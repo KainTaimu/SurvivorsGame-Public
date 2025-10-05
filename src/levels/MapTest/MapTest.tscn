@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://voqb144bje82"]
+[gd_scene load_steps=8 format=3 uid="uid://voqb144bje82"]
 
 [ext_resource type="PackedScene" uid="uid://dripg0s3cwnyp" path="res://src/levels/BaseMap/BaseMap.tscn" id="1_harkt"]
 [ext_resource type="PackedScene" uid="uid://b875akqw682al" path="res://src/entities/characters/shondo/shondo.tscn" id="2_prs7i"]
+[ext_resource type="PackedScene" uid="uid://cuxung12sqrao" path="res://src/scripts/DebugInfo.tscn" id="3_7a6mt"]
 [ext_resource type="PackedScene" uid="uid://dfjw8pyeppb35" path="res://src/levels/systems/Wave.tscn" id="3_oxvj6"]
 [ext_resource type="PackedScene" uid="uid://cagwsgk0jn4qw" path="res://src/entities/enemies/duck/duckEnemy.tscn" id="4_7a6mt"]
+[ext_resource type="PackedScene" uid="uid://be3xp5iqgbhf" path="res://src/ui/fpscounter/FpsCounter.tscn" id="4_bjlln"]
 [ext_resource type="PackedScene" uid="uid://deye8g0emljnt" path="res://src/entities/enemies/you/YOU.tscn" id="5_bjlln"]
 
 [node name="Layer0" instance=ExtResource("1_harkt")]
@@ -11,12 +13,17 @@
 [node name="Shondo" parent="." index="0" instance=ExtResource("2_prs7i")]
 position = Vector2(1786, 1001)
 
-[node name="GlobalBotRenderer" parent="Systems" index="0"]
-visible = false
+[node name="DebugInfo" parent="HudOrganizer" index="2" instance=ExtResource("3_7a6mt")]
+process_mode = 3
+layer = 128
+_enabled = true
+_updateInterval = 0.05
 
-[node name="WaveController" parent="Systems" index="5"]
-_maxMobCount = 20
+[node name="FPS" parent="HudOrganizer" index="3" instance=ExtResource("4_bjlln")]
+
+[node name="WaveController" parent="Systems" index="4"]
+_maxMobCount = 1200
 
 [node name="Wave 1" parent="Systems/WaveController" index="2" instance=ExtResource("3_oxvj6")]
-EnemyTypes = Array[PackedScene]([ExtResource("4_7a6mt"), ExtResource("5_bjlln")])
 Duration = 999
+EnemyTypes = Array[PackedScene]([ExtResource("4_7a6mt"), ExtResource("5_bjlln")])

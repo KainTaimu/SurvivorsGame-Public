@@ -5,8 +5,8 @@
 [ext_resource type="Script" uid="uid://boqtkrnxm8sad" path="res://src/levels/MapBenchmark/MapBenchmark.cs" id="2_egrnq"]
 [ext_resource type="PackedScene" uid="uid://daaq5f4a3uhiy" path="res://src/ui/hud/hud.tscn" id="3_egrnq"]
 [ext_resource type="Shader" uid="uid://fys511dc3cup" path="res://src/shaders/flash/flash.gdshader" id="4_uk4on"]
-[ext_resource type="PackedScene" uid="uid://ovon40jmj0y5" path="res://src/levels/systems/GlobalBotRenderer.tscn" id="5_fmp75"]
 [ext_resource type="Script" uid="uid://cj5hr3u1qcxmv" path="res://src/levels/systems/GlobalStateController.cs" id="6_0bua1"]
+[ext_resource type="PackedScene" uid="uid://be3xp5iqgbhf" path="res://src/ui/fpscounter/FpsCounter.tscn" id="6_8pj8p"]
 [ext_resource type="Script" uid="uid://b0nl3b41awyp" path="res://src/systems/GameWorld.cs" id="7_263q4"]
 [ext_resource type="PackedScene" uid="uid://bwh2hrmxbfov8" path="res://src/levels/systems/GridCollisionSolver.tscn" id="8_x5lw4"]
 [ext_resource type="Script" uid="uid://b3kwckekcc4on" path="res://src/ui/menus/pausemenu/PauseController.cs" id="9_42cc1"]
@@ -317,12 +317,12 @@ Enabled = false
 [node name="XpBar" parent="HudOrganizer/HUD" index="0"]
 visible = false
 
-[node name="Crosshair" parent="HudOrganizer/HUD" index="2"]
+[node name="Crosshair" parent="HudOrganizer/HUD" index="1"]
 visible = false
 
-[node name="Systems" type="Node" parent="."]
+[node name="FPS" parent="HudOrganizer" instance=ExtResource("6_8pj8p")]
 
-[node name="GlobalBotRenderer" parent="Systems" instance=ExtResource("5_fmp75")]
+[node name="Systems" type="Node" parent="."]
 
 [node name="GlobalStateController" type="Node" parent="Systems"]
 script = ExtResource("6_0bua1")
@@ -344,8 +344,8 @@ script = ExtResource("12_w5vn3")
 _maxMobCount = 2000
 
 [node name="Wave 1" parent="Systems/WaveController" instance=ExtResource("11_83bij")]
-EnemyTypes = Array[PackedScene]([ExtResource("12_wdfes"), ExtResource("13_dsy3q")])
 Duration = 999
+EnemyTypes = Array[PackedScene]([ExtResource("12_wdfes"), ExtResource("13_dsy3q")])
 
 [node name="BenchmarkRecorder" type="Node" parent="Systems"]
 script = ExtResource("16_8pj8p")

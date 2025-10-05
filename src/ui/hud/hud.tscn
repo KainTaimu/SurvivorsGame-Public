@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://daaq5f4a3uhiy"]
+[gd_scene load_steps=5 format=3 uid="uid://daaq5f4a3uhiy"]
 
 [ext_resource type="Script" uid="uid://bbmhcn47yyjg8" path="res://src/ui/hud/XpBar.cs" id="1_3lvpx"]
-[ext_resource type="PackedScene" uid="uid://cuxung12sqrao" path="res://src/scripts/DebugInfo.tscn" id="2_k2sri"]
 [ext_resource type="PackedScene" uid="uid://ixdcy7e2hu2p" path="res://src/ui/hud/crosshair/Crosshair.tscn" id="3_7ru6h"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_untti"]
@@ -21,11 +20,5 @@ theme_override_styles/background = SubResource("StyleBoxFlat_untti")
 theme_override_styles/fill = SubResource("StyleBoxFlat_pxgd7")
 show_percentage = false
 script = ExtResource("1_3lvpx")
-
-[node name="DebugInfo" parent="." instance=ExtResource("2_k2sri")]
-process_mode = 3
-layer = 128
-_enabled = true
-_updateInterval = 0.05
 
 [node name="Crosshair" parent="." instance=ExtResource("3_7ru6h")]
