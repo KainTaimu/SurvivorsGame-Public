@@ -4,7 +4,8 @@ namespace SurvivorsGame.Items.Projectiles;
 
 public partial class ProjectileRaygun : BaseProjectile
 {
-    [Export] private Area2D _areaOfEffectArea;
+    [Export]
+    private Area2D _areaOfEffectArea;
 
     public override void _Ready()
     {

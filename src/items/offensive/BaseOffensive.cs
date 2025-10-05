@@ -6,10 +6,16 @@ namespace SurvivorsGame.Items.Offensive;
 
 public partial class BaseOffensive : BaseItem
 {
+    [Export]
+    public BaseItemProperties Properties = new();
+
+    [Export]
+    public BaseOffensiveStats Stats = new();
+
+    [Export]
+    public Array<BaseOffensiveStats> Upgrades = [];
+
     public bool Enabled { get; private set; }
-    [Export] public BaseItemProperties Properties = new();
-    [Export] public BaseOffensiveStats Stats = new();
-    [Export] public Array<BaseOffensiveStats> Upgrades = [];
     protected static Player Player => GameWorld.Instance.MainPlayer;
     protected static PlayerStats PlayerStats => GameWorld.Instance.MainPlayer.StatController.PlayerStats;
 

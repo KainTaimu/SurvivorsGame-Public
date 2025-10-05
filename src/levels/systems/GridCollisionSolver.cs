@@ -4,19 +4,26 @@ namespace SurvivorsGame.Levels.Systems;
 
 public partial class GridCollisionSolver : Node
 {
-    [ExportCategory("Toggles")] [Export] public bool Enabled = true;
-    [Export] public bool DebugEnabled;
+    private const byte GridSize = 64;
 
-    [ExportCategory("Configuration")] [Export(PropertyHint.Range, "0,100,1")]
+    [ExportCategory("Configuration")]
+    [Export(PropertyHint.Range, "0,100,1")]
     private float _distBeforeShove = 45;
+
+    private Grid _grid;
 
     [Export(PropertyHint.Range, "0,5,0.1")]
     private float _pushAmount = 1.1f;
 
-    [Export] public byte SubSteps = 6;
+    [Export]
+    public bool DebugEnabled;
 
-    private Grid _grid;
-    private const byte GridSize = 64;
+    [ExportCategory("Toggles")]
+    [Export]
+    public bool Enabled = true;
+
+    [Export]
+    public byte SubSteps = 6;
 
     public override void _Ready()
     {
@@ -154,10 +161,7 @@ public partial class GridCollisionSolver : Node
                 Scale = new Vector2(0.75f, 0.75f),
                 Position = cell.Position,
                 Text = cell.Position + "\n" + cell.Index + "\n" + cell.Objects.Count,
-                LabelSettings = new LabelSettings
-                {
-                    FontColor = new Color(0, 0, 0)
-                }
+                LabelSettings = new LabelSettings { FontColor = new Color(0, 0, 0) }
             };
 
             AddChild(rect);

@@ -4,9 +4,10 @@ namespace SurvivorsGame.Entities.Enemies.States;
 
 public partial class StateChasing : State
 {
-    public override string StateName { get; protected set; } = "chasing";
+    [Export]
+    private BotStatController _botStatController;
 
-    [Export] private BotStatController _botStatController;
+    public override string StateName { get; protected set; } = "chasing";
 
     public override void PhysicsUpdate(double delta)
     {

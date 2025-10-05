@@ -4,17 +4,27 @@ namespace SurvivorsGame.Entities.Characters;
 
 public partial class PlayerXpController : Area2D
 {
+    [Export]
+    private CollisionShape2D _attractionShape2D;
+
+    private CollisionShape2D _cachedCollisionShape;
+
+    private float _collectionRadius;
+
+    [Export]
+    private CollisionShape2D _collectionShape2D;
+
+    [Export]
+    private PackedScene _levelUpMenuScene;
+
+    [Export]
+    private Player _owner;
+
+    private PlayerStats _playerPlayerStats;
+
     public int Level { get; private set; } = 1;
     public int Xp { get; private set; }
     public int XpCap { get; private set; } = 10;
-
-    [Export] private Player _owner;
-    [Export] private CollisionShape2D _attractionShape2D;
-    [Export] private CollisionShape2D _collectionShape2D;
-    [Export] private PackedScene _levelUpMenuScene;
-    private CollisionShape2D _cachedCollisionShape;
-    private float _collectionRadius;
-    private PlayerStats _playerPlayerStats;
 
     public override void _Ready()
     {

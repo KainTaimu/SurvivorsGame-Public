@@ -9,16 +9,31 @@ public partial class SelectableItem : PanelContainer
     [Signal]
     public delegate void LevelUpPressedEventHandler(BaseItem item);
 
-    [Export] private Label _nameLabel;
-    [Export] private Label _descriptionLabel;
-    [Export] private HSplitContainer _hSplitContainer;
-    [Export] private PanelContainer _rightPanel;
-    [Export] private ScrollContainer _scrollContainer;
-    [Export] private AnimationPlayer _scrollAnimator;
-    private HScrollBar _containerScrollBar;
-    private Tween _tween;
-    private bool _isHighlighted;
     private BaseItem _assignedItem;
+
+    private HScrollBar _containerScrollBar;
+
+    [Export]
+    private Label _descriptionLabel;
+
+    [Export]
+    private HSplitContainer _hSplitContainer;
+
+    private bool _isHighlighted;
+
+    [Export]
+    private Label _nameLabel;
+
+    [Export]
+    private PanelContainer _rightPanel;
+
+    [Export]
+    private AnimationPlayer _scrollAnimator;
+
+    [Export]
+    private ScrollContainer _scrollContainer;
+
+    private Tween _tween;
 
     public override void _Ready()
     {

@@ -3,12 +3,14 @@ using SurvivorsGame.Systems;
 
 public partial class EffectKnockback : BaseEffect
 {
-    public override string EffectName { get; protected set; } = "knockback";
-
-    private Player Player => GameWorld.Instance.MainPlayer;
     private Vector2 _finalVector;
+
     private Vector2 _pushVector;
+
     private Tween _tween;
+
+    public override string EffectName { get; protected set; } = "knockback";
+    private Player Player => GameWorld.Instance.MainPlayer;
 
     public override void Enter()
     {

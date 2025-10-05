@@ -8,13 +8,17 @@ public partial class BaseProjectile : Area2D
     [Signal]
     public delegate void HitEnemyEventHandler(BaseEnemy enemy);
 
-    public BaseOffensive WeaponOrigin;
-    public Sprite2D Sprite { get; private set; }
+    protected bool HasHitThisFrame;
+
+    protected int PierceCount;
+
     public int PierceLimit;
+
     public float ProjectileSpeed;
 
-    protected bool HasHitThisFrame;
-    protected int PierceCount;
+    public BaseOffensive WeaponOrigin;
+
+    public Sprite2D Sprite { get; private set; }
 
     public override void _Process(double delta)
     {

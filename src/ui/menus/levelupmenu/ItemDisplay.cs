@@ -7,10 +7,14 @@ namespace SurvivorsGame.UI.Menus;
 
 public partial class ItemDisplay : Control
 {
+    [Export]
+    private HBoxContainer _boxContainer;
+
+    [Export]
+    private PackedScene _itemContainerScene;
+
     private PlayerPassiveController PlayerPassiveController => GameWorld.Instance.MainPlayer.PassiveController;
     private List<BasePassive> Items => PlayerPassiveController.CurrentPassives;
-    [Export] private PackedScene _itemContainerScene;
-    [Export] private HBoxContainer _boxContainer;
 
     private void OnPaused()
     {

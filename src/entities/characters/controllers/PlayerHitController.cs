@@ -5,10 +5,15 @@ namespace SurvivorsGame.Entities.Characters;
 
 public partial class PlayerHitController : Node
 {
-    [Export] private PackedScene _deathEffect;
-    [Export] private Player _owner;
-    private Tween _tween;
+    [Export]
+    private PackedScene _deathEffect;
+
     private double _lastIFrame;
+
+    [Export]
+    private Player _owner;
+
+    private Tween _tween;
 
     public override void _Process(double delta)
     {

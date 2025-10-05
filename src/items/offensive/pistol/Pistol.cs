@@ -5,8 +5,10 @@ namespace SurvivorsGame.Items.Offensive;
 
 public partial class Pistol : BaseOffensive
 {
-    [Export] protected PackedScene ProjectileScene;
     private double _t;
+
+    [Export]
+    protected PackedScene ProjectileScene;
 
     public override void _Ready()
     {
@@ -38,11 +40,7 @@ public partial class Pistol : BaseOffensive
 
     private void HandleHit(BaseEnemy target)
     {
-        var damageEffect = new EffectDamage
-        {
-            EffectValue = Stats.Damage + CalculateCrit(),
-            EffectDuration = 0f
-        };
+        var damageEffect = new EffectDamage { EffectValue = Stats.Damage + CalculateCrit(), EffectDuration = 0f };
 
         target.EmitSignal(nameof(BaseEnemy.EnemyHit), damageEffect);
 

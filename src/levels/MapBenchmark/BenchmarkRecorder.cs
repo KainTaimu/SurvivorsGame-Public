@@ -4,12 +4,19 @@ namespace SurvivorsGame.Levels.Benchmark;
 
 public partial class BenchmarkRecorder : Node
 {
+    [Export]
+    private int _enemyLimit = 300;
+
     private double _fpsCheckCooldown = 5;
-    private double _waitTimeAfterStop = 5;
+
     private bool _hasHitEnemyLimit;
+
     private bool _hasLoggedStats;
+
     private bool _hasStoppedWave;
-    [Export] private int _enemyLimit = 300;
+
+    private double _waitTimeAfterStop = 5;
+
     private static GameWorld GwInstance => GameWorld.Instance;
 
     public override void _EnterTree()

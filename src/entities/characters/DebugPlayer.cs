@@ -5,14 +5,24 @@ namespace SurvivorsGame.Entities.Characters;
 public partial class DebugPlayer : VBoxContainer
 {
     private Label _healthLabel;
+
     private Label _itemsLabel;
 
-    [Export] private Player _player;
+    [Export]
+    private Player _player;
+
     private Label _positionLabel;
+
     private Label _weaponLabel;
-    [Export] public bool Enabled;
-    [Export] public PlayerOffensiveController PlayerOffensiveController;
-    [Export] public PlayerPassiveController PlayerPassiveController;
+
+    [Export]
+    public bool Enabled;
+
+    [Export]
+    public PlayerOffensiveController PlayerOffensiveController;
+
+    [Export]
+    public PlayerPassiveController PlayerPassiveController;
 
     public override void _Ready()
     {

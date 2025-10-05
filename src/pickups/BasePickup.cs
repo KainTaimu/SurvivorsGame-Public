@@ -4,13 +4,20 @@ namespace SurvivorsGame.Pickups;
 
 public abstract partial class BasePickup : RigidBody2D
 {
-    protected int PickupValue;
+    [Export]
+    private float _attractionForce = 90f;
 
-    [Export] private float _attractionForce = 90f;
-    [Export] private double _giveUpTimeSeconds = 2d;
-    [Export] private double _giveUpCooldownSeconds = 0.9d;
-    private double _elapsedGiveUpTime;
     private double _elapsedCooldownTime;
+
+    private double _elapsedGiveUpTime;
+
+    [Export]
+    private double _giveUpCooldownSeconds = 0.9d;
+
+    [Export]
+    private double _giveUpTimeSeconds = 2d;
+
+    protected int PickupValue;
 
     public override void _Ready()
     {

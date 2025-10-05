@@ -4,9 +4,10 @@ namespace SurvivorsGame.Entities.Enemies;
 
 public partial class BotEffectsController : Node
 {
-    public List<BaseEffect> CurrentEffects { get; } = [];
+    [Export]
+    private BaseEnemy _owner;
 
-    [Export] private BaseEnemy _owner;
+    public List<BaseEffect> CurrentEffects { get; } = [];
 
     public override void _Process(double delta)
     {

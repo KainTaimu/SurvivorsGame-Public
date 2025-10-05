@@ -5,9 +5,8 @@ namespace SurvivorsGame.UI.Menus;
 
 public partial class PauseMenu : CanvasLayer
 {
-    public static PauseMenu Instance { get; private set; }
-
-    [Export] private Label _playerStats;
+    [Export]
+    private Label _playerStats;
 
     public PauseMenu()
     {
@@ -21,6 +20,8 @@ public partial class PauseMenu : CanvasLayer
         Instance = this;
         ProcessMode = ProcessModeEnum.Always;
     }
+
+    public static PauseMenu Instance { get; private set; }
 
     public override void _Input(InputEvent @event)
     {

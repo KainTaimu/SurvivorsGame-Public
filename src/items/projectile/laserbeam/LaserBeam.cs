@@ -5,9 +5,14 @@ namespace SurvivorsGame.Items.Projectiles;
 
 public partial class LaserBeam : BaseProjectile
 {
-    [Export] private Line2D _beamSprite;
-    [Export] private Curve _beamWidthCurve = new();
+    [Export]
+    private Line2D _beamSprite;
+
+    [Export]
+    private Curve _beamWidthCurve = new();
+
     private double _lifetime;
+
     private Array<Rid> _previousHits = []; // Keep Rids to prevent multiple hits in one frame
 
     public override void _Ready()

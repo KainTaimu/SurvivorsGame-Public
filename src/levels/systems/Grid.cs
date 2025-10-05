@@ -4,11 +4,13 @@ namespace SurvivorsGame.Levels.Systems;
 
 public class Grid
 {
-    public readonly GridCell[,] Cells;
-    public readonly Vector2I Dimensions;
+    private const int Padding = 5;
 
     private readonly int _cellSize;
-    private const int Padding = 5;
+
+    public readonly GridCell[,] Cells;
+
+    public readonly Vector2I Dimensions;
 
     public Grid(int cellSize) // Generate cells
     {

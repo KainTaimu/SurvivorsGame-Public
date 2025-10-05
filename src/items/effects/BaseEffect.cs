@@ -3,12 +3,17 @@ using SurvivorsGame.Entities.Enemies;
 [GlobalClass]
 public partial class BaseEffect : Resource
 {
-    public virtual string EffectName { get; protected set; }
-    [Export] public float EffectValue;
-    [Export] public float EffectDuration;
+    protected bool Applied = false;
+
+    [Export]
+    public float EffectDuration;
+
+    [Export]
+    public float EffectValue;
 
     public BaseEnemy Target;
-    protected bool Applied = false;
+
+    public virtual string EffectName { get; protected set; }
 
     public override string ToString()
     {

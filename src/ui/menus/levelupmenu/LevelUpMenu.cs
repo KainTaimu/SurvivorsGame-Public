@@ -8,8 +8,12 @@ namespace SurvivorsGame.UI.Menus;
 
 public partial class LevelUpMenu : CanvasLayer
 {
-    [Export] private VBoxContainer _itemContainer;
-    [Export] private uint _maxItems = 5;
+    [Export]
+    private VBoxContainer _itemContainer;
+
+    [Export]
+    private uint _maxItems = 5;
+
     private Player Player => GameWorld.Instance.MainPlayer;
     private SceneTree Tree => GetTree();
 

@@ -5,11 +5,15 @@ namespace SurvivorsGame.Entities.Enemies.States;
 
 public partial class StateEnemyPlayerDied : State
 {
-    public override string StateName { get; protected set; } = "playerdied";
+    [Export]
+    private Shader _fadeShader;
 
-    [Export] private VisibleOnScreenNotifier2D _visibleOnScreenNotifier;
-    [Export] private Shader _fadeShader;
     private float _moveSpeed;
+
+    [Export]
+    private VisibleOnScreenNotifier2D _visibleOnScreenNotifier;
+
+    public override string StateName { get; protected set; } = "playerdied";
 
     public override void Enter()
     {

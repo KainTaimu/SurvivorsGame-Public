@@ -8,11 +8,7 @@ public partial class PauseController : Node
     [Signal]
     public delegate void UnpausedEventHandler();
 
-    public static PauseController Instance { get; private set; }
-    public Node LockedBy { get; private set; }
     public bool IsPaused;
-
-    private SceneTree Tree => GetTree();
 
     public PauseController()
     {
@@ -25,6 +21,10 @@ public partial class PauseController : Node
 
         Instance = this;
     }
+
+    public static PauseController Instance { get; private set; }
+    public Node LockedBy { get; private set; }
+    private SceneTree Tree => GetTree();
 
     public void Lock(Node locker)
     {

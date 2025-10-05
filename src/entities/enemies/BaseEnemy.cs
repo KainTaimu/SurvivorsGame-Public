@@ -8,24 +8,31 @@ public partial class BaseEnemy : Node2D
     [Signal]
     public delegate void EnemyHitEventHandler(BaseEffect effect);
 
+    private Timer _timer = new() { WaitTime = 1, Autostart = true };
+
+    public int Id;
+
     [ExportCategory("Components")]
     [Export]
     public AnimatedSprite2D Sprite { get; private set; }
 
-    [Export] public BotStatController BotStatController { get; private set; }
-    [Export] public BotHitController BotHitController { get; private set; }
-    [Export] public VisibleOnScreenNotifier2D VisibleOnScreenNotifier { get; private set; }
-    [Export] public StateMachine StateMachine { get; private set; }
-    [Export] public BotHitbox BotHitbox { get; private set; }
-    [Export] public BotDamageBox BotDamageBox { get; private set; }
+    [Export]
+    public BotStatController BotStatController { get; private set; }
 
-    public int Id;
+    [Export]
+    public BotHitController BotHitController { get; private set; }
 
-    private Timer _timer = new()
-    {
-        WaitTime = 1,
-        Autostart = true
-    };
+    [Export]
+    public VisibleOnScreenNotifier2D VisibleOnScreenNotifier { get; private set; }
+
+    [Export]
+    public StateMachine StateMachine { get; private set; }
+
+    [Export]
+    public BotHitbox BotHitbox { get; private set; }
+
+    [Export]
+    public BotDamageBox BotDamageBox { get; private set; }
 
     public override void _Ready()
     {

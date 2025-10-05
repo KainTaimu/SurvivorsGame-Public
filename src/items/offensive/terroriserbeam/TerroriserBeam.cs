@@ -6,7 +6,9 @@ namespace SurvivorsGame.Items.Offensive;
 // ProjectileSpeed is how fast the laser length grows
 public partial class TerroriserBeam : BaseOffensive
 {
-    [Export] private PackedScene _projectileScene;
+    [Export]
+    private PackedScene _projectileScene;
+
     private double _t;
 
     public override void _Ready()
@@ -39,11 +41,7 @@ public partial class TerroriserBeam : BaseOffensive
 
     private void HandleHit(BaseEnemy target)
     {
-        var damageEffect = new EffectDamage
-        {
-            EffectValue = Stats.Damage + CalculateCrit(),
-            EffectDuration = 0f
-        };
+        var damageEffect = new EffectDamage { EffectValue = Stats.Damage + CalculateCrit(), EffectDuration = 0f };
 
         target.EmitSignal(nameof(BaseEnemy.EnemyHit), damageEffect);
 

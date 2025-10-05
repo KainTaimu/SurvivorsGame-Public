@@ -4,7 +4,8 @@ namespace SurvivorsGame.Entities.Characters;
 
 public partial class PlayerCameraController : Node
 {
-    [Export] public Camera2D Camera { get; private set; }
+    [Export]
+    public Camera2D Camera { get; private set; }
 
     public override void _Ready()
     {

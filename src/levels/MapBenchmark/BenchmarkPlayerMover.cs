@@ -4,9 +4,13 @@ namespace SurvivorsGame.Levels.Benchmark;
 
 public partial class BenchmarkPlayerMover : Node
 {
-    [Export] private double _teleportTime = 5;
-    private double _t;
     private Side _playerSide = Side.Left;
+
+    private double _t;
+
+    [Export]
+    private double _teleportTime = 5;
+
     private static float LevelVerticalMiddle => GameWorld.Instance.CurrentLevel.PixelSize.Y / 2;
     private static float LevelHorizontalMiddle => GameWorld.Instance.CurrentLevel.PixelSize.X / 2;
 
@@ -61,8 +65,11 @@ public partial class BenchmarkPlayerMover : Node
     private enum Side
     {
         Left,
+
         Right,
+
         Top,
+
         Bottom
     }
 }

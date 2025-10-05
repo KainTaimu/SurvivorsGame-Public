@@ -10,13 +10,25 @@ public partial class Player : Area2D
     [Signal]
     public delegate void PlayerLevelledUpEventHandler();
 
-    [Export] public PlayerMovementController PlayerMovementController { get; private set; }
-    [Export] public PlayerStatController StatController { get; private set; }
-    [Export] public PlayerOffensiveController OffensiveController { get; private set; }
-    [Export] public PlayerPassiveController PassiveController { get; private set; }
-    [Export] public PlayerXpController XpController { get; private set; }
-    [Export] public AnimatedSprite2D Sprite { get; private set; }
     public bool Alive = true;
+
+    [Export]
+    public PlayerMovementController PlayerMovementController { get; private set; }
+
+    [Export]
+    public PlayerStatController StatController { get; private set; }
+
+    [Export]
+    public PlayerOffensiveController OffensiveController { get; private set; }
+
+    [Export]
+    public PlayerPassiveController PassiveController { get; private set; }
+
+    [Export]
+    public PlayerXpController XpController { get; private set; }
+
+    [Export]
+    public AnimatedSprite2D Sprite { get; private set; }
 
     public override void _EnterTree()
     {

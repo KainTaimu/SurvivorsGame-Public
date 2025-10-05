@@ -7,19 +7,28 @@ namespace SurvivorsGame.Levels.Systems;
 
 public partial class WaveController : Node
 {
-    private Array<Wave> _waves = [];
     private Wave _activeWave;
+
     private int _currentWaveIndex;
+
+    [Export]
+    private uint _maxMobCount;
+
+    [Export]
+    private bool _showSpawnerBounds;
 
     // [Export] private Timer _spawnDurationTimer;
     private double _spawnDurationTime;
 
     // [Export] private Timer _spawnSpeedTimer;
     private double _spawnSpeedTime;
-    [Export] private uint _maxMobCount;
 
-    [ExportCategory("Toggles")] [Export] public bool Enabled = true;
-    [Export] private bool _showSpawnerBounds;
+    private Array<Wave> _waves = [];
+
+    [ExportCategory("Toggles")]
+    [Export]
+    public bool Enabled = true;
+
     private static Player MainPlayer => GameWorld.Instance.MainPlayer;
 
     public override void _Ready()
@@ -176,10 +185,7 @@ public partial class WaveController : Node
 
         var spawnRect = new ReferenceRect
         {
-            Position = position,
-            Size = new Vector2(50, 50),
-            Visible = true,
-            EditorOnly = false
+            Position = position, Size = new Vector2(50, 50), Visible = true, EditorOnly = false
         };
 
         AddChild(spawnRect);

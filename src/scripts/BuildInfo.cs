@@ -3,7 +3,9 @@ using System.Reflection;
 
 public partial class BuildInfo : CanvasLayer
 {
-    [Export] private Label _label;
+    [Export]
+    private Label _label;
+
     private static Assembly Executable => Assembly.GetExecutingAssembly();
 
     public override void _Ready()

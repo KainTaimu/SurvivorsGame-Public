@@ -7,10 +7,16 @@ namespace SurvivorsGame.Items.Passive;
 
 public partial class BasePassive : BaseItem
 {
+    [Export]
+    public BaseItemProperties Properties = new();
+
+    [Export]
+    public BasePassiveStats Stats = new();
+
+    [Export]
+    public Array<BasePassiveStats> Upgrades = [];
+
     public bool Applied { get; private set; }
-    [Export] public BaseItemProperties Properties = new();
-    [Export] public BasePassiveStats Stats = new();
-    [Export] public Array<BasePassiveStats> Upgrades = [];
     protected static Player Player => GameWorld.Instance.MainPlayer;
     private static PlayerStats PlayerStats => Player.StatController.PlayerStats;
 

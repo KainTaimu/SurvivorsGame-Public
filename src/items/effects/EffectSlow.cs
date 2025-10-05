@@ -2,11 +2,13 @@ using SurvivorsGame.Entities.Enemies;
 
 public partial class EffectSlow : BaseEffect
 {
-    public override string EffectName { get; protected set; } = "slow";
+    private BotStatController _botStatController;
 
     private float _initialDuration;
-    private BotStatController _botStatController;
+
     private float _initialSpeed;
+
+    public override string EffectName { get; protected set; } = "slow";
 
     public override void Enter()
     {

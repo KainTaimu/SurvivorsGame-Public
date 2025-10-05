@@ -4,10 +4,14 @@ namespace SurvivorsGame.VFX;
 
 public partial class DamageIndicator : Node2D
 {
-    [Export] private Label _label;
-    private Vector2 _finalPosition;
-    private Tween _tween;
     private static int _indicatorCount;
+
+    private Vector2 _finalPosition;
+
+    [Export]
+    private Label _label;
+
+    private Tween _tween;
 
     public override void _Ready()
     {

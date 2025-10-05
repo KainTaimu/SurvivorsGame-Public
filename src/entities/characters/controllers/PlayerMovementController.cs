@@ -4,9 +4,10 @@ namespace SurvivorsGame.Entities.Characters;
 
 public partial class PlayerMovementController : Node
 {
-    public float Facing { get; private set; }
+    [Export]
+    private Player _owner;
 
-    [Export] private Player _owner;
+    public float Facing { get; private set; }
 
     public override void _Ready()
     {

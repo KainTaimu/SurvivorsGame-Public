@@ -5,10 +5,14 @@ public partial class PlayerStatController : Node
     [Signal]
     public delegate void ItemAddedEventHandler();
 
-    [Export] public PlayerStats PlayerStats;
+    [Export]
+    private PackedScene _deathEffect;
 
-    [Export] private PackedScene _deathEffect;
-    [Export] private Player _owner;
+    [Export]
+    private Player _owner;
+
+    [Export]
+    public PlayerStats PlayerStats;
 
     public override void _EnterTree()
     {

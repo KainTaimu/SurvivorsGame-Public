@@ -4,22 +4,34 @@ namespace SurvivorsGame.Entities.Enemies;
 
 public partial class BotStatController : Node
 {
-    public float Health = 1;
-    public float Defense;
-    public float MoveSpeed;
+    [Export]
+    private PackedScene _damageIndicator;
 
-    [ExportCategory("Main attributes")] [Export]
-    public int MaxDamage = 5;
-
-    [Export] public float MaxDefense;
-    [Export] public int MaxHealth = 100;
-    [Export] public float MaxMoveSpeed = 150;
-    [Export] public int XpGain = 10;
-
-    [ExportCategory("Components")] [Export]
+    [ExportCategory("Components")]
+    [Export]
     private BaseEnemy _owner;
 
-    [Export] private PackedScene _damageIndicator;
+    public float Defense;
+
+    public float Health = 1;
+
+    [ExportCategory("Main attributes")]
+    [Export]
+    public int MaxDamage = 5;
+
+    [Export]
+    public float MaxDefense;
+
+    [Export]
+    public int MaxHealth = 100;
+
+    [Export]
+    public float MaxMoveSpeed = 150;
+
+    public float MoveSpeed;
+
+    [Export]
+    public int XpGain = 10;
 
     public override void _Ready()
     {

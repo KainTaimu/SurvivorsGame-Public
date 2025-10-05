@@ -4,13 +4,20 @@ namespace SurvivorsGame.Levels.Systems;
 
 public partial class Wave : Node
 {
-    [Export] public bool Enabled = true;
-    [Export] public Array<PackedScene> EnemyTypes = [];
+    [Export]
+    public int Duration;
 
-    [Export] public double SpawnSpeedMin = 0.0001;
-    [Export] public double SpawnSpeedMax = 0.0001;
+    [Export]
+    public bool Enabled = true;
 
-    [Export] public int Duration;
+    [Export]
+    public Array<PackedScene> EnemyTypes = [];
+
+    [Export]
+    public double SpawnSpeedMax = 0.0001;
+
+    [Export]
+    public double SpawnSpeedMin = 0.0001;
 
     public override void _EnterTree()
     {

@@ -1,16 +1,14 @@
-using SurvivorsGame.UI.Menus;
 using PauseController = SurvivorsGame.UI.Menus.PauseController;
 
 namespace SurvivorsGame.UI;
 
 public partial class Crosshair : Node2D
 {
-    public static Crosshair Instance { get; private set; }
+    [Export]
+    private AnimatedSprite2D _crosshairSprite;
 
     [Export(PropertyHint.Range, "0,5,0.25")]
     public float CrosshairSize = 4;
-
-    [Export] private AnimatedSprite2D _crosshairSprite;
 
     public Crosshair()
     {
@@ -23,6 +21,8 @@ public partial class Crosshair : Node2D
 
         Instance = this;
     }
+
+    public static Crosshair Instance { get; private set; }
 
     public override void _Ready()
     {

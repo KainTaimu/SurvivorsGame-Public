@@ -5,13 +5,23 @@ namespace SurvivorsGame.Entities.Enemies;
 
 public partial class BotHitController : Node
 {
-    [Export] private BaseEnemy _owner;
-    [Export] private AnimatedSprite2D _animatedSprite;
-    [Export] private BotStatController _botStatController;
-    [Export] private StateMachine _stateMachine;
+    [Export]
+    private AnimatedSprite2D _animatedSprite;
+
+    [Export]
+    private BotStatController _botStatController;
+
     private float _dyingTime = 0.19f;
-    private Tween _tween;
+
+    [Export]
+    private BaseEnemy _owner;
+
     private ShaderMaterial _spriteShaderMaterial;
+
+    [Export]
+    private StateMachine _stateMachine;
+
+    private Tween _tween;
 
     public override void _Ready()
     {

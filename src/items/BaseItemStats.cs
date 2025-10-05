@@ -3,6 +3,7 @@ namespace SurvivorsGame.Items;
 public enum ItemType
 {
     Offensive,
+
     Passive
 }
 

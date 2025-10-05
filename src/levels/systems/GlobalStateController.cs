@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using SurvivorsGame.Entities.Enemies.States;
 using SurvivorsGame.Systems;
 
@@ -7,13 +6,11 @@ namespace SurvivorsGame.Levels.Systems;
 
 public partial class GlobalStateController : Node
 {
-    private readonly List<StateMachine>[] _stateMachines = new List<StateMachine>[PartitionCount];
     private const uint PartitionCount = 1;
+
+    private readonly List<StateMachine>[] _stateMachines = new List<StateMachine>[PartitionCount];
+
     private uint _count;
-
-    public PlayerStateCache CachedPlayerState { get; } = new();
-
-    public static GlobalStateController Instance { get; private set; }
 
     public GlobalStateController()
     {
@@ -30,6 +27,9 @@ public partial class GlobalStateController : Node
             _stateMachines[i] = [];
         }
     }
+
+    public PlayerStateCache CachedPlayerState { get; } = new();
+    public static GlobalStateController Instance { get; private set; }
 
     public override void _Process(double delta)
     {

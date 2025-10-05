@@ -5,14 +5,22 @@ namespace SurvivorsGame.Entities.Enemies.States;
 
 public partial class StateDying : State
 {
-    public override string StateName { get; protected set; } = "dying";
+    [Export]
+    private AnimatedSprite2D _animatedSprite;
 
-    [Export] private BotStatController _botStatController;
-    [Export] private PackedScene _xpScene;
-    [Export] private AnimatedSprite2D _animatedSprite;
+    [Export]
+    private BotStatController _botStatController;
+
     private float _dyingTime = 0.275f; // 0.275f
+
     private float _moveSpeed;
+
     private Vector2 _moveVector;
+
+    [Export]
+    private PackedScene _xpScene;
+
+    public override string StateName { get; protected set; } = "dying";
 
     public override void Enter()
     {

@@ -8,7 +8,9 @@ namespace SurvivorsGame.Entities.Characters;
 public partial class PlayerStats : Node
 {
     private Player _player;
+
     private List<BasePassive> _playerItems;
+
     private PlayerPassiveController _playerPassiveController;
 
     [ExportCategory("Main attributes")]

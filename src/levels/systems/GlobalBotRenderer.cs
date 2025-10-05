@@ -6,7 +6,9 @@ namespace SurvivorsGame.Levels.Systems;
 public partial class GlobalBotRenderer : Node2D
 {
     private static readonly StringName DefaultString = "default"; // stop implicit conversion in draw method
+
     private static readonly Dictionary<Rid, Vector2> TextureOffsetCache = [];
+
     private static readonly Dictionary<StringName, BotRenderCache> RenderCaches = [];
 
     public static GlobalBotRenderer Instance;
@@ -60,6 +62,7 @@ public partial class GlobalBotRenderer : Node2D
     private struct BotRenderCache
     {
         public int FrameCount { get; }
+
         public readonly Dictionary<int, Texture2D> SpriteTextures = [];
 
         public BotRenderCache(AnimatedSprite2D sprite)

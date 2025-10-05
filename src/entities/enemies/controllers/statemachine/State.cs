@@ -8,10 +8,11 @@ public partial class State : Node
     [Signal]
     public delegate void TransitionedEventHandler(string toState);
 
-    public virtual string StateName { get; protected set; }
-
     protected BaseEnemy EnemyOwner;
+
     protected bool Entered;
+
+    public virtual string StateName { get; protected set; }
     protected static Player Player => GameWorld.Instance.MainPlayer;
 
     public virtual void Enter()

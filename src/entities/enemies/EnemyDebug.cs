@@ -5,17 +5,32 @@ namespace SurvivorsGame.Entities.Enemies;
 
 public partial class EnemyDebug : VBoxContainer
 {
-    [Export] public bool Enabled;
+    [Export]
+    private Label _affectByLabel;
 
-    [Export] private BotStatController _botStatController;
-    [Export] private BotEffectsController _effects;
-    [Export] private BaseEnemy _owner;
-    [Export] private StateMachine _state;
+    [Export]
+    private BotStatController _botStatController;
 
-    [Export] private Label _healthLabel;
-    [Export] private Label _speedLabel;
-    [Export] private Label _stateLabel;
-    [Export] private Label _affectByLabel;
+    [Export]
+    private BotEffectsController _effects;
+
+    [Export]
+    private Label _healthLabel;
+
+    [Export]
+    private BaseEnemy _owner;
+
+    [Export]
+    private Label _speedLabel;
+
+    [Export]
+    private StateMachine _state;
+
+    [Export]
+    private Label _stateLabel;
+
+    [Export]
+    public bool Enabled;
 
     public override void _EnterTree()
     {

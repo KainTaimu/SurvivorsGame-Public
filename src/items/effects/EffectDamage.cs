@@ -1,8 +1,8 @@
 public partial class EffectDamage : BaseEffect
 {
-    public override string EffectName { get; protected set; } = "damage";
-
     private bool _applied;
+
+    public override string EffectName { get; protected set; } = "damage";
 
     public override void Exit()
     {

@@ -7,9 +7,9 @@ namespace SurvivorsGame.Entities.Characters;
 
 public partial class PlayerPassiveController : Node
 {
-    public List<BasePassive> CurrentPassives { get; } = [];
-
     private Player _player;
+
+    public List<BasePassive> CurrentPassives { get; } = [];
 
     public override void _Ready()
     {

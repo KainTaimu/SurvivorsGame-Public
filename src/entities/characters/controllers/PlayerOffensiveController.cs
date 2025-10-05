@@ -7,7 +7,10 @@ namespace SurvivorsGame.Entities.Characters;
 public partial class PlayerOffensiveController : Node
 {
     private Player _owner;
-    [Export] public bool Enabled = true;
+
+    [Export]
+    public bool Enabled = true;
+
     public List<BaseOffensive> CurrentOffensives { get; } = [];
 
     public override void _Ready()

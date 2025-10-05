@@ -4,11 +4,13 @@ namespace SurvivorsGame.Levels.Systems;
 
 public class GridCell
 {
-    public readonly List<Node2D> Objects = [];
-    public Vector2I Index;
-    public Vector2I Position;
-
     private const int MaxCapacity = 64;
+
+    public readonly List<Node2D> Objects = [];
+
+    public Vector2I Index;
+
+    public Vector2I Position;
 
     public override string ToString()
     {

@@ -5,10 +5,15 @@ namespace SurvivorsGame.Items.Offensive;
 
 public partial class Shotgun : BaseOffensive
 {
-    [Export] private PackedScene _projectileScene;
-    private int _pelletCount = 8;
     private float _dispersionArc = Mathf.Pi / 16f;
+
+    private int _pelletCount = 8;
+
     private float _pelletSpeedDeviation = 750f;
+
+    [Export]
+    private PackedScene _projectileScene;
+
     private double _t;
 
     public override void _Ready()
@@ -50,11 +55,7 @@ public partial class Shotgun : BaseOffensive
 
     private void HandleHit(BaseEnemy target)
     {
-        var damageEffect = new EffectDamage
-        {
-            EffectValue = Stats.Damage + CalculateCrit(),
-            EffectDuration = 0f
-        };
+        var damageEffect = new EffectDamage { EffectValue = Stats.Damage + CalculateCrit(), EffectDuration = 0f };
 
         target.EmitSignal(nameof(BaseEnemy.EnemyHit), damageEffect);
 

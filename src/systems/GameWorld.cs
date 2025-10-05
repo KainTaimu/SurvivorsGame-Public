@@ -11,13 +11,6 @@ public partial class GameWorld : Node
     [Signal]
     public delegate void PlayerDiedEventHandler();
 
-    public static GameWorld Instance { get; private set; }
-    public Player MainPlayer { get; private set; }
-    public BaseMap CurrentLevel { get; private set; }
-    public List<BaseEnemy> Enemies { get; } = [];
-    public Dictionary<string, List<BaseEnemy>> EnemiesByType { get; } = []; // Used by GlobalBotRenderer
-    public List<BasePickup> Pickups { get; } = [];
-    public int TotalEnemiesSpawned { get; private set; }
     public GameTimeTracker TimeElapsed = new();
 
     public GameWorld()
@@ -33,6 +26,14 @@ public partial class GameWorld : Node
         ProcessMode = ProcessModeEnum.Always;
         AddChild(TimeElapsed);
     }
+
+    public static GameWorld Instance { get; private set; }
+    public Player MainPlayer { get; private set; }
+    public BaseMap CurrentLevel { get; private set; }
+    public List<BaseEnemy> Enemies { get; } = [];
+    public Dictionary<string, List<BaseEnemy>> EnemiesByType { get; } = []; // Used by GlobalBotRenderer
+    public List<BasePickup> Pickups { get; } = [];
+    public int TotalEnemiesSpawned { get; private set; }
 
     public void LoadLevel(string levelName)
     {

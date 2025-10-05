@@ -9,11 +9,15 @@ public partial class StateMachine : Node
     [Signal]
     public delegate void StateChangedEventHandler();
 
-    [Export] public BaseEnemy EnemyOwner { get; private set; }
-    public State CurrentState { get; private set; }
-
     private readonly Dictionary<string, State> _states = new();
-    [Export] private State _initialState;
+
+    [Export]
+    private State _initialState;
+
+    [Export]
+    public BaseEnemy EnemyOwner { get; private set; }
+
+    public State CurrentState { get; private set; }
 
     public override void _Ready()
     {
