@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://b2v4d4wmpp4jn"]
+[gd_scene load_steps=24 format=3 uid="uid://b2v4d4wmpp4jn"]
 
 [ext_resource type="Script" uid="uid://bo6h0e10khwwr" path="res://src/entities/enemies/BaseEnemy.cs" id="1_ge3nw"]
 [ext_resource type="Script" uid="uid://cllpyp5sjnxqa" path="res://src/entities/enemies/controllers/BotStatController.cs" id="2_koof1"]
@@ -21,33 +21,17 @@
 atlas = ExtResource("13_pqxnv")
 region = Rect2(0, 0, 60, 60)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4ugd5"]
-atlas = ExtResource("13_pqxnv")
-region = Rect2(60, 0, 60, 60)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_sktf0"]
 atlas = ExtResource("13_pqxnv")
 region = Rect2(0, 60, 60, 60)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_51hkf"]
-atlas = ExtResource("13_pqxnv")
-region = Rect2(60, 60, 60, 60)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nmmv5"]
 atlas = ExtResource("13_pqxnv")
 region = Rect2(0, 120, 60, 60)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_up5bp"]
-atlas = ExtResource("13_pqxnv")
-region = Rect2(60, 120, 60, 60)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_vckpm"]
 atlas = ExtResource("13_pqxnv")
 region = Rect2(0, 180, 60, 60)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jo1mu"]
-atlas = ExtResource("13_pqxnv")
-region = Rect2(60, 180, 60, 60)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_kxty0"]
 animations = [{
@@ -56,25 +40,13 @@ animations = [{
 "texture": SubResource("AtlasTexture_hc1v1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4ugd5")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_sktf0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_51hkf")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nmmv5")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_up5bp")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_vckpm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jo1mu")
 }],
 "loop": true,
 "name": &"default",
@@ -140,7 +112,6 @@ _fadeShader = ExtResource("11_37qpx")
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-visible = false
 material = ExtResource("11_ubr2y")
 sprite_frames = SubResource("SpriteFrames_kxty0")
 autoplay = "default"

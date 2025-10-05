@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cagwsgk0jn4qw"]
+[gd_scene load_steps=12 format=3 uid="uid://cagwsgk0jn4qw"]
 
 [ext_resource type="PackedScene" uid="uid://b2v4d4wmpp4jn" path="res://src/entities/enemies/BaseEnemy.tscn" id="1_7ur44"]
 [ext_resource type="Texture2D" uid="uid://73prfwgpnhul" path="res://assets/sprites/characters/duck/spr_enemy_duck_run_strip4.png" id="2_54qhf"]
@@ -15,33 +15,17 @@ shader_parameter/flash_state = 0.0
 atlas = ExtResource("2_54qhf")
 region = Rect2(0, 0, 80, 60)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_w525m"]
-atlas = ExtResource("2_54qhf")
-region = Rect2(80, 0, 80, 60)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_o83gq"]
 atlas = ExtResource("2_54qhf")
 region = Rect2(0, 60, 80, 60)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hnv6d"]
-atlas = ExtResource("2_54qhf")
-region = Rect2(80, 60, 80, 60)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_skyle"]
 atlas = ExtResource("2_54qhf")
 region = Rect2(0, 120, 80, 60)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qj05p"]
-atlas = ExtResource("2_54qhf")
-region = Rect2(80, 120, 80, 60)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_wudc1"]
 atlas = ExtResource("2_54qhf")
 region = Rect2(0, 180, 80, 60)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rm38l"]
-atlas = ExtResource("2_54qhf")
-region = Rect2(80, 180, 80, 60)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_r56fo"]
 animations = [{
@@ -50,25 +34,13 @@ animations = [{
 "texture": SubResource("AtlasTexture_ahgk6")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_w525m")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_o83gq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hnv6d")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_skyle")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qj05p")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_wudc1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rm38l")
 }],
 "loop": true,
 "name": &"default",

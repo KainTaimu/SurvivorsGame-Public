@@ -11,6 +11,9 @@
 [node name="Shondo" parent="." index="0" instance=ExtResource("2_prs7i")]
 position = Vector2(1786, 1001)
 
+[node name="GlobalBotRenderer" parent="Systems" index="0"]
+visible = false
+
 [node name="WaveController" parent="Systems" index="5"]
 _maxMobCount = 20
 

@@ -1,10 +1,9 @@
-[gd_scene load_steps=17 format=4 uid="uid://dripg0s3cwnyp"]
+[gd_scene load_steps=16 format=4 uid="uid://dripg0s3cwnyp"]
 
 [ext_resource type="Texture2D" uid="uid://deyaflaibmsth" path="res://assets/sprites/level/grid.png" id="1_8y8k7"]
 [ext_resource type="Script" uid="uid://dqqaw1khav2g7" path="res://src/levels/BaseMap/BaseMap.cs" id="2_if266"]
 [ext_resource type="Texture2D" uid="uid://bt8qpm1um8i5i" path="res://assets/sprites/level/border.png" id="2_ru5xc"]
 [ext_resource type="Texture2D" uid="uid://b0ntmskwr6frn" path="res://assets/sprites/level/grid_dark.png" id="3_alg6g"]
-[ext_resource type="PackedScene" uid="uid://ovon40jmj0y5" path="res://src/levels/systems/GlobalBotRenderer.tscn" id="8_aqfmj"]
 [ext_resource type="Script" uid="uid://cj5hr3u1qcxmv" path="res://src/levels/systems/GlobalStateController.cs" id="8_ukuon"]
 [ext_resource type="PackedScene" uid="uid://bwh2hrmxbfov8" path="res://src/levels/systems/GridCollisionSolver.tscn" id="8_w1oit"]
 [ext_resource type="PackedScene" uid="uid://daaq5f4a3uhiy" path="res://src/ui/hud/hud.tscn" id="9_w2w52"]
@@ -557,8 +556,6 @@ metadata/_edit_lock_ = true
 [node name="PauseMenu" parent="HudOrganizer" instance=ExtResource("10_hcasr")]
 
 [node name="Systems" type="Node" parent="."]
-
-[node name="GlobalBotRenderer" parent="Systems" instance=ExtResource("8_aqfmj")]
 
 [node name="GlobalStateController" type="Node" parent="Systems"]
 script = ExtResource("8_ukuon")
