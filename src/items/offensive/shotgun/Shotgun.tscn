@@ -1,0 +1,54 @@
+[gd_scene load_steps=10 format=3 uid="uid://i30dnsyjcsua"]
+
+[ext_resource type="Script" uid="uid://c06q5vu6gdj05" path="res://src/items/offensive/shotgun/Shotgun.cs" id="1_enx3g"]
+[ext_resource type="PackedScene" uid="uid://bx3nlyg0nwpge" path="res://src/items/offensive/BaseOffensive.tscn" id="1_ett6f"]
+[ext_resource type="PackedScene" uid="uid://ho57tibavdbb" path="res://src/items/projectile/bullet/ProjectileBullet.tscn" id="2_ett6f"]
+[ext_resource type="Script" uid="uid://cu4mtsa3whygp" path="res://src/items/BaseItemProperties.cs" id="3_mv4nb"]
+[ext_resource type="Script" uid="uid://b07kwtd7x357r" path="res://src/items/offensive/BaseOffensiveStats.cs" id="4_leya7"]
+
+[sub_resource type="Resource" id="Resource_mv4nb"]
+resource_local_to_scene = true
+script = ExtResource("3_mv4nb")
+Name = "Shotgun"
+Description = "A basic-ass shotgun."
+
+[sub_resource type="Resource" id="Resource_leya7"]
+resource_local_to_scene = true
+script = ExtResource("4_leya7")
+Damage = 2
+CritDamageMultiplier = 1.1
+CritChanceProportion = 0.15
+ProjectileSpeed = 2700
+ProjectileScaleMultiplier = 0.95
+AttackSpeed = 1.0
+ProjectileEffects = []
+
+[sub_resource type="Resource" id="Resource_p2ydd"]
+resource_local_to_scene = true
+script = ExtResource("4_leya7")
+Damage = 4
+CritDamageMultiplier = 1.1
+CritChanceProportion = 0.3
+ProjectileSpeed = 2700
+ProjectileScaleMultiplier = 0.95
+AttackSpeed = 1.0
+ProjectileEffects = []
+
+[sub_resource type="Resource" id="Resource_r7de3"]
+resource_local_to_scene = true
+script = ExtResource("4_leya7")
+Damage = 4
+CritDamageMultiplier = 1.1
+CritChanceProportion = 0.3
+ProjectileSpeed = 2700
+ProjectileScaleMultiplier = 0.95
+AttackSpeed = 1.0
+PierceLimit = -1
+ProjectileEffects = []
+
+[node name="Shotgun" instance=ExtResource("1_ett6f")]
+script = ExtResource("1_enx3g")
+_projectileScene = ExtResource("2_ett6f")
+Properties = SubResource("Resource_mv4nb")
+Stats = SubResource("Resource_leya7")
+Upgrades = Array[ExtResource("4_leya7")]([SubResource("Resource_p2ydd"), SubResource("Resource_r7de3")])

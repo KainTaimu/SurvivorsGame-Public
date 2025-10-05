@@ -1,0 +1,17 @@
+# Godot 4+ specific ignores
+.godot/
+logs.lnk
+.vs/
+.vscode/
+.deleted/
+.idea/
+exports/
+example/
+ptt.json
+*.sln.DotSettings
+*.sln.DotSettings.user
+script_templates/
+*.mkv
+*.clip
+dev/asset/whip.kra
+imgui.ini

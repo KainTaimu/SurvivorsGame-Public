@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://b5u2xmnlc0u7a"]
+
+[ext_resource type="Script" uid="uid://dhpev6k5lt1et" path="res://src/items/effects/EffectSlow.cs" id="1_r2ge5"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_r2ge5")
+EffectValue = 75.0
+EffectDuration = 2.0

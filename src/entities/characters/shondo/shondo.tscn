@@ -1,0 +1,98 @@
+[gd_scene load_steps=14 format=3 uid="uid://b875akqw682al"]
+
+[ext_resource type="PackedScene" uid="uid://bgbdw30orurvd" path="res://src/entities/characters/player.tscn" id="1_u6g2f"]
+[ext_resource type="Shader" uid="uid://fys511dc3cup" path="res://src/shaders/flash/flash.gdshader" id="2_cqscl"]
+[ext_resource type="Texture2D" uid="uid://c6mygac0fml2t" path="res://assets/sprites/characters/shondo/spr_shondo_run_strip4.png" id="2_yd0ky"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gq3gf"]
+resource_local_to_scene = true
+shader = ExtResource("2_cqscl")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/flash_state = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydvvy"]
+atlas = ExtResource("2_yd0ky")
+region = Rect2(0, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_654wt"]
+atlas = ExtResource("2_yd0ky")
+region = Rect2(0, 31, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a8h1o"]
+atlas = ExtResource("2_yd0ky")
+region = Rect2(0, 62, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1p23j"]
+atlas = ExtResource("2_yd0ky")
+region = Rect2(0, 93, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h57jl"]
+atlas = ExtResource("2_yd0ky")
+region = Rect2(0, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tiou1"]
+atlas = ExtResource("2_yd0ky")
+region = Rect2(0, 31, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f4gg2"]
+atlas = ExtResource("2_yd0ky")
+region = Rect2(0, 62, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_80204"]
+atlas = ExtResource("2_yd0ky")
+region = Rect2(0, 93, 31, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b5e12"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ydvvy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_654wt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a8h1o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1p23j")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h57jl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tiou1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f4gg2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_80204")
+}],
+"loop": true,
+"name": &"run",
+"speed": 10.0
+}]
+
+[node name="Shondo" instance=ExtResource("1_u6g2f")]
+
+[node name="Stats" parent="StatController" index="0"]
+MaxHealth = 100000
+MoveSpeedMultiplier = 1.5
+Defense = 10000.0
+
+[node name="AnimatedSprite2D" parent="." index="7"]
+material = SubResource("ShaderMaterial_gq3gf")
+sprite_frames = SubResource("SpriteFrames_b5e12")
+autoplay = "run"
+
+[node name="Control" parent="." index="10"]
+visible = true
+
+[node name="VBoxContainer" parent="Control" index="0"]
+Enabled = true

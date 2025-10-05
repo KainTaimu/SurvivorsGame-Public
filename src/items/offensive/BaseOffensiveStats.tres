@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BaseOffensiveStats" load_steps=3 format=3 uid="uid://cn3hyj8e7ffse"]
+
+[ext_resource type="Resource" uid="uid://cwknl3ua55mcq" path="res://src/items/effects/EffectKnockback.tres" id="1_3hase"]
+[ext_resource type="Script" uid="uid://b07kwtd7x357r" path="res://src/items/offensive/BaseOffensiveStats.cs" id="1_rpsym"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_rpsym")
+Damage = 5
+CritDamageMultiplier = 1.2
+CritChanceProportion = 0.3
+ProjectileSpeed = 2700
+ProjectileScaleMultiplier = 1.0
+AttackSpeed = 0.5
+ProjectileEffects = Array[Object]([ExtResource("1_3hase")])

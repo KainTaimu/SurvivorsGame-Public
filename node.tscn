@@ -1,0 +1,173 @@
+[gd_scene load_steps=4 format=3 uid="uid://3jepo30m6gsa"]
+
+[ext_resource type="PackedScene" uid="uid://cagwsgk0jn4qw" path="res://src/entities/enemies/duck/duckEnemy.tscn" id="1_8mhbp"]
+[ext_resource type="Shader" uid="uid://fys511dc3cup" path="res://src/shaders/flash/flash.gdshader" id="2_ypuvl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oceho"]
+resource_local_to_scene = true
+shader = ExtResource("2_ypuvl")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/flash_state = 0.0
+
+[node name="Node" type="Node"]
+
+[node name="DuckEnemy" parent="." instance=ExtResource("1_8mhbp")]
+position = Vector2(3336, 1744)
+
+[node name="StateMachine" parent="DuckEnemy" index="3" node_paths=PackedStringArray("_initialState")]
+_initialState = NodePath("Idle")
+
+[node name="AnimatedSprite2D" parent="DuckEnemy" index="5"]
+material = SubResource("ShaderMaterial_oceho")
+
+[node name="DuckEnemy2" parent="." instance=ExtResource("1_8mhbp")]
+position = Vector2(2328, 1856)
+
+[node name="StateMachine" parent="DuckEnemy2" index="3" node_paths=PackedStringArray("_initialState")]
+_initialState = NodePath("Idle")
+
+[node name="AnimatedSprite2D" parent="DuckEnemy2" index="5"]
+material = SubResource("ShaderMaterial_oceho")
+
+[node name="DuckEnemy3" parent="." instance=ExtResource("1_8mhbp")]
+position = Vector2(3128, 1336)
+
+[node name="StateMachine" parent="DuckEnemy3" index="3" node_paths=PackedStringArray("_initialState")]
+_initialState = NodePath("Idle")
+
+[node name="AnimatedSprite2D" parent="DuckEnemy3" index="5"]
+material = SubResource("ShaderMaterial_oceho")
+
+[node name="DuckEnemy4" parent="." instance=ExtResource("1_8mhbp")]
+position = Vector2(3112, 1112)
+
+[node name="StateMachine" parent="DuckEnemy4" index="3" node_paths=PackedStringArray("_initialState")]
+_initialState = NodePath("Idle")
+
+[node name="AnimatedSprite2D" parent="DuckEnemy4" index="5"]
+material = SubResource("ShaderMaterial_oceho")
+
+[node name="DuckEnemy5" parent="." instance=ExtResource("1_8mhbp")]
+position = Vector2(3400, 1344)
+
+[node name="StateMachine" parent="DuckEnemy5" index="3" node_paths=PackedStringArray("_initialState")]
+_initialState = NodePath("Idle")
+
+[node name="AnimatedSprite2D" parent="DuckEnemy5" index="5"]
+material = SubResource("ShaderMaterial_oceho")
+
+[node name="DuckEnemy6" parent="." instance=ExtResource("1_8mhbp")]
+position = Vector2(2984, 496)
+
+[node name="StateMachine" parent="DuckEnemy6" index="3" node_paths=PackedStringArray("_initialState")]
+_initialState = NodePath("Idle")
+
+[node name="AnimatedSprite2D" parent="DuckEnemy6" index="5"]
+material = SubResource("ShaderMaterial_oceho")
+
+[node name="DuckEnemy7" parent="." instance=ExtResource("1_8mhbp")]
+position = Vector2(1192, 1328)
+
+[node name="StateMachine" parent="DuckEnemy7" index="3" node_paths=PackedStringArray("_initialState")]
+_initialState = NodePath("Idle")
+
+[node name="AnimatedSprite2D" parent="DuckEnemy7" index="5"]
+material = SubResource("ShaderMaterial_oceho")
+
+[node name="DuckEnemy8" parent="." instance=ExtResource("1_8mhbp")]
+position = Vector2(128, 1592)
+
+[node name="StateMachine" parent="DuckEnemy8" index="3" node_paths=PackedStringArray("_initialState")]
+_initialState = NodePath("Idle")
+
+[node name="AnimatedSprite2D" parent="DuckEnemy8" index="5"]
+material = SubResource("ShaderMaterial_oceho")
+
+[node name="DuckEnemy9" parent="." instance=ExtResource("1_8mhbp")]
+position = Vector2(584, 1600)
+
+[node name="StateMachine" parent="DuckEnemy9" index="3" node_paths=PackedStringArray("_initialState")]
+_initialState = NodePath("Idle")
+
+[node name="AnimatedSprite2D" parent="DuckEnemy9" index="5"]
+material = SubResource("ShaderMaterial_oceho")
+
+[node name="DuckEnemy10" parent="." instance=ExtResource("1_8mhbp")]
+position = Vector2(768, 1552)
+
+[node name="StateMachine" parent="DuckEnemy10" index="3" node_paths=PackedStringArray("_initialState")]
+_initialState = NodePath("Idle")
+
+[node name="AnimatedSprite2D" parent="DuckEnemy10" index="5"]
+material = SubResource("ShaderMaterial_oceho")
+
+[node name="DuckEnemy11" parent="." instance=ExtResource("1_8mhbp")]
+position = Vector2(1672, 600)
+
+[node name="StateMachine" parent="DuckEnemy11" index="3" node_paths=PackedStringArray("_initialState")]
+_initialState = NodePath("Idle")
+
+[node name="AnimatedSprite2D" parent="DuckEnemy11" index="5"]
+material = SubResource("ShaderMaterial_oceho")
+
+[node name="DuckEnemy12" parent="." instance=ExtResource("1_8mhbp")]
+position = Vector2(1672, 760)
+
+[node name="StateMachine" parent="DuckEnemy12" index="3" node_paths=PackedStringArray("_initialState")]
+_initialState = NodePath("Idle")
+
+[node name="AnimatedSprite2D" parent="DuckEnemy12" index="5"]
+material = SubResource("ShaderMaterial_oceho")
+
+[node name="DuckEnemy13" parent="." instance=ExtResource("1_8mhbp")]
+position = Vector2(1400, 904)
+
+[node name="StateMachine" parent="DuckEnemy13" index="3" node_paths=PackedStringArray("_initialState")]
+_initialState = NodePath("Idle")
+
+[node name="AnimatedSprite2D" parent="DuckEnemy13" index="5"]
+material = SubResource("ShaderMaterial_oceho")
+
+[node name="DuckEnemy14" parent="." instance=ExtResource("1_8mhbp")]
+position = Vector2(312, 864)
+
+[node name="StateMachine" parent="DuckEnemy14" index="3" node_paths=PackedStringArray("_initialState")]
+_initialState = NodePath("Idle")
+
+[node name="AnimatedSprite2D" parent="DuckEnemy14" index="5"]
+material = SubResource("ShaderMaterial_oceho")
+
+[node name="DuckEnemy15" parent="." instance=ExtResource("1_8mhbp")]
+position = Vector2(416, 184)
+
+[node name="StateMachine" parent="DuckEnemy15" index="3" node_paths=PackedStringArray("_initialState")]
+_initialState = NodePath("Idle")
+
+[node name="AnimatedSprite2D" parent="DuckEnemy15" index="5"]
+material = SubResource("ShaderMaterial_oceho")
+
+[node name="DuckEnemy16" parent="." instance=ExtResource("1_8mhbp")]
+position = Vector2(184, 456)
+
+[node name="StateMachine" parent="DuckEnemy16" index="3" node_paths=PackedStringArray("_initialState")]
+_initialState = NodePath("Idle")
+
+[node name="AnimatedSprite2D" parent="DuckEnemy16" index="5"]
+material = SubResource("ShaderMaterial_oceho")
+
+[editable path="DuckEnemy"]
+[editable path="DuckEnemy2"]
+[editable path="DuckEnemy3"]
+[editable path="DuckEnemy4"]
+[editable path="DuckEnemy5"]
+[editable path="DuckEnemy6"]
+[editable path="DuckEnemy7"]
+[editable path="DuckEnemy8"]
+[editable path="DuckEnemy9"]
+[editable path="DuckEnemy10"]
+[editable path="DuckEnemy11"]
+[editable path="DuckEnemy12"]
+[editable path="DuckEnemy13"]
+[editable path="DuckEnemy14"]
+[editable path="DuckEnemy15"]
+[editable path="DuckEnemy16"]

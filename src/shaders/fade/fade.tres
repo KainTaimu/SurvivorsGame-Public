@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://c4jwysmexaiqv"]
+
+[ext_resource type="Shader" uid="uid://cngm6auuaj2sc" path="res://src/shaders/fade/fade.gdshader" id="1_tkc1l"]
+
+[resource]
+shader = ExtResource("1_tkc1l")
+shader_parameter/amount = 0.0

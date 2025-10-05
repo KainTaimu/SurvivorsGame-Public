@@ -1,0 +1,76 @@
+[gd_scene load_steps=11 format=3 uid="uid://ixdcy7e2hu2p"]
+
+[ext_resource type="Script" uid="uid://5nh26sdbmfcg" path="res://src/ui/hud/crosshair/Crosshair.cs" id="1_h1s81"]
+[ext_resource type="Texture2D" uid="uid://cd8fdwtxjy24r" path="res://assets/sprites/hud/crosshair.png" id="2_is54h"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0todg"]
+atlas = ExtResource("2_is54h")
+region = Rect2(0, 0, 38, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pv7q5"]
+atlas = ExtResource("2_is54h")
+region = Rect2(0, 38, 38, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uvo0j"]
+atlas = ExtResource("2_is54h")
+region = Rect2(76, 38, 38, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ulwji"]
+atlas = ExtResource("2_is54h")
+region = Rect2(0, 76, 38, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_miplb"]
+atlas = ExtResource("2_is54h")
+region = Rect2(38, 76, 38, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_70mes"]
+atlas = ExtResource("2_is54h")
+region = Rect2(76, 76, 38, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uyw46"]
+atlas = ExtResource("2_is54h")
+region = Rect2(0, 114, 38, 38)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dsa0i"]
+animations = [{
+"frames": [{
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_0todg")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_pv7q5")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_uvo0j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ulwji")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_miplb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70mes")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uyw46")
+}],
+"loop": false,
+"name": &"default",
+"speed": 24.0
+}]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+process_thread_group = 2
+process_thread_group_order = 0
+process_thread_messages = 0
+
+[node name="Crosshair" type="Node2D" parent="." node_paths=PackedStringArray("_crosshairSprite")]
+script = ExtResource("1_h1s81")
+_crosshairSprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="Crosshair"]
+scale = Vector2(1.75, 1.75)
+sprite_frames = SubResource("SpriteFrames_dsa0i")
+frame = 6
+frame_progress = 1.0

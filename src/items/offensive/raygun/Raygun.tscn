@@ -1,0 +1,31 @@
+[gd_scene load_steps=9 format=3 uid="uid://c4qjuak0aya88"]
+
+[ext_resource type="PackedScene" uid="uid://dyia7od5wyo4h" path="res://src/items/offensive/pistol/Pistol.tscn" id="1_tx6tt"]
+[ext_resource type="Script" uid="uid://dnsptwyg1g5wx" path="res://src/items/offensive/raygun/Raygun.cs" id="2_7eocv"]
+[ext_resource type="Script" uid="uid://cu4mtsa3whygp" path="res://src/items/BaseItemProperties.cs" id="2_ujp12"]
+[ext_resource type="PackedScene" uid="uid://0hcorsnf4ihy" path="res://src/items/projectile/raygun/ProjectileRaygun.tscn" id="2_ytcdu"]
+[ext_resource type="Resource" uid="uid://cwknl3ua55mcq" path="res://src/items/effects/EffectKnockback.tres" id="3_ytcdu"]
+[ext_resource type="Script" uid="uid://b07kwtd7x357r" path="res://src/items/offensive/BaseOffensiveStats.cs" id="4_7eocv"]
+
+[sub_resource type="Resource" id="Resource_ytcdu"]
+resource_local_to_scene = true
+script = ExtResource("2_ujp12")
+Name = "Raygun"
+
+[sub_resource type="Resource" id="Resource_7eocv"]
+resource_local_to_scene = true
+script = ExtResource("4_7eocv")
+Damage = 5
+CritDamageMultiplier = 1.2
+CritChanceProportion = 0.25
+ProjectileSpeed = 1600
+ProjectileScaleMultiplier = 3.0
+AttackSpeed = 0.8
+ProjectileEffects = Array[Object]([ExtResource("3_ytcdu")])
+
+[node name="Raygun" instance=ExtResource("1_tx6tt")]
+script = ExtResource("2_7eocv")
+ProjectileScene = ExtResource("2_ytcdu")
+Properties = SubResource("Resource_ytcdu")
+Stats = SubResource("Resource_7eocv")
+Upgrades = Array[ExtResource("4_7eocv")]([])

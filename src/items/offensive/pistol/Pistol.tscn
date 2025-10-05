@@ -1,0 +1,44 @@
+[gd_scene load_steps=10 format=3 uid="uid://dyia7od5wyo4h"]
+
+[ext_resource type="PackedScene" uid="uid://bx3nlyg0nwpge" path="res://src/items/offensive/BaseOffensive.tscn" id="1_13aem"]
+[ext_resource type="Script" uid="uid://kyroygbo3ptq" path="res://src/items/offensive/pistol/Pistol.cs" id="2_ro51a"]
+[ext_resource type="PackedScene" uid="uid://ho57tibavdbb" path="res://src/items/projectile/bullet/ProjectileBullet.tscn" id="3_87j41"]
+[ext_resource type="Script" uid="uid://cu4mtsa3whygp" path="res://src/items/BaseItemProperties.cs" id="3_nsvm1"]
+[ext_resource type="Script" uid="uid://b07kwtd7x357r" path="res://src/items/offensive/BaseOffensiveStats.cs" id="5_gtrjm"]
+[ext_resource type="Resource" uid="uid://cwknl3ua55mcq" path="res://src/items/effects/EffectKnockback.tres" id="6_13aem"]
+
+[sub_resource type="Resource" id="Resource_engtw"]
+resource_local_to_scene = true
+script = ExtResource("3_nsvm1")
+Name = "Pistol"
+Description = "A basic-ass pistol"
+
+[sub_resource type="Resource" id="Resource_noe8w"]
+resource_local_to_scene = true
+script = ExtResource("5_gtrjm")
+Damage = 5
+CritDamageMultiplier = 1.2
+CritChanceProportion = 0.3
+ProjectileSpeed = 2700
+ProjectileScaleMultiplier = 1.0
+AttackSpeed = 0.5
+ProjectileEffects = Array[Object]([ExtResource("6_13aem")])
+
+[sub_resource type="Resource" id="Resource_doya2"]
+resource_local_to_scene = true
+script = ExtResource("5_gtrjm")
+Damage = 10
+CritDamageMultiplier = 1.2
+CritChanceProportion = 0.3
+ProjectileSpeed = 2700
+ProjectileScaleMultiplier = 1.0
+AttackSpeed = 0.3
+PierceLimit = 2
+ProjectileEffects = Array[Object]([ExtResource("6_13aem")])
+
+[node name="Pistol" instance=ExtResource("1_13aem")]
+script = ExtResource("2_ro51a")
+ProjectileScene = ExtResource("3_87j41")
+Properties = SubResource("Resource_engtw")
+Stats = SubResource("Resource_noe8w")
+Upgrades = Array[ExtResource("5_gtrjm")]([SubResource("Resource_doya2")])

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dfjw8pyeppb35"]
+
+[ext_resource type="Script" uid="uid://cooc4mjvurdqe" path="res://src/levels/systems/Wave.cs" id="1_feqey"]
+
+[node name="Wave 1" type="Node"]
+script = ExtResource("1_feqey")
+Duration = 30

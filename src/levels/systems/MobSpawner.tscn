@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbx06odb2wq8d"]
+
+[ext_resource type="Script" uid="uid://bag3j6cpjf7dj" path="res://src/levels/systems/MobSpawner.cs" id="1_x5nlq"]
+
+[node name="MobSpawner" type="Node" node_paths=PackedStringArray("_timer")]
+script = ExtResource("1_x5nlq")
+_timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="OnEnemySpawnTimerTimeout"]

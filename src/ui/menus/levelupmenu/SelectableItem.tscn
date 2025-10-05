@@ -1,0 +1,144 @@
+[gd_scene load_steps=12 format=3 uid="uid://dpm0txcw0jfxj"]
+
+[ext_resource type="Texture2D" uid="uid://c2q6dkq7ahiiu" path="res://assets/sprites/items/offensive/pistol.png" id="1_s6p4g"]
+[ext_resource type="Script" uid="uid://xlevbqqe6qub" path="res://src/ui/menus/levelupmenu/SelectableItem.cs" id="1_wk47c"]
+[ext_resource type="FontFile" uid="uid://ct7ds6p6sirb8" path="res://assets/fonts/Munro-2LYe.ttf" id="2_bysb2"]
+[ext_resource type="Script" uid="uid://d02kwab67pul5" path="res://src/ui/menus/levelupmenu/Scroll.cs" id="4_quj50"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1m4lu"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+
+[sub_resource type="Animation" id="Animation_mtrd1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HSplitContainer/Panel2/MarginContainer/VSplitContainer/ScrollContainer:ExposedRatio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_4rj8s"]
+resource_name = "scroll"
+length = 9.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HSplitContainer/Panel2/MarginContainer/VSplitContainer/ScrollContainer:ExposedRatio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(2, 9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gicmj"]
+_data = {
+&"RESET": SubResource("Animation_mtrd1"),
+&"scroll": SubResource("Animation_4rj8s")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cbguw"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_ydwsx"]
+font = ExtResource("2_bysb2")
+font_size = 28
+
+[sub_resource type="LabelSettings" id="LabelSettings_5f46k"]
+font = ExtResource("2_bysb2")
+font_size = 26
+
+[node name="SelectableItem" type="PanelContainer" node_paths=PackedStringArray("_nameLabel", "_descriptionLabel", "_hSplitContainer", "_rightPanel", "_scrollContainer", "_scrollAnimator")]
+self_modulate = Color(1, 1, 1, 0)
+offset_right = 1639.0
+offset_bottom = 150.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_1m4lu")
+script = ExtResource("1_wk47c")
+_nameLabel = NodePath("HSplitContainer/Panel2/MarginContainer/VSplitContainer/Title")
+_descriptionLabel = NodePath("HSplitContainer/Panel2/MarginContainer/VSplitContainer/ScrollContainer/Description")
+_hSplitContainer = NodePath("HSplitContainer")
+_rightPanel = NodePath("HSplitContainer/Panel2")
+_scrollContainer = NodePath("HSplitContainer/Panel2/MarginContainer/VSplitContainer/ScrollContainer")
+_scrollAnimator = NodePath("AnimationPlayer")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_gicmj")
+}
+autoplay = "scroll"
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+visible = false
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+dragger_visibility = 2
+
+[node name="Panel" type="PanelContainer" parent="HSplitContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cbguw")
+
+[node name="TextureRect" type="TextureRect" parent="HSplitContainer/Panel"]
+layout_mode = 2
+texture = ExtResource("1_s6p4g")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Panel2" type="PanelContainer" parent="HSplitContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_cbguw")
+
+[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/Panel2"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_right = 6
+
+[node name="VSplitContainer" type="VSplitContainer" parent="HSplitContainer/Panel2/MarginContainer"]
+layout_mode = 2
+dragger_visibility = 1
+
+[node name="Title" type="Label" parent="HSplitContainer/Panel2/MarginContainer/VSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "PLACEHOLDER TEXT! YOU SHOULD NOT BE SEEING THIS!"
+label_settings = SubResource("LabelSettings_ydwsx")
+justification_flags = 131
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/Panel2/MarginContainer/VSplitContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 0
+script = ExtResource("4_quj50")
+
+[node name="Description" type="Label" parent="HSplitContainer/Panel2/MarginContainer/VSplitContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac ipsum tortor. 
+Vestibulum semper malesuada egestas. Donec quis est ac eros dignissim ornare.
+Etiam eleifend "
+label_settings = SubResource("LabelSettings_5f46k")
+justification_flags = 131
+
+[connection signal="mouse_entered" from="." to="." method="Highlight" binds= [true]]
+[connection signal="mouse_exited" from="." to="." method="Highlight" binds= [false]]

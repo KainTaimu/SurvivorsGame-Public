@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://2ww3mvyg3pbr"]
+
+[ext_resource type="Script" uid="uid://bqvweug2g2mdu" path="res://src/levels/systems/WaveController.cs" id="1_u5yyn"]
+
+[node name="WaveController" type="Node"]
+script = ExtResource("1_u5yyn")
+
+[node name="SpawnDurationTimer" type="Timer" parent="."]
+
+[node name="SpawnSpeedTimer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="SpawnDurationTimer" to="." method="NextWave"]
+[connection signal="timeout" from="SpawnSpeedTimer" to="." method="OnSpawnSpeedTimerTimeout"]

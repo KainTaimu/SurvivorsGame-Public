@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://bjjubrliolq4f"]
+
+[sub_resource type="Curve" id="Curve_bw235"]
+_data = [Vector2(0.483566, 0.626349), 0.0, 0.0, 0, 0, Vector2(0.652013, 0.778086), 0.0, 0.0, 0, 0, Vector2(0.972473, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_hn6io"]
+curve = SubResource("Curve_bw235")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bxwqt"]
+lifetime_randomness = 0.51
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(6.115, 1, 1)
+emission_shape = 2
+emission_sphere_radius = 1.0
+inherit_velocity_ratio = 0.125
+gravity = Vector3(0, -42, 0)
+scale_min = 11.49
+scale_max = 21.98
+scale_curve = SubResource("CurveTexture_hn6io")
+scale_over_velocity_max = 321.68
+turbulence_enabled = true
+
+[node name="GPUParticles2D" type="GPUParticles2D"]
+z_index = -4095
+z_as_relative = false
+position = Vector2(0, 16)
+amount = 16
+fixed_fps = 0
+interpolate = false
+process_material = SubResource("ParticleProcessMaterial_bxwqt")

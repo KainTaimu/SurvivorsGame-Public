@@ -1,0 +1,227 @@
+[gd_scene load_steps=28 format=3 uid="uid://b2v4d4wmpp4jn"]
+
+[ext_resource type="Script" uid="uid://bo6h0e10khwwr" path="res://src/entities/enemies/BaseEnemy.cs" id="1_ge3nw"]
+[ext_resource type="Script" uid="uid://cllpyp5sjnxqa" path="res://src/entities/enemies/controllers/BotStatController.cs" id="2_koof1"]
+[ext_resource type="PackedScene" uid="uid://cdvtgev1dig3f" path="res://src/vfx/DamageIndicator/DamageIndicator.tscn" id="3_2eegf"]
+[ext_resource type="Script" uid="uid://dj8h5xow7s6h" path="res://src/entities/enemies/controllers/BotHitController.cs" id="3_lykdu"]
+[ext_resource type="Script" uid="uid://3aujhykfidp8" path="res://src/entities/enemies/controllers/BotEffectsController.cs" id="4_foj3t"]
+[ext_resource type="Script" uid="uid://cbnyfm1hgoueq" path="res://src/entities/enemies/controllers/statemachine/StateChasing.cs" id="5_v4icc"]
+[ext_resource type="Script" uid="uid://bswljyscpdxky" path="res://src/entities/enemies/controllers/statemachine/StateIdle.cs" id="6_7plns"]
+[ext_resource type="Script" uid="uid://bnlbw1sq4effv" path="res://src/entities/enemies/controllers/statemachine/StateEnemyPlayerDied.cs" id="7_j57tg"]
+[ext_resource type="Script" uid="uid://dfof7gofllkgj" path="res://src/entities/enemies/controllers/statemachine/StateDying.cs" id="8_tf3qm"]
+[ext_resource type="Script" uid="uid://cc3yvgumeru3t" path="res://src/entities/enemies/controllers/statemachine/StateMachine.cs" id="9_u35oa"]
+[ext_resource type="Shader" uid="uid://cngm6auuaj2sc" path="res://src/shaders/fade/fade.gdshader" id="11_37qpx"]
+[ext_resource type="Material" uid="uid://dkop3gaeg5ura" path="res://src/shaders/flash/flash.tres" id="11_ubr2y"]
+[ext_resource type="Script" uid="uid://davun2fep5hc5" path="res://src/entities/enemies/controllers/BotHitbox.cs" id="13_o4san"]
+[ext_resource type="Texture2D" uid="uid://bbi1t6asp1w4e" path="res://assets/sprites/characters/vanoss/spr_vanoss_run_strip4.png" id="13_pqxnv"]
+[ext_resource type="Script" uid="uid://u4nik0r4s3f3" path="res://src/entities/enemies/controllers/BotDamageBox.cs" id="14_eb8o8"]
+[ext_resource type="Script" uid="uid://dmrcuetn5521a" path="res://src/entities/enemies/EnemyDebug.cs" id="14_kvj1o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hc1v1"]
+atlas = ExtResource("13_pqxnv")
+region = Rect2(0, 0, 60, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ugd5"]
+atlas = ExtResource("13_pqxnv")
+region = Rect2(60, 0, 60, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sktf0"]
+atlas = ExtResource("13_pqxnv")
+region = Rect2(0, 60, 60, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_51hkf"]
+atlas = ExtResource("13_pqxnv")
+region = Rect2(60, 60, 60, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nmmv5"]
+atlas = ExtResource("13_pqxnv")
+region = Rect2(0, 120, 60, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_up5bp"]
+atlas = ExtResource("13_pqxnv")
+region = Rect2(60, 120, 60, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vckpm"]
+atlas = ExtResource("13_pqxnv")
+region = Rect2(0, 180, 60, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jo1mu"]
+atlas = ExtResource("13_pqxnv")
+region = Rect2(60, 180, 60, 60)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kxty0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hc1v1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ugd5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sktf0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_51hkf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nmmv5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_up5bp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vckpm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jo1mu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_umfy2"]
+radius = 17.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6u8f8"]
+radius = 11.0
+
+[node name="BaseEnemy" type="Node2D" node_paths=PackedStringArray("Sprite", "BotStatController", "BotHitController", "VisibleOnScreenNotifier", "StateMachine", "BotHitbox", "BotDamageBox")]
+script = ExtResource("1_ge3nw")
+Sprite = NodePath("AnimatedSprite2D")
+BotStatController = NodePath("BotStatController")
+BotHitController = NodePath("BotHitController")
+VisibleOnScreenNotifier = NodePath("VisibleOnScreenNotifier2D")
+StateMachine = NodePath("StateMachine")
+BotHitbox = NodePath("Hitbox")
+BotDamageBox = NodePath("PlayerDamageBox")
+
+[node name="BotStatController" type="Node" parent="." node_paths=PackedStringArray("_owner")]
+script = ExtResource("2_koof1")
+MaxHealth = 10
+_owner = NodePath("..")
+_damageIndicator = ExtResource("3_2eegf")
+
+[node name="BotHitController" type="Node" parent="." node_paths=PackedStringArray("_owner", "_animatedSprite", "_botStatController", "_stateMachine")]
+script = ExtResource("3_lykdu")
+_owner = NodePath("..")
+_animatedSprite = NodePath("../AnimatedSprite2D")
+_botStatController = NodePath("../BotStatController")
+_stateMachine = NodePath("../StateMachine")
+
+[node name="BotEffectsController" type="Node" parent="." node_paths=PackedStringArray("_owner")]
+script = ExtResource("4_foj3t")
+_owner = NodePath("..")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("EnemyOwner", "_initialState")]
+script = ExtResource("9_u35oa")
+EnemyOwner = NodePath("..")
+_initialState = NodePath("Chasing")
+
+[node name="Chasing" type="Node" parent="StateMachine" node_paths=PackedStringArray("_botStatController")]
+script = ExtResource("5_v4icc")
+_botStatController = NodePath("../../BotStatController")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("_owner")]
+script = ExtResource("6_7plns")
+_owner = NodePath("../..")
+
+[node name="Dying" type="Node" parent="StateMachine" node_paths=PackedStringArray("_botStatController", "_animatedSprite")]
+script = ExtResource("8_tf3qm")
+_botStatController = NodePath("../../BotStatController")
+_animatedSprite = NodePath("../../AnimatedSprite2D")
+
+[node name="PlayerDied" type="Node" parent="StateMachine" node_paths=PackedStringArray("_visibleOnScreenNotifier")]
+script = ExtResource("7_j57tg")
+_visibleOnScreenNotifier = NodePath("../../VisibleOnScreenNotifier2D")
+_fadeShader = ExtResource("11_37qpx")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
+material = ExtResource("11_ubr2y")
+sprite_frames = SubResource("SpriteFrames_kxty0")
+autoplay = "default"
+
+[node name="Hitbox" type="Area2D" parent="." node_paths=PackedStringArray("EnemyOwner")]
+collision_layer = 513
+collision_mask = 4
+script = ExtResource("13_o4san")
+EnemyOwner = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_umfy2")
+debug_color = Color(0.32549, 0.490196, 1, 0.584314)
+
+[node name="PlayerDamageBox" type="Area2D" parent="." node_paths=PackedStringArray("EnemyOwner")]
+collision_layer = 1025
+collision_mask = 2
+script = ExtResource("14_eb8o8")
+EnemyOwner = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDamageBox"]
+shape = SubResource("CircleShape2D_6u8f8")
+debug_color = Color(0.960784, 0, 0, 0.419608)
+
+[node name="Control" type="Control" parent="."]
+process_mode = 4
+visible = false
+z_index = 1
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -56.0
+offset_right = 20.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="EnemyDebug" type="VBoxContainer" parent="Control" node_paths=PackedStringArray("_botStatController", "_effects", "_owner", "_state", "_healthLabel", "_speedLabel", "_stateLabel", "_affectByLabel")]
+layout_mode = 0
+offset_top = -8.0
+offset_right = 40.0
+offset_bottom = 42.0
+theme_override_constants/separation = -5
+alignment = 2
+script = ExtResource("14_kvj1o")
+_botStatController = NodePath("../../BotStatController")
+_effects = NodePath("../../BotEffectsController")
+_owner = NodePath("../..")
+_state = NodePath("../../StateMachine")
+_healthLabel = NodePath("Health")
+_speedLabel = NodePath("Speed")
+_stateLabel = NodePath("State")
+_affectByLabel = NodePath("AffectBy")
+
+[node name="Health" type="Label" parent="Control/EnemyDebug"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "t1"
+
+[node name="Speed" type="Label" parent="Control/EnemyDebug"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "t2"
+
+[node name="State" type="Label" parent="Control/EnemyDebug"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "t3"
+
+[node name="AffectBy" type="Label" parent="Control/EnemyDebug"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "t4"
+
+[connection signal="EnemyHit" from="." to="BotHitController" method="OnEnemyHit"]
+[connection signal="EnemyHit" from="." to="BotEffectsController" method="AddEffect"]

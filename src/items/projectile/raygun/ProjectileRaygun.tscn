@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://0hcorsnf4ihy"]
+
+[ext_resource type="PackedScene" uid="uid://xtlr62oous5b" path="res://src/items/projectile/BaseProjectile.tscn" id="1_vxovs"]
+[ext_resource type="Script" uid="uid://bna306lcgj53e" path="res://src/items/projectile/raygun/ProjectileRaygun.cs" id="2_vaqby"]
+[ext_resource type="Texture2D" uid="uid://chfjhw070ks16" path="res://assets/sprites/projectiles/raygun.png" id="3_ststw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jrlwl"]
+radius = 50.0
+
+[node name="ProjectileRaygun" node_paths=PackedStringArray("_areaOfEffectArea") instance=ExtResource("1_vxovs")]
+scale = Vector2(3, 3)
+script = ExtResource("2_vaqby")
+_areaOfEffectArea = NodePath("AreaOfEffect")
+
+[node name="AreaOfEffect" type="Area2D" parent="." index="0"]
+collision_layer = 4
+collision_mask = 512
+
+[node name="AreaOfEffectShape" type="CollisionShape2D" parent="AreaOfEffect" index="0"]
+shape = SubResource("CircleShape2D_jrlwl")
+debug_color = Color(0.858824, 0, 0, 0)
+
+[node name="Sprite2D" parent="." index="2"]
+texture = ExtResource("3_ststw")

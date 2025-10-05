@@ -1,0 +1,114 @@
+[gd_scene load_steps=5 format=3 uid="uid://qp5q57b5v7mj"]
+
+[ext_resource type="Script" uid="uid://bkdiaukod1hf5" path="res://src/ui/menus/pausemenu/PauseMenu.cs" id="1_u32y0"]
+[ext_resource type="Material" uid="uid://ck7ba1hroowet" path="res://src/shaders/blur/blur.tres" id="2_gb17v"]
+[ext_resource type="Script" uid="uid://cuwt844so5rug" path="res://src/ui/menus/levelupmenu/ItemDisplay.cs" id="3_8ax46"]
+[ext_resource type="PackedScene" uid="uid://b5uq6thwjaf14" path="res://src/ui/menus/levelupmenu/ItemContainer.tscn" id="4_a25io"]
+
+[node name="PauseMenu" type="CanvasLayer" node_paths=PackedStringArray("_playerStats")]
+process_mode = 3
+process_thread_group = 2
+process_thread_group_order = 0
+process_thread_messages = 0
+visible = false
+script = ExtResource("1_u32y0")
+_playerStats = NodePath("ColorRect2/PlayerStats")
+
+[node name="Blur" type="ColorRect" parent="."]
+material = ExtResource("2_gb17v")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+metadata/_edit_lock_ = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -384.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0.345098, 0.345098, 0.345098, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -50.5
+offset_right = 48.0
+offset_bottom = 50.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Resume" type="Button" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Resume"
+
+[node name="Settings" type="Button" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Settings"
+
+[node name="MainMenu" type="Button" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Main menu"
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 384.0
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0.345098, 0.345098, 0.345098, 1)
+
+[node name="PlayerStats" type="Label" parent="ColorRect2"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -11.5
+offset_right = 12.0
+offset_bottom = 11.5
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 0
+text = "ff"
+vertical_alignment = 2
+
+[node name="Control" type="Control" parent="." node_paths=PackedStringArray("_boxContainer")]
+layout_mode = 3
+anchor_left = 0.206
+anchor_right = 0.8
+anchor_bottom = 0.089
+offset_left = -7.68002
+offset_bottom = -0.0800018
+grow_horizontal = 2
+script = ExtResource("3_8ax46")
+_itemContainerScene = ExtResource("4_a25io")
+_boxContainer = NodePath("ScrollContainer/HBoxContainer")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control"]
+layout_mode = 0
+offset_right = 768.0
+offset_bottom = 64.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/ScrollContainer"]
+layout_mode = 2
+
+[connection signal="pressed" from="ColorRect/VBoxContainer/Resume" to="." method="Unpause"]
+[connection signal="pressed" from="ColorRect/VBoxContainer/Settings" to="." method="ShowSettings"]
+[connection signal="pressed" from="ColorRect/VBoxContainer/MainMenu" to="." method="ShowMainMenu"]

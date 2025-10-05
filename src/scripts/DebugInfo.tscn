@@ -1,0 +1,61 @@
+[gd_scene load_steps=2 format=3 uid="uid://cuxung12sqrao"]
+
+[ext_resource type="Script" uid="uid://dgny2ixhjj7pp" path="res://src/scripts/DebugInfo.cs" id="1_bl8li"]
+
+[node name="DebugInfo" type="CanvasLayer" node_paths=PackedStringArray("_enemyLabel", "_fpsLabel", "_healthLabel", "_levelLabel", "_xpLabel", "_screenLabel", "_timeElapsed", "_timer")]
+script = ExtResource("1_bl8li")
+_enemyLabel = NodePath("DebugInfo/EnemyCounter")
+_fpsLabel = NodePath("DebugInfo/FPScounter")
+_healthLabel = NodePath("DebugInfo/PlayerHealth")
+_levelLabel = NodePath("DebugInfo/Level")
+_xpLabel = NodePath("DebugInfo/Xp")
+_screenLabel = NodePath("DebugInfo/Screen")
+_timeElapsed = NodePath("DebugInfo/TimeElapsed")
+_timer = NodePath("Timer")
+_updateInterval = 0.1
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="DebugInfo" type="BoxContainer" parent="."]
+offset_right = 74.0
+offset_bottom = 77.0
+scale = Vector2(1.1, 1.1)
+vertical = true
+
+[node name="FPScounter" type="Label" parent="DebugInfo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "FPS:"
+
+[node name="EnemyCounter" type="Label" parent="DebugInfo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Enemies: "
+
+[node name="PlayerHealth" type="Label" parent="DebugInfo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Health: "
+
+[node name="Xp" type="Label" parent="DebugInfo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Xp: "
+
+[node name="Level" type="Label" parent="DebugInfo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Level: "
+
+[node name="Screen" type="Label" parent="DebugInfo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Screen: "
+
+[node name="TimeElapsed" type="Label" parent="DebugInfo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Time Elapsed:
+"
+
+[connection signal="timeout" from="Timer" to="." method="OnTimerTimeout"]

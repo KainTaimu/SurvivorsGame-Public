@@ -1,0 +1,45 @@
+[gd_scene load_steps=8 format=3 uid="uid://deye8g0emljnt"]
+
+[ext_resource type="PackedScene" uid="uid://b2v4d4wmpp4jn" path="res://src/entities/enemies/BaseEnemy.tscn" id="1_up3nx"]
+[ext_resource type="Shader" uid="uid://fys511dc3cup" path="res://src/shaders/flash/flash.gdshader" id="2_mdj6a"]
+[ext_resource type="Texture2D" uid="uid://dcqkor2kty8mu" path="res://assets/sprites/characters/shondo/YOU.png" id="2_npw2c"]
+[ext_resource type="PackedScene" uid="uid://bjjubrliolq4f" path="res://src/vfx/RunningEffect.tscn" id="4_0d4d3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_swdf2"]
+resource_local_to_scene = true
+shader = ExtResource("2_mdj6a")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/flash_state = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_030ch"]
+atlas = ExtResource("2_npw2c")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2mtt1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_030ch")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_030ch")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="YOU" instance=ExtResource("1_up3nx")]
+
+[node name="BotStatController" parent="." index="0"]
+MaxMoveSpeed = 200.0
+
+[node name="AnimatedSprite2D" parent="." index="5"]
+material = SubResource("ShaderMaterial_swdf2")
+sprite_frames = SubResource("SpriteFrames_2mtt1")
+
+[node name="GPUParticles2D" parent="." index="8" instance=ExtResource("4_0d4d3")]
+process_mode = 1
+editor_description = "https://github.com/godotengine/godot/issues/65390"
+emitting = false
+amount_ratio = 0.5

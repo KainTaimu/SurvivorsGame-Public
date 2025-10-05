@@ -1,0 +1,235 @@
+[gd_scene load_steps=28 format=3 uid="uid://bgbdw30orurvd"]
+
+[ext_resource type="Script" uid="uid://8tqwxqlauel0" path="res://src/entities/characters/Player.cs" id="1_5130w"]
+[ext_resource type="Script" uid="uid://cqt5ffon2vxwa" path="res://src/entities/characters/controllers/PlayerMovementController.cs" id="2_nhosi"]
+[ext_resource type="Texture2D" uid="uid://5fc5vqrdgg2j" path="res://assets/sprites/characters/vanoss/spr_vanoss_idle_strip4.png" id="2_qwikt"]
+[ext_resource type="Script" uid="uid://c2a5lp83ckded" path="res://src/entities/characters/controllers/PlayerStatController.cs" id="2_rqnyw"]
+[ext_resource type="Script" uid="uid://cxaaktt5xfh8w" path="res://src/entities/characters/controllers/PlayerCameraController.cs" id="3_0f3mj"]
+[ext_resource type="PackedScene" uid="uid://dk1s3j7degywt" path="res://src/vfx/SmallChevronEffect.tscn" id="3_xochs"]
+[ext_resource type="Script" uid="uid://byhgfx2bh50cl" path="res://src/entities/characters/controllers/PlayerStats.cs" id="4_eqr8m"]
+[ext_resource type="Texture2D" uid="uid://cnv11wjprengg" path="res://assets/sprites/characters/vanoss/spr_vanoss_run_strip4_right.png" id="4_sj2qt"]
+[ext_resource type="Script" uid="uid://cxxuvi8ifoqiw" path="res://src/entities/characters/controllers/PlayerOffensiveController.cs" id="5_dllm8"]
+[ext_resource type="Script" uid="uid://cqrf6ubl25eqs" path="res://src/entities/characters/controllers/PlayerPassiveController.cs" id="6_tf28d"]
+[ext_resource type="Script" uid="uid://dqy77ve5wgeu8" path="res://src/entities/characters/controllers/PlayerHitController.cs" id="7_2gfhe"]
+[ext_resource type="Script" uid="uid://cgdpsrbc6oxst" path="res://src/entities/characters/DebugPlayer.cs" id="8_t4718"]
+[ext_resource type="Script" uid="uid://ceyskjtepyrnh" path="res://src/entities/characters/controllers/PlayerXpController.cs" id="8_tdngp"]
+[ext_resource type="Material" uid="uid://dkop3gaeg5ura" path="res://src/shaders/flash/flash.tres" id="9_35j7p"]
+[ext_resource type="PackedScene" uid="uid://bcrvtj6tux85o" path="res://src/ui/menus/levelupmenu/LevelUpMenu.tscn" id="9_a74d7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d3dny"]
+radius = 192.167
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oj1jt"]
+radius = 24.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fgmdo"]
+atlas = ExtResource("2_qwikt")
+region = Rect2(0, 0, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4d0x2"]
+atlas = ExtResource("2_qwikt")
+region = Rect2(30, 0, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n61ph"]
+atlas = ExtResource("2_qwikt")
+region = Rect2(60, 0, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gpl3q"]
+atlas = ExtResource("2_qwikt")
+region = Rect2(90, 0, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a6063"]
+atlas = ExtResource("4_sj2qt")
+region = Rect2(0, 0, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_34di1"]
+atlas = ExtResource("4_sj2qt")
+region = Rect2(30, 0, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cbb6n"]
+atlas = ExtResource("4_sj2qt")
+region = Rect2(60, 0, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0xdcc"]
+atlas = ExtResource("4_sj2qt")
+region = Rect2(90, 0, 30, 30)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ayino"]
+resource_name = "Vanoss"
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fgmdo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4d0x2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n61ph")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gpl3q")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a6063")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_34di1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cbb6n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0xdcc")
+}],
+"loop": true,
+"name": &"run",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3abiu"]
+radius = 8.0
+
+[node name="Player" type="Area2D" node_paths=PackedStringArray("PlayerMovementController", "StatController", "OffensiveController", "PassiveController", "XpController", "Sprite")]
+z_index = 4096
+z_as_relative = false
+scale = Vector2(2, 2)
+collision_layer = 3
+collision_mask = 1024
+script = ExtResource("1_5130w")
+PlayerMovementController = NodePath("PlayerMovementController")
+StatController = NodePath("StatController")
+OffensiveController = NodePath("OffensiveController")
+PassiveController = NodePath("PassiveController")
+XpController = NodePath("XpController")
+Sprite = NodePath("AnimatedSprite2D")
+
+[node name="PlayerMovementController" type="Node" parent="." node_paths=PackedStringArray("_owner")]
+script = ExtResource("2_nhosi")
+_owner = NodePath("..")
+
+[node name="PlayerCameraController" type="Node" parent="." node_paths=PackedStringArray("Camera")]
+script = ExtResource("3_0f3mj")
+Camera = NodePath("../Camera2D")
+
+[node name="StatController" type="Node" parent="." node_paths=PackedStringArray("PlayerStats", "_owner")]
+script = ExtResource("2_rqnyw")
+PlayerStats = NodePath("Stats")
+_deathEffect = ExtResource("3_xochs")
+_owner = NodePath("..")
+
+[node name="Stats" type="Node" parent="StatController"]
+script = ExtResource("4_eqr8m")
+MaxHealth = 30
+MoveSpeed = 325.0
+PickupRange = 125.0
+InvincibilityTime = 1.0
+HealthMultiplier = 1.0
+MoveSpeedMultiplier = 1.0
+IncomingDamageMultiplier = 1.0
+OutgoingDamageMultiplier = 1.0
+CriticalChanceMultiplier = 1.0
+CriticalDamageMultiplier = 1.0
+AttackSpeedMultiplier = 1.0
+ProjectileMultiplier = 1.0
+XpMultiplier = 1.0
+
+[node name="RegenTimer" type="Timer" parent="StatController"]
+autostart = true
+
+[node name="OffensiveController" type="Node" parent="."]
+script = ExtResource("5_dllm8")
+
+[node name="PassiveController" type="Node" parent="."]
+script = ExtResource("6_tf28d")
+
+[node name="HitController" type="Node" parent="." node_paths=PackedStringArray("_owner")]
+script = ExtResource("7_2gfhe")
+_deathEffect = ExtResource("3_xochs")
+_owner = NodePath("..")
+
+[node name="XpController" type="Area2D" parent="." node_paths=PackedStringArray("_owner", "_attractionShape2D", "_collectionShape2D")]
+collision_layer = 2
+collision_mask = 8
+monitorable = false
+script = ExtResource("8_tdngp")
+_owner = NodePath("..")
+_attractionShape2D = NodePath("AttractionArea")
+_collectionShape2D = NodePath("ItemCollectionArea")
+_levelUpMenuScene = ExtResource("9_a74d7")
+
+[node name="AttractionArea" type="CollisionShape2D" parent="XpController"]
+scale = Vector2(0.5, 0.5)
+shape = SubResource("CircleShape2D_d3dny")
+debug_color = Color(0.529412, 0.717647, 0, 0)
+metadata/_edit_lock_ = true
+
+[node name="ItemCollectionArea" type="CollisionShape2D" parent="XpController"]
+shape = SubResource("CircleShape2D_oj1jt")
+debug_color = Color(0, 0.544, 0.947, 0)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = ExtResource("9_35j7p")
+sprite_frames = SubResource("SpriteFrames_ayino")
+animation = &"run"
+
+[node name="HitArea" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_3abiu")
+debug_color = Color(1, 0.016, 0, 0.318)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Control" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = -20.0
+offset_top = -56.0
+offset_right = 20.0
+offset_bottom = -16.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" node_paths=PackedStringArray("_player", "PlayerOffensiveController", "PlayerPassiveController")]
+layout_mode = 0
+offset_top = -8.0
+offset_right = 40.0
+offset_bottom = 42.0
+theme_override_constants/separation = -5
+alignment = 2
+script = ExtResource("8_t4718")
+_player = NodePath("../..")
+PlayerOffensiveController = NodePath("../../OffensiveController")
+PlayerPassiveController = NodePath("../../PassiveController")
+
+[node name="Label" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "t1"
+
+[node name="Label2" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "t2"
+
+[node name="Label3" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "t3"
+
+[node name="Label4" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+text = "t4"
+
+[connection signal="PlayerDamaged" from="." to="HitController" method="OnDamage"]
+[connection signal="area_entered" from="." to="StatController" method="OnAreaEntered"]
+[connection signal="ItemAdded" from="StatController" to="StatController" method="ApplyItemStats"]
+[connection signal="timeout" from="StatController/RegenTimer" to="StatController" method="RegenerateHealth"]
