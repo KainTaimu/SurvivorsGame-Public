@@ -1,4 +1,4 @@
-<Project Sdk="Godot.NET.Sdk/4.5.0">
+<Project Sdk="Godot.NET.Sdk/4.5.1">
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net9.0</TargetFramework>
@@ -6,11 +6,11 @@
     </PropertyGroup>
     <Target Name="SetSourceRevisionId" BeforeTargets="InitializeSourceControlInformation">
         <Exec Command="git describe --long --always --dirty --exclude=* --abbrev=8" ConsoleToMsBuild="true" IgnoreExitCode="False">
-            <Output PropertyName="SourceRevisionId" TaskParameter="ConsoleOutput"/>
+            <Output PropertyName="SourceRevisionId" TaskParameter="ConsoleOutput" />
         </Exec>
-        <Message Text="$(SourceRevisionId)"/>
+        <Message Text="$(SourceRevisionId)" />
     </Target>
     <ItemGroup>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
 </Project>
