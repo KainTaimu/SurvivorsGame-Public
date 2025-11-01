@@ -84,23 +84,25 @@ public partial class GridCollisionSolver : Node
         var gridX = _grid.Dimensions.X;
         var gridY = _grid.Dimensions.Y;
         for (var x = 1; x < gridX; x++)
-        for (var y = 1; y < gridY; y++)
         {
-            var firstCell = _grid.GetCell(x, y);
-            if (firstCell.Objects.Count < 2)
+            for (var y = 1; y < gridY; y++)
             {
-                continue;
-            }
+                var firstCell = _grid.GetCell(x, y);
+                if (firstCell.Objects.Count < 2)
+                {
+                    continue;
+                }
 
-            CheckCellCollisions(firstCell); // Current cell
-            CheckCellCollisions(_grid.GetCell(x + 1, y)); // E
-            CheckCellCollisions(_grid.GetCell(x + 1, y + 1)); // SE
-            CheckCellCollisions(_grid.GetCell(x, y + 1)); // S
-            CheckCellCollisions(_grid.GetCell(x - 1, y + 1)); // SW
-            CheckCellCollisions(_grid.GetCell(x - 1, y)); // W
-            CheckCellCollisions(_grid.GetCell(x - 1, y - 1)); // NW
-            CheckCellCollisions(_grid.GetCell(x, y - 1)); // N
-            CheckCellCollisions(_grid.GetCell(x + 1, y - 1)); // NE
+                CheckCellCollisions(firstCell); // Current cell
+                CheckCellCollisions(_grid.GetCell(x + 1, y)); // E
+                CheckCellCollisions(_grid.GetCell(x + 1, y + 1)); // SE
+                CheckCellCollisions(_grid.GetCell(x, y + 1)); // S
+                CheckCellCollisions(_grid.GetCell(x - 1, y + 1)); // SW
+                CheckCellCollisions(_grid.GetCell(x - 1, y)); // W
+                CheckCellCollisions(_grid.GetCell(x - 1, y - 1)); // NW
+                CheckCellCollisions(_grid.GetCell(x, y - 1)); // N
+                CheckCellCollisions(_grid.GetCell(x + 1, y - 1)); // NE
+            }
         }
     }
 
@@ -112,9 +114,11 @@ public partial class GridCollisionSolver : Node
         }
 
         foreach (var cellObject1 in cell.Objects)
-        foreach (var cellObject2 in cell.Objects)
         {
-            SolveCollision(cellObject1, cellObject2);
+            foreach (var cellObject2 in cell.Objects)
+            {
+                SolveCollision(cellObject1, cellObject2);
+            }
         }
     }
 
@@ -143,40 +147,44 @@ public partial class GridCollisionSolver : Node
     private void CreateDebugDisplayGridBounds()
     {
         for (var x = 0; x < _grid.Dimensions.X; x++)
-        for (var y = 0; y < _grid.Dimensions.Y; y++)
         {
-            var cell = _grid.Cells[x, y];
-            var rect = new ReferenceRect
+            for (var y = 0; y < _grid.Dimensions.Y; y++)
             {
-                Name = $"rect-{cell.Index}",
-                Size = new Vector2(GridSize, GridSize),
-                Position = cell.Position,
-                Visible = true,
-                EditorOnly = false
-            };
+                var cell = _grid.Cells[x, y];
+                var rect = new ReferenceRect
+                {
+                    Name = $"rect-{cell.Index}",
+                    Size = new Vector2(GridSize, GridSize),
+                    Position = cell.Position,
+                    Visible = true,
+                    EditorOnly = false
+                };
 
-            var text = new Label
-            {
-                Name = $"text-{cell.Index}",
-                Scale = new Vector2(0.75f, 0.75f),
-                Position = cell.Position,
-                Text = cell.Position + "\n" + cell.Index + "\n" + cell.Objects.Count,
-                LabelSettings = new LabelSettings { FontColor = new Color(0, 0, 0) }
-            };
+                var text = new Label
+                {
+                    Name = $"text-{cell.Index}",
+                    Scale = new Vector2(0.75f, 0.75f),
+                    Position = cell.Position,
+                    Text = cell.Position + "\n" + cell.Index + "\n" + cell.Objects.Count,
+                    LabelSettings = new LabelSettings { FontColor = new Color(0, 0, 0) }
+                };
 
-            AddChild(rect);
-            AddChild(text);
+                AddChild(rect);
+                AddChild(text);
+            }
         }
     }
 
     private void UpdateDebug()
     {
         for (var x = 0; x < _grid.Dimensions.X; x++)
-        for (var y = 0; y < _grid.Dimensions.Y; y++)
         {
-            var cell = _grid.GetCell(x, y);
-            var text = GetNode<Label>($"text-{cell.Index}");
-            text.Text = cell.Position + "\n" + cell.Index + "\n" + cell.Objects.Count;
+            for (var y = 0; y < _grid.Dimensions.Y; y++)
+            {
+                var cell = _grid.GetCell(x, y);
+                var text = GetNode<Label>($"text-{cell.Index}");
+                text.Text = cell.Position + "\n" + cell.Index + "\n" + cell.Objects.Count;
+            }
         }
     }
 }

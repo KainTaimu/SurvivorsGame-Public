@@ -33,29 +33,31 @@ public partial class GlobalBotRenderer : Node2D
     public override void _Draw()
     {
         foreach (var enemyList in GameWorld.Instance.EnemiesByType.Values)
-        foreach (var enemy in enemyList)
         {
-            var spriteNode = enemy.Sprite;
-            if (!RenderCaches.TryGetValue(enemy.GetSceneFilePath(), out var renderCache))
+            foreach (var enemy in enemyList)
             {
-                RenderCaches.Add(enemy.GetSceneFilePath(), new BotRenderCache(spriteNode));
-                return;
+                var spriteNode = enemy.Sprite;
+                if (!RenderCaches.TryGetValue(enemy.GetSceneFilePath(), out var renderCache))
+                {
+                    RenderCaches.Add(enemy.GetSceneFilePath(), new BotRenderCache(spriteNode));
+                    return;
+                }
+
+                var pairs = renderCache.FrameCount / 2;
+                var baseFrame = spriteNode.Frame % pairs;
+                var facingOffset = spriteNode.FlipH ? 1 : 0; // 0 = right, 1 = left
+                var frameIndex = baseFrame * 2 + facingOffset;
+                var tex = renderCache.SpriteTextures[frameIndex];
+                var texRid = tex.GetRid();
+
+                if (!TextureOffsetCache.TryGetValue(texRid, out var offset))
+                {
+                    offset = -tex.GetSize() * 0.5f;
+                    TextureOffsetCache.Add(texRid, offset);
+                }
+
+                DrawTexture(tex, enemy.Position + offset);
             }
-
-            var pairs = renderCache.FrameCount / 2;
-            var baseFrame = spriteNode.Frame % pairs;
-            var facingOffset = spriteNode.FlipH ? 1 : 0; // 0 = right, 1 = left
-            var frameIndex = baseFrame * 2 + facingOffset;
-            var tex = renderCache.SpriteTextures[frameIndex];
-            var texRid = tex.GetRid();
-
-            if (!TextureOffsetCache.TryGetValue(texRid, out var offset))
-            {
-                offset = -tex.GetSize() * 0.5f;
-                TextureOffsetCache.Add(texRid, offset);
-            }
-
-            DrawTexture(tex, enemy.Position + offset);
         }
     }
 

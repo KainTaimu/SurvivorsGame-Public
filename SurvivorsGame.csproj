@@ -6,11 +6,11 @@
     </PropertyGroup>
     <Target Name="SetSourceRevisionId" BeforeTargets="InitializeSourceControlInformation">
         <Exec Command="git describe --long --always --dirty --exclude=* --abbrev=8" ConsoleToMsBuild="true" IgnoreExitCode="False">
-            <Output PropertyName="SourceRevisionId" TaskParameter="ConsoleOutput" />
+            <Output PropertyName="SourceRevisionId" TaskParameter="ConsoleOutput"/>
         </Exec>
-        <Message Text="$(SourceRevisionId)" />
+        <Message Text="$(SourceRevisionId)"/>
     </Target>
     <ItemGroup>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
     </ItemGroup>
 </Project>

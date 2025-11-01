@@ -1,5 +1,3 @@
-using System.Text;
-
 namespace SurvivorsGame.ui;
 
 public partial class FpsCounter : CanvasLayer
@@ -9,10 +7,10 @@ public partial class FpsCounter : CanvasLayer
 
     [Export]
     private Label _processTime;
-    
+
     [Export]
     private Label _physicsTime;
-    
+
     public override void _Process(double delta)
     {
         var fps = Performance.GetMonitor(Performance.Monitor.TimeFps);

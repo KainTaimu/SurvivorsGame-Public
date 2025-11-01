@@ -23,14 +23,16 @@ public class Grid
         Cells = new GridCell[width, height];
 
         for (var x = 0; x < width; x++)
-        for (var y = 0; y < height; y++)
         {
-            var cell = new GridCell
+            for (var y = 0; y < height; y++)
             {
-                Position = new Vector2I(_cellSize * x - _cellSize * 2, _cellSize * y - _cellSize * 2),
-                Index = new Vector2I(x, y)
-            };
-            Cells[x, y] = cell;
+                var cell = new GridCell
+                {
+                    Position = new Vector2I(_cellSize * x - _cellSize * 2, _cellSize * y - _cellSize * 2),
+                    Index = new Vector2I(x, y)
+                };
+                Cells[x, y] = cell;
+            }
         }
 
         Dimensions = new Vector2I(Cells.GetUpperBound(0), Cells.GetUpperBound(1));
@@ -39,9 +41,11 @@ public class Grid
     public void Clear()
     {
         for (var i = 0; i < Dimensions.X; i++)
-        for (var j = 0; j < Dimensions.Y; j++)
         {
-            Cells[i, j].Clear();
+            for (var j = 0; j < Dimensions.Y; j++)
+            {
+                Cells[i, j].Clear();
+            }
         }
     }
 
