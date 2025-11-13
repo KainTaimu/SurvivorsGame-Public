@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://bk5ahc8p8evdj"]
+
+[ext_resource type="PackedScene" uid="uid://bx3nlyg0nwpge" path="res://src/items/offensive/BaseOffensive.tscn" id="1_flu60"]
+[ext_resource type="Script" uid="uid://csuisrdtstnov" path="res://src/items/offensive/whip/Whip.cs" id="2_j0vv3"]
+
+[node name="Whip" instance=ExtResource("1_flu60")]
+script = ExtResource("2_j0vv3")

@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://62ub4h57wk6i"]
+
+[ext_resource type="PackedScene" uid="uid://xtlr62oous5b" path="res://src/items/projectile/BaseProjectile.tscn" id="1_8k6rc"]
+[ext_resource type="Script" uid="uid://dwsts27xo1me1" path="res://src/items/projectile/whip/ProjectileWhip.cs" id="2_0i6a0"]
+
+[node name="ProjectileWhip" instance=ExtResource("1_8k6rc")]
+script = ExtResource("2_0i6a0")
