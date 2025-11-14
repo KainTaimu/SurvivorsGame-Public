@@ -17,20 +17,17 @@ public partial class BaseOffensive : BaseItem
 
     public bool Enabled { get; private set; }
     protected static Player Player => GameWorld.Instance.MainPlayer;
-    protected static PlayerStats PlayerStats => GameWorld.Instance.MainPlayer.StatController.PlayerStats;
+    protected static PlayerStats PlayerStats =>
+        GameWorld.Instance.MainPlayer.StatController.PlayerStats;
 
     public virtual void Initialize()
     {
         Enabled = true;
     }
 
-    protected virtual void Attack()
-    {
-    }
+    protected virtual void Attack() { }
 
-    protected virtual void PostUpgrade(int newLevel)
-    {
-    }
+    protected virtual void PostUpgrade(int newLevel) { }
 
     protected void Upgrade(int newLevel)
     {
@@ -55,4 +52,16 @@ public partial class BaseOffensive : BaseItem
     {
         return Stats.AttackSpeed * PlayerStats.AttackSpeedMultiplier;
     }
+
+    protected float CalculateCrit()
+    {
+        var roll = GD.Randf();
+        if (roll > Stats.CritChanceProportion)
+        {
+            return 0f;
+        }
+
+        return Stats.Damage * Stats.CritDamageMultiplier;
+    }
 }
+
