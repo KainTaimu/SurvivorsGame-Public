@@ -64,3 +64,4 @@ public partial class BaseOffensive : BaseItem
         return Stats.Damage * Stats.CritDamageMultiplier;
     }
 }
+
