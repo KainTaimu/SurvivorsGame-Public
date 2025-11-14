@@ -6,26 +6,27 @@ namespace SurvivorsGame.Items.Offensive;
 public partial class BaseOffensiveStats : BaseItemStats
 {
     [Export]
-    public float AttackSpeed;
-
-    [Export]
-    public float CritChanceProportion;
+    public int Damage;
 
     [Export]
     public float CritDamageMultiplier;
 
     [Export]
-    public int Damage;
+    public float CritChanceProportion;
+
+    [Export]
+    public int ProjectileSpeed;
+
+    [Export]
+    public float ProjectileScaleMultiplier;
+
+    [Export]
+    public float AttackSpeed;
 
     [Export]
     public int PierceLimit = 1;
 
     [Export]
     public Array<BaseEffect> ProjectileEffects;
-
-    [Export]
-    public float ProjectileScaleMultiplier;
-
-    [Export]
-    public int ProjectileSpeed;
 }
+

@@ -50,4 +50,9 @@ public partial class BaseOffensive : BaseItem
 
         Upgrade(Properties.CurrentLevel);
     }
+
+    protected float GetAttackSpeed()
+    {
+        return Stats.AttackSpeed * PlayerStats.AttackSpeedMultiplier;
+    }
 }

@@ -3,14 +3,15 @@ namespace SurvivorsGame.Items.Offensive;
 [GlobalClass]
 public partial class BaseItemProperties : Resource
 {
-    public int CurrentLevel;
-
-    [Export(PropertyHint.MultilineText)]
-    public string Description;
+    [Export]
+    public string Name;
 
     [Export]
     public ItemType ItemType;
 
-    [Export]
-    public string Name;
+    public int CurrentLevel;
+
+    [Export(PropertyHint.MultilineText)]
+    public string Description;
 }
+
