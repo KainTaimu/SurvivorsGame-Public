@@ -1,0 +1,26 @@
+[gd_scene load_steps=8 format=3 uid="uid://vu3oh3urtbvj"]
+
+[ext_resource type="PackedScene" uid="uid://bx3nlyg0nwpge" path="res://src/items/offensive/BaseOffensive.tscn" id="1_m0c87"]
+[ext_resource type="Script" uid="uid://coeyhm6lrdkcv" path="res://src/items/offensive/ak/Ak47.cs" id="2_xp02x"]
+[ext_resource type="PackedScene" uid="uid://ho57tibavdbb" path="res://src/items/projectile/bullet/ProjectileBullet.tscn" id="3_5ehh0"]
+[ext_resource type="Script" uid="uid://cu4mtsa3whygp" path="res://src/items/BaseItemProperties.cs" id="3_xudbn"]
+[ext_resource type="Script" uid="uid://b07kwtd7x357r" path="res://src/items/offensive/BaseOffensiveStats.cs" id="4_5ehh0"]
+
+[sub_resource type="Resource" id="Resource_h51hn"]
+script = ExtResource("3_xudbn")
+Name = "AK-47"
+
+[sub_resource type="Resource" id="Resource_gf3pr"]
+script = ExtResource("4_5ehh0")
+Damage = 5
+CritDamageMultiplier = 1.0
+ProjectileSpeed = 3600
+ProjectileScaleMultiplier = 1.0
+AttackSpeed = 0.15
+ProjectileEffects = []
+
+[node name="Ak47" instance=ExtResource("1_m0c87")]
+script = ExtResource("2_xp02x")
+_projectileScene = ExtResource("3_5ehh0")
+Properties = SubResource("Resource_h51hn")
+Stats = SubResource("Resource_gf3pr")
