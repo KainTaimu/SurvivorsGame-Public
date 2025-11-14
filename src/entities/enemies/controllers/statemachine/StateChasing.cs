@@ -25,3 +25,4 @@ public partial class StateChasing : State
         EnemyOwner.Sprite.FlipH = !(moveVector.X > 0);
     }
 }
+

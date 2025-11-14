@@ -30,3 +30,4 @@ public partial class BasePassiveStatsMultipliers : Resource
     [Export]
     public float XpMultiplier;
 }
+

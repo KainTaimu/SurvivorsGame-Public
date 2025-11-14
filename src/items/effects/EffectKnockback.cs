@@ -19,10 +19,16 @@ public partial class EffectKnockback : BaseEffect
             return;
         }
 
-        _pushVector = new Vector2(EffectValue, 0).Rotated(Target.Position.AngleToPoint(Player.Position));
-        _finalVector = new Vector2(Target.Position.X - _pushVector.X, Target.Position.Y - _pushVector.Y);
+        _pushVector = new Vector2(EffectValue, 0).Rotated(
+            Target.Position.AngleToPoint(Player.Position)
+        );
+        _finalVector = new Vector2(
+            Target.Position.X - _pushVector.X,
+            Target.Position.Y - _pushVector.Y
+        );
         Target.Position = _finalVector;
 
         Applied = true;
     }
 }
+

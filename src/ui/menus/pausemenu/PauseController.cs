@@ -70,3 +70,4 @@ public partial class PauseController : Node
         IsPaused = Tree.Paused;
     }
 }
+

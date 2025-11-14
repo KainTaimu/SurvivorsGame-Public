@@ -32,3 +32,4 @@ public class GridCell
         Objects.Clear();
     }
 }
+

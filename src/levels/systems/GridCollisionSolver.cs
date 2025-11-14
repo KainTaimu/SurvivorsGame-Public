@@ -157,7 +157,7 @@ public partial class GridCollisionSolver : Node
                     Size = new Vector2(GridSize, GridSize),
                     Position = cell.Position,
                     Visible = true,
-                    EditorOnly = false
+                    EditorOnly = false,
                 };
 
                 var text = new Label
@@ -166,7 +166,7 @@ public partial class GridCollisionSolver : Node
                     Scale = new Vector2(0.75f, 0.75f),
                     Position = cell.Position,
                     Text = cell.Position + "\n" + cell.Index + "\n" + cell.Objects.Count,
-                    LabelSettings = new LabelSettings { FontColor = new Color(0, 0, 0) }
+                    LabelSettings = new LabelSettings { FontColor = new Color(0, 0, 0) },
                 };
 
                 AddChild(rect);
@@ -188,3 +188,4 @@ public partial class GridCollisionSolver : Node
         }
     }
 }
+

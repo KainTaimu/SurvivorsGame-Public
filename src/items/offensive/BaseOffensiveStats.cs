@@ -29,4 +29,3 @@ public partial class BaseOffensiveStats : BaseItemStats
     [Export]
     public Array<BaseEffect> ProjectileEffects;
 }
-

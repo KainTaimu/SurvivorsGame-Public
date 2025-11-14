@@ -49,7 +49,9 @@ public partial class PlayerOffensiveController : Node
             var nodeType = node.GetType();
             if (node is not BaseOffensive offensive)
             {
-                GD.PrintErr($"A child of {Name} (\"{node.Name}\") is not a BaseOffensive node. ({nodeType})");
+                GD.PrintErr(
+                    $"A child of {Name} (\"{node.Name}\") is not a BaseOffensive node. ({nodeType})"
+                );
                 node.QueueFree();
                 return;
             }
@@ -98,3 +100,4 @@ public partial class PlayerOffensiveController : Node
         }
     }
 }
+

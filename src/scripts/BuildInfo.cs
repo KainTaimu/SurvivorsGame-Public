@@ -10,7 +10,9 @@ public partial class BuildInfo : CanvasLayer
 
     public override void _Ready()
     {
-        var versionAttribute = Executable.GetCustomAttributes<AssemblyInformationalVersionAttribute>().FirstOrDefault();
+        var versionAttribute = Executable
+            .GetCustomAttributes<AssemblyInformationalVersionAttribute>()
+            .FirstOrDefault();
         if (versionAttribute is null)
         {
             Logger.LogError("Failed to get AssemblyInformationalVersionAttribute");
@@ -21,3 +23,4 @@ public partial class BuildInfo : CanvasLayer
         _label.Text = versionAttribute.InformationalVersion;
     }
 }
+

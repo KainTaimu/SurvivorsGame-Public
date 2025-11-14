@@ -40,9 +40,7 @@ public partial class DebugInfo : CanvasLayer
         }
     }
 
-    public override void _Process(double delta)
-    {
-    }
+    public override void _Process(double delta) { }
 
     private void OnTimerTimeout()
     {
@@ -57,7 +55,8 @@ public partial class DebugInfo : CanvasLayer
     private void UpdateDebugInfo()
     {
         var enemyCount = GameWorld.Instance.Enemies.Count;
-        var playerHealth = GameWorld.Instance.MainPlayer?.StatController.PlayerStats.Health.ToString() ?? "N/A";
+        var playerHealth =
+            GameWorld.Instance.MainPlayer?.StatController.PlayerStats.Health.ToString() ?? "N/A";
         var playerXp = GameWorld.Instance.MainPlayer?.XpController.Xp.ToString() ?? "N/A";
         var playerLevel = GameWorld.Instance.MainPlayer?.XpController.Level.ToString() ?? "N/A";
         var waveStats = GameWorld.Instance.CurrentLevel.WaveController?.GetWaveStats() ?? "N/A";
@@ -70,3 +69,4 @@ public partial class DebugInfo : CanvasLayer
         _timeElapsed.Text = $"Time elapsed: {GameWorld.Instance.TimeElapsed} ({waveStats})";
     }
 }
+

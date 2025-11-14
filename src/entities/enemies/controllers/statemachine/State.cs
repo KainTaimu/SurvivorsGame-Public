@@ -20,15 +20,10 @@ public partial class State : Node
         EnemyOwner = GetParent<StateMachine>().EnemyOwner;
     }
 
-    public virtual void Exit()
-    {
-    }
+    public virtual void Exit() { }
 
-    public virtual void Update(double delta)
-    {
-    }
+    public virtual void Update(double delta) { }
 
-    public virtual void PhysicsUpdate(double delta)
-    {
-    }
+    public virtual void PhysicsUpdate(double delta) { }
 }
+

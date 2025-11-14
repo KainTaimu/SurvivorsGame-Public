@@ -9,3 +9,4 @@ public partial class BaseXp : BasePickup
         PickupValue = (int)Math.Ceiling(xp + diff);
     }
 }
+

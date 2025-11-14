@@ -87,9 +87,11 @@ public partial class DebugPlayer : VBoxContainer
         List<string> e = [];
         foreach (var weapon in PlayerOffensiveController.CurrentOffensives)
         {
-            e.Add(weapon.Enabled
-                ? $"{weapon.Properties.Name} ({weapon.Properties.CurrentLevel})"
-                : $"!{weapon.Name} ({weapon.Properties.CurrentLevel})");
+            e.Add(
+                weapon.Enabled
+                    ? $"{weapon.Properties.Name} ({weapon.Properties.CurrentLevel})"
+                    : $"!{weapon.Name} ({weapon.Properties.CurrentLevel})"
+            );
         }
 
         _weaponLabel.Text = "Weapons: " + string.Join(", ", e);
@@ -105,11 +107,14 @@ public partial class DebugPlayer : VBoxContainer
         List<string> e = [];
         foreach (var item in PlayerPassiveController.CurrentPassives)
         {
-            e.Add(item.Applied
-                ? $"{item.Properties.Name} ({item.Properties.CurrentLevel})"
-                : $"!{item.Name} ({item.Properties.CurrentLevel})");
+            e.Add(
+                item.Applied
+                    ? $"{item.Properties.Name} ({item.Properties.CurrentLevel})"
+                    : $"!{item.Name} ({item.Properties.CurrentLevel})"
+            );
         }
 
         _itemsLabel.Text = "Items: " + string.Join(", ", e);
     }
 }
+

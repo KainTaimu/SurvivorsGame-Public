@@ -1,5 +1,4 @@
 namespace SurvivorsGame.Items;
 
-public partial class BaseItem : Node
-{
-}
+public partial class BaseItem : Node { }
+

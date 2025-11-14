@@ -28,8 +28,11 @@ public class Grid
             {
                 var cell = new GridCell
                 {
-                    Position = new Vector2I(_cellSize * x - _cellSize * 2, _cellSize * y - _cellSize * 2),
-                    Index = new Vector2I(x, y)
+                    Position = new Vector2I(
+                        _cellSize * x - _cellSize * 2,
+                        _cellSize * y - _cellSize * 2
+                    ),
+                    Index = new Vector2I(x, y),
                 };
                 Cells[x, y] = cell;
             }
@@ -72,3 +75,4 @@ public class Grid
         return Cells[x, y];
     }
 }
+

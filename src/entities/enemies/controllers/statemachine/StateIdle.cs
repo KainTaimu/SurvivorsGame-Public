@@ -7,7 +7,6 @@ public partial class StateIdle : State
 
     public override string StateName { get; protected set; } = "idle";
 
-    public override void PhysicsUpdate(double delta)
-    {
-    }
+    public override void PhysicsUpdate(double delta) { }
 }
+

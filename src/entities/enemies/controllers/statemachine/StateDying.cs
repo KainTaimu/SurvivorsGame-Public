@@ -78,13 +78,33 @@ public partial class StateDying : State
         }
 
         spriteShaderMaterial!.SetShaderParameter("flash_state", 1f);
-        tween.Parallel().TweenMethod(
-            Callable.From((float i) => { spriteShaderMaterial.SetShaderParameter("flash_state", i); }), 0f, 1f,
-            _dyingTime);
+        tween
+            .Parallel()
+            .TweenMethod(
+                Callable.From(
+                    (float i) =>
+                    {
+                        spriteShaderMaterial.SetShaderParameter("flash_state", i);
+                    }
+                ),
+                0f,
+                1f,
+                _dyingTime
+            );
 
-        tween.Parallel().TweenMethod(
-            Callable.From((Color i) => { spriteShaderMaterial.SetShaderParameter("color", i); }), new Color(1, 1, 1),
-            new Color(255, 255, 255, 0), _dyingTime);
+        tween
+            .Parallel()
+            .TweenMethod(
+                Callable.From(
+                    (Color i) =>
+                    {
+                        spriteShaderMaterial.SetShaderParameter("color", i);
+                    }
+                ),
+                new Color(1, 1, 1),
+                new Color(255, 255, 255, 0),
+                _dyingTime
+            );
     }
 
     private void MoveChase(double delta)
@@ -103,3 +123,4 @@ public partial class StateDying : State
         GetTree().Root.AddChild(xp);
     }
 }
+

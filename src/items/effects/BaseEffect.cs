@@ -20,13 +20,9 @@ public partial class BaseEffect : Resource
         return $"{EffectName}({EffectValue}f, {Math.Round(EffectDuration, 2)}s)";
     }
 
-    public virtual void Enter()
-    {
-    }
+    public virtual void Enter() { }
 
-    public virtual void Exit()
-    {
-    }
+    public virtual void Exit() { }
 
     public virtual void Apply(float delta)
     {
@@ -38,7 +34,6 @@ public partial class BaseEffect : Resource
         EffectDuration -= delta;
     }
 
-    public virtual void AddWorkTime(float delta)
-    {
-    }
+    public virtual void AddWorkTime(float delta) { }
 }
+

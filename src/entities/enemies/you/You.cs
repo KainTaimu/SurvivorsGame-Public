@@ -6,3 +6,4 @@ public partial class You : BaseEnemy
     [Export]
     private GpuParticles2D _particles2d;
 }
+

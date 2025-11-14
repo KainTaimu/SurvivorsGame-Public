@@ -23,15 +23,16 @@ public partial class Wave : Node
     {
         if (SpawnSpeedMax < SpawnSpeedMin)
         {
-            Logger.LogWarning("Wave maximum spawn timer should be less than its minimum. Clamping to max");
+            Logger.LogWarning(
+                "Wave maximum spawn timer should be less than its minimum. Clamping to max"
+            );
             SpawnSpeedMin = SpawnSpeedMax;
         }
     }
 
     public override string ToString()
     {
-        return
-            $"{Name} : {EnemyTypes.Count} enemy types : ({SpawnSpeedMin}, {SpawnSpeedMax}) spawn speed : {Duration} duration";
+        return $"{Name} : {EnemyTypes.Count} enemy types : ({SpawnSpeedMin}, {SpawnSpeedMax}) spawn speed : {Duration} duration";
     }
 
     public PackedScene GetRandomEnemyType()
@@ -39,3 +40,4 @@ public partial class Wave : Node
         return EnemyTypes[GD.RandRange(0, EnemyTypes.Count - 1)];
     }
 }
+

@@ -60,9 +60,12 @@ public partial class BenchmarkRecorder : Node
         var mem = perf.GetMonitor(Performance.Monitor.MemoryStatic) * 1e-6;
         var fVMem = perf.GetMonitor(Performance.Monitor.RenderVideoMemUsed) * 1e-6;
 
-        Logger.LogDebug($"Hit <{fps}FPS ({ftime * 1000:F1}ms) @ {timeElapsed} : {enemyCount} enemies");
+        Logger.LogDebug(
+            $"Hit <{fps}FPS ({ftime * 1000:F1}ms) @ {timeElapsed} : {enemyCount} enemies"
+        );
         Logger.LogDebug($"MEM: SYS({mem:F0}MB) GPU({fVMem:F0}MB)");
         Logger.LogDebug($"GPU: Frame Objs ({fFrameObjs}) : Frame Draw Calls ({fDrawCalls})");
         _hasLoggedStats = true;
     }
 }
+

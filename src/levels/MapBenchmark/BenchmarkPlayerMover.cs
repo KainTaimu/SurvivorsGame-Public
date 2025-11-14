@@ -14,9 +14,7 @@ public partial class BenchmarkPlayerMover : Node
     private static float LevelVerticalMiddle => GameWorld.Instance.CurrentLevel.PixelSize.Y / 2;
     private static float LevelHorizontalMiddle => GameWorld.Instance.CurrentLevel.PixelSize.X / 2;
 
-    public override void _Ready()
-    {
-    }
+    public override void _Ready() { }
 
     public override void _Process(double delta)
     {
@@ -34,7 +32,7 @@ public partial class BenchmarkPlayerMover : Node
             Side.Right => Side.Bottom,
             Side.Bottom => Side.Left,
             Side.Left => Side.Top,
-            _ => _playerSide
+            _ => _playerSide,
         };
 
         TeleportPlayerToSide(_playerSide);
@@ -49,13 +47,19 @@ public partial class BenchmarkPlayerMover : Node
                 tpPos = new Vector2(0, LevelVerticalMiddle);
                 break;
             case Side.Right:
-                tpPos = new Vector2(GameWorld.Instance.CurrentLevel.PixelSize.X, LevelVerticalMiddle);
+                tpPos = new Vector2(
+                    GameWorld.Instance.CurrentLevel.PixelSize.X,
+                    LevelVerticalMiddle
+                );
                 break;
             case Side.Top:
                 tpPos = new Vector2(LevelHorizontalMiddle, 0);
                 break;
             case Side.Bottom:
-                tpPos = new Vector2(LevelHorizontalMiddle, GameWorld.Instance.CurrentLevel.PixelSize.Y);
+                tpPos = new Vector2(
+                    LevelHorizontalMiddle,
+                    GameWorld.Instance.CurrentLevel.PixelSize.Y
+                );
                 break;
         }
 
@@ -70,6 +74,7 @@ public partial class BenchmarkPlayerMover : Node
 
         Top,
 
-        Bottom
+        Bottom,
     }
 }
+

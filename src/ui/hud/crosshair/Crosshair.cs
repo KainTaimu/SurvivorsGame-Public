@@ -73,3 +73,4 @@ public partial class Crosshair : Node2D
         Input.SetMouseMode(Input.MouseModeEnum.Visible);
     }
 }
+

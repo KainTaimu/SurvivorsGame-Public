@@ -13,7 +13,8 @@ public partial class ItemDisplay : Control
     [Export]
     private PackedScene _itemContainerScene;
 
-    private PlayerPassiveController PlayerPassiveController => GameWorld.Instance.MainPlayer.PassiveController;
+    private PlayerPassiveController PlayerPassiveController =>
+        GameWorld.Instance.MainPlayer.PassiveController;
     private List<BasePassive> Items => PlayerPassiveController.CurrentPassives;
 
     private void OnPaused()
@@ -36,3 +37,4 @@ public partial class ItemDisplay : Control
         }
     }
 }
+

@@ -28,3 +28,4 @@ public partial class BasePassiveStats : BaseItemStats
     [Export]
     public BasePassiveStatsMultipliers StatMultipliers;
 }
+

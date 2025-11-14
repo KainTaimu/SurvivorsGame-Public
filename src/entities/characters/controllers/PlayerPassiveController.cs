@@ -72,7 +72,9 @@ public partial class PlayerPassiveController : Node
             var nodeType = node.GetType();
             if (node is not BasePassive passive)
             {
-                GD.PrintErr($"A child of {Name} (\"{node.Name}\") is not a BasePassive node. ({nodeType})");
+                GD.PrintErr(
+                    $"A child of {Name} (\"{node.Name}\") is not a BasePassive node. ({nodeType})"
+                );
                 node.QueueFree();
                 return;
             }
@@ -107,3 +109,4 @@ public partial class PlayerPassiveController : Node
         }
     }
 }
+

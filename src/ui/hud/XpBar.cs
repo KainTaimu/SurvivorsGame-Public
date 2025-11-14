@@ -18,3 +18,4 @@ public partial class XpBar : ProgressBar
         MaxValue = _playerXpController.XpCap;
     }
 }
+

@@ -54,16 +54,28 @@ public partial class PlayerMovementController : Node
         }
 
         var move = new Vector2(
-            inputX * (_owner.StatController.PlayerStats.MoveSpeed *
-                      _owner.StatController.PlayerStats.MoveSpeedMultiplier),
-            inputY * (_owner.StatController.PlayerStats.MoveSpeed *
-                      _owner.StatController.PlayerStats.MoveSpeedMultiplier));
+            inputX
+                * (
+                    _owner.StatController.PlayerStats.MoveSpeed
+                    * _owner.StatController.PlayerStats.MoveSpeedMultiplier
+                ),
+            inputY
+                * (
+                    _owner.StatController.PlayerStats.MoveSpeed
+                    * _owner.StatController.PlayerStats.MoveSpeedMultiplier
+                )
+        );
         move *= (float)delta;
         var originalPos = _owner.GetPosition();
 
         var newPos = originalPos + move;
-        newPos = newPos.Clamp(Vector2.Zero,
-            new Vector2(GameWorld.Instance.CurrentLevel.PixelSize.X, GameWorld.Instance.CurrentLevel.PixelSize.Y));
+        newPos = newPos.Clamp(
+            Vector2.Zero,
+            new Vector2(
+                GameWorld.Instance.CurrentLevel.PixelSize.X,
+                GameWorld.Instance.CurrentLevel.PixelSize.Y
+            )
+        );
 
         _owner.SetPosition(newPos);
     }
@@ -88,3 +100,4 @@ public partial class PlayerMovementController : Node
         }
     }
 }
+

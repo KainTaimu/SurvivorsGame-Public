@@ -60,3 +60,4 @@ public abstract partial class BasePickup : RigidBody2D
         ApplyForce(direction);
     }
 }
+

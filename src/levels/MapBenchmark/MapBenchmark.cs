@@ -8,3 +8,4 @@ public partial class MapBenchmark : BaseMap
         Logger.LogDebug($"Map center: {PixelSize * 0.5f}");
     }
 }
+

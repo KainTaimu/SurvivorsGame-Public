@@ -28,7 +28,6 @@ public partial class Whip : BaseOffensive
         }
     }
 
-    protected override void Attack()
-    {
-    }
+    protected override void Attack() { }
 }
+

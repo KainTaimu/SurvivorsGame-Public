@@ -14,4 +14,3 @@ public partial class BaseItemProperties : Resource
     [Export(PropertyHint.MultilineText)]
     public string Description;
 }
-

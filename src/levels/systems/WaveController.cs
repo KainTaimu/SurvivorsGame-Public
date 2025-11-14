@@ -137,27 +137,39 @@ public partial class WaveController : Node
         switch (seed)
         {
             case 0: // TOP
-                spawnVector.X = (float)GD.RandRange(screenCenterPosition.X - viewportRectEnd.X / 2 - margin,
-                    screenCenterPosition.X + viewportRectEnd.X / 2 + margin);
+                spawnVector.X = (float)
+                    GD.RandRange(
+                        screenCenterPosition.X - viewportRectEnd.X / 2 - margin,
+                        screenCenterPosition.X + viewportRectEnd.X / 2 + margin
+                    );
                 spawnVector.Y = screenCenterPosition.Y - viewportRectEnd.Y / 2 - margin;
                 break;
 
             case 1: // BOTTOM
-                spawnVector.X = (float)GD.RandRange(screenCenterPosition.X - viewportRectEnd.X / 2 - margin,
-                    screenCenterPosition.X + viewportRectEnd.X / 2 + margin);
+                spawnVector.X = (float)
+                    GD.RandRange(
+                        screenCenterPosition.X - viewportRectEnd.X / 2 - margin,
+                        screenCenterPosition.X + viewportRectEnd.X / 2 + margin
+                    );
                 spawnVector.Y = screenCenterPosition.Y + viewportRectEnd.Y / 2 + margin;
                 break;
 
             case 2: // LEFT
                 spawnVector.X = screenCenterPosition.X - viewportRectEnd.X / 2 - margin;
-                spawnVector.Y = (float)GD.RandRange(screenCenterPosition.Y - viewportRectEnd.Y / 2 - margin,
-                    screenCenterPosition.Y + viewportRectEnd.Y / 2 + margin);
+                spawnVector.Y = (float)
+                    GD.RandRange(
+                        screenCenterPosition.Y - viewportRectEnd.Y / 2 - margin,
+                        screenCenterPosition.Y + viewportRectEnd.Y / 2 + margin
+                    );
                 break;
 
             case 3: // RIGHT
                 spawnVector.X = screenCenterPosition.X + viewportRectEnd.X / 2 + margin;
-                spawnVector.Y = (float)GD.RandRange(screenCenterPosition.Y - viewportRectEnd.Y / 2 - margin,
-                    screenCenterPosition.Y + viewportRectEnd.Y / 2 + margin);
+                spawnVector.Y = (float)
+                    GD.RandRange(
+                        screenCenterPosition.Y - viewportRectEnd.Y / 2 - margin,
+                        screenCenterPosition.Y + viewportRectEnd.Y / 2 + margin
+                    );
                 break;
         }
 
@@ -185,9 +197,13 @@ public partial class WaveController : Node
 
         var spawnRect = new ReferenceRect
         {
-            Position = position, Size = new Vector2(50, 50), Visible = true, EditorOnly = false
+            Position = position,
+            Size = new Vector2(50, 50),
+            Visible = true,
+            EditorOnly = false,
         };
 
         AddChild(spawnRect);
     }
 }
+

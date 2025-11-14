@@ -40,7 +40,8 @@ public partial class StateEnemyPlayerDied : State
 
     private void MoveAwayFromPlayer(double delta)
     {
-        var moveVector = EnemyOwner.Position.DirectionTo(Player.Position) * (float)delta * _moveSpeed;
+        var moveVector =
+            EnemyOwner.Position.DirectionTo(Player.Position) * (float)delta * _moveSpeed;
 
         EnemyOwner.Position -= moveVector;
 
@@ -68,11 +69,25 @@ public partial class StateEnemyPlayerDied : State
             return;
         }
 
-        var tween = CreateTween().BindNode(this).SetTrans(Tween.TransitionType.Expo).SetEase(Tween.EaseType.Out);
+        var tween = CreateTween()
+            .BindNode(this)
+            .SetTrans(Tween.TransitionType.Expo)
+            .SetEase(Tween.EaseType.Out);
 
         material.SetShader(_fadeShader);
-        tween.TweenMethod(Callable.From((float i) => { material.SetShaderParameter("amount", i); }), 1f, 0f, fadeTime);
+        tween.TweenMethod(
+            Callable.From(
+                (float i) =>
+                {
+                    material.SetShaderParameter("amount", i);
+                }
+            ),
+            1f,
+            0f,
+            fadeTime
+        );
         await Task.Delay((int)fadeTime * 1000);
         EnemyOwner.QueueFree();
     }
 }
+

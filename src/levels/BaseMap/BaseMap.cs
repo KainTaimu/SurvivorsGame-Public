@@ -15,3 +15,4 @@ public partial class BaseMap : TileMapLayer
         GameWorld.Instance.SetCurrentLevel(this);
     }
 }
+

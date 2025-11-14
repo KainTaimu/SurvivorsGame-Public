@@ -148,3 +148,4 @@ public partial class SelectableItem : PanelContainer
         EmitSignal(nameof(LevelUpPressed), _assignedItem);
     }
 }
+

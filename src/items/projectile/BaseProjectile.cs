@@ -71,3 +71,4 @@ public partial class BaseProjectile : Area2D
         QueueFree();
     }
 }
+

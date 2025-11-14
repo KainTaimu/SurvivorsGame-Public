@@ -94,13 +94,17 @@ public partial class PlayerXpController : Area2D
     {
         if (_attractionShape2D.Shape is not CircleShape2D attractionCircle)
         {
-            Logger.LogWarning("Updating attraction area failed due to its shape not being a CircleShape2D!");
+            Logger.LogWarning(
+                "Updating attraction area failed due to its shape not being a CircleShape2D!"
+            );
             return;
         }
 
         if (_collectionShape2D.Shape is not CircleShape2D collectionCircle)
         {
-            Logger.LogWarning("Updating collection area failed due to its shape not being a CircleShape2D!");
+            Logger.LogWarning(
+                "Updating collection area failed due to its shape not being a CircleShape2D!"
+            );
             return;
         }
 
@@ -110,3 +114,4 @@ public partial class PlayerXpController : Area2D
         _collectionRadius = collectionCircle.Radius;
     }
 }
+

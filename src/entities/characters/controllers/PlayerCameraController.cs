@@ -15,3 +15,4 @@ public partial class PlayerCameraController : Node
         Camera.LimitBottom = (int)GameWorld.Instance.CurrentLevel.PixelSize.Y;
     }
 }
+

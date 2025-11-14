@@ -1,5 +1,4 @@
 namespace SurvivorsGame.Items.Offensive;
 
-public partial class Raygun : Pistol
-{
-}
+public partial class Raygun : Pistol { }
+

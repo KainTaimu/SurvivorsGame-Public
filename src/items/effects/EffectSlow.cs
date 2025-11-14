@@ -38,7 +38,11 @@ public partial class EffectSlow : BaseEffect
         if (EffectDuration < 0.3f * _initialDuration)
         {
             var clamped = EffectDuration / (0.5f * _initialDuration);
-            Target.BotStatController.MoveSpeed = Mathf.Lerp(_initialSpeed, _initialSpeed - EffectValue, clamped);
+            Target.BotStatController.MoveSpeed = Mathf.Lerp(
+                _initialSpeed,
+                _initialSpeed - EffectValue,
+                clamped
+            );
         }
     }
 
@@ -48,3 +52,4 @@ public partial class EffectSlow : BaseEffect
         EffectDuration += result;
     }
 }
+

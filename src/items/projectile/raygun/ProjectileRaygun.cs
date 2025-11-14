@@ -10,7 +10,10 @@ public partial class ProjectileRaygun : BaseProjectile
     public override void _Ready()
     {
         base._Ready();
-        var tweenSpeed = CreateTween().BindNode(this).SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.In);
+        var tweenSpeed = CreateTween()
+            .BindNode(this)
+            .SetTrans(Tween.TransitionType.Quad)
+            .SetEase(Tween.EaseType.In);
         var originalSpeed = ProjectileSpeed;
 
         ProjectileSpeed = originalSpeed * 0.5f;
@@ -49,3 +52,4 @@ public partial class ProjectileRaygun : BaseProjectile
         EmitSignal(nameof(HitEnemy), enemy);
     }
 }
+

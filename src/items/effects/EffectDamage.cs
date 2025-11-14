@@ -4,9 +4,7 @@ public partial class EffectDamage : BaseEffect
 
     public override string EffectName { get; protected set; } = "damage";
 
-    public override void Exit()
-    {
-    }
+    public override void Exit() { }
 
     public override void Apply(float delta)
     {
@@ -22,3 +20,4 @@ public partial class EffectDamage : BaseEffect
         _applied = true;
     }
 }
+

@@ -41,3 +41,4 @@ public partial class PlayerStatController : Node
         PlayerStats.Health = Math.Clamp(sumHealth, 0, PlayerStats.MaxHealth);
     }
 }
+

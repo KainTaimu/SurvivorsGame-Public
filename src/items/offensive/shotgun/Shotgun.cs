@@ -36,8 +36,8 @@ public partial class Shotgun : BaseOffensive
         for (var i = 0; i < _pelletCount; i++)
         {
             var randomRotation = (float)GD.RandRange(-_dispersionArc, _dispersionArc);
-            var randomPelletSpeed =
-                (float)GD.RandRange(Stats.ProjectileSpeed - _pelletSpeedDeviation, Stats.ProjectileSpeed);
+            var randomPelletSpeed = (float)
+                GD.RandRange(Stats.ProjectileSpeed - _pelletSpeedDeviation, Stats.ProjectileSpeed);
 
             var projectile = _projectileScene.Instantiate<ProjectileBullet>();
             projectile.WeaponOrigin = this;
@@ -55,7 +55,11 @@ public partial class Shotgun : BaseOffensive
 
     private void HandleHit(BaseEnemy target)
     {
-        var damageEffect = new EffectDamage { EffectValue = Stats.Damage + CalculateCrit(), EffectDuration = 0f };
+        var damageEffect = new EffectDamage
+        {
+            EffectValue = Stats.Damage + CalculateCrit(),
+            EffectDuration = 0f,
+        };
 
         target.EmitSignal(nameof(BaseEnemy.EnemyHit), damageEffect);
 
@@ -76,3 +80,4 @@ public partial class Shotgun : BaseOffensive
         return Stats.Damage * Stats.CritDamageMultiplier;
     }
 }
+

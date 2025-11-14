@@ -47,3 +47,4 @@ public partial class DamageIndicator : Node2D
         _tween.TweenCallback(Callable.From(QueueFree));
     }
 }
+

@@ -49,7 +49,10 @@ public partial class PlayerHitController : Node
             switch (node)
             {
                 case BotDamageBox enemy:
-                    _owner.EmitSignal(nameof(Player.PlayerDamaged), enemy.EnemyOwner.BotStatController.MaxDamage);
+                    _owner.EmitSignal(
+                        nameof(Player.PlayerDamaged),
+                        enemy.EnemyOwner.BotStatController.MaxDamage
+                    );
                     break;
             }
         }
@@ -64,12 +67,19 @@ public partial class PlayerHitController : Node
 
         // Always deal 5% DMG regardless of DEF
         var damageAfterDefense =
-            Math.Clamp(damage - _owner.StatController.PlayerStats.Defense * 0.95, 0, double.PositiveInfinity) +
-            damage * 0.05;
+            Math.Clamp(
+                damage - _owner.StatController.PlayerStats.Defense * 0.95,
+                0,
+                double.PositiveInfinity
+            )
+            + damage * 0.05;
         var randomDamage = damageAfterDefense * GD.RandRange(-0.15f, 0.15f);
         var sumDamage = damageAfterDefense + randomDamage;
-        var clampedDamage = Math.Clamp(sumDamage * _owner.StatController.PlayerStats.IncomingDamageMultiplier, 0,
-            float.PositiveInfinity);
+        var clampedDamage = Math.Clamp(
+            sumDamage * _owner.StatController.PlayerStats.IncomingDamageMultiplier,
+            0,
+            float.PositiveInfinity
+        );
         var netDamage = Math.Ceiling(clampedDamage);
 
         _owner.StatController.PlayerStats.Health -= (int)netDamage;
@@ -96,7 +106,10 @@ public partial class PlayerHitController : Node
         var scene = _deathEffect.Instantiate<CpuParticles2D>();
         scene.Position = _owner.Position;
         scene.Emitting = true;
-        GetTree().CreateTimer(3, false).Timeout += () => { scene.QueueFree(); };
+        GetTree().CreateTimer(3, false).Timeout += () =>
+        {
+            scene.QueueFree();
+        };
         AddChild(scene);
 
         _owner.Alive = false;
@@ -118,10 +131,28 @@ public partial class PlayerHitController : Node
 
         spriteShaderMaterial.SetShaderParameter("color", new Color("red"));
 
-        _tween.TweenMethod(Callable.From((float i) => { spriteShaderMaterial.SetShaderParameter("flash_state", i); }),
-            0f, 1f, 1f);
-        _tween.TweenMethod(Callable.From((Color c) => { spriteShaderMaterial.SetShaderParameter("color", c); }),
-            new Color("red"), new Color(255, 0, 0, 0), 1f);
+        _tween.TweenMethod(
+            Callable.From(
+                (float i) =>
+                {
+                    spriteShaderMaterial.SetShaderParameter("flash_state", i);
+                }
+            ),
+            0f,
+            1f,
+            1f
+        );
+        _tween.TweenMethod(
+            Callable.From(
+                (Color c) =>
+                {
+                    spriteShaderMaterial.SetShaderParameter("color", c);
+                }
+            ),
+            new Color("red"),
+            new Color(255, 0, 0, 0),
+            1f
+        );
     }
 
     // Duplicate of Vanish method in StateDying
@@ -135,13 +166,25 @@ public partial class PlayerHitController : Node
         }
 
         _tween?.Kill();
-        _tween = CreateTween().BindNode(this).SetTrans(Tween.TransitionType.Expo).SetEase(Tween.EaseType.Out);
+        _tween = CreateTween()
+            .BindNode(this)
+            .SetTrans(Tween.TransitionType.Expo)
+            .SetEase(Tween.EaseType.Out);
 
         spriteShaderMaterial.SetShaderParameter("flash_state", 1f);
         spriteShaderMaterial.SetShaderParameter("color", new Color("white"));
 
-        _tween.TweenMethod(Callable.From((float i) => { spriteShaderMaterial.SetShaderParameter("flash_state", i); }),
-            1f, 0f, 1f);
+        _tween.TweenMethod(
+            Callable.From(
+                (float i) =>
+                {
+                    spriteShaderMaterial.SetShaderParameter("flash_state", i);
+                }
+            ),
+            1f,
+            0f,
+            1f
+        );
     }
 
     private void DebugKill()
@@ -155,3 +198,4 @@ public partial class PlayerHitController : Node
         Logger.LogDebug("Emitted PlayerDied");
     }
 }
+

@@ -23,7 +23,9 @@ public partial class StateMachine : Node
     {
         if (EnemyOwner is null)
         {
-            Logger.LogError($"[ERROR] {GetParent().Name}'s StateMachine has no assigned EnemyOwner!");
+            Logger.LogError(
+                $"[ERROR] {GetParent().Name}'s StateMachine has no assigned EnemyOwner!"
+            );
         }
 
         foreach (var child in GetChildren())
@@ -105,3 +107,4 @@ public partial class StateMachine : Node
         OnChildTransition("playerdied");
     }
 }
+

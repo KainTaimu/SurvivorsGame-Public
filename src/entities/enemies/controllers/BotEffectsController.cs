@@ -27,7 +27,9 @@ public partial class BotEffectsController : Node
         }
 
         var x = CurrentEffects.Find(x =>
-            x.EffectName == effect.EffectName && !(Math.Abs(x.EffectValue - effect.EffectValue) < 0.01f));
+            x.EffectName == effect.EffectName
+            && !(Math.Abs(x.EffectValue - effect.EffectValue) < 0.01f)
+        );
 
         if (x is not null)
         {
@@ -57,3 +59,4 @@ public partial class BotEffectsController : Node
         }
     }
 }
+

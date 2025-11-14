@@ -31,13 +31,9 @@ public partial class BasePassive : BaseItem
         ApplyStats();
     }
 
-    public virtual void Apply(double delta)
-    {
-    }
+    public virtual void Apply(double delta) { }
 
-    protected virtual void PostUpgrade()
-    {
-    }
+    protected virtual void PostUpgrade() { }
 
     private void Upgrade(int newLevel)
     {
@@ -112,3 +108,4 @@ public partial class BasePassive : BaseItem
         PlayerStats.XpMultiplier -= Stats.StatMultipliers.XpMultiplier;
     }
 }
+

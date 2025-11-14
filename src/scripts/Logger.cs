@@ -37,10 +37,10 @@ public static class Logger
     [MethodImpl(MethodImplOptions.NoInlining)]
     private static string GetCallerName()
     {
-        var stackTrace =
-            new StackTrace(1, false); //Captures 1 frame, false for not collecting information about the file
+        var stackTrace = new StackTrace(1, false); //Captures 1 frame, false for not collecting information about the file
         var type = stackTrace.GetFrame(1)?.GetMethod()?.DeclaringType;
 
         return type is null ? "" : type.Name;
     }
 }
+

@@ -51,13 +51,9 @@ public partial class BaseEnemy : Node2D
         InitializeAnimations();
     }
 
-    public override void _Process(double delta)
-    {
-    }
+    public override void _Process(double delta) { }
 
-    public override void _PhysicsProcess(double delta)
-    {
-    }
+    public override void _PhysicsProcess(double delta) { }
 
     private void InitializeEnemy()
     {
@@ -83,3 +79,4 @@ public partial class BaseEnemy : Node2D
         }
     }
 }
+

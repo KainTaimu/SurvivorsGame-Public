@@ -4,10 +4,9 @@ public enum ItemType
 {
     Offensive,
 
-    Passive
+    Passive,
 }
 
 [GlobalClass]
-public partial class BaseItemStats : Resource
-{
-}
+public partial class BaseItemStats : Resource { }
+

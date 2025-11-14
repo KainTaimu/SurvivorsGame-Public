@@ -92,3 +92,4 @@ public partial class LaserBeam : BaseProjectile
         return true;
     }
 }
+

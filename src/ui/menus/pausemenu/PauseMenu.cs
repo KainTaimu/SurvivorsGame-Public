@@ -58,9 +58,7 @@ public partial class PauseMenu : CanvasLayer
         PauseController.Instance.Unlock(this);
     }
 
-    private void ShowSettings()
-    {
-    }
+    private void ShowSettings() { }
 
     private void ShowMainMenu()
     {
@@ -79,3 +77,4 @@ public partial class PauseMenu : CanvasLayer
         _playerStats.Text = statString;
     }
 }
+

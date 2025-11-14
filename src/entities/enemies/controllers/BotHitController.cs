@@ -59,16 +59,33 @@ public partial class BotHitController : Node
     [SuppressMessage("ReSharper", "UnusedParameter.Local")]
     private void OnEnemyHit(BaseEffect effect)
     {
-        if (_owner is null || _spriteShaderMaterial is null || _stateMachine.CurrentState is StateDying)
+        if (
+            _owner is null
+            || _spriteShaderMaterial is null
+            || _stateMachine.CurrentState is StateDying
+        )
         {
             return;
         }
 
         _tween?.Kill();
-        _tween = CreateTween().BindNode(this).SetTrans(Tween.TransitionType.Expo).SetEase(Tween.EaseType.Out);
+        _tween = CreateTween()
+            .BindNode(this)
+            .SetTrans(Tween.TransitionType.Expo)
+            .SetEase(Tween.EaseType.Out);
         _spriteShaderMaterial.SetShaderParameter("flash_state", 1f);
         _spriteShaderMaterial.SetShaderParameter("color", new Color("white"));
-        _tween.TweenMethod(Callable.From((float i) => { _spriteShaderMaterial.SetShaderParameter("flash_state", i); }),
-            1f, 0f, 1f);
+        _tween.TweenMethod(
+            Callable.From(
+                (float i) =>
+                {
+                    _spriteShaderMaterial.SetShaderParameter("flash_state", i);
+                }
+            ),
+            1f,
+            0f,
+            1f
+        );
     }
 }
+
