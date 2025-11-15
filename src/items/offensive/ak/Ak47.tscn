@@ -20,6 +20,11 @@ ProjectileScaleMultiplier = 1.0
 AttackSpeed = 0.15
 PierceLimit = 2
 ProjectileEffects = [ExtResource("5_h51hn")]
+Additional = {
+"BloomCoefficient": 0.03,
+"MagazineCapacity": 30,
+"ReloadTimeMs": 1500
+}
 
 [node name="Ak47" instance=ExtResource("1_m0c87")]
 script = ExtResource("2_xp02x")

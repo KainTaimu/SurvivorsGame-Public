@@ -1,3 +1,5 @@
+using Godot.Collections;
+
 namespace SurvivorsGame.Items.Passive;
 
 [GlobalClass]
@@ -27,5 +29,7 @@ public partial class BasePassiveStats : BaseItemStats
 
     [Export]
     public BasePassiveStatsMultipliers StatMultipliers;
-}
 
+    [Export]
+    public Dictionary<string, Variant> Additional;
+}

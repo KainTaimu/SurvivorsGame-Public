@@ -10,14 +10,20 @@ public partial class Ak47 : BaseOffensive
     private PackedScene _projectileScene;
 
     private double _fireCooldown;
-    private int _magazineCount = 30;
-    private const int _magazineCapacity = 30;
     private bool _isReloading;
 
-    private const int _reloadTimeMs = 1500;
-    private const float _bloomCoefficient = 0.03f;
+    private int _reloadTimeMs = 1500;
+    private float _bloomCoefficient = 0.03f;
+    private int _magazineCapacity = 30;
+    private int _magazineCount;
 
-    public override void _Ready() { }
+    public override void _Ready()
+    {
+        _magazineCapacity = (int)Stats.Additional["MagazineCapacity"];
+        _magazineCount = _magazineCapacity;
+        _reloadTimeMs = (int)Stats.Additional["ReloadTimeMs"];
+        _bloomCoefficient = (float)Stats.Additional["BloomCoefficient"];
+    }
 
     public override void _Input(InputEvent @event)
     {
@@ -90,7 +96,6 @@ public partial class Ak47 : BaseOffensive
         await Task.Delay(_reloadTimeMs);
         _isReloading = false;
         _magazineCount = _magazineCapacity;
-        Logger.LogDebug("done");
     }
 
     private void HandleHit(BaseEnemy target)
@@ -107,16 +112,5 @@ public partial class Ak47 : BaseOffensive
         {
             target.EmitSignal(nameof(BaseEnemy.EnemyHit), effect.Duplicate(true));
         }
-    }
-
-    private float CalculateCrit()
-    {
-        var roll = GD.Randf();
-        if (roll > Stats.CritChanceProportion)
-        {
-            return 0f;
-        }
-
-        return Stats.Damage * Stats.CritDamageMultiplier;
     }
 }
