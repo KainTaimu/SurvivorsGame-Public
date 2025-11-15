@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using SurvivorsGame.Entities.Enemies;
 using SurvivorsGame.Items.Projectiles;
 
 namespace SurvivorsGame.Items.Offensive;
@@ -27,10 +26,10 @@ public partial class Ak47 : BaseOffensive
 
     public override void _Input(InputEvent @event)
     {
-        if (@event is not InputEventKey eventKey)
+        if (@event is not InputEventKey)
             return;
 
-        if (eventKey.Keycode == Key.R && !_isReloading)
+        if (Input.IsActionPressed("reload") && !_isReloading)
             Reload();
     }
 
