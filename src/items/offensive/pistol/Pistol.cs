@@ -37,20 +37,4 @@ public partial class Pistol : BaseOffensive
         projectile.HitEnemy += HandleHit;
         AddChild(projectile);
     }
-
-    private void HandleHit(BaseEnemy target)
-    {
-        var damageEffect = new EffectDamage
-        {
-            EffectValue = Stats.Damage + CalculateCrit(),
-            EffectDuration = 0f,
-        };
-
-        target.EmitSignal(nameof(BaseEnemy.EnemyHit), damageEffect);
-
-        foreach (var effect in Stats.ProjectileEffects)
-        {
-            target.EmitSignal(nameof(BaseEnemy.EnemyHit), effect.Duplicate(true));
-        }
-    }
 }

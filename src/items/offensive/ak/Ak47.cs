@@ -97,20 +97,4 @@ public partial class Ak47 : BaseOffensive
         _isReloading = false;
         _magazineCount = _magazineCapacity;
     }
-
-    private void HandleHit(BaseEnemy target)
-    {
-        var damageEffect = new EffectDamage
-        {
-            EffectValue = Stats.Damage + CalculateCrit(),
-            EffectDuration = 0f,
-        };
-
-        target.EmitSignal(nameof(BaseEnemy.EnemyHit), damageEffect);
-
-        foreach (var effect in Stats.ProjectileEffects)
-        {
-            target.EmitSignal(nameof(BaseEnemy.EnemyHit), effect.Duplicate(true));
-        }
-    }
 }

@@ -1,5 +1,6 @@
 using Godot.Collections;
 using SurvivorsGame.Entities.Characters;
+using SurvivorsGame.Entities.Enemies;
 using SurvivorsGame.Systems;
 
 namespace SurvivorsGame.Items.Offensive;
@@ -28,6 +29,22 @@ public partial class BaseOffensive : BaseItem
     protected virtual void Attack() { }
 
     protected virtual void PostUpgrade(int newLevel) { }
+
+    protected virtual void HandleHit(BaseEnemy target)
+    {
+        var damageEffect = new EffectDamage
+        {
+            EffectValue = Stats.Damage + CalculateCrit(),
+            EffectDuration = 0f,
+        };
+
+        target.EmitSignal(nameof(BaseEnemy.EnemyHit), damageEffect);
+
+        foreach (var effect in Stats.ProjectileEffects)
+        {
+            target.EmitSignal(nameof(BaseEnemy.EnemyHit), effect.Duplicate(true));
+        }
+    }
 
     protected void Upgrade(int newLevel)
     {
@@ -64,4 +81,3 @@ public partial class BaseOffensive : BaseItem
         return Stats.Damage * Stats.CritDamageMultiplier;
     }
 }
-

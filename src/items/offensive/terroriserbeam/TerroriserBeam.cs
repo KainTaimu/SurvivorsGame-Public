@@ -38,32 +38,4 @@ public partial class TerroriserBeam : BaseOffensive
         projectile.HitEnemy += HandleHit;
         AddChild(projectile);
     }
-
-    private void HandleHit(BaseEnemy target)
-    {
-        var damageEffect = new EffectDamage
-        {
-            EffectValue = Stats.Damage + CalculateCrit(),
-            EffectDuration = 0f,
-        };
-
-        target.EmitSignal(nameof(BaseEnemy.EnemyHit), damageEffect);
-
-        foreach (var effect in Stats.ProjectileEffects)
-        {
-            target.EmitSignal(nameof(BaseEnemy.EnemyHit), effect.Duplicate(true));
-        }
-    }
-
-    private float CalculateCrit()
-    {
-        var roll = GD.Randf();
-        if (roll > Stats.CritChanceProportion)
-        {
-            return 0f;
-        }
-
-        return Stats.Damage * Stats.CritDamageMultiplier;
-    }
 }
-
