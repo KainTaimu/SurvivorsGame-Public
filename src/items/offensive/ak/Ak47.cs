@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using SurvivorsGame.Items.Projectiles;
+using SurvivorsGame.UI;
 
 namespace SurvivorsGame.Items.Offensive;
 
@@ -16,12 +17,22 @@ public partial class Ak47 : BaseOffensive
     private int _magazineCapacity = 30;
     private int _magazineCount;
 
+    private float _horizontalBaseRecoil = 3f;
+    private float _horizontalRecoilRandom = 1f;
+    private float _verticalBaseRecoil = 3f;
+    private float _verticalRecoilRandom = 0.1f;
+
     public override void _Ready()
     {
         _magazineCapacity = (int)Stats.Additional["MagazineCapacity"];
         _magazineCount = _magazineCapacity;
         _reloadTimeMs = (int)Stats.Additional["ReloadTimeMs"];
         _bloomCoefficient = (float)Stats.Additional["BloomCoefficient"];
+
+        _horizontalBaseRecoil = (float)Stats.Additional["HorizontalBaseRecoil"];
+        _horizontalRecoilRandom = (float)Stats.Additional["HorizontalRecoilRandom"];
+        _verticalBaseRecoil = (float)Stats.Additional["VerticalBaseRecoil"];
+        _verticalRecoilRandom = (float)Stats.Additional["VerticalRecoilRandom"];
     }
 
     public override void _Input(InputEvent @event)
@@ -68,7 +79,13 @@ public partial class Ak47 : BaseOffensive
 
         _magazineCount--;
 
-        var bloom = (float)GD.Randfn(Player.PlayerMovementController.Facing, _bloomCoefficient);
+        var playerVector = Player.GetCanvasTransform() * Player.Position;
+        var mouseVector =
+            Crosshair.Instance.CrosshairSprite.GetCanvasTransform()
+            * Crosshair.Instance.CrosshairSprite.GlobalPosition;
+        var rotation = playerVector.AngleToPoint(mouseVector);
+
+        var bloom = (float)GD.Randfn(rotation, _bloomCoefficient);
 
         var projectile = _projectileScene.Instantiate<ProjectileBullet>();
         projectile.WeaponOrigin = this;
@@ -79,6 +96,8 @@ public partial class Ak47 : BaseOffensive
         projectile.PierceLimit = Stats.PierceLimit;
         projectile.HitEnemy += HandleHit;
         AddChild(projectile);
+
+        ApplyCursorRecoil();
     }
 
     protected void Reload()
@@ -95,5 +114,15 @@ public partial class Ak47 : BaseOffensive
         await Task.Delay(_reloadTimeMs);
         _isReloading = false;
         _magazineCount = _magazineCapacity;
+    }
+
+    private void ApplyCursorRecoil()
+    {
+        var recoilX = _horizontalBaseRecoil * (float)GD.Randfn(0, _horizontalRecoilRandom);
+        var recoilY = _verticalBaseRecoil * (float)GD.Randfn(1, _verticalRecoilRandom);
+        recoilY = Math.Clamp(recoilY, 2, float.MaxValue);
+
+        var recoil = new Vector2(recoilX, -recoilY);
+        Crosshair.Instance.Recoil.ApplyImpulse(recoil);
     }
 }

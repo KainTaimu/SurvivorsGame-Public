@@ -5,10 +5,12 @@ namespace SurvivorsGame.UI;
 public partial class Crosshair : Node2D
 {
     [Export]
-    private AnimatedSprite2D _crosshairSprite;
+    public AnimatedSprite2D CrosshairSprite { get; private set; }
 
     [Export(PropertyHint.Range, "0,5,0.25")]
-    public float CrosshairSize = 4;
+    private float CrosshairSize = 4;
+
+    public CrossHairRecoil Recoil { get; private set; }
 
     public Crosshair()
     {
@@ -20,6 +22,7 @@ public partial class Crosshair : Node2D
         }
 
         Instance = this;
+        Recoil = new CrossHairRecoil(this);
     }
 
     public static Crosshair Instance { get; private set; }
@@ -35,29 +38,15 @@ public partial class Crosshair : Node2D
         }
     }
 
-    public override void _Input(InputEvent @event)
+    public override void _Process(double delta)
     {
-        switch (@event)
-        {
-            case InputEventMouseMotion mouseMotion:
-                Position = mouseMotion.Position;
-                break;
-
-            case InputEventMouseButton mouse:
-            {
-                if (mouse.ButtonIndex == MouseButton.Left)
-                {
-                    _crosshairSprite.Play();
-                }
-
-                break;
-            }
-        }
+        var mousePos = GetViewport().GetMousePosition();
+        Position = mousePos;
     }
 
     public void ChangeCrosshairSize(float newSize)
     {
-        _crosshairSprite.Scale = new Vector2(1, 1) * newSize;
+        CrosshairSprite.Scale = new Vector2(1, 1) * newSize;
     }
 
     public void ShowCrosshair()
@@ -72,5 +61,29 @@ public partial class Crosshair : Node2D
         Hide();
         Input.SetMouseMode(Input.MouseModeEnum.Visible);
     }
-}
 
+    public partial class CrossHairRecoil(Crosshair crosshair) : Node
+    {
+        private Vector2 _accumilatedImpulse = Vector2.Zero;
+        private float _impulseScale = 1;
+        private Tween _impulseTweener;
+
+        public void ApplyImpulse(Vector2 impulse)
+        {
+            const float easeReturn = 0.2f;
+            _accumilatedImpulse += impulse;
+            _impulseScale += 0.1f;
+            _impulseScale = Math.Clamp(_impulseScale, 0.6f, 1f);
+
+            crosshair.CrosshairSprite.Position = _accumilatedImpulse * _impulseScale;
+
+            _impulseTweener?.Kill();
+            _impulseTweener = crosshair.CreateTween();
+            _impulseTweener
+                .TweenProperty(crosshair.CrosshairSprite, "position", Vector2.Zero, easeReturn)
+                .SetEase(Tween.EaseType.Out);
+            _impulseTweener.TweenProperty(this, "_accumilatedImpulse", Vector2.Zero, easeReturn);
+            _impulseTweener.TweenProperty(this, "_impulseScale", 0f, 0.6f);
+        }
+    }
+}

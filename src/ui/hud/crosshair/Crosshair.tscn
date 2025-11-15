@@ -65,9 +65,9 @@ process_thread_group = 2
 process_thread_group_order = 0
 process_thread_messages = 0
 
-[node name="Crosshair" type="Node2D" parent="." node_paths=PackedStringArray("_crosshairSprite")]
+[node name="Crosshair" type="Node2D" parent="." node_paths=PackedStringArray("CrosshairSprite")]
 script = ExtResource("1_h1s81")
-_crosshairSprite = NodePath("Sprite2D")
+CrosshairSprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="Crosshair"]
 scale = Vector2(1.75, 1.75)
