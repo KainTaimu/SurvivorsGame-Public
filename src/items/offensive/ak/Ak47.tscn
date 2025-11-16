@@ -14,8 +14,8 @@ Name = "AK-47"
 [sub_resource type="Resource" id="Resource_gf3pr"]
 script = ExtResource("4_5ehh0")
 Damage = 5
-CritDamageMultiplier = 1.0
-CritChanceProportion = 0.15
+CritDamageMultiplier = 1.2
+CritChanceProportion = 0.17
 ProjectileSpeed = 6000
 ProjectileScaleMultiplier = 1.1
 AttackSpeed = 0.15

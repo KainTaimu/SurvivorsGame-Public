@@ -42,11 +42,7 @@ public partial class BaseOffensive : BaseItem
         }
         else
         {
-            damageEffectType = new EffectCritDamage
-            {
-                EffectValue = Stats.Damage + crit,
-                EffectDuration = 0f,
-            };
+            damageEffectType = new EffectCritDamage { EffectValue = crit, EffectDuration = 0f };
         }
 
         target.EmitSignal(nameof(BaseEnemy.EnemyHit), damageEffectType);
