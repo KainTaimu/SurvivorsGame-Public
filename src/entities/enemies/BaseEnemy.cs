@@ -1,4 +1,5 @@
 using SurvivorsGame.Entities.Enemies.States;
+using SurvivorsGame.Items.Effects;
 using SurvivorsGame.Systems;
 
 namespace SurvivorsGame.Entities.Enemies;

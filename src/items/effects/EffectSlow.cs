@@ -1,5 +1,7 @@
 using SurvivorsGame.Entities.Enemies;
 
+namespace SurvivorsGame.Items.Effects;
+
 public partial class EffectSlow : BaseEffect
 {
     private BotStatController _botStatController;
@@ -52,4 +54,3 @@ public partial class EffectSlow : BaseEffect
         EffectDuration += result;
     }
 }
-

@@ -1,6 +1,7 @@
 using Godot.Collections;
 using SurvivorsGame.Entities.Characters;
 using SurvivorsGame.Entities.Enemies;
+using SurvivorsGame.Items.Effects;
 using SurvivorsGame.Systems;
 
 namespace SurvivorsGame.Items.Offensive;
@@ -32,13 +33,23 @@ public partial class BaseOffensive : BaseItem
 
     protected virtual void HandleHit(BaseEnemy target)
     {
-        var damageEffect = new EffectDamage
-        {
-            EffectValue = Stats.Damage + CalculateCrit(),
-            EffectDuration = 0f,
-        };
+        var crit = CalculateCrit();
+        BaseEffect damageEffectType;
 
-        target.EmitSignal(nameof(BaseEnemy.EnemyHit), damageEffect);
+        if (crit == 0f)
+        {
+            damageEffectType = new EffectDamage { EffectValue = Stats.Damage, EffectDuration = 0f };
+        }
+        else
+        {
+            damageEffectType = new EffectCritDamage
+            {
+                EffectValue = Stats.Damage + crit,
+                EffectDuration = 0f,
+            };
+        }
+
+        target.EmitSignal(nameof(BaseEnemy.EnemyHit), damageEffectType);
 
         foreach (var effect in Stats.ProjectileEffects)
         {

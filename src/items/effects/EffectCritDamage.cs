@@ -2,11 +2,11 @@ using SurvivorsGame.VFX;
 
 namespace SurvivorsGame.Items.Effects;
 
-public partial class EffectDamage : BaseEffect
+public partial class EffectCritDamage : BaseEffect
 {
     private bool _applied;
 
-    public override string EffectName { get; protected set; } = "damage";
+    public override string EffectName { get; protected set; } = "CritDamage";
 
     public override void Exit() { }
 
@@ -24,7 +24,7 @@ public partial class EffectDamage : BaseEffect
         var damageIndicator = indicatorScene.Instantiate<DamageIndicator>();
 
         Target.GetTree().Root.AddChild(damageIndicator);
-        damageIndicator.ShowIndicator(Target, (int)Math.Ceiling(EffectValue));
+        damageIndicator.ShowIndicator(Target, (int)Math.Ceiling(EffectValue), true);
 
         _applied = true;
     }

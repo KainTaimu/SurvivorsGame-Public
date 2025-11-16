@@ -1,12 +1,7 @@
-using SurvivorsGame.VFX;
-
 namespace SurvivorsGame.Entities.Enemies;
 
 public partial class BotStatController : Node
 {
-    [Export]
-    private PackedScene _damageIndicator;
-
     [ExportCategory("Components")]
     [Export]
     private BaseEnemy _owner;
@@ -45,12 +40,4 @@ public partial class BotStatController : Node
         MoveSpeed = MaxMoveSpeed;
         Defense = MaxDefense;
     }
-
-    public void Damage(int damage)
-    {
-        var damageIndicator = _damageIndicator.Instantiate<DamageIndicator>();
-        GetTree().Root.AddChild(damageIndicator);
-        damageIndicator.ShowIndicator(_owner, damage);
-    }
 }
-

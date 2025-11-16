@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using SurvivorsGame.Entities.Enemies.States;
+using SurvivorsGame.Items.Effects;
 
 namespace SurvivorsGame.Entities.Enemies;
 
@@ -56,7 +57,6 @@ public partial class BotHitController : Node
         }
     }
 
-    [SuppressMessage("ReSharper", "UnusedParameter.Local")]
     private void OnEnemyHit(BaseEffect effect)
     {
         if (
@@ -88,4 +88,3 @@ public partial class BotHitController : Node
         );
     }
 }
-

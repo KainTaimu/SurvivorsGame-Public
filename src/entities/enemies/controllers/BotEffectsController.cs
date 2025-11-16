@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using SurvivorsGame.Items.Effects;
 
 namespace SurvivorsGame.Entities.Enemies;
 

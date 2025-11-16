@@ -1,4 +1,5 @@
 using Godot.Collections;
+using SurvivorsGame.Items.Effects;
 
 namespace SurvivorsGame.Items.Offensive;
 

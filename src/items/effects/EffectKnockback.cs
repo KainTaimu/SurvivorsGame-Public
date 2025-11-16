@@ -1,6 +1,8 @@
 using SurvivorsGame.Entities.Characters;
 using SurvivorsGame.Systems;
 
+namespace SurvivorsGame.Items.Effects;
+
 public partial class EffectKnockback : BaseEffect
 {
     private Vector2 _finalVector;
@@ -31,4 +33,3 @@ public partial class EffectKnockback : BaseEffect
         Applied = true;
     }
 }
-

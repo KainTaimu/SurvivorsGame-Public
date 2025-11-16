@@ -1,5 +1,7 @@
 using SurvivorsGame.Entities.Enemies;
 
+namespace SurvivorsGame.Items.Effects;
+
 [GlobalClass]
 public partial class BaseEffect : Resource
 {

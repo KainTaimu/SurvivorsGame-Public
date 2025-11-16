@@ -30,14 +30,16 @@ public partial class DamageIndicator : Node2D
         _indicatorCount--;
     }
 
-    public void ShowIndicator(Node2D obj, int damage)
+    public void ShowIndicator(Node2D obj, int damage, bool isCrit = false)
     {
         const float variation = 10;
-        var randomOffset1 = (float)GD.RandRange(-variation, variation);
-        var randomOffset2 = (float)GD.RandRange(-variation, variation);
+        var randomOffsetX = (float)GD.RandRange(-variation, variation);
+        var randomOffsetY = (float)GD.RandRange(-variation, variation);
 
-        Position = new Vector2(obj.Position.X + randomOffset1, obj.Position.Y + randomOffset2 - 55);
+        Position = new Vector2(obj.Position.X + randomOffsetX, obj.Position.Y + randomOffsetY - 55);
         _label.Text = damage.ToString(CultureInfo.InvariantCulture);
+        _label.LabelSettings.FontColor = isCrit ? Colors.OrangeRed : Colors.White;
+
         _finalPosition = new Vector2(Position.X + 15, Position.Y - 15);
 
         _tween?.Kill();
@@ -47,4 +49,3 @@ public partial class DamageIndicator : Node2D
         _tween.TweenCallback(Callable.From(QueueFree));
     }
 }
-

@@ -4,6 +4,7 @@
 [ext_resource type="FontFile" uid="uid://1b8vexm0rm8u" path="res://assets/fonts/MunroSmall-wPZw.ttf" id="2_k8fii"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_61nld"]
+resource_local_to_scene = true
 font = ExtResource("2_k8fii")
 font_size = 50
 outline_size = 4
