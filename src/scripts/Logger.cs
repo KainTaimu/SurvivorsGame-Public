@@ -1,27 +1,37 @@
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Text;
 using SurvivorsGame.Systems;
 
 public static class Logger
 {
-    public static void LogInfo(object message)
+    public static void LogInfo(params object[] s)
     {
-        SendLog(GD.PrintRich, $"[color=white][Info  :  {GetCallerName()}] {message}[/color]");
+        SendLog(
+            GD.PrintRich,
+            $"[color=white][Info  :  {GetCallerName()}] {ConstructString(s)}[/color]"
+        );
     }
 
-    public static void LogDebug(object message)
+    public static void LogDebug(params object[] s)
     {
-        SendLog(GD.PrintRich, $"[color=darkgray][Debug  :  {GetCallerName()}] {message}[/color]");
+        SendLog(
+            GD.PrintRich,
+            $"[color=darkgray][Debug  :  {GetCallerName()}] {ConstructString(s)}[/color]"
+        );
     }
 
-    public static void LogWarning(object message)
+    public static void LogWarning(params object[] s)
     {
-        SendLog(GD.PrintRich, $"[color=yellow][Warning  :  {GetCallerName()}] {message}[/color]");
+        SendLog(
+            GD.PrintRich,
+            $"[color=yellow][Warning  :  {GetCallerName()}] {ConstructString(s)}[/color]"
+        );
     }
 
-    public static void LogError(object message)
+    public static void LogError(params object[] s)
     {
-        GD.PrintErr($"[Error  :  {GetCallerName()}] {message}");
+        GD.PrintErr($"[Error  :  {GetCallerName()}] {ConstructString(s)}");
     }
 
     private static void SendLog(Action<string> method, string message)
@@ -34,6 +44,14 @@ public static class Logger
         method(message);
     }
 
+    private static string ConstructString(object[] s)
+    {
+        var builder = new StringBuilder();
+        foreach (var x in s)
+            builder.Append($"{x} ");
+        return builder.ToString();
+    }
+
     [MethodImpl(MethodImplOptions.NoInlining)]
     private static string GetCallerName()
     {
@@ -43,4 +61,3 @@ public static class Logger
         return type is null ? "" : type.Name;
     }
 }
-
