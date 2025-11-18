@@ -12,6 +12,9 @@ public partial class Crosshair : Node2D
 
     public CrossHairRecoil Recoil { get; private set; }
 
+    private Input.MouseModeEnum _hiddenMouseMode = Input.MouseModeEnum.Visible;
+    private Input.MouseModeEnum _visibleMouseMode = Input.MouseModeEnum.Captured;
+
     public Crosshair()
     {
         if (Instance != null)
@@ -32,16 +35,14 @@ public partial class Crosshair : Node2D
         PauseController.Instance.Paused += HideCrosshair;
         PauseController.Instance.Unpaused += ShowCrosshair;
 
-        if (!Engine.IsEditorHint())
-        {
-            Input.SetMouseMode(Input.MouseModeEnum.Hidden);
-        }
+        Input.SetMouseMode(_visibleMouseMode);
     }
 
-    public override void _Process(double delta)
+    public override void _Input(InputEvent @event)
     {
-        var mousePos = GetViewport().GetMousePosition();
-        Position = mousePos;
+        if (@event is not InputEventMouseMotion motion)
+            return;
+        Position += motion.Relative;
     }
 
     public void ChangeCrosshairSize(float newSize)
@@ -52,36 +53,48 @@ public partial class Crosshair : Node2D
     public void ShowCrosshair()
     {
         Show();
-        Position = GetViewport().GetMousePosition();
-        Input.SetMouseMode(Input.MouseModeEnum.Hidden);
+        Input.SetMouseMode(_visibleMouseMode);
     }
 
     public void HideCrosshair()
     {
         Hide();
-        Input.SetMouseMode(Input.MouseModeEnum.Visible);
+        Input.SetMouseMode(_hiddenMouseMode);
     }
 
     public partial class CrossHairRecoil(Crosshair crosshair) : Node
     {
+        /// Ideas:
+        ///     - Bounce recoil: Crosshair jumps per shot
+        ///         - Rotation so horizontal recoil is tangent to mouse relative to player?
+        ///     - Bloom recoil: Accurate until nth shot, where accuracy exponentially decreases per shot
         private Vector2 _accumilatedImpulse = Vector2.Zero;
         private float _impulseScale = 1;
         private Tween _impulseTweener;
+        private Tween _recoilJumpTweener;
 
-        public void ApplyImpulse(Vector2 impulse)
+        public void ApplyImpulse(Vector2 impulse, float minImpulse = 0.6f)
         {
             const float easeReturn = 0.2f;
+
+            var targetCrosshair = crosshair.CrosshairSprite;
+
             _accumilatedImpulse += impulse;
             _impulseScale += 0.1f;
-            _impulseScale = Math.Clamp(_impulseScale, 0.6f, 1f);
+            _impulseScale = Math.Clamp(_impulseScale, minImpulse, 1f);
 
-            crosshair.CrosshairSprite.Position = _accumilatedImpulse * _impulseScale;
+            var finalCrosshairPos =
+                targetCrosshair.Position + (_accumilatedImpulse * _impulseScale);
+
+            _recoilJumpTweener?.Kill();
+            _recoilJumpTweener = crosshair
+                .CreateTween()
+                .SetTrans(Tween.TransitionType.Elastic)
+                .SetEase(Tween.EaseType.Out);
+            _recoilJumpTweener.TweenProperty(targetCrosshair, "position", finalCrosshairPos, 0.33f);
 
             _impulseTweener?.Kill();
-            _impulseTweener = crosshair.CreateTween();
-            _impulseTweener
-                .TweenProperty(crosshair.CrosshairSprite, "position", Vector2.Zero, easeReturn)
-                .SetEase(Tween.EaseType.Out);
+            _impulseTweener = crosshair.CreateTween().SetTrans(Tween.TransitionType.Linear);
             _impulseTweener.TweenProperty(this, "_accumilatedImpulse", Vector2.Zero, easeReturn);
             _impulseTweener.TweenProperty(this, "_impulseScale", 0f, 0.6f);
         }

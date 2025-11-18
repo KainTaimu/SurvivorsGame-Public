@@ -72,5 +72,5 @@ CrosshairSprite = NodePath("Sprite2D")
 [node name="Sprite2D" type="AnimatedSprite2D" parent="Crosshair"]
 scale = Vector2(1.75, 1.75)
 sprite_frames = SubResource("SpriteFrames_dsa0i")
-frame = 6
 frame_progress = 1.0
+metadata/_edit_lock_ = true

@@ -24,9 +24,9 @@ Additional = {
 "BloomCoefficient": 0.01,
 "HorizontalBaseRecoil": 3.0,
 "HorizontalRecoilRandom": 1.0,
-"MagazineCapacity": 30,
+"MagazineCapacity": 999,
 "ReloadTimeMs": 1500,
-"VerticalBaseRecoil": 4.0,
+"VerticalBaseRecoil": 15.0,
 "VerticalRecoilRandom": 0.5
 }
 

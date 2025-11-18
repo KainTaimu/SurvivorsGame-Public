@@ -123,6 +123,6 @@ public partial class Ak47 : BaseOffensive
         recoilY = Math.Clamp(recoilY, 2, float.MaxValue);
 
         var recoil = new Vector2(recoilX, -recoilY);
-        Crosshair.Instance.Recoil.ApplyImpulse(recoil);
+        Crosshair.Instance.Recoil.ApplyImpulse(recoil, 1f);
     }
 }
