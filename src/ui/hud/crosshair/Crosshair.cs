@@ -38,6 +38,11 @@ public partial class Crosshair : Node2D
         Input.SetMouseMode(_visibleMouseMode);
     }
 
+    public override void _Process(double delta)
+    {
+        ClampCrosshairToViewport();
+    }
+
     public override void _Input(InputEvent @event)
     {
         if (@event is not InputEventMouseMotion motion)
@@ -60,6 +65,15 @@ public partial class Crosshair : Node2D
     {
         Hide();
         Input.SetMouseMode(_hiddenMouseMode);
+    }
+
+    private void ClampCrosshairToViewport()
+    {
+        const int marginPx = 0;
+        var viewportSize = GetViewport().GetVisibleRect().Size;
+        var min = Vector2.One * -marginPx;
+        var max = new Vector2(viewportSize.X + marginPx, viewportSize.Y + marginPx);
+        CrosshairSprite.GlobalPosition = CrosshairSprite.GlobalPosition.Clamp(min, max);
     }
 
     public partial class CrossHairRecoil(Crosshair crosshair) : Node
