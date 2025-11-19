@@ -9,16 +9,26 @@ namespace SurvivorsGame.UI.Menus;
 public partial class LevelUpMenu : CanvasLayer
 {
     [Export]
+    private bool _enabled;
+
+    [Export]
     private VBoxContainer _itemContainer;
 
     [Export]
     private uint _maxItems = 5;
 
-    private Player Player => GameWorld.Instance.MainPlayer;
+    private static Player Player => GameWorld.Instance.MainPlayer;
     private SceneTree Tree => GetTree();
 
     public override void _Ready()
     {
+#if DEBUG
+        if (!_enabled)
+        {
+            QueueFree();
+            return;
+        }
+#endif
         PopulateItems();
 
         Input.MouseMode = Input.MouseModeEnum.Visible;
@@ -80,4 +90,3 @@ public partial class LevelUpMenu : CanvasLayer
         QueueFree();
     }
 }
-
