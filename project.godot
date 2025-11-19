@@ -35,6 +35,7 @@ window/size/mode=4
 window/size/resizable=false
 window/size/borderless=true
 window/stretch/mode="viewport"
+window/stretch/scale_mode="integer"
 window/vsync/vsync_mode=0
 window/size/mode.editor=0
 

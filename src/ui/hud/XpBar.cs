@@ -1,7 +1,7 @@
 using SurvivorsGame.Entities.Characters;
 using SurvivorsGame.Systems;
 
-namespace SurvivorsGame.Levels.Systems;
+namespace SurvivorsGame.UI;
 
 public partial class XpBar : ProgressBar
 {
