@@ -61,9 +61,6 @@ animations = [{
 }]
 
 [node name="CanvasLayer" type="CanvasLayer"]
-process_thread_group = 2
-process_thread_group_order = 0
-process_thread_messages = 0
 
 [node name="Crosshair" type="Node2D" parent="." node_paths=PackedStringArray("CrosshairSprite")]
 script = ExtResource("1_h1s81")
