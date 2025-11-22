@@ -1,12 +1,13 @@
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace SurvivorsGame.Levels.Systems;
 
-public class GridCell
+public class GridCell<T>
 {
     private const int MaxCapacity = 64;
 
-    public readonly List<Node2D> Objects = [];
+    public readonly List<T> Objects = [];
 
     public Vector2I Index;
 
@@ -17,7 +18,7 @@ public class GridCell
         return Index.ToString();
     }
 
-    public void AddObject(Node2D obj)
+    public void AddObject(T obj)
     {
         if (Objects.Count > MaxCapacity && MaxCapacity != -1)
         {
@@ -33,3 +34,8 @@ public class GridCell
     }
 }
 
+public readonly struct GridCellSingle<T>
+{
+    public readonly T Data;
+    public readonly Vector<float> Index;
+}

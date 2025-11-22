@@ -10,7 +10,7 @@ public partial class GridCollisionSolver : Node
     [Export(PropertyHint.Range, "0,100,1")]
     private float _distBeforeShove = 45;
 
-    private Grid _grid;
+    private Grid<Node2D> _grid;
 
     [Export(PropertyHint.Range, "0,5,0.1")]
     private float _pushAmount = 1.1f;
@@ -32,7 +32,7 @@ public partial class GridCollisionSolver : Node
             return;
         }
 
-        _grid = new Grid(GridSize);
+        _grid = new Grid<Node2D>(GridSize);
 
         if (DebugEnabled)
         {
@@ -106,7 +106,7 @@ public partial class GridCollisionSolver : Node
         }
     }
 
-    private void CheckCellCollisions(GridCell cell)
+    private void CheckCellCollisions(GridCell<Node2D> cell)
     {
         if (cell is null)
         {
@@ -188,4 +188,3 @@ public partial class GridCollisionSolver : Node
         }
     }
 }
-

@@ -2,13 +2,13 @@ using SurvivorsGame.Systems;
 
 namespace SurvivorsGame.Levels.Systems;
 
-public class Grid
+public class Grid<T>
 {
     private const int Padding = 5;
 
     private readonly int _cellSize;
 
-    public readonly GridCell[,] Cells;
+    public readonly GridCell<T>[,] Cells;
 
     public readonly Vector2I Dimensions;
 
@@ -20,13 +20,13 @@ public class Grid
 
         var width = (int)Math.Ceiling(gameWorldSize.X / _cellSize) + Padding;
         var height = (int)Math.Ceiling(gameWorldSize.Y / _cellSize) + Padding;
-        Cells = new GridCell[width, height];
+        Cells = new GridCell<T>[width, height];
 
         for (var x = 0; x < width; x++)
         {
             for (var y = 0; y < height; y++)
             {
-                var cell = new GridCell
+                var cell = new GridCell<T>
                 {
                     Position = new Vector2I(
                         _cellSize * x - _cellSize * 2,
@@ -52,7 +52,7 @@ public class Grid
         }
     }
 
-    public GridCell GetCell(Vector2 position)
+    public GridCell<T> GetCell(Vector2 position)
     {
         var ix = (int)Math.Round(position.X / _cellSize) + 2;
         var iy = (int)Math.Round(position.Y / _cellSize) + 2;
@@ -65,7 +65,7 @@ public class Grid
         return Cells[ix, iy];
     }
 
-    public GridCell GetCell(int x, int y)
+    public GridCell<T> GetCell(int x, int y)
     {
         if (x < 0 || y < 0 || x > Dimensions.X || y > Dimensions.Y)
         {
@@ -75,4 +75,3 @@ public class Grid
         return Cells[x, y];
     }
 }
-
