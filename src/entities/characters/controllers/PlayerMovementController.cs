@@ -1,4 +1,5 @@
 using SurvivorsGame.Systems;
+using SurvivorsGame.UI;
 
 namespace SurvivorsGame.Entities.Characters;
 
@@ -7,8 +8,6 @@ public partial class PlayerMovementController : Node
     [Export]
     private Player _owner;
 
-    public float Facing { get; private set; }
-
     public override void _Ready()
     {
         _owner.Sprite.Play();
@@ -16,7 +15,6 @@ public partial class PlayerMovementController : Node
 
     public override void _Process(double delta)
     {
-        UpdateFacingDirection();
         PlayerMovement(delta);
     }
 
@@ -80,17 +78,10 @@ public partial class PlayerMovementController : Node
         _owner.SetPosition(newPos);
     }
 
-    private void UpdateFacingDirection()
-    {
-        var playerVector = _owner.GetCanvasTransform() * _owner.Position;
-        var mouseVector = GetViewport().GetMousePosition();
-
-        Facing = playerVector.AngleToPoint(mouseVector);
-    }
-
     private void FlipSprite()
     {
-        if ((Facing <= MathF.PI / 2) & (Facing > -(MathF.PI / 2)))
+        var angle = Crosshair.Instance.AngleFromPlayer;
+        if ((angle <= MathF.PI / 2) & (angle > -(MathF.PI / 2)))
         {
             _owner.Sprite.FlipH = false;
         }
@@ -100,4 +91,3 @@ public partial class PlayerMovementController : Node
         }
     }
 }
-
