@@ -1,3 +1,4 @@
+using SurvivorsGame.Systems;
 using PauseController = SurvivorsGame.UI.Menus.PauseController;
 
 namespace SurvivorsGame.UI;
@@ -9,6 +10,11 @@ public partial class Crosshair : Node2D
 
     [Export(PropertyHint.Range, "0,5,0.25")]
     private float CrosshairSize = 4;
+
+    public float AngleFromPlayer
+    {
+        get => GetAngleFromPlayer();
+    }
 
     public CrossHairRecoil Recoil { get; private set; }
 
@@ -65,6 +71,18 @@ public partial class Crosshair : Node2D
     {
         Hide();
         Input.SetMouseMode(_hiddenMouseMode);
+    }
+
+    private float GetAngleFromPlayer()
+    {
+        var player = GameWorld.Instance.MainPlayer;
+        var playerPos =
+            player.GlobalPosition
+            * GetViewport().GetCamera2D().GetCanvasTransform().AffineInverse();
+        var crosshairPos = CrosshairSprite.GlobalPosition * GetViewport().GetScreenTransform();
+
+        var angle = playerPos.AngleToPoint(crosshairPos);
+        return angle;
     }
 
     private void ClampCrosshairToViewport()

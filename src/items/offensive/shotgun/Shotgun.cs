@@ -1,5 +1,5 @@
-using SurvivorsGame.Entities.Enemies;
 using SurvivorsGame.Items.Projectiles;
+using SurvivorsGame.UI;
 
 namespace SurvivorsGame.Items.Offensive;
 
@@ -44,7 +44,7 @@ public partial class Shotgun : BaseOffensive
 
             projectile.SetScale(new Vector2(1, 1) * Stats.ProjectileScaleMultiplier);
             projectile.SetPosition(Player.Position);
-            projectile.SetRotation(Player.PlayerMovementController.Facing + randomRotation);
+            projectile.SetRotation(Crosshair.Instance.AngleFromPlayer + randomRotation);
 
             projectile.ProjectileSpeed = randomPelletSpeed;
             projectile.PierceLimit = Stats.PierceLimit;

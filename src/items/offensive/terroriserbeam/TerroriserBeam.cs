@@ -1,5 +1,5 @@
-using SurvivorsGame.Entities.Enemies;
 using SurvivorsGame.Items.Projectiles;
+using SurvivorsGame.UI;
 
 namespace SurvivorsGame.Items.Offensive;
 
@@ -32,7 +32,7 @@ public partial class TerroriserBeam : BaseOffensive
         projectile.WeaponOrigin = this;
         projectile.SetScale(new Vector2(1, 1) * Stats.ProjectileScaleMultiplier);
         projectile.SetPosition(Player.Position);
-        projectile.SetRotation(Player.PlayerMovementController.Facing);
+        projectile.SetRotation(Crosshair.Instance.AngleFromPlayer);
         projectile.ProjectileSpeed = Stats.ProjectileSpeed;
         projectile.PierceLimit = Stats.PierceLimit;
         projectile.HitEnemy += HandleHit;
