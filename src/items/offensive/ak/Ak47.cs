@@ -4,10 +4,20 @@ using SurvivorsGame.UI;
 
 namespace SurvivorsGame.Items.Offensive;
 
-public partial class Ak47 : BaseOffensive
+public partial class Ak47 : BaseOffensive, IReloadable
 {
     [Export]
     private PackedScene _projectileScene;
+
+    public int MagazineCapacity
+    {
+        get => _magazineCapacity;
+    }
+
+    public int MagazineCount
+    {
+        get => _magazineCount;
+    }
 
     private double _fireCooldown;
     private bool _isReloading;
@@ -100,7 +110,7 @@ public partial class Ak47 : BaseOffensive
         ApplyCursorRecoil();
     }
 
-    protected void Reload()
+    public void Reload()
     {
         if (_magazineCount == _magazineCapacity)
             return;
