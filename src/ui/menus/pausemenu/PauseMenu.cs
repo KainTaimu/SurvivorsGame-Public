@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using System.Text;
 using SurvivorsGame.Systems;
 
 namespace SurvivorsGame.UI.Menus;
@@ -71,10 +71,23 @@ public partial class PauseMenu : CanvasLayer
         {
             return;
         }
-
+        var statString = new StringBuilder();
         var playerStats = GameWorld.Instance.MainPlayer.StatController.PlayerStats;
-        var statString = JsonConvert.SerializeObject(playerStats, Formatting.Indented);
-        _playerStats.Text = statString;
+
+        var pType = playerStats.GetType();
+        var fields = pType.GetProperties(
+            System.Reflection.BindingFlags.Public
+                | System.Reflection.BindingFlags.Instance
+                | System.Reflection.BindingFlags.DeclaredOnly
+        );
+        foreach (var f in fields)
+        {
+            var value = f.GetValue(playerStats);
+            if (value is null)
+                continue;
+            statString.AppendLine($"{f.Name}: {value.ToString()}");
+        }
+
+        _playerStats.Text = statString.ToString();
     }
 }
-
