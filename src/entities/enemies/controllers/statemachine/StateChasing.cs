@@ -18,11 +18,20 @@ public partial class StateChasing : State
     {
         var enemyPosition = EnemyOwner.Position;
         var playerPosition = GlobalStateController.Instance.CachedPlayerState.Position;
-        var moveVector = enemyPosition.DirectionTo(playerPosition) * _botStatController.MoveSpeed;
+
+        var direction = PlayerVectorFieldGrid.Instance.GetDirectionTo(enemyPosition);
+
+        // HACK: Because Godot Vector2 is not nullable
+        if (direction == Vector2.Inf)
+        {
+            direction = enemyPosition.DirectionTo(playerPosition) * _botStatController.MoveSpeed;
+            Logger.LogWarning("Got infinity vector");
+        }
+
+        var moveVector = direction * _botStatController.MoveSpeed;
 
         EnemyOwner.Position += moveVector * (float)delta;
 
         EnemyOwner.Sprite.FlipH = !(moveVector.X > 0);
     }
 }
-

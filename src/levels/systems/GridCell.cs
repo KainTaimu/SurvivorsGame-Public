@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Numerics;
 
 namespace SurvivorsGame.Levels.Systems;
 
@@ -7,7 +6,10 @@ public class GridCell<T>
 {
     private const int MaxCapacity = 64;
 
-    public readonly List<T> Objects = [];
+    public List<T> Objects = [];
+
+    // HACK: For PlayerVectorFieldGrid
+    public T SingleObject;
 
     public Vector2I Index;
 
@@ -32,10 +34,4 @@ public class GridCell<T>
     {
         Objects.Clear();
     }
-}
-
-public readonly struct GridCellSingle<T>
-{
-    public readonly T Data;
-    public readonly Vector<float> Index;
 }

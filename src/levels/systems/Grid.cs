@@ -4,7 +4,7 @@ namespace SurvivorsGame.Levels.Systems;
 
 public class Grid<T>
 {
-    private const int Padding = 5;
+    private readonly int _padding;
 
     private readonly int _cellSize;
 
@@ -12,14 +12,15 @@ public class Grid<T>
 
     public readonly Vector2I Dimensions;
 
-    public Grid(int cellSize) // Generate cells
+    public Grid(int cellSize, int padding = 5) // Generate cells
     {
         var gameWorldSize = GameWorld.Instance.CurrentLevel.PixelSize;
 
         _cellSize = cellSize;
+        _padding = padding;
 
-        var width = (int)Math.Ceiling(gameWorldSize.X / _cellSize) + Padding;
-        var height = (int)Math.Ceiling(gameWorldSize.Y / _cellSize) + Padding;
+        var width = (int)Math.Ceiling(gameWorldSize.X / _cellSize) + _padding;
+        var height = (int)Math.Ceiling(gameWorldSize.Y / _cellSize) + _padding;
         Cells = new GridCell<T>[width, height];
 
         for (var x = 0; x < width; x++)
