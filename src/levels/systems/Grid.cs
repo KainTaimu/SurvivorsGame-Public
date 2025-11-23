@@ -30,8 +30,8 @@ public class Grid<T>
                 var cell = new GridCell<T>
                 {
                     Position = new Vector2I(
-                        _cellSize * x - _cellSize * 2,
-                        _cellSize * y - _cellSize * 2
+                        _cellSize * x - _cellSize * _padding / 2,
+                        _cellSize * y - _cellSize * _padding / 2
                     ),
                     Index = new Vector2I(x, y),
                 };
@@ -55,11 +55,12 @@ public class Grid<T>
 
     public GridCell<T> GetCell(Vector2 position)
     {
-        var ix = (int)Math.Round(position.X / _cellSize) + 2;
-        var iy = (int)Math.Round(position.Y / _cellSize) + 2;
+        var ix = (int)Math.Round(position.X / _cellSize) + _padding / 2;
+        var iy = (int)Math.Round(position.Y / _cellSize) + _padding / 2;
 
         if (ix < 0 || iy < 0 || ix > Dimensions.X || iy > Dimensions.Y)
         {
+            Logger.LogWarning($"Invalid cell access at ({ix}, {iy}) for {position}");
             return null;
         }
 

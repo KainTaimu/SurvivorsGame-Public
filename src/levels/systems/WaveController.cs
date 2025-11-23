@@ -15,6 +15,9 @@ public partial class WaveController : Node
     private uint _maxMobCount;
 
     [Export]
+    private uint _maxMobCountDebug;
+
+    [Export]
     private bool _showSpawnerBounds;
 
     // [Export] private Timer _spawnDurationTimer;
@@ -110,11 +113,13 @@ public partial class WaveController : Node
 
     private void OnSpawnSpeedTimerTimeout()
     {
-        if (GameWorld.Instance.Enemies.Count >= _maxMobCount || !MainPlayer.Alive || !Enabled)
-        {
+#if DEBUG
+        if (GameWorld.Instance.Enemies.Count >= _maxMobCountDebug || !MainPlayer.Alive || !Enabled)
             return;
-        }
-
+#else
+        if (GameWorld.Instance.Enemies.Count >= _maxMobCount || !MainPlayer.Alive || !Enabled)
+            return;
+#endif
         if (MainPlayer.Alive && Enabled)
         {
             var enemyType = _activeWave.GetRandomEnemyType();
@@ -206,4 +211,3 @@ public partial class WaveController : Node
         AddChild(spawnRect);
     }
 }
-

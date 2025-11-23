@@ -5,7 +5,7 @@ namespace SurvivorsGame.Levels.Systems;
 public partial class PlayerVectorFieldGrid : Node
 {
     [Export]
-    private int _gridSize = 64;
+    private int _gridSize = 48;
     private Grid<Vector2> _grid;
 
     public static PlayerVectorFieldGrid Instance { get; private set; }
@@ -25,7 +25,7 @@ public partial class PlayerVectorFieldGrid : Node
 
     public override void _Ready()
     {
-        _grid = new(_gridSize);
+        _grid = new(_gridSize, 10);
     }
 
     public override void _PhysicsProcess(double delta)

@@ -17,8 +17,8 @@ public partial class FpsCounter : CanvasLayer
         var processTime = Performance.GetMonitor(Performance.Monitor.TimeProcess) * 1000;
         var physicsTime = Performance.GetMonitor(Performance.Monitor.TimePhysicsProcess) * 1000;
 
-        _fps.Text = $"{fps:F2} FPS";
-        _processTime.Text = $"{processTime:F2} ms";
-        _physicsTime.Text = $"{physicsTime:F2} ms";
+        _fps.Text = $"FPS: {fps:F2}";
+        _processTime.Text = $"Process: {processTime:F2}ms";
+        _physicsTime.Text = $"Physics: {physicsTime:F2}ms";
     }
 }
