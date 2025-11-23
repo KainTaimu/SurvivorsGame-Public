@@ -42,14 +42,15 @@ public partial class Crosshair : Node2D
         PauseController.Instance.Unpaused += ShowCrosshair;
 
         Input.SetMouseMode(_visibleMouseMode);
+        Position = GetViewportRect().GetCenter();
     }
 
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
     {
         ClampCrosshairToViewport();
     }
 
-    public override void _UnhandledInput(InputEvent @event)
+    public override void _Input(InputEvent @event)
     {
         if (@event is not InputEventMouseMotion motion)
             return;
