@@ -22,6 +22,7 @@ config/icon="res://assets/icon.svg"
 
 Game="*res://src/systems/Game.cs"
 BuildInfo="*res://src/scripts/BuildInfo.tscn"
+DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
 
 [debug]
 
@@ -45,7 +46,7 @@ project/assembly_name="SurvivorsGame"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/project_time_tracker/plugin.cfg")
+enabled=PackedStringArray("res://addons/debug_menu/plugin.cfg", "res://addons/project_time_tracker/plugin.cfg")
 
 [file_customization]
 
@@ -103,6 +104,10 @@ reload={
 2d_physics/layer_9="Enemies"
 2d_physics/layer_10="EnemyHitbox"
 2d_physics/layer_11="EnemyDamageBox"
+
+[physics]
+
+2d/run_on_separate_thread=true
 
 [rendering]
 

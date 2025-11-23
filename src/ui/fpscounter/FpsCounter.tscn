@@ -2,29 +2,8 @@
 
 [ext_resource type="Script" uid="uid://d0g1rk7w5ygtk" path="res://src/ui/fpscounter/FpsCounter.cs" id="1_liio2"]
 
-[node name="FPS" type="CanvasLayer" node_paths=PackedStringArray("_fps", "_processTime", "_physicsTime")]
+[node name="FPS" type="Node" node_paths=PackedStringArray("_fps", "_processTime", "_physicsTime")]
 script = ExtResource("1_liio2")
-_fps = NodePath("VBoxContainer/Label")
-_processTime = NodePath("VBoxContainer/Label2")
-_physicsTime = NodePath("VBoxContainer/Label3")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -40.0
-offset_top = -20.0
-offset_bottom = 20.0
-grow_horizontal = 0
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="Label2" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="Label3" type="Label" parent="VBoxContainer"]
-layout_mode = 2
+_fps = NodePath("")
+_processTime = NodePath("")
+_physicsTime = NodePath("")
