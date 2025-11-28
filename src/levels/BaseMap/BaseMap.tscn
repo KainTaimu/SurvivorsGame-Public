@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://dripg0s3cwnyp"]
+[gd_scene load_steps=16 format=4 uid="uid://dripg0s3cwnyp"]
 
 [ext_resource type="Texture2D" uid="uid://deyaflaibmsth" path="res://assets/sprites/level/grid.png" id="1_8y8k7"]
 [ext_resource type="Script" uid="uid://dqqaw1khav2g7" path="res://src/levels/BaseMap/BaseMap.cs" id="2_if266"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://qp5q57b5v7mj" path="res://src/ui/menus/pausemenu/PauseMenu.tscn" id="10_hcasr"]
 [ext_resource type="Script" uid="uid://b0nl3b41awyp" path="res://src/systems/GameWorld.cs" id="11_0p6xr"]
 [ext_resource type="PackedScene" uid="uid://2ww3mvyg3pbr" path="res://src/levels/systems/WaveController.tscn" id="12_m4e22"]
-[ext_resource type="Script" uid="uid://cvrd76mwv3mel" path="res://src/levels/systems/PlayerVectorFieldGrid.cs" id="12_ppapj"]
 [ext_resource type="Script" uid="uid://b3kwckekcc4on" path="res://src/ui/menus/pausemenu/PauseController.cs" id="12_w6drc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tfctj"]
@@ -573,6 +572,3 @@ _maxMobCount = 500
 [node name="GridCollisionSolver" parent="Systems" instance=ExtResource("8_w1oit")]
 _distBeforeShove = 60.0
 _pushAmount = 2.2
-
-[node name="PlayerVectorFieldGrid" type="Node" parent="Systems"]
-script = ExtResource("12_ppapj")

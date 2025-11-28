@@ -28,7 +28,7 @@ _updateInterval = 0.05
 
 [node name="WaveController" parent="Systems" index="3"]
 _maxMobCount = 1200
-_maxMobCountDebug = 300
+_maxMobCountDebug = 400
 
 [node name="Wave 1" parent="Systems/WaveController" index="2" instance=ExtResource("3_oxvj6")]
 Duration = 999
