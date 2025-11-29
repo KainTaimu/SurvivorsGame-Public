@@ -1,4 +1,5 @@
 using System.Globalization;
+using SurvivorsGame.Entities.Enemies;
 
 namespace SurvivorsGame.VFX;
 
@@ -30,7 +31,7 @@ public partial class DamageIndicator : Node2D
         _indicatorCount--;
     }
 
-    public void ShowIndicator(Node2D obj, int damage, bool isCrit = false)
+    public void ShowIndicator(BaseEnemy obj, int damage, bool isCrit = false)
     {
         const float variation = 10;
         var randomOffsetX = (float)GD.RandRange(-variation, variation);

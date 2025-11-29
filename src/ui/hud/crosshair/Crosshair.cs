@@ -21,6 +21,8 @@ public partial class Crosshair : Node2D
     private Input.MouseModeEnum _hiddenMouseMode = Input.MouseModeEnum.Visible;
     private Input.MouseModeEnum _visibleMouseMode = Input.MouseModeEnum.Captured;
 
+    private Viewport _viewport;
+
     public Crosshair()
     {
         if (Instance != null)
@@ -42,19 +44,18 @@ public partial class Crosshair : Node2D
         PauseController.Instance.Unpaused += ShowCrosshair;
 
         Input.SetMouseMode(_visibleMouseMode);
+        _viewport = GetViewport();
         Position = GetViewportRect().GetCenter();
     }
 
-    public override void _PhysicsProcess(double delta)
-    {
-        ClampCrosshairToViewport();
-    }
+    public override void _PhysicsProcess(double delta) { }
 
     public override void _Input(InputEvent @event)
     {
         if (@event is not InputEventMouseMotion motion)
             return;
         Position += motion.Relative;
+        ClampCrosshairToViewport();
     }
 
     public void ChangeCrosshairSize(float newSize)
@@ -78,9 +79,8 @@ public partial class Crosshair : Node2D
     {
         var player = GameWorld.Instance.MainPlayer;
         var playerPos =
-            player.GlobalPosition
-            * GetViewport().GetCamera2D().GetCanvasTransform().AffineInverse();
-        var crosshairPos = CrosshairSprite.GlobalPosition * GetViewport().GetScreenTransform();
+            player.GlobalPosition * _viewport.GetCamera2D().GetCanvasTransform().AffineInverse();
+        var crosshairPos = CrosshairSprite.GlobalPosition * _viewport.GetScreenTransform();
 
         var angle = playerPos.AngleToPoint(crosshairPos);
         return angle;
@@ -89,7 +89,7 @@ public partial class Crosshair : Node2D
     private void ClampCrosshairToViewport()
     {
         const int marginPx = 0;
-        var viewportSize = GetViewport().GetVisibleRect().Size;
+        var viewportSize = _viewport.GetVisibleRect().Size;
         var min = Vector2.One * -marginPx;
         var max = new Vector2(viewportSize.X + marginPx, viewportSize.Y + marginPx);
         CrosshairSprite.GlobalPosition = CrosshairSprite.GlobalPosition.Clamp(min, max);
@@ -130,6 +130,8 @@ public partial class Crosshair : Node2D
             _impulseTweener = crosshair.CreateTween().SetTrans(Tween.TransitionType.Linear);
             _impulseTweener.TweenProperty(this, "_accumilatedImpulse", Vector2.Zero, easeReturn);
             _impulseTweener.TweenProperty(this, "_impulseScale", 0f, 0.6f);
+
+            crosshair.ClampCrosshairToViewport();
         }
     }
 }

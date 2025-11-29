@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using SurvivorsGame.Entities.Characters;
 using SurvivorsGame.Entities.Enemies;
 using SurvivorsGame.Levels;
+using SurvivorsGame.Levels.Systems;
 using SurvivorsGame.Pickups;
 
 namespace SurvivorsGame.Systems;
@@ -33,7 +34,6 @@ public partial class GameWorld : Node
     public List<BaseEnemy> Enemies { get; } = [];
     public Dictionary<string, List<BaseEnemy>> EnemiesByType { get; } = []; // Used by GlobalBotRenderer
     public List<BasePickup> Pickups { get; } = [];
-    public int TotalEnemiesSpawned { get; private set; }
 
     public void LoadLevel(string levelName)
     {
@@ -52,8 +52,6 @@ public partial class GameWorld : Node
 
     public void AddEnemy(BaseEnemy enemy)
     {
-        TotalEnemiesSpawned++;
-        enemy.Id = TotalEnemiesSpawned;
         Enemies.Add(enemy);
 
         if (EnemiesByType.TryGetValue(enemy.GetSceneFilePath(), out var list))
@@ -101,4 +99,3 @@ public partial class GameWorld : Node
         }
     }
 }
-

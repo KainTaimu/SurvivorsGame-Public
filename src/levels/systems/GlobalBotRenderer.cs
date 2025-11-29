@@ -80,4 +80,3 @@ public partial class GlobalBotRenderer : Node2D
         }
     }
 }
-

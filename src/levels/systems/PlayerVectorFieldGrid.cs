@@ -39,10 +39,10 @@ public partial class PlayerVectorFieldGrid : Node
 
         Parallel.For(
             0,
-            _grid.Dimensions.Y,
-            y =>
+            _grid.Dimensions.X,
+            x =>
             {
-                for (var x = 0; x < _grid.Dimensions.X; x++)
+                for (var y = 0; y < _grid.Dimensions.Y; y++)
                 {
                     var cell = _grid.GetCell(x, y);
                     var pos = (Vector2)cell.Position;

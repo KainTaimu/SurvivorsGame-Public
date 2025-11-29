@@ -22,6 +22,8 @@ show_percentage = false
 script = ExtResource("1_3lvpx")
 
 [node name="Crosshair" parent="." instance=ExtResource("3_7ru6h")]
+process_mode = 4
 process_thread_group = 2
 process_thread_group_order = 0
 process_thread_messages = 0
+visible = false

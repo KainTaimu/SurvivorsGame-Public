@@ -1,10 +1,11 @@
 using SurvivorsGame.Entities.Enemies.States;
 using SurvivorsGame.Items.Effects;
+using SurvivorsGame.Levels.Systems;
 using SurvivorsGame.Systems;
 
 namespace SurvivorsGame.Entities.Enemies;
 
-public partial class BaseEnemy : Node2D
+public partial class BaseEnemy : Node
 {
     [Signal]
     public delegate void EnemyHitEventHandler(BaseEffect effect);
@@ -34,6 +35,12 @@ public partial class BaseEnemy : Node2D
 
     [Export]
     public BotDamageBox BotDamageBox { get; private set; }
+
+    public Vector2 Position
+    {
+        get => GlobalEntityManager.Instance.GetPosition(Id);
+        set => GlobalEntityManager.Instance.SetPosition(Id, value);
+    }
 
     public override void _Ready()
     {
@@ -80,4 +87,3 @@ public partial class BaseEnemy : Node2D
         }
     }
 }
-

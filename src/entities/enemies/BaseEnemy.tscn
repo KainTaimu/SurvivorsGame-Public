@@ -1,8 +1,7 @@
-[gd_scene load_steps=24 format=3 uid="uid://b2v4d4wmpp4jn"]
+[gd_scene load_steps=23 format=3 uid="uid://b2v4d4wmpp4jn"]
 
 [ext_resource type="Script" uid="uid://bo6h0e10khwwr" path="res://src/entities/enemies/BaseEnemy.cs" id="1_ge3nw"]
 [ext_resource type="Script" uid="uid://cllpyp5sjnxqa" path="res://src/entities/enemies/controllers/BotStatController.cs" id="2_koof1"]
-[ext_resource type="PackedScene" uid="uid://cdvtgev1dig3f" path="res://src/vfx/DamageIndicator/DamageIndicator.tscn" id="3_2eegf"]
 [ext_resource type="Script" uid="uid://dj8h5xow7s6h" path="res://src/entities/enemies/controllers/BotHitController.cs" id="3_lykdu"]
 [ext_resource type="Script" uid="uid://3aujhykfidp8" path="res://src/entities/enemies/controllers/BotEffectsController.cs" id="4_foj3t"]
 [ext_resource type="Script" uid="uid://cbnyfm1hgoueq" path="res://src/entities/enemies/controllers/statemachine/StateChasing.cs" id="5_v4icc"]
@@ -71,25 +70,24 @@ BotDamageBox = NodePath("PlayerDamageBox")
 
 [node name="BotStatController" type="Node" parent="." node_paths=PackedStringArray("_owner")]
 script = ExtResource("2_koof1")
+_owner = NodePath("..")
 MaxHealth = 10
-_owner = NodePath("..")
-_damageIndicator = ExtResource("3_2eegf")
 
-[node name="BotHitController" type="Node" parent="." node_paths=PackedStringArray("_owner", "_animatedSprite", "_botStatController", "_stateMachine")]
+[node name="BotHitController" type="Node" parent="." node_paths=PackedStringArray("_animatedSprite", "_botStatController", "_owner", "_stateMachine")]
 script = ExtResource("3_lykdu")
-_owner = NodePath("..")
 _animatedSprite = NodePath("../AnimatedSprite2D")
 _botStatController = NodePath("../BotStatController")
+_owner = NodePath("..")
 _stateMachine = NodePath("../StateMachine")
 
 [node name="BotEffectsController" type="Node" parent="." node_paths=PackedStringArray("_owner")]
 script = ExtResource("4_foj3t")
 _owner = NodePath("..")
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("EnemyOwner", "_initialState")]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("_initialState", "EnemyOwner")]
 script = ExtResource("9_u35oa")
-EnemyOwner = NodePath("..")
 _initialState = NodePath("Chasing")
+EnemyOwner = NodePath("..")
 
 [node name="Chasing" type="Node" parent="StateMachine" node_paths=PackedStringArray("_botStatController")]
 script = ExtResource("5_v4icc")
@@ -99,24 +97,27 @@ _botStatController = NodePath("../../BotStatController")
 script = ExtResource("6_7plns")
 _owner = NodePath("../..")
 
-[node name="Dying" type="Node" parent="StateMachine" node_paths=PackedStringArray("_botStatController", "_animatedSprite")]
+[node name="Dying" type="Node" parent="StateMachine" node_paths=PackedStringArray("_animatedSprite", "_botStatController")]
 script = ExtResource("8_tf3qm")
-_botStatController = NodePath("../../BotStatController")
 _animatedSprite = NodePath("../../AnimatedSprite2D")
+_botStatController = NodePath("../../BotStatController")
 
 [node name="PlayerDied" type="Node" parent="StateMachine" node_paths=PackedStringArray("_visibleOnScreenNotifier")]
 script = ExtResource("7_j57tg")
-_visibleOnScreenNotifier = NodePath("../../VisibleOnScreenNotifier2D")
 _fadeShader = ExtResource("11_37qpx")
+_visibleOnScreenNotifier = NodePath("../../VisibleOnScreenNotifier2D")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
 material = ExtResource("11_ubr2y")
 sprite_frames = SubResource("SpriteFrames_kxty0")
 autoplay = "default"
 
 [node name="Hitbox" type="Area2D" parent="." node_paths=PackedStringArray("EnemyOwner")]
+visible = false
 collision_layer = 513
 collision_mask = 4
 script = ExtResource("13_o4san")
@@ -127,6 +128,7 @@ shape = SubResource("CircleShape2D_umfy2")
 debug_color = Color(0.32549, 0.490196, 1, 0.584314)
 
 [node name="PlayerDamageBox" type="Area2D" parent="." node_paths=PackedStringArray("EnemyOwner")]
+visible = false
 collision_layer = 1025
 collision_mask = 2
 script = ExtResource("14_eb8o8")
@@ -153,7 +155,7 @@ offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="EnemyDebug" type="VBoxContainer" parent="Control" node_paths=PackedStringArray("_botStatController", "_effects", "_owner", "_state", "_healthLabel", "_speedLabel", "_stateLabel", "_affectByLabel")]
+[node name="EnemyDebug" type="VBoxContainer" parent="Control" node_paths=PackedStringArray("_affectByLabel", "_botStatController", "_effects", "_healthLabel", "_owner", "_speedLabel", "_state", "_stateLabel")]
 layout_mode = 0
 offset_top = -8.0
 offset_right = 40.0
@@ -161,14 +163,14 @@ offset_bottom = 42.0
 theme_override_constants/separation = -5
 alignment = 2
 script = ExtResource("14_kvj1o")
+_affectByLabel = NodePath("AffectBy")
 _botStatController = NodePath("../../BotStatController")
 _effects = NodePath("../../BotEffectsController")
-_owner = NodePath("../..")
-_state = NodePath("../../StateMachine")
 _healthLabel = NodePath("Health")
+_owner = NodePath("../..")
 _speedLabel = NodePath("Speed")
+_state = NodePath("../../StateMachine")
 _stateLabel = NodePath("State")
-_affectByLabel = NodePath("AffectBy")
 
 [node name="Health" type="Label" parent="Control/EnemyDebug"]
 layout_mode = 2
