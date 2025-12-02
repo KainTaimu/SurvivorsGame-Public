@@ -11,7 +11,7 @@ public partial class GridCollisionSolver : Node
     [Export(PropertyHint.Range, "0,100,1")]
     private float _distBeforeShove = 45;
 
-    private Grid<BaseEnemy> _grid;
+    private Grid<int> _grid;
 
     [Export(PropertyHint.Range, "0,5,0.1")]
     private float _pushAmount = 1.1f;
@@ -33,7 +33,7 @@ public partial class GridCollisionSolver : Node
             return;
         }
 
-        _grid = new Grid<BaseEnemy>(GridSize);
+        _grid = new Grid<int>(GridSize);
 
         if (DebugEnabled)
         {
@@ -66,12 +66,12 @@ public partial class GridCollisionSolver : Node
     private void AddObjectsToGrid()
     {
         _grid.Clear();
-        foreach (var enemy in GameWorld.Instance.Enemies)
+        foreach (var id in GlobalEntityManager.Instance.GetIds())
         {
-            var position = enemy.Position;
+            var position = GlobalEntityManager.Instance.GetPosition(id);
             var cell = _grid.GetCell(position);
 
-            cell?.AddObject(enemy);
+            cell?.AddObject(id);
         }
     }
 
@@ -107,7 +107,7 @@ public partial class GridCollisionSolver : Node
         }
     }
 
-    private void CheckCellCollisions(GridCell<BaseEnemy> cell)
+    private void CheckCellCollisions(GridCell<int> cell)
     {
         if (cell is null)
         {
@@ -123,25 +123,29 @@ public partial class GridCollisionSolver : Node
         }
     }
 
-    private void SolveCollision(BaseEnemy cellObject1, BaseEnemy cellObject2)
+    private void SolveCollision(int cellObject1, int cellObject2)
     {
         if (cellObject1 == cellObject2)
         {
             return;
         }
 
-        if (!IsInstanceValid(cellObject1) || !IsInstanceValid(cellObject2))
-        {
-            return;
-        }
+        var pos1 = GlobalEntityManager.Instance.GetPosition(cellObject1);
+        var pos2 = GlobalEntityManager.Instance.GetPosition(cellObject2);
 
-        var distance = cellObject2.Position.DistanceSquaredTo(cellObject1.Position);
+        var distance = pos2.DistanceSquaredTo(pos1);
         if (distance < _distBeforeShove * _distBeforeShove)
         {
-            var direction = cellObject2.Position.DirectionTo(cellObject1.Position);
+            var direction = pos2.DirectionTo(pos1);
 
-            cellObject1.Position += direction / 2 * _pushAmount;
-            cellObject2.Position -= direction / 2 * _pushAmount;
+            GlobalEntityManager.Instance.SetPosition(
+                cellObject1,
+                pos1 + direction / 2 * _pushAmount
+            );
+            GlobalEntityManager.Instance.SetPosition(
+                cellObject2,
+                pos2 - direction / 2 * _pushAmount
+            );
         }
     }
 

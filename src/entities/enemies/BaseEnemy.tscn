@@ -111,7 +111,6 @@ _visibleOnScreenNotifier = NodePath("../../VisibleOnScreenNotifier2D")
 visible = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-visible = false
 material = ExtResource("11_ubr2y")
 sprite_frames = SubResource("SpriteFrames_kxty0")
 autoplay = "default"

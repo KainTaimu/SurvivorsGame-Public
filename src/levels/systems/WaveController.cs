@@ -186,9 +186,18 @@ public partial class WaveController : Node
     private void SpawnEnemy(PackedScene enemyScene, Vector2 position)
     {
         _totalEnemiesSpawned++;
-        var enemy = (BaseEnemy)enemyScene.Instantiate();
+        var enemy = (Enemy)enemyScene.Instantiate();
         enemy.Id = _totalEnemiesSpawned;
-        GlobalEntityManager.Instance.RegisterEntity(enemy.Id, position);
+        if (_totalEnemiesSpawned % 100 == 0)
+            Logger.LogDebug(_totalEnemiesSpawned);
+        GlobalEntityManager.Instance.RegisterEntity(
+            enemy.Id,
+            position,
+            enemy.Stats.SpriteFrames,
+            enemy.Stats.Health,
+            enemy.Stats.Defense,
+            enemy.Stats.MoveSpeed
+        );
         enemy.Position = position;
 
         AddChild(enemy);
@@ -197,6 +206,21 @@ public partial class WaveController : Node
         CreateSpawnBox(position);
 #endif
     }
+
+    //     private void SpawnEnemy(PackedScene enemyScene, Vector2 position)
+    //     {
+    //         _totalEnemiesSpawned++;
+    //         var enemy = (BaseEnemy)enemyScene.Instantiate();
+    //         enemy.Id = _totalEnemiesSpawned;
+    //         GlobalEntityManager.Instance.RegisterEntity(enemy.Id, position);
+    //         enemy.Position = position;
+    //
+    //         AddChild(enemy);
+    //
+    // #if DEBUG
+    //         CreateSpawnBox(position);
+    // #endif
+    //     }
 
     private void CreateSpawnBox(Vector2 position)
     {

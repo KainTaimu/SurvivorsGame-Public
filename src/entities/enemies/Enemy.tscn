@@ -1,0 +1,84 @@
+[gd_scene load_steps=13 format=3 uid="uid://b3ptvvpn0xk3p"]
+
+[ext_resource type="Script" uid="uid://lfuyo7rgn60o" path="res://src/entities/enemies/Enemy.cs" id="1_t60ml"]
+[ext_resource type="Script" uid="uid://xmwq6g8d7kou" path="res://src/entities/enemies/EnemyStats.cs" id="2_o7vs3"]
+[ext_resource type="Shader" uid="uid://fys511dc3cup" path="res://src/shaders/flash/flash.gdshader" id="3_b70rp"]
+[ext_resource type="Texture2D" uid="uid://73prfwgpnhul" path="res://assets/sprites/characters/duck/spr_enemy_duck_run_strip4.png" id="4_5vkoe"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ahgk6"]
+atlas = ExtResource("4_5vkoe")
+region = Rect2(0, 0, 80, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o83gq"]
+atlas = ExtResource("4_5vkoe")
+region = Rect2(0, 60, 80, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_skyle"]
+atlas = ExtResource("4_5vkoe")
+region = Rect2(0, 120, 80, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wudc1"]
+atlas = ExtResource("4_5vkoe")
+region = Rect2(0, 180, 80, 60)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b70rp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahgk6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o83gq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_skyle")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wudc1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Resource" id="Resource_b70rp"]
+script = ExtResource("2_o7vs3")
+SpriteFrames = SubResource("SpriteFrames_b70rp")
+Health = 10
+MoveSpeed = 150
+metadata/_custom_type_script = "uid://xmwq6g8d7kou"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g20at"]
+resource_local_to_scene = true
+shader = ExtResource("3_b70rp")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/flash_state = 0.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7lumw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahgk6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o83gq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_skyle")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wudc1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Enemy" type="Node"]
+script = ExtResource("1_t60ml")
+Stats = SubResource("Resource_b70rp")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_g20at")
+sprite_frames = SubResource("SpriteFrames_7lumw")
+autoplay = "default"

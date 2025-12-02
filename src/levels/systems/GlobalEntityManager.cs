@@ -7,7 +7,7 @@ namespace SurvivorsGame.Levels.Systems;
 
 public partial class GlobalEntityManager : Node
 {
-    private readonly EntityData Entities = new();
+    private readonly EntityData _entities = new();
 
     public GlobalEntityManager()
     {
@@ -34,59 +34,84 @@ public partial class GlobalEntityManager : Node
 
     public override void _PhysicsProcess(double delta) { }
 
-    public void RegisterEntity(int id, Vector2 initialPosition)
+    public void RegisterEntity(
+        int id,
+        Vector2 initialPos,
+        SpriteFrames sprite,
+        int health,
+        int defense,
+        int moveSpeed
+    )
     {
-        Entities.Add(id, initialPosition);
+        _entities.Add(id, initialPos, sprite, health, defense, moveSpeed);
     }
 
     public void UnregisterEntity(int id)
     {
-        Entities.Remove(id);
+        _entities.Remove(id);
     }
 
     public Vector2 GetPosition(int id)
     {
-        if (!Entities.TryGetPosition(id, out var vec))
+        if (!_entities.TryGetPosition(id, out var vec))
         {
-            Logger.LogWarning("Attempted access to invalid entity position. Returning Vector2.Inf");
+            Logger.LogError("Attempted access to invalid entity position. Returning Vector2.Inf");
             return vec;
         }
         return vec;
     }
 
+    public SpriteFrames GetSprite(int id)
+    {
+        if (!_entities.TryGetSprite(id, out var sprite))
+        {
+            Logger.LogError("Attempted access to invalid entity sprite frames.");
+            return sprite;
+        }
+        return sprite;
+    }
+
     public void SetPosition(int id, Vector2 vec)
     {
-        Entities.SetPosition(id, vec);
+        _entities.SetPosition(id, vec);
     }
 
     public List<Vector2> GetPositions()
     {
-        return Entities.GetPositions();
+        return _entities.GetPositions();
+    }
+
+    [HotMethod("Sprites may not be contiguous in memory.")]
+    public List<SpriteFrames> GetSprites()
+    {
+        return _entities.GetSprites();
+    }
+
+    public List<int> GetIds()
+    {
+        return _entities.GetIds();
     }
 
     private class EntityData
     {
         private const int INITIALSIZE = 1_000;
-        private readonly Dictionary<int, int> _idToPositionIndexTable = []; // {Id: Index to position}
-        private readonly Dictionary<int, int> _positionIndexToIdTable = []; // {Index to position: Id}
-        public Vector2[] Positions { get; private set; } = new Vector2[INITIALSIZE];
-        public bool[] UsedPositions { get; private set; } = new bool[INITIALSIZE];
+        private readonly Dictionary<int, int> _idToIndexTable = []; // {Id: Index to position}
+        private readonly Dictionary<int, int> _IndexToIdTable = []; // {Index to position: Id}
+        public bool[] Bitset { get; private set; } = new bool[INITIALSIZE];
 
-        // uint[] HitboxRadius
-        // uint[] PlayerDamageBoxRadius
-        // Sprite[] Sprites
+        public Vector2[] Positions { get; private set; } = new Vector2[INITIALSIZE];
+        public SpriteFrames[] Sprites { get; private set; } = new SpriteFrames[INITIALSIZE];
+        public int[] Healths { get; private set; } = new int[INITIALSIZE];
+        public int[] Defenses { get; private set; } = new int[INITIALSIZE];
+        public int[] MoveSpeeds { get; private set; } = new int[INITIALSIZE];
 
         public EntityData() { }
 
         public override string ToString()
         {
             var str = new StringBuilder();
-            str.AppendLine(
-                $"_idToPositionIndexTable:\n{Serialize(_idToPositionIndexTable.ToList())}"
-            );
-            str.AppendLine(
-                $"_positionIndexToIdTable:\n{Serialize(_positionIndexToIdTable.ToList())}"
-            );
+            str.AppendLine($"_idToPositionIndexTable:\n{Serialize(_idToIndexTable.ToList())}");
+            str.AppendLine($"_positionIndexToIdTable:\n{Serialize(_IndexToIdTable.ToList())}");
             str.Append("_positions:\n[");
             foreach (var vec in Positions)
             {
@@ -94,43 +119,60 @@ public partial class GlobalEntityManager : Node
             }
             str.Append("]\n");
 
-            str.AppendLine($"_usedPositions:\n{Serialize(UsedPositions.ToList())}");
+            str.AppendLine($"_usedPositions:\n{Serialize(Bitset.ToList())}");
             return str.ToString();
         }
 
-        public void Add(int id, Vector2 initialPos)
+        public void Add(
+            int id,
+            Vector2 initialPos,
+            SpriteFrames sprite,
+            int health,
+            int defense,
+            int moveSpeed
+        )
         {
-            var index = Array.FindIndex(UsedPositions, b => !b);
+            var index = Array.FindIndex(Bitset, b => !b);
             if (index == -1)
             {
                 Grow();
-                index = Array.FindIndex(UsedPositions, b => !b);
+                index = Array.FindIndex(Bitset, b => !b);
             }
 
-            Positions[index] = initialPos;
-            UsedPositions[index] = true;
+            _idToIndexTable[id] = index;
+            _IndexToIdTable[index] = id;
+            Bitset[index] = true;
 
-            _idToPositionIndexTable[id] = index;
-            _positionIndexToIdTable[index] = id;
+            Positions[index] = initialPos;
+            Sprites[index] = sprite;
+            Healths[index] = health;
+            Defenses[index] = defense;
+            MoveSpeeds[index] = moveSpeed;
         }
 
         public void Remove(int id)
         {
-            if (!_idToPositionIndexTable.TryGetValue(id, out var index))
+            if (!_idToIndexTable.TryGetValue(id, out var index))
                 return;
 
             Positions[index] = default;
-            UsedPositions[index] = false;
+            Bitset[index] = false;
 
-            _idToPositionIndexTable.Remove(id);
-            _positionIndexToIdTable.Remove(index);
+            _idToIndexTable.Remove(id);
+            _IndexToIdTable.Remove(index);
+
+            Positions[index] = default;
+            Sprites[index] = default;
+            Healths[index] = default;
+            Defenses[index] = default;
+            MoveSpeeds[index] = default;
         }
 
         // Returns Vector2.Inf if accessing Position of deleted entity
         public bool TryGetPosition(int id, out Vector2 vec)
         {
-            var index = _idToPositionIndexTable[id];
-            if (!UsedPositions[index])
+            var index = _idToIndexTable[id];
+            if (!Bitset[index])
             {
                 vec = Vector2.Inf;
                 return false;
@@ -139,63 +181,211 @@ public partial class GlobalEntityManager : Node
             return true;
         }
 
+        public bool TryGetSprite(int id, out SpriteFrames sprite)
+        {
+            var index = _idToIndexTable[id];
+            if (!Bitset[index])
+            {
+                sprite = null;
+                return false;
+            }
+            sprite = Sprites[index];
+            return true;
+        }
+
+        public bool TryGetHealth(int id, out int health)
+        {
+            var index = _idToIndexTable[id];
+            if (!Bitset[index])
+            {
+                health = default;
+                return false;
+            }
+            health = Healths[index];
+            return true;
+        }
+
+        public bool TryGetDefense(int id, out int defense)
+        {
+            var index = _idToIndexTable[id];
+            if (!Bitset[index])
+            {
+                defense = default;
+                return false;
+            }
+            defense = Defenses[index];
+            return true;
+        }
+
+        public bool TryGetMoveSpeed(int id, out int moveSpeed)
+        {
+            var index = _idToIndexTable[id];
+            if (!Bitset[index])
+            {
+                moveSpeed = default;
+                return false;
+            }
+            moveSpeed = MoveSpeeds[index];
+            return true;
+        }
+
         public void SetPosition(int id, Vector2 vec)
         {
-            if (!UsedPositions[_idToPositionIndexTable[id]])
+            if (!Bitset[_idToIndexTable[id]])
+            {
+                Logger.LogError("Could not set position: Unknown id {id}");
                 return;
-            Positions[_idToPositionIndexTable[id]] = vec;
+            }
+            Positions[_idToIndexTable[id]] = vec;
+        }
+
+        public void SetSprite(int id, SpriteFrames sprite)
+        {
+            if (!Bitset[_idToIndexTable[id]])
+            {
+                Logger.LogError("Could not set sprite: Unknown id {id}");
+                return;
+            }
+            Sprites[_idToIndexTable[id]] = sprite;
+        }
+
+        public void SetHealth(int id, int health)
+        {
+            if (!Bitset[_idToIndexTable[id]])
+            {
+                Logger.LogError("Could not set health: Unknown id {id}");
+                return;
+            }
+            Healths[_idToIndexTable[id]] = health;
+        }
+
+        public void SetDefense(int id, int defense)
+        {
+            if (!Bitset[_idToIndexTable[id]])
+            {
+                Logger.LogError("Could not set defense: Unknown id {id}");
+                return;
+            }
+            Defenses[_idToIndexTable[id]] = defense;
+        }
+
+        public void SetMoveSpeed(int id, int moveSpeed)
+        {
+            if (!Bitset[_idToIndexTable[id]])
+            {
+                Logger.LogError("Could not set move speed: Unknown id {id}");
+                return;
+            }
+            Defenses[_idToIndexTable[id]] = moveSpeed;
         }
 
         public List<Vector2> GetPositions()
         {
             List<Vector2> positions = [];
 
-            for (var i = 0; i < UsedPositions.GetUpperBound(0); i++)
+            for (var i = 0; i < Bitset.GetUpperBound(0); i++)
             {
-                if (!UsedPositions[i])
+                if (!Bitset[i])
                     continue;
                 positions.Add(Positions[i]);
             }
             return positions;
         }
 
+        public List<SpriteFrames> GetSprites()
+        {
+            List<SpriteFrames> sprites = [];
+
+            for (var i = 0; i < Bitset.GetUpperBound(0); i++)
+            {
+                if (!Bitset[i])
+                    continue;
+                sprites.Add(Sprites[i]);
+            }
+            return sprites;
+        }
+
+        public List<int> GetHealths()
+        {
+            List<int> healths = [];
+
+            for (var i = 0; i < Bitset.GetUpperBound(0); i++)
+            {
+                if (!Bitset[i])
+                    continue;
+                healths.Add(Healths[i]);
+            }
+            return healths;
+        }
+
+        public List<int> GetDefenses()
+        {
+            List<int> defenses = [];
+
+            for (var i = 0; i < Bitset.GetUpperBound(0); i++)
+            {
+                if (!Bitset[i])
+                    continue;
+                defenses.Add(Defenses[i]);
+            }
+            return defenses;
+        }
+
+        public List<int> GetMoveSpeeds()
+        {
+            List<int> moveSpeeds = [];
+
+            for (var i = 0; i < Bitset.GetUpperBound(0); i++)
+            {
+                if (!Bitset[i])
+                    continue;
+                moveSpeeds.Add(MoveSpeeds[i]);
+            }
+            return moveSpeeds;
+        }
+
+        public List<int> GetIds()
+        {
+            return [.. _idToIndexTable.Keys];
+        }
+
         private void Grow()
         {
             var newLen = Positions.Length * 2;
-            // Logger.LogWarning($"Growing from {Positions.Length} to {newLen}");
+            var newBitSetArr = new bool[newLen];
             var newPositionArr = new Vector2[newLen];
-            var newUsedPositionArr = new bool[newLen];
+            var newSpriteArr = new SpriteFrames[newLen];
+            var newHealthArr = new int[newLen];
+            var newDefenseArr = new int[newLen];
+            var newMoveSpeedArr = new int[newLen];
 
             var newArrayPointer = 0;
             for (var i = 0; i < Positions.Length; i++)
             {
-                if (!UsedPositions[i])
+                if (!Bitset[i])
                     continue;
-                var id = _positionIndexToIdTable[i];
-                _positionIndexToIdTable.Remove(i);
-                var index = _idToPositionIndexTable[id];
+                var id = _IndexToIdTable[i];
+                _IndexToIdTable.Remove(i);
+                var index = _idToIndexTable[id];
 
+                newBitSetArr[newArrayPointer] = Bitset[index];
                 newPositionArr[newArrayPointer] = Positions[index];
-                newUsedPositionArr[newArrayPointer] = UsedPositions[index];
+                newSpriteArr[newArrayPointer] = Sprites[index];
+                newHealthArr[newArrayPointer] = Healths[index];
+                newDefenseArr[newArrayPointer] = Defenses[index];
+                newMoveSpeedArr[newArrayPointer] = MoveSpeeds[index];
 
-                _idToPositionIndexTable[id] = newArrayPointer;
-                _positionIndexToIdTable[newArrayPointer] = id;
+                _idToIndexTable[id] = newArrayPointer;
+                _IndexToIdTable[newArrayPointer] = id;
 
                 newArrayPointer++;
             }
+            Bitset = newBitSetArr;
             Positions = newPositionArr;
-            UsedPositions = newUsedPositionArr;
-
-            // var str = new StringBuilder();
-            // str.Append("_positions:\n[");
-            // foreach (var vec in newPositionArr)
-            // {
-            //     str.Append($"{vec}, ");
-            // }
-            // str.Append("]\n");
-            //
-            // str.AppendLine($"_usedPositions:\n{Serialize(newUsedPositionArr.ToList())}");
-            // Logger.LogWarning(str.ToString());
+            Sprites = newSpriteArr;
+            Healths = newHealthArr;
+            Defenses = newDefenseArr;
+            MoveSpeeds = newMoveSpeedArr;
         }
     }
 }
