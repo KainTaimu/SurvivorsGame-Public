@@ -4,9 +4,6 @@ namespace SurvivorsGame.Entities.Enemies.States;
 
 public partial class StateChasing : State
 {
-    [Export]
-    private BotStatController _botStatController;
-
     public override string StateName { get; protected set; } = "chasing";
 
     public override void PhysicsUpdate(double delta)
@@ -37,10 +34,11 @@ public partial class StateChasing : State
             }
         }
 
-        var moveVector = direction * _botStatController.MoveSpeed;
+        var moveVector = direction * EnemyOwner.Stats.MoveSpeed;
 
         EnemyOwner.Position += moveVector * (float)delta;
 
-        EnemyOwner.Sprite.FlipH = !(moveVector.X > 0);
+        // BUG: REGRESSION: Sprite flipping has not been implemented
+        // EnemyOwner.Sprite.FlipH = !(moveVector.X > 0);
     }
 }

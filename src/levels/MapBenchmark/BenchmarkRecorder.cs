@@ -32,7 +32,7 @@ public partial class BenchmarkRecorder : Node
             return;
         }
 
-        if (GwInstance.Enemies.Count >= _enemyLimit)
+        if (GwInstance.CurrentLevel.WaveController.TotalEnemiesSpawned >= _enemyLimit)
         {
             if (!_hasStoppedWave)
             {
@@ -68,4 +68,3 @@ public partial class BenchmarkRecorder : Node
         _hasLoggedStats = true;
     }
 }
-

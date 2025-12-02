@@ -15,7 +15,7 @@ public partial class StateMachine : Node
     private State _initialState;
 
     [Export]
-    public BaseEnemy EnemyOwner { get; private set; }
+    public Enemy EnemyOwner { get; private set; }
 
     public State CurrentState { get; private set; }
 
@@ -107,4 +107,3 @@ public partial class StateMachine : Node
         OnChildTransition("playerdied");
     }
 }
-

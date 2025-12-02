@@ -40,10 +40,21 @@ public partial class GlobalEntityManager : Node
         SpriteFrames sprite,
         int health,
         int defense,
-        int moveSpeed
+        int moveSpeed,
+        int hitboxRadius,
+        int damageboxRadius
     )
     {
-        _entities.Add(id, initialPos, sprite, health, defense, moveSpeed);
+        _entities.Add(
+            id,
+            initialPos,
+            sprite,
+            health,
+            defense,
+            moveSpeed,
+            hitboxRadius,
+            damageboxRadius
+        );
     }
 
     public void UnregisterEntity(int id)
@@ -104,6 +115,8 @@ public partial class GlobalEntityManager : Node
         public int[] Healths { get; private set; } = new int[INITIALSIZE];
         public int[] Defenses { get; private set; } = new int[INITIALSIZE];
         public int[] MoveSpeeds { get; private set; } = new int[INITIALSIZE];
+        public int[] HitboxRadius { get; private set; } = new int[INITIALSIZE];
+        public int[] DamageboxRadius { get; private set; } = new int[INITIALSIZE];
 
         public EntityData() { }
 
@@ -129,7 +142,9 @@ public partial class GlobalEntityManager : Node
             SpriteFrames sprite,
             int health,
             int defense,
-            int moveSpeed
+            int moveSpeed,
+            int hitboxRadius,
+            int damageboxRadius
         )
         {
             var index = Array.FindIndex(Bitset, b => !b);
@@ -148,6 +163,8 @@ public partial class GlobalEntityManager : Node
             Healths[index] = health;
             Defenses[index] = defense;
             MoveSpeeds[index] = moveSpeed;
+            HitboxRadius[index] = hitboxRadius;
+            DamageboxRadius[index] = damageboxRadius;
         }
 
         public void Remove(int id)
@@ -166,6 +183,8 @@ public partial class GlobalEntityManager : Node
             Healths[index] = default;
             Defenses[index] = default;
             MoveSpeeds[index] = default;
+            HitboxRadius[index] = default;
+            DamageboxRadius[index] = default;
         }
 
         // Returns Vector2.Inf if accessing Position of deleted entity
@@ -279,6 +298,26 @@ public partial class GlobalEntityManager : Node
             Defenses[_idToIndexTable[id]] = moveSpeed;
         }
 
+        public void SetHitboxRadius(int id, int radius)
+        {
+            if (!Bitset[_idToIndexTable[id]])
+            {
+                Logger.LogError("Could not set hitbox radius: Unknown id {id}");
+                return;
+            }
+            HitboxRadius[_idToIndexTable[id]] = radius;
+        }
+
+        public void SetDamageboxRadius(int id, int radius)
+        {
+            if (!Bitset[_idToIndexTable[id]])
+            {
+                Logger.LogError("Could not set hitbox radius: Unknown id {id}");
+                return;
+            }
+            DamageboxRadius[_idToIndexTable[id]] = radius;
+        }
+
         public List<Vector2> GetPositions()
         {
             List<Vector2> positions = [];
@@ -358,6 +397,8 @@ public partial class GlobalEntityManager : Node
             var newHealthArr = new int[newLen];
             var newDefenseArr = new int[newLen];
             var newMoveSpeedArr = new int[newLen];
+            var newHitboxRadius = new int[newLen];
+            var newDamageboxRadius = new int[newLen];
 
             var newArrayPointer = 0;
             for (var i = 0; i < Positions.Length; i++)
@@ -374,6 +415,8 @@ public partial class GlobalEntityManager : Node
                 newHealthArr[newArrayPointer] = Healths[index];
                 newDefenseArr[newArrayPointer] = Defenses[index];
                 newMoveSpeedArr[newArrayPointer] = MoveSpeeds[index];
+                newHitboxRadius[newArrayPointer] = HitboxRadius[index];
+                newDamageboxRadius[newArrayPointer] = DamageboxRadius[index];
 
                 _idToIndexTable[id] = newArrayPointer;
                 _IndexToIdTable[newArrayPointer] = id;
@@ -386,6 +429,8 @@ public partial class GlobalEntityManager : Node
             Healths = newHealthArr;
             Defenses = newDefenseArr;
             MoveSpeeds = newMoveSpeedArr;
+            HitboxRadius = newHitboxRadius;
+            DamageboxRadius = newDamageboxRadius;
         }
     }
 }

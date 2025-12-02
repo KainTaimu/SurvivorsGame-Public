@@ -54,7 +54,7 @@ public partial class DebugInfo : CanvasLayer
 
     private void UpdateDebugInfo()
     {
-        var enemyCount = GameWorld.Instance.Enemies.Count;
+        var enemyCount = GameWorld.Instance.CurrentLevel.WaveController.TotalEnemiesSpawned;
         var playerHealth =
             GameWorld.Instance.MainPlayer?.StatController.PlayerStats.Health.ToString() ?? "N/A";
         var playerXp = GameWorld.Instance.MainPlayer?.XpController.Xp.ToString() ?? "N/A";

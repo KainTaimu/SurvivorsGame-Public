@@ -7,10 +7,6 @@ public partial class GlobalBotRenderer : Node2D
 {
     private static readonly StringName DefaultString = "default"; // stop implicit conversion in draw method
 
-    private static readonly Dictionary<Rid, Vector2> TextureOffsetCache = [];
-
-    private static readonly Dictionary<StringName, BotRenderCache> RenderCaches = [];
-
     public static GlobalBotRenderer Instance;
 
     public GlobalBotRenderer()
@@ -37,7 +33,7 @@ public partial class GlobalBotRenderer : Node2D
         {
             var sprite = entityMan.GetSprite(id);
             var position = entityMan.GetPosition(id);
-            DrawTexture(sprite.GetFrameTexture("default", 0), position);
+            DrawTexture(sprite.GetFrameTexture(DefaultString, 0), position);
         }
     }
 

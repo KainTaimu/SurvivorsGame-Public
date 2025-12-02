@@ -17,7 +17,7 @@ public partial class WaveController : Node
     [Export]
     private uint _maxMobCountDebug;
 
-    private int _totalEnemiesSpawned = 0;
+    public int TotalEnemiesSpawned { get; private set; } = 0;
 
     [Export]
     private bool _showSpawnerBounds;
@@ -185,18 +185,22 @@ public partial class WaveController : Node
 
     private void SpawnEnemy(PackedScene enemyScene, Vector2 position)
     {
-        _totalEnemiesSpawned++;
+        TotalEnemiesSpawned++;
         var enemy = (Enemy)enemyScene.Instantiate();
-        enemy.Id = _totalEnemiesSpawned;
-        if (_totalEnemiesSpawned % 100 == 0)
-            Logger.LogDebug(_totalEnemiesSpawned);
+        enemy.Id = TotalEnemiesSpawned;
+
+        if (TotalEnemiesSpawned % 100 == 0)
+            Logger.LogDebug(TotalEnemiesSpawned);
+
         GlobalEntityManager.Instance.RegisterEntity(
             enemy.Id,
             position,
             enemy.Stats.SpriteFrames,
             enemy.Stats.Health,
             enemy.Stats.Defense,
-            enemy.Stats.MoveSpeed
+            enemy.Stats.MoveSpeed,
+            enemy.Stats.HitboxRadius,
+            enemy.Stats.DamageBoxRadius
         );
         enemy.Position = position;
 

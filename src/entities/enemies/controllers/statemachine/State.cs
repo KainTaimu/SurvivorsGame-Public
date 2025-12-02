@@ -8,7 +8,7 @@ public partial class State : Node
     [Signal]
     public delegate void TransitionedEventHandler(string toState);
 
-    protected BaseEnemy EnemyOwner;
+    protected Enemy EnemyOwner;
 
     protected bool Entered;
 
@@ -26,4 +26,3 @@ public partial class State : Node
 
     public virtual void PhysicsUpdate(double delta) { }
 }
-

@@ -14,4 +14,10 @@ public partial class EnemyStats : Resource
 
     [Export]
     public int MoveSpeed;
+
+    [Export]
+    public int HitboxRadius;
+
+    [Export]
+    public int DamageBoxRadius;
 }

@@ -1,3 +1,4 @@
+using SurvivorsGame.Levels.Systems;
 using SurvivorsGame.Pickups;
 using SurvivorsGame.Systems;
 
@@ -32,10 +33,6 @@ public partial class StateDying : State
 
         Entered = true;
 
-        EnemyOwner.BotHitbox.SetDeferred("disabled", true);
-        EnemyOwner.BotDamageBox.SetDeferred("disabled", true);
-        // EnemyOwner.GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred("disabled", true);
-
         _moveSpeed = _botStatController.MoveSpeed;
         _moveVector = EnemyOwner.Position.DirectionTo(Player.Position) * _moveSpeed;
 
@@ -62,7 +59,7 @@ public partial class StateDying : State
             return;
         }
 
-        GameWorld.Instance.Enemies.Remove(EnemyOwner);
+        GlobalEntityManager.Instance.UnregisterEntity(EnemyOwner.Id);
         EnemyOwner.QueueFree();
     }
 
@@ -70,14 +67,13 @@ public partial class StateDying : State
     {
         var tween = CreateTween().SetTrans(Tween.TransitionType.Linear);
 
-        var spriteShaderMaterial = _animatedSprite.Material as ShaderMaterial;
 
-        if (spriteShaderMaterial is null)
+        if (_animatedSprite.Material is not ShaderMaterial spriteShaderMaterial)
         {
             return;
         }
 
-        spriteShaderMaterial!.SetShaderParameter("flash_state", 1f);
+        spriteShaderMaterial.SetShaderParameter("flash_state", 1f);
         tween
             .Parallel()
             .TweenMethod(
@@ -111,7 +107,8 @@ public partial class StateDying : State
     {
         EnemyOwner.Position += _moveVector * (float)delta;
 
-        EnemyOwner.Sprite.FlipH = !(_moveVector.X > 0);
+        // BUG: REGRESSION: Sprite flipping has not been implemented
+        // EnemyOwner.Sprite.FlipH = !(_moveVector.X > 0);
     }
 
     private void SpawnXp()
