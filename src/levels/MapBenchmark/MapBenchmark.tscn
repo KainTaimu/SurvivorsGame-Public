@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://djxwvy6rovd2r"]
+[gd_scene load_steps=23 format=4 uid="uid://djxwvy6rovd2r"]
 
 [ext_resource type="Texture2D" uid="uid://b0ntmskwr6frn" path="res://assets/sprites/level/grid_dark.png" id="1_uk4on"]
 [ext_resource type="PackedScene" uid="uid://b875akqw682al" path="res://src/entities/characters/shondo/shondo.tscn" id="2_a4vyl"]
@@ -18,6 +18,7 @@
 [ext_resource type="Script" uid="uid://caw5j1rgsupcr" path="res://src/levels/systems/GlobalEntityManager.cs" id="16_0bua1"]
 [ext_resource type="Script" uid="uid://dg6mvthht6sqj" path="res://src/levels/MapBenchmark/BenchmarkRecorder.cs" id="16_8pj8p"]
 [ext_resource type="PackedScene" uid="uid://ovon40jmj0y5" path="res://src/levels/systems/GlobalBotRenderer.tscn" id="17_263q4"]
+[ext_resource type="Script" uid="uid://cvrd76mwv3mel" path="res://src/levels/systems/PlayerVectorFieldGrid.cs" id="19_263q4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tl18x"]
 texture = ExtResource("1_uk4on")
@@ -339,8 +340,9 @@ script = ExtResource("6_0bua1")
 script = ExtResource("7_263q4")
 
 [node name="GridCollisionSolver" parent="Systems" instance=ExtResource("8_x5lw4")]
-_distBeforeShove = 60.0
+_distBeforeShove = 80.0
 _pushAmount = 2.2
+SubSteps = 12
 
 [node name="PauseController" type="Node" parent="Systems"]
 script = ExtResource("9_42cc1")
@@ -350,11 +352,11 @@ script = ExtResource("12_w5vn3")
 
 [node name="BenchmarkRecorder" type="Node" parent="Systems"]
 script = ExtResource("16_8pj8p")
-_enemyLimit = 5000
+_enemyLimit = 7000
 
 [node name="WaveController" parent="Systems" instance=ExtResource("10_nvqg3")]
-_maxMobCount = 2000
-_maxMobCountDebug = 9999
+_maxMobCount = 99999
+_maxMobCountDebug = 99999
 
 [node name="Wave 1" parent="Systems/WaveController" instance=ExtResource("11_83bij")]
 Duration = 999
@@ -366,6 +368,9 @@ process_physics_priority = -999
 script = ExtResource("16_0bua1")
 
 [node name="GlobalBotRenderer" parent="Systems" instance=ExtResource("17_263q4")]
+
+[node name="PlayerVectorFieldGrid" type="Node" parent="Systems"]
+script = ExtResource("19_263q4")
 
 [editable path="Shondo"]
 [editable path="HudOrganizer/HUD"]

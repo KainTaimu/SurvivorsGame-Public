@@ -1,4 +1,3 @@
-using SurvivorsGame.Entities.Enemies;
 using SurvivorsGame.Systems;
 
 namespace SurvivorsGame.Levels.Systems;

@@ -60,7 +60,7 @@ public class Grid<T>
 
         if (ix < 0 || iy < 0 || ix > Dimensions.X || iy > Dimensions.Y)
         {
-            Logger.LogWarning($"Invalid cell access at ({ix}, {iy}) for {position}");
+            // Logger.LogWarning($"Invalid cell access at ({ix}, {iy}) for {position}");
             return null;
         }
 

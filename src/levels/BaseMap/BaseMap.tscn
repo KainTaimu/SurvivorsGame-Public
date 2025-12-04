@@ -572,7 +572,7 @@ script = ExtResource("12_w6drc")
 _maxMobCount = 500
 
 [node name="GridCollisionSolver" parent="Systems" instance=ExtResource("8_w1oit")]
-_distBeforeShove = 60.0
+_distBeforeShove = 80.0
 _pushAmount = 2.2
 
 [node name="GlobalEntityManager" type="Node" parent="Systems"]

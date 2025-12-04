@@ -105,7 +105,7 @@ public partial class GlobalEntityManager : Node
 
     private class EntityData
     {
-        private const int INITIALSIZE = 1_000;
+        private const int INITIALSIZE = 10_000;
         private readonly Dictionary<int, int> _idToIndexTable = []; // {Id: Index to position}
         private readonly Dictionary<int, int> _IndexToIdTable = []; // {Index to position: Id}
         public bool[] Bitset { get; private set; } = new bool[INITIALSIZE];

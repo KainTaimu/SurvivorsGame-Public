@@ -98,4 +98,3 @@ public partial class GlobalStateController : Node
         public Vector2 Position { get; protected internal set; }
     }
 }
-
