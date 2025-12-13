@@ -87,13 +87,13 @@ public partial class GlobalEntityManager : Node
         _entities.SetPosition(id, vec);
     }
 
-    public List<Vector2> GetPositions()
+    public IEnumerable<Vector2> GetPositions()
     {
         return _entities.GetPositions();
     }
 
     [HotMethod("Sprites may not be contiguous in memory.")]
-    public List<SpriteFrames> GetSprites()
+    public IEnumerable<SpriteFrames> GetSprites()
     {
         return _entities.GetSprites();
     }
@@ -318,69 +318,54 @@ public partial class GlobalEntityManager : Node
             DamageboxRadius[_idToIndexTable[id]] = radius;
         }
 
-        public List<Vector2> GetPositions()
+        public IEnumerable<Vector2> GetPositions()
         {
-            List<Vector2> positions = [];
-
             for (var i = 0; i < Bitset.GetUpperBound(0); i++)
             {
                 if (!Bitset[i])
                     continue;
-                positions.Add(Positions[i]);
+                yield return Positions[i];
             }
-            return positions;
         }
 
-        public List<SpriteFrames> GetSprites()
+        public IEnumerable<SpriteFrames> GetSprites()
         {
-            List<SpriteFrames> sprites = [];
-
             for (var i = 0; i < Bitset.GetUpperBound(0); i++)
             {
                 if (!Bitset[i])
                     continue;
-                sprites.Add(Sprites[i]);
+                yield return Sprites[i];
             }
-            return sprites;
         }
 
-        public List<int> GetHealths()
+        public IEnumerable<int> GetHealths()
         {
-            List<int> healths = [];
-
             for (var i = 0; i < Bitset.GetUpperBound(0); i++)
             {
                 if (!Bitset[i])
                     continue;
-                healths.Add(Healths[i]);
+                yield return Healths[i];
             }
-            return healths;
         }
 
-        public List<int> GetDefenses()
+        public IEnumerable<int> GetDefenses()
         {
-            List<int> defenses = [];
-
             for (var i = 0; i < Bitset.GetUpperBound(0); i++)
             {
                 if (!Bitset[i])
                     continue;
-                defenses.Add(Defenses[i]);
+                yield return Defenses[i];
             }
-            return defenses;
         }
 
-        public List<int> GetMoveSpeeds()
+        public IEnumerable<int> GetMoveSpeeds()
         {
-            List<int> moveSpeeds = [];
-
             for (var i = 0; i < Bitset.GetUpperBound(0); i++)
             {
                 if (!Bitset[i])
                     continue;
-                moveSpeeds.Add(MoveSpeeds[i]);
+                yield return MoveSpeeds[i];
             }
-            return moveSpeeds;
         }
 
         public List<int> GetIds()

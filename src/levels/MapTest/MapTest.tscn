@@ -34,6 +34,3 @@ _showSpawnerBounds = true
 [node name="Wave 1" parent="Systems/WaveController" index="2" instance=ExtResource("3_oxvj6")]
 Duration = 999
 EnemyTypes = Array[PackedScene]([ExtResource("6_oxvj6")])
-
-[node name="GridCollisionSolver" parent="Systems" index="4"]
-_distBeforeShove = 80.0
