@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxagx7udk1k6"]
-
-[ext_resource type="Script" uid="uid://c140ca8331am8" path="res://src/items/passive/BasePassive.cs" id="1_hvk4c"]
-
-[node name="BasePassive" type="Node"]
-script = ExtResource("1_hvk4c")

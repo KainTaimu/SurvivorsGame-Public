@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://ovon40jmj0y5"]
-
-[ext_resource type="Script" uid="uid://b36uxb4pslh0q" path="res://src/levels/systems/GlobalBotRenderer.cs" id="1_0uhve"]
-
-[node name="GlobalBotRenderer" type="Node2D"]
-script = ExtResource("1_0uhve")

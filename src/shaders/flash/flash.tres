@@ -1,9 +1,0 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dkop3gaeg5ura"]
-
-[ext_resource type="Shader" uid="uid://fys511dc3cup" path="res://src/shaders/flash/flash.gdshader" id="1_3hbwm"]
-
-[resource]
-resource_local_to_scene = true
-shader = ExtResource("1_3hbwm")
-shader_parameter/color = Color(1, 1, 1, 1)
-shader_parameter/flash_state = 0.0

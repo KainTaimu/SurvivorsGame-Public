@@ -1,9 +1,0 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cwknl3ua55mcq"]
-
-[ext_resource type="Script" uid="uid://o54urugtdhri" path="res://src/items/effects/EffectKnockback.cs" id="1_ju8hl"]
-
-[resource]
-resource_local_to_scene = true
-script = ExtResource("1_ju8hl")
-EffectValue = 15.0
-EffectDuration = 0.25

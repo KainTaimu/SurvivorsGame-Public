@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bx3nlyg0nwpge"]
-
-[ext_resource type="Script" uid="uid://do5msnphubwkg" path="res://src/items/offensive/BaseOffensive.cs" id="1_2o2qa"]
-
-[node name="BaseOffensive" type="Node"]
-script = ExtResource("1_2o2qa")

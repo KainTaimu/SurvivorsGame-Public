@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://83u6ib52uyh5"]
-
-[ext_resource type="Script" uid="uid://b0nl3b41awyp" path="res://src/systems/GameWorld.cs" id="1_n8ji7"]
-
-[node name="GameWorld" type="Node"]
-process_mode = 3
-script = ExtResource("1_n8ji7")

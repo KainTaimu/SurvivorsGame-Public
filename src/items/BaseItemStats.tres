@@ -1,6 +1,0 @@
-[gd_resource type="Resource" script_class="BaseItemStats" load_steps=2 format=3 uid="uid://c6b4by2frk30j"]
-
-[ext_resource type="Script" uid="uid://dhjhfhtgmsa3p" path="res://src/items/BaseItemStats.cs" id="1_edktw"]
-
-[resource]
-script = ExtResource("1_edktw")

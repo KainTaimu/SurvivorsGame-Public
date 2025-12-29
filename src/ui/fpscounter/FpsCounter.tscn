@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://be3xp5iqgbhf"]
-
-[ext_resource type="Script" uid="uid://d0g1rk7w5ygtk" path="res://src/ui/fpscounter/FpsCounter.cs" id="1_liio2"]
-
-[node name="FPS" type="Node" node_paths=PackedStringArray("_fps", "_processTime", "_physicsTime")]
-script = ExtResource("1_liio2")
-_fps = NodePath("")
-_processTime = NodePath("")
-_physicsTime = NodePath("")
