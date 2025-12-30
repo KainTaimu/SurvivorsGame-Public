@@ -1,0 +1,59 @@
+<Project Sdk="Godot.NET.Sdk/4.5.1">
+  <!-- Base Configuration -->
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    
+    <!-- Performance: JIT Compilation -->
+    <TieredCompilation>true</TieredCompilation>
+    <TieredCompilationQuickJit>true</TieredCompilationQuickJit>
+    
+    <!-- Code Quality: Enforce Warnings as Errors -->
+    <WarningLevel>9999</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    
+    <!-- Performance: Remove Unused Features -->
+    <EventSourceSupport>false</EventSourceSupport>
+    <UseSystemResourceKeys>true</UseSystemResourceKeys>
+    <InvariantGlobalization>false</InvariantGlobalization>
+  </PropertyGroup>
+
+  <!-- Debug Configuration: Development with Hot-Reload -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <Optimize>false</Optimize>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <!-- ExportDebug Configuration: Testing Exports with Debug Info -->
+  <PropertyGroup Condition="'$(Configuration)' == 'ExportDebug'">
+    <EnableDynamicLoading>false</EnableDynamicLoading>
+    <Optimize>true</Optimize>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <!-- ExportRelease Configuration: Maximum Performance -->
+  <PropertyGroup Condition="'$(Configuration)' == 'ExportRelease'">
+    <EnableDynamicLoading>false</EnableDynamicLoading>
+    <Optimize>true</Optimize>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    
+    <!-- Performance: ReadyToRun for Faster Startup -->
+    <PublishReadyToRun>true</PublishReadyToRun>
+    
+    <!-- Performance: Aggressive Optimization Preference -->
+    <IlcOptimizationPreference>Speed</IlcOptimizationPreference>
+    <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
+    
+    <!-- Optional: Trim Unused Code (use cautiously with Godot) -->
+    <!-- <PublishTrimmed>false</PublishTrimmed> -->
+    <!-- <TrimMode>link</TrimMode> -->
+  </PropertyGroup>
+</Project>
