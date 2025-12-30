@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://b802cb5a7o5fr"]
+
+[ext_resource type="Script" uid="uid://b6smyajb38bae" path="res://src/UI/PauseMenu/PauseMenu.cs" id="1_fsae6"]
+
+[node name="PauseMenu" type="CanvasLayer" node_paths=PackedStringArray("_playerStats")]
+process_mode = 3
+script = ExtResource("1_fsae6")
+_playerStats = NodePath("Label")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -11.5
+offset_right = 40.0
+offset_bottom = 11.5
+grow_vertical = 2

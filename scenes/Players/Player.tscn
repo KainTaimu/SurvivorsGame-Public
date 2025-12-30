@@ -1,0 +1,87 @@
+[gd_scene load_steps=11 format=3 uid="uid://bix8bkfo5pwko"]
+
+[ext_resource type="Script" uid="uid://cb48sxavv5g3k" path="res://src/Players/Player.cs" id="1_f0mf6"]
+[ext_resource type="PackedScene" uid="uid://cw0jthbyjhm45" path="res://scenes/Players/Character.tscn" id="2_d0tyu"]
+[ext_resource type="Script" uid="uid://rykv3f6ereih" path="res://src/Players/CharacterStats.cs" id="3_cdd6o"]
+[ext_resource type="Script" uid="uid://cn5rlmdgj2uue" path="res://src/Players/Controllers/PlayerMovementController.cs" id="4_kfojw"]
+[ext_resource type="Texture2D" uid="uid://coljm8hobe4v6" path="res://assets/Players/shondo.png" id="5_pqexr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yecw2"]
+atlas = ExtResource("5_pqexr")
+region = Rect2(0, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v5xr6"]
+atlas = ExtResource("5_pqexr")
+region = Rect2(0, 31, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wuwji"]
+atlas = ExtResource("5_pqexr")
+region = Rect2(0, 62, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5pqvm"]
+atlas = ExtResource("5_pqexr")
+region = Rect2(0, 93, 31, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dpv53"]
+resource_local_to_scene = true
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yecw2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v5xr6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wuwji")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5pqvm")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yecw2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v5xr6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wuwji")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5pqvm")
+}],
+"loop": true,
+"name": &"run",
+"speed": 7.0
+}]
+
+[node name="Player" type="Node2D" node_paths=PackedStringArray("Character")]
+script = ExtResource("1_f0mf6")
+Character = NodePath("Character")
+
+[node name="Character" parent="." node_paths=PackedStringArray("CharacterStats") instance=ExtResource("2_d0tyu")]
+CharacterName = "Test"
+CharacterStats = NodePath("CharacterStats")
+
+[node name="CharacterStats" type="Node" parent="Character"]
+script = ExtResource("3_cdd6o")
+MoveSpeed = 500.0
+
+[node name="PlayerMovementController" type="Node" parent="." node_paths=PackedStringArray("_player", "_characterStats", "_sprite")]
+script = ExtResource("4_kfojw")
+_player = NodePath("..")
+_characterStats = NodePath("../Character/CharacterStats")
+_sprite = NodePath("../AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_dpv53")
+animation = &"run"
+autoplay = "idle"
+
+[node name="Camera2D" type="Camera2D" parent="."]

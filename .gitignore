@@ -16,3 +16,4 @@ script_templates/
 dev/asset/whip.kra
 imgui.ini
 logs
+project_time_traker.json
