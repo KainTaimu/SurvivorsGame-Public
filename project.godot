@@ -17,8 +17,13 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
+DebugMenu="res://addons/debug_menu/debug_menu.tscn"
 Game="*res://src/Core/Game.cs"
+ServiceLocator="*res://scenes/Core/ServiceLocator.tscn"
+
+[debug]
+
+file_logging/enable_file_logging=true
 
 [display]
 
@@ -37,6 +42,14 @@ project/assembly_name="SurvivorsGame"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/debug_menu/plugin.cfg", "res://addons/project-time-tracker/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://addons/": "gray",
+"res://exports/": "gray",
+"res://roslyn-source-generated:/": "gray"
+}
 
 [input]
 
@@ -69,7 +82,7 @@ move_right={
 
 sections/show_sections=true
 sections/show_graphs=true
-afk/afk_timer=300
+afk/afk_timer=180
 
 [rendering]
 

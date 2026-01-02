@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://csat7573jqbye"]
+
+[ext_resource type="Script" uid="uid://b8phj1nedu4bc" path="res://src/Core/Services/ServiceLocator.cs" id="1_wqi2k"]
+[ext_resource type="Resource" uid="uid://dxuafjpeqqim" path="res://scenes/Core/SpriteFrameMappingsService.tres" id="2_uvc07"]
+
+[node name="ServiceLocator" type="Node"]
+script = ExtResource("1_wqi2k")
+_exportedServices = Array[Object]([ExtResource("2_uvc07")])

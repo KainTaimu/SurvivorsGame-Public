@@ -75,7 +75,7 @@ public partial class PlayerMovementController : Node
 
     private void FlipSprite()
     {
-        if (Engine.GetProcessFrames() % 10 == 0)
+        if (Engine.GetProcessFrames() % 60 != 0)
             return;
         if (_viewport is null)
             return;

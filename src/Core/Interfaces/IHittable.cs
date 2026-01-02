@@ -1,6 +1,9 @@
+using Game.Models;
+
 namespace Game.Core.Interfaces;
 
 public interface IHittable
 {
-    void HandleHit();
+    EntityType EntityType { get; }
+    void HandleHit(DamageEvent damageEvent);
 }

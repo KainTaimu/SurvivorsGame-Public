@@ -3,10 +3,9 @@ namespace Game.Players;
 public partial class Character : Node
 {
     [Export]
-    public string CharacterName = null!;
+    public string CharacterName = "";
 
-#nullable disable
     // CharacterStats should never be unset from its exported value!
     [Export]
-    public CharacterStats CharacterStats { get; private set; }
+    public CharacterStats CharacterStats { get; private set; } = null!;
 }

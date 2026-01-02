@@ -1,0 +1,40 @@
+[gd_scene load_steps=10 format=3 uid="uid://dctgt6570slx6"]
+
+[ext_resource type="Script" uid="uid://dlhka8hou7wnu" path="res://src/Levels/Controllers/EnemyController.cs" id="1_fpsbm"]
+[ext_resource type="Script" uid="uid://dyj1j5bef7ypn" path="res://src/Levels/Controllers/FodderController.cs" id="2_bnxef"]
+[ext_resource type="Script" uid="uid://c5pdv0lgc8nnw" path="res://src/Levels/Controllers/FodderRenderer.cs" id="3_p20gp"]
+[ext_resource type="Texture2D" uid="uid://bs7nvo8hnvaen" path="res://assets/Other/placeholder.png" id="4_5k66b"]
+[ext_resource type="Shader" uid="uid://c2n1glxoiwctc" path="res://src/Shaders/flash.gdshader" id="4_bsocs"]
+[ext_resource type="Script" uid="uid://c361voon0ounp" path="res://src/Test.cs" id="5_bsocs"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y11hx"]
+shader = ExtResource("4_bsocs")
+
+[sub_resource type="QuadMesh" id="QuadMesh_kw2ek"]
+size = Vector2(64, 64)
+
+[sub_resource type="MultiMesh" id="MultiMesh_vlykw"]
+use_custom_data = true
+mesh = SubResource("QuadMesh_kw2ek")
+
+[node name="EnemyController" type="Node"]
+script = ExtResource("1_fpsbm")
+
+[node name="FodderController" type="Node" parent="." node_paths=PackedStringArray("_centralController")]
+script = ExtResource("2_bnxef")
+_centralController = NodePath("..")
+
+[node name="FodderRenderer" type="Node2D" parent="FodderController" node_paths=PackedStringArray("_enemyController")]
+script = ExtResource("3_p20gp")
+_enemyController = NodePath("../..")
+
+[node name="MultiMeshInstance2D" type="MultiMeshInstance2D" parent="FodderController"]
+process_mode = 4
+material = SubResource("ShaderMaterial_y11hx")
+multimesh = SubResource("MultiMesh_vlykw")
+texture = ExtResource("4_5k66b")
+script = ExtResource("5_bsocs")
+
+[node name="Elite" type="Node" parent="."]
+
+[node name="Boss" type="Node" parent="."]
