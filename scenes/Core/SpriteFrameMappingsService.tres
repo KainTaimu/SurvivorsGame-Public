@@ -1,53 +1,8 @@
-[gd_resource type="Resource" script_class="SpriteFrameMappingsService" load_steps=9 format=3 uid="uid://dxuafjpeqqim"]
+[gd_resource type="Resource" script_class="SpriteFrameMappingsService" load_steps=2 format=3 uid="uid://dxuafjpeqqim"]
 
-[ext_resource type="Texture2D" uid="uid://dwly5uul7veta" path="res://assets/Other/missing.png" id="1_5tod7"]
-[ext_resource type="Texture2D" uid="uid://cvktr7ltievfe" path="res://assets/Enemies/duck_idle.png" id="2_i3vrj"]
 [ext_resource type="Script" uid="uid://s7wc6pn7yuev" path="res://src/Core/Services/SpriteFrameMappingsService.cs" id="3_5ouet"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_sangk"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("1_5tod7")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_x4hxh"]
-atlas = ExtResource("2_i3vrj")
-region = Rect2(0, 0, 30, 30)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sangk"]
-atlas = ExtResource("2_i3vrj")
-region = Rect2(30, 0, 30, 30)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kdo7a"]
-atlas = ExtResource("2_i3vrj")
-region = Rect2(60, 0, 30, 30)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_0uk3q"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_x4hxh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sangk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kdo7a")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
 
 [resource]
 script = ExtResource("3_5ouet")
-_spriteMapping = Dictionary[String, SpriteFrames]({
-"duck": SubResource("SpriteFrames_0uk3q")
-})
-PlaceholderSpriteFrame = SubResource("SpriteFrames_sangk")
+_spriteMapping = null
 metadata/_custom_type_script = "uid://s7wc6pn7yuev"

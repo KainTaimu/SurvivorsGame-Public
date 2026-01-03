@@ -1,11 +1,14 @@
-[gd_scene load_steps=9 format=4 uid="uid://d3su0ak3dnifl"]
+[gd_scene load_steps=12 format=4 uid="uid://d3su0ak3dnifl"]
 
 [ext_resource type="PackedScene" uid="uid://bix8bkfo5pwko" path="res://scenes/Players/Player.tscn" id="1_77fk7"]
 [ext_resource type="Texture2D" uid="uid://dp7ojvtgxb02l" path="res://assets/Levels/grid_dark.png" id="2_qgy1a"]
 [ext_resource type="Script" uid="uid://jbowd6556xtq" path="res://src/Levels/Controllers/GameWorld.cs" id="3_pi0ox"]
 [ext_resource type="PackedScene" uid="uid://b802cb5a7o5fr" path="res://scenes/UI/PauseMenu.tscn" id="4_pi0ox"]
 [ext_resource type="Script" uid="uid://conjw4f6t4f3m" path="res://src/UI/PauseMenu/PauseController.cs" id="5_ajbtw"]
-[ext_resource type="PackedScene" uid="uid://dctgt6570slx6" path="res://scenes/Levels/EnemyController.tscn" id="6_5v78f"]
+[ext_resource type="Script" uid="uid://dlhka8hou7wnu" path="res://src/Core/ECS/EntityComponentStore.cs" id="6_ajbtw"]
+[ext_resource type="Script" uid="uid://dr36ylh627o76" path="res://src/Levels/Controllers/EnemySpawner.cs" id="7_bqfuu"]
+[ext_resource type="Script" uid="uid://ka2gttaut1jq" path="res://src/Levels/Controllers/EnemyRenderer.cs" id="8_bqfuu"]
+[ext_resource type="PackedScene" uid="uid://umbqj1xym7lp" path="res://scenes/Core/FodderMultiMeshInstance2D.tscn" id="9_ror81"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qgy1a"]
 texture = ExtResource("2_qgy1a")
@@ -281,7 +284,7 @@ navigation_enabled = false
 metadata/_edit_lock_ = true
 
 [node name="Player" parent="." instance=ExtResource("1_77fk7")]
-position = Vector2(1538, 833)
+position = Vector2(960, 540)
 metadata/_edit_lock_ = true
 
 [node name="Systems" type="Node" parent="."]
@@ -297,4 +300,14 @@ script = ExtResource("5_ajbtw")
 _player = NodePath("../../Player")
 _pauseController = NodePath("../PauseController")
 
-[node name="EnemyController" parent="Systems" instance=ExtResource("6_5v78f")]
+[node name="EntityStore" type="Node" parent="Systems"]
+script = ExtResource("6_ajbtw")
+
+[node name="EnemySpawner" type="Node" parent="Systems" node_paths=PackedStringArray("_entities")]
+script = ExtResource("7_bqfuu")
+_entities = NodePath("../EntityStore")
+
+[node name="EnemyRenderer" type="Node" parent="Systems" node_paths=PackedStringArray("_entities")]
+script = ExtResource("8_bqfuu")
+_entities = NodePath("../EntityStore")
+_multiMesh = ExtResource("9_ror81")

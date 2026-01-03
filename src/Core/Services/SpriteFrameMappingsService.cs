@@ -4,12 +4,12 @@ namespace Game.Core.Services;
 public partial class SpriteFrameMappingsService : Service
 {
     [Export]
-    private Godot.Collections.Dictionary<string, SpriteFrames> _spriteMapping = null!;
+    private Godot.Collections.Dictionary<string, Texture2D> _spriteMapping = null!;
 
     [Export]
-    public SpriteFrames PlaceholderSpriteFrame { get; private set; } = null!;
+    public Texture2D PlaceholderSpriteFrame { get; private set; } = null!;
 
-    public SpriteFrames GetSpriteFrame(string name)
+    public Texture2D GetSpriteFrame(string name)
     {
         if (!_spriteMapping.TryGetValue(name, out var sprite))
         {

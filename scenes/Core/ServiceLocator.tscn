@@ -1,8 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://csat7573jqbye"]
+[gd_scene load_steps=6 format=3 uid="uid://csat7573jqbye"]
 
 [ext_resource type="Script" uid="uid://b8phj1nedu4bc" path="res://src/Core/Services/ServiceLocator.cs" id="1_wqi2k"]
-[ext_resource type="Resource" uid="uid://dxuafjpeqqim" path="res://scenes/Core/SpriteFrameMappingsService.tres" id="2_uvc07"]
+[ext_resource type="Texture2D" uid="uid://dwly5uul7veta" path="res://assets/Other/missing.png" id="2_x4hxh"]
+[ext_resource type="Texture2D" uid="uid://cvktr7ltievfe" path="res://assets/Enemies/duck_idle.png" id="3_sangk"]
+[ext_resource type="Script" uid="uid://s7wc6pn7yuev" path="res://src/Core/Services/SpriteFrameMappingsService.cs" id="4_kdo7a"]
+
+[sub_resource type="Resource" id="Resource_0uk3q"]
+script = ExtResource("4_kdo7a")
+_spriteMapping = Dictionary[String, Texture2D]({
+"duck": ExtResource("3_sangk")
+})
+PlaceholderSpriteFrame = ExtResource("2_x4hxh")
+metadata/_custom_type_script = "uid://s7wc6pn7yuev"
 
 [node name="ServiceLocator" type="Node"]
 script = ExtResource("1_wqi2k")
-_exportedServices = Array[Object]([ExtResource("2_uvc07")])
+_exportedServices = Array[Object]([SubResource("Resource_0uk3q")])

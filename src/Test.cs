@@ -16,7 +16,7 @@ public partial class Test : MultiMeshInstance2D
         //     UseCustomData = true,
         // };
         var mm = Multimesh;
-        mm.InstanceCount = 1;
+        mm.InstanceCount = 50_000;
 
         for (int i = 0; i < mm.InstanceCount; i++)
         {
@@ -32,7 +32,8 @@ public partial class Test : MultiMeshInstance2D
         var mm = Multimesh;
         for (int i = 0; i < mm.InstanceCount; i++)
         {
-            mm.SetInstanceCustomData(i, new Color(0, 0, 0, GD.RandRange(0, 1)));
+            mm.SetInstanceTransform2D(i, new Transform2D(0, new Vector2(GD.RandRange(0, 1920), GD.RandRange(0, 1080))));
+            mm.SetInstanceCustomData(i, new Color(GD.RandRange(0, 1), 0, i % 2 == 0 ? 0 : 1, GD.RandRange(0, 1)));
         }
     }
 }

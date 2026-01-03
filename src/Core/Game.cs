@@ -15,6 +15,12 @@ public partial class Game : Node
             GetTree().Quit();
             return;
         }
+        if (Input.IsPhysicalKeyPressed(Key.F12))
+        {
+            Logger.LogDebug($"Reloading current scene \"{GetTree().CurrentScene.Name}\"");
+            GetTree().ReloadCurrentScene();
+            return;
+        }
     }
 #endif
 }
