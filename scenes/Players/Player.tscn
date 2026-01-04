@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://bix8bkfo5pwko"]
+[gd_scene load_steps=12 format=3 uid="uid://bix8bkfo5pwko"]
 
 [ext_resource type="Script" uid="uid://cb48sxavv5g3k" path="res://src/Players/Player.cs" id="1_f0mf6"]
 [ext_resource type="PackedScene" uid="uid://cw0jthbyjhm45" path="res://scenes/Players/Character.tscn" id="2_d0tyu"]
 [ext_resource type="Script" uid="uid://rykv3f6ereih" path="res://src/Players/CharacterStats.cs" id="3_cdd6o"]
 [ext_resource type="Script" uid="uid://cn5rlmdgj2uue" path="res://src/Players/Controllers/PlayerMovementController.cs" id="4_kfojw"]
 [ext_resource type="Texture2D" uid="uid://coljm8hobe4v6" path="res://assets/Players/shondo.png" id="5_pqexr"]
+[ext_resource type="Script" uid="uid://b8nlijamaetyr" path="res://src/Players/Controllers/PlayerCameraController.cs" id="6_kfojw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yecw2"]
 atlas = ExtResource("5_pqexr")
@@ -84,4 +85,5 @@ animation = &"run"
 autoplay = "idle"
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.2, 0.2)
+zoom = Vector2(0.9, 0.9)
+script = ExtResource("6_kfojw")

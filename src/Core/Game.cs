@@ -16,6 +16,7 @@ public partial class Game : Node
     {
         if (Input.IsPhysicalKeyPressed(Key.Quoteleft))
         {
+            Logger.LogDebug($"{Engine.GetFramesPerSecond()} FPS");
             GetTree().Quit();
             return;
         }

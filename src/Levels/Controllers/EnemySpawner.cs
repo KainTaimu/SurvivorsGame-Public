@@ -1,6 +1,5 @@
 using Game.Core.ECS;
 using Game.Core.Services;
-using Game.Utils;
 
 namespace Game.Levels.Controllers;
 
@@ -9,17 +8,19 @@ public partial class EnemySpawner : Node
     [Export]
     private EntityComponentStore _entities = null!;
 
-    private DebugRectCreator Db => new(GetTree());
-
     public override void _Ready()
     {
         var ss = ServiceLocator.GetService<SpriteFrameMappingsService>();
         if (ss is null)
             return;
 
-        for (var i = 0; i < 20_000; i++)
+#if DEBUG
+        for (var i = 0; i < 15_000; i++)
+#else
+        for (var i = 0; i < 25_000; i++)
+#endif
         {
-            var pos = new Vector2(GD.RandRange(1920, 1920 * 2), GD.RandRange(1920, 1920 * 2));
+            var pos = new Vector2(GD.RandRange(1920, 1920 * 3), GD.RandRange(1920, 1920 * 3));
             if (!_entities.RegisterEntity(i))
                 continue;
 
@@ -46,6 +47,7 @@ public partial class EnemySpawner : Node
         foreach (var (id, pos) in _entities.Query<PositionComponent>())
         {
             var p = pos.Position.MoveToward(playerPos, 150 * (float)delta);
+
             _entities.UpdateComponent(id, new PositionComponent() { Position = p });
         }
 

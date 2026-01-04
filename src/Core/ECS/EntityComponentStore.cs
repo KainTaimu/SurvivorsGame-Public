@@ -32,7 +32,9 @@ public partial class EntityComponentStore : Node
         }
         if (idx == MAX_SIZE)
         {
-            Logger.LogWarning($"Couldn't register entity {id} with index {idx}");
+            Logger.LogWarning(
+                $"Couldn't register entity {id} with index {idx}. Store at max capacity"
+            );
             return false;
         }
 
@@ -63,6 +65,13 @@ public partial class EntityComponentStore : Node
             Logger.LogWarning("Couldn't register component. Entity with id", id, "does not exist");
             return;
         }
+        if (idx < 0 || idx >= MAX_SIZE)
+        {
+            Logger.LogWarning(
+                $"Couldn't register component {id} with index {idx}. Index out of bounds"
+            );
+            return;
+        }
 
         var type = typeof(T);
         if (!_components.ContainsKey(type))
@@ -78,10 +87,18 @@ public partial class EntityComponentStore : Node
             Logger.LogWarning("Couldn't update component. Entity with id", id, "does not exist");
             return;
         }
+        if (idx < 0 || idx >= MAX_SIZE)
+        {
+            Logger.LogWarning(
+                $"Couldn't update component {id} with index {idx}. Index out of bounds"
+            );
+            return;
+        }
 
         var components = GetComponents<T>();
         if (components is null)
             return;
+
         components[idx] = data;
     }
 
@@ -108,11 +125,16 @@ public partial class EntityComponentStore : Node
             Logger.LogError($"Component {typeof(T1).Name} not registered. Breaking.");
             yield break;
         }
+
         for (var i = 0; i < MAX_SIZE; i++)
         {
             if (!_alive[i])
                 continue;
-            yield return (_indexToIdTable[i], components[i]);
+
+            if (!_indexToIdTable.TryGetValue(i, out var id))
+                continue;
+
+            yield return (id, components[i]);
         }
     }
 
@@ -124,17 +146,23 @@ public partial class EntityComponentStore : Node
             Logger.LogError($"Component {typeof(T1).Name} not registered. Breaking.");
             yield break;
         }
+
         var c2 = GetComponents<T2>();
         if (c2 is null)
         {
             Logger.LogError($"Component {typeof(T2).Name} not registered. Breaking.");
             yield break;
         }
+
         for (var i = 0; i < MAX_SIZE; i++)
         {
             if (!_alive[i])
                 continue;
-            yield return (_indexToIdTable[i], c1[i], c2[i]);
+
+            if (!_indexToIdTable.TryGetValue(i, out var id))
+                continue;
+
+            yield return (id, c1[i], c2[i]);
         }
     }
 
@@ -146,23 +174,30 @@ public partial class EntityComponentStore : Node
             Logger.LogError($"Component {typeof(T1).Name} not registered. Breaking.");
             yield break;
         }
+
         var c2 = GetComponents<T2>();
         if (c2 is null)
         {
             Logger.LogError($"Component {typeof(T2).Name} not registered. Breaking.");
             yield break;
         }
+
         var c3 = GetComponents<T3>();
         if (c3 is null)
         {
             Logger.LogError($"Component {typeof(T3).Name} not registered. Breaking.");
             yield break;
         }
+
         for (var i = 0; i < MAX_SIZE; i++)
         {
             if (!_alive[i])
                 continue;
-            yield return (_indexToIdTable[i], c1[i], c2[i], c3[i]);
+
+            if (!_indexToIdTable.TryGetValue(i, out var id))
+                continue;
+
+            yield return (id, c1[i], c2[i], c3[i]);
         }
     }
 

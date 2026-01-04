@@ -1,0 +1,90 @@
+[gd_resource type="VisualShader" load_steps=9 format=3 uid="uid://cnblq7amf1vgs"]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_l18am"]
+input_name = "instance_custom"
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_i2ht7"]
+input_name = "color"
+
+[sub_resource type="VisualShaderNodeMix" id="VisualShaderNodeMix_7mnfh"]
+
+[sub_resource type="VisualShaderNodeColorFunc" id="VisualShaderNodeColorFunc_h2fyd"]
+default_input_values = [0, Vector3(1, 1, 1)]
+
+[sub_resource type="VisualShaderNodeVectorDecompose" id="VisualShaderNodeVectorDecompose_xm44c"]
+output_port_for_preview = 0
+default_input_values = [0, Quaternion(0, 0, 0, 0)]
+op_type = 2
+
+[sub_resource type="VisualShaderNodeCompare" id="VisualShaderNodeCompare_invj7"]
+function = 2
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_cifr0"]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeIf" id="VisualShaderNodeIf_kykmb"]
+
+[resource]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+
+
+
+void vertex() {
+// Input:3
+	vec4 n_out3p0 = COLOR;
+
+
+	vec3 n_out5p0;
+// ColorFunc:5
+	vec3 n_in5p0 = vec3(1.00000, 1.00000, 1.00000);
+	{
+		vec3 c = n_in5p0;
+		float max1 = max(c.r, c.g);
+		float max2 = max(max1, c.b);
+		n_out5p0 = vec3(max2, max2, max2);
+	}
+
+
+// Input:2
+	vec4 n_out2p0 = INSTANCE_CUSTOM;
+
+
+// VectorDecompose:6
+	float n_out6p0 = n_out2p0.x;
+	float n_out6p1 = n_out2p0.y;
+	float n_out6p2 = n_out2p0.z;
+	float n_out6p3 = n_out2p0.w;
+
+
+// Mix:4
+	float n_out4p0 = mix(n_out3p0.x, n_out5p0.x, n_out6p0);
+
+
+// Output:0
+	COLOR.rgb = vec3(n_out4p0);
+
+
+}
+"
+mode = 1
+flags/light_only = false
+nodes/vertex/0/position = Vector2(900, 80)
+nodes/vertex/2/node = SubResource("VisualShaderNodeInput_l18am")
+nodes/vertex/2/position = Vector2(-200, 280)
+nodes/vertex/3/node = SubResource("VisualShaderNodeInput_i2ht7")
+nodes/vertex/3/position = Vector2(20, 100)
+nodes/vertex/4/node = SubResource("VisualShaderNodeMix_7mnfh")
+nodes/vertex/4/position = Vector2(460, 80)
+nodes/vertex/5/node = SubResource("VisualShaderNodeColorFunc_h2fyd")
+nodes/vertex/5/position = Vector2(0, -60)
+nodes/vertex/6/node = SubResource("VisualShaderNodeVectorDecompose_xm44c")
+nodes/vertex/6/position = Vector2(120, 260)
+nodes/vertex/7/node = SubResource("VisualShaderNodeCompare_invj7")
+nodes/vertex/7/position = Vector2(420, 340)
+nodes/vertex/8/node = SubResource("VisualShaderNodeInput_cifr0")
+nodes/vertex/8/position = Vector2(400, 620)
+nodes/vertex/9/node = SubResource("VisualShaderNodeIf_kykmb")
+nodes/vertex/9/position = Vector2(620, 340)
+nodes/vertex/connections = PackedInt32Array(5, 0, 4, 1, 3, 0, 4, 0, 4, 0, 0, 2, 2, 0, 6, 0, 6, 0, 4, 2, 6, 2, 7, 0)

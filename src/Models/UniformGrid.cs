@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Game.Models;
 
-public partial class UniformGrid<T>
+public class UniformGrid<T>
 {
     public readonly UniformGridCell<T>[,] Cells;
 
