@@ -8,25 +8,38 @@ public partial class EnemySpawner : Node
     [Export]
     private EntityComponentStore _entities = null!;
 
-    public override void _Ready()
+    private double _t;
+    private int Spawned
     {
+        get;
+        set { field = Math.Clamp(value, 0, EntityComponentStore.MAX_SIZE); }
+    }
+
+    public override void _Process(double delta)
+    {
+        _t -= delta;
+        SpawnEnemy();
+    }
+
+    public void SpawnEnemy()
+    {
+        if (_t > 0 || Spawned >= EntityComponentStore.MAX_SIZE)
+            return;
+        _t = 0.5f;
+
         var ss = ServiceLocator.GetService<SpriteFrameMappingsService>();
         if (ss is null)
             return;
 
-#if DEBUG
-        for (var i = 0; i < 15_000; i++)
-#else
-        for (var i = 0; i < 25_000; i++)
-#endif
+        for (var i = 0; i < 500; i++)
         {
             var pos = new Vector2(GD.RandRange(1920, 1920 * 3), GD.RandRange(1920, 1920 * 3));
-            if (!_entities.RegisterEntity(i))
+            if (!_entities.RegisterEntity(Spawned))
                 continue;
 
-            _entities.RegisterComponent(i, new PositionComponent() { Position = pos });
+            _entities.RegisterComponent(Spawned, new PositionComponent() { Position = pos });
             _entities.RegisterComponent(
-                i,
+                Spawned,
                 new AnimatedSpriteComponent()
                 {
                     SpriteName = "duck",
@@ -34,33 +47,8 @@ public partial class EnemySpawner : Node
                     FrameCount = 1,
                 }
             );
+            Spawned++;
         }
-    }
-
-    public override void _Process(double delta)
-    {
-        var player = GameWorld.Instance.MainPlayer;
-        if (player is null)
-            return;
-        var playerPos = player.GlobalPosition;
-
-        foreach (var (id, pos) in _entities.Query<PositionComponent>())
-        {
-            var p = pos.Position.MoveToward(playerPos, 150 * (float)delta);
-
-            _entities.UpdateComponent(id, new PositionComponent() { Position = p });
-        }
-
-        // _entities
-        //     .Query<PositionComponent>()
-        //     .AsParallel()
-        //     .ForAll(
-        //         (x) =>
-        //         {
-        //             var (id, pos) = x;
-        //             var p = pos.Position.MoveToward(playerPos, 150 * (float)delta);
-        //             _entities.UpdateComponent(id, new PositionComponent() { Position = p });
-        //         }
-        //     );
+        Logger.LogDebug(Spawned);
     }
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://d3su0ak3dnifl"]
+[gd_scene load_steps=12 format=3 uid="uid://d3su0ak3dnifl"]
 
 [ext_resource type="PackedScene" uid="uid://bix8bkfo5pwko" path="res://scenes/Players/Player.tscn" id="1_77fk7"]
 [ext_resource type="Texture2D" uid="uid://dp7ojvtgxb02l" path="res://assets/Levels/grid_dark.png" id="2_qgy1a"]
@@ -10,12 +10,13 @@
 [ext_resource type="Script" uid="uid://ka2gttaut1jq" path="res://src/Levels/Controllers/EnemyRenderer.cs" id="8_bqfuu"]
 [ext_resource type="PackedScene" uid="uid://umbqj1xym7lp" path="res://scenes/Core/FodderMultiMeshInstance2D.tscn" id="9_ror81"]
 [ext_resource type="Script" uid="uid://cwkq6cfxp7jub" path="res://src/Levels/Controllers/EnemyCollisionSolver.cs" id="10_ajdj3"]
+[ext_resource type="Script" uid="uid://bct2mtni7a82f" path="res://src/Levels/Controllers/EnemyMover.cs" id="10_sh7eq"]
 
 [node name="Level" type="Node2D"]
 metadata/_edit_lock_ = true
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
-repeat_size = Vector2(1920, 1144)
+repeat_size = Vector2(1920, 1139)
 repeat_times = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D"]
@@ -24,16 +25,15 @@ position = Vector2(1009, 383)
 texture = ExtResource("2_qgy1a")
 centered = false
 region_enabled = true
-region_rect = Rect2(0, 0, 1920, 1144)
+region_rect = Rect2(0, 0, 1920, 1145)
 
 [node name="Player" parent="." instance=ExtResource("1_77fk7")]
 
 [node name="Systems" type="Node" parent="."]
 
-[node name="GameWorld" type="Node" parent="Systems" node_paths=PackedStringArray("MainPlayer", "LevelTileMap")]
+[node name="GameWorld" type="Node" parent="Systems" node_paths=PackedStringArray("MainPlayer")]
 script = ExtResource("3_pi0ox")
 MainPlayer = NodePath("../../Player")
-LevelTileMap = NodePath("")
 
 [node name="PauseController" type="Node" parent="Systems"]
 script = ExtResource("5_ajbtw")
@@ -53,6 +53,10 @@ _entities = NodePath("../EntityStore")
 script = ExtResource("8_bqfuu")
 _entities = NodePath("../EntityStore")
 _multiMesh = ExtResource("9_ror81")
+
+[node name="EnemyMover" type="Node" parent="Systems" node_paths=PackedStringArray("_entities")]
+script = ExtResource("10_sh7eq")
+_entities = NodePath("../EntityStore")
 
 [node name="EnemyCollisionSolver" type="Node" parent="Systems" node_paths=PackedStringArray("_entities")]
 script = ExtResource("10_ajdj3")

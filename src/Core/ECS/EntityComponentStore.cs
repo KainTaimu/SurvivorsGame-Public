@@ -6,7 +6,7 @@ namespace Game.Core.ECS;
 
 public partial class EntityComponentStore : Node
 {
-    private const int MAX_SIZE = 32_000;
+    public const int MAX_SIZE = 86000;
     private readonly BitArray _alive = new(MAX_SIZE, false);
 
     private readonly Dictionary<int, int> _idToIndexTable = []; // {Id: Index to position}
