@@ -2,26 +2,13 @@ using System.Collections.Generic;
 
 namespace Game.Models;
 
-public class UniformCollisionGrid<T> : UniformGrid<T>
+public partial class UniformGrid<T>
 {
-    public UniformCollisionGrid(
-        int cellSize,
-        int sizeX,
-        int sizeY,
-        int startX = 0,
-        int startY = 0,
-        int padding = 0
-    )
-        : base(cellSize, startX, startY, sizeX, sizeY) { }
-}
+    public readonly UniformGridCell<T>[,] Cells;
 
-public class UniformGrid<T>
-{
-    private readonly UniformGridCell[,] _cells;
+    public readonly Vector2I Dimensions;
 
-    protected readonly Vector2I _dimensions;
-
-    protected readonly int _cellSize;
+    public readonly int CellSize;
 
     public UniformGrid(int cellSize, int sizeX, int sizeY, int startX = 0, int startY = 0)
     {
@@ -35,13 +22,13 @@ public class UniformGrid<T>
         var startCellY = startY / cellSize;
         var width = sizeX / cellSize;
         var height = sizeY / cellSize;
-        var grid = new UniformGridCell[width, height];
+        var grid = new UniformGridCell<T>[width, height];
 
         for (var x = 0; x < width; x++)
         {
             for (var y = 0; y < height; y++)
             {
-                grid[x, y] = new UniformGridCell()
+                grid[x, y] = new UniformGridCell<T>()
                 {
                     Index = new Vector2I(x, y),
                     Position = new Vector2I(
@@ -52,74 +39,71 @@ public class UniformGrid<T>
             }
         }
 
-        _cells = grid;
-        _dimensions = new Vector2I(width, height);
-        _cellSize = cellSize;
+        Cells = grid;
+        Dimensions = new Vector2I(width, height);
+        CellSize = cellSize;
+    }
+
+    public UniformGridCell<T>? GetCell(Vector2 position)
+    {
+        var x = (int)(position.X / CellSize);
+        var y = (int)(position.Y / CellSize);
+
+        if (x < 0 || y < 0 || x >= Dimensions.X || y >= Dimensions.Y)
+        {
+            // Logger.LogWarning($"Invalid cell access at ({x}, {y}) for {position}");
+            return null;
+        }
+
+        return Cells[x, y];
+    }
+
+    public UniformGridCell<T>? GetCell(int x, int y)
+    {
+        if (x < 0 || y < 0 || x >= Dimensions.X || y >= Dimensions.Y)
+        {
+            // Logger.LogWarning($"Invalid cell access at ({x}, {y})");
+            return null;
+        }
+
+        return Cells[x, y];
     }
 
     public IEnumerable<T> GetCellContent(Vector2 position)
     {
-        var x = (int)(position.X / _cellSize);
-        var y = (int)(position.Y / _cellSize);
+        var x = (int)(position.X / CellSize);
+        var y = (int)(position.Y / CellSize);
 
-        if (x < 0 || y < 0 || x >= _dimensions.X || y >= _dimensions.Y)
+        if (x < 0 || y < 0 || x >= Dimensions.X || y >= Dimensions.Y)
         {
-            Logger.LogWarning($"Invalid cell access at ({x}, {y}) for {position}");
+            // Logger.LogWarning($"Invalid cell access at ({x}, {y}) for {position}");
             yield break;
         }
 
-        var cell = _cells[x, y];
+        var cell = Cells[x, y];
         for (var i = 0; i < cell.Count; i++)
             yield return cell.Array[i];
     }
 
     public IEnumerable<T> GetCellContent(int x, int y)
     {
-        if (x < 0 || y < 0 || x >= _dimensions.X || y >= _dimensions.Y)
+        if (x < 0 || y < 0 || x >= Dimensions.X || y >= Dimensions.Y)
         {
-            Logger.LogWarning($"Invalid cell access at ({x}, {y})");
+            // Logger.LogWarning($"Invalid cell access at ({x}, {y})");
             yield break;
         }
 
-        var cell = _cells[x, y];
+        var cell = Cells[x, y];
         for (var i = 0; i < cell.Count; i++)
             yield return cell.Array[i];
     }
 
-    private class UniformGridCell
+    public void ClearGrid()
     {
-        private const int MAX_SIZE = 32;
-
-        public required Vector2I Index;
-        public required Vector2I Position;
-
-        public readonly T[] Array = new T[MAX_SIZE];
-
-        public int Count
+        for (var x = 0; x < Dimensions.X; x++)
+        for (var y = 0; y < Dimensions.Y; y++)
         {
-            get => _count;
-            set
-            {
-                var clamped = Math.Clamp(value, 0, MAX_SIZE);
-                _count = clamped;
-            }
-        }
-
-        private int _count;
-
-        // Drops obj silenty by design
-        public void Add(T obj)
-        {
-            if (Count >= MAX_SIZE)
-                return;
-
-            Array[Count] = obj;
-            Count++;
-        }
-
-        public void Clear()
-        {
-            Count = 0;
+            Cells[x, y].Clear();
         }
     }
 }

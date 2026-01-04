@@ -17,7 +17,7 @@ public partial class EnemySpawner : Node
         if (ss is null)
             return;
 
-        for (var i = 0; i < 10_000; i++)
+        for (var i = 0; i < 100; i++)
         {
             var pos = new Vector2(GD.RandRange(0, 1920), GD.RandRange(0, 1080));
             if (!_entities.RegisterEntity(i))
@@ -45,7 +45,7 @@ public partial class EnemySpawner : Node
 
         foreach (var (id, pos) in _entities.Query<PositionComponent>())
         {
-            var p = pos.Position.MoveToward(player.GlobalPosition, 500 * (float)delta);
+            var p = pos.Position.MoveToward(player.GlobalPosition, 150 * (float)delta);
             _entities.UpdateComponent(id, new PositionComponent() { Position = p });
         }
     }

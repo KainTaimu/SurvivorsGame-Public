@@ -25,9 +25,12 @@
   <!-- Debug Configuration: Development with Hot-Reload -->
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <EnableDynamicLoading>true</EnableDynamicLoading>
-    <Optimize>false</Optimize>
+
+    <!-- Full optimizations even in Debug -->
+    <Optimize>true</Optimize>
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
+    <Debuggable>false</Debuggable>
   </PropertyGroup>
 
   <!-- ExportDebug Configuration: Testing Exports with Debug Info -->

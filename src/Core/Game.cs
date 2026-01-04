@@ -2,12 +2,16 @@ namespace Game.Core;
 
 public partial class Game : Node
 {
-#if DEBUG
     public override void _EnterTree()
     {
-        GetNode("/root/DebugMenu").Set("style", 2);
+#if DEBUG
+        GetNode("/root/DebugMenu").Set("style", 2); // Full with graph
+#else
+        GetNode("/root/DebugMenu").Set("style", 1);
+#endif
     }
 
+#if DEBUG
     public override void _Process(double delta)
     {
         if (Input.IsPhysicalKeyPressed(Key.Quoteleft))

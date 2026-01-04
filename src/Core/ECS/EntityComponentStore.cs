@@ -79,11 +79,10 @@ public partial class EntityComponentStore : Node
             return;
         }
 
-        var type = typeof(T);
-        if (!_components.ContainsKey(type))
+        var components = GetComponents<T>();
+        if (components is null)
             return;
-
-        _components[type].SetValue(data, idx);
+        components[idx] = data;
     }
 
     // ===== Queries =====
