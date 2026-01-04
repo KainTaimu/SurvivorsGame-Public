@@ -70,7 +70,6 @@ CharacterStats = NodePath("CharacterStats")
 
 [node name="CharacterStats" type="Node" parent="Character"]
 script = ExtResource("3_cdd6o")
-MoveSpeed = 500.0
 
 [node name="PlayerMovementController" type="Node" parent="." node_paths=PackedStringArray("_player", "_characterStats", "_sprite")]
 script = ExtResource("4_kfojw")
@@ -85,3 +84,4 @@ animation = &"run"
 autoplay = "idle"
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.2, 0.2)
