@@ -1,3 +1,4 @@
+using Game.Core;
 using Game.Core.ECS;
 using Game.Core.Services;
 
@@ -25,7 +26,7 @@ public partial class EnemySpawner : Node
     {
         if (_t > 0 || Spawned >= EntityComponentStore.MAX_SIZE)
             return;
-        _t = 0.5f;
+        _t = 0.1f;
 
         var ss = ServiceLocator.GetService<SpriteFrameMappingsService>();
         if (ss is null)
@@ -34,12 +35,14 @@ public partial class EnemySpawner : Node
         for (var i = 0; i < 500; i++)
         {
             var pos = new Vector2(GD.RandRange(1920, 1920 * 3), GD.RandRange(1920, 1920 * 3));
-            if (!_entities.RegisterEntity(Spawned))
+            var id = Spawned;
+            if (!_entities.RegisterEntity(id))
                 continue;
 
-            _entities.RegisterComponent(Spawned, new PositionComponent() { Position = pos });
+            _entities.RegisterComponent(id, new EntityTypeComponent(EntityType.Enemy));
+            _entities.RegisterComponent(id, new PositionComponent() { Position = pos });
             _entities.RegisterComponent(
-                Spawned,
+                id,
                 new AnimatedSpriteComponent()
                 {
                     SpriteName = "duck",
