@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Game.Core.ECS;
 using Game.Models;
 
@@ -30,6 +31,8 @@ public partial class EnemyCollisionSolver : Node
 
     private CenteredMovingUniformGrid<(Vector2, int)> _grid = null!;
 
+    private readonly Dictionary<int, Vector2> _writeBuffer = [];
+
     public override void _Ready()
     {
         var viewport = GetViewport();
@@ -59,16 +62,27 @@ public partial class EnemyCollisionSolver : Node
         if (player is null)
             return;
 
+        _writeBuffer.Clear();
+        AddObjectsToGrid();
         for (var i = 0; i < SubSteps; i++)
         {
             _grid.Recenter(player.GlobalPosition);
             _grid.ClearGrid();
-            AddObjectsToGrid();
+            AddObjectsToGridFromBuffer();
             SolveCollisions();
         }
+        ApplyCollisions();
 
         if (DebugEnabled)
             UpdateDebug();
+    }
+
+    private void ApplyCollisions()
+    {
+        foreach (var (id, pos) in _writeBuffer)
+        {
+            _entities.UpdateComponent(id, new PositionComponent(pos) { Position = pos });
+        }
     }
 
     private void AddObjectsToGrid()
@@ -80,6 +94,19 @@ public partial class EnemyCollisionSolver : Node
 
             var cell = _grid.GetCellWorld(pos.Position);
             cell?.Add((pos.Position, id));
+            _writeBuffer[id] = pos.Position;
+        }
+    }
+
+    private void AddObjectsToGridFromBuffer()
+    {
+        foreach (var (id, pos) in _writeBuffer)
+        {
+            if (!_grid.ContainsWorld(pos))
+                continue;
+
+            var cell = _grid.GetCellWorld(pos);
+            cell?.Add((pos, id));
         }
     }
 
@@ -152,8 +179,8 @@ public partial class EnemyCollisionSolver : Node
         cellA.Array[indexA] = (posA, idA);
         cellB.Array[indexB] = (posB, idB);
 
-        _entities.UpdateComponent(idA, new PositionComponent(posA) { Position = posA });
-        _entities.UpdateComponent(idB, new PositionComponent(posB) { Position = posB });
+        _writeBuffer[idA] = posA;
+        _writeBuffer[idB] = posB;
     }
 
     private void CreateDebugDisplayGridBounds()
