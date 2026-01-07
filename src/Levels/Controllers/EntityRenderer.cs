@@ -19,6 +19,12 @@ public partial class EntityRenderer : Node
     private const int _initialInstanceCount = 2000;
     private const float _instanceGrowthMultiplier = 1.5f;
 
+    public override void _Ready()
+    {
+        // Render last to allow other systems to do their work first
+        ProcessPriority = 16;
+    }
+
     public override void _Process(double delta)
     {
         foreach (
