@@ -121,6 +121,18 @@ public partial class EntityComponentStore : Node
         return Unsafe.As<T[]>(collection);
     }
 
+    public T? GetComponent<T>(int id)
+    {
+        if (!_idToIndexTable.TryGetValue(id, out var idx))
+            return default;
+
+        var components = GetComponents<T>();
+        if (components is null)
+            return default;
+
+        return components[idx];
+    }
+
     /// <summary>
     /// Returns the entity ID, and the value of T1
     /// </summary>
@@ -208,5 +220,24 @@ public partial class EntityComponentStore : Node
         }
     }
 
+    public bool GetIsAlive(int id)
+    {
+        if (!_idToIndexTable.TryGetValue(id, out var idx))
+            return false;
+
+        return _alive[idx];
+    }
+
     // ===== Sets =====
+    public void SetComponent<T>(int id, T newData)
+    {
+        if (!_idToIndexTable.TryGetValue(id, out var idx))
+            return;
+
+        var components = GetComponents<T>();
+        if (components is null)
+            return;
+
+        components[idx] = newData;
+    }
 }

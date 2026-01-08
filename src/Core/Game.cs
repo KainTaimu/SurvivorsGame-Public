@@ -4,14 +4,9 @@ public partial class Game : Node
 {
     public override void _EnterTree()
     {
-#if DEBUG
         GetNode("/root/DebugMenu").Set("style", 2); // Full with graph
-#else
-        GetNode("/root/DebugMenu").Set("style", 1);
-#endif
     }
 
-#if DEBUG
     public override void _Process(double delta)
     {
         if (Input.IsPhysicalKeyPressed(Key.Quoteleft))
@@ -27,5 +22,4 @@ public partial class Game : Node
             return;
         }
     }
-#endif
 }

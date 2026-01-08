@@ -16,6 +16,7 @@ public partial class EnemyMover : Node
             return;
         var playerPos = player.GlobalPosition;
 
+        // TODO: Very expensive. Add dictionary to map enemy type to index?
         var enemies = _entities
             .Query<PositionComponent, EntityTypeComponent>()
             .Where(x => x.Item3.EntityType == EntityType.Enemy)
@@ -27,7 +28,7 @@ public partial class EnemyMover : Node
 
             var p = pos.Position.MoveToward(playerPos, 150 * (float)delta);
 
-            _entities.UpdateComponent(id, new PositionComponent() { Position = p });
+            _entities.UpdateComponent(id, new PositionComponent(p));
         }
     }
 }

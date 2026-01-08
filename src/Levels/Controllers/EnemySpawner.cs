@@ -39,6 +39,8 @@ public partial class EnemySpawner : Node
             if (!_entities.RegisterEntity(id))
                 continue;
 
+            // TODO: Enemy blueprints
+            _entities.RegisterComponent(id, new HealthComponent(10));
             _entities.RegisterComponent(id, new EntityTypeComponent(EntityType.Enemy));
             _entities.RegisterComponent(id, new PositionComponent() { Position = pos });
             _entities.RegisterComponent(
