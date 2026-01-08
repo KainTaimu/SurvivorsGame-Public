@@ -6,7 +6,12 @@ namespace Game.Core.ECS;
 
 public partial class EntityComponentStore : Node
 {
-    public const int MAX_SIZE = 86000;
+#if DEBUG
+    public const int MAX_SIZE = 40_000;
+#else
+    public const int MAX_SIZE = 64_000;
+#endif
+
     private readonly BitArray _alive = new(MAX_SIZE, false);
 
     private readonly Dictionary<int, int> _idToIndexTable = []; // {Id: Index to position}
@@ -17,10 +22,12 @@ public partial class EntityComponentStore : Node
 
     /// <summary>
     /// Returns true if successfully registered. False otherwise.
+    /// Return value must be checked and handled in the case of unsuccessful register
     /// </summary>
     /// <remarks>
     /// Does not handle when an enemy is registered with an already existing id.
     /// </remarks>
+    [MustUseReturnValue]
     public bool RegisterEntity(int id)
     {
         // Find free index
@@ -46,7 +53,7 @@ public partial class EntityComponentStore : Node
         return true;
     }
 
-    public void UnregisterEnemy(int id)
+    public void UnregisterEntity(int id)
     {
         if (!_idToIndexTable.ContainsKey(id))
             return;

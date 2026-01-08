@@ -59,4 +59,7 @@
     <!-- <PublishTrimmed>false</PublishTrimmed> -->
     <!-- <TrimMode>link</TrimMode> -->
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MustUseRetVal" Version="0.0.2" />
+  </ItemGroup>
 </Project>
