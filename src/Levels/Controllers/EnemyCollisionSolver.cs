@@ -53,6 +53,11 @@ public partial class EnemyCollisionSolver : Node
             CreateDebugDisplayGridBounds();
     }
 
+    public override void _Process(double delta)
+    {
+        Process();
+    }
+
     public void Process()
     {
         if (!Enabled)
@@ -172,6 +177,7 @@ public partial class EnemyCollisionSolver : Node
         if (direction == Vector2.Zero)
             direction = Vector2.Right;
 
+        // NOTE: Delta is accounted for in the Timer that calls Process.
         var push = _distBeforeShove * 0.5f * _pushAmount;
         posA += direction * push;
         posB -= direction * push;

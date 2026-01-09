@@ -13,6 +13,7 @@ ptt.json
 script_templates/
 *.mkv
 *.clip
+.docs/
 dev/asset/whip.kra
 imgui.ini
 logs

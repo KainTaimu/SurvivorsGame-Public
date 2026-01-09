@@ -23,6 +23,8 @@ public partial class EntityRenderer : Node
     {
         // Render last to allow other systems to do their work first
         ProcessPriority = 16;
+
+        _entities.BeforeEntityUnregistered += BeforeEntityUnregistered;
     }
 
     public override void _Process(double delta)
@@ -100,5 +102,30 @@ public partial class EntityRenderer : Node
 
         var data = new Color(0, 0, flip, 1);
         multiMesh.SetInstanceCustomData(instanceIdx, data);
+    }
+
+    private void BeforeEntityUnregistered(int id)
+    {
+        if (!_entities.GetComponent<AnimatedSpriteComponent>(id, out var sprite))
+        {
+            Logger.LogDebug("sprite not found");
+            return;
+        }
+        if (!_spriteToMultiMesh.TryGetValue(sprite.SpriteName, out var mmi))
+        {
+            Logger.LogDebug("multiMesh not found");
+            return;
+        }
+
+        if (!_idToInstanceIndex.TryGetValue(id, out var idx))
+        {
+            Logger.LogDebug("instanceIdx not found");
+            return;
+        }
+
+        var multiMesh = mmi.Multimesh;
+        multiMesh.SetInstanceTransform2D(idx, new Transform2D(0, Vector2.Inf)); // HACK: Hide the instance in narnia
+
+        _idToInstanceIndex.Remove(id);
     }
 }

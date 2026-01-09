@@ -9,3 +9,6 @@ Fodder enemies uses MultiMeshInstance2D for rendering. Each instance uses custom
 - W: Opacity (from 0f - 1f)
 
 Flash is used to whiten spritee
+
+### Process priorities
+EntityRenderer: 16

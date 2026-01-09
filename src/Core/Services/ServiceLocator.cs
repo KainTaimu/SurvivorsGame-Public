@@ -4,6 +4,7 @@ using Godot.Collections;
 
 namespace Game.Core.Services;
 
+// TODO: Use Nodes for exported services. Resources suck to edit in-editor.
 public partial class ServiceLocator : Node
 {
     [Export]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d3su0ak3dnifl"]
+[gd_scene load_steps=13 format=3 uid="uid://d3su0ak3dnifl"]
 
 [ext_resource type="PackedScene" uid="uid://bix8bkfo5pwko" path="res://scenes/Players/Player.tscn" id="1_77fk7"]
 [ext_resource type="Texture2D" uid="uid://dp7ojvtgxb02l" path="res://assets/Levels/grid_dark.png" id="2_qgy1a"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://umbqj1xym7lp" path="res://scenes/Core/FodderMultiMeshInstance2D.tscn" id="9_ror81"]
 [ext_resource type="Script" uid="uid://cwkq6cfxp7jub" path="res://src/Levels/Controllers/EnemyCollisionSolver.cs" id="10_ajdj3"]
 [ext_resource type="Script" uid="uid://bct2mtni7a82f" path="res://src/Levels/Controllers/EnemyMover.cs" id="10_sh7eq"]
+[ext_resource type="Script" uid="uid://dhee6pva3aeeu" path="res://src/UI/Debug/EnemyInfo.cs" id="12_qaj6y"]
 
 [node name="Level" type="Node2D"]
 metadata/_edit_lock_ = true
@@ -63,12 +64,25 @@ _entities = NodePath("../EntityStore")
 
 [node name="EnemyCollisionSolver" type="Node" parent="Systems" node_paths=PackedStringArray("_entities")]
 script = ExtResource("10_ajdj3")
-SubSteps = 4
 _entities = NodePath("../EntityStore")
 
 [node name="Timer" type="Timer" parent="Systems/EnemyCollisionSolver"]
-wait_time = 0.05
-autostart = true
+wait_time = 0.1
 ignore_time_scale = true
+
+[node name="HUD" type="Node" parent="."]
+
+[node name="EnemyInfo" type="CanvasLayer" parent="HUD" node_paths=PackedStringArray("_label", "_spawner")]
+script = ExtResource("12_qaj6y")
+_label = NodePath("VBoxContainer/Label")
+_spawner = NodePath("../../Systems/EnemySpawner")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/EnemyInfo"]
+offset_right = 66.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="HUD/EnemyInfo/VBoxContainer"]
+layout_mode = 2
+text = "Enemies"
 
 [connection signal="timeout" from="Systems/EnemyCollisionSolver/Timer" to="Systems/EnemyCollisionSolver" method="Process"]

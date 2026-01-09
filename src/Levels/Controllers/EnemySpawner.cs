@@ -9,11 +9,32 @@ public partial class EnemySpawner : Node
     [Export]
     private EntityComponentStore _entities = null!;
 
-    private double _t;
-    private int Spawned
+    public int TotalSpawned
     {
         get;
-        set { field = Math.Clamp(value, 0, EntityComponentStore.MAX_SIZE); }
+        private set
+        {
+            // Spawned should not be decremented because we rely on it to create unique ids
+            field =
+                Math.Clamp(value, field, EntityComponentStore.MAX_SIZE);
+        }
+    }
+
+    public int Alive
+    {
+        get;
+        private set
+        {
+
+            field = Math.Clamp(value, 0, EntityComponentStore.MAX_SIZE);
+        }
+    }
+
+    private double _t;
+
+    public override void _Ready()
+    {
+        _entities.BeforeEntityUnregistered += (_) => Alive--;
     }
 
     public override void _Process(double delta)
@@ -24,18 +45,18 @@ public partial class EnemySpawner : Node
 
     public void SpawnEnemy()
     {
-        if (_t > 0 || Spawned >= EntityComponentStore.MAX_SIZE)
+        if (_t > 0 || Alive >= EntityComponentStore.MAX_SIZE)
             return;
-        _t = 0.1f;
+        _t = 0.05f;
 
         var ss = ServiceLocator.GetService<SpriteFrameMappingsService>();
         if (ss is null)
             return;
 
-        for (var i = 0; i < 500; i++)
+        for (var i = 0; i < 100; i++)
         {
             var pos = new Vector2(GD.RandRange(1920, 1920 * 3), GD.RandRange(1920, 1920 * 3));
-            var id = Spawned;
+            var id = TotalSpawned;
             if (!_entities.RegisterEntity(id))
                 continue;
 
@@ -52,8 +73,9 @@ public partial class EnemySpawner : Node
                     FrameCount = 1,
                 }
             );
-            Spawned++;
+            TotalSpawned++;
+            Alive++;
         }
-        Logger.LogDebug(Spawned);
+        Logger.LogDebug(TotalSpawned);
     }
 }

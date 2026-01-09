@@ -28,7 +28,13 @@ public partial class PlayerMovementController : Node
     public override void _Process(double delta)
     {
         PlayerMovement(delta);
-        FlipSprite();
+    }
+
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (@event is not InputEventMouseMotion motion)
+            return;
+        FlipSprite(motion.Position);
     }
 
     private void PlayerMovement(double delta)
@@ -62,25 +68,15 @@ public partial class PlayerMovementController : Node
         var originalPos = _player.GetPosition();
 
         var newPos = originalPos + move;
-        // newPos = newPos.Clamp(
-        //     Vector2.Zero,
-        //     new Vector2(
-        //         GameWorld.Instance.CurrentLevel.PixelSize.X,
-        //         GameWorld.Instance.CurrentLevel.PixelSize.Y
-        //     )
-        // );
-
         _player.SetPosition(newPos);
     }
 
-    private void FlipSprite()
+    private void FlipSprite(Vector2 mousePos)
     {
-        if (Engine.GetProcessFrames() % 60 != 0)
-            return;
         if (_viewport is null)
             return;
 
-        var mouse = _viewport.GetMousePosition() / _viewport.GetVisibleRect().Size.X;
+        var mouse = mousePos / _viewport.GetVisibleRect().Size.X;
         _sprite.FlipH = mouse.X < 0.5;
     }
 }

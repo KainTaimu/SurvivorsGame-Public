@@ -6,18 +6,24 @@ namespace Game.Core.ECS;
 
 public partial class EntityComponentStore : Node
 {
+    [Signal]
+    public delegate void BeforeEntityUnregisteredEventHandler(int id);
+
 #if DEBUG
-    public const int MAX_SIZE = 40_000;
+    public const int MAX_SIZE = 20_000;
 #else
-    public const int MAX_SIZE = 64_000;
+    // ~55FPS as of a838207
+    public const int MAX_SIZE = 32_000;
 #endif
 
     private readonly BitArray _alive = new(MAX_SIZE, false);
+    private readonly BitArray _markedRemoved = new(MAX_SIZE, false);
 
     private readonly Dictionary<int, int> _idToIndexTable = []; // {Id: Index to position}
     private readonly Dictionary<int, int> _indexToIdTable = []; // {Index to position: Id}
     private int _count;
 
+    // Array is of size MAX_SIZE
     private readonly Dictionary<Type, Array> _components = [];
 
     /// <summary>
@@ -57,6 +63,9 @@ public partial class EntityComponentStore : Node
     {
         if (!_idToIndexTable.ContainsKey(id))
             return;
+
+        // Allow systems to handle removed entities before data is cleared
+        EmitSignal(SignalName.BeforeEntityUnregistered, id);
 
         var idx = _idToIndexTable[id];
         _idToIndexTable.Remove(id);
@@ -121,16 +130,18 @@ public partial class EntityComponentStore : Node
         return Unsafe.As<T[]>(collection);
     }
 
-    public T? GetComponent<T>(int id)
+    public bool GetComponent<T>(int id, out T? component)
     {
+        component = default;
         if (!_idToIndexTable.TryGetValue(id, out var idx))
-            return default;
+            return false;
 
         var components = GetComponents<T>();
         if (components is null)
-            return default;
+            return false;
 
-        return components[idx];
+        component = components[idx];
+        return true;
     }
 
     /// <summary>
