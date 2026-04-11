@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://d3su0ak3dnifl"]
+[gd_scene format=3 uid="uid://d3su0ak3dnifl"]
 
 [ext_resource type="PackedScene" uid="uid://bix8bkfo5pwko" path="res://scenes/Players/Player.tscn" id="1_77fk7"]
 [ext_resource type="Texture2D" uid="uid://dp7ojvtgxb02l" path="res://assets/Levels/grid_dark.png" id="2_qgy1a"]
@@ -13,15 +13,15 @@
 [ext_resource type="Script" uid="uid://bct2mtni7a82f" path="res://src/Levels/Controllers/EnemyMover.cs" id="10_sh7eq"]
 [ext_resource type="Script" uid="uid://dhee6pva3aeeu" path="res://src/UI/Debug/EnemyInfo.cs" id="12_qaj6y"]
 
-[node name="Level" type="Node2D"]
+[node name="Level" type="Node2D" unique_id=2141389114]
 metadata/_edit_lock_ = true
 
-[node name="Parallax2D" type="Parallax2D" parent="."]
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=951832910]
 repeat_size = Vector2(1920, 1139)
 repeat_times = 2
 metadata/_edit_lock_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Parallax2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=876885186]
 texture_repeat = 2
 position = Vector2(1009, 383)
 texture = ExtResource("2_qgy1a")
@@ -30,58 +30,58 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1920, 1145)
 metadata/_edit_lock_ = true
 
-[node name="Player" parent="." instance=ExtResource("1_77fk7")]
+[node name="Player" parent="." unique_id=1984267814 instance=ExtResource("1_77fk7")]
 
-[node name="Systems" type="Node" parent="."]
+[node name="Systems" type="Node" parent="." unique_id=708197889]
 
-[node name="GameWorld" type="Node" parent="Systems" node_paths=PackedStringArray("MainPlayer")]
+[node name="GameWorld" type="Node" parent="Systems" unique_id=562045734 node_paths=PackedStringArray("MainPlayer")]
 script = ExtResource("3_pi0ox")
 MainPlayer = NodePath("../../Player")
 
-[node name="PauseController" type="Node" parent="Systems"]
+[node name="PauseController" type="Node" parent="Systems" unique_id=867414551]
 script = ExtResource("5_ajbtw")
 
-[node name="PauseMenu" parent="Systems" node_paths=PackedStringArray("_player", "_pauseController") instance=ExtResource("4_pi0ox")]
+[node name="PauseMenu" parent="Systems" unique_id=1937596238 node_paths=PackedStringArray("_player", "_pauseController") instance=ExtResource("4_pi0ox")]
 _player = NodePath("../../Player")
 _pauseController = NodePath("../PauseController")
 
-[node name="EntityStore" type="Node" parent="Systems"]
+[node name="EntityStore" type="Node" parent="Systems" unique_id=1131826051]
 script = ExtResource("6_ajbtw")
 
-[node name="EntityRenderer" type="Node" parent="Systems" node_paths=PackedStringArray("_entities")]
+[node name="EntityRenderer" type="Node" parent="Systems" unique_id=1054443393 node_paths=PackedStringArray("_entities")]
 process_priority = 16
 script = ExtResource("7_ajdj3")
 _entities = NodePath("../EntityStore")
 _multiMesh = ExtResource("9_ror81")
 
-[node name="EnemySpawner" type="Node" parent="Systems" node_paths=PackedStringArray("_entities")]
+[node name="EnemySpawner" type="Node" parent="Systems" unique_id=1827593298 node_paths=PackedStringArray("_entities")]
 script = ExtResource("7_bqfuu")
 _entities = NodePath("../EntityStore")
 
-[node name="EnemyMover" type="Node" parent="Systems" node_paths=PackedStringArray("_entities")]
+[node name="EnemyMover" type="Node" parent="Systems" unique_id=348078406 node_paths=PackedStringArray("_entities")]
 script = ExtResource("10_sh7eq")
 _entities = NodePath("../EntityStore")
 
-[node name="EnemyCollisionSolver" type="Node" parent="Systems" node_paths=PackedStringArray("_entities")]
+[node name="EnemyCollisionSolver" type="Node" parent="Systems" unique_id=2115688042 node_paths=PackedStringArray("_entities")]
 script = ExtResource("10_ajdj3")
 _entities = NodePath("../EntityStore")
 
-[node name="Timer" type="Timer" parent="Systems/EnemyCollisionSolver"]
+[node name="Timer" type="Timer" parent="Systems/EnemyCollisionSolver" unique_id=2089274592]
 wait_time = 0.1
 ignore_time_scale = true
 
-[node name="HUD" type="Node" parent="."]
+[node name="HUD" type="Node" parent="." unique_id=1918867052]
 
-[node name="EnemyInfo" type="CanvasLayer" parent="HUD" node_paths=PackedStringArray("_label", "_spawner")]
+[node name="EnemyInfo" type="CanvasLayer" parent="HUD" unique_id=370296864 node_paths=PackedStringArray("_label", "_spawner")]
 script = ExtResource("12_qaj6y")
 _label = NodePath("VBoxContainer/Label")
 _spawner = NodePath("../../Systems/EnemySpawner")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD/EnemyInfo"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/EnemyInfo" unique_id=1020579535]
 offset_right = 66.0
 offset_bottom = 40.0
 
-[node name="Label" type="Label" parent="HUD/EnemyInfo/VBoxContainer"]
+[node name="Label" type="Label" parent="HUD/EnemyInfo/VBoxContainer" unique_id=2085024501]
 layout_mode = 2
 text = "Enemies"
 

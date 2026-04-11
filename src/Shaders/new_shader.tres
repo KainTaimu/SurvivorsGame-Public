@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=9 format=3 uid="uid://cnblq7amf1vgs"]
+[gd_resource type="VisualShader" format=3 uid="uid://cnblq7amf1vgs"]
 
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_l18am"]
 input_name = "instance_custom"
@@ -25,49 +25,6 @@ input_name = "uv"
 [sub_resource type="VisualShaderNodeIf" id="VisualShaderNodeIf_kykmb"]
 
 [resource]
-code = "shader_type canvas_item;
-render_mode blend_mix;
-
-
-
-
-void vertex() {
-// Input:3
-	vec4 n_out3p0 = COLOR;
-
-
-	vec3 n_out5p0;
-// ColorFunc:5
-	vec3 n_in5p0 = vec3(1.00000, 1.00000, 1.00000);
-	{
-		vec3 c = n_in5p0;
-		float max1 = max(c.r, c.g);
-		float max2 = max(max1, c.b);
-		n_out5p0 = vec3(max2, max2, max2);
-	}
-
-
-// Input:2
-	vec4 n_out2p0 = INSTANCE_CUSTOM;
-
-
-// VectorDecompose:6
-	float n_out6p0 = n_out2p0.x;
-	float n_out6p1 = n_out2p0.y;
-	float n_out6p2 = n_out2p0.z;
-	float n_out6p3 = n_out2p0.w;
-
-
-// Mix:4
-	float n_out4p0 = mix(n_out3p0.x, n_out5p0.x, n_out6p0);
-
-
-// Output:0
-	COLOR.rgb = vec3(n_out4p0);
-
-
-}
-"
 mode = 1
 flags/light_only = false
 nodes/vertex/0/position = Vector2(900, 80)
