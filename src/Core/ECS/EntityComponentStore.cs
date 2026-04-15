@@ -6,249 +6,249 @@ namespace Game.Core.ECS;
 
 public partial class EntityComponentStore : Node
 {
-    [Signal]
-    public delegate void BeforeEntityUnregisteredEventHandler(int id);
+	[Signal]
+	public delegate void BeforeEntityUnregisteredEventHandler(int id);
 
 #if DEBUG
-    public const int MAX_SIZE = 20_000;
+	public const int MAX_SIZE = 20_000;
 #else
-    // ~55FPS as of a838207
-    public const int MAX_SIZE = 32_000;
+	// ~55FPS as of a838207
+	public const int MAX_SIZE = 32_000;
 #endif
 
-    private readonly BitArray _alive = new(MAX_SIZE, false);
-    private readonly BitArray _markedRemoved = new(MAX_SIZE, false);
+	private readonly BitArray _alive = new(MAX_SIZE, false);
+	private readonly BitArray _markedRemoved = new(MAX_SIZE, false);
 
-    private readonly Dictionary<int, int> _idToIndexTable = []; // {Id: Index to position}
-    private readonly Dictionary<int, int> _indexToIdTable = []; // {Index to position: Id}
-    private int _count;
+	private readonly Dictionary<int, int> _idToIndexTable = []; // {Id: Index to position}
+	private readonly Dictionary<int, int> _indexToIdTable = []; // {Index to position: Id}
+	private int _count;
 
-    // Array is of size MAX_SIZE
-    private readonly Dictionary<Type, Array> _components = [];
+	// Array is of size MAX_SIZE
+	private readonly Dictionary<Type, Array> _components = [];
 
-    /// <summary>
-    /// Returns true if successfully registered. False otherwise.
-    /// Return value must be checked and handled in the case of unsuccessful register
-    /// </summary>
-    /// <remarks>
-    /// Does not handle when an enemy is registered with an already existing id.
-    /// </remarks>
-    [MustUseReturnValue]
-    public bool RegisterEntity(int id)
-    {
-        // Find free index
-        int idx;
-        for (idx = 0; idx < MAX_SIZE; idx++)
-        {
-            if (!_alive[idx])
-                break;
-        }
-        if (idx == MAX_SIZE)
-        {
-            Logger.LogWarning(
-                $"Couldn't register entity {id} with index {idx}. Store at max capacity"
-            );
-            return false;
-        }
+	/// <summary>
+	/// Returns true if successfully registered. False otherwise.
+	/// Return value must be checked and handled in the case of unsuccessful register
+	/// </summary>
+	/// <remarks>
+	/// Does not handle when an enemy is registered with an already existing id.
+	/// </remarks>
+	[MustUseReturnValue]
+	public bool RegisterEntity(int id)
+	{
+		// Find free index
+		int idx;
+		for (idx = 0; idx < MAX_SIZE; idx++)
+		{
+			if (!_alive[idx])
+				break;
+		}
+		if (idx == MAX_SIZE)
+		{
+			Logger.LogWarning(
+				$"Couldn't register entity {id} with index {idx}. Store at max capacity"
+			);
+			return false;
+		}
 
-        _alive[idx] = true;
-        _idToIndexTable[id] = idx;
-        _indexToIdTable[idx] = id;
+		_alive[idx] = true;
+		_idToIndexTable[id] = idx;
+		_indexToIdTable[idx] = id;
 
-        _count++;
-        return true;
-    }
+		_count++;
+		return true;
+	}
 
-    public void UnregisterEntity(int id)
-    {
-        if (!_idToIndexTable.ContainsKey(id))
-            return;
+	public void UnregisterEntity(int id)
+	{
+		if (!_idToIndexTable.ContainsKey(id))
+			return;
 
-        // Allow systems to handle removed entities before data is cleared
-        EmitSignal(SignalName.BeforeEntityUnregistered, id);
+		// Allow systems to handle removed entities before data is cleared
+		EmitSignal(SignalName.BeforeEntityUnregistered, id);
 
-        var idx = _idToIndexTable[id];
-        _idToIndexTable.Remove(id);
-        _indexToIdTable.Remove(idx);
-        _alive[idx] = false;
-        _count--;
-    }
+		var idx = _idToIndexTable[id];
+		_idToIndexTable.Remove(id);
+		_indexToIdTable.Remove(idx);
+		_alive[idx] = false;
+		_count--;
+	}
 
-    public void RegisterComponent<T>(int id, T data)
-    {
-        if (!_idToIndexTable.TryGetValue(id, out var idx))
-        {
-            Logger.LogWarning("Couldn't register component. Entity with id", id, "does not exist");
-            return;
-        }
-        if (idx < 0 || idx >= MAX_SIZE)
-        {
-            Logger.LogWarning(
-                $"Couldn't register component {id} with index {idx}. Index out of bounds"
-            );
-            return;
-        }
+	public void RegisterComponent<T>(int id, T data)
+	{
+		if (!_idToIndexTable.TryGetValue(id, out var idx))
+		{
+			Logger.LogWarning("Couldn't register component. Entity with id", id, "does not exist");
+			return;
+		}
+		if (idx < 0 || idx >= MAX_SIZE)
+		{
+			Logger.LogWarning(
+				$"Couldn't register component {id} with index {idx}. Index out of bounds"
+			);
+			return;
+		}
 
-        var type = typeof(T);
-        if (!_components.ContainsKey(type))
-            _components.Add(type, Array.CreateInstance(type, MAX_SIZE));
+		var type = typeof(T);
+		if (!_components.ContainsKey(type))
+			_components.Add(type, Array.CreateInstance(type, MAX_SIZE));
 
-        _components[type].SetValue(data, idx);
-    }
+		_components[type].SetValue(data, idx);
+	}
 
-    public void UpdateComponent<T>(int id, T data)
-    {
-        if (!_idToIndexTable.TryGetValue(id, out var idx))
-        {
-            Logger.LogWarning("Couldn't update component. Entity with id", id, "does not exist");
-            return;
-        }
-        if (idx < 0 || idx >= MAX_SIZE)
-        {
-            Logger.LogWarning(
-                $"Couldn't update component {id} with index {idx}. Index out of bounds"
-            );
-            return;
-        }
+	public void UpdateComponent<T>(int id, T data)
+	{
+		if (!_idToIndexTable.TryGetValue(id, out var idx))
+		{
+			Logger.LogWarning("Couldn't update component. Entity with id", id, "does not exist");
+			return;
+		}
+		if (idx < 0 || idx >= MAX_SIZE)
+		{
+			Logger.LogWarning(
+				$"Couldn't update component {id} with index {idx}. Index out of bounds"
+			);
+			return;
+		}
 
-        var components = GetComponents<T>();
-        if (components is null)
-            return;
+		var components = GetComponents<T>();
+		if (components is null)
+			return;
 
-        components[idx] = data;
-    }
+		components[idx] = data;
+	}
 
-    // ===== Queries =====
-    // Could use generators if we need more queries
+	// ===== Queries =====
+	// Could use generators if we need more queries
 
-    private T[]? GetComponents<T>()
-    {
-        var type = typeof(T);
-        if (!_components.TryGetValue(type, out var collection))
-            return null;
+	private T[]? GetComponents<T>()
+	{
+		var type = typeof(T);
+		if (!_components.TryGetValue(type, out var collection))
+			return null;
 
-        return Unsafe.As<T[]>(collection);
-    }
+		return Unsafe.As<T[]>(collection);
+	}
 
-    public bool GetComponent<T>(int id, out T? component)
-    {
-        component = default;
-        if (!_idToIndexTable.TryGetValue(id, out var idx))
-            return false;
+	public bool GetComponent<T>(int id, out T? component)
+	{
+		component = default;
+		if (!_idToIndexTable.TryGetValue(id, out var idx))
+			return false;
 
-        var components = GetComponents<T>();
-        if (components is null)
-            return false;
+		var components = GetComponents<T>();
+		if (components is null)
+			return false;
 
-        component = components[idx];
-        return true;
-    }
+		component = components[idx];
+		return true;
+	}
 
-    /// <summary>
-    /// Returns the entity ID, and the value of T1
-    /// </summary>
-    public IEnumerable<(int, T1)> Query<T1>()
-    {
-        var components = GetComponents<T1>();
-        if (components is null)
-        {
-            Logger.LogError($"Component {typeof(T1).Name} not registered. Breaking.");
-            yield break;
-        }
+	/// <summary>
+	/// Returns the entity ID, and the value of T1
+	/// </summary>
+	public IEnumerable<(int, T1)> Query<T1>()
+	{
+		var components = GetComponents<T1>();
+		if (components is null)
+		{
+			Logger.LogError($"Component {typeof(T1).Name} not registered. Breaking.");
+			yield break;
+		}
 
-        for (var i = 0; i < MAX_SIZE; i++)
-        {
-            if (!_alive[i])
-                continue;
+		for (var i = 0; i < MAX_SIZE; i++)
+		{
+			if (!_alive[i])
+				continue;
 
-            if (!_indexToIdTable.TryGetValue(i, out var id))
-                continue;
+			if (!_indexToIdTable.TryGetValue(i, out var id))
+				continue;
 
-            yield return (id, components[i]);
-        }
-    }
+			yield return (id, components[i]);
+		}
+	}
 
-    public IEnumerable<(int, T1, T2)> Query<T1, T2>()
-    {
-        var c1 = GetComponents<T1>();
-        if (c1 is null)
-        {
-            Logger.LogError($"Component {typeof(T1).Name} not registered. Breaking.");
-            yield break;
-        }
+	public IEnumerable<(int, T1, T2)> Query<T1, T2>()
+	{
+		var c1 = GetComponents<T1>();
+		if (c1 is null)
+		{
+			Logger.LogError($"Component {typeof(T1).Name} not registered. Breaking.");
+			yield break;
+		}
 
-        var c2 = GetComponents<T2>();
-        if (c2 is null)
-        {
-            Logger.LogError($"Component {typeof(T2).Name} not registered. Breaking.");
-            yield break;
-        }
+		var c2 = GetComponents<T2>();
+		if (c2 is null)
+		{
+			Logger.LogError($"Component {typeof(T2).Name} not registered. Breaking.");
+			yield break;
+		}
 
-        for (var i = 0; i < MAX_SIZE; i++)
-        {
-            if (!_alive[i])
-                continue;
+		for (var i = 0; i < MAX_SIZE; i++)
+		{
+			if (!_alive[i])
+				continue;
 
-            if (!_indexToIdTable.TryGetValue(i, out var id))
-                continue;
+			if (!_indexToIdTable.TryGetValue(i, out var id))
+				continue;
 
-            yield return (id, c1[i], c2[i]);
-        }
-    }
+			yield return (id, c1[i], c2[i]);
+		}
+	}
 
-    public IEnumerable<(int, T1, T2, T3)> Query<T1, T2, T3>()
-    {
-        var c1 = GetComponents<T1>();
-        if (c1 is null)
-        {
-            Logger.LogError($"Component {typeof(T1).Name} not registered. Breaking.");
-            yield break;
-        }
+	public IEnumerable<(int, T1, T2, T3)> Query<T1, T2, T3>()
+	{
+		var c1 = GetComponents<T1>();
+		if (c1 is null)
+		{
+			Logger.LogError($"Component {typeof(T1).Name} not registered. Breaking.");
+			yield break;
+		}
 
-        var c2 = GetComponents<T2>();
-        if (c2 is null)
-        {
-            Logger.LogError($"Component {typeof(T2).Name} not registered. Breaking.");
-            yield break;
-        }
+		var c2 = GetComponents<T2>();
+		if (c2 is null)
+		{
+			Logger.LogError($"Component {typeof(T2).Name} not registered. Breaking.");
+			yield break;
+		}
 
-        var c3 = GetComponents<T3>();
-        if (c3 is null)
-        {
-            Logger.LogError($"Component {typeof(T3).Name} not registered. Breaking.");
-            yield break;
-        }
+		var c3 = GetComponents<T3>();
+		if (c3 is null)
+		{
+			Logger.LogError($"Component {typeof(T3).Name} not registered. Breaking.");
+			yield break;
+		}
 
-        for (var i = 0; i < MAX_SIZE; i++)
-        {
-            if (!_alive[i])
-                continue;
+		for (var i = 0; i < MAX_SIZE; i++)
+		{
+			if (!_alive[i])
+				continue;
 
-            if (!_indexToIdTable.TryGetValue(i, out var id))
-                continue;
+			if (!_indexToIdTable.TryGetValue(i, out var id))
+				continue;
 
-            yield return (id, c1[i], c2[i], c3[i]);
-        }
-    }
+			yield return (id, c1[i], c2[i], c3[i]);
+		}
+	}
 
-    public bool GetIsAlive(int id)
-    {
-        if (!_idToIndexTable.TryGetValue(id, out var idx))
-            return false;
+	public bool GetIsAlive(int id)
+	{
+		if (!_idToIndexTable.TryGetValue(id, out var idx))
+			return false;
 
-        return _alive[idx];
-    }
+		return _alive[idx];
+	}
 
-    // ===== Sets =====
-    public void SetComponent<T>(int id, T newData)
-    {
-        if (!_idToIndexTable.TryGetValue(id, out var idx))
-            return;
+	// ===== Sets =====
+	public void SetComponent<T>(int id, T newData)
+	{
+		if (!_idToIndexTable.TryGetValue(id, out var idx))
+			return;
 
-        var components = GetComponents<T>();
-        if (components is null)
-            return;
+		var components = GetComponents<T>();
+		if (components is null)
+			return;
 
-        components[idx] = newData;
-    }
+		components[idx] = newData;
+	}
 }

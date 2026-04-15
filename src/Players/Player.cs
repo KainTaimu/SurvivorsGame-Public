@@ -4,8 +4,8 @@ namespace Game.Players;
 
 public partial class Player : Node2D
 {
-    [Export]
-    public Character Character { get; private set; } = null!;
+	[Export]
+	public Character Character { get; private set; } = null!;
 
-    public EntityType EntityType => EntityType.Player;
+	public EntityType EntityType => EntityType.Player;
 }

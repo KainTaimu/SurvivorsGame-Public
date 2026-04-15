@@ -1,5 +1,6 @@
 shader_type canvas_item;
 
+// TODO: How to pack sprite frames information to custom_data?
 uniform vec2 frames = vec2(3.0, 1.0); // 3 horizontal, 1 vertical
 varying vec4 custom_data;
 

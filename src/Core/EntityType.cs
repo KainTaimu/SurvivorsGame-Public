@@ -2,8 +2,8 @@ namespace Game.Core;
 
 public enum EntityType
 {
-    None,
-    Player,
-    Enemy,
-    Breakable,
+	None,
+	Player,
+	Enemy,
+	Breakable,
 }
