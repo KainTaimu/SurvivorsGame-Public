@@ -1,6 +1,6 @@
 namespace Game.Core.ECS;
 
-public struct AnimatedSpriteComponent(string sprite, float animSpeed, int frameCount)
+public record struct AnimatedSpriteComponent(string sprite, float animSpeed, int frameCount)
 {
 	// TODO: Performance issue: LOTS of duplicate string objects in garbage collector. Enum?
 	public required string SpriteName = sprite;

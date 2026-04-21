@@ -45,7 +45,7 @@ public partial class EntityRenderer : Node
 			{
 				_idToInstanceIndex.Add(id, mmi.Multimesh.VisibleInstanceCount);
 				instanceIdx = mmi.Multimesh.VisibleInstanceCount;
-				mmi.Multimesh.VisibleInstanceCount = mmi.Multimesh.VisibleInstanceCount + 1;
+				mmi.Multimesh.VisibleInstanceCount++;
 
 				if (mmi.Multimesh.VisibleInstanceCount >= mmi.Multimesh.InstanceCount - 10)
 				{

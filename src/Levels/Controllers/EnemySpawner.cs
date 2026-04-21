@@ -9,13 +9,18 @@ public partial class EnemySpawner : Node
 	[Export]
 	private EntityComponentStore _entities = null!;
 
+	[Export]
+	private int _spawnCount = 1;
+	[Export]
+	private int _spawnBatchCount = 1;
+
 	public int TotalSpawned
 	{
 		get;
 		private set
 		{
 			// Spawned should not be decremented because we rely on it to create unique ids
-            field =
+			field =
 				Math.Clamp(value, field, EntityComponentStore.MAX_SIZE);
 		}
 	}
@@ -45,7 +50,7 @@ public partial class EnemySpawner : Node
 
 	public void SpawnEnemy()
 	{
-		if (_t > 0 || Alive >= EntityComponentStore.MAX_SIZE)
+		if (_t > 0 || Alive >= EntityComponentStore.MAX_SIZE || Alive >= _spawnCount)
 			return;
 		_t = 0.05f;
 
@@ -53,7 +58,7 @@ public partial class EnemySpawner : Node
 		if (ss is null)
 			return;
 
-		for (var i = 0; i < 100; i++)
+		for (var i = 0; i < _spawnBatchCount; i++)
 		{
 			var pos = new Vector2(GD.RandRange(1920, 1920 * 3), GD.RandRange(1920, 1920 * 3));
 			var id = TotalSpawned;
