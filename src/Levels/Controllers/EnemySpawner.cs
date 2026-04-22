@@ -1,6 +1,5 @@
 using Game.Core;
 using Game.Core.ECS;
-using Game.Core.Services;
 
 namespace Game.Levels.Controllers;
 
@@ -30,7 +29,6 @@ public partial class EnemySpawner : Node
 		get;
 		private set
 		{
-
 			field = Math.Clamp(value, 0, EntityComponentStore.MAX_SIZE);
 		}
 	}
@@ -54,10 +52,6 @@ public partial class EnemySpawner : Node
 			return;
 		_t = 0.05f;
 
-		var ss = ServiceLocator.GetService<SpriteFrameMappingsService>();
-		if (ss is null)
-			return;
-
 		for (var i = 0; i < _spawnBatchCount; i++)
 		{
 			var pos = new Vector2(GD.RandRange(1920, 1920 * 3), GD.RandRange(1920, 1920 * 3));
@@ -74,8 +68,11 @@ public partial class EnemySpawner : Node
 				new AnimatedSpriteComponent()
 				{
 					SpriteName = "duck",
-					AnimationSpeed = 1,
-					FrameCount = 1,
+					AnimationSpeed = 0.5f,
+					FrameCountX = 1,
+					FrameCountY = 4,
+					FrameSizePxX = 40,
+					FrameSizePxY = 40,
 				}
 			);
 			TotalSpawned++;

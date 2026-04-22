@@ -4,3 +4,4 @@
 dotnet_diagnostic.IDE0130.severity = silent
 indent_style = tab
 indent_size = 4
+max_line_length = 80
