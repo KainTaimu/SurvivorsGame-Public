@@ -17,7 +17,9 @@ public partial class Game : Node
 		}
 		if (Input.IsPhysicalKeyPressed(Key.F12))
 		{
-			Logger.LogDebug($"Reloading current scene \"{GetTree().CurrentScene.Name}\"");
+			Logger.LogDebug(
+				$"Reloading current scene \"{GetTree().CurrentScene.Name}\""
+			);
 			GetTree().ReloadCurrentScene();
 			return;
 		}

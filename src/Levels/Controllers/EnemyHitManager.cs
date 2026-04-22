@@ -35,9 +35,5 @@ public partial class EnemyHitManager : Node
 		_grid.Recenter(playerPos);
 	}
 
-	private void OnEnemyRemoved(int id)
-	{
-
-	}
+	private void OnEnemyRemoved(int id) { }
 }
-

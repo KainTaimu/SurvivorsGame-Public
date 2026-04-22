@@ -61,8 +61,16 @@ public partial class PlayerMovementController : Node
 		}
 
 		var move = new Vector2(
-			inputX * (_characterStats.MoveSpeed * _characterStats.MoveSpeedMultiplier),
-			inputY * (_characterStats.MoveSpeed * _characterStats.MoveSpeedMultiplier)
+			inputX
+				* (
+					_characterStats.MoveSpeed
+					* _characterStats.MoveSpeedMultiplier
+				),
+			inputY
+				* (
+					_characterStats.MoveSpeed
+					* _characterStats.MoveSpeedMultiplier
+				)
 		);
 		move *= (float)delta;
 		var originalPos = _player.GetPosition();

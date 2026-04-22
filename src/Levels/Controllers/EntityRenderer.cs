@@ -6,7 +6,17 @@ using Game.Models;
 
 namespace Game.Levels.Controllers;
 
-public class EnemyShaderCustomData(byte frameX, byte frameY, byte frameSizePxX, byte frameSizePxY, byte frameIdxX = 0, byte frameIdxY = 0, bool flip = false, byte opacity = 255, byte flash = 0)
+public class EnemyShaderCustomData(
+	byte frameX,
+	byte frameY,
+	byte frameSizePxX,
+	byte frameSizePxY,
+	byte frameIdxX = 0,
+	byte frameIdxY = 0,
+	bool flip = false,
+	byte opacity = 255,
+	byte flash = 0
+)
 {
 	public float R => GetR();
 	public float G => GetG();
@@ -76,6 +86,7 @@ public class EnemyShaderCustomData(byte frameX, byte frameY, byte frameSizePxX, 
 		return BitConverter.UInt32BitsToSingle(bits);
 	}
 }
+
 public partial class EntityRenderer : Node
 {
 	[Export]
@@ -87,14 +98,18 @@ public partial class EntityRenderer : Node
 	private const int GridSize = 128;
 	private CenteredMovingUniformGrid<(Vector2, int)> _grid = null!;
 
-	private readonly Dictionary<string, MultiMeshInstance2D> _spriteToMultiMesh = [];
+	private readonly Dictionary<
+		string,
+		MultiMeshInstance2D
+	> _spriteToMultiMesh = [];
 	private readonly Dictionary<int, int> _idToInstanceIndex = [];
 	private int _visibleCount;
 
 	private const int _initialInstanceCount = 2000;
 	private const float _instanceGrowthMultiplier = 1.5f;
 
-	private Vector2 PlayerPosition => GameWorld.Instance.MainPlayer?.GlobalPosition ?? Vector2.Zero;
+	private Vector2 PlayerPosition =>
+		GameWorld.Instance.MainPlayer?.GlobalPosition ?? Vector2.Zero;
 
 	public override void _Ready()
 	{
@@ -103,7 +118,10 @@ public partial class EntityRenderer : Node
 			return;
 
 		var windowSize = viewport.GetVisibleRect().Size * 1.2f;
-		_grid = new CenteredMovingUniformGrid<(Vector2, int)>(GridSize, windowSize);
+		_grid = new CenteredMovingUniformGrid<(Vector2, int)>(
+			GridSize,
+			windowSize
+		);
 
 		// Render last to allow other systems to do their work first
 		ProcessPriority = 16;
@@ -113,7 +131,7 @@ public partial class EntityRenderer : Node
 
 	public override void _Process(double delta)
 	{
-		// TODO: 
+		// TODO:
 		// Instead of moving hidden instances to a large Vector2 position,
 		// Change MultiMesh.VisibleInstanceCount based on how many entities
 		// are on the screen.
@@ -139,7 +157,10 @@ public partial class EntityRenderer : Node
 				instanceIdx = mmi.Multimesh.VisibleInstanceCount;
 				mmi.Multimesh.VisibleInstanceCount++;
 
-				if (mmi.Multimesh.VisibleInstanceCount >= mmi.Multimesh.InstanceCount - 10)
+				if (
+					mmi.Multimesh.VisibleInstanceCount
+					>= mmi.Multimesh.InstanceCount - 10
+				)
 				{
 					mmi.Multimesh.InstanceCount = (int)(
 						mmi.Multimesh.InstanceCount * _instanceGrowthMultiplier
@@ -151,7 +172,13 @@ public partial class EntityRenderer : Node
 			switch (type.EntityType)
 			{
 				case EntityType.Enemy:
-					UpdateEnemyInstance(mmi, id, instanceIdx, pos.Position, sprite);
+					UpdateEnemyInstance(
+						mmi,
+						id,
+						instanceIdx,
+						pos.Position,
+						sprite
+					);
 					break;
 			}
 		}
@@ -179,14 +206,16 @@ public partial class EntityRenderer : Node
 		return mmi;
 	}
 
-	private void HideInstance(int instanceIdx)
-	{
-
-	}
+	private void HideInstance(int instanceIdx) { }
 
 	// NOTE: See NOTES.md for shader data layout
-	private void UpdateEnemyInstance(MultiMeshInstance2D mmi, int entityId, int instanceIdx, Vector2 newPos,
-			AnimatedSpriteComponent sprite)
+	private void UpdateEnemyInstance(
+		MultiMeshInstance2D mmi,
+		int entityId,
+		int instanceIdx,
+		Vector2 newPos,
+		AnimatedSpriteComponent sprite
+	)
 	{
 		var multiMesh = mmi.Multimesh;
 
@@ -202,7 +231,10 @@ public partial class EntityRenderer : Node
 		else
 			flip = player.GlobalPosition < newPos;
 
-		multiMesh.SetInstanceTransform2D(instanceIdx, new Transform2D(0, newPos));
+		multiMesh.SetInstanceTransform2D(
+			instanceIdx,
+			new Transform2D(0, newPos)
+		);
 
 		var updatedSprite = sprite;
 		if (updatedSprite.AnimationTime <= 0)
@@ -220,15 +252,23 @@ public partial class EntityRenderer : Node
 
 		_entities.UpdateComponent(entityId, updatedSprite);
 
-		var custom = new EnemyShaderCustomData(updatedSprite.FrameCountX, updatedSprite.FrameCountY,
-				updatedSprite.frameSizePxX, updatedSprite.frameSizePxY, frameIdxY: updatedSprite.FrameIdxY, flip: flip);
+		var custom = new EnemyShaderCustomData(
+			updatedSprite.FrameCountX,
+			updatedSprite.FrameCountY,
+			updatedSprite.frameSizePxX,
+			updatedSprite.frameSizePxY,
+			frameIdxY: updatedSprite.FrameIdxY,
+			flip: flip
+		);
 		var data = new Color(custom.R, custom.G, custom.B, custom.A);
 		multiMesh.SetInstanceCustomData(instanceIdx, data);
 	}
 
 	private void BeforeEntityUnregistered(int id)
 	{
-		if (!_entities.GetComponent<AnimatedSpriteComponent>(id, out var sprite))
+		if (
+			!_entities.GetComponent<AnimatedSpriteComponent>(id, out var sprite)
+		)
 		{
 			Logger.LogDebug("sprite not found");
 			return;

@@ -10,6 +10,7 @@ public partial class EnemySpawner : Node
 
 	[Export]
 	private int _spawnCount = 1;
+
 	[Export]
 	private int _spawnBatchCount = 1;
 
@@ -48,21 +49,34 @@ public partial class EnemySpawner : Node
 
 	public void SpawnEnemy()
 	{
-		if (_t > 0 || Alive >= EntityComponentStore.MAX_SIZE || Alive >= _spawnCount)
+		if (
+			_t > 0
+			|| Alive >= EntityComponentStore.MAX_SIZE
+			|| Alive >= _spawnCount
+		)
 			return;
 		_t = 0.05f;
 
 		for (var i = 0; i < _spawnBatchCount; i++)
 		{
-			var pos = new Vector2(GD.RandRange(1920, 1920 * 3), GD.RandRange(1920, 1920 * 3));
+			var pos = new Vector2(
+				GD.RandRange(1920, 1920 * 3),
+				GD.RandRange(1920, 1920 * 3)
+			);
 			var id = TotalSpawned;
 			if (!_entities.RegisterEntity(id))
 				continue;
 
 			// TODO: Enemy blueprints
 			_entities.RegisterComponent(id, new HealthComponent(10));
-			_entities.RegisterComponent(id, new EntityTypeComponent(EntityType.Enemy));
-			_entities.RegisterComponent(id, new PositionComponent() { Position = pos });
+			_entities.RegisterComponent(
+				id,
+				new EntityTypeComponent(EntityType.Enemy)
+			);
+			_entities.RegisterComponent(
+				id,
+				new PositionComponent() { Position = pos }
+			);
 			_entities.RegisterComponent(
 				id,
 				new AnimatedSpriteComponent()

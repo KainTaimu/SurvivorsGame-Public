@@ -76,7 +76,11 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 	{
 		if (!_idToIndexTable.TryGetValue(id, out var idx))
 		{
-			Logger.LogWarning("Couldn't register component. Entity with id", id, "does not exist");
+			Logger.LogWarning(
+				"Couldn't register component. Entity with id",
+				id,
+				"does not exist"
+			);
 			return;
 		}
 		if (idx < 0 || idx >= MAX_SIZE)
@@ -99,7 +103,11 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 	{
 		if (!_idToIndexTable.TryGetValue(id, out var idx))
 		{
-			Logger.LogWarning("Couldn't update component. Entity with id", id, "does not exist");
+			Logger.LogWarning(
+				"Couldn't update component. Entity with id",
+				id,
+				"does not exist"
+			);
 			return;
 		}
 		if (idx < 0 || idx >= MAX_SIZE)
@@ -151,7 +159,9 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 		var components = GetComponents<T1>();
 		if (components is null)
 		{
-			Logger.LogError($"Component {typeof(T1).Name} not registered. Breaking.");
+			Logger.LogError(
+				$"Component {typeof(T1).Name} not registered. Breaking."
+			);
 			yield break;
 		}
 
@@ -172,14 +182,18 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 		var c1 = GetComponents<T1>();
 		if (c1 is null)
 		{
-			Logger.LogError($"Component {typeof(T1).Name} not registered. Breaking.");
+			Logger.LogError(
+				$"Component {typeof(T1).Name} not registered. Breaking."
+			);
 			yield break;
 		}
 
 		var c2 = GetComponents<T2>();
 		if (c2 is null)
 		{
-			Logger.LogError($"Component {typeof(T2).Name} not registered. Breaking.");
+			Logger.LogError(
+				$"Component {typeof(T2).Name} not registered. Breaking."
+			);
 			yield break;
 		}
 
@@ -200,21 +214,27 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 		var c1 = GetComponents<T1>();
 		if (c1 is null)
 		{
-			Logger.LogError($"Component {typeof(T1).Name} not registered. Breaking.");
+			Logger.LogError(
+				$"Component {typeof(T1).Name} not registered. Breaking."
+			);
 			yield break;
 		}
 
 		var c2 = GetComponents<T2>();
 		if (c2 is null)
 		{
-			Logger.LogError($"Component {typeof(T2).Name} not registered. Breaking.");
+			Logger.LogError(
+				$"Component {typeof(T2).Name} not registered. Breaking."
+			);
 			yield break;
 		}
 
 		var c3 = GetComponents<T3>();
 		if (c3 is null)
 		{
-			Logger.LogError($"Component {typeof(T3).Name} not registered. Breaking.");
+			Logger.LogError(
+				$"Component {typeof(T3).Name} not registered. Breaking."
+			);
 			yield break;
 		}
 

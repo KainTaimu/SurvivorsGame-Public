@@ -10,11 +10,19 @@ public class UniformGrid<T>
 
 	public readonly int CellSize;
 
-	public UniformGrid(int cellSize, int sizeX, int sizeY, int startX = 0, int startY = 0)
+	public UniformGrid(
+		int cellSize,
+		int sizeX,
+		int sizeY,
+		int startX = 0,
+		int startY = 0
+	)
 	{
 		if (cellSize <= 0)
 		{
-			Logger.LogError("Invalid cell size, cellSize must be > 0. Setting as 16px.");
+			Logger.LogError(
+				"Invalid cell size, cellSize must be > 0. Setting as 16px."
+			);
 			cellSize = 16;
 		}
 
