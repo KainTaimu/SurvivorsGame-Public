@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b802cb5a7o5fr" path="res://scenes/UI/PauseMenu.tscn" id="4_pi0ox"]
 [ext_resource type="Script" uid="uid://conjw4f6t4f3m" path="res://src/UI/PauseMenu/PauseController.cs" id="5_ajbtw"]
 [ext_resource type="Script" uid="uid://bjnekrn8u4tcu" path="res://src/Core/ECS/EntityComponentStoreV1.cs" id="6_qaj6y"]
-[ext_resource type="Script" uid="uid://dklm653yljghu" path="res://src/Levels/Controllers/EntityRenderer.cs" id="7_ajdj3"]
+[ext_resource type="Script" uid="uid://bkpyb01olop50" path="res://src/Levels/Controllers/EntityRenderer.cs" id="7_ajdj3"]
 [ext_resource type="Script" uid="uid://dr36ylh627o76" path="res://src/Levels/Controllers/EnemySpawner.cs" id="7_bqfuu"]
 [ext_resource type="PackedScene" uid="uid://umbqj1xym7lp" path="res://scenes/Core/FodderMultiMeshInstance2D.tscn" id="9_ror81"]
 [ext_resource type="Script" uid="uid://cwkq6cfxp7jub" path="res://src/Levels/Controllers/EnemyCollisionSolver.cs" id="10_ajdj3"]
@@ -51,8 +51,8 @@ script = ExtResource("6_qaj6y")
 [node name="EnemySpawner" type="Node" parent="Systems" unique_id=1827593298 node_paths=PackedStringArray("_entities")]
 script = ExtResource("7_bqfuu")
 _entities = NodePath("../EntityStore")
-_spawnCount = 20000
-_spawnBatchCount = 250
+_spawnCount = 10000
+_spawnBatchCount = 500
 
 [node name="EnemyMover" type="Node" parent="Systems" unique_id=348078406 node_paths=PackedStringArray("_entities")]
 script = ExtResource("10_sh7eq")
@@ -60,11 +60,11 @@ _entities = NodePath("../EntityStore")
 
 [node name="EnemyCollisionSolver" type="Node" parent="Systems" unique_id=2115688042 node_paths=PackedStringArray("_entities")]
 script = ExtResource("10_ajdj3")
-_pushAmount = 0.7
-SubSteps = 8
+_pushAmount = 0.6
 _entities = NodePath("../EntityStore")
 
 [node name="Timer" type="Timer" parent="Systems/EnemyCollisionSolver" unique_id=2089274592]
+process_callback = 0
 wait_time = 0.05
 ignore_time_scale = true
 

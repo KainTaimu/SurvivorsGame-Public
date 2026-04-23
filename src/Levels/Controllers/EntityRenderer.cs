@@ -1,91 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
 using Game.Core;
 using Game.Core.ECS;
 using Game.Core.Services;
 using Game.Models;
 
 namespace Game.Levels.Controllers;
-
-public class EnemyShaderCustomData(
-	byte frameX,
-	byte frameY,
-	byte frameSizePxX,
-	byte frameSizePxY,
-	byte frameIdxX = 0,
-	byte frameIdxY = 0,
-	bool flip = false,
-	byte opacity = 255,
-	byte flash = 0
-)
-{
-	public float R => GetR();
-	public float G => GetG();
-	public float B => GetB();
-	public float A => GetA();
-
-	// Channel R
-	public bool Flip = flip; // 1 bit
-	public byte Opacity = opacity; // 2 byte = 8 bit
-	public byte Flash = flash;
-	private const int FlipPosition = 0;
-	private const int OpacityPosition = 1;
-	private const int FlashPosition = 9;
-
-	// Channel B
-	public readonly byte FrameX = frameX;
-	public readonly byte FrameY = frameY;
-	public readonly byte FrameIdxX = frameIdxX;
-	public readonly byte FrameIdxY = frameIdxY;
-	private const int FrameXPosition = 0;
-	private const int FrameYPosition = 8;
-	private const int FrameIdxXPosition = 16;
-	private const int FrameIdxYPosition = 24;
-
-	// Channel A
-	public readonly byte FrameSizePxX = frameSizePxX;
-	public readonly byte FrameSizePxY = frameSizePxY;
-	private const int FrameSizePxXPosition = 0;
-	private const int FrameSizePxYPosition = 8;
-
-	private float GetR()
-	{
-		var bits = 0u;
-
-		bits ^= (Flip ? 1u : 0u) << FlipPosition;
-		bits ^= (uint)Opacity << OpacityPosition;
-		bits ^= (uint)Flash << FlashPosition;
-
-		return BitConverter.UInt32BitsToSingle(bits);
-	}
-
-	// TODO: What to use channel G for
-	private float GetG()
-	{
-		return 0f;
-	}
-
-	private float GetB()
-	{
-		var bits = 0u;
-
-		bits ^= (uint)FrameX << FrameXPosition;
-		bits ^= (uint)FrameY << FrameYPosition;
-		bits ^= (uint)FrameIdxX << FrameIdxXPosition;
-		bits ^= (uint)FrameIdxY << FrameIdxYPosition;
-
-		return BitConverter.UInt32BitsToSingle(bits);
-	}
-
-	private float GetA()
-	{
-		var bits = 0u;
-
-		bits ^= (uint)FrameSizePxX << FrameSizePxXPosition;
-		bits ^= (uint)FrameSizePxY << FrameSizePxYPosition;
-
-		return BitConverter.UInt32BitsToSingle(bits);
-	}
-}
 
 public partial class EntityRenderer : Node
 {
@@ -95,15 +15,15 @@ public partial class EntityRenderer : Node
 	[Export]
 	private PackedScene _multiMesh = null!;
 
-	private const int GridSize = 128;
-	private CenteredMovingUniformGrid<(Vector2, int)> _grid = null!;
+	[Export]
+	private float _renderDistanceFactor = 1.1f;
 
-	private readonly Dictionary<
-		string,
-		MultiMeshInstance2D
-	> _spriteToMultiMesh = [];
-	private readonly Dictionary<int, int> _idToInstanceIndex = [];
-	private int _visibleCount;
+	private const int GridSize = 64;
+
+	private CenteredMovingUniformGrid<string> _visibilityGrid = null!;
+	private readonly Dictionary<MultiMeshInstance2D, int> _mmiVisibilityCount = [];
+
+	private readonly Dictionary<string, MultiMeshInstance2D> _spriteToMultiMesh = [];
 
 	private const int _initialInstanceCount = 2000;
 	private const float _instanceGrowthMultiplier = 1.5f;
@@ -117,8 +37,8 @@ public partial class EntityRenderer : Node
 		if (viewport is null)
 			return;
 
-		var windowSize = viewport.GetVisibleRect().Size * 1.2f;
-		_grid = new CenteredMovingUniformGrid<(Vector2, int)>(
+		var windowSize = viewport.GetVisibleRect().Size * _renderDistanceFactor;
+		_visibilityGrid = new CenteredMovingUniformGrid<string>(
 			GridSize,
 			windowSize
 		);
@@ -131,109 +51,58 @@ public partial class EntityRenderer : Node
 
 	public override void _Process(double delta)
 	{
-		// TODO:
-		// Instead of moving hidden instances to a large Vector2 position,
-		// Change MultiMesh.VisibleInstanceCount based on how many entities
-		// are on the screen.
-		_grid.Recenter(PlayerPosition);
-		// _grid.ClearGrid();
-		// AddObjectsToGrid();
+		// calculate vis grid
+		_visibilityGrid.Recenter(PlayerPosition);
+		foreach (var mmi in _mmiVisibilityCount.Keys)
+			_mmiVisibilityCount[mmi] = 0;
 
-		foreach (
-			var (id, sprite, pos, type) in _entities.Query<
-				AnimatedSpriteComponent,
-				PositionComponent,
-				EntityTypeComponent
-			>()
-		)
+		var vis = AddObjectsToGrid();
+		foreach (var (key, val) in vis)
 		{
+			if (!_spriteToMultiMesh.TryGetValue(key, out var mmi))
+				continue;
+			if (Engine.GetProcessFrames() % 10 == 0)
+				Logger.LogDebug(key, val);
+			mmi.Multimesh.VisibleInstanceCount = val;
+		}
+
+		foreach (var (id, pos, sprite) in _entities.Query<PositionComponent, AnimatedSpriteComponent>())
+		{
+			if (!_visibilityGrid.ContainsWorld(pos.Position))
+				continue;
+
 			if (!_spriteToMultiMesh.TryGetValue(sprite.SpriteName, out var mmi))
-			{
 				mmi = CreateNewMultiMesh(sprite.SpriteName);
-			}
-			if (!_idToInstanceIndex.TryGetValue(id, out var instanceIdx))
-			{
-				_idToInstanceIndex.Add(id, mmi.Multimesh.VisibleInstanceCount);
-				instanceIdx = mmi.Multimesh.VisibleInstanceCount;
-				mmi.Multimesh.VisibleInstanceCount++;
 
-				if (
-					mmi.Multimesh.VisibleInstanceCount
-					>= mmi.Multimesh.InstanceCount - 10
-				)
-				{
-					mmi.Multimesh.InstanceCount = (int)(
-						mmi.Multimesh.InstanceCount * _instanceGrowthMultiplier
-					);
-					Logger.LogDebug(mmi.Multimesh.InstanceCount);
-				}
-			}
-
-			switch (type.EntityType)
+			var count = ++_mmiVisibilityCount[mmi];
+			if (count > mmi.Multimesh.InstanceCount)
 			{
-				case EntityType.Enemy:
-					UpdateEnemyInstance(
-						mmi,
-						id,
-						instanceIdx,
-						pos.Position,
-						sprite
-					);
-					break;
+				mmi.Multimesh.InstanceCount = (int)(mmi.Multimesh.InstanceCount * _instanceGrowthMultiplier);
 			}
+			UpdateEnemyInstance(mmi, id, count, pos.Position, sprite);
 		}
 	}
 
-	private MultiMeshInstance2D CreateNewMultiMesh(string spriteName)
-	{
-		var mmi = _multiMesh.Instantiate<MultiMeshInstance2D>();
-		// To avoid flickering, pre-initialize 1,000 instances and only make them visible when spawned
-		mmi.Multimesh.InstanceCount = _initialInstanceCount;
-		mmi.Multimesh.VisibleInstanceCount = 0;
-
-		var ss = ServiceLocator.GetService<SpriteFrameMappingsService>();
-		if (ss is null)
-		{
-			Logger.LogError("Could not get SpriteFrameMappingsService.");
-			mmi.Texture = new PlaceholderTexture2D();
-			return mmi;
-		}
-
-		mmi.Texture = ss.GetSpriteFrame(spriteName);
-
-		AddChild(mmi);
-		_spriteToMultiMesh.Add(spriteName, mmi);
-		return mmi;
-	}
-
-	private void HideInstance(int instanceIdx) { }
-
-	// NOTE: See NOTES.md for shader data layout
 	private void UpdateEnemyInstance(
 		MultiMeshInstance2D mmi,
 		int entityId,
 		int instanceIdx,
-		Vector2 newPos,
+		Vector2 pos,
 		AnimatedSpriteComponent sprite
 	)
 	{
 		var multiMesh = mmi.Multimesh;
-
-		if (!_grid.ContainsWorld(newPos))
-		{
-			return;
-		}
-
 		bool flip;
+
 		var player = GameWorld.Instance.MainPlayer;
 		if (player is null)
 			flip = false;
 		else
-			flip = player.GlobalPosition < newPos;
+			flip = player.GlobalPosition < pos;
 
 		multiMesh.SetInstanceTransform2D(
 			instanceIdx,
-			new Transform2D(0, newPos)
+			new Transform2D(0, pos)
 		);
 
 		var updatedSprite = sprite;
@@ -264,56 +133,50 @@ public partial class EntityRenderer : Node
 		multiMesh.SetInstanceCustomData(instanceIdx, data);
 	}
 
-	private void BeforeEntityUnregistered(int id)
+	private MultiMeshInstance2D CreateNewMultiMesh(string spriteName)
 	{
-		if (
-			!_entities.GetComponent<AnimatedSpriteComponent>(id, out var sprite)
-		)
-		{
-			Logger.LogDebug("sprite not found");
-			return;
-		}
-		if (!_spriteToMultiMesh.TryGetValue(sprite.SpriteName, out var mmi))
-		{
-			Logger.LogDebug("multiMesh not found");
-			return;
-		}
+		var mmi = _multiMesh.Instantiate<MultiMeshInstance2D>();
+		// To avoid flickering, pre-initialize 1,000 instances and only make them visible when spawned
+		mmi.Multimesh.InstanceCount = _initialInstanceCount;
+		mmi.Multimesh.VisibleInstanceCount = 0;
 
-		if (!_idToInstanceIndex.TryGetValue(id, out var idx))
+		var ss = ServiceLocator.GetService<SpriteFrameMappingsService>();
+		if (ss is null)
 		{
-			Logger.LogDebug("instanceIdx not found");
-			return;
+			Logger.LogError("Could not get SpriteFrameMappingsService.");
+			mmi.Texture = new PlaceholderTexture2D();
+			return mmi;
 		}
 
-		var multiMesh = mmi.Multimesh;
-		multiMesh.SetInstanceTransform2D(idx, new Transform2D(0, Vector2.Inf));
+		mmi.Texture = ss.GetSpriteFrame(spriteName);
 
-		_idToInstanceIndex.Remove(id);
+		AddChild(mmi);
+		_spriteToMultiMesh.Add(spriteName, mmi);
+		_mmiVisibilityCount.TryAdd(mmi, 0);
+		return mmi;
 	}
 
-	private void AddObjectsToGrid()
+	private void BeforeEntityUnregistered(int entityId)
 	{
-		foreach (var (id, pos) in _entities.Query<PositionComponent>())
+		throw new NotImplementedException("TODO");
+	}
+
+	private Dictionary<string, int> AddObjectsToGrid()
+	{
+		var vis = new Dictionary<string, int>();
+		foreach (var (_, pos, sprite) in _entities.Query<PositionComponent, AnimatedSpriteComponent>())
 		{
-			if (!_grid.ContainsWorld(pos.Position))
+			if (!_visibilityGrid.ContainsWorld(pos.Position))
 				continue;
 
-			var cell = _grid.GetCellWorld(pos.Position);
-			cell?.Add((pos.Position, id));
-		}
-	}
+			var cell = _visibilityGrid.GetCellWorld(pos.Position);
+			if (cell is null)
+				continue;
+			cell.Add(sprite.SpriteName);
 
-	private int GetGridCount()
-	{
-		var i = 0;
-		for (int x = 0; x < _grid.Dimensions.X; x++)
-		{
-			for (int y = 0; x < _grid.Dimensions.Y; y++)
-			{
-				var cell = _grid.GetCell(x, y)!;
-				i += cell.Count;
-			}
+			if (!vis.TryAdd(sprite.SpriteName, 1))
+				vis[sprite.SpriteName]++;
 		}
-		return i;
+		return vis;
 	}
 }

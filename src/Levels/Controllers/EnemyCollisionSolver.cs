@@ -9,8 +9,8 @@ public partial class EnemyCollisionSolver : Node
 	private const byte GridSize = 64;
 
 	[ExportCategory("Configuration")]
-	// [Export(PropertyHint.Range, "0,50,1")]
-	private const int _distBeforeShove = 45;
+	[Export(PropertyHint.Range, "0,50,1")]
+	private int _distBeforeShove = 45;
 
 	[Export(PropertyHint.Range, "0,5,0.1")]
 	private float _pushAmount = 1.1f;
@@ -124,19 +124,19 @@ public partial class EnemyCollisionSolver : Node
 	private void SolveCollisions()
 	{
 		for (var x = 0; x < _grid.Dimensions.X; x++)
-		for (var y = 0; y < _grid.Dimensions.Y; y++)
-		{
-			var cell = _grid.GetCell(x, y);
-			if (cell is null || cell.Count <= 1)
-				continue;
+			for (var y = 0; y < _grid.Dimensions.Y; y++)
+			{
+				var cell = _grid.GetCell(x, y);
+				if (cell is null || cell.Count <= 1)
+					continue;
 
-			SolveCellInternalCollisions(cell);
+				SolveCellInternalCollisions(cell);
 
-			SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y)); // E
-			SolveCellPairCollisions(cell, _grid.GetCell(x, y + 1)); // S
-			SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y + 1)); // SE
-			SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y - 1)); // NE
-		}
+				SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y)); // E
+				SolveCellPairCollisions(cell, _grid.GetCell(x, y + 1)); // S
+				SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y + 1)); // SE
+				SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y - 1)); // NE
+			}
 	}
 
 	private void SolveCellInternalCollisions(
@@ -144,10 +144,10 @@ public partial class EnemyCollisionSolver : Node
 	)
 	{
 		for (var i = 0; i < cell.Count; i++)
-		for (var j = i + 1; j < cell.Count; j++)
-		{
-			SolveCollisionInPlace(cell, i, cell, j);
-		}
+			for (var j = i + 1; j < cell.Count; j++)
+			{
+				SolveCollisionInPlace(cell, i, cell, j);
+			}
 	}
 
 	private void SolveCellPairCollisions(
@@ -159,10 +159,10 @@ public partial class EnemyCollisionSolver : Node
 			return;
 
 		for (var i = 0; i < cellA.Count; i++)
-		for (var j = 0; j < cellB.Count; j++)
-		{
-			SolveCollisionInPlace(cellA, i, cellB, j);
-		}
+			for (var j = 0; j < cellB.Count; j++)
+			{
+				SolveCollisionInPlace(cellA, i, cellB, j);
+			}
 	}
 
 	private void SolveCollisionInPlace(
@@ -200,43 +200,43 @@ public partial class EnemyCollisionSolver : Node
 	private void CreateDebugDisplayGridBounds()
 	{
 		for (var x = 0; x < _grid.Dimensions.X; x++)
-		for (var y = 0; y < _grid.Dimensions.Y; y++)
-		{
-			var cell = _grid.Cells[x, y];
-			var rect = new ReferenceRect
+			for (var y = 0; y < _grid.Dimensions.Y; y++)
 			{
-				Name = $"rect-{cell.Index}",
-				Size = new Vector2(GridSize, GridSize),
-				Position = cell.Position,
-				Visible = true,
-				EditorOnly = false,
-			};
-
-			var text = new Label
-			{
-				Name = $"text-{cell.Index}",
-				Scale = new Vector2(0.75f, 0.75f),
-				Position = cell.Position,
-				Text = cell.Position + "\n" + cell.Index + "\n" + cell.Count,
-				LabelSettings = new LabelSettings
+				var cell = _grid.Cells[x, y];
+				var rect = new ReferenceRect
 				{
-					FontColor = new Color(0, 0, 0),
-				},
-			};
+					Name = $"rect-{cell.Index}",
+					Size = new Vector2(GridSize, GridSize),
+					Position = cell.Position,
+					Visible = true,
+					EditorOnly = false,
+				};
 
-			AddChild(rect);
-			AddChild(text);
-		}
+				var text = new Label
+				{
+					Name = $"text-{cell.Index}",
+					Scale = new Vector2(0.75f, 0.75f),
+					Position = cell.Position,
+					Text = cell.Position + "\n" + cell.Index + "\n" + cell.Count,
+					LabelSettings = new LabelSettings
+					{
+						FontColor = new Color(0, 0, 0),
+					},
+				};
+
+				AddChild(rect);
+				AddChild(text);
+			}
 	}
 
 	private void UpdateDebug()
 	{
 		for (var x = 0; x < _grid.Dimensions.X; x++)
-		for (var y = 0; y < _grid.Dimensions.Y; y++)
-		{
-			var cell = _grid.Cells[x, y];
-			var text = GetNode<Label>($"text-{cell.Index}");
-			text.Text = cell.Position + "\n" + cell.Index + "\n" + cell.Count;
-		}
+			for (var y = 0; y < _grid.Dimensions.Y; y++)
+			{
+				var cell = _grid.Cells[x, y];
+				var text = GetNode<Label>($"text-{cell.Index}");
+				text.Text = cell.Position + "\n" + cell.Index + "\n" + cell.Count;
+			}
 	}
 }
