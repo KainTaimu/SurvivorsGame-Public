@@ -51,7 +51,7 @@ script = ExtResource("6_qaj6y")
 [node name="EnemySpawner" type="Node" parent="Systems" unique_id=1827593298 node_paths=PackedStringArray("_entities")]
 script = ExtResource("7_bqfuu")
 _entities = NodePath("../EntityStore")
-_spawnCount = 10000
+_spawnCount = 20000
 _spawnBatchCount = 500
 
 [node name="EnemyMover" type="Node" parent="Systems" unique_id=348078406 node_paths=PackedStringArray("_entities")]
@@ -60,7 +60,9 @@ _entities = NodePath("../EntityStore")
 
 [node name="EnemyCollisionSolver" type="Node" parent="Systems" unique_id=2115688042 node_paths=PackedStringArray("_entities")]
 script = ExtResource("10_ajdj3")
-_pushAmount = 0.6
+_distBeforeShove = 35
+_pushAmount = 0.4
+SubSteps = 3
 _entities = NodePath("../EntityStore")
 
 [node name="Timer" type="Timer" parent="Systems/EnemyCollisionSolver" unique_id=2089274592]

@@ -11,7 +11,6 @@ public record struct AnimatedSpriteComponent(
 	byte frameIdxY = 0
 )
 {
-	// TODO: Performance issue: LOTS of duplicate string objects in garbage collector. Enum?
 	public required string SpriteName = sprite;
 	public required float AnimationSpeed = animSpeed;
 	public required byte FrameCountX = frameCountX;
