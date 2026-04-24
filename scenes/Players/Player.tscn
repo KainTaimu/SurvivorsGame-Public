@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bix8bkfo5pwko"]
+[gd_scene format=3 uid="uid://bix8bkfo5pwko"]
 
 [ext_resource type="Script" uid="uid://cb48sxavv5g3k" path="res://src/Players/Player.cs" id="1_f0mf6"]
 [ext_resource type="PackedScene" uid="uid://cw0jthbyjhm45" path="res://scenes/Players/Character.tscn" id="2_d0tyu"]
@@ -61,29 +61,30 @@ animations = [{
 "speed": 7.0
 }]
 
-[node name="Player" type="Node2D" node_paths=PackedStringArray("Character")]
+[node name="Player" type="Node2D" unique_id=1386970244 node_paths=PackedStringArray("Character")]
 script = ExtResource("1_f0mf6")
 Character = NodePath("Character")
 
-[node name="Character" parent="." node_paths=PackedStringArray("CharacterStats") instance=ExtResource("2_d0tyu")]
+[node name="Character" parent="." unique_id=1307742891 node_paths=PackedStringArray("CharacterStats") instance=ExtResource("2_d0tyu")]
 CharacterName = "Test"
 CharacterStats = NodePath("CharacterStats")
 
-[node name="CharacterStats" type="Node" parent="Character"]
+[node name="CharacterStats" type="Node" parent="Character" unique_id=248938102]
 script = ExtResource("3_cdd6o")
+MoveSpeed = 600.0
 
-[node name="PlayerMovementController" type="Node" parent="." node_paths=PackedStringArray("_player", "_characterStats", "_sprite")]
+[node name="PlayerMovementController" type="Node" parent="." unique_id=1602338086 node_paths=PackedStringArray("_player", "_characterStats", "_sprite")]
 script = ExtResource("4_kfojw")
 _player = NodePath("..")
 _characterStats = NodePath("../Character/CharacterStats")
 _sprite = NodePath("../AnimatedSprite2D")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=881638213]
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_dpv53")
 animation = &"run"
 autoplay = "idle"
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=68646763]
 zoom = Vector2(0.9, 0.9)
 script = ExtResource("6_kfojw")

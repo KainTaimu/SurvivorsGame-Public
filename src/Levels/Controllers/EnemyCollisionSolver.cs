@@ -6,14 +6,25 @@ namespace Game.Levels.Controllers;
 
 public partial class EnemyCollisionSolver : Node
 {
-	private const byte GridSize = 64;
 
 	[ExportCategory("Configuration")]
-	[Export(PropertyHint.Range, "0,50,1")]
-	private int _distBeforeShove = 45;
+	[Export]
+	private byte GridSize = 64;
+
+	[Export]
+	private float _solverRangeFactor = 3f;
+
+	[Export]
+	private int _distBeforeShove = 50;
 
 	[Export(PropertyHint.Range, "0,5,0.1")]
-	private float _pushAmount = 1.1f;
+	private float _pushAmount = 0.4f;
+
+	[Export]
+	private int _cramLimitBeforeExtraPush = 6;
+
+	[Export]
+	private float _cramExtraPushFactor = 6f;
 
 	[Export]
 	public bool DebugEnabled;
@@ -42,12 +53,13 @@ public partial class EnemyCollisionSolver : Node
 			return;
 		}
 
-		var windowSize = viewport.GetVisibleRect().Size * 3.0f;
+		var windowSize = viewport.GetVisibleRect().Size * _solverRangeFactor;
 		_grid = new CenteredMovingUniformGrid<(Vector2, int)>(
 			GridSize,
-			windowSize
+			new Vector2(windowSize.X, windowSize.X)
 		);
-		Logger.LogDebug(_grid.Dimensions, _grid.CellSize);
+
+		Logger.LogDebug("in", _grid.Dimensions, _grid.CellSize);
 
 		if (!Enabled)
 			return;
@@ -69,18 +81,18 @@ public partial class EnemyCollisionSolver : Node
 		var player = GameWorld.Instance.MainPlayer;
 		if (player is null)
 			return;
+		_grid.Recenter(player.GlobalPosition);
 
 		_writeBuffer.Clear();
 		AddObjectsToGrid();
 		for (var i = 0; i < SubSteps; i++)
 		{
-			_grid.Recenter(player.GlobalPosition);
 			_grid.ClearGrid();
 			AddObjectsToGridFromBuffer();
 			SolveCollisions();
 		}
-		ApplyCollisions();
 
+		ApplyCollisions();
 		if (DebugEnabled)
 			UpdateDebug();
 	}
@@ -124,6 +136,7 @@ public partial class EnemyCollisionSolver : Node
 	private void SolveCollisions()
 	{
 		for (var x = 0; x < _grid.Dimensions.X; x++)
+		{
 			for (var y = 0; y < _grid.Dimensions.Y; y++)
 			{
 				var cell = _grid.GetCell(x, y);
@@ -137,6 +150,7 @@ public partial class EnemyCollisionSolver : Node
 				SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y + 1)); // SE
 				SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y - 1)); // NE
 			}
+		}
 	}
 
 	private void SolveCellInternalCollisions(
@@ -144,10 +158,12 @@ public partial class EnemyCollisionSolver : Node
 	)
 	{
 		for (var i = 0; i < cell.Count; i++)
+		{
 			for (var j = i + 1; j < cell.Count; j++)
 			{
 				SolveCollisionInPlace(cell, i, cell, j);
 			}
+		}
 	}
 
 	private void SolveCellPairCollisions(
@@ -159,10 +175,12 @@ public partial class EnemyCollisionSolver : Node
 			return;
 
 		for (var i = 0; i < cellA.Count; i++)
+		{
 			for (var j = 0; j < cellB.Count; j++)
 			{
 				SolveCollisionInPlace(cellA, i, cellB, j);
 			}
+		}
 	}
 
 	private void SolveCollisionInPlace(
@@ -185,8 +203,16 @@ public partial class EnemyCollisionSolver : Node
 		if (direction == Vector2.Zero)
 			direction = Vector2.Right;
 
+
 		// NOTE: Delta is accounted for in the Timer that calls Process.
 		var push = _distBeforeShove * 0.5f * _pushAmount;
+
+		if (cellA.Count >= _cramLimitBeforeExtraPush || cellB.Count >= _cramLimitBeforeExtraPush)
+		{
+			var extraPush = Mathf.Log((cellA.Count + cellB.Count) / 1.5f) * _cramExtraPushFactor;
+			push *= Math.Abs(extraPush);
+		}
+
 		posA += direction * push;
 		posB -= direction * push;
 

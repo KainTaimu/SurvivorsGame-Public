@@ -69,12 +69,7 @@ public partial class EntityRenderer : Node
 			if (count >= mmi.Multimesh.InstanceCount)
 			{
 				mmi.Multimesh.InstanceCount = (int)(mmi.Multimesh.InstanceCount * _instanceGrowthMultiplier);
-				Logger.LogDebug("Increasing", mmi.Multimesh.InstanceCount);
 			}
-			if (count < 0)
-				Logger.LogError($"count({count}) < 0");
-			if (count >= mmi.Multimesh.InstanceCount)
-				Logger.LogError($"count({count}) >= mmi.Multimesh.InstanceCount({mmi.Multimesh.InstanceCount})");
 
 			UpdateEnemyInstance(mmi, id, count, pos.Position, sprite);
 		}
