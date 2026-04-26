@@ -4,6 +4,7 @@ using Godot.Collections;
 
 namespace Game.Levels.Controllers;
 
+[Obsolete]
 public partial class EnemySpawner : Node
 {
 	[ExportCategory("Main")]

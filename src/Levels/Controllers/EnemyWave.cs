@@ -39,7 +39,7 @@ public partial class EnemyWave : Resource, IEnemyWave
 			}
 			field = value;
 		}
-	}
+	} = 0.5;
 
 	[Export]
 	public double SpawnMaxTime
@@ -57,7 +57,7 @@ public partial class EnemyWave : Resource, IEnemyWave
 			}
 			field = value;
 		}
-	}
+	} = 1;
 
 	public List<int> SpawnedIds => _waveController.SpawnedIds;
 
@@ -99,7 +99,6 @@ public partial class EnemyWave : Resource, IEnemyWave
 	public void EndWave()
 	{
 		EmitSignalOnWaveEnd();
-		Logger.LogDebug($"Ended {ToString()}");
 	}
 
 	public void SpawnEnemy()
