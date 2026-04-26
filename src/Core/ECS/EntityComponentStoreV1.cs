@@ -150,9 +150,6 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 		var components = GetComponents<T1>();
 		if (components is null)
 		{
-			Logger.LogError(
-				$"Component {typeof(T1).Name} not registered. Breaking."
-			);
 			yield break;
 		}
 
@@ -173,18 +170,12 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 		var c1 = GetComponents<T1>();
 		if (c1 is null)
 		{
-			Logger.LogError(
-				$"Component {typeof(T1).Name} not registered. Breaking."
-			);
 			yield break;
 		}
 
 		var c2 = GetComponents<T2>();
 		if (c2 is null)
 		{
-			Logger.LogError(
-				$"Component {typeof(T2).Name} not registered. Breaking."
-			);
 			yield break;
 		}
 
@@ -205,27 +196,18 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 		var c1 = GetComponents<T1>();
 		if (c1 is null)
 		{
-			Logger.LogError(
-				$"Component {typeof(T1).Name} not registered. Breaking."
-			);
 			yield break;
 		}
 
 		var c2 = GetComponents<T2>();
 		if (c2 is null)
 		{
-			Logger.LogError(
-				$"Component {typeof(T2).Name} not registered. Breaking."
-			);
 			yield break;
 		}
 
 		var c3 = GetComponents<T3>();
 		if (c3 is null)
 		{
-			Logger.LogError(
-				$"Component {typeof(T3).Name} not registered. Breaking."
-			);
 			yield break;
 		}
 

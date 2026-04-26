@@ -8,7 +8,7 @@ public partial class EnemyInfo : Node
 	private Label _label = null!;
 
 	[Export]
-	private EnemySpawner? _spawner;
+	private EnemyWaveController? _spawner;
 
 	public override void _Ready()
 	{

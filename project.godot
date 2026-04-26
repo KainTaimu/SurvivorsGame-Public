@@ -41,7 +41,7 @@ window/size/mode.editor=3
 
 [dotnet]
 
-project/assembly_name="SurvivorsGame"
+project/assembly_name="Game"
 
 [editor_plugins]
 

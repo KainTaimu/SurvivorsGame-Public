@@ -8,4 +8,6 @@ public partial class Player : Node2D
 	public Character Character { get; private set; } = null!;
 
 	public EntityType EntityType => EntityType.Player;
+
+	public bool IsAlive => Character.CharacterStats.Health == 0;
 }

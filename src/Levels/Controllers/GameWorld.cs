@@ -5,7 +5,7 @@ namespace Game.Levels.Controllers;
 public partial class GameWorld : Node
 {
 	[Export]
-	public Player? MainPlayer { get; private set; }
+	public Player MainPlayer { get; private set; } = null!;
 
 	[Export]
 	private TileMapLayer LevelTileMap = null!;

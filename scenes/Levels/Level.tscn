@@ -14,7 +14,25 @@
 [ext_resource type="Script" uid="uid://cwkq6cfxp7jub" path="res://src/Levels/Controllers/EnemyCollisionSolver.cs" id="10_ajdj3"]
 [ext_resource type="Resource" uid="uid://dl1a0sq36f524" path="res://scenes/Enemies/Blueprints/Shondo.tres" id="10_d4hlt"]
 [ext_resource type="Script" uid="uid://bct2mtni7a82f" path="res://src/Levels/Controllers/EnemyMover.cs" id="10_sh7eq"]
+[ext_resource type="Script" uid="uid://citywxiolgxtm" path="res://src/Levels/Controllers/EnemyWaveController.cs" id="11_aredf"]
 [ext_resource type="Script" uid="uid://dhee6pva3aeeu" path="res://src/UI/Debug/EnemyInfo.cs" id="12_qaj6y"]
+[ext_resource type="Script" uid="uid://k3emmqynn150" path="res://src/Levels/Controllers/EnemyWave.cs" id="12_x7tv3"]
+
+[sub_resource type="Resource" id="Resource_x7tv3"]
+script = ExtResource("12_x7tv3")
+EnemyBlueprints = Array[Object]([ExtResource("8_1c6ul")])
+Duration = 5.0
+MaxMobs = 30
+SpawnMinTime = 1.0
+SpawnMaxTime = 1.0
+metadata/_custom_type_script = "uid://k3emmqynn150"
+
+[sub_resource type="Resource" id="Resource_e7p0g"]
+script = ExtResource("12_x7tv3")
+EnemyBlueprints = Array[Object]([ExtResource("8_1c6ul"), ExtResource("9_occlw"), ExtResource("10_d4hlt")])
+SpawnMinTime = 0.1
+SpawnMaxTime = 0.1
+metadata/_custom_type_script = "uid://k3emmqynn150"
 
 [node name="Level" type="Node2D" unique_id=2141389114]
 metadata/_edit_lock_ = true
@@ -34,7 +52,6 @@ region_rect = Rect2(0, 0, 1920, 1145)
 metadata/_edit_lock_ = true
 
 [node name="Player" parent="." unique_id=1984267814 instance=ExtResource("1_77fk7")]
-position = Vector2(3046, 1550)
 
 [node name="Systems" type="Node" parent="." unique_id=708197889]
 
@@ -49,31 +66,35 @@ script = ExtResource("5_ajbtw")
 _player = NodePath("../../Player")
 _pauseController = NodePath("../PauseController")
 
-[node name="EntityStore" type="Node" parent="Systems" unique_id=1131826051]
+[node name="EntityComponentStore" type="Node" parent="Systems" unique_id=1131826051]
 script = ExtResource("6_qaj6y")
 
 [node name="EnemySpawner" type="Node" parent="Systems" unique_id=1827593298 node_paths=PackedStringArray("_entities")]
+process_mode = 4
 script = ExtResource("7_bqfuu")
-_enemyBlueprints = Array[Object]([ExtResource("8_1c6ul"), ExtResource("9_occlw"), ExtResource("10_d4hlt")])
-_entities = NodePath("../EntityStore")
-_spawnCount = 3000
-_spawnBatchCount = 500
+_enemyBlueprints = Array[Object]([ExtResource("10_d4hlt")])
+_entities = NodePath("../EntityComponentStore")
+
+[node name="EnemyWaveController" type="Node" parent="Systems" unique_id=247564660 node_paths=PackedStringArray("EntityComponentStore")]
+script = ExtResource("11_aredf")
+Waves = Array[Object]([SubResource("Resource_x7tv3"), SubResource("Resource_e7p0g")])
+EntityComponentStore = NodePath("../EntityComponentStore")
 
 [node name="EnemyMover" type="Node" parent="Systems" unique_id=348078406 node_paths=PackedStringArray("_entities")]
 script = ExtResource("10_sh7eq")
-_entities = NodePath("../EntityStore")
+_entities = NodePath("../EntityComponentStore")
 
 [node name="EnemyCollisionSolver" type="Node" parent="Systems" unique_id=2115688042 node_paths=PackedStringArray("_entities")]
 script = ExtResource("10_ajdj3")
 _solverRangeFactor = 2.0
 _distBeforeShove = 45
 SubSteps = 4
-_entities = NodePath("../EntityStore")
+_entities = NodePath("../EntityComponentStore")
 
 [node name="EntityRenderer" type="Node" parent="Systems" unique_id=1054443393 node_paths=PackedStringArray("_entities")]
 process_priority = 16
 script = ExtResource("7_ajdj3")
-_entities = NodePath("../EntityStore")
+_entities = NodePath("../EntityComponentStore")
 _multiMesh = ExtResource("9_ror81")
 
 [node name="HUD" type="Node" parent="." unique_id=1918867052]
@@ -81,7 +102,7 @@ _multiMesh = ExtResource("9_ror81")
 [node name="EnemyInfo" type="CanvasLayer" parent="HUD" unique_id=370296864 node_paths=PackedStringArray("_label", "_spawner")]
 script = ExtResource("12_qaj6y")
 _label = NodePath("VBoxContainer/Label")
-_spawner = NodePath("../../Systems/EnemySpawner")
+_spawner = NodePath("../../Systems/EnemyWaveController")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HUD/EnemyInfo" unique_id=1020579535]
 offset_right = 66.0
