@@ -8,8 +8,11 @@
 [ext_resource type="Script" uid="uid://bjnekrn8u4tcu" path="res://src/Core/ECS/EntityComponentStoreV1.cs" id="6_qaj6y"]
 [ext_resource type="Script" uid="uid://bkpyb01olop50" path="res://src/Levels/Controllers/EntityRenderer.cs" id="7_ajdj3"]
 [ext_resource type="Script" uid="uid://dr36ylh627o76" path="res://src/Levels/Controllers/EnemySpawner.cs" id="7_bqfuu"]
+[ext_resource type="Resource" uid="uid://d3ao5d4ym77ad" path="res://scenes/Enemies/Blueprints/Duck.tres" id="8_1c6ul"]
+[ext_resource type="Resource" uid="uid://6rycr3xfb4ax" path="res://scenes/Enemies/Blueprints/Vanoss.tres" id="9_occlw"]
 [ext_resource type="PackedScene" uid="uid://umbqj1xym7lp" path="res://scenes/Core/FodderMultiMeshInstance2D.tscn" id="9_ror81"]
 [ext_resource type="Script" uid="uid://cwkq6cfxp7jub" path="res://src/Levels/Controllers/EnemyCollisionSolver.cs" id="10_ajdj3"]
+[ext_resource type="Resource" uid="uid://dl1a0sq36f524" path="res://scenes/Enemies/Blueprints/Shondo.tres" id="10_d4hlt"]
 [ext_resource type="Script" uid="uid://bct2mtni7a82f" path="res://src/Levels/Controllers/EnemyMover.cs" id="10_sh7eq"]
 [ext_resource type="Script" uid="uid://dhee6pva3aeeu" path="res://src/UI/Debug/EnemyInfo.cs" id="12_qaj6y"]
 
@@ -31,6 +34,7 @@ region_rect = Rect2(0, 0, 1920, 1145)
 metadata/_edit_lock_ = true
 
 [node name="Player" parent="." unique_id=1984267814 instance=ExtResource("1_77fk7")]
+position = Vector2(3046, 1550)
 
 [node name="Systems" type="Node" parent="." unique_id=708197889]
 
@@ -50,8 +54,9 @@ script = ExtResource("6_qaj6y")
 
 [node name="EnemySpawner" type="Node" parent="Systems" unique_id=1827593298 node_paths=PackedStringArray("_entities")]
 script = ExtResource("7_bqfuu")
+_enemyBlueprints = Array[Object]([ExtResource("8_1c6ul"), ExtResource("9_occlw"), ExtResource("10_d4hlt")])
 _entities = NodePath("../EntityStore")
-_spawnCount = 10000
+_spawnCount = 3000
 _spawnBatchCount = 500
 
 [node name="EnemyMover" type="Node" parent="Systems" unique_id=348078406 node_paths=PackedStringArray("_entities")]
@@ -60,8 +65,9 @@ _entities = NodePath("../EntityStore")
 
 [node name="EnemyCollisionSolver" type="Node" parent="Systems" unique_id=2115688042 node_paths=PackedStringArray("_entities")]
 script = ExtResource("10_ajdj3")
-_cramLimitBeforeExtraPush = 4
-SubSteps = 8
+_solverRangeFactor = 2.0
+_distBeforeShove = 45
+SubSteps = 4
 _entities = NodePath("../EntityStore")
 
 [node name="EntityRenderer" type="Node" parent="Systems" unique_id=1054443393 node_paths=PackedStringArray("_entities")]

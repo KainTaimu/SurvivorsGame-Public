@@ -5,8 +5,7 @@ public partial class PlayerMovementController : Node
 	[Export]
 	private Player _player = null!;
 
-	[Export]
-	private CharacterStats _characterStats = null!;
+	private CharacterStats CharacterStats => _player.Character.CharacterStats;
 
 	[Export]
 	private AnimatedSprite2D _sprite = null!;
@@ -63,13 +62,13 @@ public partial class PlayerMovementController : Node
 		var move = new Vector2(
 			inputX
 				* (
-					_characterStats.MoveSpeed
-					* _characterStats.MoveSpeedMultiplier
+					CharacterStats.MoveSpeed
+					* CharacterStats.MoveSpeedMultiplier
 				),
 			inputY
 				* (
-					_characterStats.MoveSpeed
-					* _characterStats.MoveSpeedMultiplier
+					CharacterStats.MoveSpeed
+					* CharacterStats.MoveSpeedMultiplier
 				)
 		);
 		move *= (float)delta;

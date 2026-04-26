@@ -22,9 +22,13 @@ public partial class EntityRenderer : Node
 
 	// Only for checking visibility. Nothing stored inside
 	private CenteredMovingUniformGrid<object> _visibilityGrid = null!;
-	private readonly Dictionary<MultiMeshInstance2D, int> _mmiVisibilityCount = [];
+	private readonly Dictionary<MultiMeshInstance2D, int> _mmiVisibilityCount =
+	[];
 
-	private readonly Dictionary<string, MultiMeshInstance2D> _spriteToMultiMesh = [];
+	private readonly Dictionary<
+		string,
+		MultiMeshInstance2D
+	> _spriteToMultiMesh = [];
 
 	private const int _initialInstanceCount = 2000;
 	private const float _instanceGrowthMultiplier = 1.5f;
@@ -57,7 +61,12 @@ public partial class EntityRenderer : Node
 			mmi.Multimesh.VisibleInstanceCount = 0;
 		}
 
-		foreach (var (id, pos, sprite) in _entities.Query<PositionComponent, AnimatedSpriteComponent>())
+		foreach (
+			var (id, pos, sprite) in _entities.Query<
+				PositionComponent,
+				AnimatedSpriteComponent
+			>()
+		)
 		{
 			if (!_visibilityGrid.ContainsWorld(pos.Position))
 				continue;
@@ -67,9 +76,9 @@ public partial class EntityRenderer : Node
 
 			var count = _mmiVisibilityCount[mmi]++;
 			if (count >= mmi.Multimesh.InstanceCount)
-			{
-				mmi.Multimesh.InstanceCount = (int)(mmi.Multimesh.InstanceCount * _instanceGrowthMultiplier);
-			}
+				mmi.Multimesh.InstanceCount = (int)(
+					mmi.Multimesh.InstanceCount * _instanceGrowthMultiplier
+				);
 
 			UpdateEnemyInstance(mmi, id, count, pos.Position, sprite);
 		}
@@ -89,30 +98,20 @@ public partial class EntityRenderer : Node
 	)
 	{
 		var multiMesh = mmi.Multimesh;
-		bool flip;
 
-		var player = GameWorld.Instance.MainPlayer;
-		if (player is null)
-			flip = false;
-		else
-			flip = player.GlobalPosition < pos;
-
-		multiMesh.SetInstanceTransform2D(
-			instanceIdx,
-			new Transform2D(0, pos)
-		);
+		var flip = PlayerPosition < pos;
 
 		var updatedSprite = sprite;
 		if (updatedSprite.AnimationTime <= 0)
 		{
 			// TODO: Will continue into empty sprite frame tiles due to
-			// AnimatedSpriteComponent not tracking which XY index in the last 
+			// AnimatedSpriteComponent not tracking which XY index in the last
 			// tile in the sprite frame
 			updatedSprite.AnimationTime = updatedSprite.AnimationSpeed;
-			if (updatedSprite.FrameIdxY + 1 >= updatedSprite.FrameCountY)
-				updatedSprite.FrameIdxY = 0;
+			if (updatedSprite.FrameIdxX + 1 >= updatedSprite.FrameCountX)
+				updatedSprite.FrameIdxX = 0;
 			else
-				updatedSprite.FrameIdxY++;
+				updatedSprite.FrameIdxX++;
 		}
 		else
 		{
@@ -124,19 +123,23 @@ public partial class EntityRenderer : Node
 		var custom = new EnemyShaderCustomData(
 			updatedSprite.FrameCountX,
 			updatedSprite.FrameCountY,
-			updatedSprite.frameSizePxX,
-			updatedSprite.frameSizePxY,
-			frameIdxY: updatedSprite.FrameIdxY,
-			flip: flip
+			updatedSprite.FrameSizePxX,
+			updatedSprite.FrameSizePxY,
+			frameIdxX: updatedSprite.FrameIdxX,
+			flip: flip,
+			opacity: updatedSprite.Opacity,
+			flash: updatedSprite.Flash
 		);
 		var data = new Color(custom.R, custom.G, custom.B, custom.A);
+
 		multiMesh.SetInstanceCustomData(instanceIdx, data);
+		multiMesh.SetInstanceTransform2D(instanceIdx, new Transform2D(0, pos));
 	}
 
 	private MultiMeshInstance2D CreateNewMultiMesh(string spriteName)
 	{
 		var mmi = _multiMesh.Instantiate<MultiMeshInstance2D>();
-		// To avoid flickering, pre-initialize 1,000 instances and only make them visible when spawned
+		// To avoid flickering, pre-initialize _initialInstanceCount instances
 		mmi.Multimesh.InstanceCount = _initialInstanceCount;
 		mmi.Multimesh.VisibleInstanceCount = 0;
 
@@ -144,7 +147,12 @@ public partial class EntityRenderer : Node
 		if (ss is null)
 		{
 			Logger.LogError("Could not get SpriteFrameMappingsService.");
-			mmi.Texture = new PlaceholderTexture2D();
+			mmi.Texture = new PlaceholderTexture2D()
+			{
+				Size = new Vector2(32, 32),
+			};
+			_spriteToMultiMesh.Add(spriteName, mmi);
+			_mmiVisibilityCount.TryAdd(mmi, 0);
 			return mmi;
 		}
 

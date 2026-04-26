@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="SpriteFrameMappingsService" load_steps=2 format=3 uid="uid://dxuafjpeqqim"]
+[gd_resource type="Resource" script_class="SpriteFrameMappingsService" format=3 uid="uid://dxuafjpeqqim"]
 
 [ext_resource type="Script" uid="uid://s7wc6pn7yuev" path="res://src/Core/Services/SpriteFrameMappingsService.cs" id="3_5ouet"]
 

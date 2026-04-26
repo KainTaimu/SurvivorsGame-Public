@@ -1,43 +1,69 @@
 [gd_scene format=3 uid="uid://bix8bkfo5pwko"]
 
 [ext_resource type="Script" uid="uid://cb48sxavv5g3k" path="res://src/Players/Player.cs" id="1_f0mf6"]
-[ext_resource type="PackedScene" uid="uid://cw0jthbyjhm45" path="res://scenes/Players/Character.tscn" id="2_d0tyu"]
 [ext_resource type="Script" uid="uid://rykv3f6ereih" path="res://src/Players/CharacterStats.cs" id="3_cdd6o"]
+[ext_resource type="Script" uid="uid://ud6xfov0txuh" path="res://src/Players/Character.cs" id="3_kfojw"]
 [ext_resource type="Script" uid="uid://cn5rlmdgj2uue" path="res://src/Players/Controllers/PlayerMovementController.cs" id="4_kfojw"]
 [ext_resource type="Texture2D" uid="uid://coljm8hobe4v6" path="res://assets/Players/shondo.png" id="5_pqexr"]
 [ext_resource type="Script" uid="uid://b8nlijamaetyr" path="res://src/Players/Controllers/PlayerCameraController.cs" id="6_kfojw"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_yecw2"]
+[sub_resource type="Resource" id="Resource_pqexr"]
+script = ExtResource("3_cdd6o")
+metadata/_custom_type_script = "uid://rykv3f6ereih"
+
+[sub_resource type="Resource" id="Resource_yecw2"]
+script = ExtResource("3_kfojw")
+CharacterName = "PLACEHOLDER"
+CharacterStats = SubResource("Resource_pqexr")
+metadata/_custom_type_script = "uid://ud6xfov0txuh"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kfojw"]
 atlas = ExtResource("5_pqexr")
 region = Rect2(0, 0, 31, 31)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_pqexr"]
+atlas = ExtResource("5_pqexr")
+region = Rect2(31, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yecw2"]
+atlas = ExtResource("5_pqexr")
+region = Rect2(62, 0, 31, 31)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_v5xr6"]
 atlas = ExtResource("5_pqexr")
-region = Rect2(0, 31, 31, 31)
+region = Rect2(93, 0, 31, 31)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wuwji"]
 atlas = ExtResource("5_pqexr")
-region = Rect2(0, 62, 31, 31)
+region = Rect2(0, 0, 31, 31)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5pqvm"]
 atlas = ExtResource("5_pqexr")
-region = Rect2(0, 93, 31, 31)
+region = Rect2(31, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dpv53"]
+atlas = ExtResource("5_pqexr")
+region = Rect2(62, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eai52"]
+atlas = ExtResource("5_pqexr")
+region = Rect2(93, 0, 31, 31)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_dpv53"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_kfojw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pqexr")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_yecw2")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_v5xr6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wuwji")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5pqvm")
 }],
 "loop": true,
 "name": &"idle",
@@ -45,44 +71,35 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_yecw2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_v5xr6")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_wuwji")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5pqvm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dpv53")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eai52")
 }],
 "loop": true,
 "name": &"run",
 "speed": 7.0
 }]
 
-[node name="Player" type="Node2D" unique_id=1386970244 node_paths=PackedStringArray("Character")]
+[node name="Player" type="Node2D" unique_id=1386970244]
 script = ExtResource("1_f0mf6")
-Character = NodePath("Character")
+Character = SubResource("Resource_yecw2")
 
-[node name="Character" parent="." unique_id=1307742891 node_paths=PackedStringArray("CharacterStats") instance=ExtResource("2_d0tyu")]
-CharacterName = "Test"
-CharacterStats = NodePath("CharacterStats")
-
-[node name="CharacterStats" type="Node" parent="Character" unique_id=248938102]
-script = ExtResource("3_cdd6o")
-MoveSpeed = 600.0
-
-[node name="PlayerMovementController" type="Node" parent="." unique_id=1602338086 node_paths=PackedStringArray("_player", "_characterStats", "_sprite")]
+[node name="PlayerMovementController" type="Node" parent="." unique_id=1602338086 node_paths=PackedStringArray("_player", "_sprite")]
 script = ExtResource("4_kfojw")
 _player = NodePath("..")
-_characterStats = NodePath("../Character/CharacterStats")
 _sprite = NodePath("../AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=881638213]
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_dpv53")
-animation = &"run"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=68646763]

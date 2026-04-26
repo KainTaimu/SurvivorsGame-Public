@@ -80,4 +80,3 @@ public class EnemyShaderCustomData(
 		return BitConverter.UInt32BitsToSingle(bits);
 	}
 }
-

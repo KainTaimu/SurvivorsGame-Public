@@ -5,7 +5,8 @@ namespace Game.Players;
 // Most Stat setters are the same, except for Health which is clamped between 0 to MaxHealth, and MaxHealth which clamps Health to its value.
 // Health is initially set to MaxHealth.
 // =============
-public partial class CharacterStats : Node
+[GlobalClass]
+public partial class CharacterStats : Resource
 {
 	[Signal]
 	public delegate void OnHealthChangedEventHandler(
@@ -109,7 +110,7 @@ public partial class CharacterStats : Node
 		float newValue
 	);
 
-	private int _health;
+	private int _health = -1;
 	private int _maxHealth = 100;
 	private float _moveSpeed = 800;
 	private int _defense;
@@ -130,9 +131,21 @@ public partial class CharacterStats : Node
 
 	public int Health
 	{
-		get => _health;
+		get
+		{
+			// health may be uninitialized on first access.
+			if (_health == -1)
+			{
+				_health = _maxHealth;
+				return _health;
+			}
+			return _health;
+		}
 		set
 		{
+			if (_health == -1)
+				_health = _maxHealth;
+
 			var clamped = Math.Clamp(value, 0, _maxHealth);
 			if (_health == clamped)
 				return;
@@ -453,10 +466,5 @@ public partial class CharacterStats : Node
 				_xpMultiplier
 			);
 		}
-	}
-
-	public override void _Ready()
-	{
-		Health = MaxHealth;
 	}
 }

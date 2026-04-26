@@ -5,3 +5,7 @@ dotnet_diagnostic.IDE0130.severity = silent
 indent_style = tab
 indent_size = 4
 max_line_length = 80
+
+# Default severity for analyzer diagnostics with category 'Roslynator'
+dotnet_analyzer_diagnostic.category-Roslynator.severity = silent
+

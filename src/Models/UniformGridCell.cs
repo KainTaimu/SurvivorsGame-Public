@@ -12,10 +12,7 @@ public class UniformGridCell<T>
 	public int Count
 	{
 		get => _count;
-		set
-		{
-			_count = Math.Clamp(value, 0, MAX_SIZE);
-		}
+		set { _count = Math.Clamp(value, 0, MAX_SIZE); }
 	}
 
 	private int _count;

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EnemyBlueprint" format=3 uid="uid://1faxw8s3sokq"]
+
+[ext_resource type="Script" uid="uid://rykv3f6ereih" path="res://src/Players/CharacterStats.cs" id="1_0plxx"]
+[ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="2_i13sw"]
+
+[sub_resource type="Resource" id="Resource_nqi3b"]
+script = ExtResource("1_0plxx")
+MaxHealth = 10
+metadata/_custom_type_script = "uid://rykv3f6ereih"
+
+[resource]
+script = ExtResource("2_i13sw")
+Name = "duck"
+Type = 2
+Stats = SubResource("Resource_nqi3b")
+metadata/_custom_type_script = "uid://fti2ky20j85c"

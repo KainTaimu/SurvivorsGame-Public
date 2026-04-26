@@ -4,15 +4,6 @@ using System.Runtime.CompilerServices;
 
 namespace Game.Core.ECS;
 
-public partial class EntityComponentStoreV1
-{
-	private record struct QueryCache<T>(T Cache)
-	{
-		public readonly T Cache = Cache;
-		public bool Dirty;
-	}
-}
-
 public partial class EntityComponentStoreV1 : EntityComponentStore
 {
 	private readonly BitArray _alive = new(MAX_SIZE, false);
@@ -139,7 +130,7 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 
 	public override bool GetComponent<T>(int id, out T component)
 	{
-		component = default;
+		component = default!;
 		if (!_idToIndexTable.TryGetValue(id, out var idx))
 			return false;
 

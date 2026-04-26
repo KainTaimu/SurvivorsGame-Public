@@ -6,7 +6,6 @@ namespace Game.Levels.Controllers;
 
 public partial class EnemyCollisionSolver : Node
 {
-
 	[ExportCategory("Configuration")]
 	[Export]
 	private byte GridSize = 64;
@@ -69,11 +68,6 @@ public partial class EnemyCollisionSolver : Node
 	}
 
 	public override void _Process(double delta)
-	{
-		Process();
-	}
-
-	public void Process()
 	{
 		if (!Enabled)
 			return;
@@ -203,13 +197,17 @@ public partial class EnemyCollisionSolver : Node
 		if (direction == Vector2.Zero)
 			direction = Vector2.Right;
 
-
 		// NOTE: Delta is accounted for in the Timer that calls Process.
 		var push = _distBeforeShove * 0.5f * _pushAmount;
 
-		if (cellA.Count >= _cramLimitBeforeExtraPush || cellB.Count >= _cramLimitBeforeExtraPush)
+		if (
+			cellA.Count >= _cramLimitBeforeExtraPush
+			|| cellB.Count >= _cramLimitBeforeExtraPush
+		)
 		{
-			var extraPush = Mathf.Log((cellA.Count + cellB.Count) / 1.5f) * _cramExtraPushFactor;
+			var extraPush =
+				Mathf.Log((cellA.Count + cellB.Count) / 1.5f)
+				* _cramExtraPushFactor;
 			push *= Math.Abs(extraPush);
 		}
 
@@ -226,43 +224,43 @@ public partial class EnemyCollisionSolver : Node
 	private void CreateDebugDisplayGridBounds()
 	{
 		for (var x = 0; x < _grid.Dimensions.X; x++)
-			for (var y = 0; y < _grid.Dimensions.Y; y++)
+		for (var y = 0; y < _grid.Dimensions.Y; y++)
+		{
+			var cell = _grid.Cells[x, y];
+			var rect = new ReferenceRect
 			{
-				var cell = _grid.Cells[x, y];
-				var rect = new ReferenceRect
-				{
-					Name = $"rect-{cell.Index}",
-					Size = new Vector2(GridSize, GridSize),
-					Position = cell.Position,
-					Visible = true,
-					EditorOnly = false,
-				};
+				Name = $"rect-{cell.Index}",
+				Size = new Vector2(GridSize, GridSize),
+				Position = cell.Position,
+				Visible = true,
+				EditorOnly = false,
+			};
 
-				var text = new Label
+			var text = new Label
+			{
+				Name = $"text-{cell.Index}",
+				Scale = new Vector2(0.75f, 0.75f),
+				Position = cell.Position,
+				Text = cell.Position + "\n" + cell.Index + "\n" + cell.Count,
+				LabelSettings = new LabelSettings
 				{
-					Name = $"text-{cell.Index}",
-					Scale = new Vector2(0.75f, 0.75f),
-					Position = cell.Position,
-					Text = cell.Position + "\n" + cell.Index + "\n" + cell.Count,
-					LabelSettings = new LabelSettings
-					{
-						FontColor = new Color(0, 0, 0),
-					},
-				};
+					FontColor = new Color(0, 0, 0),
+				},
+			};
 
-				AddChild(rect);
-				AddChild(text);
-			}
+			AddChild(rect);
+			AddChild(text);
+		}
 	}
 
 	private void UpdateDebug()
 	{
 		for (var x = 0; x < _grid.Dimensions.X; x++)
-			for (var y = 0; y < _grid.Dimensions.Y; y++)
-			{
-				var cell = _grid.Cells[x, y];
-				var text = GetNode<Label>($"text-{cell.Index}");
-				text.Text = cell.Position + "\n" + cell.Index + "\n" + cell.Count;
-			}
+		for (var y = 0; y < _grid.Dimensions.Y; y++)
+		{
+			var cell = _grid.Cells[x, y];
+			var text = GetNode<Label>($"text-{cell.Index}");
+			text.Text = cell.Position + "\n" + cell.Index + "\n" + cell.Count;
+		}
 	}
 }

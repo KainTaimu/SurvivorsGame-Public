@@ -1,10 +1,16 @@
-using Game.Core;
 using Game.Core.ECS;
+using Game.Core.Services;
+using Godot.Collections;
 
 namespace Game.Levels.Controllers;
 
 public partial class EnemySpawner : Node
 {
+	[ExportCategory("Main")]
+	[Export]
+	private Array<EnemyBlueprint> _enemyBlueprints = null!;
+
+	[ExportCategory("Configuration")]
 	[Export]
 	private EntityComponentStore _entities = null!;
 
@@ -57,22 +63,31 @@ public partial class EnemySpawner : Node
 			return;
 		_t = 0.05f;
 
+		var ss = ServiceLocator.GetService<SpriteFrameMappingsService>();
+		if (ss is null)
+		{
+			Logger.LogError("Could not get sprite frame mappings service");
+			return;
+		}
+
 		for (var i = 0; i < _spawnBatchCount; i++)
 		{
-			var pos = new Vector2(
-				GD.RandRange(1920, 1920 * 3),
-				GD.RandRange(1920, 1920 * 3)
-			);
+			var pos = GetPositionOutsideViewport();
 			var id = TotalSpawned;
 			if (!_entities.RegisterEntity(id))
 				continue;
 
+			var bp = _enemyBlueprints.PickRandom();
+			var stats = bp.Stats;
+
+			var spriteInfo = ss.GetSpriteInfo(bp.Name);
+
 			// TODO: Enemy blueprints
-			_entities.RegisterComponent(id, new HealthComponent(10));
 			_entities.RegisterComponent(
 				id,
-				new EntityTypeComponent(EntityType.Enemy)
+				new HealthComponent(stats.MaxHealth)
 			);
+			_entities.RegisterComponent(id, new EntityTypeComponent(bp.Type));
 			_entities.RegisterComponent(
 				id,
 				new PositionComponent() { Position = pos }
@@ -81,17 +96,90 @@ public partial class EnemySpawner : Node
 				id,
 				new AnimatedSpriteComponent()
 				{
-					SpriteName = "duck",
-					AnimationSpeed = 0.5f,
-					FrameCountX = 1,
-					FrameCountY = 4,
-					FrameSizePxX = 40,
-					FrameSizePxY = 40,
+					SpriteName = spriteInfo?.SpriteName ?? "",
+					AnimationSpeed = spriteInfo?.AnimationSpeed ?? Mathf.Inf,
+					FrameCountX = spriteInfo?.FrameCountX ?? 1,
+					FrameCountY = 1,
+					FrameSizePxX = spriteInfo?.FrameSizePxX ?? 32,
+					FrameSizePxY = spriteInfo?.FrameSizePxY ?? 32,
+					Opacity = spriteInfo?.Opacity ?? 255,
+					Flash = spriteInfo?.Flash ?? 0,
 				}
 			);
+
 			TotalSpawned++;
 			Alive++;
 		}
-		Logger.LogDebug(TotalSpawned);
+	}
+
+	private Vector2 GetPositionOutsideViewport()
+	{
+		var viewport = GetViewport().GetCamera2D();
+		var screenCenterPosition = viewport.GetScreenCenterPosition();
+		var viewportRectEnd = viewport.GetViewportRect().Size;
+
+		const float margin = 100;
+		var spawnVector = new Vector2();
+
+		switch (GD.RandRange(0, 3))
+		{
+			case 0: // TOP
+				spawnVector.X = (float)
+					GD.RandRange(
+						screenCenterPosition.X
+							- (viewportRectEnd.X / 2)
+							- margin,
+						screenCenterPosition.X
+							+ (viewportRectEnd.X / 2)
+							+ margin
+					);
+				spawnVector.Y =
+					screenCenterPosition.Y - (viewportRectEnd.Y / 2) - margin;
+				break;
+
+			case 1: // BOTTOM
+				spawnVector.X = (float)
+					GD.RandRange(
+						screenCenterPosition.X
+							- (viewportRectEnd.X / 2)
+							- margin,
+						screenCenterPosition.X
+							+ (viewportRectEnd.X / 2)
+							+ margin
+					);
+				spawnVector.Y =
+					screenCenterPosition.Y + (viewportRectEnd.Y / 2) + margin;
+				break;
+
+			case 2: // LEFT
+				spawnVector.X =
+					screenCenterPosition.X - (viewportRectEnd.X / 2) - margin;
+				spawnVector.Y = (float)
+					GD.RandRange(
+						screenCenterPosition.Y
+							- (viewportRectEnd.Y / 2)
+							- margin,
+						screenCenterPosition.Y
+							+ (viewportRectEnd.Y / 2)
+							+ margin
+					);
+				break;
+
+			case 3: // RIGHT
+				spawnVector.X =
+					screenCenterPosition.X + (viewportRectEnd.X / 2) + margin;
+				spawnVector.Y = (float)
+					GD.RandRange(
+						screenCenterPosition.Y
+							- (viewportRectEnd.Y / 2)
+							- margin,
+						screenCenterPosition.Y
+							+ (viewportRectEnd.Y / 2)
+							+ margin
+					);
+				break;
+		}
+
+		return spawnVector;
 	}
 }

@@ -9,6 +9,7 @@ shader = ExtResource("1_p4hpj")
 size = Vector2(64, 64)
 
 [sub_resource type="MultiMesh" id="MultiMesh_x86l5"]
+resource_local_to_scene = true
 use_custom_data = true
 instance_count = 1000
 visible_instance_count = 0
