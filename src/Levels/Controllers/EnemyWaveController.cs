@@ -61,6 +61,8 @@ public partial class EnemyWaveController : Node
 
 	public override void _Process(double delta)
 	{
+		if (!Enabled)
+			return;
 		_currentWave?.Process(delta);
 	}
 

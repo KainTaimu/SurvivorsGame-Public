@@ -15,6 +15,11 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 	// Array is of size MAX_SIZE
 	private readonly Dictionary<Type, Array> _components = [];
 
+	public override void _Ready()
+	{
+		Instance = this;
+	}
+
 	/// <summary>
 	/// Returns true if successfully registered. False otherwise.
 	/// Return value must be checked and handled in the case of unsuccessful register
@@ -87,6 +92,29 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 			_components.Add(type, Array.CreateInstance(type, MAX_SIZE));
 
 		_components[type].SetValue(data, idx);
+	}
+
+	public override void UnregisterComponent<T>(int id)
+	{
+		if (!_idToIndexTable.TryGetValue(id, out var idx))
+		{
+			Logger.LogWarning(
+				"Couldn't unregister component. Entity with id",
+				id,
+				"does not exist"
+			);
+			return;
+		}
+		if (idx < 0 || idx >= MAX_SIZE)
+		{
+			Logger.LogWarning(
+				$"Couldn't unregister component {id} with index {idx}. Index out of bounds"
+			);
+			return;
+		}
+
+		var type = typeof(T);
+		_components.Remove(type);
 	}
 
 	// PERF: Two dictionary accesses, one in GetComponents

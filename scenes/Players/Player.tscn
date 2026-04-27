@@ -5,7 +5,12 @@
 [ext_resource type="Script" uid="uid://ud6xfov0txuh" path="res://src/Players/Character.cs" id="3_kfojw"]
 [ext_resource type="Script" uid="uid://cn5rlmdgj2uue" path="res://src/Players/Controllers/PlayerMovementController.cs" id="4_kfojw"]
 [ext_resource type="Texture2D" uid="uid://coljm8hobe4v6" path="res://assets/Players/shondo.png" id="5_pqexr"]
+[ext_resource type="Script" uid="uid://b344j1ahaiaqv" path="res://src/Players/Controllers/PlayerWeaponController.cs" id="5_yecw2"]
 [ext_resource type="Script" uid="uid://b8nlijamaetyr" path="res://src/Players/Controllers/PlayerCameraController.cs" id="6_kfojw"]
+[ext_resource type="Script" uid="uid://b0dw23p6yvt6b" path="res://src/Items/Offensive/Ak47.cs" id="6_wuwji"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="7_5pqvm"]
+[ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="7_dpv53"]
+[ext_resource type="Script" uid="uid://os8ycjo6m7r0" path="res://src/Items/Offensive/BaseOffensiveStats.cs" id="8_dpv53"]
 
 [sub_resource type="Resource" id="Resource_pqexr"]
 script = ExtResource("3_cdd6o")
@@ -16,6 +21,26 @@ script = ExtResource("3_kfojw")
 CharacterName = "PLACEHOLDER"
 CharacterStats = SubResource("Resource_pqexr")
 metadata/_custom_type_script = "uid://ud6xfov0txuh"
+
+[sub_resource type="Resource" id="Resource_eai52"]
+script = ExtResource("7_5pqvm")
+
+[sub_resource type="Resource" id="Resource_oypsu"]
+script = ExtResource("8_dpv53")
+Damage = 10
+ProjectileSpeed = 3600
+ProjectileScaleMultiplier = 1.0
+AttackSpeed = 0.17
+Additional = Dictionary[String, Variant]({
+"BloomCoefficient": 0.01,
+"HorizontalBaseRecoil": 3.0,
+"HorizontalRecoilRandom": 1.0,
+"Knockback": 10.0,
+"MagazineCapacity": 30,
+"ReloadTimeMs": 1200,
+"VerticalBaseRecoil": 15.0,
+"VerticalRecoilRandom": 0.5
+})
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kfojw"]
 atlas = ExtResource("5_pqexr")
@@ -96,12 +121,21 @@ script = ExtResource("4_kfojw")
 _player = NodePath("..")
 _sprite = NodePath("../AnimatedSprite2D")
 
+[node name="PlayerWeaponController" type="Node" parent="." unique_id=752109662]
+script = ExtResource("5_yecw2")
+
+[node name="Ak47" type="Node" parent="PlayerWeaponController" unique_id=1638423356]
+script = ExtResource("6_wuwji")
+_projectileScene = ExtResource("7_dpv53")
+Properties = SubResource("Resource_eai52")
+Stats = SubResource("Resource_oypsu")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=881638213]
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_dpv53")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=68646763]
+[node name="PlayerCameraController" type="Camera2D" parent="." unique_id=68646763]
 zoom = Vector2(0.9, 0.9)
 script = ExtResource("6_kfojw")

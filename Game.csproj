@@ -6,16 +6,16 @@
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    
+
     <!-- Performance: JIT Compilation -->
     <TieredCompilation>true</TieredCompilation>
     <TieredCompilationQuickJit>true</TieredCompilationQuickJit>
-    
+
     <!-- Code Quality: Enforce Warnings as Errors -->
     <WarningLevel>9999</WarningLevel>
     <!-- <TreatWarningsAsErrors>true</TreatWarningsAsErrors> -->
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    
+
     <!-- Performance: Remove Unused Features -->
     <EventSourceSupport>false</EventSourceSupport>
     <UseSystemResourceKeys>true</UseSystemResourceKeys>
@@ -47,14 +47,14 @@
     <Optimize>true</Optimize>
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
-    
+
     <!-- Performance: ReadyToRun for Faster Startup -->
     <PublishReadyToRun>true</PublishReadyToRun>
-    
+
     <!-- Performance: Aggressive Optimization Preference -->
     <IlcOptimizationPreference>Speed</IlcOptimizationPreference>
     <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
-    
+
     <!-- Optional: Trim Unused Code (use cautiously with Godot) -->
     <!-- <PublishTrimmed>false</PublishTrimmed> -->
     <!-- <TrimMode>link</TrimMode> -->
@@ -63,4 +63,3 @@
     <PackageReference Include="MustUseRetVal" Version="0.0.2" />
   </ItemGroup>
 </Project>
-

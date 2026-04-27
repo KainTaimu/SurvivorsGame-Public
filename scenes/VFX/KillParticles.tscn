@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://rv526axhe2xw"]
+
+[ext_resource type="Texture2D" uid="uid://c7kegqurrrx0w" path="res://assets/VFX/small_chevron.png" id="1_a4yrt"]
+
+[sub_resource type="Curve" id="Curve_ya3sa"]
+_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
+point_count = 2
+
+[node name="KillParticles" type="CPUParticles2D" unique_id=136474770]
+emitting = false
+amount = 16
+texture = ExtResource("1_a4yrt")
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 250.53
+angular_velocity_min = -381.18
+angular_velocity_max = 347.29
+scale_amount_min = 4.0
+scale_amount_max = 6.0
+scale_amount_curve = SubResource("Curve_ya3sa")
+color = Color(18.892157, 0, 0, 1)

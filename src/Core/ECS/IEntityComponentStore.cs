@@ -8,6 +8,7 @@ public interface IEntityComponentStore
 	void UnregisterEntity(int id);
 
 	void RegisterComponent<T>(int id, T data);
+	void UnregisterComponent<T>(int id);
 	void UpdateComponent<T>(int id, T data);
 
 	bool GetComponent<T>(int id, out T component);

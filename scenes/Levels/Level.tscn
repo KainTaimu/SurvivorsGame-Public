@@ -14,33 +14,21 @@
 [ext_resource type="Resource" uid="uid://dl1a0sq36f524" path="res://scenes/Enemies/Blueprints/Shondo.tres" id="10_d4hlt"]
 [ext_resource type="Script" uid="uid://bct2mtni7a82f" path="res://src/Levels/Controllers/EnemyMover.cs" id="10_sh7eq"]
 [ext_resource type="Script" uid="uid://citywxiolgxtm" path="res://src/Levels/Controllers/EnemyWaveController.cs" id="11_aredf"]
+[ext_resource type="Script" uid="uid://cv0uegm46tv7j" path="res://src/Levels/Controllers/EnemyDeathManager.cs" id="11_x7tv3"]
 [ext_resource type="Script" uid="uid://dhee6pva3aeeu" path="res://src/UI/Debug/EnemyInfo.cs" id="12_qaj6y"]
-[ext_resource type="Script" uid="uid://k3emmqynn150" path="res://src/Levels/Controllers/EnemyWave.cs" id="12_x7tv3"]
+[ext_resource type="Script" uid="uid://cwbl163hsg1db" path="res://src/Levels/Controllers/EnemyWave.cs" id="12_x7tv3"]
+[ext_resource type="PackedScene" uid="uid://cjx5nc7bql8d0" path="res://scenes/UI/Crosshair.tscn" id="15_aredf"]
+[ext_resource type="Script" uid="uid://djv8orxale1c3" path="res://src/Levels/Controllers/EnemyHitManager.cs" id="16_x7tv3"]
 
 [sub_resource type="Resource" id="Resource_x7tv3"]
 script = ExtResource("12_x7tv3")
-EnemyBlueprints = Array[Object]([ExtResource("8_1c6ul")])
-Duration = 5.0
-MaxMobs = 30
+EnemyBlueprints = Array[Object]([ExtResource("8_1c6ul"), ExtResource("10_d4hlt"), ExtResource("9_occlw")])
+Duration = 9999.0
+MaxMobs = 25
 SpawnMinTime = 0.01
 SpawnMaxTime = 0.01
-metadata/_custom_type_script = "uid://k3emmqynn150"
-
-[sub_resource type="Resource" id="Resource_e7p0g"]
-script = ExtResource("12_x7tv3")
-EnemyBlueprints = Array[Object]([ExtResource("8_1c6ul"), ExtResource("9_occlw"), ExtResource("10_d4hlt")])
-Duration = 5.0
-SpawnMinTime = 0.01
-SpawnMaxTime = 0.01
-metadata/_custom_type_script = "uid://k3emmqynn150"
-
-[sub_resource type="Resource" id="Resource_aredf"]
-script = ExtResource("12_x7tv3")
-EnemyBlueprints = Array[Object]([ExtResource("10_d4hlt")])
-Duration = 5.0
-MaxMobs = 30
-SpawnMinTime = 0.01
-SpawnMaxTime = 0.01
+SpawnBatchMin = 100
+SpawnBatchMax = 100
 metadata/_custom_type_script = "uid://k3emmqynn150"
 
 [node name="Level" type="Node2D" unique_id=2141389114]
@@ -80,8 +68,17 @@ script = ExtResource("6_qaj6y")
 
 [node name="EnemyWaveController" type="Node" parent="Systems" unique_id=247564660 node_paths=PackedStringArray("EntityComponentStore")]
 script = ExtResource("11_aredf")
-Waves = Array[Object]([SubResource("Resource_x7tv3"), SubResource("Resource_e7p0g"), SubResource("Resource_aredf")])
+Waves = Array[Object]([SubResource("Resource_x7tv3")])
 EntityComponentStore = NodePath("../EntityComponentStore")
+
+[node name="EnemyHitManager" type="Node" parent="Systems" unique_id=1940935389 node_paths=PackedStringArray("_entities", "_renderer")]
+script = ExtResource("16_x7tv3")
+_entities = NodePath("../EntityComponentStore")
+_renderer = NodePath("../EntityRenderer")
+
+[node name="EnemyDeathManager" type="Node" parent="Systems" unique_id=715210331 node_paths=PackedStringArray("ComponentStore")]
+script = ExtResource("11_x7tv3")
+ComponentStore = NodePath("../EntityComponentStore")
 
 [node name="EnemyMover" type="Node" parent="Systems" unique_id=348078406 node_paths=PackedStringArray("_entities")]
 script = ExtResource("10_sh7eq")
@@ -114,3 +111,10 @@ offset_bottom = 40.0
 [node name="Label" type="Label" parent="HUD/EnemyInfo/VBoxContainer" unique_id=2085024501]
 layout_mode = 2
 text = "Enemies"
+
+[node name="Crosshair" type="CanvasLayer" parent="HUD" unique_id=1911762679]
+
+[node name="Crosshair" parent="HUD/Crosshair" unique_id=587001361 node_paths=PackedStringArray("Player", "PauseController") instance=ExtResource("15_aredf")]
+Player = NodePath("../../../Player")
+PauseController = NodePath("../../../Systems/PauseController")
+CrosshairSize = 1.5

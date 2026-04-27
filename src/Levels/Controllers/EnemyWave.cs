@@ -21,7 +21,7 @@ public partial class EnemyWave : Resource, IEnemyWave
 	public double Duration = 30;
 
 	[Export]
-	public int MaxMobs = 50;
+	public uint MaxMobs = 50;
 
 	[Export]
 	public double SpawnMinTime
@@ -59,6 +59,12 @@ public partial class EnemyWave : Resource, IEnemyWave
 		}
 	} = 1;
 
+	[Export]
+	public int SpawnBatchMin = 1;
+
+	[Export]
+	public int SpawnBatchMax = 1;
+
 	public List<int> SpawnedIds => _waveController.SpawnedIds;
 
 	public double SpawnTimeLeft;
@@ -78,7 +84,11 @@ public partial class EnemyWave : Resource, IEnemyWave
 			return;
 		}
 		if (SpawnTimeLeft <= 0)
-			SpawnEnemy();
+		{
+			// csharpier-ignore
+			for (var i = 0; i < GD.RandRange(SpawnBatchMin, SpawnBatchMax); i++)
+				SpawnEnemy();
+		}
 	}
 
 	public void Initialize(EnemyWaveController waveController)
@@ -103,10 +113,11 @@ public partial class EnemyWave : Resource, IEnemyWave
 
 	public void SpawnEnemy()
 	{
-		if (SpawnedIds.Count >= MaxMobs)
+		if (_waveController.Alive >= MaxMobs)
 			return;
 
 		SpawnTimeLeft = GD.RandRange(SpawnMinTime, SpawnMaxTime);
+
 		var ss = ServiceLocator.GetService<SpriteFrameMappingsService>();
 		if (ss is null)
 		{
