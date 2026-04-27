@@ -33,14 +33,14 @@ public partial class ProjectileBullet : BaseProjectile
 			.SetEase(Tween.EaseType.In);
 		var originalSpeed = ProjectileSpeed;
 
-		ProjectileSpeed = originalSpeed / 2;
+		ProjectileSpeed = originalSpeed / 3;
 		tweenSpeed.TweenProperty(
 			this,
 			nameof(ProjectileSpeed),
 			originalSpeed,
 			0.13f
 		);
-		tweenScale.TweenProperty(this, "scale", new Vector2(4, 1), 0.13f);
+		tweenScale.TweenProperty(this, "scale", new Vector2(8, 1), 0.05);
 	}
 
 	public override void _Process(double delta)
@@ -81,7 +81,12 @@ public partial class ProjectileBullet : BaseProjectile
 	{
 		if (!ComponentStore.GetComponent<HealthComponent>(id, out var health))
 			return;
-		var newHealth = health.Health - OffensiveOrigin.Stats.Damage;
+		var crit = CritDamageCalculator.GetCritDamage(
+			OffensiveOrigin.Stats.Damage,
+			OffensiveOrigin.Stats.CritDamageMultiplier,
+			OffensiveOrigin.Stats.CritChanceProportion
+		);
+		var newHealth = health.Health - OffensiveOrigin.Stats.Damage - crit;
 		ComponentStore.SetComponent(id, health with { Health = newHealth });
 	}
 

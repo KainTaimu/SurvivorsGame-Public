@@ -36,6 +36,12 @@ public partial class Ak47 : BaseOffensive, IReloadable
 
 	public override void _Ready()
 	{
+		UpdateAdditionalFields();
+		OnStatsChanged += UpdateAdditionalFields;
+	}
+
+	private void UpdateAdditionalFields()
+	{
 		_fireCooldown = Stats.AttackSpeed;
 
 		_magazineCapacity = Stats.Additional["MagazineCapacity"].As<int>();
@@ -113,7 +119,11 @@ public partial class Ak47 : BaseOffensive, IReloadable
 	public void Reload()
 	{
 		GetTree().CreateTimer(_reloadTimeMs / 1000).Timeout += () =>
+		{
 			_magazineCount = _magazineCapacity;
+			_isReloading = false;
+		};
+		_isReloading = true;
 	}
 
 	private void ApplyCursorRecoil()

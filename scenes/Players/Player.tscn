@@ -27,15 +27,18 @@ script = ExtResource("7_5pqvm")
 
 [sub_resource type="Resource" id="Resource_oypsu"]
 script = ExtResource("8_dpv53")
-Damage = 10
-ProjectileSpeed = 3600
+Damage = 4
+CritDamageMultiplier = 3.0
+CritChanceProportion = 0.1
+ProjectileSpeed = 5000
 ProjectileScaleMultiplier = 1.0
 AttackSpeed = 0.17
+PierceLimit = 2
 Additional = Dictionary[String, Variant]({
 "BloomCoefficient": 0.01,
 "HorizontalBaseRecoil": 3.0,
 "HorizontalRecoilRandom": 1.0,
-"Knockback": 10.0,
+"Knockback": 20.0,
 "MagazineCapacity": 30,
 "ReloadTimeMs": 1200,
 "VerticalBaseRecoil": 15.0,

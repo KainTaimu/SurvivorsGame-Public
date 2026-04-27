@@ -5,6 +5,9 @@ namespace Game.Levels.Controllers;
 public partial class EnemyDeathManager : Node
 {
 	[Export]
+	private PackedScene _enemyDeathParticlesScene = null!;
+
+	[Export]
 	private EntityComponentStore ComponentStore = null!;
 
 	public override void _Process(double delta)
@@ -23,10 +26,23 @@ public partial class EnemyDeathManager : Node
 		ComponentStore.GetComponent<AnimatedSpriteComponent>(id, out var spr);
 		ComponentStore.SetComponent(id, spr with { Flash = 255 });
 		ComponentStore.UnregisterEntity(id);
-		var particles = GD.Load<PackedScene>("uid://rv526axhe2xw")
-			.Instantiate<CpuParticles2D>();
-		AddChild(particles);
-		particles.GlobalPosition = pos.Position;
-		particles.Emitting = true;
+
+		var particleNode = _enemyDeathParticlesScene.Instantiate();
+		switch (particleNode)
+		{
+			case CpuParticles2D cpu:
+				cpu.GlobalPosition = pos.Position;
+				cpu.Emitting = true;
+				break;
+			case GpuParticles2D gpu:
+				gpu.GlobalPosition = pos.Position;
+				gpu.Emitting = true;
+				break;
+			default:
+				particleNode.Free();
+				return;
+		}
+
+		AddChild(particleNode);
 	}
 }

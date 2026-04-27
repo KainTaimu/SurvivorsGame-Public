@@ -1,16 +1,32 @@
-using Game.Levels.Controllers;
-using Game.Players;
 using Godot.Collections;
 
 namespace Game.Items.Offensive;
 
 public partial class BaseOffensive : BaseItem
 {
+	[Signal]
+	public delegate void OnStatsChangedEventHandler();
+
+	[Signal]
+	public delegate void OnStatUpgradesChangedEventHandler();
+
 	[Export]
 	public BaseItemProperties Properties = new();
 
 	[Export]
-	public BaseOffensiveStats Stats = new();
+	public BaseOffensiveStats Stats
+	{
+		get;
+		set
+		{
+			// csharpier-ignore
+			if (field.IsConnected(Resource.SignalName.Changed, Callable.From(EmitSignalOnStatsChanged)))
+				field.Changed -= EmitSignalOnStatsChanged;
+
+			field = value;
+			value.Changed += EmitSignalOnStatsChanged;
+		}
+	} = new();
 
 	[Export]
 	public Array<BaseOffensiveStats> Upgrades = [];

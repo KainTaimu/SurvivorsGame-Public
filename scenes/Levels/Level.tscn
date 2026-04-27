@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://cv0uegm46tv7j" path="res://src/Levels/Controllers/EnemyDeathManager.cs" id="11_x7tv3"]
 [ext_resource type="Script" uid="uid://dhee6pva3aeeu" path="res://src/UI/Debug/EnemyInfo.cs" id="12_qaj6y"]
 [ext_resource type="Script" uid="uid://cwbl163hsg1db" path="res://src/Levels/Controllers/EnemyWave.cs" id="12_x7tv3"]
+[ext_resource type="PackedScene" uid="uid://rv526axhe2xw" path="res://scenes/VFX/KillParticles.tscn" id="14_lkd4q"]
 [ext_resource type="PackedScene" uid="uid://cjx5nc7bql8d0" path="res://scenes/UI/Crosshair.tscn" id="15_aredf"]
 [ext_resource type="Script" uid="uid://djv8orxale1c3" path="res://src/Levels/Controllers/EnemyHitManager.cs" id="16_x7tv3"]
 
@@ -24,12 +25,8 @@
 script = ExtResource("12_x7tv3")
 EnemyBlueprints = Array[Object]([ExtResource("8_1c6ul"), ExtResource("10_d4hlt"), ExtResource("9_occlw")])
 Duration = 9999.0
-MaxMobs = 25
-SpawnMinTime = 0.01
-SpawnMaxTime = 0.01
-SpawnBatchMin = 100
-SpawnBatchMax = 100
-metadata/_custom_type_script = "uid://k3emmqynn150"
+MaxMobs = 5000
+SpawnBatchMax = 3
 
 [node name="Level" type="Node2D" unique_id=2141389114]
 metadata/_edit_lock_ = true
@@ -78,6 +75,7 @@ _renderer = NodePath("../EntityRenderer")
 
 [node name="EnemyDeathManager" type="Node" parent="Systems" unique_id=715210331 node_paths=PackedStringArray("ComponentStore")]
 script = ExtResource("11_x7tv3")
+_enemyDeathParticlesScene = ExtResource("14_lkd4q")
 ComponentStore = NodePath("../EntityComponentStore")
 
 [node name="EnemyMover" type="Node" parent="Systems" unique_id=348078406 node_paths=PackedStringArray("_entities")]
