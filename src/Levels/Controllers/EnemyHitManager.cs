@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Game.Core.ECS;
 using Game.Models;
 
@@ -104,8 +105,46 @@ public partial class EnemyHitManager : Node
 
 			var cell = _grid.GetCellWorld(pos.Position);
 			cell?.Add(id);
-			// Logger.LogInfo(id, pos.Position);
 		}
+	}
+
+	public bool TryGetTargetsInArea(
+		Vector2 areaCenter,
+		float areaRadius,
+		out int[] targetIds
+	)
+	{
+		// credit: https://www.redblobgames.com/grids/circle-drawing/
+		var targets = new List<int>();
+		Logger.LogDebug(areaCenter);
+
+		var top = Math.Ceiling(areaCenter.Y - areaRadius);
+		var bottom = Math.Floor(areaCenter.Y + areaRadius);
+		for (var y = top; y <= bottom; y++)
+		{
+			var dy = y - areaCenter.Y;
+			var dx = Math.Sqrt(areaRadius * areaRadius - dy * dy);
+			var left = Math.Ceiling(areaCenter.X - dx);
+			var right = Math.Floor(areaCenter.X + dx);
+			for (var x = left; x <= right; x++)
+			{
+				var cell = _grid.GetCellWorld(new Vector2((float)x, (float)y));
+				if (cell is null)
+				{
+					continue;
+				}
+				for (var i = 0; i < cell.Count; i++)
+				{
+					var id = cell.Array[i];
+					if (targets.Contains(id))
+						continue;
+					targets.Add(id);
+				}
+			}
+		}
+
+		targetIds = [.. targets];
+		return true;
 	}
 
 	/// <summary>

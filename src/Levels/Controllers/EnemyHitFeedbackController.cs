@@ -16,12 +16,16 @@ public partial class EnemyHitFeedbackController : Node
 			>()
 		)
 		{
-			if (hit.HitTime <= 0)
+			if (hit.HitTimeLeft <= 0)
 				continue;
-			var hitTime = Math.Clamp(hit.HitTime - delta, 0, double.MaxValue);
-			var flash = 255 * hitTime;
+			var newHitTime = Math.Clamp(
+				hit.HitTimeLeft - delta,
+				0,
+				double.MaxValue
+			);
+			var flash = 255 * (newHitTime / hit.HitTime);
 
-			var newHit = hit with { HitTime = hitTime };
+			var newHit = hit with { HitTimeLeft = newHitTime };
 			var newFlash = spr with { Flash = (byte)flash };
 
 			ComponentStore.SetComponent(id, newFlash);

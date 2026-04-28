@@ -5,6 +5,8 @@ using Game.Levels.Controllers;
 
 namespace Game.Items.Projectiles;
 
+// TODO:
+// BaseWeapon should be responsible for handling damage, crit, etc
 public partial class ProjectileBullet : BaseProjectile
 {
 	[Export]
@@ -82,7 +84,7 @@ public partial class ProjectileBullet : BaseProjectile
 		if (!ComponentStore.GetComponent<HealthComponent>(id, out var health))
 			return;
 
-		var hit = new HitFeedbackComponent(1);
+		var hit = new HitFeedbackComponent() { HitTime = 0.5f };
 		if (!ComponentStore.GetComponent<HitFeedbackComponent>(id, out var _))
 			ComponentStore.RegisterComponent(id, hit);
 		else

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c18mvu8kqrmng"]
+
+[ext_resource type="Script" uid="uid://cbfjls4e6upqh" path="res://src/Items/Offensive/Airstrike.cs" id="1_1wnj3"]
+
+[node name="Airstrike" type="Node" unique_id=94679970]
+script = ExtResource("1_1wnj3")

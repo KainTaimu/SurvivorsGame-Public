@@ -14,7 +14,7 @@ public partial class BaseOffensiveStats : BaseItemStats
 			field = value;
 			EmitChanged();
 		}
-	}
+	} = 4;
 
 	[Export(PropertyHint.Range, "0,3,0.1,or_greater")]
 	public float CritDamageMultiplier
@@ -25,7 +25,7 @@ public partial class BaseOffensiveStats : BaseItemStats
 			field = value;
 			EmitChanged();
 		}
-	}
+	} = 1.5f;
 
 	[Export(PropertyHint.Range, "0,1,0.01")]
 	public float CritChanceProportion
@@ -36,7 +36,7 @@ public partial class BaseOffensiveStats : BaseItemStats
 			field = value;
 			EmitChanged();
 		}
-	}
+	} = 0.1f;
 
 	[Export]
 	public int ProjectileSpeed
@@ -47,7 +47,7 @@ public partial class BaseOffensiveStats : BaseItemStats
 			field = value;
 			EmitChanged();
 		}
-	}
+	} = 3600;
 
 	[Export]
 	public float ProjectileScaleMultiplier
@@ -58,7 +58,7 @@ public partial class BaseOffensiveStats : BaseItemStats
 			field = value;
 			EmitChanged();
 		}
-	}
+	} = 1;
 
 	[Export]
 	public float AttackSpeed
@@ -69,7 +69,7 @@ public partial class BaseOffensiveStats : BaseItemStats
 			field = value;
 			EmitChanged();
 		}
-	}
+	} = 0.2f;
 
 	[Export]
 	public int PierceLimit

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Game.Core.ECS;
 
 namespace Game.Levels.Controllers;
@@ -9,6 +10,27 @@ public partial class EnemyDeathManager : Node
 
 	[Export]
 	private EntityComponentStore ComponentStore = null!;
+
+	[Export]
+	private int _maxActiveParticles = 100;
+
+	private readonly Queue<GpuParticles2D> _activeParticles = [];
+	private readonly Queue<GpuParticles2D> _inactiveParticles = [];
+
+	public override void _Ready()
+	{
+		if (_enemyDeathParticlesScene is null)
+			return;
+
+		for (var i = 0; i < _maxActiveParticles; i++)
+		{
+			var gpu = _enemyDeathParticlesScene.Instantiate<GpuParticles2D>();
+			gpu.Hide();
+			gpu.Finished += gpu.Hide;
+			AddChild(gpu);
+			_inactiveParticles.Enqueue(gpu);
+		}
+	}
 
 	public override void _Process(double delta)
 	{
@@ -28,22 +50,17 @@ public partial class EnemyDeathManager : Node
 		}
 		ComponentStore.UnregisterEntity(id);
 
-		var particleNode = _enemyDeathParticlesScene.Instantiate();
-		switch (particleNode)
+		if (_activeParticles.Count >= _maxActiveParticles)
 		{
-			case CpuParticles2D cpu:
-				cpu.GlobalPosition = pos.Position;
-				cpu.Emitting = true;
-				break;
-			case GpuParticles2D gpu:
-				gpu.GlobalPosition = pos.Position;
-				gpu.Emitting = true;
-				break;
-			default:
-				particleNode.Free();
-				return;
+			var off = _activeParticles.Dequeue();
+			off.Hide();
+			_inactiveParticles.Enqueue(off);
 		}
 
-		AddChild(particleNode);
+		var gpu = _inactiveParticles.Dequeue();
+		gpu.GlobalPosition = pos.Position;
+		gpu.Show();
+		gpu.Restart();
+		_activeParticles.Enqueue(gpu);
 	}
 }

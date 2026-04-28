@@ -25,6 +25,14 @@ public partial class Crosshair : Node2D
 		}
 	} = 1;
 
+	public Vector2 CanvasSpacePosition =>
+		CrosshairSprite.GetCanvasTransform() * CrosshairSprite.GlobalPosition;
+
+	public Vector2 GlobalSpacePosition =>
+		Viewport.CanvasTransform
+			.AffineInverse()
+			* CrosshairSprite.GlobalPosition;
+
 	public static Crosshair? Instance { get; private set; }
 
 	public float AngleFromPlayer => GetAngleFromPlayer();

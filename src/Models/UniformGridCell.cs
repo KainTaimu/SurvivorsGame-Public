@@ -35,4 +35,9 @@ public class UniformGridCell<T>
 	{
 		Count = 0;
 	}
+
+	public override string ToString()
+	{
+		return $"{Index} : {Count} objects";
+	}
 }

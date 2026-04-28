@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://b6pcia1iql0ct"]
+
+[ext_resource type="Script" uid="uid://b0dw23p6yvt6b" path="res://src/Items/Offensive/Ak47.cs" id="1_gumc8"]
+[ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_rp6n0"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_ld3kt"]
+[ext_resource type="Script" uid="uid://os8ycjo6m7r0" path="res://src/Items/Offensive/BaseOffensiveStats.cs" id="4_tg8rs"]
+
+[sub_resource type="Resource" id="Resource_eai52"]
+script = ExtResource("3_ld3kt")
+
+[sub_resource type="Resource" id="Resource_oypsu"]
+script = ExtResource("4_tg8rs")
+CritChanceProportion = 0.1
+AttackSpeed = 0.17
+Additional = Dictionary[String, Variant]({
+"BloomCoefficient": 0.01,
+"HorizontalBaseRecoil": 3.0,
+"HorizontalRecoilRandom": 1.0,
+"Knockback": 20.0,
+"MagazineCapacity": 99999,
+"ReloadTimeMs": 1200,
+"VerticalBaseRecoil": 15.0,
+"VerticalRecoilRandom": 0.5
+})
+
+[node name="Ak47" type="Node" unique_id=915008798]
+script = ExtResource("1_gumc8")
+_projectileScene = ExtResource("2_rp6n0")
+Properties = SubResource("Resource_eai52")
+Stats = SubResource("Resource_oypsu")
