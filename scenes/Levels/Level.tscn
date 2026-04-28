@@ -26,9 +26,11 @@
 script = ExtResource("12_x7tv3")
 EnemyBlueprints = Array[Object]([ExtResource("8_1c6ul"), ExtResource("10_d4hlt"), ExtResource("9_occlw")])
 Duration = 9999.0
+MaxMobs = 20
 SpawnMinTime = 0.01
 SpawnMaxTime = 0.01
-SpawnBatchMax = 500
+SpawnBatchMin = 1000
+SpawnBatchMax = 1000
 
 [node name="Level" type="Node2D" unique_id=2141389114]
 z_index = -999
@@ -85,7 +87,7 @@ ComponentStore = NodePath("../EntityComponentStore")
 script = ExtResource("11_x7tv3")
 _enemyDeathParticlesScene = ExtResource("15_eh1w1")
 ComponentStore = NodePath("../EntityComponentStore")
-_maxActiveParticles = 500
+MaxActiveParticles = 500
 
 [node name="EnemyMover" type="Node" parent="Systems" unique_id=348078406 node_paths=PackedStringArray("_entities")]
 script = ExtResource("10_sh7eq")
