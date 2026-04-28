@@ -54,7 +54,6 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 
 	public override void UnregisterEntity(int id)
 	{
-		// PERF: Slow O(n)
 		if (!_idToIndexTable.ContainsKey(id))
 			return;
 
@@ -62,6 +61,9 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 		EmitSignal(SignalName.BeforeEntityUnregistered, id);
 
 		var idx = _idToIndexTable[id];
+		foreach (var type in _components.Keys)
+			_components[type].SetValue(Activator.CreateInstance(type), idx);
+
 		_idToIndexTable.Remove(id);
 		_indexToIdTable.Remove(idx);
 		_alive[idx] = false;

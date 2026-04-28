@@ -1,5 +1,3 @@
-using System.Linq;
-using Game.Core;
 using Game.Core.ECS;
 
 namespace Game.Levels.Controllers;
@@ -16,19 +14,19 @@ public partial class EnemyMover : Node
 			return;
 		var playerPos = player.GlobalPosition;
 
-		// TODO: Very expensive. Add dictionary to map enemy type to index?
-		var enemies = _entities
-			.Query<PositionComponent, EntityTypeComponent>()
-			.Where(x => x.Item3.EntityType == EntityType.Enemy)
-			.Select(x => new { x.Item1, x.Item2 });
-
-		foreach (var x in enemies)
+		foreach (
+			var (id, pos, moveSpeed) in _entities.Query<
+				PositionComponent,
+				MoveSpeedComponent
+			>()
+		)
 		{
-			var (id, pos) = (x.Item1, x.Item2);
+			var p = pos.Position.MoveToward(
+				playerPos,
+				moveSpeed.MoveSpeed * (float)delta
+			);
 
-			var p = pos.Position.MoveToward(playerPos, 150 * (float)delta);
-
-			_entities.UpdateComponent(id, new PositionComponent(p));
+			_entities.UpdateComponent(id, pos with { Position = p });
 		}
 	}
 }

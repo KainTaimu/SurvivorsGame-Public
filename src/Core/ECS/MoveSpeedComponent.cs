@@ -1,6 +1,3 @@
 namespace Game.Core.ECS;
 
-public struct MoveSpeedComponent(float speed)
-{
-	public required float MoveSpeed = speed;
-}
+public record struct MoveSpeedComponent(float MoveSpeed);

@@ -81,6 +81,13 @@ public partial class ProjectileBullet : BaseProjectile
 	{
 		if (!ComponentStore.GetComponent<HealthComponent>(id, out var health))
 			return;
+
+		var hit = new HitFeedbackComponent(1);
+		if (!ComponentStore.GetComponent<HitFeedbackComponent>(id, out var _))
+			ComponentStore.RegisterComponent(id, hit);
+		else
+			ComponentStore.SetComponent(id, hit);
+
 		var crit = CritDamageCalculator.GetCritDamage(
 			OffensiveOrigin.Stats.Damage,
 			OffensiveOrigin.Stats.CritDamageMultiplier,

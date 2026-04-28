@@ -157,6 +157,10 @@ public partial class EnemyWave : Resource, IEnemyWave
 				Flash = spriteInfo?.Flash ?? 0,
 			}
 		);
+		_entities.RegisterComponent(
+			id,
+			new MoveSpeedComponent(bp.Stats.MoveSpeed)
+		);
 
 		SpawnedIds.Add(id);
 	}

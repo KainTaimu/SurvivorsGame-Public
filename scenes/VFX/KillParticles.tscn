@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://rv526axhe2xw"]
 
 [ext_resource type="Texture2D" uid="uid://c7kegqurrrx0w" path="res://assets/VFX/small_chevron.png" id="1_a4yrt"]
+[ext_resource type="Script" uid="uid://bu1f3kjvp7vqe" path="res://src/VFX/KillParticles.cs" id="2_ya3sa"]
 
 [sub_resource type="Curve" id="Curve_ya3sa"]
 _data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
@@ -31,3 +32,6 @@ explosiveness = 1.0
 fixed_fps = 0
 draw_order = 0
 process_material = SubResource("ParticleProcessMaterial_ya3sa")
+script = ExtResource("2_ya3sa")
+
+[connection signal="finished" from="." to="." method="queue_free"]

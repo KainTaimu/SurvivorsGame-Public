@@ -22,9 +22,10 @@ public partial class EnemyDeathManager : Node
 	private void HandleDeath(int id)
 	{
 		if (!ComponentStore.GetComponent<PositionComponent>(id, out var pos))
+		{
+			ComponentStore.UnregisterEntity(id);
 			return;
-		ComponentStore.GetComponent<AnimatedSpriteComponent>(id, out var spr);
-		ComponentStore.SetComponent(id, spr with { Flash = 255 });
+		}
 		ComponentStore.UnregisterEntity(id);
 
 		var particleNode = _enemyDeathParticlesScene.Instantiate();
