@@ -31,7 +31,7 @@ public partial class EnemyHitManager : Node
 	/// Renderer reference for inspector wiring and debug workflows.
 	/// </summary>
 	[Export]
-	private EntityRenderer _renderer = null!;
+	private EnemyRenderer _renderer = null!;
 
 	/// <summary>
 	/// Uniform grid cell size in world units.

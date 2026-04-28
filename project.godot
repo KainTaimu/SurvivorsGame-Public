@@ -105,3 +105,4 @@ afk/afk_timer=180
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+lights_and_shadows/use_physical_light_units=true

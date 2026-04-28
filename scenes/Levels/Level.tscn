@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b802cb5a7o5fr" path="res://scenes/UI/PauseMenu.tscn" id="4_pi0ox"]
 [ext_resource type="Script" uid="uid://conjw4f6t4f3m" path="res://src/UI/PauseMenu/PauseController.cs" id="5_ajbtw"]
 [ext_resource type="Script" uid="uid://bjnekrn8u4tcu" path="res://src/Core/ECS/EntityComponentStoreV1.cs" id="6_qaj6y"]
-[ext_resource type="Script" uid="uid://bkpyb01olop50" path="res://src/Levels/Controllers/EntityRenderer.cs" id="7_ajdj3"]
+[ext_resource type="Script" uid="uid://bkpyb01olop50" path="res://src/Levels/Controllers/EnemyRenderer.cs" id="7_ajdj3"]
 [ext_resource type="Resource" uid="uid://d3ao5d4ym77ad" path="res://scenes/Enemies/Blueprints/Duck.tres" id="8_1c6ul"]
 [ext_resource type="Resource" uid="uid://6rycr3xfb4ax" path="res://scenes/Enemies/Blueprints/Vanoss.tres" id="9_occlw"]
 [ext_resource type="PackedScene" uid="uid://umbqj1xym7lp" path="res://scenes/Core/FodderMultiMeshInstance2D.tscn" id="9_ror81"]
@@ -26,7 +26,7 @@
 script = ExtResource("12_x7tv3")
 EnemyBlueprints = Array[Object]([ExtResource("8_1c6ul"), ExtResource("10_d4hlt"), ExtResource("9_occlw")])
 Duration = 9999.0
-MaxMobs = 20
+MaxMobs = 5
 SpawnMinTime = 0.01
 SpawnMaxTime = 0.01
 SpawnBatchMin = 1000
@@ -62,56 +62,58 @@ MainPlayer = NodePath("../../Player")
 [node name="PauseController" type="Node" parent="Systems" unique_id=867414551]
 script = ExtResource("5_ajbtw")
 
-[node name="PauseMenu" parent="Systems" unique_id=1937596238 node_paths=PackedStringArray("_player", "_pauseController") instance=ExtResource("4_pi0ox")]
-_player = NodePath("../../Player")
-_pauseController = NodePath("../PauseController")
-
 [node name="EntityComponentStore" type="Node" parent="Systems" unique_id=1131826051]
 script = ExtResource("6_qaj6y")
 
-[node name="EnemyWaveController" type="Node" parent="Systems" unique_id=247564660 node_paths=PackedStringArray("EntityComponentStore")]
+[node name="EnemySystems" type="Node" parent="Systems" unique_id=1808118587]
+
+[node name="EnemyWaveController" type="Node" parent="Systems/EnemySystems" unique_id=247564660 node_paths=PackedStringArray("EntityComponentStore")]
 script = ExtResource("11_aredf")
 Waves = Array[Object]([SubResource("Resource_x7tv3")])
-EntityComponentStore = NodePath("../EntityComponentStore")
+EntityComponentStore = NodePath("../../EntityComponentStore")
 
-[node name="EnemyHitManager" type="Node" parent="Systems" unique_id=1940935389 node_paths=PackedStringArray("_entities", "_renderer")]
+[node name="EnemyHitManager" type="Node" parent="Systems/EnemySystems" unique_id=1940935389 node_paths=PackedStringArray("_entities", "_renderer")]
 script = ExtResource("16_x7tv3")
-_entities = NodePath("../EntityComponentStore")
-_renderer = NodePath("../EntityRenderer")
+_entities = NodePath("../../EntityComponentStore")
+_renderer = NodePath("../EnemyRenderer")
 
-[node name="EnemyHitFeedbackController" type="Node" parent="Systems" unique_id=1764008549 node_paths=PackedStringArray("ComponentStore")]
+[node name="EnemyHitFeedbackController" type="Node" parent="Systems/EnemySystems" unique_id=1764008549 node_paths=PackedStringArray("ComponentStore")]
 script = ExtResource("13_eh1w1")
-ComponentStore = NodePath("../EntityComponentStore")
+ComponentStore = NodePath("../../EntityComponentStore")
 
-[node name="EnemyDeathManager" type="Node" parent="Systems" unique_id=715210331 node_paths=PackedStringArray("ComponentStore")]
+[node name="EnemyDeathManager" type="Node" parent="Systems/EnemySystems" unique_id=715210331 node_paths=PackedStringArray("ComponentStore")]
 script = ExtResource("11_x7tv3")
 _enemyDeathParticlesScene = ExtResource("15_eh1w1")
-ComponentStore = NodePath("../EntityComponentStore")
+ComponentStore = NodePath("../../EntityComponentStore")
 MaxActiveParticles = 500
 
-[node name="EnemyMover" type="Node" parent="Systems" unique_id=348078406 node_paths=PackedStringArray("_entities")]
+[node name="EnemyMover" type="Node" parent="Systems/EnemySystems" unique_id=348078406 node_paths=PackedStringArray("_entities")]
 script = ExtResource("10_sh7eq")
-_entities = NodePath("../EntityComponentStore")
+_entities = NodePath("../../EntityComponentStore")
 
-[node name="EnemyCollisionSolver" type="Node" parent="Systems" unique_id=2115688042 node_paths=PackedStringArray("_entities")]
+[node name="EnemyCollisionSolver" type="Node" parent="Systems/EnemySystems" unique_id=2115688042 node_paths=PackedStringArray("_entities")]
 script = ExtResource("10_ajdj3")
 _solverRangeFactor = 2.0
 _distBeforeShove = 45
 SubSteps = 4
-_entities = NodePath("../EntityComponentStore")
+_entities = NodePath("../../EntityComponentStore")
 
-[node name="EntityRenderer" type="Node" parent="Systems" unique_id=1054443393 node_paths=PackedStringArray("_entities")]
+[node name="EnemyRenderer" type="Node" parent="Systems/EnemySystems" unique_id=1054443393 node_paths=PackedStringArray("_entities")]
 process_priority = 16
 script = ExtResource("7_ajdj3")
-_entities = NodePath("../EntityComponentStore")
+_entities = NodePath("../../EntityComponentStore")
 _multiMesh = ExtResource("9_ror81")
 
 [node name="HUD" type="Node" parent="." unique_id=1918867052]
 
+[node name="PauseMenu" parent="HUD" unique_id=1937596238 node_paths=PackedStringArray("_player", "_pauseController") instance=ExtResource("4_pi0ox")]
+_player = NodePath("../../Player")
+_pauseController = NodePath("../../Systems/PauseController")
+
 [node name="EnemyInfo" type="CanvasLayer" parent="HUD" unique_id=370296864 node_paths=PackedStringArray("_label", "_spawner")]
 script = ExtResource("12_qaj6y")
 _label = NodePath("VBoxContainer/Label")
-_spawner = NodePath("../../Systems/EnemyWaveController")
+_spawner = NodePath("../../Systems/EnemySystems/EnemyWaveController")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HUD/EnemyInfo" unique_id=1020579535]
 offset_right = 66.0

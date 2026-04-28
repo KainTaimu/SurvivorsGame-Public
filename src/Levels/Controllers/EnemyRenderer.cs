@@ -5,7 +5,7 @@ using Game.Models;
 
 namespace Game.Levels.Controllers;
 
-public partial class EntityRenderer : Node
+public partial class EnemyRenderer : Node
 {
 	[Export]
 	private EntityComponentStore _entities = null!;
