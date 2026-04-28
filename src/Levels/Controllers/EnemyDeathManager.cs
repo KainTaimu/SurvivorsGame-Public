@@ -35,7 +35,6 @@ public partial class EnemyDeathManager : Node
 		var particlesLeft =
 			maxParticles - _activeParticles.Count - _inactiveParticles.Count;
 
-		Logger.LogDebug($"start: {particlesLeft}");
 		while (particlesLeft < 0)
 		{
 			if (!_inactiveParticles.TryDequeue(out var particles))
@@ -67,9 +66,6 @@ public partial class EnemyDeathManager : Node
 			DisableParticles(particles);
 			AddChild(particles);
 			_inactiveParticles.Enqueue(particles);
-			Logger.LogDebug(
-				$"inactive({_inactiveParticles.Count}): {particlesLeft}"
-			);
 		}
 	}
 

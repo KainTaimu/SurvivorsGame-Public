@@ -66,7 +66,7 @@ public partial class EnemyHitManager : Node
 		var viewport = GetViewport();
 		if (viewport is null)
 		{
-			Logger.LogError("EnemyCollisionSolver: missing viewport.");
+			Logger.LogError("missing viewport.");
 			return;
 		}
 
@@ -116,7 +116,6 @@ public partial class EnemyHitManager : Node
 	{
 		// credit: https://www.redblobgames.com/grids/circle-drawing/
 		var targets = new List<int>();
-		Logger.LogDebug(areaCenter);
 
 		var top = Math.Ceiling(areaCenter.Y - areaRadius);
 		var bottom = Math.Floor(areaCenter.Y + areaRadius);
