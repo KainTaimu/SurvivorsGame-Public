@@ -7,7 +7,7 @@ namespace Game.Items.Offensive;
 public partial class Airstrike : BaseOffensive
 {
 	private Crosshair Crosshair => Crosshair.Instance!;
-	private EnemyHitManager HitManager => EnemyHitManager.Instance;
+	private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
 	private EntityComponentStore ComponentStore =>
 		EntityComponentStore.Instance;
 
@@ -28,7 +28,7 @@ public partial class Airstrike : BaseOffensive
 
 		var mousePos = Crosshair.GlobalSpacePosition;
 
-		if (HitManager.TryGetTargetsInArea(mousePos, 256, out var targetIds))
+		if (TargetQuery.TryGetTargetsInArea(mousePos, 256, out var targetIds))
 		{
 			foreach (var id in targetIds)
 				HandleHitECS(id);

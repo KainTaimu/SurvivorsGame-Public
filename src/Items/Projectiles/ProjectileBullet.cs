@@ -19,7 +19,7 @@ public partial class ProjectileBullet : BaseProjectile
 	private readonly List<int> _hits = [];
 
 	private BaseOffensive OffensiveOrigin => (BaseOffensive)Origin;
-	private EnemyHitManager HitManager => EnemyHitManager.Instance;
+	private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
 	private EntityComponentStore ComponentStore =>
 		EntityComponentStore.Instance;
 
@@ -58,7 +58,7 @@ public partial class ProjectileBullet : BaseProjectile
 		Position = to;
 
 		if (
-			!HitManager.TryGetTargetAlongSegment(
+			!TargetQuery.TryGetTargetAlongSegment(
 				from,
 				to,
 				HitRadius,

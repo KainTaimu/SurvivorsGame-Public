@@ -8,7 +8,7 @@ public partial class PlayerHitController : Node
 	private EntityComponentStore _componentStore = null!;
 
 	[Export]
-	private EnemyHitManager _hitManager = null!;
+	private EnemyTargetQuery _hitManager = null!;
 
 	public override void _Process(double delta) { }
 }

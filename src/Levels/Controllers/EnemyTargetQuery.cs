@@ -19,7 +19,7 @@ namespace Game.Levels.Controllers;
 /// Swept query samples along movement segment and checks neighboring cells to
 /// reduce tunneling for fast projectiles, including zero-length segments.
 /// </remarks>
-public partial class EnemyHitManager : Node
+public partial class EnemyTargetQuery : Node
 {
 	/// <summary>
 	/// ECS store that owns enemy components.
@@ -51,7 +51,7 @@ public partial class EnemyHitManager : Node
 	/// <summary>
 	/// Singleton instance for global gameplay access.
 	/// </summary>
-	public static EnemyHitManager Instance { get; private set; } = null!;
+	public static EnemyTargetQuery Instance { get; private set; } = null!;
 
 	/// <summary>
 	/// Initializes singleton and allocates spatial grid.

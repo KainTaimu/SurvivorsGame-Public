@@ -43,7 +43,7 @@ public partial class Ak47 : BaseOffensive, IReloadable
 	private float _recoilScale = 1f;
 
 	private Crosshair? Crosshair => Crosshair.Instance;
-	private EnemyHitManager HitManager => EnemyHitManager.Instance;
+	private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
 	private EntityComponentStore ComponentStore =>
 		EntityComponentStore.Instance;
 
