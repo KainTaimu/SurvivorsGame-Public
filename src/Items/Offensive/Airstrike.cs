@@ -1,5 +1,4 @@
 using Game.Core.ECS;
-using Game.Items.Projectiles;
 using Game.Levels.Controllers;
 using Game.UI;
 
@@ -21,7 +20,7 @@ public partial class Airstrike : BaseOffensive
 			Attack();
 	}
 
-	protected override void Attack()
+	public override void Attack()
 	{
 		if (_fireCooldown > 0)
 			return;
@@ -29,38 +28,30 @@ public partial class Airstrike : BaseOffensive
 
 		var mousePos = Crosshair.GlobalSpacePosition;
 
-		if (!HitManager.TryGetTargetsInArea(mousePos, 256, out var targetIds))
+		if (HitManager.TryGetTargetsInArea(mousePos, 256, out var targetIds))
+		{
+			foreach (var id in targetIds)
+				HandleHitECS(id);
+			return;
+		}
+		// TODO: Handle Node Enemy
+	}
+
+	protected override void HandleHitECS(int id)
+	{
+		if (!ComponentStore.GetComponent<HealthComponent>(id, out var health))
 			return;
 
-		foreach (var id in targetIds)
-		{
-			if (
-				!ComponentStore.GetComponent<HealthComponent>(
-					id,
-					out var health
-				)
-			)
-			{
-				continue;
-			}
-			var crit = CritDamageCalculator.GetCritDamage(
-				Stats.Damage,
-				Stats.CritDamageMultiplier,
-				Stats.CritChanceProportion
-			);
-			var newHealth = health.Health - Stats.Damage - crit;
-			ComponentStore.SetComponent(id, health with { Health = newHealth });
+		var crit = CalculateCrit();
+		var newHealth = health.Health - Stats.Damage - crit;
 
-			var hit = new HitFeedbackComponent() { HitTime = 0.5f };
-			if (
-				!ComponentStore.GetComponent<HitFeedbackComponent>(
-					id,
-					out var _
-				)
-			)
-				ComponentStore.RegisterComponent(id, hit);
-			else
-				ComponentStore.SetComponent(id, hit);
-		}
+		ComponentStore.SetComponent(id, health with { Health = newHealth });
+
+		var hit = new HitFeedbackComponent() { HitTime = 0.5f };
+
+		if (!ComponentStore.GetComponent<HitFeedbackComponent>(id, out var _))
+			ComponentStore.RegisterComponent(id, hit);
+		else
+			ComponentStore.SetComponent(id, hit);
 	}
 }

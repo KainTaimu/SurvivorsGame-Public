@@ -70,54 +70,11 @@ public partial class ProjectileBullet : BaseProjectile
 		if (_hits.Contains(id))
 			return;
 
-		ApplyDamage(id);
-		ApplyKnockback(id);
+		OffensiveOrigin.HandleHit(id: id);
 
 		_hits.Add(id);
 		_pierceCount++;
 		if (_pierceCount >= PierceLimit)
 			QueueFree();
-	}
-
-	private void ApplyDamage(int id)
-	{
-		if (!ComponentStore.GetComponent<HealthComponent>(id, out var health))
-			return;
-
-		var hit = new HitFeedbackComponent() { HitTime = 0.5f };
-		if (!ComponentStore.GetComponent<HitFeedbackComponent>(id, out var _))
-			ComponentStore.RegisterComponent(id, hit);
-		else
-			ComponentStore.SetComponent(id, hit);
-
-		var crit = CritDamageCalculator.GetCritDamage(
-			OffensiveOrigin.Stats.Damage,
-			OffensiveOrigin.Stats.CritDamageMultiplier,
-			OffensiveOrigin.Stats.CritChanceProportion
-		);
-		var newHealth = health.Health - OffensiveOrigin.Stats.Damage - crit;
-		ComponentStore.SetComponent(id, health with { Health = newHealth });
-	}
-
-	private void ApplyKnockback(int id)
-	{
-		if (!ComponentStore.GetComponent<PositionComponent>(id, out var pos))
-			return;
-		var knockback = OffensiveOrigin
-			.Stats.Additional.GetValueOrDefault("Knockback")
-			.AsSingle();
-		var knockbackVector =
-			GameWorld.Instance.MainPlayer.GlobalPosition.DirectionTo(
-				pos.Position
-			);
-		knockbackVector *= knockback;
-
-		ComponentStore.SetComponent(
-			id,
-			pos with
-			{
-				Position = pos.Position + knockbackVector,
-			}
-		);
 	}
 }

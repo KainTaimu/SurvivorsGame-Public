@@ -8,9 +8,7 @@
 [ext_resource type="Script" uid="uid://b344j1ahaiaqv" path="res://src/Players/Controllers/PlayerWeaponController.cs" id="5_yecw2"]
 [ext_resource type="Script" uid="uid://b8nlijamaetyr" path="res://src/Players/Controllers/PlayerCameraController.cs" id="6_kfojw"]
 [ext_resource type="PackedScene" uid="uid://b6pcia1iql0ct" path="res://scenes/Items/Offensive/Ak47.tscn" id="6_yecw2"]
-[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="7_5pqvm"]
 [ext_resource type="PackedScene" uid="uid://c18mvu8kqrmng" path="res://scenes/Items/Offensive/Airstrike.tscn" id="7_v5xr6"]
-[ext_resource type="Script" uid="uid://os8ycjo6m7r0" path="res://src/Items/Offensive/BaseOffensiveStats.cs" id="8_dpv53"]
 
 [sub_resource type="Resource" id="Resource_pqexr"]
 script = ExtResource("3_cdd6o")
@@ -21,30 +19,6 @@ script = ExtResource("3_kfojw")
 CharacterName = "PLACEHOLDER"
 CharacterStats = SubResource("Resource_pqexr")
 metadata/_custom_type_script = "uid://ud6xfov0txuh"
-
-[sub_resource type="Resource" id="Resource_eai52"]
-script = ExtResource("8_dpv53")
-CritDamageMultiplier = 2.0
-CritChanceProportion = 0.15
-AttackSpeed = 0.17
-Additional = Dictionary[String, Variant]({
-"BloomCoefficient": 0.01,
-"HorizontalBaseRecoil": 3.0,
-"HorizontalRecoilRandom": 1.0,
-"Knockback": 20.0,
-"MagazineCapacity": 99999,
-"ReloadTimeMs": 1200,
-"VerticalBaseRecoil": 15.0,
-"VerticalRecoilRandom": 0.5
-})
-
-[sub_resource type="Resource" id="Resource_5pqvm"]
-script = ExtResource("7_5pqvm")
-
-[sub_resource type="Resource" id="Resource_dpv53"]
-script = ExtResource("8_dpv53")
-Damage = 5
-CritChanceProportion = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kfojw"]
 atlas = ExtResource("5_pqexr")
@@ -132,11 +106,8 @@ _sprite = NodePath("../AnimatedSprite2D")
 script = ExtResource("5_yecw2")
 
 [node name="Ak47" parent="PlayerWeaponController" unique_id=915008798 instance=ExtResource("6_yecw2")]
-Stats = SubResource("Resource_eai52")
 
 [node name="Airstrike" parent="PlayerWeaponController" unique_id=94679970 instance=ExtResource("7_v5xr6")]
-Properties = SubResource("Resource_5pqvm")
-Stats = SubResource("Resource_dpv53")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=881638213]
 scale = Vector2(2, 2)

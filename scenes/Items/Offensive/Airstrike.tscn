@@ -1,6 +1,21 @@
 [gd_scene format=3 uid="uid://c18mvu8kqrmng"]
 
 [ext_resource type="Script" uid="uid://cbfjls4e6upqh" path="res://src/Items/Offensive/Airstrike.cs" id="1_1wnj3"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="2_jy8an"]
+[ext_resource type="Script" uid="uid://os8ycjo6m7r0" path="res://src/Items/Offensive/BaseOffensiveStats.cs" id="3_j8i8h"]
+
+[sub_resource type="Resource" id="Resource_ugfqd"]
+script = ExtResource("2_jy8an")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
+[sub_resource type="Resource" id="Resource_d4ip8"]
+script = ExtResource("3_j8i8h")
+Damage = 5
+CritChanceProportion = 0.0
+AttackSpeed = 0.1
+metadata/_custom_type_script = "uid://os8ycjo6m7r0"
 
 [node name="Airstrike" type="Node" unique_id=94679970]
 script = ExtResource("1_1wnj3")
+Properties = SubResource("Resource_ugfqd")
+Stats = SubResource("Resource_d4ip8")

@@ -29,9 +29,8 @@ public partial class Crosshair : Node2D
 		CrosshairSprite.GetCanvasTransform() * CrosshairSprite.GlobalPosition;
 
 	public Vector2 GlobalSpacePosition =>
-		Viewport.CanvasTransform
-			.AffineInverse()
-			* CrosshairSprite.GlobalPosition;
+		Viewport.CanvasTransform.AffineInverse()
+		* CrosshairSprite.GlobalPosition;
 
 	public static Crosshair? Instance { get; private set; }
 
@@ -129,7 +128,7 @@ public partial class Crosshair : Node2D
 		private Tween? _impulseTweener;
 		private Tween? _recoilJumpTweener;
 
-		public void ApplyImpulse(Vector2 impulse, float minImpulse = 0.6f)
+		public void ApplyImpulse(Vector2 impulse)
 		{
 			const float easeReturn = 0.2f;
 
@@ -137,7 +136,7 @@ public partial class Crosshair : Node2D
 
 			_accumilatedImpulse += impulse;
 			_impulseScale += 0.1f;
-			_impulseScale = Math.Clamp(_impulseScale, minImpulse, 1f);
+			_impulseScale = Math.Clamp(_impulseScale, 0f, 1f);
 
 			var finalCrosshairPos =
 				targetCrosshair.Position

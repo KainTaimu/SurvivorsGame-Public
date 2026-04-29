@@ -5,7 +5,7 @@
 
 [sub_resource type="Curve" id="Curve_w5u0a"]
 _limits = [0.0, 100.0, 0.0, 1.0]
-_data = [Vector2(0, 0), 0.0, 925.0839, 0, 0, Vector2(0.12646803, 100), 341.2726, 341.2726, 0, 0, Vector2(0.385289, 100), 46.072346, 0.0, 0, 0]
+_data = [Vector2(0, 0), 0.0, 925.0839, 0, 0, Vector2(0.063, 100), 341.2726, 341.2726, 0, 0, Vector2(0.385289, 100), 46.072346, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="CurveTexture" id="CurveTexture_hmbxg"]
@@ -44,7 +44,7 @@ modulate = Color(1, 0, 0, 1)
 emitting = false
 amount = 150
 texture = ExtResource("1_j17l3")
-lifetime = 30.0
+lifetime = 60.0
 one_shot = true
 preprocess = 0.1
 explosiveness = 1.0
