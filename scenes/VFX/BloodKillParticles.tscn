@@ -46,6 +46,7 @@ amount = 150
 texture = ExtResource("1_j17l3")
 lifetime = 30.0
 one_shot = true
+preprocess = 0.1
 explosiveness = 1.0
 fixed_fps = 20
 visibility_rect = Rect2(-8192, -8192, 16384, 16384)

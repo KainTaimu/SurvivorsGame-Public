@@ -1,5 +1,6 @@
 using Game.Items.Projectiles;
 using Game.Players;
+using Game.SFX;
 using Game.UI;
 
 namespace Game.Items.Offensive;
@@ -8,6 +9,9 @@ public partial class Ak47 : BaseOffensive, IReloadable
 {
 	[Export]
 	private PackedScene _projectileScene = null!;
+
+	[Export]
+	private RandomAudioStreamPlayer _streamPlayer = null!;
 
 	public int MagazineCapacity
 	{
@@ -83,6 +87,9 @@ public partial class Ak47 : BaseOffensive, IReloadable
 			Reload();
 			return;
 		}
+
+		_streamPlayer?.PlayRandom();
+		_streamPlayer?.PitchScale = 0.9f + (GD.RandRange(-1, 1) * 0.1f);
 
 		_fireCooldown = Stats.AttackSpeed;
 		_magazineCount--;

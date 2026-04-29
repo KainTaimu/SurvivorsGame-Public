@@ -24,8 +24,8 @@ metadata/_custom_type_script = "uid://ud6xfov0txuh"
 
 [sub_resource type="Resource" id="Resource_eai52"]
 script = ExtResource("8_dpv53")
-Damage = 6
-CritChanceProportion = 0.1
+CritDamageMultiplier = 2.0
+CritChanceProportion = 0.15
 AttackSpeed = 0.17
 Additional = Dictionary[String, Variant]({
 "BloomCoefficient": 0.01,
