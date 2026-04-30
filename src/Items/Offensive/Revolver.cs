@@ -15,21 +15,20 @@ public partial class Revolver : Firearm
 		OnAttack += () =>
 		{
 			_ammoCount.RotateCylinder();
-			ShakeCamera();
+			ApplyCameraRecoil();
 		};
 	}
 
 	public override void _Process(double delta)
 	{
-		FireCooldown -= delta;
+		_fireCooldown -= delta;
 		if (Input.IsActionPressed(InputMapNames.WeaponReload))
 		{
 			Reload();
 			return;
 		}
-		if (!Input.IsActionPressed(InputMapNames.PrimaryAttack))
+		if (!Input.IsActionJustPressed(InputMapNames.PrimaryAttack))
 			return;
-
 		Attack();
 	}
 
@@ -52,27 +51,5 @@ public partial class Revolver : Firearm
 				Position = pos.Position + knockbackVector,
 			}
 		);
-	}
-
-	private void ShakeCamera()
-	{
-		var camera = GetViewport().GetCamera2D();
-
-		var origPos = camera.Position;
-		var tween = CreateTween().SetTrans(Tween.TransitionType.Spring);
-
-		for (var i = 0; i < 6; i++)
-		{
-			static int rand() => GD.RandRange(-1, 1);
-			var shake = new Vector2(rand(), rand()) * GD.RandRange(4, 9);
-
-			tween.TweenProperty(
-				camera,
-				"position",
-				camera.Position + shake,
-				1 / 30f
-			);
-		}
-		tween.TweenProperty(camera, "position", origPos, 1 / 8f);
 	}
 }

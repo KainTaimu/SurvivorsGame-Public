@@ -53,7 +53,7 @@ public abstract partial class Firearm : BaseOffensive, IReloadable
 	{
 		get
 		{
-			if (FireCooldown > 0)
+			if (_fireCooldown > 0)
 				return false;
 			if (IsReloading)
 				return false;
@@ -63,7 +63,7 @@ public abstract partial class Firearm : BaseOffensive, IReloadable
 		}
 	}
 
-	public double FireCooldown;
+	protected double _fireCooldown;
 
 	private int _reloadTimeMs = 1500;
 	private float _bloomCoefficientDeg = 0.03f;
@@ -77,6 +77,7 @@ public abstract partial class Firearm : BaseOffensive, IReloadable
 	private float _verticalBaseRecoil = 3f;
 	private float _verticalRecoilRandom = 0.1f;
 	private float _recoilScale = 1f;
+	private float _cameraRecoilScale = 1f;
 
 	protected Crosshair? Crosshair => Crosshair.Instance;
 
@@ -88,13 +89,18 @@ public abstract partial class Firearm : BaseOffensive, IReloadable
 
 	public override void Attack()
 	{
+		if (_magazineCount <= 0)
+		{
+			Reload();
+			return;
+		}
 		if (!ReadyToShoot)
 			return;
 
 		_shootAudioPlayer?.PlayRandom();
 		_shootAudioPlayer?.PitchScale = 0.9f + (GD.RandRange(-1, 1) * 0.1f);
 
-		FireCooldown = Stats.AttackSpeed;
+		_fireCooldown = Stats.AttackSpeed;
 		_magazineCount--;
 
 		var playerVector = Player.GetCanvasTransform() * Player.Position;
@@ -181,9 +187,38 @@ public abstract partial class Firearm : BaseOffensive, IReloadable
 		Crosshair.Recoil.ApplyImpulse(recoil);
 	}
 
+	public void ApplyCameraRecoil()
+	{
+		// WARN: Unknown consequences of directly modifying camera position
+		if (_cameraRecoilScale == 0)
+			return;
+
+		var camera = GetViewport().GetCamera2D();
+
+		var origPos = camera.Position;
+		var tween = CreateTween().SetTrans(Tween.TransitionType.Spring);
+
+		for (var i = 0; i < 6; i++)
+		{
+			static int rand() => GD.RandRange(-1, 1);
+			var shake =
+				new Vector2(rand(), rand())
+				* GD.RandRange(4, 9)
+				* _cameraRecoilScale;
+
+			tween.TweenProperty(
+				camera,
+				"position",
+				camera.Position + shake,
+				1 / 30f
+			);
+		}
+		tween.TweenProperty(camera, "position", origPos, 1 / 8f);
+	}
+
 	private void UpdateAdditionalFields()
 	{
-		FireCooldown = Stats.AttackSpeed;
+		_fireCooldown = Stats.AttackSpeed;
 
 		_magazineCapacity = Stats.Additional["MagazineCapacity"].As<int>();
 		_magazineCount = _magazineCapacity;
@@ -209,6 +244,9 @@ public abstract partial class Firearm : BaseOffensive, IReloadable
 			.Additional["VerticalRecoilRandom"]
 			.As<float>();
 		_recoilScale = Stats.Additional["RecoilScale"].AsSingle();
+		if (Stats.Additional.TryGetValue("CameraRecoilScale", out var x))
+			_cameraRecoilScale = x.AsSingle();
+
 		Logger.LogDebug(
 			"Updated Stats",
 			GetClassProperties.GetClassPropertiesString(Stats)

@@ -20,6 +20,7 @@ AttackSpeed = 1.0
 PierceLimit = 5
 Additional = Dictionary[String, Variant]({
 "BloomCoefficientDeg": 3.0,
+"CameraRecoilScale": 1.0,
 "HorizontalBaseRecoil": 50.0,
 "HorizontalRecoilMin": 50.0,
 "HorizontalRecoilRandom": 20.0,

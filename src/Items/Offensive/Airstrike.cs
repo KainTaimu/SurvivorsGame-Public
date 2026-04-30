@@ -1,5 +1,4 @@
 using Game.Core.ECS;
-using Game.Levels.Controllers;
 using Game.UI;
 
 namespace Game.Items.Offensive;
@@ -7,10 +6,6 @@ namespace Game.Items.Offensive;
 public partial class Airstrike : BaseOffensive
 {
 	private Crosshair Crosshair => Crosshair.Instance!;
-	private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
-	private EntityComponentStore ComponentStore =>
-		EntityComponentStore.Instance;
-
 	private double _fireCooldown;
 
 	public override void _Process(double delta)

@@ -7,7 +7,7 @@ public partial class Ak47 : Firearm
 {
 	public override void _Process(double delta)
 	{
-		FireCooldown -= delta;
+		_fireCooldown -= delta;
 		if (Input.IsActionPressed(InputMapNames.WeaponReload))
 		{
 			Reload();

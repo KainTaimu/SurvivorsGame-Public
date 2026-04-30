@@ -17,6 +17,7 @@ CritChanceProportion = 0.1
 AttackSpeed = 0.17
 Additional = Dictionary[String, Variant]({
 "BloomCoefficientDeg": 10.0,
+"CameraRecoilScale": 1.0,
 "HorizontalBaseRecoil": 3.0,
 "HorizontalRecoilMin": 1.0,
 "HorizontalRecoilRandom": 1.0,

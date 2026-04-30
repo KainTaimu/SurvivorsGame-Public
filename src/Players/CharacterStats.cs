@@ -476,11 +476,7 @@ public partial class CharacterStats : Resource
 	{
 		var damageAfterDefense = damage - Defense;
 		var scaledDamage = damageAfterDefense * IncomingDamageMultiplier;
-		var clampedDamage = Math.Clamp(
-			scaledDamage,
-			Health * 0.05,
-			float.PositiveInfinity
-		);
+		var clampedDamage = Math.Clamp(scaledDamage, 1, float.PositiveInfinity);
 		var totalDamage = Mathf.CeilToInt(clampedDamage);
 
 		Logger.LogDebug(
