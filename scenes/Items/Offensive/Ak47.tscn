@@ -23,6 +23,7 @@ Additional = Dictionary[String, Variant]({
 "HorizontalRecoilRandom": 1.0,
 "Knockback": 20.0,
 "MagazineCapacity": 99999,
+"RecoilAccumilationScale": 0.0,
 "RecoilScale": 1.0,
 "ReloadTimeMs": 1200,
 "VerticalBaseRecoil": 8.0,

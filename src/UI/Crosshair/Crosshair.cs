@@ -132,18 +132,22 @@ public partial class Crosshair : Node2D
 		private Tween? _impulseTweener;
 		private Tween? _recoilJumpTweener;
 
-		public void ApplyImpulse(Vector2 impulse)
+		public void ApplyImpulse(
+			Vector2 impulse,
+			float accumilatedImpuseFactor = 1f
+		)
 		{
 			const float easeReturn = 0.2f;
 
 			var targetCrosshair = crosshair.CrosshairSprite;
 
-			_accumilatedImpulse += impulse;
+			_accumilatedImpulse += impulse * accumilatedImpuseFactor;
 			_impulseScale += 0.1f;
 			_impulseScale = Math.Clamp(_impulseScale, 0f, 1f);
 
 			var finalCrosshairPos =
 				targetCrosshair.Position
+				+ impulse
 				+ (_accumilatedImpulse * _impulseScale);
 
 			_recoilJumpTweener?.Kill();

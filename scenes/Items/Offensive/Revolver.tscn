@@ -25,16 +25,17 @@ PierceLimit = 5
 Additional = Dictionary[String, Variant]({
 "BloomCoefficientDeg": 3.0,
 "CameraRecoilScale": 1.8,
-"HorizontalBaseRecoil": 50.0,
-"HorizontalRecoilMin": 50.0,
+"HorizontalBaseRecoil": 20.0,
+"HorizontalRecoilMin": 20.0,
 "HorizontalRecoilRandom": 20.0,
 "Knockback": 80.0,
 "MagazineCapacity": 6,
-"RecoilScale": 1.2,
+"RecoilAccumilationScale": 1.0,
+"RecoilScale": 0.8,
 "ReloadTimeMs": 1800,
-"VerticalBaseRecoil": 600.0,
-"VerticalRecoilMin": 600.0,
-"VerticalRecoilRandom": 200.0
+"VerticalBaseRecoil": 120.0,
+"VerticalRecoilMin": 120.0,
+"VerticalRecoilRandom": 40.0
 })
 metadata/_custom_type_script = "uid://os8ycjo6m7r0"
 

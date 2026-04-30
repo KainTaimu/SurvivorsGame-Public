@@ -1,7 +1,6 @@
 using Game.Core.ECS;
 using Game.Items.Projectiles;
 using Game.Players;
-using Game.SFX;
 using Game.UI;
 using Game.Utils;
 
@@ -80,6 +79,7 @@ public abstract partial class Firearm
 	private float _verticalBaseRecoil = 3f;
 	private float _verticalRecoilRandom = 0.1f;
 	private float _recoilScale = 1f;
+	private float _recoilAccumilationScale = 1f;
 	private float _cameraRecoilScale = 1f;
 
 	protected Crosshair? Crosshair => Crosshair.Instance;
@@ -178,10 +178,20 @@ public abstract partial class Firearm
 		if (Crosshair is null)
 			return;
 
-		var recoilX =
-			_horizontalBaseRecoil
-			+ Math.Abs((float)GD.Randfn(0, _horizontalRecoilRandom));
-		recoilX = Math.Clamp(recoilX, _horizontalRecoilMin, float.MaxValue);
+		var recoilX = (float)
+			GD.Randfn(
+				0,
+				_horizontalBaseRecoil
+					+ GD.RandRange(
+						-_horizontalRecoilRandom,
+						_horizontalRecoilRandom
+					)
+			);
+		recoilX = Math.Clamp(
+			recoilX,
+			-Math.Abs(_horizontalRecoilMin),
+			float.MaxValue
+		);
 
 		var recoilY =
 			_verticalBaseRecoil
@@ -248,7 +258,10 @@ public abstract partial class Firearm
 			.Additional["VerticalRecoilRandom"]
 			.As<float>();
 		_recoilScale = Stats.Additional["RecoilScale"].AsSingle();
-		if (Stats.Additional.TryGetValue("CameraRecoilScale", out var x))
+
+		if (Stats.Additional.TryGetValue("RecoilAccumilationScale", out var x))
+			_recoilAccumilationScale = x.AsSingle();
+		if (Stats.Additional.TryGetValue("CameraRecoilScale", out x))
 			_cameraRecoilScale = x.AsSingle();
 
 		Logger.LogDebug(
