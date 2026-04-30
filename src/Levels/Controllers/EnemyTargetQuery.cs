@@ -1,65 +1,28 @@
+/*
+ * Commented methods are written by AI slop machine
+*/
+
 using System.Collections.Generic;
 using Game.Core.ECS;
 using Game.Models;
 
 namespace Game.Levels.Controllers;
 
-/// <summary>
-/// Builds and queries a moving enemy hit grid.
-/// </summary>
-/// <remarks>
-/// This manager keeps a centered <see cref="CenteredMovingUniformGrid{T}"/> that
-/// follows player position each frame. Enemy entity ids are inserted from ECS
-/// position data and then used by hit queries.
-///
-/// Query modes:
-/// - <see cref="TryGetTarget"/>: point query in current cell.
-/// - <see cref="TryGetTargetAlongSegment"/>: swept query with radius.
-///
-/// Swept query samples along movement segment and checks neighboring cells to
-/// reduce tunneling for fast projectiles, including zero-length segments.
-/// </remarks>
 public partial class EnemyTargetQuery : Node
 {
-	/// <summary>
-	/// ECS store that owns enemy components.
-	/// </summary>
 	[Export]
 	private EntityComponentStore _entities = null!;
 
-	/// <summary>
-	/// Renderer reference for inspector wiring and debug workflows.
-	/// </summary>
 	[Export]
 	private EnemyRenderer _renderer = null!;
 
-	/// <summary>
-	/// Uniform grid cell size in world units.
-	/// </summary>
-	/// <remarks>
-	/// Smaller values increase precision but may increase query overhead.
-	/// Larger values reduce precision but may reduce bookkeeping work.
-	/// </remarks>
 	[Export]
 	private int _gridSize = 16;
 
-	/// <summary>
-	/// Centered moving grid storing enemy ids.
-	/// </summary>
 	private CenteredMovingUniformGrid<int> _grid = null!;
 
-	/// <summary>
-	/// Singleton instance for global gameplay access.
-	/// </summary>
 	public static EnemyTargetQuery Instance { get; private set; } = null!;
 
-	/// <summary>
-	/// Initializes singleton and allocates spatial grid.
-	/// </summary>
-	/// <remarks>
-	/// Grid window uses viewport size * 2 so nearby off-screen enemies remain
-	/// queryable during fast movement and camera shifts.
-	/// </remarks>
 	public override void _EnterTree()
 	{
 		Instance = this;
@@ -74,10 +37,6 @@ public partial class EnemyTargetQuery : Node
 		_grid = new CenteredMovingUniformGrid<int>(_gridSize, windowSize);
 	}
 
-	/// <summary>
-	/// Rebuilds grid around player and handles debug click probing.
-	/// </summary>
-	/// <param name="delta">Frame delta time, currently unused.</param>
 	public override void _Process(double delta)
 	{
 		var player = GameWorld.Instance.MainPlayer;
@@ -90,12 +49,6 @@ public partial class EnemyTargetQuery : Node
 		AddObjectsToGrid();
 	}
 
-	/// <summary>
-	/// Inserts all ECS position entries into current grid cells.
-	/// </summary>
-	/// <remarks>
-	/// Caller must clear and recenter grid before invoking this method.
-	/// </remarks>
 	private void AddObjectsToGrid()
 	{
 		foreach (var (id, pos) in _entities.Query<PositionComponent>())
@@ -158,11 +111,6 @@ public partial class EnemyTargetQuery : Node
 	/// <returns>
 	/// <c>true</c> when at least one target lies within swept corridor.
 	/// </returns>
-	/// <remarks>
-	/// Segment gets sampled at <c>_gridSize * 0.5</c> spacing. For each sample, the
-	/// algorithm checks sample cell and eight neighbors (3x3 neighborhood). Candidate
-	/// ranking uses squared distance from enemy point to finite segment.
-	/// </remarks>
 	public bool TryGetTargetAlongSegment(
 		Vector2 from,
 		Vector2 to,
@@ -290,10 +238,6 @@ public partial class EnemyTargetQuery : Node
 	/// <param name="start">Segment start.</param>
 	/// <param name="end">Segment end.</param>
 	/// <returns>Squared distance to nearest point on segment.</returns>
-	/// <remarks>
-	/// Uses projection onto segment vector and clamps interpolation factor to
-	/// [0, 1]. Squared distance avoids sqrt in hot loops.
-	/// </remarks>
 	private static float DistanceSquaredPointToSegment(
 		Vector2 point,
 		Vector2 start,
