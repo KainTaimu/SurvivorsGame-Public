@@ -60,6 +60,7 @@ stream = SubResource("AudioStreamRandomizer_0u5yb")
 [node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="." unique_id=1261930206]
 process_mode = 3
 stream = ExtResource("6_0u5yb")
+max_polyphony = 6
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1938930498 node_paths=PackedStringArray("_revolver", "_revolverCylinderSprite", "_cartidgeSprites")]
 script = ExtResource("2_wjj7r")
@@ -75,31 +76,37 @@ scale = Vector2(0.192, 0.192)
 texture = ExtResource("2_0ntdy")
 
 [node name="Cartridge1" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1500318896]
+visible = false
 position = Vector2(0, -291.6665)
 scale = Vector2(4.1917686, 4.1917686)
 texture = ExtResource("9_n3sky")
 
 [node name="Cartridge2" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1599935953]
+visible = false
 position = Vector2(250, -145.83301)
 scale = Vector2(4.1917686, 4.1917686)
 texture = ExtResource("9_n3sky")
 
 [node name="Cartridge3" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1242576479]
+visible = false
 position = Vector2(250, 145.83398)
 scale = Vector2(4.1917686, 4.1917686)
 texture = ExtResource("9_n3sky")
 
 [node name="Cartridge4" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1080329020]
+visible = false
 position = Vector2(0, 291.66748)
 scale = Vector2(4.1917686, 4.1917686)
 texture = ExtResource("9_n3sky")
 
 [node name="Cartridge5" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=2102841778]
+visible = false
 position = Vector2(-250, 145.83398)
 scale = Vector2(4.1917686, 4.1917686)
 texture = ExtResource("9_n3sky")
 
 [node name="Cartridge6" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1716022962]
+visible = false
 position = Vector2(-250, -145.83301)
 scale = Vector2(4.1917686, 4.1917686)
 texture = ExtResource("9_n3sky")

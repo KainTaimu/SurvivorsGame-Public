@@ -25,6 +25,34 @@ public partial class Revolver : Firearm
 			};
 			ApplyCameraRecoil();
 		};
+
+		// Reload SFX
+		OnReloadStart += () =>
+		{
+			for (var i = 0; i < 6; i++)
+				GetTree()
+					.CreateTimer(
+						Stats.Additional["ReloadTimeMs"].AsSingle()
+							/ 1000 // To seconds
+							/ 5 // Arbitrary
+							/ 6 // Amount of cylinder spin
+							* i
+					)
+					.Timeout += () => CockAudioPlayer?.Play();
+		};
+		OnReloadEnd += () =>
+		{
+			for (var i = 0; i < 6; i++)
+				GetTree()
+					.CreateTimer(
+						Stats.Additional["ReloadTimeMs"].AsSingle()
+							/ 1000
+							/ 5
+							/ 6
+							* i
+					)
+					.Timeout += () => CockAudioPlayer?.Play();
+		};
 	}
 
 	public override void _Process(double delta)

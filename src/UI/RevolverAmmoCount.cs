@@ -21,14 +21,37 @@ public partial class RevolverAmmoCount : CanvasLayer
 	private Texture2D _unfiredCartridge = null!;
 
 	private float _cylinderRotation = 60f * (Mathf.Pi / 180);
+	private const int _maxCylinderCount = 6;
+
+	private int MagazineCapacity =>
+		Math.Clamp(_revolver.MagazineCapacity, 0, _maxCylinderCount);
 
 	public override void _Ready()
 	{
 		base._Ready();
+		Callable
+			.From(() =>
+			{
+				for (var i = 0; i < MagazineCapacity; i++)
+				{
+					Logger.LogDebug(i, MagazineCapacity);
+					var sprite = _cartidgeSprites[i];
+					sprite.Show();
+				}
+			})
+			.CallDeferred();
+
+		// BUG: When decreasing MagazineCapacity then increasing it again,
+		// there will be a permanently visible cartridge because of
+		// the conditionals in the for loops
 		_revolver.OnReloadStart += () =>
 		{
-			foreach (var sprite in _cartidgeSprites)
+			// foreach (var sprite in _cartidgeSprites)
+			for (var i = 0; i < MagazineCapacity; i++)
+			{
+				var sprite = _cartidgeSprites[i];
 				sprite.Hide();
+			}
 			var tween = CreateTween()
 				.SetEase(Tween.EaseType.Out)
 				.SetTrans(Tween.TransitionType.Spring);
@@ -42,8 +65,9 @@ public partial class RevolverAmmoCount : CanvasLayer
 		};
 		_revolver.OnReloadEnd += () =>
 		{
-			foreach (var sprite in _cartidgeSprites)
+			for (var i = 0; i < MagazineCapacity; i++)
 			{
+				var sprite = _cartidgeSprites[i];
 				sprite.Show();
 				sprite.Texture = _unfiredCartridge;
 			}
@@ -80,7 +104,7 @@ public partial class RevolverAmmoCount : CanvasLayer
 				1 / 8f
 			);
 			_cartidgeSprites[
-				_revolver.MagazineCapacity - _revolver.MagazineCount - 1
+				MagazineCapacity - _revolver.MagazineCount - 1
 			].Texture = _firedCartridge;
 		};
 	}
