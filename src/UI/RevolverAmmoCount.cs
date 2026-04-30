@@ -73,6 +73,17 @@ public partial class RevolverAmmoCount : CanvasLayer
 		};
 	}
 
+	// HACK:
+	// Because of inheritance fuckery, cannot set _revolver as Node2D then
+	// connect to visibility_changed signal to hide this CanvasLayer normally.
+	public override void _Notification(int what)
+	{
+		if (what == NotificationPaused)
+			Hide();
+		else if (what == NotificationUnpaused)
+			Show();
+	}
+
 	public void RotateCylinder()
 	{
 		foreach (var sprite in _cartidges)

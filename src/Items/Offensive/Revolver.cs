@@ -27,7 +27,11 @@ public partial class Revolver : Firearm
 			Reload();
 			return;
 		}
-		if (!Input.IsActionJustPressed(InputMapNames.PrimaryAttack))
+		if (
+			!Input.IsActionPressed(
+				AttackActionString ?? InputMapNames.PrimaryAttack
+			)
+		)
 			return;
 		Attack();
 	}

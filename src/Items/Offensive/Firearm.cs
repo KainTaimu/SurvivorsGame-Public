@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using Game.Core.ECS;
 using Game.Items.Projectiles;
-using Game.Levels.Controllers;
 using Game.Players;
 using Game.SFX;
 using Game.UI;
@@ -9,7 +7,10 @@ using Game.Utils;
 
 namespace Game.Items.Offensive;
 
-public abstract partial class Firearm : BaseOffensive, IReloadable
+public abstract partial class Firearm
+	: BaseOffensive,
+		IReloadable,
+		IManualAttack
 {
 	[Signal]
 	public delegate void OnReloadStartEventHandler();
@@ -62,6 +63,8 @@ public abstract partial class Firearm : BaseOffensive, IReloadable
 			return true;
 		}
 	}
+
+	public string? AttackActionString { get; set; }
 
 	protected double _fireCooldown;
 
@@ -168,6 +171,9 @@ public abstract partial class Firearm : BaseOffensive, IReloadable
 		ComponentStore.SetComponent(id, health with { Health = newHealth });
 	}
 
+	// BUG:
+	// Extreme recoil due to accumilated impulse in Crosshair recoil system
+	// if shooting two high recoil weapons at once
 	private void ApplyCursorRecoil()
 	{
 		if (Crosshair is null)
@@ -189,7 +195,6 @@ public abstract partial class Firearm : BaseOffensive, IReloadable
 
 	public void ApplyCameraRecoil()
 	{
-		// WARN: Unknown consequences of directly modifying camera position
 		if (_cameraRecoilScale == 0)
 			return;
 
@@ -208,12 +213,12 @@ public abstract partial class Firearm : BaseOffensive, IReloadable
 
 			tween.TweenProperty(
 				camera,
-				"position",
+				"offset",
 				camera.Position + shake,
 				1 / 30f
 			);
 		}
-		tween.TweenProperty(camera, "position", origPos, 1 / 8f);
+		tween.TweenProperty(camera, "offset", origPos, 1 / 8f);
 	}
 
 	private void UpdateAdditionalFields()

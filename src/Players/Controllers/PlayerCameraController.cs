@@ -12,6 +12,9 @@ public partial class PlayerCameraController : Camera2D
 	{
 		if (@event is not InputEventMouseButton mouse)
 			return;
+		if (!Input.IsPhysicalKeyPressed(Key.Ctrl))
+			return;
+
 		var zoom = Zoom;
 		if (mouse.ButtonIndex == MouseButton.WheelUp)
 			zoom += Vector2.One * 0.1f;

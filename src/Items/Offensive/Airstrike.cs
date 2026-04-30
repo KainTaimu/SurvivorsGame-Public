@@ -3,15 +3,22 @@ using Game.UI;
 
 namespace Game.Items.Offensive;
 
-public partial class Airstrike : BaseOffensive
+public partial class Airstrike : BaseOffensive, IManualAttack
 {
 	private Crosshair Crosshair => Crosshair.Instance!;
+
+	public string? AttackActionString { get; set; }
+
 	private double _fireCooldown;
 
 	public override void _Process(double delta)
 	{
 		_fireCooldown -= delta;
-		if (Input.IsActionPressed(InputMapNames.SecondaryAttack))
+		if (
+			Input.IsActionPressed(
+				AttackActionString ?? InputMapNames.PrimaryAttack
+			)
+		)
 			Attack();
 	}
 

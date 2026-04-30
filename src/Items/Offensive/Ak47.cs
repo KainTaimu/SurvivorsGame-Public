@@ -5,6 +5,12 @@ namespace Game.Items.Offensive;
 
 public partial class Ak47 : Firearm
 {
+	public override void _Ready()
+	{
+		base._Ready();
+		OnAttack += ApplyCameraRecoil;
+	}
+
 	public override void _Process(double delta)
 	{
 		_fireCooldown -= delta;
@@ -13,7 +19,11 @@ public partial class Ak47 : Firearm
 			Reload();
 			return;
 		}
-		if (!Input.IsActionPressed(InputMapNames.PrimaryAttack))
+		if (
+			!Input.IsActionPressed(
+				AttackActionString ?? InputMapNames.PrimaryAttack
+			)
+		)
 			return;
 
 		Attack();
