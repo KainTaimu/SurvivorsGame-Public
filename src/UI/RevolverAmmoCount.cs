@@ -29,12 +29,14 @@ public partial class RevolverAmmoCount : CanvasLayer
 	public override void _Ready()
 	{
 		base._Ready();
+
+		// Properties may not be properly set by this point.
+		// Wait till next frame
 		Callable
 			.From(() =>
 			{
 				for (var i = 0; i < MagazineCapacity; i++)
 				{
-					Logger.LogDebug(i, MagazineCapacity);
 					var sprite = _cartidgeSprites[i];
 					sprite.Show();
 				}
