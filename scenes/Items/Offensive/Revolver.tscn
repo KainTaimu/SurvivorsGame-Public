@@ -6,6 +6,10 @@
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="2_wc6to"]
 [ext_resource type="Script" uid="uid://wf7jhuhepxtp" path="res://src/UI/RevolverAmmoCount.cs" id="2_wjj7r"]
 [ext_resource type="Script" uid="uid://os8ycjo6m7r0" path="res://src/Items/Offensive/BaseOffensiveStats.cs" id="3_o3lg4"]
+[ext_resource type="AudioStream" uid="uid://dspbe1b535vno" path="res://assets/SFX/revolver_cocking.mp3" id="6_0u5yb"]
+[ext_resource type="AudioStream" uid="uid://byaqp87dpfq3j" path="res://assets/SFX/revolver_gunshot.mp3" id="6_fgf34"]
+[ext_resource type="Texture2D" uid="uid://bywdcxqghufl4" path="res://assets/UI/revolver_fired.tres" id="8_y3hip"]
+[ext_resource type="Texture2D" uid="uid://xssw45w6smmp" path="res://assets/UI/revolver_unfired.tres" id="9_n3sky"]
 
 [sub_resource type="Resource" id="Resource_whe3a"]
 script = ExtResource("2_wc6to")
@@ -34,28 +38,33 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://os8ycjo6m7r0"
 
-[sub_resource type="Gradient" id="Gradient_o3lg4"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0.22469275, 0.31523913, 0.3387243, 0.37560737, 0.60365856, 0.67164874)
-colors = PackedColorArray(0.6313726, 0.6156863, 0.5803922, 1, 0.47, 0.45872, 0.43240002, 1, 0.8117647, 0.45490196, 0.09803922, 1, 0.80784315, 0.5372549, 0.27450982, 1, 0.81, 0.4536, 0.097200006, 1, 0, 0, 0, 0)
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0u5yb"]
+playback_mode = 1
+streams_count = 1
+stream_0/stream = ExtResource("6_fgf34")
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_whe3a"]
-gradient = SubResource("Gradient_o3lg4")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-
-[node name="Revolver" type="Node" unique_id=1644478588 node_paths=PackedStringArray("_ammoCount")]
+[node name="Revolver" type="Node" unique_id=1644478588 node_paths=PackedStringArray("_ammoCount", "CockAudioPlayer", "ShootAudioPlayer")]
 script = ExtResource("1_0wf3b")
 _ammoCount = NodePath("CanvasLayer")
+CockAudioPlayer = NodePath("AudioStreamPlayer2")
 _projectileScene = ExtResource("2_o3lg4")
+ShootAudioPlayer = NodePath("AudioStreamPlayer")
 Properties = SubResource("Resource_whe3a")
 Stats = SubResource("Resource_o3lg4")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1938930498 node_paths=PackedStringArray("_revolver", "_revolverCylinderSprite", "_cartidges")]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1706054987]
+stream = SubResource("AudioStreamRandomizer_0u5yb")
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="." unique_id=1261930206]
+stream = ExtResource("6_0u5yb")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1938930498 node_paths=PackedStringArray("_revolver", "_revolverCylinderSprite", "_cartidgeSprites")]
 script = ExtResource("2_wjj7r")
 _revolver = NodePath("..")
 _revolverCylinderSprite = NodePath("RevolverCylinder")
-_cartidges = [NodePath("RevolverCylinder/Cartridge1"), NodePath("RevolverCylinder/Cartridge2"), NodePath("RevolverCylinder/Cartridge3"), NodePath("RevolverCylinder/Cartridge4"), NodePath("RevolverCylinder/Cartridge5"), NodePath("RevolverCylinder/Cartridge6")]
+_cartidgeSprites = [NodePath("RevolverCylinder/Cartridge1"), NodePath("RevolverCylinder/Cartridge2"), NodePath("RevolverCylinder/Cartridge3"), NodePath("RevolverCylinder/Cartridge4"), NodePath("RevolverCylinder/Cartridge5"), NodePath("RevolverCylinder/Cartridge6")]
+_firedCartridge = ExtResource("8_y3hip")
+_unfiredCartridge = ExtResource("9_n3sky")
 
 [node name="RevolverCylinder" type="Sprite2D" parent="CanvasLayer" unique_id=1441007593]
 position = Vector2(1824, 984)
@@ -65,29 +74,29 @@ texture = ExtResource("2_0ntdy")
 [node name="Cartridge1" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1500318896]
 position = Vector2(0, -291.6665)
 scale = Vector2(4.1917686, 4.1917686)
-texture = SubResource("GradientTexture2D_whe3a")
+texture = ExtResource("9_n3sky")
 
 [node name="Cartridge2" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1599935953]
 position = Vector2(250, -145.83301)
 scale = Vector2(4.1917686, 4.1917686)
-texture = SubResource("GradientTexture2D_whe3a")
+texture = ExtResource("9_n3sky")
 
 [node name="Cartridge3" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1242576479]
 position = Vector2(250, 145.83398)
 scale = Vector2(4.1917686, 4.1917686)
-texture = SubResource("GradientTexture2D_whe3a")
+texture = ExtResource("9_n3sky")
 
 [node name="Cartridge4" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1080329020]
 position = Vector2(0, 291.66748)
 scale = Vector2(4.1917686, 4.1917686)
-texture = SubResource("GradientTexture2D_whe3a")
+texture = ExtResource("9_n3sky")
 
 [node name="Cartridge5" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=2102841778]
 position = Vector2(-250, 145.83398)
 scale = Vector2(4.1917686, 4.1917686)
-texture = SubResource("GradientTexture2D_whe3a")
+texture = ExtResource("9_n3sky")
 
 [node name="Cartridge6" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1716022962]
 position = Vector2(-250, -145.83301)
 scale = Vector2(4.1917686, 4.1917686)
-texture = SubResource("GradientTexture2D_whe3a")
+texture = ExtResource("9_n3sky")

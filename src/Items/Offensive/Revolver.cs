@@ -9,12 +9,20 @@ public partial class Revolver : Firearm
 	[Export]
 	private RevolverAmmoCount _ammoCount = null!;
 
+	[Export]
+	public AudioStreamPlayer? CockAudioPlayer;
+
 	public override void _Ready()
 	{
 		base._Ready();
 		OnAttack += () =>
 		{
-			_ammoCount.RotateCylinder();
+			GetTree().CreateTimer(_fireCooldown).Timeout += () =>
+			{
+				_ammoCount.RotateCylinder();
+				if (MagazineCount != 0)
+					CockAudioPlayer?.Play();
+			};
 			ApplyCameraRecoil();
 		};
 	}

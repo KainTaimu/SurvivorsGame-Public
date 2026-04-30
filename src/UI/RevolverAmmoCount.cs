@@ -12,7 +12,13 @@ public partial class RevolverAmmoCount : CanvasLayer
 	private Sprite2D _revolverCylinderSprite = null!;
 
 	[Export]
-	private Array<Sprite2D> _cartidges = [];
+	private Array<Sprite2D> _cartidgeSprites = [];
+
+	[Export]
+	private Texture2D _firedCartridge = null!;
+
+	[Export]
+	private Texture2D _unfiredCartridge = null!;
 
 	private float _cylinderRotation = 60f * (Mathf.Pi / 180);
 
@@ -21,7 +27,7 @@ public partial class RevolverAmmoCount : CanvasLayer
 		base._Ready();
 		_revolver.OnReloadStart += () =>
 		{
-			foreach (var sprite in _cartidges)
+			foreach (var sprite in _cartidgeSprites)
 				sprite.Hide();
 			var tween = CreateTween()
 				.SetEase(Tween.EaseType.Out)
@@ -30,14 +36,17 @@ public partial class RevolverAmmoCount : CanvasLayer
 			tween.TweenProperty(
 				_revolverCylinderSprite,
 				"rotation",
-				_revolverCylinderSprite.Rotation + _cylinderRotation * 6,
+				_revolverCylinderSprite.Rotation - _cylinderRotation * 6,
 				_revolver.Stats.Additional["ReloadTimeMs"].AsSingle() / 1000 / 2
 			);
 		};
 		_revolver.OnReloadEnd += () =>
 		{
-			foreach (var sprite in _cartidges)
+			foreach (var sprite in _cartidgeSprites)
+			{
 				sprite.Show();
+				sprite.Texture = _unfiredCartridge;
+			}
 			var tween = CreateTween()
 				.SetEase(Tween.EaseType.Out)
 				.SetTrans(Tween.TransitionType.Spring);
@@ -70,6 +79,9 @@ public partial class RevolverAmmoCount : CanvasLayer
 				origPos,
 				1 / 8f
 			);
+			_cartidgeSprites[
+				_revolver.MagazineCapacity - _revolver.MagazineCount - 1
+			].Texture = _firedCartridge;
 		};
 	}
 
@@ -86,13 +98,6 @@ public partial class RevolverAmmoCount : CanvasLayer
 
 	public void RotateCylinder()
 	{
-		foreach (var sprite in _cartidges)
-		{
-			sprite.Hide();
-		}
-		for (var i = 0; i < _revolver.MagazineCount; i++)
-			_cartidges[5 - i % 6].Show();
-
 		var nextRotation = _revolverCylinderSprite.Rotation - _cylinderRotation;
 
 		var tween = CreateTween();

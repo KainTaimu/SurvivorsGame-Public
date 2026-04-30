@@ -22,10 +22,10 @@ public abstract partial class Firearm
 	private PackedScene _projectileScene = null!;
 
 	[Export]
-	private RandomAudioStreamPlayer? _shootAudioPlayer;
+	public AudioStreamPlayer? ShootAudioPlayer;
 
 	[Export]
-	private AudioStreamPlayer? _reloadAudioPlayer;
+	public AudioStreamPlayer? ReloadAudioPlayer;
 
 	public int MagazineCapacity
 	{
@@ -100,8 +100,7 @@ public abstract partial class Firearm
 		if (!ReadyToShoot)
 			return;
 
-		_shootAudioPlayer?.PlayRandom();
-		_shootAudioPlayer?.PitchScale = 0.9f + (GD.RandRange(-1, 1) * 0.1f);
+		ShootAudioPlayer?.Play();
 
 		_fireCooldown = Stats.AttackSpeed;
 		_magazineCount--;
@@ -151,7 +150,7 @@ public abstract partial class Firearm
 			IsReloading = false;
 		};
 		IsReloading = true;
-		_reloadAudioPlayer?.Play();
+		ReloadAudioPlayer?.Play();
 	}
 
 	protected override void HandleHitECS(int id)
