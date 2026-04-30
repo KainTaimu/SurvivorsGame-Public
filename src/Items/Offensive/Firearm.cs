@@ -132,7 +132,7 @@ public abstract partial class Firearm
 		projectile.SetRotation(rotation);
 		projectile.ProjectileSpeed = Stats.ProjectileSpeed;
 		projectile.PierceLimit = Stats.PierceLimit;
-		AddChild(projectile);
+		GetTree().Root.AddChild(projectile);
 
 		ApplyCursorRecoil();
 		EmitSignalOnAttack();

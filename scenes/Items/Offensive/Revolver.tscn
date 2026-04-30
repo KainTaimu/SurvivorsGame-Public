@@ -54,9 +54,11 @@ Properties = SubResource("Resource_whe3a")
 Stats = SubResource("Resource_o3lg4")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1706054987]
+process_mode = 3
 stream = SubResource("AudioStreamRandomizer_0u5yb")
 
 [node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="." unique_id=1261930206]
+process_mode = 3
 stream = ExtResource("6_0u5yb")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1938930498 node_paths=PackedStringArray("_revolver", "_revolverCylinderSprite", "_cartidgeSprites")]

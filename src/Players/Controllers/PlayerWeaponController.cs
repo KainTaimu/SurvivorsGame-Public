@@ -45,6 +45,21 @@ public partial class PlayerWeaponController : Node
 
 	public override void _Ready()
 	{
+		ChildOrderChanged += InitializeWeaponNodes;
+		InitializeWeaponNodes();
+	}
+
+	private void InitializeWeaponNodes()
+	{
+		if (PrimaryAttack is not null)
+			DisableManualOffensive(PrimaryAttack);
+		if (SecondaryAttack is not null)
+			DisableManualOffensive(SecondaryAttack);
+		PrimaryAttack = null;
+		SecondaryAttack = null;
+
+		AutomaticOffensives.Clear();
+		ManualOffensives.Clear();
 		foreach (var node in GetChildren())
 		{
 			if (node is not BaseOffensive offensive)
@@ -56,12 +71,14 @@ public partial class PlayerWeaponController : Node
 				{
 					manualAttack.AttackActionString =
 						InputMapNames.PrimaryAttack;
+					offensive.ProcessMode = ProcessModeEnum.Inherit;
 					PrimaryAttack = manualAttack;
 				}
 				else if (SecondaryAttack is null)
 				{
 					manualAttack.AttackActionString =
 						InputMapNames.SecondaryAttack;
+					offensive.ProcessMode = ProcessModeEnum.Inherit;
 					SecondaryAttack = manualAttack;
 				}
 				else
@@ -173,6 +190,7 @@ public partial class PlayerWeaponController : Node
 	private void DisableManualOffensive(IManualAttack manual)
 	{
 		var node = (manual as Node)!;
+		manual.AttackActionString = null;
 		node.ProcessMode = ProcessModeEnum.Disabled;
 		if (node is Node2D node2D)
 			node2D.Hide();
