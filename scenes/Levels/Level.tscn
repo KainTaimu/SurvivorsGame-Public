@@ -27,9 +27,9 @@
 script = ExtResource("12_x7tv3")
 EnemyBlueprints = Array[Object]([ExtResource("8_1c6ul"), ExtResource("10_d4hlt"), ExtResource("9_occlw")])
 Duration = 9999.0
-MaxMobs = 2
 SpawnMinTime = 0.01
 SpawnMaxTime = 0.01
+SpawnBatchMin = 2000
 
 [node name="Level" type="Node2D" unique_id=2141389114]
 z_index = -999

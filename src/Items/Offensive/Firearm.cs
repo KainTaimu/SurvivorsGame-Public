@@ -1,0 +1,217 @@
+using System.Collections.Generic;
+using Game.Core.ECS;
+using Game.Items.Projectiles;
+using Game.Levels.Controllers;
+using Game.Players;
+using Game.SFX;
+using Game.UI;
+using Game.Utils;
+
+namespace Game.Items.Offensive;
+
+public abstract partial class Firearm : BaseOffensive, IReloadable
+{
+	[Signal]
+	public delegate void OnReloadStartEventHandler();
+
+	[Signal]
+	public delegate void OnReloadEndEventHandler();
+
+	[Export]
+	private PackedScene _projectileScene = null!;
+
+	[Export]
+	private RandomAudioStreamPlayer? _shootAudioPlayer;
+
+	[Export]
+	private AudioStreamPlayer? _reloadAudioPlayer;
+
+	public int MagazineCapacity
+	{
+		get => _magazineCapacity;
+	}
+
+	public int MagazineCount
+	{
+		get => _magazineCount;
+	}
+
+	public bool IsReloading
+	{
+		get;
+		set
+		{
+			if (value)
+				EmitSignalOnReloadStart();
+			else
+				EmitSignalOnReloadEnd();
+			field = value;
+		}
+	}
+
+	public bool ReadyToShoot
+	{
+		get
+		{
+			if (FireCooldown > 0)
+				return false;
+			if (IsReloading)
+				return false;
+			if (_magazineCount <= 0)
+				return false;
+			return true;
+		}
+	}
+
+	public double FireCooldown;
+
+	private int _reloadTimeMs = 1500;
+	private float _bloomCoefficientDeg = 0.03f;
+	private int _magazineCapacity = 30;
+	private int _magazineCount;
+
+	private float _horizontalRecoilMin = 1f;
+	private float _horizontalBaseRecoil = 3f;
+	private float _horizontalRecoilRandom = 1f;
+	private float _verticalRecoilMin = 2f;
+	private float _verticalBaseRecoil = 3f;
+	private float _verticalRecoilRandom = 0.1f;
+	private float _recoilScale = 1f;
+
+	protected Crosshair? Crosshair => Crosshair.Instance;
+
+	public override void _Ready()
+	{
+		UpdateAdditionalFields();
+		OnStatsChanged += UpdateAdditionalFields;
+	}
+
+	public override void Attack()
+	{
+		if (!ReadyToShoot)
+			return;
+
+		_shootAudioPlayer?.PlayRandom();
+		_shootAudioPlayer?.PitchScale = 0.9f + (GD.RandRange(-1, 1) * 0.1f);
+
+		FireCooldown = Stats.AttackSpeed;
+		_magazineCount--;
+
+		var playerVector = Player.GetCanvasTransform() * Player.Position;
+
+		Vector2 mouseVector;
+		if (Crosshair is not null)
+		{
+			mouseVector =
+				Crosshair.CrosshairSprite.GetCanvasTransform()
+				* Crosshair.CrosshairSprite.GlobalPosition;
+		}
+		else
+		{
+			mouseVector = Player.GetGlobalMousePosition();
+		}
+		var rotation = playerVector.AngleToPoint(mouseVector);
+
+		var bloomRad = _bloomCoefficientDeg * (Math.PI / 180);
+		var bloom = (float)GD.RandRange(-bloomRad / 2, bloomRad / 2);
+
+		rotation += bloom;
+
+		var projectile = _projectileScene.Instantiate<ProjectileBullet>();
+		projectile.Origin = this;
+		projectile.SetScale(Vector2.One * Stats.ProjectileScaleMultiplier);
+		projectile.SetPosition(Player.Position);
+		projectile.SetRotation(rotation);
+		projectile.ProjectileSpeed = Stats.ProjectileSpeed;
+		projectile.PierceLimit = Stats.PierceLimit;
+		AddChild(projectile);
+
+		ApplyCursorRecoil();
+		EmitSignalOnAttack();
+	}
+
+	public void Reload()
+	{
+		if (IsReloading)
+			return;
+		if (MagazineCount == MagazineCapacity)
+			return;
+		GetTree().CreateTimer(_reloadTimeMs / 1000f).Timeout += () =>
+		{
+			_magazineCount = _magazineCapacity;
+			IsReloading = false;
+		};
+		IsReloading = true;
+		_reloadAudioPlayer?.Play();
+	}
+
+	protected override void HandleHitECS(int id)
+	{
+		if (!ComponentStore.GetComponent<HealthComponent>(id, out var health))
+			return;
+
+		var hit = new HitFeedbackComponent() { HitTime = 0.5f };
+		if (!ComponentStore.GetComponent<HitFeedbackComponent>(id, out var _))
+			ComponentStore.RegisterComponent(id, hit);
+		else
+			ComponentStore.SetComponent(id, hit);
+
+		var crit = CalculateCrit();
+		var newHealth = health.Health - Stats.Damage - crit;
+
+		ComponentStore.SetComponent(id, health with { Health = newHealth });
+	}
+
+	private void ApplyCursorRecoil()
+	{
+		if (Crosshair is null)
+			return;
+
+		var recoilX =
+			_horizontalBaseRecoil
+			+ Math.Abs((float)GD.Randfn(0, _horizontalRecoilRandom));
+		recoilX = Math.Clamp(recoilX, _horizontalRecoilMin, float.MaxValue);
+
+		var recoilY =
+			_verticalBaseRecoil
+			+ Math.Abs((float)GD.Randfn(0, _verticalRecoilRandom));
+		recoilY = Math.Clamp(recoilY, _verticalRecoilMin, float.MaxValue);
+
+		var recoil = new Vector2(recoilX, -recoilY) * _recoilScale;
+		Crosshair.Recoil.ApplyImpulse(recoil);
+	}
+
+	private void UpdateAdditionalFields()
+	{
+		FireCooldown = Stats.AttackSpeed;
+
+		_magazineCapacity = Stats.Additional["MagazineCapacity"].As<int>();
+		_magazineCount = _magazineCapacity;
+		_reloadTimeMs = Stats.Additional["ReloadTimeMs"].As<int>();
+		_bloomCoefficientDeg = Stats
+			.Additional["BloomCoefficientDeg"]
+			.As<float>();
+
+		_horizontalRecoilMin = Stats
+			.Additional["HorizontalRecoilMin"]
+			.AsSingle();
+		_horizontalBaseRecoil = Stats
+			.Additional["HorizontalBaseRecoil"]
+			.As<float>();
+		_horizontalRecoilRandom = Stats
+			.Additional["HorizontalRecoilRandom"]
+			.As<float>();
+		_verticalRecoilMin = Stats.Additional["VerticalRecoilMin"].AsSingle();
+		_verticalBaseRecoil = Stats
+			.Additional["VerticalBaseRecoil"]
+			.As<float>();
+		_verticalRecoilRandom = Stats
+			.Additional["VerticalRecoilRandom"]
+			.As<float>();
+		_recoilScale = Stats.Additional["RecoilScale"].AsSingle();
+		Logger.LogDebug(
+			"Updated Stats",
+			GetClassProperties.GetClassPropertiesString(Stats)
+		);
+	}
+}

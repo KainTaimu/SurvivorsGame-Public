@@ -6,9 +6,8 @@
 [ext_resource type="Script" uid="uid://cn5rlmdgj2uue" path="res://src/Players/Controllers/PlayerMovementController.cs" id="4_kfojw"]
 [ext_resource type="Texture2D" uid="uid://coljm8hobe4v6" path="res://assets/Players/shondo.png" id="5_pqexr"]
 [ext_resource type="Script" uid="uid://b344j1ahaiaqv" path="res://src/Players/Controllers/PlayerWeaponController.cs" id="5_yecw2"]
+[ext_resource type="PackedScene" uid="uid://twvhgblbtovy" path="res://scenes/Items/Offensive/Revolver.tscn" id="6_eai52"]
 [ext_resource type="Script" uid="uid://b8nlijamaetyr" path="res://src/Players/Controllers/PlayerCameraController.cs" id="6_kfojw"]
-[ext_resource type="PackedScene" uid="uid://b6pcia1iql0ct" path="res://scenes/Items/Offensive/Ak47.tscn" id="6_yecw2"]
-[ext_resource type="PackedScene" uid="uid://c18mvu8kqrmng" path="res://scenes/Items/Offensive/Airstrike.tscn" id="7_v5xr6"]
 [ext_resource type="Shader" uid="uid://bgl0yr4nfmpqx" path="res://src/Shaders/flash.gdshader" id="8_wuwji"]
 
 [sub_resource type="Resource" id="Resource_pqexr"]
@@ -114,9 +113,7 @@ _sprite = NodePath("../AnimatedSprite2D")
 [node name="PlayerWeaponController" type="Node" parent="." unique_id=752109662]
 script = ExtResource("5_yecw2")
 
-[node name="Ak47" parent="PlayerWeaponController" unique_id=915008798 instance=ExtResource("6_yecw2")]
-
-[node name="Airstrike" parent="PlayerWeaponController" unique_id=94679970 instance=ExtResource("7_v5xr6")]
+[node name="Revolver" parent="PlayerWeaponController" unique_id=1857571471 instance=ExtResource("6_eai52")]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=881638213]
 material = SubResource("ShaderMaterial_5pqvm")

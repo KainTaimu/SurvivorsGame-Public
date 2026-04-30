@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://twvhgblbtovy"]
+
+[ext_resource type="Script" uid="uid://ccxu0f6wcpxw8" path="res://src/Items/Offensive/Revolver.cs" id="1_0wf3b"]
+[ext_resource type="Texture2D" uid="uid://bh2t3jjtgjys7" path="res://assets/UI/revolver_cylinder.png" id="2_0ntdy"]
+[ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_o3lg4"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="2_wc6to"]
+[ext_resource type="Script" uid="uid://wf7jhuhepxtp" path="res://src/UI/RevolverAmmoCount.cs" id="2_wjj7r"]
+[ext_resource type="Script" uid="uid://os8ycjo6m7r0" path="res://src/Items/Offensive/BaseOffensiveStats.cs" id="3_o3lg4"]
+
+[sub_resource type="Resource" id="Resource_whe3a"]
+script = ExtResource("2_wc6to")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
+[sub_resource type="Resource" id="Resource_o3lg4"]
+script = ExtResource("3_o3lg4")
+Damage = 10
+ProjectileSpeed = 2880
+ProjectileScaleMultiplier = 1.5
+AttackSpeed = 1.0
+PierceLimit = 5
+Additional = Dictionary[String, Variant]({
+"BloomCoefficientDeg": 3.0,
+"HorizontalBaseRecoil": 50.0,
+"HorizontalRecoilMin": 50.0,
+"HorizontalRecoilRandom": 20.0,
+"Knockback": 80.0,
+"MagazineCapacity": 6,
+"RecoilScale": 1.2,
+"ReloadTimeMs": 1800,
+"VerticalBaseRecoil": 600.0,
+"VerticalRecoilMin": 600.0,
+"VerticalRecoilRandom": 200.0
+})
+metadata/_custom_type_script = "uid://os8ycjo6m7r0"
+
+[sub_resource type="Gradient" id="Gradient_o3lg4"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.22469275, 0.31523913, 0.3387243, 0.37560737, 0.60365856, 0.67164874)
+colors = PackedColorArray(0.6313726, 0.6156863, 0.5803922, 1, 0.47, 0.45872, 0.43240002, 1, 0.8117647, 0.45490196, 0.09803922, 1, 0.80784315, 0.5372549, 0.27450982, 1, 0.81, 0.4536, 0.097200006, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_whe3a"]
+gradient = SubResource("Gradient_o3lg4")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Revolver" type="Node" unique_id=1857571471 node_paths=PackedStringArray("_ammoCount")]
+script = ExtResource("1_0wf3b")
+_ammoCount = NodePath("CanvasLayer")
+_projectileScene = ExtResource("2_o3lg4")
+Properties = SubResource("Resource_whe3a")
+Stats = SubResource("Resource_o3lg4")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1938930498 node_paths=PackedStringArray("_revolver", "_revolverCylinderSprite", "_cartidges")]
+script = ExtResource("2_wjj7r")
+_revolver = NodePath("..")
+_revolverCylinderSprite = NodePath("RevolverCylinder")
+_cartidges = [NodePath("RevolverCylinder/Cartridge1"), NodePath("RevolverCylinder/Cartridge2"), NodePath("RevolverCylinder/Cartridge3"), NodePath("RevolverCylinder/Cartridge4"), NodePath("RevolverCylinder/Cartridge5"), NodePath("RevolverCylinder/Cartridge6")]
+
+[node name="RevolverCylinder" type="Sprite2D" parent="CanvasLayer" unique_id=1441007593]
+position = Vector2(1824, 984)
+scale = Vector2(0.192, 0.192)
+texture = ExtResource("2_0ntdy")
+
+[node name="Cartridge1" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1500318896]
+position = Vector2(0, -291.6665)
+scale = Vector2(4.1917686, 4.1917686)
+texture = SubResource("GradientTexture2D_whe3a")
+
+[node name="Cartridge2" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1599935953]
+position = Vector2(250, -145.83301)
+scale = Vector2(4.1917686, 4.1917686)
+texture = SubResource("GradientTexture2D_whe3a")
+
+[node name="Cartridge3" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1242576479]
+position = Vector2(250, 145.83398)
+scale = Vector2(4.1917686, 4.1917686)
+texture = SubResource("GradientTexture2D_whe3a")
+
+[node name="Cartridge4" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1080329020]
+position = Vector2(0, 291.66748)
+scale = Vector2(4.1917686, 4.1917686)
+texture = SubResource("GradientTexture2D_whe3a")
+
+[node name="Cartridge5" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=2102841778]
+position = Vector2(-250, 145.83398)
+scale = Vector2(4.1917686, 4.1917686)
+texture = SubResource("GradientTexture2D_whe3a")
+
+[node name="Cartridge6" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1716022962]
+position = Vector2(-250, -145.83301)
+scale = Vector2(4.1917686, 4.1917686)
+texture = SubResource("GradientTexture2D_whe3a")

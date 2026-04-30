@@ -1,4 +1,5 @@
-using Game.Utils;
+using Game.Core.ECS;
+using Game.Levels.Controllers;
 using Godot.Collections;
 
 namespace Game.Items.Offensive;
@@ -10,6 +11,9 @@ public abstract partial class BaseOffensive : BaseItem
 
 	[Signal]
 	public delegate void OnStatUpgradesChangedEventHandler();
+
+	[Signal]
+	public delegate void OnAttackEventHandler();
 
 	[Export]
 	public BaseItemProperties Properties = null!;
@@ -36,6 +40,10 @@ public abstract partial class BaseOffensive : BaseItem
 
 	[Export]
 	public Array<BaseOffensiveStats> Upgrades = [];
+
+	protected EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
+	protected EntityComponentStore ComponentStore =>
+		EntityComponentStore.Instance;
 
 	public abstract void Attack();
 

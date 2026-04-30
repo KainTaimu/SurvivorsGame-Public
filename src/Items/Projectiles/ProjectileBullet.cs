@@ -26,11 +26,9 @@ public partial class ProjectileBullet : BaseProjectile
 	public override void _Ready()
 	{
 		var tweenSpeed = CreateTween()
-			.BindNode(this)
 			.SetTrans(Tween.TransitionType.Expo)
 			.SetEase(Tween.EaseType.In);
 		var tweenScale = CreateTween()
-			.BindNode(this)
 			.SetTrans(Tween.TransitionType.Linear)
 			.SetEase(Tween.EaseType.In);
 		var originalSpeed = ProjectileSpeed;
@@ -42,7 +40,9 @@ public partial class ProjectileBullet : BaseProjectile
 			originalSpeed,
 			0.13f
 		);
-		tweenScale.TweenProperty(this, "scale", new Vector2(8, 1), 0.05);
+
+		var finalScale = Scale * new Vector2(8, 1);
+		tweenScale.TweenProperty(this, "scale", finalScale, 0.05);
 	}
 
 	public override void _Process(double delta)
