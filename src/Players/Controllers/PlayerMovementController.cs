@@ -1,3 +1,5 @@
+using Game.UI;
+
 namespace Game.Players.Controllers;
 
 public partial class PlayerMovementController : Node
@@ -10,30 +12,19 @@ public partial class PlayerMovementController : Node
 	[Export]
 	private AnimatedSprite2D _sprite = null!;
 
-	private Viewport? _viewport;
+	private Viewport? Viewport => GetViewport();
+	private Crosshair? Crosshair => Crosshair.Instance;
 
 	public override void _Ready()
 	{
-		var viewport = GetViewport();
-		if (viewport is null)
-		{
-			Logger.LogError("Could not get viewport.");
-			return;
-		}
-		_viewport = viewport;
-		_viewport.SizeChanged += () => _viewport = GetViewport();
+		Callable
+			.From(() => Crosshair?.OnCrosshairMoved += FlipSprite)
+			.CallDeferred();
 	}
 
 	public override void _Process(double delta)
 	{
 		PlayerMovement(delta);
-	}
-
-	public override void _UnhandledInput(InputEvent @event)
-	{
-		if (@event is not InputEventMouseMotion motion)
-			return;
-		FlipSprite(motion.Position);
 	}
 
 	private void PlayerMovement(double delta)
@@ -78,12 +69,13 @@ public partial class PlayerMovementController : Node
 		_player.SetPosition(newPos);
 	}
 
-	private void FlipSprite(Vector2 mousePos)
+	private void FlipSprite()
 	{
-		if (_viewport is null)
+		if (Crosshair is null || Viewport is null)
 			return;
 
-		var mouse = mousePos / _viewport.GetVisibleRect().Size.X;
+		var mouse =
+			Crosshair.CanvasSpacePosition / Viewport.GetVisibleRect().Size;
 		_sprite.FlipH = mouse.X < 0.5;
 	}
 }

@@ -63,6 +63,10 @@ folder_colors={
 "res://roslyn-source-generated:/": "gray"
 }
 
+[gui]
+
+theme/custom_font="uid://dble3270knfo4"
+
 [input]
 
 move_up={

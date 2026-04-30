@@ -161,6 +161,10 @@ public partial class EnemyWave : Resource, IEnemyWave
 			id,
 			new MoveSpeedComponent(bp.Stats.MoveSpeed)
 		);
+		_entities.RegisterComponent(
+			id,
+			new EnemyContactDamageComponent(stats.DamageOnContact)
+		);
 
 		SpawnedIds.Add(id);
 	}

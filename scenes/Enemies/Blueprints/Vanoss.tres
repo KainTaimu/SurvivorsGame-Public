@@ -1,17 +1,16 @@
 [gd_resource type="Resource" script_class="EnemyBlueprint" format=3 uid="uid://6rycr3xfb4ax"]
 
-[ext_resource type="Script" uid="uid://rykv3f6ereih" path="res://src/Players/CharacterStats.cs" id="1_hs4vj"]
+[ext_resource type="Script" uid="uid://y77qtp32wo00" path="res://src/Enemies/EnemyStats.cs" id="1_hs4vj"]
 [ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="2_a1bkk"]
 
-[sub_resource type="Resource" id="Resource_nqi3b"]
+[sub_resource type="Resource" id="Resource_a1bkk"]
 script = ExtResource("1_hs4vj")
-MaxHealth = 10
-MoveSpeed = 200.0
-metadata/_custom_type_script = "uid://rykv3f6ereih"
+DamageOnContact = 6
+metadata/_custom_type_script = "uid://y77qtp32wo00"
 
 [resource]
 script = ExtResource("2_a1bkk")
 Name = "vanoss"
-Type = 2
-Stats = SubResource("Resource_nqi3b")
+Type = 1
+Stats = SubResource("Resource_a1bkk")
 metadata/_custom_type_script = "uid://fti2ky20j85c"

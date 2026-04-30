@@ -1,3 +1,3 @@
 namespace Game.Core.ECS;
 
-public readonly record struct EntityTypeComponent(EntityType EntityType) { }
+public readonly record struct EntityTypeComponent(EnemyType EntityType);

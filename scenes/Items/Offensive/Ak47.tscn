@@ -29,10 +29,9 @@ Additional = Dictionary[String, Variant]({
 "VerticalRecoilRandom": 1.0
 })
 
-[node name="Ak47" type="Node" unique_id=915008798 node_paths=PackedStringArray("_streamPlayer")]
+[node name="Ak47" type="Node" unique_id=915008798]
 script = ExtResource("1_gumc8")
 _projectileScene = ExtResource("2_rp6n0")
-_streamPlayer = NodePath("AudioStreamPlayer")
 Properties = SubResource("Resource_eai52")
 Stats = SubResource("Resource_oypsu")
 

@@ -192,6 +192,7 @@ public partial class CharacterStats : Resource
 	}
 
 	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
+	/// Flat defense
 	public required int Defense
 	{
 		get => _defense;
@@ -466,5 +467,25 @@ public partial class CharacterStats : Resource
 				_xpMultiplier
 			);
 		}
+	}
+
+	public int TotalMaxHealth => Mathf.CeilToInt(MaxHealth * HealthMultiplier);
+	public float TotalMoveSpeed => MoveSpeed * MoveSpeedMultiplier;
+
+	public void Damage(int damage)
+	{
+		var damageAfterDefense = damage - Defense;
+		var scaledDamage = damageAfterDefense * IncomingDamageMultiplier;
+		var clampedDamage = Math.Clamp(
+			scaledDamage,
+			Health * 0.05,
+			float.PositiveInfinity
+		);
+		var totalDamage = Mathf.CeilToInt(clampedDamage);
+
+		Logger.LogDebug(
+			$"Player damaged {totalDamage}. Health: {Health - totalDamage}"
+		);
+		Health -= totalDamage;
 	}
 }

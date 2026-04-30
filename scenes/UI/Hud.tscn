@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://do6p1pg4x0vkf"]
+
+[ext_resource type="Script" uid="uid://bgqngsa7la7p1" path="res://src/UI/Hud.cs" id="1_47idg"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_47idg"]
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_bplp6"]
+font_size = 24
+
+[node name="HUD" type="CanvasLayer" unique_id=1626912566 node_paths=PackedStringArray("PlayerHealthLabel", "EnemyCountLabel")]
+script = ExtResource("1_47idg")
+PlayerHealthLabel = NodePath("VBoxContainer/Label")
+EnemyCountLabel = NodePath("VBoxContainer/Label2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1180246057]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=37998141]
+layout_mode = 2
+text = "Health"
+label_settings = SubResource("LabelSettings_47idg")
+
+[node name="Label2" type="Label" parent="VBoxContainer" unique_id=432544888]
+layout_mode = 2
+text = "Enemies"
+label_settings = SubResource("LabelSettings_bplp6")

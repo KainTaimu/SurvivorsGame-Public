@@ -1,5 +1,5 @@
 using Game.Core;
-using Game.Players;
+using Game.Enemies;
 
 namespace Game.Levels.Controllers;
 
@@ -10,8 +10,8 @@ public partial class EnemyBlueprint : Resource
 	public string Name { get; private set; } = null!;
 
 	[Export]
-	public EntityType Type { get; private set; }
+	public EnemyType Type { get; private set; }
 
 	[Export]
-	public CharacterStats Stats { get; private set; } = null!;
+	public EnemyStats Stats { get; private set; } = null!;
 }

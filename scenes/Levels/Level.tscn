@@ -15,22 +15,21 @@
 [ext_resource type="Script" uid="uid://bct2mtni7a82f" path="res://src/Levels/Controllers/EnemyMover.cs" id="10_sh7eq"]
 [ext_resource type="Script" uid="uid://citywxiolgxtm" path="res://src/Levels/Controllers/EnemyWaveController.cs" id="11_aredf"]
 [ext_resource type="Script" uid="uid://cv0uegm46tv7j" path="res://src/Levels/Controllers/EnemyDeathManager.cs" id="11_x7tv3"]
-[ext_resource type="Script" uid="uid://dhee6pva3aeeu" path="res://src/UI/Debug/EnemyInfo.cs" id="12_qaj6y"]
 [ext_resource type="Script" uid="uid://cwbl163hsg1db" path="res://src/Levels/Controllers/EnemyWave.cs" id="12_x7tv3"]
 [ext_resource type="Script" uid="uid://dwfbc8oub2v16" path="res://src/Levels/Controllers/EnemyHitFeedbackController.cs" id="13_eh1w1"]
 [ext_resource type="PackedScene" uid="uid://cjx5nc7bql8d0" path="res://scenes/UI/Crosshair.tscn" id="15_aredf"]
 [ext_resource type="PackedScene" uid="uid://bqy6yv5uhrqp0" path="res://scenes/VFX/BloodKillParticles.tscn" id="15_eh1w1"]
 [ext_resource type="Script" uid="uid://djv8orxale1c3" path="res://src/Levels/Controllers/EnemyTargetQuery.cs" id="16_x7tv3"]
 [ext_resource type="Script" uid="uid://bpqjji00j8p6x" path="res://src/Levels/Controllers/PlayerHitController.cs" id="19_aig1n"]
+[ext_resource type="PackedScene" uid="uid://do6p1pg4x0vkf" path="res://scenes/UI/Hud.tscn" id="20_vg5sh"]
 
 [sub_resource type="Resource" id="Resource_x7tv3"]
 script = ExtResource("12_x7tv3")
 EnemyBlueprints = Array[Object]([ExtResource("8_1c6ul"), ExtResource("10_d4hlt"), ExtResource("9_occlw")])
 Duration = 9999.0
+MaxMobs = 2
 SpawnMinTime = 0.01
 SpawnMaxTime = 0.01
-SpawnBatchMin = 1000
-SpawnBatchMax = 1000
 
 [node name="Level" type="Node2D" unique_id=2141389114]
 z_index = -999
@@ -107,31 +106,25 @@ _multiMesh = ExtResource("9_ror81")
 
 [node name="PlayerSystems" type="Node" parent="Systems" unique_id=1262578567]
 
-[node name="PlayerHitController" type="Node" parent="Systems/PlayerSystems" unique_id=1486291681]
+[node name="PlayerHitController" type="Node" parent="Systems/PlayerSystems" unique_id=1486291681 node_paths=PackedStringArray("_targetQuery")]
 script = ExtResource("19_aig1n")
+_targetQuery = NodePath("../../EnemySystems/EnemyTargetQuery")
 
-[node name="HUD" type="Node" parent="." unique_id=1918867052]
+[node name="UI" type="Node" parent="." unique_id=1918867052]
 
-[node name="PauseMenu" parent="HUD" unique_id=1937596238 node_paths=PackedStringArray("_player", "_pauseController") instance=ExtResource("4_pi0ox")]
+[node name="PauseMenu" parent="UI" unique_id=1937596238 node_paths=PackedStringArray("_player", "_pauseController") instance=ExtResource("4_pi0ox")]
 _player = NodePath("../../Player")
 _pauseController = NodePath("../../Systems/PauseController")
 
-[node name="EnemyInfo" type="CanvasLayer" parent="HUD" unique_id=370296864 node_paths=PackedStringArray("_label", "_spawner")]
-script = ExtResource("12_qaj6y")
-_label = NodePath("VBoxContainer/Label")
-_spawner = NodePath("../../Systems/EnemySystems/EnemyWaveController")
+[node name="Crosshair" type="CanvasLayer" parent="UI" unique_id=1911762679]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD/EnemyInfo" unique_id=1020579535]
-offset_right = 66.0
-offset_bottom = 40.0
-
-[node name="Label" type="Label" parent="HUD/EnemyInfo/VBoxContainer" unique_id=2085024501]
-layout_mode = 2
-text = "Enemies"
-
-[node name="Crosshair" type="CanvasLayer" parent="HUD" unique_id=1911762679]
-
-[node name="Crosshair" parent="HUD/Crosshair" unique_id=587001361 node_paths=PackedStringArray("Player", "PauseController") instance=ExtResource("15_aredf")]
+[node name="Crosshair" parent="UI/Crosshair" unique_id=587001361 node_paths=PackedStringArray("Player", "PauseController") instance=ExtResource("15_aredf")]
 Player = NodePath("../../../Player")
 PauseController = NodePath("../../../Systems/PauseController")
 CrosshairSize = 1.5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI" unique_id=395615751]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HUD" parent="UI/VBoxContainer" unique_id=1626912566 instance=ExtResource("20_vg5sh")]

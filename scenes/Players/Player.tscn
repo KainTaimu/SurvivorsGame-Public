@@ -9,9 +9,13 @@
 [ext_resource type="Script" uid="uid://b8nlijamaetyr" path="res://src/Players/Controllers/PlayerCameraController.cs" id="6_kfojw"]
 [ext_resource type="PackedScene" uid="uid://b6pcia1iql0ct" path="res://scenes/Items/Offensive/Ak47.tscn" id="6_yecw2"]
 [ext_resource type="PackedScene" uid="uid://c18mvu8kqrmng" path="res://scenes/Items/Offensive/Airstrike.tscn" id="7_v5xr6"]
+[ext_resource type="Shader" uid="uid://bgl0yr4nfmpqx" path="res://src/Shaders/flash.gdshader" id="8_wuwji"]
 
 [sub_resource type="Resource" id="Resource_pqexr"]
 script = ExtResource("3_cdd6o")
+MaxHealth = 99999
+Defense = 8
+InvincibilityTime = 1.0
 metadata/_custom_type_script = "uid://rykv3f6ereih"
 
 [sub_resource type="Resource" id="Resource_yecw2"]
@@ -19,6 +23,11 @@ script = ExtResource("3_kfojw")
 CharacterName = "PLACEHOLDER"
 CharacterStats = SubResource("Resource_pqexr")
 metadata/_custom_type_script = "uid://ud6xfov0txuh"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5pqvm"]
+shader = ExtResource("8_wuwji")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/flash_state = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kfojw"]
 atlas = ExtResource("5_pqexr")
@@ -110,6 +119,7 @@ script = ExtResource("5_yecw2")
 [node name="Airstrike" parent="PlayerWeaponController" unique_id=94679970 instance=ExtResource("7_v5xr6")]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=881638213]
+material = SubResource("ShaderMaterial_5pqvm")
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_dpv53")
 animation = &"idle"

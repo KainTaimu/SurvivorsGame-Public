@@ -42,8 +42,12 @@ public partial class EnemyWaveController : Node
 	private int _currentWaveIndex;
 	public readonly List<int> SpawnedIds = [];
 
+	public static EnemyWaveController? Instance;
+
 	public override void _Ready()
 	{
+		Instance = this;
+
 		EntityComponentStore.BeforeEntityUnregistered += (_) => Alive--;
 
 		foreach (var wave in Waves)

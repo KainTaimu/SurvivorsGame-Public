@@ -5,6 +5,9 @@ namespace Game.UI;
 
 public partial class Crosshair : Node2D
 {
+	[Signal]
+	public delegate void OnCrosshairMovedEventHandler();
+
 	[Export]
 	public Player Player = null!;
 
@@ -71,6 +74,7 @@ public partial class Crosshair : Node2D
 			return;
 		Position += motion.Relative;
 		ClampCrosshairToViewport();
+		EmitSignalOnCrosshairMoved();
 	}
 
 	public void ChangeCrosshairSize(float newSize)
