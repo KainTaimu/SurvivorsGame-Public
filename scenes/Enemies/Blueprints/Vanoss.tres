@@ -6,6 +6,7 @@
 [sub_resource type="Resource" id="Resource_a1bkk"]
 script = ExtResource("1_hs4vj")
 DamageOnContact = 6
+MoneyDrop = 3
 metadata/_custom_type_script = "uid://y77qtp32wo00"
 
 [resource]

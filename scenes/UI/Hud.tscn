@@ -8,10 +8,14 @@ font_size = 24
 [sub_resource type="LabelSettings" id="LabelSettings_bplp6"]
 font_size = 24
 
-[node name="HUD" type="CanvasLayer" unique_id=1626912566 node_paths=PackedStringArray("PlayerHealthLabel", "EnemyCountLabel")]
+[sub_resource type="LabelSettings" id="LabelSettings_bg4j7"]
+font_size = 24
+
+[node name="HUD" type="CanvasLayer" unique_id=1626912566 node_paths=PackedStringArray("PlayerHealthLabel", "EnemyCountLabel", "MoneyLabel")]
 script = ExtResource("1_47idg")
 PlayerHealthLabel = NodePath("VBoxContainer/Label")
 EnemyCountLabel = NodePath("VBoxContainer/Label2")
+MoneyLabel = NodePath("Label")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1180246057]
 anchors_preset = 15
@@ -29,3 +33,14 @@ label_settings = SubResource("LabelSettings_47idg")
 layout_mode = 2
 text = "Enemies"
 label_settings = SubResource("LabelSettings_bplp6")
+
+[node name="Label" type="Label" parent="." unique_id=1360731784]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 19.0
+grow_horizontal = 2
+text = "$null"
+label_settings = SubResource("LabelSettings_bg4j7")

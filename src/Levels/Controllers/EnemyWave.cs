@@ -159,11 +159,23 @@ public partial class EnemyWave : Resource, IEnemyWave
 		);
 		_entities.RegisterComponent(
 			id,
-			new MoveSpeedComponent(bp.Stats.MoveSpeed)
+			new MoveSpeedComponent(
+				Mathf.CeilToInt(stats.MoveSpeed * stats.MoveSpeedMultiplier)
+			)
 		);
 		_entities.RegisterComponent(
 			id,
-			new EnemyContactDamageComponent(stats.DamageOnContact)
+			new EnemyContactDamageComponent(
+				Mathf.CeilToInt(
+					stats.DamageOnContact * stats.ContactDamageMultiplier
+				)
+			)
+		);
+		_entities.RegisterComponent(
+			id,
+			new DeathRewardComponent(
+				Mathf.CeilToInt(stats.MoneyDrop * stats.MoneyDropMultiplier)
+			)
 		);
 
 		SpawnedIds.Add(id);

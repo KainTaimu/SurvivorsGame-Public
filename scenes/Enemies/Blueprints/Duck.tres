@@ -5,6 +5,7 @@
 
 [sub_resource type="Resource" id="Resource_ag0wl"]
 script = ExtResource("1_abnrt")
+MoneyDrop = 1
 metadata/_custom_type_script = "uid://y77qtp32wo00"
 
 [resource]

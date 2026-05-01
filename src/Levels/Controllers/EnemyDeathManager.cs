@@ -85,13 +85,24 @@ public partial class EnemyDeathManager : Node
 
 	private void HandleDeath(int id)
 	{
-		if (!ComponentStore.GetComponent<PositionComponent>(id, out var pos))
-		{
-			ComponentStore.UnregisterEntity(id);
-			return;
-		}
-		ComponentStore.UnregisterEntity(id);
+		if (ComponentStore.GetComponent<PositionComponent>(id, out var pos))
+			SpawnParticles(pos.Position);
 
+		if (
+			ComponentStore.GetComponent<DeathRewardComponent>(
+				id,
+				out var reward
+			)
+		)
+			LevelData.Instance?.Money += reward.Money;
+
+		ComponentStore.UnregisterEntity(id);
+	}
+
+	// PERF: Large amount of particles causes a draw call per active particles.
+	// TODO: Find out a way to reduce draw calls
+	private void SpawnParticles(Vector2 pos)
+	{
 		if (MaxActiveParticles <= 0)
 			return;
 		if (_activeParticles.Count >= MaxActiveParticles)
@@ -102,7 +113,7 @@ public partial class EnemyDeathManager : Node
 		}
 
 		var particles = _inactiveParticles.Dequeue();
-		EnableParticles(particles, pos.Position);
+		EnableParticles(particles, pos);
 
 		_activeParticles.Enqueue(particles);
 	}

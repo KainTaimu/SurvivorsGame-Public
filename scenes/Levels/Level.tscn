@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dp7ojvtgxb02l" path="res://assets/Levels/grid_dark.png" id="2_qgy1a"]
 [ext_resource type="Script" uid="uid://jbowd6556xtq" path="res://src/Levels/Controllers/GameWorld.cs" id="3_pi0ox"]
 [ext_resource type="PackedScene" uid="uid://b802cb5a7o5fr" path="res://scenes/UI/PauseMenu.tscn" id="4_pi0ox"]
+[ext_resource type="Script" uid="uid://cyldy6fxdbadt" path="res://src/Levels/Controllers/LevelData.cs" id="4_qsiuk"]
 [ext_resource type="Script" uid="uid://conjw4f6t4f3m" path="res://src/UI/PauseMenu/PauseController.cs" id="5_ajbtw"]
 [ext_resource type="Script" uid="uid://bjnekrn8u4tcu" path="res://src/Core/ECS/EntityComponentStoreV1.cs" id="6_qaj6y"]
 [ext_resource type="Script" uid="uid://bkpyb01olop50" path="res://src/Levels/Controllers/EnemyRenderer.cs" id="7_ajdj3"]
@@ -62,6 +63,9 @@ metadata/_edit_lock_ = true
 [node name="GameWorld" type="Node" parent="Systems" unique_id=562045734 node_paths=PackedStringArray("MainPlayer")]
 script = ExtResource("3_pi0ox")
 MainPlayer = NodePath("../../Player")
+
+[node name="LevelData" type="Node" parent="Systems" unique_id=1461409732]
+script = ExtResource("4_qsiuk")
 
 [node name="PauseController" type="Node" parent="Systems" unique_id=867414551]
 script = ExtResource("5_ajbtw")
@@ -129,8 +133,4 @@ Player = NodePath("../../../Player")
 PauseController = NodePath("../../../Systems/PauseController")
 CrosshairSize = 1.5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI" unique_id=395615751]
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="HUD" parent="UI/VBoxContainer" unique_id=1626912566 instance=ExtResource("20_vg5sh")]
+[node name="HUD" parent="UI" unique_id=1626912566 instance=ExtResource("20_vg5sh")]
