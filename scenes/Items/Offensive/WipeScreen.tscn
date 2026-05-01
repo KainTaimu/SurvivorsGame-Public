@@ -11,8 +11,8 @@ metadata/_custom_type_script = "uid://8rt54h4imtxv"
 [sub_resource type="Resource" id="Resource_lc3gw"]
 script = ExtResource("3_8c3to")
 Damage = 999
-CritDamageMultiplier = 0.0
-CritChanceProportion = 0.0
+CritDamageMultiplier = 1.0
+CritChanceProportion = 1.0
 metadata/_custom_type_script = "uid://os8ycjo6m7r0"
 
 [node name="WipeScreen" type="Node" unique_id=462338799]

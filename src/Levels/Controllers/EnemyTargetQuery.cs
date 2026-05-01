@@ -137,7 +137,7 @@ public partial class EnemyTargetQuery : Node
 
 		var delta = to - from;
 		var length = delta.Length();
-		var step = _gridSize * 0.5f;
+		var step = _gridSize * 0.25f;
 		var sampleCount = Math.Max(1, Mathf.CeilToInt(length / step));
 		var hitRadiusSq = hitRadius * hitRadius;
 

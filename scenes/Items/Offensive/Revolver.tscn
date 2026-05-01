@@ -62,6 +62,8 @@ stream = SubResource("AudioStreamRandomizer_0u5yb")
 [node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="." unique_id=1261930206]
 process_mode = 3
 stream = ExtResource("6_0u5yb")
+volume_db = 12.0
+mix_target = 2
 max_polyphony = 6
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1938930498 node_paths=PackedStringArray("_revolver", "_revolverCylinderSprite", "_cartidgeSprites")]

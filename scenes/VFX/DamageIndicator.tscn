@@ -20,6 +20,9 @@ script = ExtResource("1_jxdlq")
 _label = NodePath("Label")
 
 [node name="Label" type="Label" parent="." unique_id=1785052322]
+process_thread_group = 2
+process_thread_group_order = 0
+process_thread_messages = 0
 light_mask = 0
 offset_right = 78.0
 offset_bottom = 57.0
