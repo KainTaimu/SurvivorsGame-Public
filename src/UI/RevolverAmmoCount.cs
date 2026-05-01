@@ -22,6 +22,7 @@ public partial class RevolverAmmoCount : CanvasLayer
 
 	private float _cylinderRotation = 60f * (Mathf.Pi / 180);
 	private const int _maxCylinderCount = 6;
+	private Vector2 _originalPosition;
 
 	private int MagazineCapacity =>
 		Math.Clamp(_revolver.MagazineCapacity, 0, _maxCylinderCount);
@@ -29,6 +30,7 @@ public partial class RevolverAmmoCount : CanvasLayer
 	public override void _Ready()
 	{
 		base._Ready();
+		_originalPosition = _revolverCylinderSprite.Position;
 
 		// Properties may not be properly set by this point.
 		// Wait till next frame
@@ -85,7 +87,6 @@ public partial class RevolverAmmoCount : CanvasLayer
 		};
 		_revolver.OnAttack += () =>
 		{
-			var origPos = _revolverCylinderSprite.Position;
 			var tween = CreateTween().SetTrans(Tween.TransitionType.Spring);
 			for (var i = 0; i < 6; i++)
 			{
@@ -102,7 +103,7 @@ public partial class RevolverAmmoCount : CanvasLayer
 			tween.TweenProperty(
 				_revolverCylinderSprite,
 				"position",
-				origPos,
+				_originalPosition,
 				1 / 8f
 			);
 			_cartidgeSprites[

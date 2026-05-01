@@ -19,7 +19,7 @@ metadata/_custom_type_script = "uid://8rt54h4imtxv"
 script = ExtResource("3_o3lg4")
 Damage = 10
 CritChanceProportion = 0.5
-ProjectileSpeed = 5000
+ProjectileSpeed = 10000
 ProjectileScaleMultiplier = 1.2
 AttackSpeed = 1.0
 PierceLimit = 5
@@ -77,37 +77,31 @@ scale = Vector2(0.192, 0.192)
 texture = ExtResource("2_0ntdy")
 
 [node name="Cartridge1" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1500318896]
-visible = false
 position = Vector2(0, -291.6665)
-scale = Vector2(4.1917686, 4.1917686)
+scale = Vector2(1.036, 1.036)
 texture = ExtResource("9_n3sky")
 
 [node name="Cartridge2" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1599935953]
-visible = false
 position = Vector2(250, -145.83301)
-scale = Vector2(4.1917686, 4.1917686)
+scale = Vector2(1.036, 1.036)
 texture = ExtResource("9_n3sky")
 
 [node name="Cartridge3" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1242576479]
-visible = false
 position = Vector2(250, 145.83398)
-scale = Vector2(4.1917686, 4.1917686)
+scale = Vector2(1.036, 1.036)
 texture = ExtResource("9_n3sky")
 
 [node name="Cartridge4" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1080329020]
-visible = false
 position = Vector2(0, 291.66748)
-scale = Vector2(4.1917686, 4.1917686)
+scale = Vector2(1.036, 1.036)
 texture = ExtResource("9_n3sky")
 
 [node name="Cartridge5" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=2102841778]
-visible = false
 position = Vector2(-250, 145.83398)
-scale = Vector2(4.1917686, 4.1917686)
+scale = Vector2(1.036, 1.036)
 texture = ExtResource("9_n3sky")
 
 [node name="Cartridge6" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1716022962]
-visible = false
 position = Vector2(-250, -145.83301)
-scale = Vector2(4.1917686, 4.1917686)
+scale = Vector2(1.036, 1.036)
 texture = ExtResource("9_n3sky")
