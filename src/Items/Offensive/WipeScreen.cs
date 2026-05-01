@@ -2,7 +2,7 @@ using Game.UI;
 
 namespace Game.Items.Offensive;
 
-public partial class Airstrike : BaseOffensive, IManualAttack
+public partial class WipeScreen : BaseOffensive, IManualAttack
 {
 	private Crosshair Crosshair => Crosshair.Instance!;
 
@@ -27,13 +27,8 @@ public partial class Airstrike : BaseOffensive, IManualAttack
 			return;
 		_fireCooldown = Stats.AttackSpeed;
 
-		var mousePos = Crosshair.GlobalSpacePosition;
-
-		if (TargetQuery.TryGetTargetsInArea(mousePos, 256, out var targetIds))
-		{
-			foreach (var id in targetIds)
-				HandleHit(id: id);
-		}
+		foreach (var id in TargetQuery.GetTargetsInScreen())
+			HandleHit(id: id);
 	}
 
 	protected override void HandleHitECS(int id) { }

@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://xy08twumu55m" path="res://src/UI/CurrentWeaponUi.cs" id="8_5pqvm"]
 [ext_resource type="PackedScene" uid="uid://c18mvu8kqrmng" path="res://scenes/Items/Offensive/Airstrike.tscn" id="8_dpv53"]
 [ext_resource type="Shader" uid="uid://bgl0yr4nfmpqx" path="res://src/Shaders/flash.gdshader" id="8_wuwji"]
+[ext_resource type="PackedScene" uid="uid://dkhkglqxq0j2p" path="res://scenes/Items/Offensive/WipeScreen.tscn" id="11_ragxt"]
 
 [sub_resource type="Resource" id="Resource_pqexr"]
 script = ExtResource("3_cdd6o")
@@ -150,6 +151,8 @@ script = ExtResource("5_yecw2")
 [node name="Ak47" parent="PlayerWeaponController" unique_id=915008798 instance=ExtResource("7_wuwji")]
 
 [node name="Airstrike" parent="PlayerWeaponController" unique_id=94679970 instance=ExtResource("8_dpv53")]
+
+[node name="WipeScreen" parent="PlayerWeaponController" unique_id=462338799 instance=ExtResource("11_ragxt")]
 
 [node name="CurrentWeaponUi" type="CanvasLayer" parent="." unique_id=196737206 node_paths=PackedStringArray("WeaponController", "CurrentWeaponsLabel")]
 script = ExtResource("8_5pqvm")

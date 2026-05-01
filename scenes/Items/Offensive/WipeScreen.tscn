@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dkhkglqxq0j2p"]
+
+[ext_resource type="Script" uid="uid://difwuk4vrauo2" path="res://src/Items/Offensive/WipeScreen.cs" id="1_yk1bt"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="2_vuhvs"]
+[ext_resource type="Script" uid="uid://os8ycjo6m7r0" path="res://src/Items/Offensive/BaseOffensiveStats.cs" id="3_8c3to"]
+
+[sub_resource type="Resource" id="Resource_kq7cf"]
+script = ExtResource("2_vuhvs")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
+[sub_resource type="Resource" id="Resource_lc3gw"]
+script = ExtResource("3_8c3to")
+Damage = 999
+CritDamageMultiplier = 0.0
+CritChanceProportion = 0.0
+metadata/_custom_type_script = "uid://os8ycjo6m7r0"
+
+[node name="WipeScreen" type="Node" unique_id=462338799]
+script = ExtResource("1_yk1bt")
+Properties = SubResource("Resource_kq7cf")
+Stats = SubResource("Resource_lc3gw")
