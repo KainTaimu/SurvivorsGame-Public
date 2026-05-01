@@ -12,6 +12,9 @@ public partial class ProjectileBullet : BaseProjectile
 	[Export]
 	public float HitRadius = 24f;
 
+	[Export]
+	public Sprite2D Sprite = null!;
+
 	public float ProjectileSpeed;
 	public int PierceLimit;
 
@@ -42,7 +45,7 @@ public partial class ProjectileBullet : BaseProjectile
 		);
 
 		var finalScale = Scale * new Vector2(8, 1);
-		tweenScale.TweenProperty(this, "scale", finalScale, 0.05);
+		tweenScale.TweenProperty(Sprite, "scale", finalScale, 0.05);
 	}
 
 	public override void _Process(double delta)

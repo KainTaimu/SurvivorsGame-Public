@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using System.Text;
 
 namespace Game.VFX;
 
-public partial class DamageIndicatorPool : Node
+public partial class DamageIndicatorPool : Node2D
 {
 	[Export]
 	public int PoolCount = 25;

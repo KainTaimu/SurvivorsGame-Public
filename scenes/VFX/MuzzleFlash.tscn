@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dxf3jlcoofx8r"]
+
+[ext_resource type="Script" uid="uid://cfn3fiu4q41tn" path="res://src/VFX/MuzzleFlash.cs" id="1_fiy83"]
+[ext_resource type="Texture2D" uid="uid://d20hfinyt8lgx" path="res://assets/Lighting/cone_e_blur_noise.png" id="2_kd86i"]
+
+[node name="MuzzleFlash" type="Node" unique_id=651480621 node_paths=PackedStringArray("Offensive", "Light")]
+script = ExtResource("1_fiy83")
+Offensive = NodePath("")
+Light = NodePath("PointLight2D")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1556498957]
+visible = false
+color = Color(1, 1, 0, 1)
+energy = 2.0
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 1)
+texture = ExtResource("2_kd86i")
+offset = Vector2(0, -256)

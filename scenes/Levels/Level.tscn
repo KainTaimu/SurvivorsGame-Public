@@ -28,7 +28,6 @@
 script = ExtResource("12_x7tv3")
 EnemyBlueprints = Array[Object]([ExtResource("8_1c6ul"), ExtResource("10_d4hlt"), ExtResource("9_occlw")])
 Duration = 9999.0
-MaxMobs = 100
 SpawnMinTime = 0.01
 SpawnMaxTime = 0.01
 SpawnBatchMin = 2000
@@ -38,8 +37,11 @@ z_index = -999
 z_as_relative = false
 metadata/_edit_lock_ = true
 
-[node name="Parallax2D" type="Parallax2D" parent="." unique_id=951832910]
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1594940435]
 visible = false
+color = Color(0.0004478309, 0.00044783013, 0.00044783056, 1)
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=951832910]
 repeat_size = Vector2(1920, 1139)
 repeat_times = 2
 metadata/_edit_lock_ = true
@@ -84,6 +86,7 @@ script = ExtResource("13_eh1w1")
 ComponentStore = NodePath("../../EntityComponentStore")
 
 [node name="DamageIndicatorPool" parent="Systems/EnemySystems/EnemyHitFeedbackController" unique_id=1311911397 instance=ExtResource("20_qsiuk")]
+visible = false
 
 [node name="EnemyDeathManager" type="Node" parent="Systems/EnemySystems" unique_id=715210331 node_paths=PackedStringArray("ComponentStore")]
 script = ExtResource("11_x7tv3")

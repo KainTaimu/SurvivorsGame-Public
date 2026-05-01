@@ -20,6 +20,7 @@ script = ExtResource("1_jxdlq")
 _label = NodePath("Label")
 
 [node name="Label" type="Label" parent="." unique_id=1785052322]
+light_mask = 0
 offset_right = 78.0
 offset_bottom = 57.0
 text = "0123"

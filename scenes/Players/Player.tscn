@@ -3,7 +3,9 @@
 [ext_resource type="Script" uid="uid://cb48sxavv5g3k" path="res://src/Players/Player.cs" id="1_f0mf6"]
 [ext_resource type="Script" uid="uid://rykv3f6ereih" path="res://src/Players/CharacterStats.cs" id="3_cdd6o"]
 [ext_resource type="Script" uid="uid://ud6xfov0txuh" path="res://src/Players/Character.cs" id="3_kfojw"]
+[ext_resource type="Texture2D" uid="uid://d20hfinyt8lgx" path="res://assets/Lighting/cone_e_blur_noise.png" id="4_eai52"]
 [ext_resource type="Script" uid="uid://cn5rlmdgj2uue" path="res://src/Players/Controllers/PlayerMovementController.cs" id="4_kfojw"]
+[ext_resource type="Script" uid="uid://jk25jpibrbm3" path="res://src/Players/Controllers/LookLight.cs" id="5_oypsu"]
 [ext_resource type="Texture2D" uid="uid://coljm8hobe4v6" path="res://assets/Players/shondo.png" id="5_pqexr"]
 [ext_resource type="Script" uid="uid://b344j1ahaiaqv" path="res://src/Players/Controllers/PlayerWeaponController.cs" id="5_yecw2"]
 [ext_resource type="PackedScene" uid="uid://twvhgblbtovy" path="res://scenes/Items/Offensive/Revolver.tscn" id="6_eai52"]
@@ -16,6 +18,7 @@
 [sub_resource type="Resource" id="Resource_pqexr"]
 script = ExtResource("3_cdd6o")
 MaxHealth = 99999
+MoveSpeed = 500.0
 Defense = 8
 InvincibilityTime = 1.0
 metadata/_custom_type_script = "uid://rykv3f6ereih"
@@ -25,6 +28,17 @@ script = ExtResource("3_kfojw")
 CharacterName = "PLACEHOLDER"
 CharacterStats = SubResource("Resource_pqexr")
 metadata/_custom_type_script = "uid://ud6xfov0txuh"
+
+[sub_resource type="Gradient" id="Gradient_oypsu"]
+offsets = PackedFloat32Array(0, 0.67409015)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ragxt"]
+gradient = SubResource("Gradient_oypsu")
+width = 1024
+height = 1024
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5pqvm"]
 shader = ExtResource("8_wuwji")
@@ -107,6 +121,21 @@ z_index = 32
 z_as_relative = false
 script = ExtResource("1_f0mf6")
 Character = SubResource("Resource_yecw2")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1140483799]
+visible = false
+energy = 0.31
+shadow_color = Color(0, 0, 0, 1)
+texture = SubResource("GradientTexture2D_ragxt")
+
+[node name="LookLight" type="PointLight2D" parent="." unique_id=1398023543]
+visible = false
+scale = Vector2(1.577, 1.577)
+energy = 0.5
+shadow_color = Color(0, 0, 0, 1)
+texture = ExtResource("4_eai52")
+offset = Vector2(0, -256)
+script = ExtResource("5_oypsu")
 
 [node name="PlayerMovementController" type="Node" parent="." unique_id=1602338086 node_paths=PackedStringArray("_player", "_sprite")]
 script = ExtResource("4_kfojw")
