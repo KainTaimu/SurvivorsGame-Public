@@ -99,6 +99,21 @@ public partial class EnemyTargetQuery : Node
 		return true;
 	}
 
+	public IEnumerable<int> GetTargetsInScreen()
+	{
+		for (var x = 0; x < _grid.Dimensions.X; x++)
+		{
+			for (var y = 0; y < _grid.Dimensions.Y; y++)
+			{
+				var cell = _grid.GetCell(x, y);
+				if (cell is null)
+					continue;
+				for (var i = 0; i < cell.Count; i++)
+					yield return cell.Array[i];
+			}
+		}
+	}
+
 	/// <summary>
 	/// Finds closest target intersecting swept segment corridor.
 	/// </summary>

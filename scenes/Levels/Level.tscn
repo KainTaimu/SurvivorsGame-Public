@@ -86,13 +86,12 @@ script = ExtResource("13_eh1w1")
 ComponentStore = NodePath("../../EntityComponentStore")
 
 [node name="DamageIndicatorPool" parent="Systems/EnemySystems/EnemyHitFeedbackController" unique_id=1311911397 instance=ExtResource("20_qsiuk")]
-visible = false
 
 [node name="EnemyDeathManager" type="Node" parent="Systems/EnemySystems" unique_id=715210331 node_paths=PackedStringArray("ComponentStore")]
 script = ExtResource("11_x7tv3")
 _enemyDeathParticlesScene = ExtResource("15_eh1w1")
 ComponentStore = NodePath("../../EntityComponentStore")
-MaxActiveParticles = 500
+MaxActiveParticles = 1000
 
 [node name="EnemyMover" type="Node" parent="Systems/EnemySystems" unique_id=348078406 node_paths=PackedStringArray("_entities")]
 script = ExtResource("10_sh7eq")
