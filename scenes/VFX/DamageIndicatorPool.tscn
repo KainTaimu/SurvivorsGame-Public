@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://b5fp1qbog6ics"]
+
+[ext_resource type="Script" uid="uid://cxtguf0ld1b2l" path="res://src/VFX/DamageIndicatorPool.cs" id="1_hd6eq"]
+[ext_resource type="PackedScene" uid="uid://r2x7fiwrol4h" path="res://scenes/VFX/DamageIndicator.tscn" id="2_k6xtc"]
+
+[node name="DamageIndicatorPool" type="Node" unique_id=1311911397]
+script = ExtResource("1_hd6eq")
+_indicatorScene = ExtResource("2_k6xtc")

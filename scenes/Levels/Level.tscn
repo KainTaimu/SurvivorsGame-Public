@@ -21,12 +21,14 @@
 [ext_resource type="PackedScene" uid="uid://bqy6yv5uhrqp0" path="res://scenes/VFX/BloodKillParticles.tscn" id="15_eh1w1"]
 [ext_resource type="Script" uid="uid://djv8orxale1c3" path="res://src/Levels/Controllers/EnemyTargetQuery.cs" id="16_x7tv3"]
 [ext_resource type="Script" uid="uid://bpqjji00j8p6x" path="res://src/Levels/Controllers/PlayerHitController.cs" id="19_aig1n"]
+[ext_resource type="PackedScene" uid="uid://b5fp1qbog6ics" path="res://scenes/VFX/DamageIndicatorPool.tscn" id="20_qsiuk"]
 [ext_resource type="PackedScene" uid="uid://do6p1pg4x0vkf" path="res://scenes/UI/Hud.tscn" id="20_vg5sh"]
 
 [sub_resource type="Resource" id="Resource_x7tv3"]
 script = ExtResource("12_x7tv3")
 EnemyBlueprints = Array[Object]([ExtResource("8_1c6ul"), ExtResource("10_d4hlt"), ExtResource("9_occlw")])
 Duration = 9999.0
+MaxMobs = 100
 SpawnMinTime = 0.01
 SpawnMaxTime = 0.01
 SpawnBatchMin = 2000
@@ -80,6 +82,8 @@ _renderer = NodePath("../EnemyRenderer")
 [node name="EnemyHitFeedbackController" type="Node" parent="Systems/EnemySystems" unique_id=1764008549 node_paths=PackedStringArray("ComponentStore")]
 script = ExtResource("13_eh1w1")
 ComponentStore = NodePath("../../EntityComponentStore")
+
+[node name="DamageIndicatorPool" parent="Systems/EnemySystems/EnemyHitFeedbackController" unique_id=1311911397 instance=ExtResource("20_qsiuk")]
 
 [node name="EnemyDeathManager" type="Node" parent="Systems/EnemySystems" unique_id=715210331 node_paths=PackedStringArray("ComponentStore")]
 script = ExtResource("11_x7tv3")

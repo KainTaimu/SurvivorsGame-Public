@@ -63,11 +63,36 @@ public abstract partial class BaseOffensive : BaseItem
 		}
 		if (id is not null)
 		{
+			HandleDamageECS(id.Value);
 			HandleHitECS(id.Value);
 		}
 	}
 
-	protected abstract void HandleHitECS(int id);
+	/// <summary> Handle the damage to the enemy </summary>
+	protected void HandleDamageECS(int id)
+	{
+		if (!ComponentStore.GetComponent<HealthComponent>(id, out var health))
+			return;
+
+		var crit = CalculateCrit();
+		var newHealth = health.Health - Stats.Damage - crit;
+
+		var hit = new HitFeedbackComponent()
+		{
+			HitTime = 0.5f,
+			Damage = Stats.Damage + crit,
+			IsCrit = crit > 0,
+		};
+		if (!ComponentStore.GetComponent<HitFeedbackComponent>(id, out var _))
+			ComponentStore.RegisterComponent(id, hit);
+		else
+			ComponentStore.SetComponent(id, hit);
+
+		ComponentStore.SetComponent(id, health with { Health = newHealth });
+	}
+
+	/// <summary> Handle additional effects to the enemy like knockback </summary>
+	protected virtual void HandleHitECS(int id) { }
 
 	// protected abstract void HandleHitNode(Node node);
 
@@ -84,6 +109,7 @@ public abstract partial class BaseOffensive : BaseItem
 
 	public void TryUpgrade()
 	{
+		Logger.LogWarning("Attempted to upgrade past max level");
 		var incrementLevel = Properties.CurrentLevel + 1;
 		if (incrementLevel > Upgrades.Count)
 		{

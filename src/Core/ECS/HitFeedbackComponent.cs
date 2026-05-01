@@ -17,4 +17,7 @@ public record struct HitFeedbackComponent()
 		get;
 		set => field = Math.Clamp(value, 0, double.MaxValue);
 	}
+
+	public int Damage;
+	public bool IsCrit;
 }

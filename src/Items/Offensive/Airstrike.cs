@@ -33,27 +33,9 @@ public partial class Airstrike : BaseOffensive, IManualAttack
 		if (TargetQuery.TryGetTargetsInArea(mousePos, 256, out var targetIds))
 		{
 			foreach (var id in targetIds)
-				HandleHitECS(id);
-			return;
+				HandleHit(id: id);
 		}
-		// TODO: Handle Node Enemy
 	}
 
-	protected override void HandleHitECS(int id)
-	{
-		if (!ComponentStore.GetComponent<HealthComponent>(id, out var health))
-			return;
-
-		var crit = CalculateCrit();
-		var newHealth = health.Health - Stats.Damage - crit;
-
-		ComponentStore.SetComponent(id, health with { Health = newHealth });
-
-		var hit = new HitFeedbackComponent() { HitTime = 0.5f };
-
-		if (!ComponentStore.GetComponent<HitFeedbackComponent>(id, out var _))
-			ComponentStore.RegisterComponent(id, hit);
-		else
-			ComponentStore.SetComponent(id, hit);
-	}
+	protected override void HandleHitECS(int id) { }
 }

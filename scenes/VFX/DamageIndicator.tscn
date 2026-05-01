@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://r2x7fiwrol4h"]
+
+[ext_resource type="Script" uid="uid://ca4qwn1td22eu" path="res://src/VFX/DamageIndicator.cs" id="1_jxdlq"]
+[ext_resource type="FontFile" uid="uid://imomsqhxc2fu" path="res://assets/Fonts/MunroSmall-wPZw.ttf" id="2_k8fii"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_61nld"]
+resource_local_to_scene = true
+font = ExtResource("2_k8fii")
+font_size = 64
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+stacked_shadow_count = 1
+stacked_shadow_0/offset = Vector2(1, 1)
+stacked_shadow_0/outline_size = 8
+
+[node name="DamageIndicator" type="Node2D" unique_id=80517012 node_paths=PackedStringArray("_label")]
+z_index = 4095
+z_as_relative = false
+script = ExtResource("1_jxdlq")
+_label = NodePath("Label")
+
+[node name="Label" type="Label" parent="." unique_id=1785052322]
+offset_right = 78.0
+offset_bottom = 57.0
+text = "0123"
+label_settings = SubResource("LabelSettings_61nld")
+horizontal_alignment = 1
+vertical_alignment = 1

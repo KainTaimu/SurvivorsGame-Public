@@ -14,6 +14,7 @@ public partial class CurrentWeaponUi : CanvasLayer
 	{
 		WeaponController.OnPrimaryAttackReassigned += UpdateCurrentWeapons;
 		WeaponController.OnSecondaryAttackReassigned += UpdateCurrentWeapons;
+		UpdateCurrentWeapons();
 	}
 
 	public void UpdateCurrentWeapons()

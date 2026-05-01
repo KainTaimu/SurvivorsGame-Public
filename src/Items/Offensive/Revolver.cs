@@ -74,8 +74,6 @@ public partial class Revolver : Firearm
 
 	protected override void HandleHitECS(int id)
 	{
-		base.HandleHitECS(id);
-
 		if (!ComponentStore.GetComponent<PositionComponent>(id, out var pos))
 			return;
 		var knockback = Stats

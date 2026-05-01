@@ -1,4 +1,3 @@
-using Game.Core.ECS;
 using Game.Items.Projectiles;
 using Game.Players;
 using Game.UI;
@@ -151,23 +150,6 @@ public abstract partial class Firearm
 		};
 		IsReloading = true;
 		ReloadAudioPlayer?.Play();
-	}
-
-	protected override void HandleHitECS(int id)
-	{
-		if (!ComponentStore.GetComponent<HealthComponent>(id, out var health))
-			return;
-
-		var hit = new HitFeedbackComponent() { HitTime = 0.5f };
-		if (!ComponentStore.GetComponent<HitFeedbackComponent>(id, out var _))
-			ComponentStore.RegisterComponent(id, hit);
-		else
-			ComponentStore.SetComponent(id, hit);
-
-		var crit = CalculateCrit();
-		var newHealth = health.Health - Stats.Damage - crit;
-
-		ComponentStore.SetComponent(id, health with { Health = newHealth });
 	}
 
 	// BUG:

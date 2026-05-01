@@ -13,7 +13,7 @@ script = ExtResource("3_ld3kt")
 
 [sub_resource type="Resource" id="Resource_oypsu"]
 script = ExtResource("4_tg8rs")
-CritChanceProportion = 0.1
+CritChanceProportion = 0.2
 AttackSpeed = 0.17
 Additional = Dictionary[String, Variant]({
 "BloomCoefficientDeg": 10.0,
@@ -22,7 +22,7 @@ Additional = Dictionary[String, Variant]({
 "HorizontalRecoilMin": 1.0,
 "HorizontalRecoilRandom": 1.0,
 "Knockback": 20.0,
-"MagazineCapacity": 99999,
+"MagazineCapacity": 30,
 "RecoilAccumilationScale": 0.0,
 "RecoilScale": 1.0,
 "ReloadTimeMs": 1200,

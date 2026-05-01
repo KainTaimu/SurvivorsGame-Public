@@ -31,8 +31,6 @@ public partial class Ak47 : Firearm
 
 	protected override void HandleHitECS(int id)
 	{
-		base.HandleHitECS(id);
-
 		if (!ComponentStore.GetComponent<PositionComponent>(id, out var pos))
 			return;
 		var knockback = Stats
