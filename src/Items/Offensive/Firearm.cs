@@ -25,15 +25,9 @@ public abstract partial class Firearm
 	[Export]
 	public AudioStreamPlayer? ReloadAudioPlayer;
 
-	public int MagazineCapacity
-	{
-		get => _magazineCapacity;
-	}
+	public int MagazineCapacity => FirearmStats?.MagazineCapacity ?? 30;
 
-	public int MagazineCount
-	{
-		get => _magazineCount;
-	}
+	public int MagazineCount => _magazineCount;
 
 	public bool IsReloading
 	{
@@ -62,24 +56,31 @@ public abstract partial class Firearm
 		}
 	}
 
+	public FirearmStats? FirearmStats => Stats as FirearmStats;
+
 	public string? AttackActionString { get; set; }
 
 	protected double _fireCooldown;
 
-	private int _reloadTimeMs = 1500;
-	private float _bloomCoefficientDeg = 0.03f;
-	private int _magazineCapacity = 30;
 	private int _magazineCount;
 
-	private float _horizontalRecoilMin = 1f;
-	private float _horizontalBaseRecoil = 3f;
-	private float _horizontalRecoilRandom = 1f;
-	private float _verticalRecoilMin = 2f;
-	private float _verticalBaseRecoil = 3f;
-	private float _verticalRecoilRandom = 0.1f;
-	private float _recoilScale = 1f;
-	private float _recoilAccumilationScale = 1f;
-	private float _cameraRecoilScale = 1f;
+	private int ReloadTimeMs => FirearmStats?.ReloadTimeMs ?? 1500;
+	private float BloomCoefficientDeg =>
+		FirearmStats?.BloomCoefficientDeg ?? 0.03f;
+	private float HorizontalRecoilMin =>
+		FirearmStats?.HorizontalRecoilMin ?? 1f;
+	private float HorizontalBaseRecoil =>
+		FirearmStats?.HorizontalBaseRecoil ?? 3f;
+	private float HorizontalRecoilRandom =>
+		FirearmStats?.HorizontalRecoilRandom ?? 1f;
+	private float VerticalRecoilMin => FirearmStats?.VerticalRecoilMin ?? 2f;
+	private float VerticalBaseRecoil => FirearmStats?.VerticalBaseRecoil ?? 3f;
+	private float VerticalRecoilRandom =>
+		FirearmStats?.VerticalRecoilRandom ?? 0.1f;
+	private float RecoilScale => FirearmStats?.RecoilScale ?? 1f;
+	private float RecoilAccumilationScale =>
+		FirearmStats?.RecoilAccumilationScale ?? 1f;
+	private float CameraRecoilScale => FirearmStats?.CameraRecoilScale ?? 1f;
 
 	protected Crosshair? Crosshair => Crosshair.Instance;
 
@@ -87,6 +88,7 @@ public abstract partial class Firearm
 	{
 		UpdateAdditionalFields();
 		OnStatsChanged += UpdateAdditionalFields;
+		_magazineCount = FirearmStats?.MagazineCapacity ?? 30;
 	}
 
 	public override void Attack()
@@ -110,8 +112,8 @@ public abstract partial class Firearm
 		if (Crosshair is not null)
 		{
 			mouseVector =
-				Crosshair.CrosshairSprite.GetCanvasTransform()
-				* Crosshair.CrosshairSprite.GlobalPosition;
+				Crosshair.PrimaryCrosshairSprite.GetCanvasTransform()
+				* Crosshair.PrimaryCrosshairSprite.GlobalPosition;
 		}
 		else
 		{
@@ -119,7 +121,7 @@ public abstract partial class Firearm
 		}
 		var rotation = playerVector.AngleToPoint(mouseVector);
 
-		var bloomRad = _bloomCoefficientDeg * (Math.PI / 180);
+		var bloomRad = BloomCoefficientDeg * (Math.PI / 180);
 		var bloom = (float)GD.RandRange(-bloomRad / 2, bloomRad / 2);
 
 		rotation += bloom;
@@ -131,6 +133,7 @@ public abstract partial class Firearm
 		projectile.SetRotation(rotation);
 		projectile.ProjectileSpeed = Stats.ProjectileSpeed;
 		projectile.PierceLimit = Stats.PierceLimit;
+		projectile.HitRadius = FirearmStats?.ProjectileRadius ?? 24;
 		GetTree().Root.AddChild(projectile);
 
 		ApplyCursorRecoil();
@@ -143,9 +146,9 @@ public abstract partial class Firearm
 			return;
 		if (MagazineCount == MagazineCapacity)
 			return;
-		GetTree().CreateTimer(_reloadTimeMs / 1000f).Timeout += () =>
+		GetTree().CreateTimer(ReloadTimeMs / 1000f).Timeout += () =>
 		{
-			_magazineCount = _magazineCapacity;
+			_magazineCount = MagazineCapacity;
 			IsReloading = false;
 		};
 		IsReloading = true;
@@ -163,30 +166,30 @@ public abstract partial class Firearm
 		var recoilX = (float)
 			GD.Randfn(
 				0,
-				_horizontalBaseRecoil
+				HorizontalBaseRecoil
 					+ GD.RandRange(
-						-_horizontalRecoilRandom,
-						_horizontalRecoilRandom
+						-HorizontalRecoilRandom,
+						HorizontalRecoilRandom
 					)
 			);
 		recoilX = Math.Clamp(
 			recoilX,
-			-Math.Abs(_horizontalRecoilMin),
+			-Math.Abs(HorizontalRecoilMin),
 			float.MaxValue
 		);
 
 		var recoilY =
-			_verticalBaseRecoil
-			+ Math.Abs((float)GD.Randfn(0, _verticalRecoilRandom));
-		recoilY = Math.Clamp(recoilY, _verticalRecoilMin, float.MaxValue);
+			VerticalBaseRecoil
+			+ Math.Abs((float)GD.Randfn(0, VerticalRecoilRandom));
+		recoilY = Math.Clamp(recoilY, VerticalRecoilMin, float.MaxValue);
 
-		var recoil = new Vector2(recoilX, -recoilY) * _recoilScale;
+		var recoil = new Vector2(recoilX, -recoilY) * RecoilScale;
 		Crosshair.Recoil.ApplyImpulse(recoil);
 	}
 
 	public void ApplyCameraRecoil()
 	{
-		if (_cameraRecoilScale == 0)
+		if (CameraRecoilScale == 0)
 			return;
 
 		var camera = GetViewport().GetCamera2D();
@@ -200,7 +203,7 @@ public abstract partial class Firearm
 			var shake =
 				new Vector2(rand(), rand())
 				* GD.RandRange(4, 9)
-				* _cameraRecoilScale;
+				* CameraRecoilScale;
 
 			tween.TweenProperty(
 				camera,
@@ -215,36 +218,6 @@ public abstract partial class Firearm
 	private void UpdateAdditionalFields()
 	{
 		_fireCooldown = Stats.AttackSpeed;
-
-		_magazineCapacity = Stats.Additional["MagazineCapacity"].As<int>();
-		_magazineCount = _magazineCapacity;
-		_reloadTimeMs = Stats.Additional["ReloadTimeMs"].As<int>();
-		_bloomCoefficientDeg = Stats
-			.Additional["BloomCoefficientDeg"]
-			.As<float>();
-
-		_horizontalRecoilMin = Stats
-			.Additional["HorizontalRecoilMin"]
-			.AsSingle();
-		_horizontalBaseRecoil = Stats
-			.Additional["HorizontalBaseRecoil"]
-			.As<float>();
-		_horizontalRecoilRandom = Stats
-			.Additional["HorizontalRecoilRandom"]
-			.As<float>();
-		_verticalRecoilMin = Stats.Additional["VerticalRecoilMin"].AsSingle();
-		_verticalBaseRecoil = Stats
-			.Additional["VerticalBaseRecoil"]
-			.As<float>();
-		_verticalRecoilRandom = Stats
-			.Additional["VerticalRecoilRandom"]
-			.As<float>();
-		_recoilScale = Stats.Additional["RecoilScale"].AsSingle();
-
-		if (Stats.Additional.TryGetValue("RecoilAccumilationScale", out var x))
-			_recoilAccumilationScale = x.AsSingle();
-		if (Stats.Additional.TryGetValue("CameraRecoilScale", out x))
-			_cameraRecoilScale = x.AsSingle();
 
 		Logger.LogDebug(
 			"Updated Stats",

@@ -136,7 +136,6 @@ public partial class EnemyWave : Resource, IEnemyWave
 
 		var spriteInfo = ss.GetSpriteInfo(bp.Name);
 
-		// TODO: Enemy blueprints
 		_entities.RegisterComponent(id, new HealthComponent(stats.MaxHealth));
 		_entities.RegisterComponent(id, new EntityTypeComponent(bp.Type));
 		_entities.RegisterComponent(

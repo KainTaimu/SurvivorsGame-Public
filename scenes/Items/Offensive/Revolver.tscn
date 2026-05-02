@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_o3lg4"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="2_wc6to"]
 [ext_resource type="Script" uid="uid://wf7jhuhepxtp" path="res://src/UI/RevolverAmmoCount.cs" id="2_wjj7r"]
-[ext_resource type="Script" uid="uid://os8ycjo6m7r0" path="res://src/Items/Offensive/BaseOffensiveStats.cs" id="3_o3lg4"]
+[ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_y3hip"]
 [ext_resource type="AudioStream" uid="uid://dspbe1b535vno" path="res://assets/SFX/revolver_cocking.mp3" id="6_0u5yb"]
 [ext_resource type="AudioStream" uid="uid://byaqp87dpfq3j" path="res://assets/SFX/revolver_gunshot.mp3" id="6_fgf34"]
 [ext_resource type="Texture2D" uid="uid://bywdcxqghufl4" path="res://assets/UI/revolver_fired.tres" id="8_y3hip"]
@@ -15,8 +15,19 @@
 script = ExtResource("2_wc6to")
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
-[sub_resource type="Resource" id="Resource_o3lg4"]
-script = ExtResource("3_o3lg4")
+[sub_resource type="Resource" id="Resource_n3sky"]
+script = ExtResource("4_y3hip")
+ReloadTimeMs = 1800
+BloomCoefficientDeg = 3.0
+MagazineCapacity = 6
+HorizontalRecoilMin = 20.0
+HorizontalBaseRecoil = 20.0
+HorizontalRecoilRandom = 20.0
+VerticalRecoilMin = 120.0
+VerticalBaseRecoil = 120.0
+VerticalRecoilRandom = 40.0
+RecoilScale = 0.8
+CameraRecoilScale = 1.8
 Damage = 10
 CritDamageMultiplier = 3.0
 CritChanceProportion = 0.5
@@ -25,21 +36,9 @@ ProjectileScaleMultiplier = 1.2
 AttackSpeed = 1.0
 PierceLimit = 5
 Additional = Dictionary[String, Variant]({
-"BloomCoefficientDeg": 3.0,
-"CameraRecoilScale": 1.8,
-"HorizontalBaseRecoil": 20.0,
-"HorizontalRecoilMin": 20.0,
-"HorizontalRecoilRandom": 20.0,
-"Knockback": 80.0,
-"MagazineCapacity": 6,
-"RecoilAccumilationScale": 1.0,
-"RecoilScale": 0.8,
-"ReloadTimeMs": 1800,
-"VerticalBaseRecoil": 120.0,
-"VerticalRecoilMin": 120.0,
-"VerticalRecoilRandom": 40.0
+"Knockback": 50.0
 })
-metadata/_custom_type_script = "uid://os8ycjo6m7r0"
+metadata/_custom_type_script = "uid://di81uufgmcsog"
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0u5yb"]
 playback_mode = 1
@@ -53,7 +52,7 @@ CockAudioPlayer = NodePath("AudioStreamPlayer2")
 _projectileScene = ExtResource("2_o3lg4")
 ShootAudioPlayer = NodePath("AudioStreamPlayer")
 Properties = SubResource("Resource_whe3a")
-Stats = SubResource("Resource_o3lg4")
+Stats = SubResource("Resource_n3sky")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1706054987]
 process_mode = 3

@@ -12,7 +12,12 @@ public partial class Crosshair : Node2D
 	public Player Player = null!;
 
 	[Export]
-	public AnimatedSprite2D CrosshairSprite { get; private set; } = null!;
+	public AnimatedSprite2D PrimaryCrosshairSprite { get; private set; } =
+		null!;
+
+	[Export]
+	public AnimatedSprite2D SecondaryCrosshairSprite { get; private set; } =
+		null!;
 
 	[Export]
 	public PauseController PauseController { get; private set; } = null!;
@@ -29,11 +34,12 @@ public partial class Crosshair : Node2D
 	} = 1;
 
 	public Vector2 CanvasSpacePosition =>
-		CrosshairSprite.GetCanvasTransform() * CrosshairSprite.GlobalPosition;
+		PrimaryCrosshairSprite.GetCanvasTransform()
+		* PrimaryCrosshairSprite.GlobalPosition;
 
 	public Vector2 GlobalSpacePosition =>
 		Viewport.CanvasTransform.AffineInverse()
-		* CrosshairSprite.GlobalPosition;
+		* PrimaryCrosshairSprite.GlobalPosition;
 
 	public static Crosshair? Instance { get; private set; }
 
@@ -63,6 +69,12 @@ public partial class Crosshair : Node2D
 		ChangeCrosshairSize(CrosshairSize);
 	}
 
+	public override void _Process(double delta)
+	{
+		PrimaryCrosshairSprite.Frame = 0;
+		SecondaryCrosshairSprite.Frame = 0;
+	}
+
 	public override void _ExitTree()
 	{
 		Input.SetMouseMode(_hiddenMouseMode);
@@ -77,9 +89,31 @@ public partial class Crosshair : Node2D
 		EmitSignalOnCrosshairMoved();
 	}
 
+	public void ChangePrimaryCrosshairSpread(float spreadRatio)
+	{
+		if (spreadRatio < 0 || spreadRatio > 1)
+			Logger.LogError("spreadRatio should be 0 < spreadRatio < 1");
+		var frameCount = PrimaryCrosshairSprite.SpriteFrames.GetFrameCount(
+			PrimaryCrosshairSprite.Animation
+		);
+		var idx = (int)Math.Round(spreadRatio * frameCount);
+		PrimaryCrosshairSprite.Frame = Mathf.Clamp(idx, 0, frameCount);
+	}
+
+	public void ChangeSecondaryCrosshairSpread(float spreadRatio)
+	{
+		if (spreadRatio < 0 || spreadRatio > 1)
+			Logger.LogError("spreadRatio should be 0 < spreadRatio < 1");
+		var frameCount = SecondaryCrosshairSprite.SpriteFrames.GetFrameCount(
+			SecondaryCrosshairSprite.Animation
+		);
+		var idx = (int)Math.Round(spreadRatio * frameCount);
+		SecondaryCrosshairSprite.Frame = Mathf.Clamp(idx, 0, frameCount);
+	}
+
 	public void ChangeCrosshairSize(float newSize)
 	{
-		CrosshairSprite.Scale = new Vector2(1, 1) * newSize;
+		PrimaryCrosshairSprite.Scale = new Vector2(1, 1) * newSize;
 	}
 
 	public void ShowCrosshair()
@@ -100,10 +134,10 @@ public partial class Crosshair : Node2D
 			Player.GlobalPosition
 			* Viewport.GetCamera2D().GetCanvasTransform().AffineInverse();
 		var crosshairPos =
-			CrosshairSprite.GlobalPosition * Viewport.GetScreenTransform();
+			PrimaryCrosshairSprite.GlobalPosition
+			* Viewport.GetScreenTransform();
 
-		var angle = playerPos.AngleToPoint(crosshairPos);
-		return angle;
+		return playerPos.AngleToPoint(crosshairPos);
 	}
 
 	private void ClampCrosshairToViewport()
@@ -115,10 +149,8 @@ public partial class Crosshair : Node2D
 			viewportSize.X + marginPx,
 			viewportSize.Y + marginPx
 		);
-		CrosshairSprite.GlobalPosition = CrosshairSprite.GlobalPosition.Clamp(
-			min,
-			max
-		);
+		PrimaryCrosshairSprite.GlobalPosition =
+			PrimaryCrosshairSprite.GlobalPosition.Clamp(min, max);
 	}
 
 	public partial class CrossHairRecoil(Crosshair crosshair) : Node
@@ -139,7 +171,7 @@ public partial class Crosshair : Node2D
 		{
 			const float easeReturn = 0.2f;
 
-			var targetCrosshair = crosshair.CrosshairSprite;
+			var targetCrosshair = crosshair.PrimaryCrosshairSprite;
 
 			_accumilatedImpulse += impulse * accumilatedImpuseFactor;
 			_impulseScale += 0.1f;

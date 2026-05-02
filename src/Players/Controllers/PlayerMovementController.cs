@@ -7,13 +7,14 @@ public partial class PlayerMovementController : Node
 	[Export]
 	private Player _player = null!;
 
-	private CharacterStats CharacterStats => _player.Character.CharacterStats;
-
 	[Export]
 	private AnimatedSprite2D _sprite = null!;
 
+	public Vector2 Velocity;
+
 	private Viewport? Viewport => GetViewport();
 	private Crosshair? Crosshair => Crosshair.Instance;
+	private CharacterStats CharacterStats => _player.Character.CharacterStats;
 
 	public override void _Ready()
 	{
@@ -24,6 +25,7 @@ public partial class PlayerMovementController : Node
 
 	public override void _Process(double delta)
 	{
+		Velocity = Vector2.Zero;
 		PlayerMovement(delta);
 	}
 
@@ -62,6 +64,7 @@ public partial class PlayerMovementController : Node
 					* CharacterStats.MoveSpeedMultiplier
 				)
 		);
+		Velocity = move;
 		move *= (float)delta;
 		var originalPos = _player.GetPosition();
 

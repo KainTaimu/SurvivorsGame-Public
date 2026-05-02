@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://cuerorgcryk5k"]
+
+[ext_resource type="Script" uid="uid://dsoi8oc5exk1o" path="res://src/Items/Offensive/Sniper.cs" id="1_jg7ce"]
+[ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_u7hyr"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_f52b2"]
+[ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_u7hyr"]
+
+[sub_resource type="Resource" id="Resource_iky5m"]
+script = ExtResource("3_f52b2")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
+[sub_resource type="Resource" id="Resource_f52b2"]
+script = ExtResource("4_u7hyr")
+ProjectileRadius = 16
+ReloadTimeMs = 2000
+BloomCoefficientDeg = 45.0
+MagazineCapacity = 5
+RecoilScale = 2.0
+CameraRecoilScale = 3.0
+Damage = 7
+CritDamageMultiplier = 2.0
+CritChanceProportion = 1.0
+ProjectileSpeed = 20000
+ProjectileScaleMultiplier = 1.5
+AttackSpeed = 2.0
+PierceLimit = 99
+Additional = Dictionary[String, Variant]({
+"MoveTimeBloomGrowthRate": 3.0,
+"MoveTimeBloomShrinkRate": 1.0,
+"MoveTimeToMaxBloom": 1.0
+})
+metadata/_custom_type_script = "uid://di81uufgmcsog"
+
+[node name="Sniper" type="Node" unique_id=753371605]
+script = ExtResource("1_jg7ce")
+_projectileScene = ExtResource("2_u7hyr")
+Properties = SubResource("Resource_iky5m")
+Stats = SubResource("Resource_f52b2")

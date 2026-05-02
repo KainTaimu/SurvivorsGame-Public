@@ -5,11 +5,8 @@ using Game.Levels.Controllers;
 
 namespace Game.Items.Projectiles;
 
-// TODO:
-// BaseWeapon should be responsible for handling damage, crit, etc
 public partial class ProjectileBullet : BaseProjectile
 {
-	[Export]
 	public float HitRadius = 24f;
 
 	[Export]
@@ -56,28 +53,22 @@ public partial class ProjectileBullet : BaseProjectile
 			new Vector2(1, 0).Rotated(Rotation)
 			* ProjectileSpeed
 			* (float)delta;
-		var to = from + moveVector;
+		Position = from + moveVector;
 
-		Position = to;
-
-		if (
-			!TargetQuery.TryGetTargetAlongSegment(
-				from,
-				to,
-				HitRadius,
-				out var id
-			)
-		)
+		if (!TargetQuery.TryGetTargetsInArea(from, HitRadius, out var ids))
 			return;
 
-		if (_hits.Contains(id))
-			return;
+		foreach (var id in ids)
+		{
+			if (_hits.Contains(id))
+				return;
 
-		OffensiveOrigin.HandleHit(id: id);
+			OffensiveOrigin.HandleHit(id: id);
 
-		_hits.Add(id);
-		_pierceCount++;
-		if (_pierceCount >= PierceLimit)
-			QueueFree();
+			_hits.Add(id);
+			_pierceCount++;
+			if (_pierceCount >= PierceLimit)
+				QueueFree();
+		}
 	}
 }

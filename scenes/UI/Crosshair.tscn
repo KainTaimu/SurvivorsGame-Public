@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cgu6j8ic7r2v3" path="res://src/UI/Crosshair/Crosshair.cs" id="1_v23f2"]
 [ext_resource type="Texture2D" uid="uid://coysqgxl7mvbn" path="res://assets/UI/crosshair.png" id="2_dqn7s"]
+[ext_resource type="Texture2D" uid="uid://bx3hb2oce4wax" path="res://assets/UI/crosshair_small.png" id="3_dqn7s"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_svatc"]
 atlas = ExtResource("2_dqn7s")
@@ -27,22 +28,6 @@ region = Rect2(38, 38, 38, 38)
 atlas = ExtResource("2_dqn7s")
 region = Rect2(76, 38, 38, 38)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2meft"]
-atlas = ExtResource("2_dqn7s")
-region = Rect2(0, 76, 38, 38)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0xqs2"]
-atlas = ExtResource("2_dqn7s")
-region = Rect2(38, 76, 38, 38)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ipmer"]
-atlas = ExtResource("2_dqn7s")
-region = Rect2(76, 76, 38, 38)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_av1gt"]
-atlas = ExtResource("2_dqn7s")
-region = Rect2(0, 114, 38, 38)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_r7dij"]
 animations = [{
 "frames": [{
@@ -63,30 +48,73 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jxjwb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2meft")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0xqs2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ipmer")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_av1gt")
 }],
-"loop": true,
+"loop": false,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="Crosshair" type="Node2D" unique_id=587001361 node_paths=PackedStringArray("CrosshairSprite")]
+[sub_resource type="AtlasTexture" id="AtlasTexture_odigo"]
+atlas = ExtResource("3_dqn7s")
+region = Rect2(0, 0, 38, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x25hu"]
+atlas = ExtResource("3_dqn7s")
+region = Rect2(38, 0, 38, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6m638"]
+atlas = ExtResource("3_dqn7s")
+region = Rect2(76, 0, 38, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gcgrs"]
+atlas = ExtResource("3_dqn7s")
+region = Rect2(0, 38, 38, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nl3ej"]
+atlas = ExtResource("3_dqn7s")
+region = Rect2(38, 38, 38, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p6pms"]
+atlas = ExtResource("3_dqn7s")
+region = Rect2(76, 38, 38, 38)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v23f2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_odigo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x25hu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6m638")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gcgrs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nl3ej")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p6pms")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Crosshair" type="Node2D" unique_id=587001361 node_paths=PackedStringArray("PrimaryCrosshairSprite", "SecondaryCrosshairSprite")]
 process_thread_group = 2
 process_thread_group_order = 0
 process_thread_messages = 0
 script = ExtResource("1_v23f2")
-CrosshairSprite = NodePath("AnimatedSprite2D")
+PrimaryCrosshairSprite = NodePath("AnimatedSprite2D")
+SecondaryCrosshairSprite = NodePath("AnimatedSprite2D/AnimatedSprite2D2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1326093589]
 sprite_frames = SubResource("SpriteFrames_r7dij")
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=1787195296]
+scale = Vector2(1.7, 1.7)
+sprite_frames = SubResource("SpriteFrames_v23f2")
