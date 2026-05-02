@@ -78,6 +78,16 @@ public partial class Sniper : Firearm
 		)
 			return;
 
+		if (_fireCooldown <= 0)
+			Logger.LogInfo(MoveTimeFactor);
+
+		// Stats.Damage = (int)
+		// 	Math.Clamp(
+		// 		MoveDamageMax * (1 - MoveTimeFactor),
+		// 		MoveDamageMin,
+		// 		MoveDamageMax
+		// 	);
+
 		if (FirearmStats is not null)
 			AttackWithMoveTimeBloom(FirearmStats);
 		else
@@ -95,13 +105,14 @@ public partial class Sniper : Firearm
 
 	private void UpdateMoveTimeBloom(double delta)
 	{
-		if (MovementController?.Velocity.LengthSquared() > 0)
+		if (
+			MovementController?.Velocity.LengthSquared() > 0
+			|| Crosshair?.CrosshairVelocity.LengthSquared() > 0
+		)
 			MoveTime += delta * MoveBloomGrowthRate;
+		else
+			MoveTime -= delta * MoveBloomShrinkRate;
 
-		if (Crosshair?.CrosshairVelocity.LengthSquared() > 0)
-			MoveTime += delta * MoveBloomGrowthRate;
-
-		MoveTime -= delta * MoveBloomShrinkRate;
 		SpreadCrosshair((float)MoveTimeFactor);
 	}
 
