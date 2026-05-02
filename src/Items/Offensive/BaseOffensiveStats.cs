@@ -6,81 +6,28 @@ namespace Game.Items.Offensive;
 public partial class BaseOffensiveStats : BaseItemStats
 {
 	[Export]
-	public int Damage
-	{
-		get;
-		set
-		{
-			field = value;
-			EmitChanged();
-		}
-	} = 4;
+	public int Damage = 4;
 
+	/// <summary>
+	/// Damage is calculated as: Base Damage + (Base Damage * CritDamageMultiplier)
+	/// </summary>
 	[Export(PropertyHint.Range, "0,3,0.1,or_greater")]
-	public float CritDamageMultiplier
-	{
-		get;
-		set
-		{
-			field = value;
-			EmitChanged();
-		}
-	} = 1.5f;
+	public float CritDamageMultiplier = 1.5f;
 
 	[Export(PropertyHint.Range, "0,1,0.01")]
-	public float CritChanceProportion
-	{
-		get;
-		set
-		{
-			field = value;
-			EmitChanged();
-		}
-	} = 0.1f;
+	public float CritChanceProportion = 0.1f;
 
 	[Export]
-	public int ProjectileSpeed
-	{
-		get;
-		set
-		{
-			field = value;
-			EmitChanged();
-		}
-	} = 3600;
+	public int ProjectileSpeed = 3600;
 
 	[Export]
-	public float ProjectileScaleMultiplier
-	{
-		get;
-		set
-		{
-			field = value;
-			EmitChanged();
-		}
-	} = 1;
+	public float ProjectileScaleMultiplier = 1;
 
 	[Export]
-	public float AttackSpeed
-	{
-		get;
-		set
-		{
-			field = value;
-			EmitChanged();
-		}
-	} = 0.2f;
+	public float AttackSpeed = 0.2f;
 
 	[Export]
-	public int PierceLimit
-	{
-		get;
-		set
-		{
-			field = value;
-			EmitChanged();
-		}
-	} = 1;
+	public int PierceLimit = 1;
 
 	[Export]
 	public Array<Resource> ProjectileEffects

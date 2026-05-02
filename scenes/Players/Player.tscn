@@ -148,9 +148,9 @@ _sprite = NodePath("../AnimatedSprite2D")
 [node name="PlayerWeaponController" type="Node" parent="." unique_id=752109662]
 script = ExtResource("5_yecw2")
 
-[node name="Revolver" parent="PlayerWeaponController" unique_id=1857571471 instance=ExtResource("6_eai52")]
-
 [node name="Sniper" parent="PlayerWeaponController" unique_id=753371605 instance=ExtResource("10_2g2d6")]
+
+[node name="Revolver" parent="PlayerWeaponController" unique_id=1857571471 instance=ExtResource("6_eai52")]
 
 [node name="Ak47" parent="PlayerWeaponController" unique_id=915008798 instance=ExtResource("7_wuwji")]
 

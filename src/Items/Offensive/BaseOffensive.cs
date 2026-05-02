@@ -75,12 +75,16 @@ public abstract partial class BaseOffensive : BaseItem
 			return;
 
 		var crit = CalculateCrit();
-		var newHealth = health.Health - Stats.Damage - crit;
+		var randomDamage = Mathf.CeilToInt(
+			GD.RandRange(-0.15, 0.15) * Stats.Damage
+		);
+		var damage = Stats.Damage + crit + randomDamage;
+		var newHealth = health.Health - damage;
 
 		var hit = new HitFeedbackComponent()
 		{
 			HitTime = 0.5f,
-			Damage = Stats.Damage + crit,
+			Damage = damage,
 			IsCrit = crit > 0,
 		};
 		if (!ComponentStore.GetComponent<HitFeedbackComponent>(id, out var _))
@@ -132,6 +136,6 @@ public abstract partial class BaseOffensive : BaseItem
 			return 0;
 		}
 
-		return (int)Math.Round(Stats.Damage * Stats.CritDamageMultiplier);
+		return Mathf.CeilToInt(Stats.Damage * Stats.CritDamageMultiplier);
 	}
 }

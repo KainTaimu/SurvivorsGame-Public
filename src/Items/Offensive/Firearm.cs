@@ -217,7 +217,7 @@ public abstract partial class Firearm
 
 	private void UpdateAdditionalFields()
 	{
-		_fireCooldown = Stats.AttackSpeed;
+		_fireCooldown = 0;
 
 		Logger.LogDebug(
 			"Updated Stats",

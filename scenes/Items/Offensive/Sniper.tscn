@@ -11,13 +11,18 @@ metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_f52b2"]
 script = ExtResource("4_u7hyr")
-ProjectileRadius = 16
+ProjectileRadius = 14
 ReloadTimeMs = 2000
-BloomCoefficientDeg = 45.0
-MagazineCapacity = 5
-RecoilScale = 2.0
+BloomCoefficientDeg = 0.0
+MagazineCapacity = 99
+HorizontalRecoilMin = 20.0
+HorizontalBaseRecoil = 20.0
+HorizontalRecoilRandom = 20.0
+VerticalRecoilMin = 120.0
+VerticalBaseRecoil = 120.0
+VerticalRecoilRandom = 40.0
 CameraRecoilScale = 3.0
-Damage = 7
+Damage = 20
 CritDamageMultiplier = 2.0
 CritChanceProportion = 1.0
 ProjectileSpeed = 20000
@@ -25,8 +30,12 @@ ProjectileScaleMultiplier = 1.5
 AttackSpeed = 2.0
 PierceLimit = 99
 Additional = Dictionary[String, Variant]({
-"MoveTimeBloomGrowthRate": 3.0,
-"MoveTimeBloomShrinkRate": 1.0,
+"MoveBloomMaxDeg": 50.0,
+"MoveBloomMinDeg": 0.0,
+"MoveDamageMax": 10,
+"MoveDamageMin": 5,
+"MoveTimeGrowthRate": 5.0,
+"MoveTimeShrinkRate": 1.2,
 "MoveTimeToMaxBloom": 1.0
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"

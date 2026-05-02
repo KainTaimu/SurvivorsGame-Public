@@ -33,6 +33,17 @@ public partial class Crosshair : Node2D
 		}
 	} = 1;
 
+	public float PrimaryCrosshairSpreadRatio =>
+		PrimaryCrosshairSprite.Frame
+		/ PrimaryCrosshairSprite.SpriteFrames.GetFrameCount(
+			PrimaryCrosshairSprite.Animation
+		);
+	public float SecondaryCrosshairSpreadRatio =>
+		SecondaryCrosshairSprite.Frame
+		/ SecondaryCrosshairSprite.SpriteFrames.GetFrameCount(
+			SecondaryCrosshairSprite.Animation
+		);
+
 	public Vector2 CanvasSpacePosition =>
 		PrimaryCrosshairSprite.GetCanvasTransform()
 		* PrimaryCrosshairSprite.GlobalPosition;
@@ -44,6 +55,7 @@ public partial class Crosshair : Node2D
 	public static Crosshair? Instance { get; private set; }
 
 	public float AngleFromPlayer => GetAngleFromPlayer();
+	public Vector2 CrosshairVelocity;
 
 	public CrossHairRecoil Recoil { get; private set; } = null!;
 
@@ -73,6 +85,7 @@ public partial class Crosshair : Node2D
 	{
 		PrimaryCrosshairSprite.Frame = 0;
 		SecondaryCrosshairSprite.Frame = 0;
+		Callable.From(() => CrosshairVelocity = Vector2.Zero).CallDeferred();
 	}
 
 	public override void _ExitTree()
@@ -85,6 +98,7 @@ public partial class Crosshair : Node2D
 		if (@event is not InputEventMouseMotion motion)
 			return;
 		Position += motion.Relative;
+		CrosshairVelocity += motion.Relative;
 		ClampCrosshairToViewport();
 		EmitSignalOnCrosshairMoved();
 	}
@@ -155,10 +169,6 @@ public partial class Crosshair : Node2D
 
 	public partial class CrossHairRecoil(Crosshair crosshair) : Node
 	{
-		/// Ideas:
-		///     - Bounce recoil: Crosshair jumps per shot
-		///         - Rotation so horizontal recoil is tangent to mouse relative to player?
-		///     - Bloom recoil: Accurate until nth shot, where accuracy exponentially decreases per shot
 		private Vector2 _accumilatedImpulse = Vector2.Zero;
 		private float _impulseScale = 1;
 		private Tween? _impulseTweener;
@@ -177,10 +187,10 @@ public partial class Crosshair : Node2D
 			_impulseScale += 0.1f;
 			_impulseScale = Math.Clamp(_impulseScale, 0f, 1f);
 
+			var finalImpulseVector =
+				impulse + (_accumilatedImpulse * _impulseScale);
 			var finalCrosshairPos =
-				targetCrosshair.Position
-				+ impulse
-				+ (_accumilatedImpulse * _impulseScale);
+				targetCrosshair.Position + finalImpulseVector;
 
 			_recoilJumpTweener?.Kill();
 			_recoilJumpTweener = crosshair
