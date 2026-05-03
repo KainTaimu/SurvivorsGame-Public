@@ -55,20 +55,27 @@ public partial class ProjectileBullet : BaseProjectile
 			* (float)delta;
 		Position = from + moveVector;
 
-		if (!TargetQuery.TryGetTargetsInArea(from, HitRadius, out var ids))
-			return;
-
-		foreach (var id in ids)
+		if (
+			TargetQuery.TryGetTargetsInAreaAlongSegment(
+				from,
+				Position,
+				HitRadius,
+				out var ids
+			)
+		)
 		{
-			if (_hits.Contains(id))
-				return;
+			foreach (var id in ids)
+			{
+				if (_hits.Contains(id))
+					return;
 
-			OffensiveOrigin.HandleHit(id: id);
+				OffensiveOrigin.HandleHit(id: id);
 
-			_hits.Add(id);
-			_pierceCount++;
-			if (_pierceCount >= PierceLimit)
-				QueueFree();
+				_hits.Add(id);
+				_pierceCount++;
+				if (_pierceCount >= PierceLimit)
+					QueueFree();
+			}
 		}
 	}
 }

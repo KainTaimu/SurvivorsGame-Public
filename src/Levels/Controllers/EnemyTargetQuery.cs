@@ -8,6 +8,11 @@ using Game.Models;
 
 namespace Game.Levels.Controllers;
 
+// BUG:
+// Hit detection reliability falls as FPS drops.
+// There are attempts to make it less severe by
+// increase sample size in *AlongSegment methods but
+// the issue persists.
 public partial class EnemyTargetQuery : Node
 {
 	[Export]
@@ -99,6 +104,61 @@ public partial class EnemyTargetQuery : Node
 		return true;
 	}
 
+	public bool TryGetTargetsInAreaAlongSegment(
+		Vector2 fromAreaCenter,
+		Vector2 toAreaCenter,
+		float areaRadius,
+		out int[] targetIds
+	)
+	{
+		// credit: https://www.redblobgames.com/grids/circle-drawing/
+		var targets = new HashSet<int>();
+
+		var delta = toAreaCenter - fromAreaCenter;
+		var length = delta.Length();
+		var step =
+			_gridSize
+			* (0.1 + Performance.GetMonitor(Performance.Monitor.TimeProcess));
+
+		var sampleCount = Math.Max(100, Mathf.CeilToInt(length / step));
+		Logger.LogDebug(sampleCount);
+
+		for (var b = 0; b <= sampleCount; b++)
+		{
+			var t = sampleCount == 0 ? 0f : (float)b / sampleCount;
+			var sample = fromAreaCenter.Lerp(toAreaCenter, t);
+
+			var top = Math.Ceiling(sample.Y - areaRadius);
+			var bottom = Math.Floor(sample.Y + areaRadius);
+			for (var y = top; y <= bottom; y++)
+			{
+				var dy = y - sample.Y;
+				var dx = Math.Sqrt(areaRadius * areaRadius - dy * dy);
+				var left = Math.Ceiling(sample.X - dx);
+				var right = Math.Floor(sample.X + dx);
+				for (var x = left; x <= right; x++)
+				{
+					var cell = _grid.GetCellWorld(
+						new Vector2((float)x, (float)y)
+					);
+					if (cell is null)
+						continue;
+
+					for (var i = 0; i < cell.Count; i++)
+					{
+						var id = cell.Array[i];
+						if (targets.Contains(id))
+							continue;
+						targets.Add(id);
+					}
+				}
+			}
+		}
+
+		targetIds = [.. targets];
+		return true;
+	}
+
 	public IEnumerable<int> GetTargetsInScreen()
 	{
 		for (var x = 0; x < _grid.Dimensions.X; x++)
@@ -115,34 +175,30 @@ public partial class EnemyTargetQuery : Node
 	}
 
 	/// <summary>
-	/// Finds closest target intersecting swept segment corridor.
+	/// Finds all targets intersecting swept segment corridor.
 	/// </summary>
 	/// <param name="from">Segment start in world coordinates.</param>
 	/// <param name="to">Segment end in world coordinates.</param>
 	/// <param name="hitRadius">Corridor radius around segment.</param>
-	/// <param name="targetId">
-	/// Output entity id. Set to <c>-1</c> when no target found.
-	/// </param>
+	/// <param name="targetIds">Output entity ids.</param>
 	/// <returns>
 	/// <c>true</c> when at least one target lies within swept corridor.
 	/// </returns>
-	public bool TryGetTargetAlongSegment(
+	public bool TryGetTargetsAlongSegment(
 		Vector2 from,
 		Vector2 to,
 		float hitRadius,
-		out int targetId
+		out int[] targetIds
 	)
 	{
-		targetId = -1;
-
 		var delta = to - from;
 		var length = delta.Length();
-		var step = _gridSize * 0.25f;
-		var sampleCount = Math.Max(1, Mathf.CeilToInt(length / step));
-		var hitRadiusSq = hitRadius * hitRadius;
+		var step =
+			_gridSize * Performance.GetMonitor(Performance.Monitor.TimeProcess);
+		var sampleCount = Math.Max(100, Mathf.CeilToInt(length / step));
 
-		var closestId = -1;
-		var closestDistSq = float.PositiveInfinity;
+		var hitRadiusSq = hitRadius * hitRadius;
+		var targets = new HashSet<int>();
 
 		for (var i = 0; i <= sampleCount; i++)
 		{
@@ -153,20 +209,22 @@ public partial class EnemyTargetQuery : Node
 			if (sampleCell is null)
 				continue;
 
-			FindClosestAlongSegmentInNeighborCells(
+			FindTargetsAlongSegmentInNeighborCells(
 				sampleCell.Index,
 				from,
 				to,
 				hitRadiusSq,
-				ref closestId,
-				ref closestDistSq
+				targets
 			);
 		}
 
-		if (closestId == -1)
+		if (targets.Count == 0)
+		{
+			targetIds = [];
 			return false;
+		}
 
-		targetId = closestId;
+		targetIds = [.. targets];
 		return true;
 	}
 
@@ -181,13 +239,12 @@ public partial class EnemyTargetQuery : Node
 	/// <param name="closestDistSq">
 	/// Best candidate squared distance tracked by reference.
 	/// </param>
-	private void FindClosestAlongSegmentInNeighborCells(
+	private void FindTargetsAlongSegmentInNeighborCells(
 		Vector2I centerCell,
 		Vector2 from,
 		Vector2 to,
 		float hitRadiusSq,
-		ref int closestId,
-		ref float closestDistSq
+		HashSet<int> targets
 	)
 	{
 		for (var x = -1; x <= 1; x++)
@@ -197,14 +254,7 @@ public partial class EnemyTargetQuery : Node
 			if (cell is null)
 				continue;
 
-			FindClosestAlongSegmentInCell(
-				cell,
-				from,
-				to,
-				hitRadiusSq,
-				ref closestId,
-				ref closestDistSq
-			);
+			FindTargetsAlongSegmentInCell(cell, from, to, hitRadiusSq, targets);
 		}
 	}
 
@@ -219,18 +269,19 @@ public partial class EnemyTargetQuery : Node
 	/// <param name="closestDistSq">
 	/// Best candidate squared distance tracked by reference.
 	/// </param>
-	private void FindClosestAlongSegmentInCell(
+	private void FindTargetsAlongSegmentInCell(
 		UniformGridCell<int> cell,
 		Vector2 from,
 		Vector2 to,
 		float hitRadiusSq,
-		ref int closestId,
-		ref float closestDistSq
+		HashSet<int> targets
 	)
 	{
 		for (var i = 0; i < cell.Count; i++)
 		{
 			var id = cell.Array[i];
+			if (targets.Contains(id))
+				continue;
 			if (!_entities.GetComponent<PositionComponent>(id, out var ipos))
 				continue;
 
@@ -238,11 +289,7 @@ public partial class EnemyTargetQuery : Node
 			if (distSq > hitRadiusSq)
 				continue;
 
-			if (distSq < closestDistSq)
-			{
-				closestDistSq = distSq;
-				closestId = id;
-			}
+			targets.Add(id);
 		}
 	}
 
