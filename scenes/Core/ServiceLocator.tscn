@@ -1,53 +1,8 @@
 [gd_scene format=3 uid="uid://csat7573jqbye"]
 
 [ext_resource type="Script" uid="uid://b8phj1nedu4bc" path="res://src/Core/Services/ServiceLocator.cs" id="1_wqi2k"]
-[ext_resource type="Texture2D" uid="uid://cld7o2wop1s72" path="res://assets/Enemies/duck_run.png" id="2_sangk"]
-[ext_resource type="Script" uid="uid://bnoq5noicfau6" path="res://src/Levels/Controllers/FodderEnemySpriteInfo.cs" id="3_kdo7a"]
-[ext_resource type="Texture2D" uid="uid://coljm8hobe4v6" path="res://assets/Players/shondo.png" id="4_0uk3q"]
-[ext_resource type="Script" uid="uid://s7wc6pn7yuev" path="res://src/Core/Services/SpriteFrameMappingsService.cs" id="5_ipw78"]
-[ext_resource type="Texture2D" uid="uid://xp5sa420xcnt" path="res://assets/Enemies/vanoss_run.png" id="5_kdo7a"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_sangk"]
-size = Vector2(32, 32)
-
-[sub_resource type="Resource" id="Resource_eju28"]
-script = ExtResource("3_kdo7a")
-SpriteFrames = ExtResource("2_sangk")
-SpriteName = "duck"
-AnimationSpeed = 0.1
-FrameCountX = 4
-metadata/_custom_type_script = "uid://bnoq5noicfau6"
-
-[sub_resource type="Resource" id="Resource_nu24x"]
-script = ExtResource("3_kdo7a")
-SpriteFrames = ExtResource("4_0uk3q")
-SpriteName = "shondo"
-AnimationSpeed = 0.1
-FrameCountX = 4
-FrameSizePxX = 31
-FrameSizePxY = 31
-metadata/_custom_type_script = "uid://bnoq5noicfau6"
-
-[sub_resource type="Resource" id="Resource_0uk3q"]
-script = ExtResource("3_kdo7a")
-SpriteFrames = ExtResource("5_kdo7a")
-SpriteName = "vanoss"
-AnimationSpeed = 0.1
-FrameCountX = 4
-FrameSizePxX = 30
-FrameSizePxY = 30
-metadata/_custom_type_script = "uid://bnoq5noicfau6"
-
-[sub_resource type="Resource" id="Resource_648t6"]
-script = ExtResource("5_ipw78")
-_spriteMapping = Dictionary[String, Object]({
-"duck": SubResource("Resource_eju28"),
-"shondo": SubResource("Resource_nu24x"),
-"vanoss": SubResource("Resource_0uk3q")
-})
-PlaceholderSpriteFrame = SubResource("PlaceholderTexture2D_sangk")
-metadata/_custom_type_script = "uid://s7wc6pn7yuev"
+[ext_resource type="Resource" uid="uid://dxuafjpeqqim" path="res://scenes/Core/SpriteFrameMappingsService.tres" id="2_uvc07"]
 
 [node name="ServiceLocator" type="Node" unique_id=157946951]
 script = ExtResource("1_wqi2k")
-_exportedServices = Array[Object]([SubResource("Resource_648t6")])
+_exportedServices = Array[Object]([ExtResource("2_uvc07")])

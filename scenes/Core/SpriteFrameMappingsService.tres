@@ -1,8 +1,48 @@
 [gd_resource type="Resource" script_class="SpriteFrameMappingsService" format=3 uid="uid://dxuafjpeqqim"]
 
+[ext_resource type="Texture2D" uid="uid://cld7o2wop1s72" path="res://assets/Enemies/duck_run.png" id="1_5ouet"]
+[ext_resource type="Script" uid="uid://bnoq5noicfau6" path="res://src/Levels/Controllers/FodderEnemySpriteInfo.cs" id="2_xcs0u"]
 [ext_resource type="Script" uid="uid://s7wc6pn7yuev" path="res://src/Core/Services/SpriteFrameMappingsService.cs" id="3_5ouet"]
+[ext_resource type="Texture2D" uid="uid://dgbqs3nq7mvej" path="res://assets/Enemies/shondo_desat.png" id="3_xcs0u"]
+[ext_resource type="Texture2D" uid="uid://c2rtfggucpya6" path="res://assets/Enemies/vanoss_run_desat.png" id="4_5ouet"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_sangk"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_eju28"]
+script = ExtResource("2_xcs0u")
+SpriteFrames = ExtResource("1_5ouet")
+SpriteName = "duck"
+AnimationSpeed = 0.1
+FrameCountX = 4
+metadata/_custom_type_script = "uid://bnoq5noicfau6"
+
+[sub_resource type="Resource" id="Resource_nu24x"]
+script = ExtResource("2_xcs0u")
+SpriteFrames = ExtResource("3_xcs0u")
+SpriteName = "shondo"
+AnimationSpeed = 0.1
+FrameCountX = 4
+FrameSizePxX = 31
+FrameSizePxY = 31
+metadata/_custom_type_script = "uid://bnoq5noicfau6"
+
+[sub_resource type="Resource" id="Resource_0uk3q"]
+script = ExtResource("2_xcs0u")
+SpriteFrames = ExtResource("4_5ouet")
+SpriteName = "vanoss"
+AnimationSpeed = 0.1
+FrameCountX = 4
+FrameSizePxX = 30
+FrameSizePxY = 30
+metadata/_custom_type_script = "uid://bnoq5noicfau6"
 
 [resource]
 script = ExtResource("3_5ouet")
-_spriteMapping = null
+_spriteMapping = Dictionary[String, Object]({
+"duck": SubResource("Resource_eju28"),
+"shondo": SubResource("Resource_nu24x"),
+"vanoss": SubResource("Resource_0uk3q")
+})
+PlaceholderSpriteFrame = SubResource("PlaceholderTexture2D_sangk")
 metadata/_custom_type_script = "uid://s7wc6pn7yuev"
