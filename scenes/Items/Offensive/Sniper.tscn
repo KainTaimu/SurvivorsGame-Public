@@ -11,7 +11,7 @@ metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_f52b2"]
 script = ExtResource("4_u7hyr")
-ProjectileRadius = 14
+ProjectileRadius = 20
 BloomCoefficientDeg = 0.0
 MagazineCapacity = 99
 HorizontalRecoilMin = 20.0

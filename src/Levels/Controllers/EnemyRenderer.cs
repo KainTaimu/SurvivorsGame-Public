@@ -20,13 +20,9 @@ public partial class EnemyRenderer : Node
 
 	// Only for checking visibility. Nothing stored inside
 	private CenteredMovingUniformGrid<object> _visibilityGrid = null!;
-	private readonly Dictionary<MultiMeshInstance2D, int> _mmiVisibilityCount =
-	[];
+	private readonly Dictionary<MultiMesh, int> _mmiVisibilityCount = [];
 
-	private readonly Dictionary<
-		string,
-		MultiMeshInstance2D
-	> _spriteToMultiMesh = [];
+	private readonly Dictionary<string, MultiMesh> _spriteToMultiMesh = [];
 
 	private const int _initialInstanceCount = 2000;
 	private const float _instanceGrowthMultiplier = 1.5f;
@@ -56,7 +52,7 @@ public partial class EnemyRenderer : Node
 		foreach (var mmi in _mmiVisibilityCount.Keys)
 		{
 			_mmiVisibilityCount[mmi] = 0;
-			mmi.Multimesh.VisibleInstanceCount = 0;
+			mmi.VisibleInstanceCount = 0;
 		}
 
 		foreach (
@@ -73,9 +69,9 @@ public partial class EnemyRenderer : Node
 				mmi = CreateNewMultiMesh(sprite.SpriteName);
 
 			var count = _mmiVisibilityCount[mmi]++;
-			if (count >= mmi.Multimesh.InstanceCount)
-				mmi.Multimesh.InstanceCount = (int)(
-					mmi.Multimesh.InstanceCount * _instanceGrowthMultiplier
+			if (count >= mmi.InstanceCount)
+				mmi.InstanceCount = (int)(
+					mmi.InstanceCount * _instanceGrowthMultiplier
 				);
 
 			UpdateEnemyInstance(mmi, id, count, pos.Position, sprite);
@@ -83,20 +79,18 @@ public partial class EnemyRenderer : Node
 
 		foreach (var (mmi, visibleCount) in _mmiVisibilityCount)
 		{
-			mmi.Multimesh.VisibleInstanceCount = visibleCount;
+			mmi.VisibleInstanceCount = visibleCount;
 		}
 	}
 
 	private void UpdateEnemyInstance(
-		MultiMeshInstance2D mmi,
+		MultiMesh multiMesh,
 		int entityId,
 		int instanceIdx,
 		Vector2 pos,
 		AnimatedSpriteComponent sprite
 	)
 	{
-		var multiMesh = mmi.Multimesh;
-
 		var flip = PlayerPosition < pos;
 
 		var updatedSprite = sprite;
@@ -134,7 +128,7 @@ public partial class EnemyRenderer : Node
 		multiMesh.SetInstanceTransform2D(instanceIdx, new Transform2D(0, pos));
 	}
 
-	private MultiMeshInstance2D CreateNewMultiMesh(string spriteName)
+	private MultiMesh CreateNewMultiMesh(string spriteName)
 	{
 		var mmi = _multiMesh.Instantiate<MultiMeshInstance2D>();
 		// To avoid flickering, pre-initialize _initialInstanceCount instances
@@ -149,16 +143,16 @@ public partial class EnemyRenderer : Node
 			{
 				Size = new Vector2(32, 32),
 			};
-			_spriteToMultiMesh.Add(spriteName, mmi);
-			_mmiVisibilityCount.TryAdd(mmi, 0);
-			return mmi;
+			_spriteToMultiMesh.Add(spriteName, mmi.Multimesh);
+			_mmiVisibilityCount.TryAdd(mmi.Multimesh, 0);
+			return mmi.Multimesh;
 		}
 
 		mmi.Texture = ss.GetSpriteFrame(spriteName);
 
 		AddChild(mmi);
-		_spriteToMultiMesh.Add(spriteName, mmi);
-		_mmiVisibilityCount.TryAdd(mmi, 0);
-		return mmi;
+		_spriteToMultiMesh.Add(spriteName, mmi.Multimesh);
+		_mmiVisibilityCount.TryAdd(mmi.Multimesh, 0);
+		return mmi.Multimesh;
 	}
 }

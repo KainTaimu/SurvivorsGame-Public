@@ -13,11 +13,10 @@ public partial class Airstrike : BaseOffensive, IManualAttack
 	public override void _Process(double delta)
 	{
 		_fireCooldown -= delta;
-		if (
-			Input.IsActionPressed(
-				AttackActionString ?? InputMapNames.PrimaryAttack
-			)
-		)
+		if (AttackActionString is null)
+			return;
+
+		if (Input.IsActionPressed(AttackActionString))
 			Attack();
 	}
 
