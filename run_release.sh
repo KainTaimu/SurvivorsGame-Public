@@ -1,2 +1,2 @@
-godot-mono --path . --export-release Linux exports/linux.x86_64 --headless
-./exports/linux.x86_64
+godot-mono --path . --export-release Linux exports/linux/linux.x86_64 --headless
+./exports/linux/linux.x86_64
