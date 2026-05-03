@@ -17,7 +17,7 @@ metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_n3sky"]
 script = ExtResource("4_y3hip")
-ReloadTimeMs = 1800
+ReloadTimeMs = 1800.0
 BloomCoefficientDeg = 3.0
 MagazineCapacity = 6
 HorizontalRecoilMin = 20.0
@@ -40,25 +40,20 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0u5yb"]
-playback_mode = 1
-streams_count = 1
-stream_0/stream = ExtResource("6_fgf34")
-
 [node name="Revolver" type="Node" unique_id=1644478588 node_paths=PackedStringArray("_ammoCount", "CockAudioPlayer", "ShootAudioPlayer")]
 script = ExtResource("1_0wf3b")
 _ammoCount = NodePath("CanvasLayer")
-CockAudioPlayer = NodePath("AudioStreamPlayer2")
+CockAudioPlayer = NodePath("CockAudioPlayer")
 _projectileScene = ExtResource("2_o3lg4")
-ShootAudioPlayer = NodePath("AudioStreamPlayer")
+ShootAudioPlayer = NodePath("ShootAudioPlayer")
 Properties = SubResource("Resource_whe3a")
 Stats = SubResource("Resource_n3sky")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1706054987]
+[node name="ShootAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1706054987]
 process_mode = 3
-stream = SubResource("AudioStreamRandomizer_0u5yb")
+stream = ExtResource("6_fgf34")
 
-[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="." unique_id=1261930206]
+[node name="CockAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1261930206]
 process_mode = 3
 stream = ExtResource("6_0u5yb")
 volume_db = 12.0

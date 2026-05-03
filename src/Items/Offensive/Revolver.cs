@@ -33,11 +33,11 @@ public partial class Revolver : Firearm
 				GetTree()
 					.CreateTimer(
 						FirearmStats?.ReloadTimeMs
+							/ 1000 // To seconds
+							/ 5 // Arbitrary
+							/ 6 // Amount of cylinder spin
+							* i
 							?? 0
-								/ 1000 // To seconds
-								/ 5 // Arbitrary
-								/ 6 // Amount of cylinder spin
-								* i
 					)
 					.Timeout += () => CockAudioPlayer?.Play();
 		};
@@ -46,7 +46,7 @@ public partial class Revolver : Firearm
 			for (var i = 0; i < 6; i++)
 				GetTree()
 					.CreateTimer(
-						FirearmStats?.ReloadTimeMs ?? 0 / 1000 / 5 / 6 * i
+						FirearmStats?.ReloadTimeMs / 1000 / 5 / 6 * i ?? 0
 					)
 					.Timeout += () => CockAudioPlayer?.Play();
 		};

@@ -38,26 +38,7 @@ public partial class Sniper : Firearm
 	public override void _Ready()
 	{
 		base._Ready();
-		OnAttack += () =>
-		{
-			ApplyCameraRecoil();
-			var tween = CreateTween()
-				.SetEase(Tween.EaseType.Out)
-				.SetTrans(Tween.TransitionType.Expo);
-			tween.TweenMethod(
-				Callable.From<float>(
-					(i) =>
-					{
-						i = Math.Clamp(i, 0, 1);
-						SpreadCrosshair(i);
-						MoveTime = i;
-					}
-				),
-				1f,
-				MoveTime,
-				1f
-			);
-		};
+		OnAttack += ApplyCameraRecoil;
 	}
 
 	public override void _Process(double delta)
@@ -78,15 +59,16 @@ public partial class Sniper : Firearm
 		)
 			return;
 
-		if (_fireCooldown <= 0)
-			Logger.LogInfo(MoveTimeFactor);
-
-		// Stats.Damage = (int)
-		// 	Math.Clamp(
-		// 		MoveDamageMax * (1 - MoveTimeFactor),
-		// 		MoveDamageMin,
-		// 		MoveDamageMax
-		// 	);
+		if (IsReadyToShoot)
+		{
+			Stats.CritChanceProportion = (float)(1 - MoveTimeFactor);
+			Stats.Damage = (int)
+				Math.Clamp(
+					MoveDamageMax * (1 - MoveTimeFactor),
+					MoveDamageMin,
+					MoveDamageMax
+				);
+		}
 
 		if (FirearmStats is not null)
 			AttackWithMoveTimeBloom(FirearmStats);

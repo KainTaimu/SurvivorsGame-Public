@@ -33,9 +33,9 @@ Additional = Dictionary[String, Variant]({
 "MoveBloomMaxDeg": 50.0,
 "MoveBloomMinDeg": 0.0,
 "MoveDamageMax": 20,
-"MoveDamageMin": 3,
+"MoveDamageMin": 10,
 "MoveTimeGrowthRate": 2.4,
-"MoveTimeShrinkRate": 1.2,
+"MoveTimeShrinkRate": 5.0,
 "MoveTimeToMaxBloom": 1.0
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"

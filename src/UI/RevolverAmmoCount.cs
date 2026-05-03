@@ -88,6 +88,7 @@ public partial class RevolverAmmoCount : CanvasLayer
 		_revolver.OnAttack += () =>
 		{
 			var tween = CreateTween().SetTrans(Tween.TransitionType.Spring);
+			// Cylinder Shake
 			for (var i = 0; i < 6; i++)
 			{
 				static int rand() => GD.RandRange(-1, 1);

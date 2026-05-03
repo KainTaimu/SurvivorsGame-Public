@@ -8,7 +8,7 @@ public partial class FirearmStats : BaseOffensiveStats
 	public int ProjectileRadius = 24;
 
 	[Export]
-	public int ReloadTimeMs = 1500;
+	public float ReloadTimeMs = 1500;
 
 	[Export]
 	public float BloomCoefficientDeg = 0.03f;

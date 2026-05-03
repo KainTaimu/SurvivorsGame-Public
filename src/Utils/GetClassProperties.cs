@@ -2,7 +2,7 @@ using System.Text;
 
 namespace Game.Utils;
 
-public static class GetClassProperties
+public static class ClassInspector
 {
 	public static string GetClassPropertiesString(object obj)
 	{

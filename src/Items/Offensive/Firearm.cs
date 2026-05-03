@@ -42,7 +42,7 @@ public abstract partial class Firearm
 		}
 	}
 
-	public bool ReadyToShoot
+	public bool IsReadyToShoot
 	{
 		get
 		{
@@ -64,7 +64,7 @@ public abstract partial class Firearm
 
 	private int _magazineCount;
 
-	private int ReloadTimeMs => FirearmStats?.ReloadTimeMs ?? 1500;
+	private float ReloadTimeMs => FirearmStats?.ReloadTimeMs ?? 1500;
 	private float BloomCoefficientDeg =>
 		FirearmStats?.BloomCoefficientDeg ?? 0.03f;
 	private float HorizontalRecoilMin =>
@@ -98,7 +98,7 @@ public abstract partial class Firearm
 			Reload();
 			return;
 		}
-		if (!ReadyToShoot)
+		if (!IsReadyToShoot)
 			return;
 
 		ShootAudioPlayer?.Play();
@@ -220,8 +220,8 @@ public abstract partial class Firearm
 		_fireCooldown = 0;
 
 		Logger.LogDebug(
-			"Updated Stats",
-			GetClassProperties.GetClassPropertiesString(Stats)
+			"Updated Stats\n",
+			ClassInspector.GetClassPropertiesString(Stats)
 		);
 	}
 }
