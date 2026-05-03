@@ -75,9 +75,10 @@ public abstract partial class BaseOffensive : BaseItem
 			return;
 
 		var crit = CalculateCrit();
-		var randomDamage = Mathf.CeilToInt(
-			GD.RandRange(-0.15, 0.15) * Stats.Damage
-		);
+		var randomDamage =
+			Stats.Damage > 1
+				? Mathf.CeilToInt(GD.RandRange(-0.15, 0.15) * Stats.Damage)
+				: 0;
 		var damage = Stats.Damage + crit + randomDamage;
 		var newHealth = health.Health - damage;
 

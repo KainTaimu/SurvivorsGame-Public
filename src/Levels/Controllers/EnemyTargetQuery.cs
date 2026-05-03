@@ -118,10 +118,9 @@ public partial class EnemyTargetQuery : Node
 		var length = delta.Length();
 		var step =
 			_gridSize
-			* (0.1 + Performance.GetMonitor(Performance.Monitor.TimeProcess));
+			* (1 + Performance.GetMonitor(Performance.Monitor.TimeProcess));
 
-		var sampleCount = Math.Max(100, Mathf.CeilToInt(length / step));
-		Logger.LogDebug(sampleCount);
+		var sampleCount = Math.Max(10, Mathf.CeilToInt(length / step));
 
 		for (var b = 0; b <= sampleCount; b++)
 		{
