@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://1hchpk0m1v70"]
+
+[ext_resource type="Script" uid="uid://btsjfyj4mvtfa" path="res://src/Levels/Controllers/GoreManager.cs" id="1_2mqri"]
+[ext_resource type="PackedScene" uid="uid://bqy6yv5uhrqp0" path="res://scenes/VFX/BloodKillParticles.tscn" id="2_pkkq0"]
+
+[node name="GoreManager" type="Node" unique_id=623372769]
+script = ExtResource("1_2mqri")
+_enemyDeathParticlesScene = ExtResource("2_pkkq0")

@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://c8d8andvaknho"]
 
 [ext_resource type="Script" uid="uid://cv0uegm46tv7j" path="res://src/Levels/Controllers/EnemyDeathManager.cs" id="1_xyvax"]
-[ext_resource type="PackedScene" uid="uid://bqy6yv5uhrqp0" path="res://scenes/VFX/BloodKillParticles.tscn" id="2_l2so0"]
+[ext_resource type="PackedScene" uid="uid://1hchpk0m1v70" path="res://scenes/Levels/GoreManager.tscn" id="2_xyvax"]
 
-[node name="EnemyDeathManager" type="Node" unique_id=821545961 node_paths=PackedStringArray("ComponentStore")]
+[node name="EnemyDeathManager" type="Node" unique_id=821545961 node_paths=PackedStringArray("GoreManager")]
 script = ExtResource("1_xyvax")
-_enemyDeathParticlesScene = ExtResource("2_l2so0")
-ComponentStore = NodePath("")
-MaxActiveParticles = 1000
+GoreManager = NodePath("GoreManager")
+
+[node name="GoreManager" parent="." unique_id=623372769 instance=ExtResource("2_xyvax")]

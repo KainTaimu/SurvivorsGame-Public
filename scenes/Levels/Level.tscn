@@ -87,8 +87,7 @@ _renderer = NodePath("../EnemyRenderer")
 [node name="EnemyHitFeedbackController" parent="Systems/EnemySystems" unique_id=1105191984 node_paths=PackedStringArray("ComponentStore") instance=ExtResource("13_vg5sh")]
 ComponentStore = NodePath("../../EntityComponentStore")
 
-[node name="EnemyDeathManager" parent="Systems/EnemySystems" unique_id=821545961 node_paths=PackedStringArray("ComponentStore") instance=ExtResource("14_aig1n")]
-ComponentStore = NodePath("../../EntityComponentStore")
+[node name="EnemyDeathManager" parent="Systems/EnemySystems" unique_id=821545961 instance=ExtResource("14_aig1n")]
 
 [node name="EnemyMover" type="Node" parent="Systems/EnemySystems" unique_id=348078406 node_paths=PackedStringArray("_entities")]
 script = ExtResource("10_sh7eq")
