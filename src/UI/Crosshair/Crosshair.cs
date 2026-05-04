@@ -187,6 +187,33 @@ public partial class Crosshair : Node2D
 			_impulseScale += 0.1f;
 			_impulseScale = Math.Clamp(_impulseScale, 0f, 1f);
 
+			// Punish avoiding vertical recoil by shooting above or below center
+			var crosshairScreenPosRatio =
+				crosshair.CanvasSpacePosition
+				/ crosshair.GetViewport().GetVisibleRect().Size;
+			if (
+				(
+					crosshairScreenPosRatio.Y < 0.3
+					|| crosshairScreenPosRatio.Y > 0.7
+				)
+				&& crosshairScreenPosRatio.X > 0.3
+				&& crosshairScreenPosRatio.X < 0.7
+			)
+			{
+				// account for larger horizontal size on 16:9 screens
+				impulse = new Vector2(
+					impulse.Y
+						* crosshair.GetViewport().GetVisibleRect().Size.X
+						* 0.001111111f // Arbitrary scaling factor for X
+						* (
+							GD.Randf() < 0.5
+								? (float)GD.RandRange(-1, -0.5)
+								: (float)GD.RandRange(0.5, 1)
+						),
+					impulse.X * 0.8f
+				);
+			}
+
 			var finalImpulseVector =
 				impulse + (_accumilatedImpulse * _impulseScale);
 			var finalCrosshairPos =
