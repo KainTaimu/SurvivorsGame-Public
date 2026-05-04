@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://xy08twumu55m" path="res://src/UI/CurrentWeaponUi.cs" id="1_tlm74"]
 
 [node name="CurrentWeaponUI" type="CanvasLayer" unique_id=2135368036 node_paths=PackedStringArray("_weaponCarousel")]
+process_thread_group = 2
+process_thread_group_order = 0
+process_thread_messages = 0
 script = ExtResource("1_tlm74")
 _weaponCarousel = NodePath("Control/VBoxContainer/WeaponCarousel")
 

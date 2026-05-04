@@ -152,7 +152,7 @@ script = ExtResource("5_yecw2")
 
 [node name="TP9" parent="PlayerWeaponController" unique_id=1472391115 instance=ExtResource("8_8rask")]
 
-[node name="TP10" parent="PlayerWeaponController" unique_id=1530689530 instance=ExtResource("8_8rask")]
+[node name="TP10" parent="PlayerWeaponController" unique_id=447956487 instance=ExtResource("8_8rask")]
 
 [node name="Ak47" parent="PlayerWeaponController" unique_id=915008798 instance=ExtResource("7_wuwji")]
 
