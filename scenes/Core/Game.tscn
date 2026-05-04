@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://brlugd2ju6667"]
+
+[ext_resource type="Script" uid="uid://cd8kwl1lfgjx4" path="res://src/Core/GameSingleton.cs" id="1_vil2m"]
+[ext_resource type="Resource" uid="uid://21pymi1puoaf" path="res://scenes/Core/DefaultGameSettings.tres" id="2_1uj6g"]
+
+[node name="GameSingleton" type="Node" unique_id=1187747533]
+script = ExtResource("1_vil2m")
+_gameSettings = ExtResource("2_1uj6g")

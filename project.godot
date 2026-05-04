@@ -26,7 +26,7 @@ buses/default_bus_layout="uid://cd1ytmgy4kjgv"
 [autoload]
 
 DebugMenu="*uid://cggqb75a8w8r"
-Game="*res://src/Core/Game.cs"
+Game="*uid://brlugd2ju6667"
 ServiceLocator="*res://scenes/Core/ServiceLocator.tscn"
 
 [debug]
