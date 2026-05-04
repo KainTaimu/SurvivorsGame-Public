@@ -5,9 +5,6 @@ public partial class FirearmStats : BaseOffensiveStats
 {
 	[ExportGroup("Firearm")]
 	[Export]
-	public int ProjectileRadius = 24;
-
-	[Export]
 	public float ReloadTimeMs = 1500;
 
 	[Export]

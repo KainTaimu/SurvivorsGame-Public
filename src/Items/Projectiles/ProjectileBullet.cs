@@ -7,13 +7,8 @@ namespace Game.Items.Projectiles;
 
 public partial class ProjectileBullet : BaseProjectile
 {
-	public float HitRadius = 24f;
-
 	[Export]
 	public Sprite2D Sprite = null!;
-
-	public float ProjectileSpeed;
-	public int PierceLimit;
 
 	private int _pierceCount;
 	private readonly List<int> _hits = [];
@@ -56,26 +51,26 @@ public partial class ProjectileBullet : BaseProjectile
 		Position = from + moveVector;
 
 		if (
-			TargetQuery.TryGetTargetsInAreaAlongSegment(
+			!TargetQuery.TryGetTargetsInAreaAlongSegment(
 				from,
 				Position,
 				HitRadius,
 				out var ids
 			)
 		)
+			return;
+
+		foreach (var id in ids)
 		{
-			foreach (var id in ids)
-			{
-				if (_hits.Contains(id))
-					return;
+			if (_hits.Contains(id))
+				return;
 
-				OffensiveOrigin.HandleHit(id: id);
+			OffensiveOrigin.HandleHit(id: id);
 
-				_hits.Add(id);
-				_pierceCount++;
-				if (_pierceCount >= PierceLimit)
-					QueueFree();
-			}
+			_hits.Add(id);
+			_pierceCount++;
+			if (_pierceCount >= PierceLimit)
+				QueueFree();
 		}
 	}
 }

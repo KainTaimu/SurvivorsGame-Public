@@ -11,9 +11,8 @@ script = ExtResource("3_jpa4p")
 Name = "TP9 SMG"
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
-[sub_resource type="Resource" id="Resource_wbo41"]
+[sub_resource type="Resource" id="Resource_34bgn"]
 script = ExtResource("4_hsj8o")
-ProjectileRadius = 6
 ReloadTimeMs = 1000.0
 BloomCoefficientDeg = 20.0
 MagazineCapacity = 40
@@ -29,6 +28,7 @@ Damage = 1
 CritChanceProportion = 0.0
 ProjectileSpeed = 6000
 ProjectileScaleMultiplier = 0.6
+ProjectileRadius = 6
 AttackSpeed = 0.015
 Additional = Dictionary[String, Variant]({
 "Knockback": 10.0
@@ -40,7 +40,7 @@ script = ExtResource("1_x35og")
 _projectileScene = ExtResource("2_34bgn")
 ShootAudioPlayer = NodePath("AudioStreamPlayer")
 Properties = SubResource("Resource_dkd5d")
-Stats = SubResource("Resource_wbo41")
+Stats = SubResource("Resource_34bgn")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1380114539]
 stream = ExtResource("5_34bgn")

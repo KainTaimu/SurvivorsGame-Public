@@ -126,7 +126,7 @@ public abstract partial class Firearm
 
 		rotation += bloom;
 
-		var projectile = _projectileScene.Instantiate<ProjectileBullet>();
+		var projectile = _projectileScene.Instantiate<BaseProjectile>();
 		projectile.Origin = this;
 		projectile.SetScale(Vector2.One * Stats.ProjectileScaleMultiplier);
 		projectile.SetPosition(Player.Position);

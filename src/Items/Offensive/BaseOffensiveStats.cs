@@ -24,6 +24,9 @@ public partial class BaseOffensiveStats : BaseItemStats
 	public float ProjectileScaleMultiplier = 1;
 
 	[Export]
+	public int ProjectileRadius = 24;
+
+	[Export]
 	public float AttackSpeed = 0.2f;
 
 	[Export]
