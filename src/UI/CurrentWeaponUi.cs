@@ -102,12 +102,17 @@ public partial class CurrentWeaponUi : CanvasLayer
 			if (_weaponCarousel.GetChild(i) is not WeaponItem weaponItem)
 				continue;
 			weaponItem.WeaponName.Text = weapon.Properties.Name;
-			if (
-				WeaponController.PrimaryAttack == weapon
-				|| WeaponController.SecondaryAttack == weapon
-			)
+
+			if (WeaponController.PrimaryAttack == weapon)
 			{
 				weaponItem.SelectedCaret.VisibleRatio = 1;
+				weaponItem.SelectedCaret.Text = "1";
+				weaponItem.WeaponName.LabelSettings.FontColor = Colors.White;
+			}
+			else if (WeaponController.SecondaryAttack == weapon)
+			{
+				weaponItem.SelectedCaret.VisibleRatio = 1;
+				weaponItem.SelectedCaret.Text = "2";
 				weaponItem.WeaponName.LabelSettings.FontColor = Colors.White;
 			}
 			else
@@ -115,6 +120,7 @@ public partial class CurrentWeaponUi : CanvasLayer
 				weaponItem.SelectedCaret.VisibleRatio = 0;
 				weaponItem.WeaponName.LabelSettings.FontColor = Colors.DarkGray;
 			}
+
 			weaponItem.Name = i++.ToString();
 		}
 	}
