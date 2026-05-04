@@ -6,11 +6,9 @@ namespace Game.Levels.Controllers;
 public partial class PlayerHitController : Node
 {
 	[Export]
-	private EnemyTargetQuery _targetQuery = null!;
-
-	[Export]
 	public float PlayerHitboxRadius = 30f;
 
+	private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
 	private EntityComponentStore ComponentStore =>
 		EntityComponentStore.Instance;
 	private Player Player => GameWorld.Instance.MainPlayer;
@@ -31,7 +29,7 @@ public partial class PlayerHitController : Node
 			return;
 
 		if (
-			!_targetQuery.TryGetTargetsInArea(
+			!TargetQuery.TryGetTargetsInArea(
 				Player.GlobalPosition,
 				PlayerHitboxRadius,
 				out var ids

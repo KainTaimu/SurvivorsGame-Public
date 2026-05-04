@@ -29,9 +29,9 @@ CritDamageMultiplier = 1.0
 CritChanceProportion = 1.0
 ProjectileSpeed = 10000
 ProjectileScaleMultiplier = 1.5
-ProjectileRadius = 32
+ProjectileRadius = 84
 AttackSpeed = 2.0
-PierceLimit = 99
+PierceLimit = 9999
 Additional = Dictionary[String, Variant]({
 "MoveBloomMaxDeg": 50.0,
 "MoveBloomMinDeg": 0.0,

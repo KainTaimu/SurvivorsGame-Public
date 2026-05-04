@@ -59,7 +59,7 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 		Position = from + moveVector;
 
 		if (
-			!TargetQuery.TryGetTargetsInAreaAlongSegment(
+			!TargetQuery.TryGetTargetsAlongSegment(
 				from,
 				Position,
 				HitRadius,

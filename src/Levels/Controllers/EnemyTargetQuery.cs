@@ -21,8 +21,8 @@ public partial class EnemyTargetQuery : Node
 	[Export]
 	private EnemyRenderer _renderer = null!;
 
-	[Export]
-	private int _gridSize = 16;
+	// BREAKING: Changing this value breaks Projectile radius of weapons
+	private const int _gridSize = 32;
 
 	public CenteredMovingUniformGrid<int> Grid
 	{
@@ -92,9 +92,8 @@ public partial class EnemyTargetQuery : Node
 			{
 				var cell = _grid.GetCellWorld(new Vector2((float)x, (float)y));
 				if (cell is null)
-				{
 					continue;
-				}
+
 				for (var i = 0; i < cell.Count; i++)
 				{
 					var id = cell.Array[i];
@@ -118,12 +117,11 @@ public partial class EnemyTargetQuery : Node
 	{
 		// credit: https://www.redblobgames.com/grids/circle-drawing/
 		var targets = new HashSet<int>();
+		var visited = new HashSet<UniformGridCell<int>>();
 
 		var delta = toAreaCenter - fromAreaCenter;
 		var length = delta.Length();
-		var step =
-			_gridSize
-			* (1 + Performance.GetMonitor(Performance.Monitor.TimeProcess));
+		var step = _gridSize * 0.1f;
 
 		var sampleCount = Math.Max(10, Mathf.CeilToInt(length / step));
 
@@ -147,12 +145,14 @@ public partial class EnemyTargetQuery : Node
 					);
 					if (cell is null)
 						continue;
+					if (visited.Contains(cell))
+						continue;
+
+					visited.Add(cell);
 
 					for (var i = 0; i < cell.Count; i++)
 					{
 						var id = cell.Array[i];
-						if (targets.Contains(id))
-							continue;
 						targets.Add(id);
 					}
 				}
@@ -188,6 +188,10 @@ public partial class EnemyTargetQuery : Node
 	/// <returns>
 	/// <c>true</c> when at least one target lies within swept corridor.
 	/// </returns>
+	/// <remarks>
+	/// hitRadius is capped at _gridSize due to this method checking at most a
+	/// 3x3 area around the corrider.
+	/// </remarks>
 	public bool TryGetTargetsAlongSegment(
 		Vector2 from,
 		Vector2 to,
@@ -195,6 +199,9 @@ public partial class EnemyTargetQuery : Node
 		out int[] targetIds
 	)
 	{
+		var targets = new HashSet<int>();
+		var visited = new HashSet<UniformGridCell<int>>();
+
 		var delta = to - from;
 		var length = delta.Length();
 		var step =
@@ -202,7 +209,6 @@ public partial class EnemyTargetQuery : Node
 		var sampleCount = Math.Max(100, Mathf.CeilToInt(length / step));
 
 		var hitRadiusSq = hitRadius * hitRadius;
-		var targets = new HashSet<int>();
 
 		for (var i = 0; i <= sampleCount; i++)
 		{
@@ -212,13 +218,18 @@ public partial class EnemyTargetQuery : Node
 			var sampleCell = _grid.GetCellWorld(sample);
 			if (sampleCell is null)
 				continue;
+			if (visited.Contains(sampleCell))
+				continue;
+
+			visited.Add(sampleCell);
 
 			FindTargetsAlongSegmentInNeighborCells(
 				sampleCell.Index,
 				from,
 				to,
 				hitRadiusSq,
-				targets
+				targets,
+				visited
 			);
 		}
 
@@ -248,7 +259,8 @@ public partial class EnemyTargetQuery : Node
 		Vector2 from,
 		Vector2 to,
 		float hitRadiusSq,
-		HashSet<int> targets
+		HashSet<int> targets,
+		HashSet<UniformGridCell<int>> visited
 	)
 	{
 		for (var x = -1; x <= 1; x++)
@@ -257,6 +269,9 @@ public partial class EnemyTargetQuery : Node
 			var cell = _grid.GetCell(centerCell.X + x, centerCell.Y + y);
 			if (cell is null)
 				continue;
+			if (visited.Contains(cell))
+				continue;
+			visited.Add(cell);
 
 			FindTargetsAlongSegmentInCell(cell, from, to, hitRadiusSq, targets);
 		}

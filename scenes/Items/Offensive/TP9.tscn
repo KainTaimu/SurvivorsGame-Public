@@ -28,7 +28,7 @@ Damage = 1
 CritChanceProportion = 0.0
 ProjectileSpeed = 6000
 ProjectileScaleMultiplier = 0.6
-ProjectileRadius = 6
+ProjectileRadius = 16
 AttackSpeed = 0.05
 Additional = Dictionary[String, Variant]({
 "Knockback": 10.0

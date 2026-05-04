@@ -27,6 +27,7 @@
 script = ExtResource("12_x7tv3")
 EnemyBlueprints = Array[Object]([ExtResource("8_1c6ul"), ExtResource("10_d4hlt"), ExtResource("9_occlw")])
 Duration = 9999.0
+MaxMobs = 100
 SpawnMinTime = 0.01
 SpawnMaxTime = 0.01
 SpawnBatchMin = 2000
@@ -79,7 +80,7 @@ script = ExtResource("11_aredf")
 Waves = Array[Object]([SubResource("Resource_x7tv3")])
 EntityComponentStore = NodePath("../../EntityComponentStore")
 
-[node name="EnemyTargetQuery" type="Node" parent="Systems/EnemySystems" unique_id=1940935389 node_paths=PackedStringArray("_entities", "_renderer")]
+[node name="EnemyTargetQuery" type="Node" parent="Systems/EnemySystems" unique_id=2124239944 node_paths=PackedStringArray("_entities", "_renderer")]
 script = ExtResource("16_x7tv3")
 _entities = NodePath("../../EntityComponentStore")
 _renderer = NodePath("../EnemyRenderer")
@@ -108,9 +109,8 @@ _multiMesh = ExtResource("9_ror81")
 
 [node name="PlayerSystems" type="Node" parent="Systems" unique_id=1262578567]
 
-[node name="PlayerHitController" type="Node" parent="Systems/PlayerSystems" unique_id=1486291681 node_paths=PackedStringArray("_targetQuery")]
+[node name="PlayerHitController" type="Node" parent="Systems/PlayerSystems" unique_id=1486291681]
 script = ExtResource("19_aig1n")
-_targetQuery = NodePath("../../EnemySystems/EnemyTargetQuery")
 
 [node name="UI" type="Node" parent="." unique_id=1918867052]
 

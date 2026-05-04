@@ -18,7 +18,6 @@ config/name="SurvivorsGame"
 run/main_scene="uid://d3su0ak3dnifl"
 config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 config/icon="res://icon.svg"
-run/max_fps.editor=60
 
 [audio]
 

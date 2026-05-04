@@ -54,8 +54,8 @@ public class UniformGrid<T>
 
 	public UniformGridCell<T>? GetCell(Vector2 position)
 	{
-		var x = (int)(position.X / CellSize);
-		var y = (int)(position.Y / CellSize);
+		var x = Mathf.RoundToInt(position.X / CellSize);
+		var y = Mathf.RoundToInt(position.Y / CellSize);
 
 		if (x < 0 || y < 0 || x >= Dimensions.X || y >= Dimensions.Y)
 		{
