@@ -17,7 +17,6 @@
 [ext_resource type="PackedScene" uid="uid://cuerorgcryk5k" path="res://scenes/Items/Offensive/Sniper.tscn" id="10_2g2d6"]
 [ext_resource type="PackedScene" uid="uid://dkhkglqxq0j2p" path="res://scenes/Items/Offensive/WipeScreen.tscn" id="11_ragxt"]
 [ext_resource type="PackedScene" uid="uid://c5q166p2d4241" path="res://scenes/UI/CurrentWeaponUi.tscn" id="14_8rask"]
-[ext_resource type="PackedScene" uid="uid://gf8aatfp6j1o" path="res://scenes/UI/WeaponCarouselItem.tscn" id="15_jgr36"]
 
 [sub_resource type="Resource" id="Resource_pqexr"]
 script = ExtResource("3_cdd6o")
@@ -166,7 +165,6 @@ script = ExtResource("5_yecw2")
 
 [node name="CurrentWeaponUI" parent="." unique_id=2135368036 node_paths=PackedStringArray("WeaponController") instance=ExtResource("14_8rask")]
 WeaponController = NodePath("../PlayerWeaponController")
-_weaponCarouselItemScene = ExtResource("15_jgr36")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=881638213]
 material = SubResource("ShaderMaterial_5pqvm")
