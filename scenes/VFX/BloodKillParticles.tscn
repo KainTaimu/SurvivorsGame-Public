@@ -2,7 +2,6 @@
 
 [ext_resource type="Texture2D" uid="uid://c7kegqurrrx0w" path="res://assets/VFX/small_chevron.png" id="1_j17l3"]
 [ext_resource type="Material" uid="uid://bv14rr355ftcq" path="res://scenes/VFX/ViolentKillParticleMaterial.tres" id="2_hmbxg"]
-[ext_resource type="Script" uid="uid://dh2l8bcnsub30" path="res://src/VFX/KillParticles.cs" id="2_w5u0a"]
 
 [node name="BloodKillParticles" type="GPUParticles2D" unique_id=893552966]
 modulate = Color(1, 0, 0, 1)
@@ -18,4 +17,3 @@ visibility_rect = Rect2(-8192, -8192, 16384, 16384)
 local_coords = true
 draw_order = 0
 process_material = ExtResource("2_hmbxg")
-script = ExtResource("2_w5u0a")
