@@ -8,6 +8,9 @@ public partial class EnemyHitFeedbackController : Node
 	[Export]
 	private EntityComponentStore ComponentStore = null!;
 
+	[Export]
+	private AudioStreamPlayer? _hitmarkerStreamPlayer;
+
 	public override void _Process(double delta)
 	{
 		foreach (
@@ -45,6 +48,7 @@ public partial class EnemyHitFeedbackController : Node
 				);
 
 				ComponentStore.SetComponent(id, newHit with { Damage = -1 });
+				_hitmarkerStreamPlayer?.Play();
 			}
 		}
 	}

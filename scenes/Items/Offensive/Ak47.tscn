@@ -4,9 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_rp6n0"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_ld3kt"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_tg8rs"]
-[ext_resource type="AudioStream" uid="uid://bmxu8ae3iong7" path="res://assets/SFX/Shoot/explosion.wav" id="5_rp6n0"]
-[ext_resource type="Script" uid="uid://5monpl2hwb2g" path="res://src/SFX/RandomAudioStreamPlayer.cs" id="5_tg8rs"]
-[ext_resource type="AudioStream" uid="uid://bq6u5o5q4utus" path="res://assets/SFX/Shoot/explosion1.wav" id="6_nihe0"]
+[ext_resource type="AudioStream" uid="uid://cebms7f3dx4yf" path="res://assets/SFX/hitmarker.wav" id="5_rp6n0"]
 
 [sub_resource type="Resource" id="Resource_eai52"]
 script = ExtResource("3_ld3kt")
@@ -30,15 +28,14 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[node name="Ak47" type="Node" unique_id=915008798]
+[node name="Ak47" type="Node" unique_id=915008798 node_paths=PackedStringArray("ShootAudioPlayer")]
 script = ExtResource("1_gumc8")
 _projectileScene = ExtResource("2_rp6n0")
+ShootAudioPlayer = NodePath("AudioStreamPlayer")
 Properties = SubResource("Resource_eai52")
 Stats = SubResource("Resource_nihe0")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=550545162]
-pitch_scale = 0.9
-mix_target = 2
-max_polyphony = 10
-script = ExtResource("5_tg8rs")
-RandomAudioStreams = Array[AudioStream]([ExtResource("6_nihe0"), ExtResource("5_rp6n0")])
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=458425301]
+stream = ExtResource("5_rp6n0")
+volume_db = 20.0
+pitch_scale = 0.59

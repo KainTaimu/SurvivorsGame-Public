@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_u7hyr"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_f52b2"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_u7hyr"]
+[ext_resource type="AudioStream" uid="uid://byaqp87dpfq3j" path="res://assets/SFX/revolver_gunshot.mp3" id="5_f52b2"]
 
 [sub_resource type="Resource" id="Resource_iky5m"]
 script = ExtResource("3_f52b2")
@@ -39,8 +40,14 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[node name="Sniper" type="Node" unique_id=753371605]
+[node name="Sniper" type="Node" unique_id=753371605 node_paths=PackedStringArray("ShootAudioPlayer")]
 script = ExtResource("1_jg7ce")
 _projectileScene = ExtResource("2_u7hyr")
+ShootAudioPlayer = NodePath("AudioStreamPlayer")
 Properties = SubResource("Resource_iky5m")
 Stats = SubResource("Resource_f52b2")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=2103641847]
+stream = ExtResource("5_f52b2")
+volume_db = 16.0
+pitch_scale = 1.66

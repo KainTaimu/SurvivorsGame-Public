@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bpgtq48wt7r32"]
+
+[ext_resource type="Script" uid="uid://dwfbc8oub2v16" path="res://src/Levels/Controllers/EnemyHitFeedbackController.cs" id="1_sp5c2"]
+[ext_resource type="PackedScene" uid="uid://b5fp1qbog6ics" path="res://scenes/VFX/DamageIndicatorPool.tscn" id="2_4defx"]
+[ext_resource type="AudioStream" uid="uid://cebms7f3dx4yf" path="res://assets/SFX/hitmarker.wav" id="3_4defx"]
+
+[node name="EnemyHitFeedbackController" type="Node" unique_id=1105191984 node_paths=PackedStringArray("_hitmarkerStreamPlayer")]
+script = ExtResource("1_sp5c2")
+_hitmarkerStreamPlayer = NodePath("AudioStreamPlayer")
+
+[node name="DamageIndicatorPool" parent="." unique_id=1041537640 instance=ExtResource("2_4defx")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1438174894]
+stream = ExtResource("3_4defx")
+volume_db = 10.0
+max_polyphony = 50
