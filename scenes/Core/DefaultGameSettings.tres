@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource("1_ymg3i")
+GoreEffects = 1
 metadata/_custom_type_script = "uid://ccsjx0puny2kx"
