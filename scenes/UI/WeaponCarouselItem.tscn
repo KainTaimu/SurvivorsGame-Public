@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://gf8aatfp6j1o"]
+
+[ext_resource type="Script" uid="uid://ciyr8n0mao26x" path="res://src/UI/WeaponItem.cs" id="1_e7aue"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8t4bl"]
+resource_local_to_scene = true
+font_size = 24
+
+[node name="WeaponCarouselItem" type="VBoxContainer" unique_id=1184841960 node_paths=PackedStringArray("SelectedCaret", "WeaponName")]
+script = ExtResource("1_e7aue")
+SelectedCaret = NodePath("SelectedCaret")
+WeaponName = NodePath("WeaponName")
+
+[node name="SelectedCaret" type="Label" parent="." unique_id=363378440]
+layout_mode = 2
+text = "⌄"
+horizontal_alignment = 1
+
+[node name="WeaponName" type="Label" parent="." unique_id=393295308]
+layout_mode = 2
+text = "A"
+label_settings = SubResource("LabelSettings_8t4bl")

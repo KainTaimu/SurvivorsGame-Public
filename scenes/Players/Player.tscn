@@ -11,12 +11,13 @@
 [ext_resource type="PackedScene" uid="uid://twvhgblbtovy" path="res://scenes/Items/Offensive/Revolver.tscn" id="6_eai52"]
 [ext_resource type="Script" uid="uid://b8nlijamaetyr" path="res://src/Players/Controllers/PlayerCameraController.cs" id="6_kfojw"]
 [ext_resource type="PackedScene" uid="uid://b6pcia1iql0ct" path="res://scenes/Items/Offensive/Ak47.tscn" id="7_wuwji"]
-[ext_resource type="Script" uid="uid://xy08twumu55m" path="res://src/UI/CurrentWeaponUi.cs" id="8_5pqvm"]
 [ext_resource type="PackedScene" uid="uid://dwyqdinyji8tt" path="res://scenes/Items/Offensive/TP9.tscn" id="8_8rask"]
 [ext_resource type="PackedScene" uid="uid://c18mvu8kqrmng" path="res://scenes/Items/Offensive/Airstrike.tscn" id="8_dpv53"]
 [ext_resource type="Shader" uid="uid://bgl0yr4nfmpqx" path="res://src/Shaders/flash.gdshader" id="8_wuwji"]
 [ext_resource type="PackedScene" uid="uid://cuerorgcryk5k" path="res://scenes/Items/Offensive/Sniper.tscn" id="10_2g2d6"]
 [ext_resource type="PackedScene" uid="uid://dkhkglqxq0j2p" path="res://scenes/Items/Offensive/WipeScreen.tscn" id="11_ragxt"]
+[ext_resource type="PackedScene" uid="uid://c5q166p2d4241" path="res://scenes/UI/CurrentWeaponUi.tscn" id="14_8rask"]
+[ext_resource type="PackedScene" uid="uid://gf8aatfp6j1o" path="res://scenes/UI/WeaponCarouselItem.tscn" id="15_jgr36"]
 
 [sub_resource type="Resource" id="Resource_pqexr"]
 script = ExtResource("3_cdd6o")
@@ -151,9 +152,11 @@ script = ExtResource("5_yecw2")
 
 [node name="TP9" parent="PlayerWeaponController" unique_id=1472391115 instance=ExtResource("8_8rask")]
 
-[node name="Sniper" parent="PlayerWeaponController" unique_id=753371605 instance=ExtResource("10_2g2d6")]
+[node name="TP10" parent="PlayerWeaponController" unique_id=1530689530 instance=ExtResource("8_8rask")]
 
 [node name="Ak47" parent="PlayerWeaponController" unique_id=915008798 instance=ExtResource("7_wuwji")]
+
+[node name="Sniper" parent="PlayerWeaponController" unique_id=753371605 instance=ExtResource("10_2g2d6")]
 
 [node name="Revolver" parent="PlayerWeaponController" unique_id=1857571471 instance=ExtResource("6_eai52")]
 
@@ -161,20 +164,9 @@ script = ExtResource("5_yecw2")
 
 [node name="WipeScreen" parent="PlayerWeaponController" unique_id=462338799 instance=ExtResource("11_ragxt")]
 
-[node name="CurrentWeaponUi" type="CanvasLayer" parent="." unique_id=196737206 node_paths=PackedStringArray("WeaponController", "CurrentWeaponsLabel")]
-script = ExtResource("8_5pqvm")
+[node name="CurrentWeaponUI" parent="." unique_id=2135368036 node_paths=PackedStringArray("WeaponController") instance=ExtResource("14_8rask")]
 WeaponController = NodePath("../PlayerWeaponController")
-CurrentWeaponsLabel = NodePath("Label")
-
-[node name="Label" type="Label" parent="CurrentWeaponUi" unique_id=806983618]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -41.0
-offset_right = 71.0
-grow_vertical = 0
-text = "PRIMARY:
-SECONDARY:"
+_weaponCarouselItemScene = ExtResource("15_jgr36")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=881638213]
 material = SubResource("ShaderMaterial_5pqvm")

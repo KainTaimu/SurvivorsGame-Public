@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Game.Items.Offensive;
 
 namespace Game.Players.Controllers;
@@ -7,6 +8,11 @@ namespace Game.Players.Controllers;
 // zooming in with snipers or locking on target with missile?
 public partial class PlayerWeaponController : Node
 {
+	[Signal]
+	public delegate void OnOffensiveListChangedEventHandler(
+		BaseOffensive newOffensive
+	);
+
 	[Signal]
 	public delegate void OnPrimaryAttackReassignedEventHandler();
 
@@ -40,6 +46,7 @@ public partial class PlayerWeaponController : Node
 		}
 	}
 
+	public readonly List<BaseOffensive> Offensives = [];
 	public readonly List<BaseOffensive> AutomaticOffensives = [];
 	public readonly List<IManualAttack> ManualOffensives = [];
 
@@ -58,36 +65,50 @@ public partial class PlayerWeaponController : Node
 		PrimaryAttack = null;
 		SecondaryAttack = null;
 
+		Offensives.Clear();
 		AutomaticOffensives.Clear();
 		ManualOffensives.Clear();
 		foreach (var node in GetChildren())
 		{
 			if (node is not BaseOffensive offensive)
 				continue;
-			AutomaticOffensives.Add(offensive);
-			if (offensive is IManualAttack manualAttack)
+
+			switch (offensive)
 			{
-				if (PrimaryAttack is null)
-				{
-					manualAttack.AttackActionString =
-						InputMapNames.PrimaryAttack;
-					offensive.ProcessMode = ProcessModeEnum.Inherit;
-					PrimaryAttack = manualAttack;
-				}
-				else if (SecondaryAttack is null)
-				{
-					manualAttack.AttackActionString =
-						InputMapNames.SecondaryAttack;
-					offensive.ProcessMode = ProcessModeEnum.Inherit;
-					SecondaryAttack = manualAttack;
-				}
-				else
-				{
-					offensive.ProcessMode = ProcessModeEnum.Disabled;
-				}
-				ManualOffensives.Add(manualAttack);
+				case IManualAttack:
+					AddManualOffensive(offensive);
+					break;
+				case IAutomaticAttack:
+					throw new NotImplementedException();
 			}
 		}
+	}
+
+	private void AddManualOffensive(BaseOffensive offensive)
+	{
+		AutomaticOffensives.Add(offensive);
+		if (offensive is not IManualAttack manualAttack)
+			return;
+
+		if (PrimaryAttack is null)
+		{
+			manualAttack.AttackActionString = InputMapNames.PrimaryAttack;
+			offensive.ProcessMode = ProcessModeEnum.Inherit;
+			PrimaryAttack = manualAttack;
+		}
+		else if (SecondaryAttack is null)
+		{
+			manualAttack.AttackActionString = InputMapNames.SecondaryAttack;
+			offensive.ProcessMode = ProcessModeEnum.Inherit;
+			SecondaryAttack = manualAttack;
+		}
+		else
+		{
+			offensive.ProcessMode = ProcessModeEnum.Disabled;
+		}
+		ManualOffensives.Add(manualAttack);
+		Offensives.Add(offensive);
+		EmitSignalOnOffensiveListChanged(offensive);
 	}
 
 	public override void _Input(InputEvent @event)
@@ -150,30 +171,30 @@ public partial class PlayerWeaponController : Node
 		if (ManualOffensives.Count == 2)
 		{
 			// csharpier-ignore
-			(SecondaryAttack.AttackActionString, PrimaryAttack.AttackActionString) =
+			(PrimaryAttack.AttackActionString, SecondaryAttack.AttackActionString) =
 			(
-				PrimaryAttack.AttackActionString, SecondaryAttack.AttackActionString
+				SecondaryAttack.AttackActionString, PrimaryAttack.AttackActionString
 			);
-			(SecondaryAttack, PrimaryAttack) = (PrimaryAttack, SecondaryAttack);
+			(PrimaryAttack, SecondaryAttack) = (SecondaryAttack, PrimaryAttack);
 			return;
 		}
 
+		var oldSecondary = SecondaryAttack;
+		oldSecondary.AttackActionString = null;
+		DisableManualOffensive(oldSecondary);
+
 		var oldPrimary = PrimaryAttack;
-		oldPrimary.AttackActionString = null;
-		DisableManualOffensive(oldPrimary);
+		var newPrimary = ManualOffensives.Last();
 
-		var newPrimary = SecondaryAttack;
-		var newSecondary = ManualOffensives[2];
-
-		ManualOffensives.RemoveAt(0);
-		ManualOffensives.Add(oldPrimary);
+		ManualOffensives.RemoveAt(ManualOffensives.Count - 1);
+		ManualOffensives.Insert(0, newPrimary);
 
 		PrimaryAttack = newPrimary;
 		PrimaryAttack.AttackActionString = InputMapNames.PrimaryAttack;
-		SecondaryAttack = newSecondary;
+		SecondaryAttack = oldPrimary;
 		SecondaryAttack.AttackActionString = InputMapNames.SecondaryAttack;
 
-		EnableManualOffensive(newSecondary);
+		EnableManualOffensive(newPrimary);
 	}
 
 	// NOTE:

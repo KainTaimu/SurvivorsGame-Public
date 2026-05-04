@@ -10,6 +10,7 @@
 
 [sub_resource type="Resource" id="Resource_eai52"]
 script = ExtResource("3_ld3kt")
+Name = "AK-47"
 
 [sub_resource type="Resource" id="Resource_nihe0"]
 script = ExtResource("4_tg8rs")

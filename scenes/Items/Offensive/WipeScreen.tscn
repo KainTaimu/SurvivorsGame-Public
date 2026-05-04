@@ -6,6 +6,7 @@
 
 [sub_resource type="Resource" id="Resource_kq7cf"]
 script = ExtResource("2_vuhvs")
+Name = "DEBUG_SCREEN_SKILL"
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_lc3gw"]
