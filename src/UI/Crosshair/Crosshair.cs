@@ -190,9 +190,6 @@ public partial class Crosshair : Node2D
 
 			// Punish avoiding vertical recoil by shooting above or below center
 			ApplyHorizontalRecoilPunish(ref impulse);
-			Logger.LogDebug(
-				GameSingleton.GameSettings.EnableCrosshairHorizontalRecoilPunish
-			);
 
 			var finalImpulseVector =
 				impulse + (_accumilatedImpulse * _impulseScale);

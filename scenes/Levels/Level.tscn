@@ -15,11 +15,10 @@
 [ext_resource type="Resource" uid="uid://dl1a0sq36f524" path="res://scenes/Enemies/Blueprints/Shondo.tres" id="10_d4hlt"]
 [ext_resource type="Script" uid="uid://bct2mtni7a82f" path="res://src/Levels/Controllers/EnemyMover.cs" id="10_sh7eq"]
 [ext_resource type="Script" uid="uid://citywxiolgxtm" path="res://src/Levels/Controllers/EnemyWaveController.cs" id="11_aredf"]
-[ext_resource type="Script" uid="uid://cv0uegm46tv7j" path="res://src/Levels/Controllers/EnemyDeathManager.cs" id="11_x7tv3"]
 [ext_resource type="Script" uid="uid://cwbl163hsg1db" path="res://src/Levels/Controllers/EnemyWave.cs" id="12_x7tv3"]
 [ext_resource type="PackedScene" uid="uid://bpgtq48wt7r32" path="res://scenes/Levels/EnemyHitFeedbackController.tscn" id="13_vg5sh"]
+[ext_resource type="PackedScene" uid="uid://c8d8andvaknho" path="res://scenes/Levels/EnemyDeathManager.tscn" id="14_aig1n"]
 [ext_resource type="PackedScene" uid="uid://cjx5nc7bql8d0" path="res://scenes/UI/Crosshair.tscn" id="15_aredf"]
-[ext_resource type="PackedScene" uid="uid://bqy6yv5uhrqp0" path="res://scenes/VFX/BloodKillParticles.tscn" id="15_eh1w1"]
 [ext_resource type="Script" uid="uid://djv8orxale1c3" path="res://src/Levels/Controllers/EnemyTargetQuery.cs" id="16_x7tv3"]
 [ext_resource type="Script" uid="uid://bpqjji00j8p6x" path="res://src/Levels/Controllers/PlayerHitController.cs" id="19_aig1n"]
 [ext_resource type="PackedScene" uid="uid://do6p1pg4x0vkf" path="res://scenes/UI/Hud.tscn" id="20_vg5sh"]
@@ -88,11 +87,9 @@ _renderer = NodePath("../EnemyRenderer")
 [node name="EnemyHitFeedbackController" parent="Systems/EnemySystems" unique_id=1105191984 node_paths=PackedStringArray("ComponentStore") instance=ExtResource("13_vg5sh")]
 ComponentStore = NodePath("../../EntityComponentStore")
 
-[node name="EnemyDeathManager" type="Node" parent="Systems/EnemySystems" unique_id=715210331 node_paths=PackedStringArray("ComponentStore")]
-script = ExtResource("11_x7tv3")
-_enemyDeathParticlesScene = ExtResource("15_eh1w1")
+[node name="EnemyDeathManager" parent="Systems/EnemySystems" unique_id=821545961 node_paths=PackedStringArray("ComponentStore") instance=ExtResource("14_aig1n")]
 ComponentStore = NodePath("../../EntityComponentStore")
-MaxActiveParticles = 1000
+MaxActiveParticles = 100
 
 [node name="EnemyMover" type="Node" parent="Systems/EnemySystems" unique_id=348078406 node_paths=PackedStringArray("_entities")]
 script = ExtResource("10_sh7eq")
