@@ -9,8 +9,3 @@ Sprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=765938757]
 texture = ExtResource("2_o556r")
-
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=349821157]
-rect = Rect2(-6, -2, 12, 4)
-
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="ReturnToPool"]

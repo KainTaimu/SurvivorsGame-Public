@@ -44,6 +44,12 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 
 	public override void _Process(double delta)
 	{
+		if (!TargetQuery.Grid.ContainsWorld(Position))
+		{
+			ReturnToPool();
+			return;
+		}
+
 		var from = Position;
 
 		var moveVector =
@@ -73,7 +79,8 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 			_pierceCount++;
 			if (_pierceCount >= PierceLimit)
 			{
-				ReturnToPool();
+				Callable.From(ReturnToPool).CallDeferred();
+				return;
 			}
 		}
 	}

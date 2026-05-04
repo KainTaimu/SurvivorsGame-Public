@@ -24,6 +24,11 @@ public partial class EnemyTargetQuery : Node
 	[Export]
 	private int _gridSize = 16;
 
+	public CenteredMovingUniformGrid<int> Grid
+	{
+		get => _grid;
+	}
+
 	private CenteredMovingUniformGrid<int> _grid = null!;
 
 	public static EnemyTargetQuery Instance { get; private set; } = null!;

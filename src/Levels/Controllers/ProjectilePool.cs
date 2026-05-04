@@ -31,7 +31,6 @@ public partial class ProjectilePool : Node
 		if (!_inactivePool.TryDequeue(out var projectile))
 		{
 			projectile = NewProjectile();
-			Logger.LogDebug("count=", _activePool.Count + _inactivePool.Count);
 		}
 		_activePool.Add(projectile);
 		projectile.ProcessMode = ProcessModeEnum.Inherit;
