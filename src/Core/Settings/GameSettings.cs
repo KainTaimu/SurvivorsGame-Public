@@ -3,6 +3,18 @@ namespace Game.Core.Settings;
 [GlobalClass]
 public partial class GameSettings : Resource
 {
+	[ExportGroup("Game")]
+	[Export]
+	public bool EnableDamageIndicators
+	{
+		get;
+		set
+		{
+			field = value;
+			EmitSignalOnDamageIndicatorsChanged();
+		}
+	} = true;
+
 	[ExportGroup("Graphics")]
 	[Export]
 	public GoreEffectsEnum GoreEffects
@@ -23,4 +35,7 @@ public partial class GameSettings : Resource
 
 	[Signal]
 	public delegate void OnGoreEffectsChangedEventHandler();
+
+	[Signal]
+	public delegate void OnDamageIndicatorsChangedEventHandler();
 }

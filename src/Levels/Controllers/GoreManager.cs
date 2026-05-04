@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Game.Core;
 using Game.Core.ECS;
+using Game.Core.Settings;
 
 namespace Game.Levels.Controllers;
 

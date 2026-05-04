@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Game.Core;
 
 namespace Game.VFX;
 
@@ -15,9 +16,41 @@ public partial class DamageIndicatorPool : Node2D
 
 	public static DamageIndicatorPool? Instance;
 
+	public bool Enabled => GameSingleton.GameSettings.EnableDamageIndicators;
+
 	public override void _Ready()
 	{
+		GameSingleton.GameSettings.OnDamageIndicatorsChanged += () =>
+		{
+			ProcessMode = GameSingleton.GameSettings.EnableDamageIndicators
+				? ProcessModeEnum.Inherit
+				: ProcessModeEnum.Disabled;
+			if (Enabled)
+			{
+				PopulatePool();
+			}
+			else
+			{
+				while (_activePool.Count > 0)
+				{
+					_activePool.Dequeue().QueueFree();
+				}
+				while (_inactivePool.Count > 0)
+				{
+					_inactivePool.Dequeue().QueueFree();
+				}
+			}
+		};
+
 		Instance = this;
+		if (Enabled)
+		{
+			PopulatePool();
+		}
+	}
+
+	private void PopulatePool()
+	{
 		for (var i = 0; i < PoolCount; i++)
 		{
 			var indicator = _indicatorScene.Instantiate<DamageIndicator>();
@@ -37,6 +70,8 @@ public partial class DamageIndicatorPool : Node2D
 
 	public void GetIndicator(Vector2 pos, int totalDamage, bool isCrit = false)
 	{
+		if (!Enabled)
+			return;
 		if (!_inactivePool.TryDequeue(out var indicator))
 		{
 			indicator = _activePool.Dequeue();
