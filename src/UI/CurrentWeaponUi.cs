@@ -1,3 +1,4 @@
+using Game.Items.Offensive;
 using Game.Players.Controllers;
 
 namespace Game.UI;
@@ -13,6 +14,12 @@ public partial class CurrentWeaponUi : CanvasLayer
 	[Export]
 	private Control _weaponCarousel = null!;
 
+	[Export]
+	private Label _primaryWeaponAmmo = null!;
+
+	[Export]
+	private Label _secondaryWeaponAmmo = null!;
+
 	public override void _Ready()
 	{
 		WeaponController.OnPrimaryAttackReassigned += () =>
@@ -24,6 +31,50 @@ public partial class CurrentWeaponUi : CanvasLayer
 		WeaponController.ChildOrderChanged += () =>
 			Callable.From(UpdateCarousel).CallDeferred();
 		Callable.From(UpdateCarousel).CallDeferred();
+	}
+
+	public override void _Process(double delta)
+	{
+		// PERF: Use signals
+		Callable.From(UpdateAmmoCount).CallDeferred();
+	}
+
+	public void UpdateAmmoCount()
+	{
+		if (WeaponController.PrimaryAttack is IReloadable primary)
+		{
+			_primaryWeaponAmmo.Show();
+			if (primary.IsReloading)
+			{
+				_primaryWeaponAmmo.Text = "Reloading...";
+			}
+			else
+			{
+				_primaryWeaponAmmo.Text =
+					$"{primary.MagazineCount}/{primary.MagazineCapacity}";
+			}
+		}
+		else
+		{
+			_primaryWeaponAmmo.Hide();
+		}
+		if (WeaponController.SecondaryAttack is IReloadable secondary)
+		{
+			_secondaryWeaponAmmo.Show();
+			if (secondary.IsReloading)
+			{
+				_secondaryWeaponAmmo.Text = "Reloading...";
+			}
+			else
+			{
+				_secondaryWeaponAmmo.Text =
+					$"{secondary.MagazineCount}/{secondary.MagazineCapacity}";
+			}
+		}
+		else
+		{
+			_secondaryWeaponAmmo.Hide();
+		}
 	}
 
 	public void UpdateCarousel()
