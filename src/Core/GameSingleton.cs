@@ -1,3 +1,5 @@
+using Game.Core.Settings;
+
 namespace Game.Core;
 
 public partial class GameSingleton : Node

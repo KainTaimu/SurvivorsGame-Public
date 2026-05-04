@@ -1,14 +1,4 @@
-using System.Collections.Generic;
-
-namespace Game.Core;
-
-public enum GoreEffectsEnum
-{
-	Disabled,
-	Low,
-	Medium,
-	High,
-}
+namespace Game.Core.Settings;
 
 [GlobalClass]
 public partial class GameSettings : Resource
@@ -33,16 +23,4 @@ public partial class GameSettings : Resource
 
 	[Signal]
 	public delegate void OnGoreEffectsChangedEventHandler();
-}
-
-public static class GoreEffectsConfigs
-{
-	public static readonly Dictionary<GoreEffectsEnum, int> GoreEffectsMap =
-		new()
-		{
-			{ GoreEffectsEnum.Disabled, 0 },
-			{ GoreEffectsEnum.Low, 200 },
-			{ GoreEffectsEnum.Medium, 800 },
-			{ GoreEffectsEnum.High, 1200 },
-		};
 }
