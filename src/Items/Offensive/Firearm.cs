@@ -1,4 +1,4 @@
-using Game.Items.Projectiles;
+using Game.Levels.Controllers;
 using Game.Players;
 using Game.UI;
 using Game.Utils;
@@ -84,11 +84,18 @@ public abstract partial class Firearm
 
 	protected Crosshair? Crosshair => Crosshair.Instance;
 
+	protected ProjectilePool ProjectilePool = null!;
+
 	public override void _Ready()
 	{
 		UpdateAdditionalFields();
 		OnStatsChanged += UpdateAdditionalFields;
 		_magazineCount = FirearmStats?.MagazineCapacity ?? 30;
+
+		// HACK: Too lazy to add ProjectilePool for all existing Firearms.
+		// Should avoid creating nodes programatically unless for pooling
+		ProjectilePool = new() { ProjectileScene = _projectileScene };
+		AddChild(ProjectilePool);
 	}
 
 	public override void Attack()
@@ -126,7 +133,8 @@ public abstract partial class Firearm
 
 		rotation += bloom;
 
-		var projectile = _projectileScene.Instantiate<BaseProjectile>();
+		var projectile = ProjectilePool.GetProjectile();
+
 		projectile.Origin = this;
 		projectile.SetScale(Vector2.One * Stats.ProjectileScaleMultiplier);
 		projectile.SetPosition(Player.Position);
@@ -134,7 +142,6 @@ public abstract partial class Firearm
 		projectile.ProjectileSpeed = Stats.ProjectileSpeed;
 		projectile.PierceLimit = Stats.PierceLimit;
 		projectile.HitRadius = FirearmStats?.ProjectileRadius ?? 24;
-		GetTree().Root.AddChild(projectile);
 
 		ApplyCursorRecoil();
 		EmitSignalOnAttack();

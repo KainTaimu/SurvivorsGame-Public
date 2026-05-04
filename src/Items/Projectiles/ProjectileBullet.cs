@@ -5,7 +5,7 @@ using Game.Levels.Controllers;
 
 namespace Game.Items.Projectiles;
 
-public partial class ProjectileBullet : BaseProjectile
+public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 {
 	[Export]
 	public Sprite2D Sprite = null!;
@@ -17,6 +17,8 @@ public partial class ProjectileBullet : BaseProjectile
 	private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
 	private EntityComponentStore ComponentStore =>
 		EntityComponentStore.Instance;
+
+	public ProjectilePool ProjectilePool { get; set; } = null!;
 
 	public override void _Ready()
 	{
@@ -70,7 +72,16 @@ public partial class ProjectileBullet : BaseProjectile
 			_hits.Add(id);
 			_pierceCount++;
 			if (_pierceCount >= PierceLimit)
-				QueueFree();
+			{
+				ReturnToPool();
+			}
 		}
+	}
+
+	public void ReturnToPool()
+	{
+		_pierceCount = 0;
+		_hits.Clear();
+		ProjectilePool.ReturnProjectile(this);
 	}
 }
