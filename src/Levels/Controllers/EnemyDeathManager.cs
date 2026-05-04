@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Game.Core;
 using Game.Core.ECS;
 
 namespace Game.Levels.Controllers;
@@ -11,21 +12,32 @@ public partial class EnemyDeathManager : Node
 	[Export]
 	private EntityComponentStore ComponentStore = null!;
 
-	[Export]
 	private int MaxActiveParticles
 	{
-		get;
-		set
-		{
-			UpdateParticles(value);
-			field = value;
-		}
-	} = 100;
+		get => GameSingleton.GameSettings.GoreEffectsValue;
+		set { UpdateParticles(value); }
+	}
 
 	private readonly Queue<GpuParticles2D> _activeParticles = [];
 	private readonly Queue<GpuParticles2D> _inactiveParticles = [];
 
 	private ProcessModeEnum? _particlesOriginalProcessMode;
+
+	public override void _Ready()
+	{
+		UpdateParticles(MaxActiveParticles);
+		GameSingleton.GameSettings.OnGoreEffectsChanged += () =>
+			UpdateParticles(MaxActiveParticles);
+	}
+
+	public override void _Process(double delta)
+	{
+		foreach (var (id, health) in ComponentStore.Query<HealthComponent>())
+		{
+			if (health.Health <= 0)
+				HandleDeath(id);
+		}
+	}
 
 	private void UpdateParticles(int maxParticles)
 	{
@@ -66,20 +78,6 @@ public partial class EnemyDeathManager : Node
 			DisableParticles(particles);
 			AddChild(particles);
 			_inactiveParticles.Enqueue(particles);
-		}
-	}
-
-	public override void _Ready()
-	{
-		UpdateParticles(MaxActiveParticles);
-	}
-
-	public override void _Process(double delta)
-	{
-		foreach (var (id, health) in ComponentStore.Query<HealthComponent>())
-		{
-			if (health.Health <= 0)
-				HandleDeath(id);
 		}
 	}
 
