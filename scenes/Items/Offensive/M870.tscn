@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://lvm5jo1ua73i"]
+
+[ext_resource type="Script" uid="uid://d16s2voefyry4" path="res://src/Items/Offensive/M870.cs" id="1_f4o5x"]
+[ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_e0ol0"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_yjw8k"]
+[ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_60s7d"]
+
+[sub_resource type="Resource" id="Resource_fvcvv"]
+script = ExtResource("3_yjw8k")
+Name = "M870"
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
+[sub_resource type="Resource" id="Resource_mvme6"]
+script = ExtResource("4_60s7d")
+ReloadTimeMs = 800.0
+BloomCoefficientDeg = 35.0
+MagazineCapacity = 6
+HorizontalRecoilMin = 20.0
+HorizontalBaseRecoil = 20.0
+HorizontalRecoilRandom = 20.0
+VerticalRecoilMin = 120.0
+VerticalBaseRecoil = 120.0
+VerticalRecoilRandom = 40.0
+RecoilScale = 1.1
+CameraRecoilScale = 3.0
+Damage = 8
+ProjectileSpeed = 2600
+ProjectileScaleMultiplier = 0.8
+AttackSpeed = 1.1
+PierceLimit = 2
+Additional = Dictionary[String, Variant]({
+"PelletCount": 8
+})
+metadata/_custom_type_script = "uid://di81uufgmcsog"
+
+[node name="M870" type="Node" unique_id=1997007315]
+script = ExtResource("1_f4o5x")
+_projectileScene = ExtResource("2_e0ol0")
+Properties = SubResource("Resource_fvcvv")
+Stats = SubResource("Resource_mvme6")

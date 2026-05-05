@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://c18mvu8kqrmng" path="res://scenes/Items/Offensive/Airstrike.tscn" id="8_dpv53"]
 [ext_resource type="Shader" uid="uid://bgl0yr4nfmpqx" path="res://src/Shaders/flash.gdshader" id="8_wuwji"]
 [ext_resource type="PackedScene" uid="uid://cuerorgcryk5k" path="res://scenes/Items/Offensive/Sniper.tscn" id="10_2g2d6"]
+[ext_resource type="PackedScene" uid="uid://lvm5jo1ua73i" path="res://scenes/Items/Offensive/M870.tscn" id="11_jgr36"]
 [ext_resource type="PackedScene" uid="uid://dkhkglqxq0j2p" path="res://scenes/Items/Offensive/WipeScreen.tscn" id="11_ragxt"]
 [ext_resource type="PackedScene" uid="uid://c5q166p2d4241" path="res://scenes/UI/CurrentWeaponUi.tscn" id="14_8rask"]
 
@@ -171,6 +172,8 @@ script = ExtResource("5_yecw2")
 [node name="TP10" parent="PlayerWeaponController" unique_id=447956487 instance=ExtResource("8_8rask")]
 
 [node name="Ak47" parent="PlayerWeaponController" unique_id=915008798 instance=ExtResource("7_wuwji")]
+
+[node name="M870" parent="PlayerWeaponController" unique_id=1997007315 instance=ExtResource("11_jgr36")]
 
 [node name="Revolver" parent="PlayerWeaponController" unique_id=1857571471 instance=ExtResource("6_eai52")]
 

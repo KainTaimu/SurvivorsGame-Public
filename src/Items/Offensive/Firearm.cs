@@ -57,31 +57,31 @@ public abstract partial class Firearm
 		}
 	}
 
-	public FirearmStats? FirearmStats => Stats as FirearmStats;
+	public FirearmStats FirearmStats => (Stats as FirearmStats)!;
 
 	public string? AttackActionString { get; set; }
 
 	protected double _fireCooldown;
+	protected int _magazineCount;
 
-	private int _magazineCount;
-
-	private float ReloadTimeMs => FirearmStats?.ReloadTimeMs ?? 1500;
-	private float BloomCoefficientDeg =>
+	protected float ReloadTimeMs => FirearmStats?.ReloadTimeMs ?? 1500;
+	protected float BloomCoefficientDeg =>
 		FirearmStats?.BloomCoefficientDeg ?? 0.03f;
-	private float HorizontalRecoilMin =>
+	protected float HorizontalRecoilMin =>
 		FirearmStats?.HorizontalRecoilMin ?? 1f;
-	private float HorizontalBaseRecoil =>
+	protected float HorizontalBaseRecoil =>
 		FirearmStats?.HorizontalBaseRecoil ?? 3f;
-	private float HorizontalRecoilRandom =>
+	protected float HorizontalRecoilRandom =>
 		FirearmStats?.HorizontalRecoilRandom ?? 1f;
-	private float VerticalRecoilMin => FirearmStats?.VerticalRecoilMin ?? 2f;
-	private float VerticalBaseRecoil => FirearmStats?.VerticalBaseRecoil ?? 3f;
-	private float VerticalRecoilRandom =>
+	protected float VerticalRecoilMin => FirearmStats?.VerticalRecoilMin ?? 2f;
+	protected float VerticalBaseRecoil =>
+		FirearmStats?.VerticalBaseRecoil ?? 3f;
+	protected float VerticalRecoilRandom =>
 		FirearmStats?.VerticalRecoilRandom ?? 0.1f;
-	private float RecoilScale => FirearmStats?.RecoilScale ?? 1f;
-	private float RecoilAccumilationScale =>
+	protected float RecoilScale => FirearmStats?.RecoilScale ?? 1f;
+	protected float RecoilAccumilationScale =>
 		FirearmStats?.RecoilAccumilationScale ?? 1f;
-	private float CameraRecoilScale =>
+	protected float CameraRecoilScale =>
 		FirearmStats?.CameraRecoilScale * GameSettings.Instance.CameraShakeScale
 		?? 1f;
 
@@ -150,7 +150,7 @@ public abstract partial class Firearm
 		EmitSignalOnAttack();
 	}
 
-	public void Reload()
+	public virtual void Reload()
 	{
 		if (IsReloading)
 			return;
@@ -168,7 +168,7 @@ public abstract partial class Firearm
 	// BUG:
 	// Extreme recoil due to accumilated impulse in Crosshair recoil system
 	// if shooting two high recoil weapons at once
-	private void ApplyCursorRecoil()
+	protected void ApplyCursorRecoil()
 	{
 		if (Crosshair is null)
 			return;
@@ -199,7 +199,7 @@ public abstract partial class Firearm
 
 	// TODO: Move camera recoil to a method in PlayerCameraController
 	// and have this call that instead.
-	public void ApplyCameraRecoil()
+	protected void ApplyCameraRecoil()
 	{
 		if (!GameSettings.Instance.EnableCameraShake)
 			return;
