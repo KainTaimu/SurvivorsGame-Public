@@ -5,13 +5,13 @@ namespace Game.Levels.Controllers;
 
 public partial class PlayerHitController : Node
 {
-	[Export]
-	public float PlayerHitboxRadius = 30f;
-
 	private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
 	private EntityComponentStore ComponentStore =>
 		EntityComponentStore.Instance;
 	private Player Player => GameWorld.Instance.MainPlayer;
+	private float PlayerHitboxRadius =>
+		Player.Character.CharacterStats.HitboxRadius;
+
 	private CharacterStats PlayerStats =>
 		GameWorld.Instance.MainPlayer.Character.CharacterStats;
 

@@ -57,6 +57,12 @@ public partial class CharacterStats : Resource
 	);
 
 	[Signal]
+	public delegate void OnHitboxRadiusChangedEventHandler(
+		float oldValue,
+		float newValue
+	);
+
+	[Signal]
 	public delegate void OnHealthMultiplierChangedEventHandler(
 		float oldValue,
 		float newValue
@@ -128,6 +134,7 @@ public partial class CharacterStats : Resource
 	private float _attackSpeedMultiplier = 1;
 	private float _projectileMultiplier = 1;
 	private float _xpMultiplier = 1;
+	private float _hitboxRadius = 32;
 
 	public int Health
 	{
@@ -285,6 +292,22 @@ public partial class CharacterStats : Resource
 				oldValue,
 				_invincibilityTime
 			);
+		}
+	}
+
+	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
+	public required float HitboxRadius
+	{
+		get => _hitboxRadius;
+		set
+		{
+			var clamped = Math.Max(value, 0);
+			if (_hitboxRadius == clamped)
+				return;
+
+			var oldValue = _hitboxRadius;
+			_hitboxRadius = clamped;
+			EmitSignalOnHitboxRadiusChanged(oldValue, _hitboxRadius);
 		}
 	}
 

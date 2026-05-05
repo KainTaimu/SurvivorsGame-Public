@@ -24,6 +24,7 @@ MaxHealth = 99999
 MoveSpeed = 500.0
 Defense = 8
 InvincibilityTime = 1.0
+HitboxRadius = 24.0
 metadata/_custom_type_script = "uid://rykv3f6ereih"
 
 [sub_resource type="Resource" id="Resource_yecw2"]
