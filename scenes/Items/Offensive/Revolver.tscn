@@ -63,6 +63,7 @@ mix_target = 2
 max_polyphony = 6
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1938930498 node_paths=PackedStringArray("_revolver", "_revolverCylinderSprite", "_cartidgeSprites", "_leftPosition", "_rightPosition")]
+visible = false
 script = ExtResource("2_wjj7r")
 _revolver = NodePath("..")
 _revolverCylinderSprite = NodePath("RevolverCylinder")

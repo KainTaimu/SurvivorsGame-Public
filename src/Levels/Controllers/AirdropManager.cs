@@ -16,6 +16,25 @@ public partial class AirdropManager : Node2D
 	private Player Player => GameWorld.Instance.MainPlayer;
 	private Vector2 PlayerPosition => Player.GlobalPosition;
 
+	private bool _f1Held;
+
+	public override void _Process(double delta)
+	{
+		var prev = _f1Held;
+		if (Input.IsPhysicalKeyPressed(Key.F1))
+		{
+			_f1Held = true;
+		}
+		else
+		{
+			_f1Held = false;
+			return;
+		}
+
+		if (prev != _f1Held)
+			DeployItemAirdrop(PlayerPosition, GD.RandRange(0, 360), 8);
+	}
+
 	public void DeployItemAirdrop(
 		Vector2 dropPosition,
 		float arrivalAngleDeg,
@@ -62,6 +81,9 @@ public partial class AirdropManager : Node2D
 			timeToArrivalSec * 2,
 			dropScene: dropScene,
 			dropParent: dropParent
+		);
+		Logger.LogInfo(
+			$"Spawned airdrop : Drop={dropPosition} : TTA={timeToArrivalSec} : Angle={arrivalAngleDeg}"
 		);
 	}
 }
