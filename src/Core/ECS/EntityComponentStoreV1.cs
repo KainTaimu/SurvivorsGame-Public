@@ -18,6 +18,8 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 	public override void _Ready()
 	{
 		Instance = this;
+		_idToIndexTable.EnsureCapacity(MAX_SIZE);
+		_indexToIdTable.EnsureCapacity(MAX_SIZE);
 	}
 
 	/// <summary>
