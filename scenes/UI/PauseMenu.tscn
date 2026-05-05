@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b6smyajb38bae" path="res://src/UI/PauseMenu/PauseMenu.cs" id="1_fsae6"]
 [ext_resource type="Script" uid="uid://hiaypuga6gnf" path="res://scenes/UI/Settings.cs" id="2_6q0ex"]
+[ext_resource type="LabelSettings" uid="uid://c0lq4rqaj62dx" path="res://scenes/UI/SettingsLabelSettings.tres" id="3_4r2wj"]
 
 [node name="PauseMenu" type="CanvasLayer" unique_id=1796089998 node_paths=PackedStringArray("_playerStats")]
 process_mode = 3
@@ -30,7 +31,7 @@ offset_bottom = 11.5
 grow_vertical = 2
 text = "STATS"
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=755710647]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=755710647 node_paths=PackedStringArray("GoreSelection", "CameraShake", "CameraShakeScale", "DamageIndicators")]
 anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
@@ -39,36 +40,83 @@ offset_left = -320.0
 grow_horizontal = 0
 grow_vertical = 2
 color = Color(0.011764706, 0.011764706, 0.011764706, 1)
+script = ExtResource("2_6q0ex")
+GoreSelection = NodePath("MarginContainer/HSplitContainer/VBoxContainer2/OptionButton")
+CameraShake = NodePath("MarginContainer/HSplitContainer/VBoxContainer2/OptionButton2")
+CameraShakeScale = NodePath("MarginContainer/HSplitContainer/VBoxContainer2/HSlider")
+DamageIndicators = NodePath("MarginContainer/HSplitContainer/VBoxContainer2/OptionButton3")
+metadata/_edit_lock_ = true
 
-[node name="Settings" type="VBoxContainer" parent="ColorRect" unique_id=687402907 node_paths=PackedStringArray("GoreSelection", "CameraShake", "CameraShakeScale", "DamageIndicators")]
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect" unique_id=1226701403]
 layout_mode = 1
-anchors_preset = 6
+anchors_preset = 11
 anchor_left = 1.0
-anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 0.5
+anchor_bottom = 1.0
 offset_left = -320.0
-offset_top = -13.5
-offset_bottom = 13.5
 grow_horizontal = 0
 grow_vertical = 2
-alignment = 1
-script = ExtResource("2_6q0ex")
-GoreSelection = NodePath("HBoxContainer/OptionButton")
-CameraShake = NodePath("HBoxContainer2/OptionButton")
-CameraShakeScale = NodePath("HBoxContainer4/HSlider")
-DamageIndicators = NodePath("HBoxContainer3/OptionButton")
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_right = 14
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/Settings" unique_id=376271223]
+[node name="HSplitContainer" type="HSplitContainer" parent="ColorRect/MarginContainer" unique_id=1392199739]
 layout_mode = 2
-alignment = 2
+split_offsets = PackedInt32Array(160)
+dragging_enabled = false
+dragger_visibility = 1
+split_offset = 160
 
-[node name="Label" type="Label" parent="ColorRect/Settings/HBoxContainer" unique_id=2077723473]
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer/HSplitContainer" unique_id=289133683]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/HSplitContainer/VBoxContainer" unique_id=331500675]
+custom_minimum_size = Vector2(0, 32)
+custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
 text = "Gore"
+label_settings = ExtResource("3_4r2wj")
+horizontal_alignment = 2
+vertical_alignment = 1
 uppercase = true
 
-[node name="OptionButton" type="OptionButton" parent="ColorRect/Settings/HBoxContainer" unique_id=339271790]
+[node name="Label2" type="Label" parent="ColorRect/MarginContainer/HSplitContainer/VBoxContainer" unique_id=574214767]
+custom_minimum_size = Vector2(0, 32)
+custom_maximum_size = Vector2(-1, 32)
+layout_mode = 2
+text = "Camera shake"
+label_settings = ExtResource("3_4r2wj")
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="Label3" type="Label" parent="ColorRect/MarginContainer/HSplitContainer/VBoxContainer" unique_id=855560805]
+custom_minimum_size = Vector2(0, 32)
+custom_maximum_size = Vector2(-1, 32)
+layout_mode = 2
+text = "Camera shake scale"
+label_settings = ExtResource("3_4r2wj")
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="Label4" type="Label" parent="ColorRect/MarginContainer/HSplitContainer/VBoxContainer" unique_id=453116855]
+custom_minimum_size = Vector2(0, 32)
+custom_maximum_size = Vector2(-1, 32)
+layout_mode = 2
+text = "Damage indicators"
+label_settings = ExtResource("3_4r2wj")
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="ColorRect/MarginContainer/HSplitContainer" unique_id=573502470]
+layout_mode = 2
+alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="ColorRect/MarginContainer/HSplitContainer/VBoxContainer2" unique_id=1802278189]
+custom_minimum_size = Vector2(0, 32)
+custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
 item_count = 4
 popup/item_0/text = "Disabled"
@@ -80,16 +128,9 @@ popup/item_2/id = 2
 popup/item_3/text = "High"
 popup/item_3/id = 3
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/Settings" unique_id=1210165878]
-layout_mode = 2
-alignment = 2
-
-[node name="Label" type="Label" parent="ColorRect/Settings/HBoxContainer2" unique_id=193439151]
-layout_mode = 2
-text = "Camera shake"
-uppercase = true
-
-[node name="OptionButton" type="OptionButton" parent="ColorRect/Settings/HBoxContainer2" unique_id=956747885]
+[node name="OptionButton2" type="OptionButton" parent="ColorRect/MarginContainer/HSplitContainer/VBoxContainer2" unique_id=207002055]
+custom_minimum_size = Vector2(0, 32)
+custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
 item_count = 2
 popup/item_0/text = "Disabled"
@@ -97,32 +138,20 @@ popup/item_0/id = 0
 popup/item_1/text = "Enabled"
 popup/item_1/id = 1
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="ColorRect/Settings" unique_id=1934330598]
-layout_mode = 2
-alignment = 2
-
-[node name="Label" type="Label" parent="ColorRect/Settings/HBoxContainer4" unique_id=1468759752]
-layout_mode = 2
-text = "Camera shake scale"
-uppercase = true
-
-[node name="HSlider" type="HSlider" parent="ColorRect/Settings/HBoxContainer4" unique_id=801904298]
-custom_minimum_size = Vector2(83.677, 0)
+[node name="HSlider" type="HSlider" parent="ColorRect/MarginContainer/HSplitContainer/VBoxContainer2" unique_id=1531197181]
+custom_minimum_size = Vector2(83.677, 32)
+custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
 max_value = 1.0
 step = 0.1
+value = 0.5
+tick_count = 7
+ticks_on_borders = true
 ticks_position = 3
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="ColorRect/Settings" unique_id=1601588541]
-layout_mode = 2
-alignment = 2
-
-[node name="Label" type="Label" parent="ColorRect/Settings/HBoxContainer3" unique_id=97350242]
-layout_mode = 2
-text = "Damage indicators"
-uppercase = true
-
-[node name="OptionButton" type="OptionButton" parent="ColorRect/Settings/HBoxContainer3" unique_id=1480867047]
+[node name="OptionButton3" type="OptionButton" parent="ColorRect/MarginContainer/HSplitContainer/VBoxContainer2" unique_id=1990164640]
+custom_minimum_size = Vector2(0, 32)
+custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
 item_count = 2
 popup/item_0/text = "Disabled"

@@ -2,7 +2,7 @@ using Game.Core.Settings;
 
 namespace Game.UI;
 
-public partial class Settings : VBoxContainer
+public partial class Settings : Control
 {
 	[Export]
 	public OptionButton GoreSelection = null!;
