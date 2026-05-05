@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cjx5nc7bql8d0"]
 
-[ext_resource type="Script" uid="uid://cgu6j8ic7r2v3" path="res://src/UI/Crosshair/Crosshair.cs" id="1_v23f2"]
+[ext_resource type="Script" uid="uid://ckqeev07nd33j" path="res://src/UI/Crosshair/Crosshair.cs" id="1_v23f2"]
 [ext_resource type="Texture2D" uid="uid://coysqgxl7mvbn" path="res://assets/UI/crosshair.png" id="2_dqn7s"]
 [ext_resource type="Texture2D" uid="uid://bx3hb2oce4wax" path="res://assets/UI/crosshair_small.png" id="3_dqn7s"]
 
@@ -49,7 +49,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jxjwb")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 5.0
 }]
@@ -99,7 +99,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_p6pms")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 5.0
 }]

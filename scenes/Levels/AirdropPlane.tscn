@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cq8d77rrxnkkv"]
+
+[ext_resource type="Script" uid="uid://baar5nau4ntim" path="res://src/Levels/Controllers/AirdropPlane.cs" id="1_qt882"]
+[ext_resource type="Texture2D" uid="uid://ciss6iaayf6h1" path="res://assets/Levels/aircraft.png" id="1_vykd8"]
+
+[node name="AirdropPlane" type="Node2D" unique_id=507387755]
+script = ExtResource("1_qt882")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1375479191]
+modulate = Color(0.012617188, 0.012617188, 0.012617188, 1)
+self_modulate = Color(1, 1, 1, 0.49803922)
+scale = Vector2(5, 5)
+texture = ExtResource("1_vykd8")
+metadata/_edit_lock_ = true

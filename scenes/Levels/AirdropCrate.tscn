@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://d3mr5xk4msn7y"]
+
+[ext_resource type="Script" uid="uid://0ir5y5fj5c8p" path="res://src/Interactable/InteractableAirdropCrate.cs" id="1_8wfuc"]
+[ext_resource type="Texture2D" uid="uid://chc1uuc50rwwt" path="res://assets/Levels/barrel.png" id="1_lfwm1"]
+[ext_resource type="Texture2D" uid="uid://bavbks4hkklvg" path="res://assets/UI/circle.png" id="3_lingc"]
+[ext_resource type="Texture2D" uid="uid://4g1il4rw4pan" path="res://assets/UI/circle_outer.png" id="4_4g8bn"]
+
+[node name="AirdropCrate" type="Node2D" unique_id=141661673 node_paths=PackedStringArray("_interactableCircle", "_interactableInnerCircle")]
+script = ExtResource("1_8wfuc")
+_interactableCircle = NodePath("InteractableCircle")
+_interactableInnerCircle = NodePath("InteractableCircle/InnerCircle")
+PickUpRange = 100
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2007828770]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_lfwm1")
+
+[node name="InteractableCircle" type="Node2D" parent="." unique_id=1545558573]
+modulate = Color(1, 1, 1, 0)
+
+[node name="InnerCircle" type="Sprite2D" parent="InteractableCircle" unique_id=207735287]
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("3_lingc")
+
+[node name="OuterCircle" type="Sprite2D" parent="InteractableCircle" unique_id=563633024]
+texture = ExtResource("4_4g8bn")

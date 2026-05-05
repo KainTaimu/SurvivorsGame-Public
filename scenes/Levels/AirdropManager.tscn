@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bh4q5xe8eps71"]
+
+[ext_resource type="Script" uid="uid://cs1f70yvprhf2" path="res://src/Levels/Controllers/AirdropManager.cs" id="1_h0uvq"]
+[ext_resource type="PackedScene" uid="uid://cq8d77rrxnkkv" path="res://scenes/Levels/AirdropPlane.tscn" id="2_5uhfe"]
+[ext_resource type="PackedScene" uid="uid://d3mr5xk4msn7y" path="res://scenes/Levels/AirdropCrate.tscn" id="3_b4nno"]
+
+[node name="AirdropManager" type="Node2D" unique_id=1529584760]
+script = ExtResource("1_h0uvq")
+_airdropPlaneScene = ExtResource("2_5uhfe")
+_itemDropScene = ExtResource("3_b4nno")
+Velocity = 5000.0

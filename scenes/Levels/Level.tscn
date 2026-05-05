@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://cjx5nc7bql8d0" path="res://scenes/UI/Crosshair.tscn" id="15_aredf"]
 [ext_resource type="Script" uid="uid://djv8orxale1c3" path="res://src/Levels/Controllers/EnemyTargetQuery.cs" id="16_x7tv3"]
 [ext_resource type="Script" uid="uid://bpqjji00j8p6x" path="res://src/Levels/Controllers/PlayerHitController.cs" id="19_aig1n"]
+[ext_resource type="PackedScene" uid="uid://bh4q5xe8eps71" path="res://scenes/Levels/AirdropManager.tscn" id="20_qsiuk"]
 [ext_resource type="PackedScene" uid="uid://do6p1pg4x0vkf" path="res://scenes/UI/Hud.tscn" id="20_vg5sh"]
 
 [sub_resource type="Resource" id="Resource_x7tv3"]
@@ -58,7 +59,7 @@ metadata/_edit_lock_ = true
 
 [node name="Player" parent="." unique_id=1984267814 instance=ExtResource("1_77fk7")]
 
-[node name="Systems" type="Node" parent="." unique_id=708197889]
+[node name="Systems" type="Node2D" parent="." unique_id=897106209]
 
 [node name="GameWorld" type="Node" parent="Systems" unique_id=562045734 node_paths=PackedStringArray("MainPlayer")]
 script = ExtResource("3_pi0ox")
@@ -111,6 +112,10 @@ _multiMesh = ExtResource("9_ror81")
 
 [node name="PlayerHitController" type="Node" parent="Systems/PlayerSystems" unique_id=1486291681]
 script = ExtResource("19_aig1n")
+
+[node name="LevelSystems" type="Node" parent="Systems" unique_id=1543900922]
+
+[node name="AirdropManager" parent="Systems/LevelSystems" unique_id=1529584760 instance=ExtResource("20_qsiuk")]
 
 [node name="UI" type="Node" parent="." unique_id=1918867052]
 
