@@ -81,7 +81,9 @@ public abstract partial class Firearm
 	private float RecoilScale => FirearmStats?.RecoilScale ?? 1f;
 	private float RecoilAccumilationScale =>
 		FirearmStats?.RecoilAccumilationScale ?? 1f;
-	private float CameraRecoilScale => FirearmStats?.CameraRecoilScale ?? 1f;
+	private float CameraRecoilScale =>
+		FirearmStats?.CameraRecoilScale * GameSettings.Instance.CameraShakeScale
+		?? 1f;
 
 	protected Crosshair? Crosshair => Crosshair.Instance;
 

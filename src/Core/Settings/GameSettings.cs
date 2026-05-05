@@ -19,6 +19,18 @@ public partial class GameSettings : Resource
 		}
 	} = true;
 
+	[Export(PropertyHint.Range, "0,1,0.01")]
+	[JsonProperty]
+	public float CameraShakeScale
+	{
+		get;
+		set
+		{
+			field = value;
+			EmitSignalOnCameraShakeScaleChanged();
+		}
+	} = 1;
+
 	[Export]
 	[JsonProperty]
 	public bool EnableDamageIndicators
@@ -58,6 +70,9 @@ public partial class GameSettings : Resource
 
 	[Signal]
 	public delegate void OnCameraShakeChangedEventHandler();
+
+	[Signal]
+	public delegate void OnCameraShakeScaleChangedEventHandler();
 
 	public static GameSettings Instance = null!;
 }

@@ -11,6 +11,9 @@ public partial class Settings : VBoxContainer
 	public OptionButton CameraShake = null!;
 
 	[Export]
+	public Slider CameraShakeScale = null!;
+
+	[Export]
 	public OptionButton DamageIndicators = null!;
 
 	public override void _Ready()
@@ -35,6 +38,7 @@ public partial class Settings : VBoxContainer
 			_ => throw new NotImplementedException(),
 		};
 		CameraShake.Selected = GameSettings.Instance.EnableCameraShake ? 1 : 0;
+		CameraShakeScale.Value = GameSettings.Instance.CameraShakeScale;
 		DamageIndicators.Selected = GameSettings.Instance.EnableDamageIndicators
 			? 1
 			: 0;
@@ -73,6 +77,8 @@ public partial class Settings : VBoxContainer
 					break;
 			}
 		};
+		CameraShakeScale.ValueChanged += (value) =>
+			GameSettings.Instance.CameraShakeScale = (float)value;
 		DamageIndicators.ItemSelected += (idx) =>
 		{
 			switch (idx)
