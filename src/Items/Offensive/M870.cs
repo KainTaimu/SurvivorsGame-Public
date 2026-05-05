@@ -4,7 +4,14 @@ namespace Game.Items.Offensive;
 
 public partial class M870 : Firearm
 {
+	[Export]
+	private AudioStreamPlayer? _shellReloadAudioPlayer;
+
+	[Export]
+	private AudioStreamPlayer? _cockingAudioPlayer;
+
 	private bool _isShotgunReloading;
+	private double _reloadCooldown;
 
 	private int PelletCount =>
 		Stats.Additional.GetValueOrDefault("PelletCount").AsInt32();
@@ -19,7 +26,7 @@ public partial class M870 : Firearm
 	{
 		if (_magazineCount <= 0)
 		{
-			Reload();
+			// Reload();
 			return;
 		}
 		if (!IsReadyToShoot)
@@ -27,6 +34,10 @@ public partial class M870 : Firearm
 		_isShotgunReloading = false;
 
 		ShootAudioPlayer?.Play();
+		if (_cockingAudioPlayer is not null)
+			CreateTween()
+				.TweenCallback(Callable.From(() => _cockingAudioPlayer.Play()))
+				.SetDelay(Stats.AttackSpeed / 1e3 * 0.5f);
 
 		_fireCooldown = Stats.AttackSpeed;
 		_magazineCount--;
@@ -45,13 +56,13 @@ public partial class M870 : Firearm
 			mouseVector = Player.GetGlobalMousePosition();
 		}
 
-		var rotation = playerVector.AngleToPoint(mouseVector);
+		var baseRotation = playerVector.AngleToPoint(mouseVector);
 		for (var i = 0; i < PelletCount; i++)
 		{
 			var bloomRad = BloomCoefficientDeg * (Math.PI / 180);
 			var bloom = (float)GD.RandRange(-bloomRad / 2, bloomRad / 2);
 
-			rotation += bloom;
+			var rotation = baseRotation + bloom;
 
 			var projectile = ProjectilePool.GetProjectile();
 
@@ -68,36 +79,61 @@ public partial class M870 : Firearm
 		EmitSignalOnAttack();
 	}
 
+	private Tween? _reloadTween;
+
 	public override void Reload()
 	{
-		if (_isShotgunReloading)
+		if (_reloadCooldown > 0)
 			return;
 		if (MagazineCount == MagazineCapacity)
 			return;
 
-		_isShotgunReloading = true;
-		var tween = CreateTween().SetLoops(MagazineCapacity - MagazineCount);
-		tween
-			.TweenCallback(
-				Callable.From(() =>
-				{
-					if (!_isShotgunReloading)
-					{
-						tween.Kill();
-						return;
-					}
-					_magazineCount++;
-					ReloadAudioPlayer?.Play();
-				})
-			)
-			.SetDelay(ReloadTimeMs / 1e3);
+		_magazineCount++;
+		_shellReloadAudioPlayer?.Play();
+		_reloadCooldown = FirearmStats.ReloadTimeMs / 1e3;
+
+		// _reloadTween?.Kill();
+		// _reloadTween = null;
+		// _isShotgunReloading = true;
+		//
+		// // Add delay before reloading sequence to punish reload/shoot spam
+		// GetTree().CreateTimer(ReloadTimeMs / 1e3 * 0.7f, false).Timeout += () =>
+		// {
+		// 	_reloadTween = CreateTween()
+		// 		.SetLoops(MagazineCapacity - MagazineCount);
+		// 	_reloadTween
+		// 		.TweenCallback(
+		// 			Callable.From(() =>
+		// 			{
+		// 				_magazineCount++;
+		// 				_shellReloadAudioPlayer?.Play();
+		// 				if (_magazineCount == MagazineCapacity)
+		// 				{
+		// 					_isShotgunReloading = false;
+		// 					_reloadTween.Kill();
+		// 				}
+		// 			})
+		// 		)
+		// 		.SetDelay(ReloadTimeMs / 1e3);
+		// 	_reloadTween.TweenCallback(
+		// 		Callable.From(() => _isShotgunReloading = false)
+		// 	);
+		// };
 	}
 
 	public override void _Process(double delta)
 	{
 		_fireCooldown -= delta;
+
 		if (Input.IsActionPressed(InputMapNames.WeaponReload))
 		{
+			if (Input.IsActionJustPressed(InputMapNames.WeaponReload))
+			{
+				_reloadCooldown = 0;
+				Reload();
+				return;
+			}
+			_reloadCooldown -= delta;
 			Reload();
 			return;
 		}
@@ -109,5 +145,6 @@ public partial class M870 : Firearm
 			return;
 
 		Attack();
+		_reloadCooldown = 0;
 	}
 }

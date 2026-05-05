@@ -36,7 +36,7 @@ ProjectileSpeed = 5000
 ProjectileScaleMultiplier = 1.2
 ProjectileRadius = 32
 AttackSpeed = 1.0
-PierceLimit = 6
+PierceLimit = 8
 Additional = Dictionary[String, Variant]({
 "Knockback": 50.0
 })

@@ -12,7 +12,7 @@ Name = "AK-47"
 
 [sub_resource type="Resource" id="Resource_nihe0"]
 script = ExtResource("4_tg8rs")
-BloomCoefficientDeg = 5.0
+BloomCoefficientDeg = 7.0
 VerticalRecoilMin = 8.0
 VerticalBaseRecoil = 8.0
 VerticalRecoilRandom = 1.0
