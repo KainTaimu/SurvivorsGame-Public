@@ -26,7 +26,7 @@ public partial class M870 : Firearm
 	{
 		if (_magazineCount <= 0)
 		{
-			// Reload();
+			Reload();
 			return;
 		}
 		if (!IsReadyToShoot)
@@ -88,63 +88,48 @@ public partial class M870 : Firearm
 		if (MagazineCount == MagazineCapacity)
 			return;
 
-		_magazineCount++;
-		_shellReloadAudioPlayer?.Play();
-		_reloadCooldown = FirearmStats.ReloadTimeMs / 1e3;
+		_reloadTween?.Kill();
+		_reloadTween = null;
+		_isShotgunReloading = true;
 
-		// _reloadTween?.Kill();
-		// _reloadTween = null;
-		// _isShotgunReloading = true;
-		//
-		// // Add delay before reloading sequence to punish reload/shoot spam
-		// GetTree().CreateTimer(ReloadTimeMs / 1e3 * 0.7f, false).Timeout += () =>
-		// {
-		// 	_reloadTween = CreateTween()
-		// 		.SetLoops(MagazineCapacity - MagazineCount);
-		// 	_reloadTween
-		// 		.TweenCallback(
-		// 			Callable.From(() =>
-		// 			{
-		// 				_magazineCount++;
-		// 				_shellReloadAudioPlayer?.Play();
-		// 				if (_magazineCount == MagazineCapacity)
-		// 				{
-		// 					_isShotgunReloading = false;
-		// 					_reloadTween.Kill();
-		// 				}
-		// 			})
-		// 		)
-		// 		.SetDelay(ReloadTimeMs / 1e3);
-		// 	_reloadTween.TweenCallback(
-		// 		Callable.From(() => _isShotgunReloading = false)
-		// 	);
-		// };
+		// Add delay before reloading sequence to punish reload/shoot spam
+
+		_reloadTween = CreateTween().SetLoops(MagazineCapacity - MagazineCount);
+		_reloadTween
+			.TweenCallback(
+				Callable.From(() =>
+				{
+					_magazineCount++;
+					_shellReloadAudioPlayer?.Play();
+					if (_magazineCount == MagazineCapacity)
+					{
+						_isShotgunReloading = false;
+						_reloadTween.Kill();
+					}
+				})
+			)
+			.SetDelay(ReloadTimeMs / 1e3);
+		_reloadTween.TweenCallback(
+			Callable.From(() => _isShotgunReloading = false)
+		);
 	}
 
 	public override void _Process(double delta)
 	{
 		_fireCooldown -= delta;
 
-		if (Input.IsActionPressed(InputMapNames.WeaponReload))
+		if (Input.IsActionJustPressed(InputMapNames.WeaponReload))
 		{
-			if (Input.IsActionJustPressed(InputMapNames.WeaponReload))
-			{
-				_reloadCooldown = 0;
-				Reload();
-				return;
-			}
-			_reloadCooldown -= delta;
 			Reload();
 			return;
 		}
 		if (
-			!Input.IsActionPressed(
+			!Input.IsActionJustPressed(
 				AttackActionString ?? InputMapNames.PrimaryAttack
 			)
 		)
 			return;
 
 		Attack();
-		_reloadCooldown = 0;
 	}
 }

@@ -42,7 +42,7 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[node name="Revolver" type="Node" unique_id=1644478588 node_paths=PackedStringArray("_ammoCount", "CockAudioPlayer", "ShootAudioPlayer")]
+[node name="Revolver" type="Node2D" unique_id=1975794211 node_paths=PackedStringArray("_ammoCount", "CockAudioPlayer", "ShootAudioPlayer")]
 script = ExtResource("1_0wf3b")
 _ammoCount = NodePath("CanvasLayer")
 CockAudioPlayer = NodePath("CockAudioPlayer")
