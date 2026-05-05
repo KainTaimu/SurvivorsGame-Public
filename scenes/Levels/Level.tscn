@@ -129,6 +129,5 @@ _pauseController = NodePath("../../Systems/PauseController")
 [node name="Crosshair" parent="UI/Crosshair" unique_id=587001361 node_paths=PackedStringArray("Player", "PauseController") instance=ExtResource("15_aredf")]
 Player = NodePath("../../../Player")
 PauseController = NodePath("../../../Systems/PauseController")
-CrosshairSize = 1.5
 
 [node name="HUD" parent="UI" unique_id=1626912566 instance=ExtResource("20_vg5sh")]

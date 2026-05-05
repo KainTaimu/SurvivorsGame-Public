@@ -32,7 +32,7 @@ public partial class Crosshair : Node2D
 			field = value;
 			Callable.From(() => ChangeCrosshairSize(value)).CallDeferred();
 		}
-	} = 1;
+	} = 1.5f;
 
 	public float PrimaryCrosshairSpreadRatio =>
 		PrimaryCrosshairSprite.Frame
@@ -70,6 +70,8 @@ public partial class Crosshair : Node2D
 	public override void _Ready()
 	{
 		Instance = this;
+		GameSettings.Instance.OnCrosshairScaleChanged += () =>
+			CrosshairSize = GameSettings.Instance.CrosshairScale;
 
 		Recoil = new CrossHairRecoil(this);
 

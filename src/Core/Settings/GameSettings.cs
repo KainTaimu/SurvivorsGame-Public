@@ -31,6 +31,18 @@ public partial class GameSettings : Resource
 		}
 	} = 1;
 
+	[Export(PropertyHint.Range, "0.1,5,0.1")]
+	[JsonProperty]
+	public float CrosshairScale
+	{
+		get;
+		set
+		{
+			field = value;
+			EmitSignalOnCrosshairScaleChanged();
+		}
+	} = 1.5f;
+
 	[Export]
 	[JsonProperty]
 	public bool EnableDamageIndicators
@@ -73,6 +85,9 @@ public partial class GameSettings : Resource
 
 	[Signal]
 	public delegate void OnCameraShakeScaleChangedEventHandler();
+
+	[Signal]
+	public delegate void OnCrosshairScaleChangedEventHandler();
 
 	public static GameSettings Instance = null!;
 }

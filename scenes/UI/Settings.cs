@@ -14,6 +14,12 @@ public partial class Settings : Control
 	public Slider CameraShakeScale = null!;
 
 	[Export]
+	public Slider CrosshairScale = null!;
+
+	[Export]
+	public Label CrosshairScaleLabel = null!;
+
+	[Export]
 	public OptionButton DamageIndicators = null!;
 
 	public override void _Ready()
@@ -39,6 +45,9 @@ public partial class Settings : Control
 		};
 		CameraShake.Selected = GameSettings.Instance.EnableCameraShake ? 1 : 0;
 		CameraShakeScale.Value = GameSettings.Instance.CameraShakeScale;
+
+		CrosshairScale.Value = GameSettings.Instance.CrosshairScale;
+		CrosshairScaleLabel.Text = CrosshairScale.Value.ToString("0.##");
 		DamageIndicators.Selected = GameSettings.Instance.EnableDamageIndicators
 			? 1
 			: 0;
@@ -79,6 +88,11 @@ public partial class Settings : Control
 		};
 		CameraShakeScale.ValueChanged += (value) =>
 			GameSettings.Instance.CameraShakeScale = (float)value;
+		CrosshairScale.ValueChanged += (value) =>
+		{
+			GameSettings.Instance.CrosshairScale = (float)value;
+			CrosshairScaleLabel.Text = CrosshairScale.Value.ToString("0.##");
+		};
 		DamageIndicators.ItemSelected += (idx) =>
 		{
 			switch (idx)
@@ -91,5 +105,13 @@ public partial class Settings : Control
 					break;
 			}
 		};
+	}
+
+	private void ResetCrosshairScale(InputEvent @event)
+	{
+		if (@event is not InputEventMouseButton mb)
+			return;
+		if (mb.ButtonIndex == MouseButton.Right)
+			CrosshairScale.Value = 1.5;
 	}
 }

@@ -2,15 +2,37 @@
 
 [ext_resource type="Script" uid="uid://b6smyajb38bae" path="res://src/UI/PauseMenu/PauseMenu.cs" id="1_fsae6"]
 [ext_resource type="Script" uid="uid://hiaypuga6gnf" path="res://scenes/UI/Settings.cs" id="2_6q0ex"]
+[ext_resource type="Shader" uid="uid://cjavr4nj3ysk" path="res://src/Shaders/bw.gdshader" id="2_avwb0"]
 [ext_resource type="LabelSettings" uid="uid://c0lq4rqaj62dx" path="res://scenes/UI/SettingsLabelSettings.tres" id="3_4r2wj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_73e60"]
+shader = ExtResource("2_avwb0")
+shader_parameter/saturation = 0.0
 
 [node name="PauseMenu" type="CanvasLayer" unique_id=1796089998 node_paths=PackedStringArray("_playerStats")]
 process_mode = 3
 layer = 2
 script = ExtResource("1_fsae6")
-_playerStats = NodePath("ColorRect2/Label")
+_playerStats = NodePath("LeftPanel/Label")
 
-[node name="ColorRect2" type="ColorRect" parent="." unique_id=320626036]
+[node name="Grayscale" type="ColorRect" parent="." unique_id=573509053]
+material = SubResource("ShaderMaterial_73e60")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="ColorRect" parent="." unique_id=170965132]
+z_index = -1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.011764706, 0.011764706, 0.011764706, 0.49803922)
+
+[node name="LeftPanel" type="ColorRect" parent="." unique_id=320626036]
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
@@ -20,7 +42,7 @@ offset_bottom = 540.0
 grow_vertical = 2
 color = Color(0.011764706, 0.011764706, 0.011764706, 1)
 
-[node name="Label" type="Label" parent="ColorRect2" unique_id=1852902350]
+[node name="Label" type="Label" parent="LeftPanel" unique_id=1852902350]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -30,8 +52,9 @@ offset_right = 40.0
 offset_bottom = 11.5
 grow_vertical = 2
 text = "STATS"
+label_settings = ExtResource("3_4r2wj")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=755710647 node_paths=PackedStringArray("GoreSelection", "CameraShake", "CameraShakeScale", "DamageIndicators")]
+[node name="RightPanel" type="ColorRect" parent="." unique_id=755710647 node_paths=PackedStringArray("GoreSelection", "CameraShake", "CameraShakeScale", "CrosshairScale", "CrosshairScaleLabel", "DamageIndicators")]
 anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
@@ -44,10 +67,12 @@ script = ExtResource("2_6q0ex")
 GoreSelection = NodePath("MarginContainer/HSplitContainer/VBoxContainer2/OptionButton")
 CameraShake = NodePath("MarginContainer/HSplitContainer/VBoxContainer2/OptionButton2")
 CameraShakeScale = NodePath("MarginContainer/HSplitContainer/VBoxContainer2/HSlider")
+CrosshairScale = NodePath("MarginContainer/HSplitContainer/VBoxContainer2/HSplitContainer/HSlider2")
+CrosshairScaleLabel = NodePath("MarginContainer/HSplitContainer/VBoxContainer2/HSplitContainer/Label")
 DamageIndicators = NodePath("MarginContainer/HSplitContainer/VBoxContainer2/OptionButton3")
 metadata/_edit_lock_ = true
 
-[node name="MarginContainer" type="MarginContainer" parent="ColorRect" unique_id=1226701403]
+[node name="MarginContainer" type="MarginContainer" parent="RightPanel" unique_id=1226701403]
 layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0
@@ -59,18 +84,18 @@ grow_vertical = 2
 theme_override_constants/margin_left = 14
 theme_override_constants/margin_right = 14
 
-[node name="HSplitContainer" type="HSplitContainer" parent="ColorRect/MarginContainer" unique_id=1392199739]
+[node name="HSplitContainer" type="HSplitContainer" parent="RightPanel/MarginContainer" unique_id=1392199739]
 layout_mode = 2
-split_offsets = PackedInt32Array(160)
+split_offsets = PackedInt32Array(152)
 dragging_enabled = false
 dragger_visibility = 1
-split_offset = 160
+split_offset = 152
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer/HSplitContainer" unique_id=289133683]
+[node name="VBoxContainer" type="VBoxContainer" parent="RightPanel/MarginContainer/HSplitContainer" unique_id=289133683]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="ColorRect/MarginContainer/HSplitContainer/VBoxContainer" unique_id=331500675]
+[node name="Label" type="Label" parent="RightPanel/MarginContainer/HSplitContainer/VBoxContainer" unique_id=331500675]
 custom_minimum_size = Vector2(0, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
@@ -80,7 +105,7 @@ horizontal_alignment = 2
 vertical_alignment = 1
 uppercase = true
 
-[node name="Label2" type="Label" parent="ColorRect/MarginContainer/HSplitContainer/VBoxContainer" unique_id=574214767]
+[node name="Label2" type="Label" parent="RightPanel/MarginContainer/HSplitContainer/VBoxContainer" unique_id=574214767]
 custom_minimum_size = Vector2(0, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
@@ -90,7 +115,7 @@ horizontal_alignment = 2
 vertical_alignment = 1
 uppercase = true
 
-[node name="Label3" type="Label" parent="ColorRect/MarginContainer/HSplitContainer/VBoxContainer" unique_id=855560805]
+[node name="Label3" type="Label" parent="RightPanel/MarginContainer/HSplitContainer/VBoxContainer" unique_id=855560805]
 custom_minimum_size = Vector2(0, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
@@ -100,7 +125,17 @@ horizontal_alignment = 2
 vertical_alignment = 1
 uppercase = true
 
-[node name="Label4" type="Label" parent="ColorRect/MarginContainer/HSplitContainer/VBoxContainer" unique_id=453116855]
+[node name="Label5" type="Label" parent="RightPanel/MarginContainer/HSplitContainer/VBoxContainer" unique_id=1058529459]
+custom_minimum_size = Vector2(0, 32)
+custom_maximum_size = Vector2(-1, 32)
+layout_mode = 2
+text = "Crosshair scale"
+label_settings = ExtResource("3_4r2wj")
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="Label4" type="Label" parent="RightPanel/MarginContainer/HSplitContainer/VBoxContainer" unique_id=453116855]
 custom_minimum_size = Vector2(0, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
@@ -110,11 +145,11 @@ horizontal_alignment = 2
 vertical_alignment = 1
 uppercase = true
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="ColorRect/MarginContainer/HSplitContainer" unique_id=573502470]
+[node name="VBoxContainer2" type="VBoxContainer" parent="RightPanel/MarginContainer/HSplitContainer" unique_id=573502470]
 layout_mode = 2
 alignment = 1
 
-[node name="OptionButton" type="OptionButton" parent="ColorRect/MarginContainer/HSplitContainer/VBoxContainer2" unique_id=1802278189]
+[node name="OptionButton" type="OptionButton" parent="RightPanel/MarginContainer/HSplitContainer/VBoxContainer2" unique_id=1802278189]
 custom_minimum_size = Vector2(0, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
@@ -128,7 +163,7 @@ popup/item_2/id = 2
 popup/item_3/text = "High"
 popup/item_3/id = 3
 
-[node name="OptionButton2" type="OptionButton" parent="ColorRect/MarginContainer/HSplitContainer/VBoxContainer2" unique_id=207002055]
+[node name="OptionButton2" type="OptionButton" parent="RightPanel/MarginContainer/HSplitContainer/VBoxContainer2" unique_id=207002055]
 custom_minimum_size = Vector2(0, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
@@ -138,7 +173,7 @@ popup/item_0/id = 0
 popup/item_1/text = "Enabled"
 popup/item_1/id = 1
 
-[node name="HSlider" type="HSlider" parent="ColorRect/MarginContainer/HSplitContainer/VBoxContainer2" unique_id=1531197181]
+[node name="HSlider" type="HSlider" parent="RightPanel/MarginContainer/HSplitContainer/VBoxContainer2" unique_id=1531197181]
 custom_minimum_size = Vector2(83.677, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
@@ -149,7 +184,32 @@ tick_count = 7
 ticks_on_borders = true
 ticks_position = 3
 
-[node name="OptionButton3" type="OptionButton" parent="ColorRect/MarginContainer/HSplitContainer/VBoxContainer2" unique_id=1990164640]
+[node name="HSplitContainer" type="HSplitContainer" parent="RightPanel/MarginContainer/HSplitContainer/VBoxContainer2" unique_id=1110691747]
+layout_mode = 2
+split_offsets = PackedInt32Array(94)
+dragging_enabled = false
+dragger_visibility = 1
+split_offset = 94
+
+[node name="HSlider2" type="HSlider" parent="RightPanel/MarginContainer/HSplitContainer/VBoxContainer2/HSplitContainer" unique_id=1878723952]
+custom_minimum_size = Vector2(83.677, 32)
+custom_maximum_size = Vector2(-1, 32)
+layout_mode = 2
+min_value = 1.0
+max_value = 4.0
+step = 0.1
+value = 1.0
+tick_count = 10
+ticks_on_borders = true
+ticks_position = 3
+
+[node name="Label" type="Label" parent="RightPanel/MarginContainer/HSplitContainer/VBoxContainer2/HSplitContainer" unique_id=242115233]
+layout_mode = 2
+text = "X.X"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="OptionButton3" type="OptionButton" parent="RightPanel/MarginContainer/HSplitContainer/VBoxContainer2" unique_id=1990164640]
 custom_minimum_size = Vector2(0, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
@@ -158,3 +218,5 @@ popup/item_0/text = "Disabled"
 popup/item_0/id = 0
 popup/item_1/text = "Enabled"
 popup/item_1/id = 1
+
+[connection signal="gui_input" from="RightPanel/MarginContainer/HSplitContainer/VBoxContainer2/HSplitContainer/HSlider2" to="RightPanel" method="ResetCrosshairScale"]
