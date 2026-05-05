@@ -120,6 +120,7 @@ script = ExtResource("19_aig1n")
 [node name="UI" type="Node" parent="." unique_id=1918867052]
 
 [node name="PauseMenu" parent="UI" unique_id=1937596238 node_paths=PackedStringArray("_player", "_pauseController") instance=ExtResource("4_pi0ox")]
+visible = false
 _player = NodePath("../../Player")
 _pauseController = NodePath("../../Systems/PauseController")
 
