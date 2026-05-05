@@ -1,3 +1,4 @@
+using Game.Core.Settings;
 using Game.Levels.Controllers;
 using Game.Players;
 using Game.UI;
@@ -194,8 +195,12 @@ public abstract partial class Firearm
 		Crosshair.Recoil.ApplyImpulse(recoil);
 	}
 
+	// TODO: Move camera recoil to a method in PlayerCameraController
+	// and have this call that instead.
 	public void ApplyCameraRecoil()
 	{
+		if (!GameSettings.Instance.EnableCameraShake)
+			return;
 		if (CameraRecoilScale == 0)
 			return;
 

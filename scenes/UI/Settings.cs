@@ -1,4 +1,3 @@
-using Game.Core;
 using Game.Core.Settings;
 
 namespace Game.UI;
@@ -8,7 +7,8 @@ public partial class Settings : VBoxContainer
 	[Export]
 	public OptionButton GoreSelection = null!;
 
-	public GameSettings GameSettings => GameSingleton.GameSettings;
+	[Export]
+	public OptionButton CameraShake = null!;
 
 	public override void _Ready()
 	{
@@ -18,7 +18,7 @@ public partial class Settings : VBoxContainer
 
 	private void UpdateOptions()
 	{
-		GoreSelection.Selected = GameSettings.GoreEffects switch
+		GoreSelection.Selected = GameSettings.Instance.GoreEffects switch
 		{
 			GoreEffectsEnum.Disabled => 0,
 			GoreEffectsEnum.Low => 1,
@@ -26,6 +26,7 @@ public partial class Settings : VBoxContainer
 			GoreEffectsEnum.High => 4,
 			_ => throw new NotImplementedException(),
 		};
+		CameraShake.Selected = GameSettings.Instance.EnableCameraShake ? 1 : 0;
 	}
 
 	private void SubscribeOptions()
@@ -35,16 +36,29 @@ public partial class Settings : VBoxContainer
 			switch (idx)
 			{
 				case 0:
-					GameSettings.GoreEffects = GoreEffectsEnum.Disabled;
+					GameSettings.Instance.GoreEffects =
+						GoreEffectsEnum.Disabled;
 					break;
 				case 1:
-					GameSettings.GoreEffects = GoreEffectsEnum.Low;
+					GameSettings.Instance.GoreEffects = GoreEffectsEnum.Low;
 					break;
 				case 2:
-					GameSettings.GoreEffects = GoreEffectsEnum.Medium;
+					GameSettings.Instance.GoreEffects = GoreEffectsEnum.Medium;
 					break;
 				case 3:
-					GameSettings.GoreEffects = GoreEffectsEnum.High;
+					GameSettings.Instance.GoreEffects = GoreEffectsEnum.High;
+					break;
+			}
+		};
+		CameraShake.ItemSelected += (idx) =>
+		{
+			switch (idx)
+			{
+				case 0:
+					GameSettings.Instance.EnableCameraShake = false;
+					break;
+				case 1:
+					GameSettings.Instance.EnableCameraShake = true;
 					break;
 			}
 		};

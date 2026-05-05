@@ -1,4 +1,4 @@
-using Game.Core;
+using Game.Core.Settings;
 using Game.Players;
 using Game.UI.Menus;
 
@@ -225,11 +225,7 @@ public partial class Crosshair : Node2D
 
 		private void ApplyHorizontalRecoilPunish(ref Vector2 impulse)
 		{
-			if (
-				!GameSingleton
-					.GameSettings
-					.EnableCrosshairHorizontalRecoilPunish
-			)
+			if (!GameSettings.Instance.EnableCrosshairHorizontalRecoilPunish)
 				return;
 			var crosshairScreenPosRatio =
 				crosshair.CanvasSpacePosition

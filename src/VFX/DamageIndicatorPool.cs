@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Game.Core;
+using Game.Core.Settings;
 
 namespace Game.VFX;
 
@@ -16,13 +16,13 @@ public partial class DamageIndicatorPool : Node2D
 
 	public static DamageIndicatorPool? Instance;
 
-	public bool Enabled => GameSingleton.GameSettings.EnableDamageIndicators;
+	public bool Enabled => GameSettings.Instance.EnableDamageIndicators;
 
 	public override void _Ready()
 	{
-		GameSingleton.GameSettings.OnDamageIndicatorsChanged += () =>
+		GameSettings.Instance.OnDamageIndicatorsChanged += () =>
 		{
-			ProcessMode = GameSingleton.GameSettings.EnableDamageIndicators
+			ProcessMode = Enabled
 				? ProcessModeEnum.Inherit
 				: ProcessModeEnum.Disabled;
 			if (Enabled)

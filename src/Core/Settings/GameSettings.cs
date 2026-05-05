@@ -5,6 +5,17 @@ public partial class GameSettings : Resource
 {
 	[ExportGroup("Game")]
 	[Export]
+	public bool EnableCameraShake
+	{
+		get;
+		set
+		{
+			field = value;
+			EmitSignalOnCameraShakeChanged();
+		}
+	} = true;
+
+	[Export]
 	public bool EnableDamageIndicators
 	{
 		get;
@@ -38,4 +49,9 @@ public partial class GameSettings : Resource
 
 	[Signal]
 	public delegate void OnDamageIndicatorsChangedEventHandler();
+
+	[Signal]
+	public delegate void OnCameraShakeChangedEventHandler();
+
+	public static GameSettings Instance = null!;
 }

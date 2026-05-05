@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Game.Core;
 using Game.Core.ECS;
+using Game.Core.Settings;
 
 namespace Game.Levels.Controllers;
 
@@ -14,7 +14,7 @@ public partial class GoreManager : Node
 
 	private int MaxActiveParticles
 	{
-		get => GameSingleton.GameSettings.GoreEffectsValue;
+		get => GameSettings.Instance.GoreEffectsValue;
 		set { UpdateParticles(value); }
 	}
 
@@ -26,7 +26,7 @@ public partial class GoreManager : Node
 	public override void _Ready()
 	{
 		UpdateParticles(MaxActiveParticles);
-		GameSingleton.GameSettings.OnGoreEffectsChanged += () =>
+		GameSettings.Instance.OnGoreEffectsChanged += () =>
 			UpdateParticles(MaxActiveParticles);
 	}
 

@@ -14,6 +14,7 @@ public partial class GameSingleton : Node
 	{
 		GetNode("/root/DebugMenu").Set("style", 2); // Full with graph
 		Instance = this;
+		GameSettings.Instance = _gameSettings;
 	}
 
 	private void ReadUserSettings() { }
