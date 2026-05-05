@@ -11,5 +11,9 @@ public partial class Player : Node2D
 	public PlayerMovementController MovementController { get; private set; } =
 		null!;
 
+	[Export]
+	public PlayerWeaponController WeaponController { get; private set; } =
+		null!;
+
 	public bool IsAlive => Character.CharacterStats.Health == 0;
 }

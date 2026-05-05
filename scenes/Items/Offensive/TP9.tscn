@@ -23,12 +23,11 @@ VerticalRecoilMin = 8.0
 VerticalBaseRecoil = 8.0
 VerticalRecoilRandom = 1.0
 RecoilScale = 0.2
-CameraRecoilScale = 0.8
+CameraRecoilScale = 0.4
 Damage = 1
 CritChanceProportion = 0.0
 ProjectileSpeed = 6000
 ProjectileScaleMultiplier = 0.6
-ProjectileRadius = 16
 AttackSpeed = 0.05
 Additional = Dictionary[String, Variant]({
 "Knockback": 10.0

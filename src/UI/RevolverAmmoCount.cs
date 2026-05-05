@@ -1,4 +1,6 @@
 using Game.Items.Offensive;
+using Game.Levels.Controllers;
+using Game.Players.Controllers;
 using Godot.Collections;
 
 namespace Game.UI;
@@ -20,17 +22,24 @@ public partial class RevolverAmmoCount : CanvasLayer
 	[Export]
 	private Texture2D _unfiredCartridge = null!;
 
+	[Export]
+	private Marker2D _leftPosition = null!;
+
+	[Export]
+	private Marker2D _rightPosition = null!;
+
 	private float _cylinderRotation = 60f * (Mathf.Pi / 180);
 	private const int _maxCylinderCount = 6;
 	private Vector2 _originalPosition;
 
+	private PlayerWeaponController WeaponController =>
+		GameWorld.Instance.MainPlayer.WeaponController;
 	private int MagazineCapacity =>
 		Math.Clamp(_revolver.MagazineCapacity, 0, _maxCylinderCount);
 
 	public override void _Ready()
 	{
 		base._Ready();
-		_originalPosition = _revolverCylinderSprite.Position;
 
 		// Properties may not be properly set by this point.
 		// Wait till next frame
@@ -111,17 +120,30 @@ public partial class RevolverAmmoCount : CanvasLayer
 				MagazineCapacity - _revolver.MagazineCount - 1
 			].Texture = _firedCartridge;
 		};
+		WeaponController.OnPrimaryAttackReassigned += () =>
+			Callable.From(SwapCylinderSide).CallDeferred();
+		WeaponController.OnSecondaryAttackReassigned += () =>
+			Callable.From(SwapCylinderSide).CallDeferred();
 	}
 
-	// HACK:
-	// Because of inheritance fuckery, cannot set _revolver as Node2D then
-	// connect to visibility_changed signal to hide this CanvasLayer normally.
-	public override void _Notification(int what)
+	private void SwapCylinderSide()
 	{
-		if (what == NotificationPaused)
+		if (_revolver.AttackActionString is null)
+		{
 			Hide();
-		else if (what == NotificationUnpaused)
+			return;
+		}
+		else
 			Show();
+
+		var useLeft =
+			_revolver.AttackActionString == InputMapNames.PrimaryAttack;
+		if (useLeft)
+			_revolverCylinderSprite.Reparent(_leftPosition, false);
+		else
+			_revolverCylinderSprite.Reparent(_rightPosition, false);
+
+		// _originalPosition = _revolverCylinderSprite.Position;
 	}
 
 	public void RotateCylinder()

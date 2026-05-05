@@ -118,13 +118,14 @@ animations = [{
 "speed": 7.0
 }]
 
-[node name="Player" type="Node2D" unique_id=1386970244 node_paths=PackedStringArray("MovementController")]
+[node name="Player" type="Node2D" unique_id=1386970244 node_paths=PackedStringArray("MovementController", "WeaponController")]
 top_level = true
 z_index = 32
 z_as_relative = false
 script = ExtResource("1_f0mf6")
 Character = SubResource("Resource_yecw2")
 MovementController = NodePath("PlayerMovementController")
+WeaponController = NodePath("PlayerWeaponController")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1140483799]
 visible = false
@@ -149,15 +150,15 @@ _sprite = NodePath("../AnimatedSprite2D")
 [node name="PlayerWeaponController" type="Node" parent="." unique_id=752109662]
 script = ExtResource("5_yecw2")
 
-[node name="Sniper" parent="PlayerWeaponController" unique_id=753371605 instance=ExtResource("10_2g2d6")]
-
-[node name="Ak47" parent="PlayerWeaponController" unique_id=915008798 instance=ExtResource("7_wuwji")]
-
 [node name="TP9" parent="PlayerWeaponController" unique_id=1472391115 instance=ExtResource("8_8rask")]
 
 [node name="TP10" parent="PlayerWeaponController" unique_id=447956487 instance=ExtResource("8_8rask")]
 
+[node name="Ak47" parent="PlayerWeaponController" unique_id=915008798 instance=ExtResource("7_wuwji")]
+
 [node name="Revolver" parent="PlayerWeaponController" unique_id=1857571471 instance=ExtResource("6_eai52")]
+
+[node name="Sniper" parent="PlayerWeaponController" unique_id=753371605 instance=ExtResource("10_2g2d6")]
 
 [node name="Airstrike" parent="PlayerWeaponController" unique_id=94679970 instance=ExtResource("8_dpv53")]
 

@@ -22,22 +22,9 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 
 	public override void _Ready()
 	{
-		var tweenSpeed = CreateTween()
-			.SetTrans(Tween.TransitionType.Expo)
-			.SetEase(Tween.EaseType.In);
 		var tweenScale = CreateTween()
 			.SetTrans(Tween.TransitionType.Linear)
 			.SetEase(Tween.EaseType.In);
-		var originalSpeed = ProjectileSpeed;
-
-		ProjectileSpeed = originalSpeed / 3;
-		tweenSpeed.TweenProperty(
-			this,
-			nameof(ProjectileSpeed),
-			originalSpeed,
-			0.13f
-		);
-
 		var finalScale = Scale * new Vector2(8, 1);
 		tweenScale.TweenProperty(Sprite, "scale", finalScale, 0.05);
 	}

@@ -109,6 +109,10 @@ weapon_reload={
 ]
 }
 
+[physics]
+
+2d/run_on_separate_thread=true
+
 [project_time_traker]
 
 sections/show_sections=true

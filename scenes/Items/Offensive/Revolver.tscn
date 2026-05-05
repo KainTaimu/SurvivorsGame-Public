@@ -32,10 +32,11 @@ CameraRecoilScale = 1.8
 Damage = 10
 CritDamageMultiplier = 1.0
 CritChanceProportion = 0.1
-ProjectileSpeed = 10000
+ProjectileSpeed = 5000
 ProjectileScaleMultiplier = 1.2
+ProjectileRadius = 32
 AttackSpeed = 1.0
-PierceLimit = 5
+PierceLimit = 6
 Additional = Dictionary[String, Variant]({
 "Knockback": 50.0
 })
@@ -61,45 +62,52 @@ volume_db = 12.0
 mix_target = 2
 max_polyphony = 6
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1938930498 node_paths=PackedStringArray("_revolver", "_revolverCylinderSprite", "_cartidgeSprites")]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1938930498 node_paths=PackedStringArray("_revolver", "_revolverCylinderSprite", "_cartidgeSprites", "_leftPosition", "_rightPosition")]
 script = ExtResource("2_wjj7r")
 _revolver = NodePath("..")
 _revolverCylinderSprite = NodePath("RevolverCylinder")
 _cartidgeSprites = [NodePath("RevolverCylinder/Cartridge1"), NodePath("RevolverCylinder/Cartridge2"), NodePath("RevolverCylinder/Cartridge3"), NodePath("RevolverCylinder/Cartridge4"), NodePath("RevolverCylinder/Cartridge5"), NodePath("RevolverCylinder/Cartridge6")]
 _firedCartridge = ExtResource("8_y3hip")
 _unfiredCartridge = ExtResource("9_n3sky")
+_leftPosition = NodePath("Left")
+_rightPosition = NodePath("Right")
 
-[node name="RevolverCylinder" type="Sprite2D" parent="CanvasLayer" unique_id=1441007593]
+[node name="Left" type="Marker2D" parent="CanvasLayer" unique_id=395434852]
+position = Vector2(96, 984)
+
+[node name="Right" type="Marker2D" parent="CanvasLayer" unique_id=1905433381]
 position = Vector2(1824, 984)
+
+[node name="RevolverCylinder" type="Sprite2D" parent="CanvasLayer" unique_id=1078624920]
 scale = Vector2(0.192, 0.192)
 texture = ExtResource("2_0ntdy")
 
-[node name="Cartridge1" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1500318896]
+[node name="Cartridge1" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=817127743]
 position = Vector2(0, -291.6665)
 scale = Vector2(1.036, 1.036)
 texture = ExtResource("9_n3sky")
 
-[node name="Cartridge2" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1599935953]
+[node name="Cartridge2" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=196050588]
 position = Vector2(250, -145.83301)
 scale = Vector2(1.036, 1.036)
 texture = ExtResource("9_n3sky")
 
-[node name="Cartridge3" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1242576479]
+[node name="Cartridge3" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1686300093]
 position = Vector2(250, 145.83398)
 scale = Vector2(1.036, 1.036)
 texture = ExtResource("9_n3sky")
 
-[node name="Cartridge4" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1080329020]
+[node name="Cartridge4" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=2107974818]
 position = Vector2(0, 291.66748)
 scale = Vector2(1.036, 1.036)
 texture = ExtResource("9_n3sky")
 
-[node name="Cartridge5" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=2102841778]
+[node name="Cartridge5" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1922285309]
 position = Vector2(-250, 145.83398)
 scale = Vector2(1.036, 1.036)
 texture = ExtResource("9_n3sky")
 
-[node name="Cartridge6" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1716022962]
+[node name="Cartridge6" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=936040375]
 position = Vector2(-250, -145.83301)
 scale = Vector2(1.036, 1.036)
 texture = ExtResource("9_n3sky")
