@@ -1,10 +1,14 @@
+using Newtonsoft.Json;
+
 namespace Game.Core.Settings;
 
 [GlobalClass]
+[JsonObject(MemberSerialization.OptIn)]
 public partial class GameSettings : Resource
 {
 	[ExportGroup("Game")]
 	[Export]
+	[JsonProperty]
 	public bool EnableCameraShake
 	{
 		get;
@@ -16,6 +20,7 @@ public partial class GameSettings : Resource
 	} = true;
 
 	[Export]
+	[JsonProperty]
 	public bool EnableDamageIndicators
 	{
 		get;
@@ -28,6 +33,7 @@ public partial class GameSettings : Resource
 
 	[ExportGroup("Graphics")]
 	[Export]
+	[JsonProperty]
 	public GoreEffectsEnum GoreEffects
 	{
 		get;

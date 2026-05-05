@@ -5,5 +5,6 @@
 
 [node name="GameSingleton" type="Node" unique_id=1187747533]
 process_mode = 3
+process_priority = -99
 script = ExtResource("1_vil2m")
-_gameSettings = ExtResource("2_1uj6g")
+GameSettings = ExtResource("2_1uj6g")

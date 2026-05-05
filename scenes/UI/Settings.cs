@@ -10,10 +10,18 @@ public partial class Settings : VBoxContainer
 	[Export]
 	public OptionButton CameraShake = null!;
 
+	[Export]
+	public OptionButton DamageIndicators = null!;
+
 	public override void _Ready()
 	{
-		UpdateOptions();
-		SubscribeOptions();
+		Callable
+			.From(() =>
+			{
+				UpdateOptions();
+				SubscribeOptions();
+			})
+			.CallDeferred();
 	}
 
 	private void UpdateOptions()
@@ -23,10 +31,13 @@ public partial class Settings : VBoxContainer
 			GoreEffectsEnum.Disabled => 0,
 			GoreEffectsEnum.Low => 1,
 			GoreEffectsEnum.Medium => 2,
-			GoreEffectsEnum.High => 4,
+			GoreEffectsEnum.High => 3,
 			_ => throw new NotImplementedException(),
 		};
 		CameraShake.Selected = GameSettings.Instance.EnableCameraShake ? 1 : 0;
+		DamageIndicators.Selected = GameSettings.Instance.EnableDamageIndicators
+			? 1
+			: 0;
 	}
 
 	private void SubscribeOptions()
@@ -59,6 +70,18 @@ public partial class Settings : VBoxContainer
 					break;
 				case 1:
 					GameSettings.Instance.EnableCameraShake = true;
+					break;
+			}
+		};
+		DamageIndicators.ItemSelected += (idx) =>
+		{
+			switch (idx)
+			{
+				case 0:
+					GameSettings.Instance.EnableDamageIndicators = false;
+					break;
+				case 1:
+					GameSettings.Instance.EnableDamageIndicators = true;
 					break;
 			}
 		};
