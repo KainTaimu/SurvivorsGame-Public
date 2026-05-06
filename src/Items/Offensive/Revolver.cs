@@ -32,8 +32,7 @@ public partial class Revolver : Firearm
 			for (var i = 0; i < 6; i++)
 				GetTree()
 					.CreateTimer(
-						FirearmStats?.ReloadTimeMs
-							/ 1000 // To seconds
+						FirearmStats?.ReloadTime
 							/ 5 // Arbitrary
 							/ 6 // Amount of cylinder spin
 							* i
@@ -47,7 +46,7 @@ public partial class Revolver : Firearm
 			for (var i = 0; i < 6; i++)
 				GetTree()
 					.CreateTimer(
-						FirearmStats?.ReloadTimeMs / 1000 / 5 / 6 * i ?? 0,
+						FirearmStats?.ReloadTime / 5 / 6 * i ?? 0,
 						false
 					)
 					.Timeout += () => CockAudioPlayer?.Play();

@@ -5,7 +5,7 @@ public partial class FirearmStats : BaseOffensiveStats
 {
 	[ExportGroup("Firearm")]
 	[Export]
-	public float ReloadTimeMs = 1500;
+	public float ReloadTime = 1.5f;
 
 	[Export]
 	public float BloomCoefficientDeg = 0.03f;

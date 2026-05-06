@@ -73,7 +73,7 @@ public partial class RevolverAmmoCount : CanvasLayer
 				_revolverCylinderSprite,
 				"rotation",
 				_revolverCylinderSprite.Rotation - _cylinderRotation * 6,
-				_revolver.FirearmStats?.ReloadTimeMs / 1000 / 2 ?? 0
+				_revolver.FirearmStats?.ReloadTime / 2 ?? 0
 			);
 		};
 		_revolver.OnReloadEnd += () =>
@@ -91,7 +91,7 @@ public partial class RevolverAmmoCount : CanvasLayer
 				_revolverCylinderSprite,
 				"rotation",
 				0,
-				_revolver.FirearmStats?.ReloadTimeMs / 1000 / 2 ?? 0
+				_revolver.FirearmStats?.ReloadTime / 2 ?? 0
 			);
 		};
 		_revolver.OnAttack += () =>

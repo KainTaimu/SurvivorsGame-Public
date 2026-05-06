@@ -107,7 +107,7 @@ public partial class M870 : Firearm
 					}
 				})
 			)
-			.SetDelay(ReloadTimeMs / 1e3);
+			.SetDelay(ReloadTime);
 		_reloadTween.TweenCallback(
 			Callable.From(() => _isShotgunReloading = false)
 		);

@@ -64,7 +64,7 @@ public abstract partial class Firearm
 	protected double _fireCooldown;
 	protected int _magazineCount;
 
-	protected float ReloadTimeMs => FirearmStats?.ReloadTimeMs ?? 1500;
+	protected float ReloadTime => FirearmStats?.ReloadTime ?? 1.5f;
 	protected float BloomCoefficientDeg =>
 		FirearmStats?.BloomCoefficientDeg ?? 0.03f;
 	protected float HorizontalRecoilMin =>
@@ -156,7 +156,7 @@ public abstract partial class Firearm
 			return;
 		if (MagazineCount == MagazineCapacity)
 			return;
-		GetTree().CreateTimer(ReloadTimeMs / 1000f, false).Timeout += () =>
+		GetTree().CreateTimer(ReloadTime, false).Timeout += () =>
 		{
 			_magazineCount = MagazineCapacity;
 			IsReloading = false;

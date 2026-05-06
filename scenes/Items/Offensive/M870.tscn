@@ -14,7 +14,7 @@ metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_mvme6"]
 script = ExtResource("4_60s7d")
-ReloadTimeMs = 300.0
+ReloadTime = 0.3
 BloomCoefficientDeg = 25.0
 MagazineCapacity = 6
 HorizontalRecoilMin = 20.0
