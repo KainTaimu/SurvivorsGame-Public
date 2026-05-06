@@ -17,7 +17,7 @@ public partial class Revolver : Firearm
 		base._Ready();
 		OnAttack += () =>
 		{
-			GetTree().CreateTimer(_fireCooldown).Timeout += () =>
+			GetTree().CreateTimer(_fireCooldown, false).Timeout += () =>
 			{
 				_ammoCount.RotateCylinder();
 				if (MagazineCount != 0)
@@ -37,7 +37,8 @@ public partial class Revolver : Firearm
 							/ 5 // Arbitrary
 							/ 6 // Amount of cylinder spin
 							* i
-							?? 0
+							?? 0,
+						false
 					)
 					.Timeout += () => CockAudioPlayer?.Play();
 		};
@@ -46,7 +47,8 @@ public partial class Revolver : Firearm
 			for (var i = 0; i < 6; i++)
 				GetTree()
 					.CreateTimer(
-						FirearmStats?.ReloadTimeMs / 1000 / 5 / 6 * i ?? 0
+						FirearmStats?.ReloadTimeMs / 1000 / 5 / 6 * i ?? 0,
+						false
 					)
 					.Timeout += () => CockAudioPlayer?.Play();
 		};

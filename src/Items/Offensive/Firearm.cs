@@ -156,7 +156,7 @@ public abstract partial class Firearm
 			return;
 		if (MagazineCount == MagazineCapacity)
 			return;
-		GetTree().CreateTimer(ReloadTimeMs / 1000f).Timeout += () =>
+		GetTree().CreateTimer(ReloadTimeMs / 1000f, false).Timeout += () =>
 		{
 			_magazineCount = MagazineCapacity;
 			IsReloading = false;
