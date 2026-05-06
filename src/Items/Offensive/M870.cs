@@ -35,9 +35,8 @@ public partial class M870 : Firearm
 
 		ShootAudioPlayer?.Play();
 		if (_cockingAudioPlayer is not null)
-			CreateTween()
-				.TweenCallback(Callable.From(() => _cockingAudioPlayer.Play()))
-				.SetDelay(Stats.AttackSpeed / 1e3 * 0.5f);
+			GetTree().CreateTimer(Stats.AttackSpeed / 2).Timeout += () =>
+				_cockingAudioPlayer.Play();
 
 		_fireCooldown = Stats.AttackSpeed;
 		_magazineCount--;
