@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://c0svlhjww3qot"]
+
+[ext_resource type="Texture2D" uid="uid://djm14uecps0mk" path="res://assets/UI/pistol.png" id="1_7b1sg"]
+[ext_resource type="Script" uid="uid://ceajjqumnjnat" path="res://scenes/UI/ScrollRichTextLabel.cs" id="2_ci30e"]
+
+[sub_resource type="Animation" id="Animation_ci30e"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_cy1ac"]
+resource_name = "scroll"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qlmw6"]
+_data = {
+&"RESET": SubResource("Animation_ci30e"),
+&"scroll": SubResource("Animation_cy1ac")
+}
+
+[node name="PanelContainer" type="PanelContainer" unique_id=2089056310]
+custom_minimum_size = Vector2(600, 256)
+offset_right = 600.0
+offset_bottom = 256.0
+
+[node name="VSplitContainer" type="VBoxContainer" parent="." unique_id=940677940]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="VSplitContainer" unique_id=1142730094]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Top" type="HSplitContainer" parent="VSplitContainer/MarginContainer" unique_id=1642363631]
+layout_mode = 2
+split_offsets = PackedInt32Array(64)
+dragging_enabled = false
+split_offset = 64
+
+[node name="TextureRect" type="TextureRect" parent="VSplitContainer/MarginContainer/Top" unique_id=912550820]
+layout_mode = 2
+texture = ExtResource("1_7b1sg")
+expand_mode = 4
+
+[node name="ItemName" type="Label" parent="VSplitContainer/MarginContainer/Top" unique_id=1715539151]
+layout_mode = 2
+text = "FIREARM"
+
+[node name="Bottom" type="MarginContainer" parent="VSplitContainer" unique_id=106540326]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="VSplitContainer/Bottom" unique_id=2130690544]
+root_node = NodePath("../../..")
+libraries/ = SubResource("AnimationLibrary_qlmw6")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VSplitContainer/Bottom" unique_id=803488058 node_paths=PackedStringArray("ScrollAnimationPlayer", "_panelParent", "_label")]
+layout_mode = 2
+mouse_filter = 0
+script = ExtResource("2_ci30e")
+ScrollAnimationPlayer = NodePath("../AnimationPlayer")
+_panelParent = NodePath("../../..")
+_label = NodePath("Label")
+
+[node name="Label" type="Label" parent="VSplitContainer/Bottom/ScrollContainer" unique_id=842229286]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique lacus ac purus tincidunt, ut congue leo lobortis. Aenean congue et magna fermentum molestie. Etiam gravida ante at neque dignissim, vitae auctor turpis consequat. Cras vel dictum mi. Etiam vitae urna congue, tempor sem sit amet, consectetur dui. Aliquam vitae ante porttitor, porttitor nibh eu, maximus est. Suspendisse sed vestibulum metus. Curabitur volutpat, mauris ac varius sodales, massa justo malesuada odio, nec volutpat leo lectus hendrerit felis. Aliquam vitae volutpat neque. Donec sem ex, mattis vitae ligula non, luctus faucibus nibh. Vivamus tempor vel libero vel suscipit. Mauris vitae velit rutrum, venenatis massa id, auctor purus.
+
+Nam vel eros vel felis imperdiet efficitur sed non quam. Morbi dignissim ornare nisl vitae finibus. Duis diam lorem, fermentum in nibh non, fermentum placerat nisi. Curabitur ex dolor, congue non libero in, elementum tempor nulla. Vestibulum sed erat iaculis eros sagittis ornare. Donec laoreet viverra libero a porttitor. Pellentesque tincidunt laoreet purus, ut congue felis tincidunt eget. Donec sollicitudin tortor vel lacus vulputate, nec sollicitudin arcu ullamcorper. Cras sem orci, mattis eget dictum ac, pellentesque ac velit. Nullam tempor venenatis tortor, et rhoncus lorem. Morbi placerat volutpat sollicitudin. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam pulvinar suscipit urna et blandit.
+
+Nunc iaculis et nulla sed mollis. Quisque nec volutpat purus, sit amet scelerisque mi. Integer diam ipsum, finibus sit amet venenatis sed, pharetra vel mi. In hendrerit egestas lectus, id viverra risus pulvinar et. Donec luctus lacus vitae lectus molestie aliquet. Nulla volutpat condimentum arcu, ac laoreet lorem hendrerit eu. Ut vestibulum maximus risus, non facilisis nunc auctor vitae. Suspendisse sed massa dignissim, placerat justo a, pharetra mi.
+
+Nunc sit amet aliquet lorem. Nam a risus tempus turpis ultricies laoreet. Fusce vel risus laoreet, bibendum tortor id, ultrices nunc. Suspendisse posuere posuere felis vitae cursus. Nulla tempor elit quis fringilla aliquet. Vestibulum semper arcu magna, sit amet aliquet ante commodo id. Quisque tellus nibh, interdum ut nunc ut, accumsan ultrices orci. Donec nunc tortor, varius et velit id, euismod commodo ante. Suspendisse malesuada, nisl et pharetra faucibus, dui nibh tempus magna, at tristique arcu turpis vitae arcu. Phasellus interdum sapien in hendrerit sollicitudin. Etiam venenatis at nulla eu placerat. Pellentesque diam lectus, egestas id nulla sed, tristique pharetra quam. Nulla faucibus erat in magna iaculis, non fermentum orci blandit. Nam aliquam turpis vitae urna sodales tincidunt. Quisque tincidunt eu nibh a finibus. Praesent egestas nisi non mi rhoncus, quis pretium nulla condimentum.
+
+Donec eu suscipit nunc. Donec sem ligula, ornare nec gravida iaculis, bibendum ut augue. Sed hendrerit at massa eu porttitor. Maecenas efficitur elementum efficitur. Vestibulum fringilla, lorem sed tristique interdum, nibh dui consectetur diam, ac bibendum elit lacus id sem. Praesent commodo erat mollis pulvinar facilisis. Aenean suscipit fermentum nisi vitae scelerisque. Duis posuere ut lacus id sollicitudin. Proin tempus, ex vitae porta lobortis, arcu ante pulvinar quam, eu volutpat orci lorem sed dolor. Integer varius rhoncus pellentesque. Quisque auctor eros massa, at elementum magna blandit in. Mauris maximus tincidunt maximus. "
+autowrap_mode = 2

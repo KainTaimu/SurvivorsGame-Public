@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://cbpyycvkwcedb"]
+
+[ext_resource type="Script" uid="uid://4qxgf6f1hof8" path="res://src/UI/PickupUi.cs" id="1_kja30"]
+[ext_resource type="PackedScene" uid="uid://c0svlhjww3qot" path="res://scenes/UI/ItemShowcase.tscn" id="2_5cant"]
+
+[node name="Control" type="PanelContainer" unique_id=1639386775]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -284.0
+offset_bottom = 292.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kja30")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=328059922]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="CenterContainer" unique_id=323042347]
+layout_mode = 2
+columns = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/GridContainer" unique_id=1819032143]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="PanelContainer" parent="CenterContainer/GridContainer/MarginContainer" unique_id=2089056310 instance=ExtResource("2_5cant")]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="CenterContainer/GridContainer" unique_id=1052883514]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="PanelContainer" parent="CenterContainer/GridContainer/MarginContainer2" unique_id=198266432 instance=ExtResource("2_5cant")]
+layout_mode = 2
+
+[node name="MarginContainer3" type="MarginContainer" parent="CenterContainer/GridContainer" unique_id=1523761533]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="PanelContainer" parent="CenterContainer/GridContainer/MarginContainer3" unique_id=1462905690 instance=ExtResource("2_5cant")]
+layout_mode = 2
+
+[node name="MarginContainer4" type="MarginContainer" parent="CenterContainer/GridContainer" unique_id=415895383]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="PanelContainer" parent="CenterContainer/GridContainer/MarginContainer4" unique_id=1024655287 instance=ExtResource("2_5cant")]
+layout_mode = 2
+
+[node name="MarginContainer5" type="MarginContainer" parent="CenterContainer/GridContainer" unique_id=1418744948]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="PanelContainer" parent="CenterContainer/GridContainer/MarginContainer5" unique_id=1403051556 instance=ExtResource("2_5cant")]
+layout_mode = 2
+
+[node name="MarginContainer6" type="MarginContainer" parent="CenterContainer/GridContainer" unique_id=1007692241]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="PanelContainer" parent="CenterContainer/GridContainer/MarginContainer6" unique_id=160845631 instance=ExtResource("2_5cant")]
+layout_mode = 2
