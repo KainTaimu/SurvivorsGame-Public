@@ -7,4 +7,8 @@ public abstract partial class BaseProjectile : Node2D
 	public float HitRadius = 24f;
 	public float ProjectileSpeed;
 	public int PierceLimit;
+
+	protected bool _isInitialized;
+
+	public abstract void Initialize();
 }

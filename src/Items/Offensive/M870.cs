@@ -73,6 +73,7 @@ public partial class M870 : Firearm
 				Stats.ProjectileSpeed * (float)GD.RandRange(1f, 2f);
 			projectile.PierceLimit = Stats.PierceLimit;
 			projectile.HitRadius = FirearmStats?.ProjectileRadius ?? 24;
+			projectile.Initialize();
 		}
 		ApplyCursorRecoil();
 		EmitSignalOnAttack();

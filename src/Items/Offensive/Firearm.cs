@@ -145,6 +145,7 @@ public abstract partial class Firearm
 		projectile.ProjectileSpeed = Stats.ProjectileSpeed;
 		projectile.PierceLimit = Stats.PierceLimit;
 		projectile.HitRadius = FirearmStats?.ProjectileRadius ?? 24;
+		projectile.Initialize();
 
 		ApplyCursorRecoil();
 		EmitSignalOnAttack();

@@ -20,15 +20,6 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 
 	public ProjectilePool ProjectilePool { get; set; } = null!;
 
-	public override void _Ready()
-	{
-		var tweenScale = CreateTween()
-			.SetTrans(Tween.TransitionType.Linear)
-			.SetEase(Tween.EaseType.In);
-		var finalScale = Scale * new Vector2(8, 1);
-		tweenScale.TweenProperty(Sprite, "scale", finalScale, 0.05);
-	}
-
 	public override void _Process(double delta)
 	{
 		if (!TargetQuery.Grid.ContainsWorld(Position))
@@ -36,6 +27,10 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 			ReturnToPool();
 			return;
 		}
+		if (!_isInitialized)
+			Logger.LogWarning(
+				$"Projectile {GetType().Name} is processing but is not initialized"
+			);
 
 		var from = Position;
 
@@ -77,5 +72,16 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 		_pierceCount = 0;
 		_hits.Clear();
 		ProjectilePool.ReturnProjectile(this);
+		_isInitialized = false;
+	}
+
+	public override void Initialize()
+	{
+		var tweenScale = CreateTween()
+			.SetTrans(Tween.TransitionType.Linear)
+			.SetEase(Tween.EaseType.In);
+		var finalScale = Scale * new Vector2(8, 1);
+		tweenScale.TweenProperty(Sprite, "scale", finalScale, 0.05);
+		_isInitialized = true;
 	}
 }
