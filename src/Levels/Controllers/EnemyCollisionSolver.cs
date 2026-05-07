@@ -1,4 +1,4 @@
-using System.Collections.Concurrent;
+using System.Collections.Generic;
 using Game.Core.ECS;
 using Game.Models;
 
@@ -41,7 +41,7 @@ public partial class EnemyCollisionSolver : Node
 
 	private CenteredMovingUniformGrid<(Vector2, int)> _grid = null!;
 
-	private readonly ConcurrentDictionary<int, Vector2> _writeBuffer = [];
+	private readonly Dictionary<int, Vector2> _writeBuffer = [];
 
 	public override void _Ready()
 	{
