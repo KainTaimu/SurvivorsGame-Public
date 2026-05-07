@@ -34,10 +34,8 @@ public static class LogTimer
 		});
 	}
 
-	public static IDisposable LogTimeUsec(double? p = null)
+	public static IDisposable LogTimeUsec()
 	{
-		if (Engine.GetProcessFrames() % p == 0)
-			return new DelegateDisposable(() => { });
 		var name = GetCallerName();
 		var start = Time.GetTicksUsec();
 		return new DelegateDisposable(() =>

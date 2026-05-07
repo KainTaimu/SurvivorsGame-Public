@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
@@ -10,6 +11,10 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 
 	private readonly Dictionary<int, int> _idToIndexTable = []; // {Id: Index to position}
 	private readonly Dictionary<int, int> _indexToIdTable = []; // {Index to position: Id}
+
+	private FrozenDictionary<int, int> _frozenIdToIdTable = null!;
+	private FrozenDictionary<int, int> _frozenIndexToIdTable = null!;
+
 	private int _count;
 
 	// Array is of size MAX_SIZE
@@ -50,6 +55,9 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 		_idToIndexTable[id] = idx;
 		_indexToIdTable[idx] = id;
 
+		_frozenIdToIdTable = _idToIndexTable.ToFrozenDictionary();
+		_frozenIndexToIdTable = _indexToIdTable.ToFrozenDictionary();
+
 		_count++;
 		return true;
 	}
@@ -69,12 +77,16 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 		_idToIndexTable.Remove(id);
 		_indexToIdTable.Remove(idx);
 		_alive[idx] = false;
+
+		_frozenIdToIdTable = _idToIndexTable.ToFrozenDictionary();
+		_frozenIndexToIdTable = _indexToIdTable.ToFrozenDictionary();
+
 		_count--;
 	}
 
 	public override void RegisterComponent<T>(int id, T data)
 	{
-		if (!_idToIndexTable.TryGetValue(id, out var idx))
+		if (!_frozenIdToIdTable.TryGetValue(id, out var idx))
 		{
 			Logger.LogWarning(
 				"Couldn't register component. Entity with id",
@@ -100,7 +112,7 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 
 	public override void UnregisterComponent<T>(int id)
 	{
-		if (!_idToIndexTable.TryGetValue(id, out var idx))
+		if (!_frozenIdToIdTable.TryGetValue(id, out var idx))
 		{
 			Logger.LogWarning(
 				"Couldn't unregister component. Entity with id",
@@ -124,7 +136,7 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 	// PERF: Two dictionary accesses, one in GetComponents
 	public override void UpdateComponent<T>(int id, T data)
 	{
-		if (!_idToIndexTable.TryGetValue(id, out var idx))
+		if (!_frozenIdToIdTable.TryGetValue(id, out var idx))
 		{
 			Logger.LogWarning(
 				"Couldn't update component. Entity with id",
@@ -163,7 +175,7 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 	public override bool GetComponent<T>(int id, out T component)
 	{
 		component = default!;
-		if (!_idToIndexTable.TryGetValue(id, out var idx))
+		if (!_frozenIdToIdTable.TryGetValue(id, out var idx))
 			return false;
 
 		var components = GetComponents<T>();
@@ -190,7 +202,7 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 			if (!_alive[i])
 				continue;
 
-			if (!_indexToIdTable.TryGetValue(i, out var id))
+			if (!_frozenIndexToIdTable.TryGetValue(i, out var id))
 				continue;
 
 			yield return (id, components[i]);
@@ -216,7 +228,7 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 			if (!_alive[i])
 				continue;
 
-			if (!_indexToIdTable.TryGetValue(i, out var id))
+			if (!_frozenIndexToIdTable.TryGetValue(i, out var id))
 				continue;
 
 			yield return (id, c1[i], c2[i]);
@@ -248,7 +260,7 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 			if (!_alive[i])
 				continue;
 
-			if (!_indexToIdTable.TryGetValue(i, out var id))
+			if (!_frozenIndexToIdTable.TryGetValue(i, out var id))
 				continue;
 
 			yield return (id, c1[i], c2[i], c3[i]);
@@ -266,7 +278,7 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 	// ===== Sets =====
 	public override void SetComponent<T>(int id, T newData)
 	{
-		if (!_idToIndexTable.TryGetValue(id, out var idx))
+		if (!_frozenIdToIdTable.TryGetValue(id, out var idx))
 			return;
 
 		var components = GetComponents<T>();

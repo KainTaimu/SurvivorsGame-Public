@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using Game.Core.ECS;
 using Game.Models;
 
@@ -41,7 +41,7 @@ public partial class EnemyCollisionSolver : Node
 
 	private CenteredMovingUniformGrid<(Vector2, int)> _grid = null!;
 
-	private readonly Dictionary<int, Vector2> _writeBuffer = [];
+	private readonly ConcurrentDictionary<int, Vector2> _writeBuffer = [];
 
 	public override void _Ready()
 	{
@@ -129,22 +129,34 @@ public partial class EnemyCollisionSolver : Node
 
 	private void SolveCollisions()
 	{
-		for (var x = 0; x < _grid.Dimensions.X; x++)
-		{
-			for (var y = 0; y < _grid.Dimensions.Y; y++)
-			{
-				var cell = _grid.GetCell(x, y);
-				if (cell is null || cell.Count <= 1)
-					continue;
+		var id = WorkerThreadPool.AddGroupTask(
+			Callable.From<int>(
+				(x) =>
+				{
+					for (var y = 0; y < _grid.Dimensions.Y; y++)
+					{
+						var cell = _grid.GetCell(x, y);
+						if (cell is null || cell.Count <= 1)
+							continue;
 
-				SolveCellInternalCollisions(cell);
+						SolveCellInternalCollisions(cell);
 
-				SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y)); // E
-				SolveCellPairCollisions(cell, _grid.GetCell(x, y + 1)); // S
-				SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y + 1)); // SE
-				SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y - 1)); // NE
-			}
-		}
+						SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y)); // E
+						SolveCellPairCollisions(cell, _grid.GetCell(x, y + 1)); // S
+						SolveCellPairCollisions(
+							cell,
+							_grid.GetCell(x + 1, y + 1)
+						); // SE
+						SolveCellPairCollisions(
+							cell,
+							_grid.GetCell(x + 1, y - 1)
+						); // NE
+					}
+				}
+			),
+			_grid.Dimensions.X
+		);
+		WorkerThreadPool.WaitForGroupTaskCompletion(id);
 	}
 
 	private void SolveCellInternalCollisions(
