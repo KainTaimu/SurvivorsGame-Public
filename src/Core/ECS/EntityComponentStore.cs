@@ -9,7 +9,7 @@ public abstract partial class EntityComponentStore : Node
 
 	public const int MAX_SIZE = 65_536;
 
-	public static EntityComponentStore? Instance { get; protected set; }
+	public static EntityComponentStore Instance { get; protected set; } = null!;
 
 	[MustUseReturnValue]
 	public abstract int RegisterEntity();

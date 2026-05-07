@@ -104,61 +104,6 @@ public partial class EnemyTargetQuery : Node
 		return true;
 	}
 
-	public bool TryGetTargetsInAreaAlongSegment(
-		Vector2 fromAreaCenter,
-		Vector2 toAreaCenter,
-		float areaRadius,
-		out int[] targetIds
-	)
-	{
-		// credit: https://www.redblobgames.com/grids/circle-drawing/
-		var targets = new HashSet<int>();
-		var visited = new HashSet<UniformGridCell<int>>();
-
-		var delta = toAreaCenter - fromAreaCenter;
-		var length = delta.Length();
-		var step = _gridSize * 0.1f;
-
-		var sampleCount = Math.Max(10, Mathf.CeilToInt(length / step));
-
-		for (var b = 0; b <= sampleCount; b++)
-		{
-			var t = sampleCount == 0 ? 0f : (float)b / sampleCount;
-			var sample = fromAreaCenter.Lerp(toAreaCenter, t);
-
-			var top = Math.Ceiling(sample.Y - areaRadius);
-			var bottom = Math.Floor(sample.Y + areaRadius);
-			for (var y = top; y <= bottom; y++)
-			{
-				var dy = y - sample.Y;
-				var dx = Math.Sqrt(areaRadius * areaRadius - dy * dy);
-				var left = Math.Ceiling(sample.X - dx);
-				var right = Math.Floor(sample.X + dx);
-				for (var x = left; x <= right; x++)
-				{
-					var cell = _grid.GetCellWorld(
-						new Vector2((float)x, (float)y)
-					);
-					if (cell is null)
-						continue;
-					if (visited.Contains(cell))
-						continue;
-
-					visited.Add(cell);
-
-					for (var i = 0; i < cell.Count; i++)
-					{
-						var id = cell.Array[i];
-						targets.Add(id);
-					}
-				}
-			}
-		}
-
-		targetIds = [.. targets];
-		return true;
-	}
-
 	public IEnumerable<int> GetTargetsInScreen()
 	{
 		for (var x = 0; x < _grid.Dimensions.X; x++)
