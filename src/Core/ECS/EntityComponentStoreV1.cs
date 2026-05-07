@@ -34,8 +34,9 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 	/// <remarks>
 	/// Does not handle when an enemy is registered with an already existing id.
 	/// </remarks>
-	public override bool RegisterEntity(int id)
+	public override int RegisterEntity()
 	{
+		var id = _count;
 		// Find free index
 		int idx;
 		for (idx = 0; idx < MAX_SIZE; idx++)
@@ -48,7 +49,7 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 			Logger.LogWarning(
 				$"Couldn't register entity {id} with index {idx}. Store at max capacity"
 			);
-			return false;
+			return -1;
 		}
 
 		_alive[idx] = true;
@@ -59,7 +60,7 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 		_frozenIndexToIdTable = _indexToIdTable.ToFrozenDictionary();
 
 		_count++;
-		return true;
+		return id;
 	}
 
 	public override void UnregisterEntity(int id)
@@ -80,8 +81,6 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 
 		_frozenIdToIndexTable = _idToIndexTable.ToFrozenDictionary();
 		_frozenIndexToIdTable = _indexToIdTable.ToFrozenDictionary();
-
-		_count--;
 	}
 
 	public override void RegisterComponent<T>(int id, T data)

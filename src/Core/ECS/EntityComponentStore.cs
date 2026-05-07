@@ -2,17 +2,17 @@ using System.Collections.Generic;
 
 namespace Game.Core.ECS;
 
-public abstract partial class EntityComponentStore : Node, IEntityComponentStore
+public abstract partial class EntityComponentStore : Node
 {
 	[Signal]
 	public delegate void BeforeEntityUnregisteredEventHandler(int id);
 
 	public const int MAX_SIZE = 65_536;
 
-	public static EntityComponentStore Instance { get; protected set; } = null!;
+	public static EntityComponentStore? Instance { get; protected set; }
 
 	[MustUseReturnValue]
-	public abstract bool RegisterEntity(int id);
+	public abstract int RegisterEntity();
 	public abstract void UnregisterEntity(int id);
 
 	public abstract void RegisterComponent<T>(int id, T data);

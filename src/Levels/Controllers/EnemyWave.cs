@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Game.Core.ECS;
-using Game.Core.Services;
 using Godot.Collections;
 
 namespace Game.Levels.Controllers;
@@ -73,6 +72,8 @@ public partial class EnemyWave : Resource, IEnemyWave
 	private EntityComponentStore _entities = null!;
 	private int _index;
 
+	private EnemySpawner? Spawner => EnemySpawner.Instance;
+
 	public void Process(double delta)
 	{
 		WaveTimeLeft -= delta;
@@ -113,142 +114,23 @@ public partial class EnemyWave : Resource, IEnemyWave
 
 	public void SpawnEnemy()
 	{
+		if (Spawner is null)
+			return;
 		if (_waveController.Alive >= MaxMobs)
 			return;
 
 		SpawnTimeLeft = GD.RandRange(SpawnMinTime, SpawnMaxTime);
 
-		var ss = ServiceLocator.GetService<SpriteFrameMappingsService>();
-		if (ss is null)
-		{
-			Logger.LogError("Could not get sprite frame mappings service");
-			return;
-		}
-
-		var pos = GetPositionOutsideViewport();
-		var id = _waveController.TotalSpawned++;
-		_waveController.Alive++;
-		if (!_entities.RegisterEntity(id))
-			return;
-
 		var bp = EnemyBlueprints.PickRandom();
-		var stats = bp.Stats;
-
-		var spriteInfo = ss.GetSpriteInfo(bp.Name);
-
-		_entities.RegisterComponent(id, new HealthComponent(stats.MaxHealth));
-		_entities.RegisterComponent(id, new EntityTypeComponent(bp.Type));
-		_entities.RegisterComponent(
-			id,
-			new PositionComponent() { Position = pos }
-		);
-		_entities.RegisterComponent(
-			id,
-			new AnimatedSpriteComponent()
-			{
-				SpriteName = spriteInfo?.SpriteName ?? "",
-				AnimationSpeed = spriteInfo?.AnimationSpeed ?? Mathf.Inf,
-				FrameCountX = spriteInfo?.FrameCountX ?? 1,
-				FrameCountY = 1,
-				FrameSizePxX = spriteInfo?.FrameSizePxX ?? 32,
-				FrameSizePxY = spriteInfo?.FrameSizePxY ?? 32,
-				Opacity = spriteInfo?.Opacity ?? 255,
-				Flash = spriteInfo?.Flash ?? 0,
-			}
-		);
-		_entities.RegisterComponent(
-			id,
-			new MoveSpeedComponent(
-				Mathf.CeilToInt(stats.MoveSpeed * stats.MoveSpeedMultiplier)
-			)
-		);
-		_entities.RegisterComponent(
-			id,
-			new EnemyContactDamageComponent(
-				Mathf.CeilToInt(
-					stats.DamageOnContact * stats.ContactDamageMultiplier
-				)
-			)
-		);
-		_entities.RegisterComponent(
-			id,
-			new DeathRewardComponent(
-				Mathf.CeilToInt(stats.MoneyDrop * stats.MoneyDropMultiplier)
-			)
-		);
-
-		SpawnedIds.Add(id);
-	}
-
-	private Vector2 GetPositionOutsideViewport()
-	{
-		var viewport = GameWorld.Instance.GetViewport().GetCamera2D();
-		var screenCenterPosition = viewport.GetScreenCenterPosition();
-		var viewportRectEnd = viewport.GetViewportRect().Size;
-
-		const float margin = 100;
-		var spawnVector = new Vector2();
-
-		switch (GD.RandRange(0, 3))
+		var id = Spawner.SpawnEnemy(bp);
+		if (id == -1)
 		{
-			case 0: // TOP
-				spawnVector.X = (float)
-					GD.RandRange(
-						screenCenterPosition.X
-							- (viewportRectEnd.X / 2)
-							- margin,
-						screenCenterPosition.X
-							+ (viewportRectEnd.X / 2)
-							+ margin
-					);
-				spawnVector.Y =
-					screenCenterPosition.Y - (viewportRectEnd.Y / 2) - margin;
-				break;
-
-			case 1: // BOTTOM
-				spawnVector.X = (float)
-					GD.RandRange(
-						screenCenterPosition.X
-							- (viewportRectEnd.X / 2)
-							- margin,
-						screenCenterPosition.X
-							+ (viewportRectEnd.X / 2)
-							+ margin
-					);
-				spawnVector.Y =
-					screenCenterPosition.Y + (viewportRectEnd.Y / 2) + margin;
-				break;
-
-			case 2: // LEFT
-				spawnVector.X =
-					screenCenterPosition.X - (viewportRectEnd.X / 2) - margin;
-				spawnVector.Y = (float)
-					GD.RandRange(
-						screenCenterPosition.Y
-							- (viewportRectEnd.Y / 2)
-							- margin,
-						screenCenterPosition.Y
-							+ (viewportRectEnd.Y / 2)
-							+ margin
-					);
-				break;
-
-			case 3: // RIGHT
-				spawnVector.X =
-					screenCenterPosition.X + (viewportRectEnd.X / 2) + margin;
-				spawnVector.Y = (float)
-					GD.RandRange(
-						screenCenterPosition.Y
-							- (viewportRectEnd.Y / 2)
-							- margin,
-						screenCenterPosition.Y
-							+ (viewportRectEnd.Y / 2)
-							+ margin
-					);
-				break;
+			Logger.LogError("failed to spawn");
+			return;
 		}
 
-		return spawnVector;
+		_waveController.Alive++;
+		SpawnedIds.Add(id);
 	}
 
 	public override string ToString()

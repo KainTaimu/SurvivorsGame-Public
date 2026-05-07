@@ -15,6 +15,7 @@
 [ext_resource type="Resource" uid="uid://dl1a0sq36f524" path="res://scenes/Enemies/Blueprints/Shondo.tres" id="10_d4hlt"]
 [ext_resource type="Script" uid="uid://bct2mtni7a82f" path="res://src/Levels/Controllers/EnemyMover.cs" id="10_sh7eq"]
 [ext_resource type="Script" uid="uid://citywxiolgxtm" path="res://src/Levels/Controllers/EnemyWaveController.cs" id="11_aredf"]
+[ext_resource type="Script" uid="uid://cuxwdf1ugwtxm" path="res://src/Levels/Controllers/EnemySpawner.cs" id="12_qsiuk"]
 [ext_resource type="Script" uid="uid://cwbl163hsg1db" path="res://src/Levels/Controllers/EnemyWave.cs" id="12_x7tv3"]
 [ext_resource type="PackedScene" uid="uid://bpgtq48wt7r32" path="res://scenes/Levels/EnemyHitFeedbackController.tscn" id="13_vg5sh"]
 [ext_resource type="PackedScene" uid="uid://c8d8andvaknho" path="res://scenes/Levels/EnemyDeathManager.tscn" id="14_aig1n"]
@@ -27,7 +28,7 @@
 [sub_resource type="Resource" id="Resource_x7tv3"]
 script = ExtResource("12_x7tv3")
 EnemyBlueprints = Array[Object]([ExtResource("8_1c6ul"), ExtResource("10_d4hlt"), ExtResource("9_occlw")])
-Duration = 2.0
+Duration = 9999.0
 MaxMobs = 100
 SpawnMinTime = 0.01
 SpawnMaxTime = 0.01
@@ -81,6 +82,9 @@ script = ExtResource("6_qaj6y")
 script = ExtResource("11_aredf")
 Waves = Array[Object]([SubResource("Resource_x7tv3")])
 EntityComponentStore = NodePath("../../EntityComponentStore")
+
+[node name="EnemySpawner" type="Node" parent="Systems/EnemySystems/EnemyWaveController" unique_id=836765334]
+script = ExtResource("12_qsiuk")
 
 [node name="EnemyTargetQuery" type="Node" parent="Systems/EnemySystems" unique_id=991938994 node_paths=PackedStringArray("_entities", "_renderer")]
 script = ExtResource("16_x7tv3")
