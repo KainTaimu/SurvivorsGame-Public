@@ -26,13 +26,9 @@ public partial class Crosshair : Node2D
 	[Export(PropertyHint.Range, "0,5,0.25")]
 	private float CrosshairSize
 	{
-		get;
-		set
-		{
-			field = value;
-			Callable.From(() => ChangeCrosshairSize(value)).CallDeferred();
-		}
-	} = 1.5f;
+		get => GameSettings.Instance.CrosshairScale;
+		set { Callable.From(() => ChangeCrosshairSize(value)).CallDeferred(); }
+	}
 
 	public float PrimaryCrosshairSpreadRatio =>
 		PrimaryCrosshairSprite.Frame
