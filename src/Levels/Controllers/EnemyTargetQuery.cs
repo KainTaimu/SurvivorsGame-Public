@@ -3,17 +3,13 @@
 */
 
 using System.Collections.Generic;
+using System.Linq;
 using Game.Core.ECS;
 using Game.Models;
 
 namespace Game.Levels.Controllers;
 
-// BUG:
-// Hit detection reliability falls as FPS drops.
-// There are attempts to make it less severe by
-// increase sample size in *AlongSegment methods but
-// the issue persists.
-public partial class EnemyTargetQuery : Node
+public partial class EnemyTargetQuery : Node2D
 {
 	[Export]
 	private EntityComponentStore _entities = null!;
@@ -335,5 +331,181 @@ public partial class EnemyTargetQuery : Node
 
 		var closest = start + segment * t;
 		return point.DistanceSquaredTo(closest);
+	}
+
+	/// <summary>
+	/// Samples all grid cells along a line forming an angle, with thickness.
+	/// Uses Bresenham line algorithm to traverse grid cells.
+	/// </summary>
+	/// <param name="from">Ray origin in world coordinates.</param>
+	/// <param name="angle">Ray angle in radians.</param>
+	/// <param name="width">Ray thickness (radius perpendicular to direction).</param>
+	/// <param name="targetIds">Output entity ids.</param>
+	/// <returns>
+	/// <c>true</c> when at least one target lies within raycast corridor.
+	/// </returns>
+	public bool GetTargetsRayCast(
+		Vector2 from,
+		float angle,
+		float width,
+		out int[] targetIds
+	)
+	{
+		var direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+		var rayLength = _grid.WindowSize.Length();
+		var rayEnd = from + direction * rayLength;
+		var widthSq = width * width;
+
+		var cellsOnRay = new HashSet<Vector2I>();
+		GetCellsAlongLine(from, rayEnd, cellsOnRay);
+
+		var cellsOnRayList = cellsOnRay.ToList();
+		cellsOnRayList.Sort(
+			(a, b) =>
+				(new Vector2(a.X, a.Y) * _gridSize + _grid.TopLeft - from)
+					.LengthSquared()
+					.CompareTo(
+						(
+							new Vector2(b.X, b.Y) * _gridSize
+							+ _grid.TopLeft
+							- from
+						).LengthSquared()
+					)
+		);
+
+		var allCells = new List<Vector2I>();
+		foreach (var cellIdx in cellsOnRayList)
+		{
+			var surrounding = new List<Vector2I>();
+			for (var dx = -3; dx <= 3; dx++)
+			for (var dy = -3; dy <= 3; dy++)
+			{
+				var checkCell = new Vector2I(cellIdx.X + dx, cellIdx.Y + dy);
+				if (_grid.GetCell(checkCell.X, checkCell.Y) is not null)
+					surrounding.Add(checkCell);
+			}
+
+			surrounding.Sort(
+				(a, b) =>
+				{
+					var cellWorldA =
+						new Vector2(a.X * _gridSize, a.Y * _gridSize)
+						+ _grid.TopLeft;
+					var cellWorldB =
+						new Vector2(b.X * _gridSize, b.Y * _gridSize)
+						+ _grid.TopLeft;
+					return DistanceSquaredPointToRay(
+							cellWorldA,
+							from,
+							direction,
+							rayLength
+						)
+						.CompareTo(
+							DistanceSquaredPointToRay(
+								cellWorldB,
+								from,
+								direction,
+								rayLength
+							)
+						);
+				}
+			);
+
+			allCells.AddRange(surrounding);
+		}
+
+		var targets = new List<int>();
+		var seenIds = new HashSet<int>();
+
+		foreach (var cellIndex in allCells)
+		{
+			var cell = _grid.GetCell(cellIndex.X, cellIndex.Y);
+			if (cell is null)
+				continue;
+
+			for (var i = 0; i < cell.Count; i++)
+			{
+				var id = cell.Array[i];
+				if (seenIds.Contains(id))
+					continue;
+				seenIds.Add(id);
+
+				if (!_entities.GetComponent<PositionComponent>(id, out var pos))
+					continue;
+
+				if (
+					DistanceSquaredPointToRay(
+						pos.Position,
+						from,
+						direction,
+						rayLength
+					) <= widthSq
+				)
+					targets.Add(id);
+			}
+		}
+
+		targetIds = [.. targets];
+		return targets.Count > 0;
+	}
+
+	private void GetCellsAlongLine(
+		Vector2 start,
+		Vector2 end,
+		HashSet<Vector2I> cells
+	)
+	{
+		var startCell = _grid.GetCellWorld(start);
+		if (startCell is null)
+			return;
+
+		var direction = (end - start).Normalized();
+		var maxDist = (end - start).Length();
+		var current = startCell.Index;
+		var dx = Mathf.Abs(Mathf.RoundToInt(direction.X * maxDist));
+		var dy = Mathf.Abs(Mathf.RoundToInt(direction.Y * maxDist));
+		var sx = direction.X > 0 ? 1 : -1;
+		var sy = direction.Y > 0 ? 1 : -1;
+		var err = dx - dy;
+
+		cells.Add(current);
+
+		while (true)
+		{
+			var e2 = 2 * err;
+			if (e2 > -dy)
+			{
+				err -= dy;
+				current.X += sx;
+			}
+			if (e2 < dx)
+			{
+				err += dx;
+				current.Y += sy;
+			}
+
+			if (_grid.GetCell(current.X, current.Y) is null)
+				break;
+
+			cells.Add(current);
+		}
+	}
+
+	private static float DistanceSquaredPointToRay(
+		Vector2 point,
+		Vector2 rayStart,
+		Vector2 rayDirection,
+		float rayLength
+	)
+	{
+		var toPoint = point - rayStart;
+		var t = toPoint.Dot(rayDirection);
+
+		if (t < 0f)
+			return toPoint.LengthSquared();
+		if (t > rayLength)
+			return point.DistanceSquaredTo(rayStart + rayDirection * rayLength);
+
+		return point.DistanceSquaredTo(rayStart + rayDirection * t);
 	}
 }

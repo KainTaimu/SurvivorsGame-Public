@@ -25,11 +25,7 @@ public partial class PlayerWeaponController : Node
 		private set
 		{
 			field = value;
-			Logger.LogDebug(
-				$"{field?.GetType().Name ?? "null"} is primary attack"
-			);
-			if (field is not null)
-				EmitSignalOnPrimaryAttackReassigned();
+			EmitSignalOnPrimaryAttackReassigned();
 		}
 	}
 	public IManualAttack? SecondaryAttack
@@ -38,9 +34,6 @@ public partial class PlayerWeaponController : Node
 		private set
 		{
 			field = value;
-			Logger.LogDebug(
-				$"{field?.GetType().Name ?? "null"} is secondary attack"
-			);
 			if (field is not null)
 				EmitSignalOnSecondaryAttackReassigned();
 		}

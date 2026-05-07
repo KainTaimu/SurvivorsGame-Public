@@ -39,32 +39,6 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 			* ProjectileSpeed
 			* (float)delta;
 		Position = from + moveVector;
-
-		if (
-			!TargetQuery.TryGetTargetsAlongSegment(
-				from,
-				Position,
-				HitRadius,
-				out var ids
-			)
-		)
-			return;
-
-		foreach (var id in ids)
-		{
-			if (_hits.Contains(id))
-				return;
-
-			OffensiveOrigin.HandleHit(id: id);
-
-			_hits.Add(id);
-			_pierceCount++;
-			if (_pierceCount >= PierceLimit)
-			{
-				Callable.From(ReturnToPool).CallDeferred();
-				return;
-			}
-		}
 	}
 
 	public void ReturnToPool()
@@ -83,5 +57,62 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 		var finalScale = Scale * new Vector2(8, 1);
 		tweenScale.TweenProperty(Sprite, "scale", finalScale, 0.05);
 		_isInitialized = true;
+
+		if (
+			!TargetQuery.GetTargetsRayCast(
+				Position,
+				Rotation,
+				HitRadius,
+				out var ids
+			)
+		)
+			return;
+
+		foreach (var id in ids)
+		{
+			if (_hits.Contains(id))
+				return;
+
+			if (
+				!ComponentStore.GetComponent<PositionComponent>(
+					id,
+					out var lastPos
+				)
+			)
+				return;
+
+			Callable
+				.From(() =>
+				{
+					GetTree()
+						.CreateTimer(
+							Position.DistanceTo(lastPos.Position)
+								/ ProjectileSpeed,
+							false
+						)
+						.Timeout += () => OffensiveOrigin.HandleHit(id: id);
+				})
+				.CallDeferred();
+
+			_hits.Add(id);
+			_pierceCount++;
+			if (_pierceCount >= PierceLimit)
+			{
+				Callable
+					.From(() =>
+					{
+						GetTree()
+							.CreateTimer(
+								Position.DistanceTo(lastPos.Position)
+									/ ProjectileSpeed,
+								false
+							)
+							.Timeout += () =>
+							Callable.From(ReturnToPool).CallDeferred();
+					})
+					.CallDeferred();
+				return;
+			}
+		}
 	}
 }
