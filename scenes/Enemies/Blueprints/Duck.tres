@@ -1,4 +1,4 @@
-[gd_resource type="Resource" format=3 uid="uid://d3ao5d4ym77ad"]
+[gd_resource type="Resource" script_class="EnemyBlueprint" format=3 uid="uid://d3ao5d4ym77ad"]
 
 [ext_resource type="Script" uid="uid://y77qtp32wo00" path="res://src/Enemies/EnemyStats.cs" id="1_abnrt"]
 [ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="2_ag0wl"]

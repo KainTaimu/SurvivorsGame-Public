@@ -9,7 +9,7 @@ using Game.Models;
 
 namespace Game.Levels.Controllers;
 
-public partial class EnemyTargetQuery : Node2D
+public partial class EnemyTargetQuery : Node
 {
 	[Export]
 	private EntityComponentStore _entities = null!;

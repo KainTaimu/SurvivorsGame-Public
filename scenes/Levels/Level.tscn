@@ -32,6 +32,7 @@ MaxMobs = 100
 SpawnMinTime = 0.01
 SpawnMaxTime = 0.01
 SpawnBatchMin = 2000
+SpawnBatchMax = 0
 
 [node name="Level" type="Node2D" unique_id=2141389114]
 z_index = -999
@@ -81,7 +82,7 @@ script = ExtResource("11_aredf")
 Waves = Array[Object]([SubResource("Resource_x7tv3")])
 EntityComponentStore = NodePath("../../EntityComponentStore")
 
-[node name="EnemyTargetQuery" type="Node" parent="Systems/EnemySystems" unique_id=2124239944 node_paths=PackedStringArray("_entities", "_renderer")]
+[node name="EnemyTargetQuery" type="Node" parent="Systems/EnemySystems" unique_id=991938994 node_paths=PackedStringArray("_entities", "_renderer")]
 script = ExtResource("16_x7tv3")
 _entities = NodePath("../../EntityComponentStore")
 _renderer = NodePath("../EnemyRenderer")
