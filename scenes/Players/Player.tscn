@@ -14,7 +14,9 @@
 [ext_resource type="PackedScene" uid="uid://dwyqdinyji8tt" path="res://scenes/Items/Offensive/TP9.tscn" id="8_8rask"]
 [ext_resource type="PackedScene" uid="uid://c18mvu8kqrmng" path="res://scenes/Items/Offensive/Airstrike.tscn" id="8_dpv53"]
 [ext_resource type="Shader" uid="uid://bgl0yr4nfmpqx" path="res://src/Shaders/flash.gdshader" id="8_wuwji"]
+[ext_resource type="Texture2D" uid="uid://c7kegqurrrx0w" path="res://assets/VFX/small_chevron.png" id="9_c66x0"]
 [ext_resource type="PackedScene" uid="uid://cuerorgcryk5k" path="res://scenes/Items/Offensive/Sniper.tscn" id="10_2g2d6"]
+[ext_resource type="Script" uid="uid://d2moqmcv2k22p" path="res://src/Players/Controllers/LookHeader.cs" id="10_k7ubp"]
 [ext_resource type="PackedScene" uid="uid://ceimmtu3q4x6n" path="res://scenes/Items/Offensive/GrenadeThrower.tscn" id="11_espgp"]
 [ext_resource type="PackedScene" uid="uid://lvm5jo1ua73i" path="res://scenes/Items/Offensive/M870.tscn" id="11_jgr36"]
 [ext_resource type="PackedScene" uid="uid://dkhkglqxq0j2p" path="res://scenes/Items/Offensive/WipeScreen.tscn" id="11_ragxt"]
@@ -160,6 +162,12 @@ texture = ExtResource("4_eai52")
 offset = Vector2(0, -256)
 script = ExtResource("5_oypsu")
 metadata/_edit_lock_ = true
+
+[node name="LookHeader" type="Sprite2D" parent="." unique_id=655755286]
+scale = Vector2(12, 12)
+texture = ExtResource("9_c66x0")
+offset = Vector2(0, 5)
+script = ExtResource("10_k7ubp")
 
 [node name="PlayerMovementController" type="Node" parent="." unique_id=1602338086 node_paths=PackedStringArray("_player", "_sprite")]
 script = ExtResource("4_kfojw")

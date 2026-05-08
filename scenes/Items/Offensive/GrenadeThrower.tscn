@@ -16,7 +16,7 @@ Damage = 9999999999999
 CritDamageMultiplier = 0.1
 CritChanceProportion = 0.94
 ProjectileRadius = 200
-AttackSpeed = 0.2
+AttackSpeed = 1.0
 PierceLimit = 999
 Additional = Dictionary[String, Variant]({
 "CameraRecoilScale": 4.2,

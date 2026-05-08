@@ -5,7 +5,6 @@ namespace Game.Players;
 public partial class LookLight : PointLight2D
 {
 	private Crosshair? Crosshair => Crosshair.Instance;
-	private Viewport? Viewport => GetViewport();
 
 	public override void _Process(double delta)
 	{
