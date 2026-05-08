@@ -6,7 +6,7 @@ namespace Game.UI;
 public partial class CurrentWeaponUi : CanvasLayer
 {
     [Export]
-    private PlayerWeaponController WeaponController = null!;
+    private PlayerWeaponController _weaponController = null!;
 
     [Export]
     private PackedScene _weaponCarouselItemScene = null!;
@@ -22,13 +22,13 @@ public partial class CurrentWeaponUi : CanvasLayer
 
     public override void _Ready()
     {
-        WeaponController.OnPrimaryAttackReassigned += () =>
+        _weaponController.OnPrimaryAttackReassigned += () =>
             Callable.From(UpdateCarousel).CallDeferred();
-        WeaponController.OnSecondaryAttackReassigned += () =>
+        _weaponController.OnSecondaryAttackReassigned += () =>
             Callable.From(UpdateCarousel).CallDeferred();
-        WeaponController.OnOffensiveListChanged += _ =>
+        _weaponController.OnOffensiveListChanged += _ =>
             Callable.From(UpdateCarousel).CallDeferred();
-        WeaponController.ChildOrderChanged += () =>
+        _weaponController.ChildOrderChanged += () =>
             Callable.From(UpdateCarousel).CallDeferred();
         Callable.From(UpdateCarousel).CallDeferred();
     }
@@ -41,7 +41,7 @@ public partial class CurrentWeaponUi : CanvasLayer
 
     public void UpdateAmmoCount()
     {
-        if (WeaponController.PrimaryAttack is IReloadable primary)
+        if (_weaponController.PrimaryAttack is IReloadable primary)
         {
             _primaryWeaponAmmo.Show();
             if (primary.IsReloading)
@@ -55,7 +55,7 @@ public partial class CurrentWeaponUi : CanvasLayer
         else
             _primaryWeaponAmmo.Hide();
 
-        if (WeaponController.SecondaryAttack is IReloadable secondary)
+        if (_weaponController.SecondaryAttack is IReloadable secondary)
         {
             _secondaryWeaponAmmo.Show();
             if (secondary.IsReloading)
@@ -73,7 +73,8 @@ public partial class CurrentWeaponUi : CanvasLayer
     public void UpdateCarousel()
     {
         var diff =
-            WeaponController.Offensives.Count - _weaponCarousel.GetChildCount();
+            _weaponController.Offensives.Count
+            - _weaponCarousel.GetChildCount();
         while (diff > 0)
         {
             var weaponItem = _weaponCarouselItemScene.Instantiate<WeaponItem>();
@@ -91,19 +92,19 @@ public partial class CurrentWeaponUi : CanvasLayer
         }
 
         var i = 0;
-        foreach (var weapon in WeaponController.Offensives)
+        foreach (var weapon in _weaponController.Offensives)
         {
             if (_weaponCarousel.GetChild(i) is not WeaponItem weaponItem)
                 continue;
             weaponItem.WeaponName.Text = weapon.Properties.Name;
 
-            if (WeaponController.PrimaryAttack == weapon)
+            if (_weaponController.PrimaryAttack == weapon)
             {
                 weaponItem.SelectedCaret.VisibleRatio = 1;
                 weaponItem.SelectedCaret.Text = "1";
                 weaponItem.WeaponName.LabelSettings.FontColor = Colors.White;
             }
-            else if (WeaponController.SecondaryAttack == weapon)
+            else if (_weaponController.SecondaryAttack == weapon)
             {
                 weaponItem.SelectedCaret.VisibleRatio = 1;
                 weaponItem.SelectedCaret.Text = "2";

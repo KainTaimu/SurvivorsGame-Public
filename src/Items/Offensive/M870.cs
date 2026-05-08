@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Game.Items.Projectiles;
 
 namespace Game.Items.Offensive;
 
@@ -25,7 +24,7 @@ public partial class M870 : Firearm
 
     public override void Attack()
     {
-        if (_magazineCount <= 0)
+        if (MagazineCount <= 0)
         {
             Reload();
             return;
@@ -42,8 +41,8 @@ public partial class M870 : Firearm
                 _cockingAudioPlayer.Play();
         }
 
-        _fireCooldown = Stats.AttackSpeed;
-        _magazineCount--;
+        FireCooldown = Stats.AttackSpeed;
+        MagazineCount--;
 
         var playerVector = Player.GetCanvasTransform() * Player.Position;
 
@@ -65,7 +64,7 @@ public partial class M870 : Firearm
 
             var rotation = baseRotation + bloom;
 
-            var projectile = (BaseProjectile)ProjectilePool.GetProjectile();
+            var projectile = ProjectilePool.GetProjectile();
 
             projectile.Origin = this;
             projectile.SetScale(Vector2.One * Stats.ProjectileScaleMultiplier);
@@ -104,9 +103,9 @@ public partial class M870 : Firearm
                 {
                     if (!_isShotgunReloading)
                         return;
-                    _magazineCount++;
+                    MagazineCount++;
                     _shellReloadAudioPlayer?.Play();
-                    if (_magazineCount == MagazineCapacity)
+                    if (MagazineCount == MagazineCapacity)
                     {
                         _isShotgunReloading = false;
                         _reloadTween.Kill();
@@ -118,7 +117,7 @@ public partial class M870 : Firearm
 
     public override void _Process(double delta)
     {
-        _fireCooldown -= delta;
+        FireCooldown -= delta;
 
         if (Input.IsActionJustPressed(InputMapNames.WeaponReload))
         {

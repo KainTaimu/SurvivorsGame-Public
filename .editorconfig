@@ -1,5 +1,4 @@
 [*.{cs,vb}]
-
 # IDE0130: Namespace does not match folder structure
 dotnet_diagnostic.ide0130.severity = silent
 indent_style = tab
@@ -100,20 +99,16 @@ resharper_web_config_module_not_resolved_highlighting = warning
 resharper_web_config_type_not_resolved_highlighting = warning
 resharper_web_config_wrong_module_highlighting = warning
 
-
 [*]
-charset = utf-8
-end_of_line = lf
 trim_trailing_whitespace = false
 insert_final_newline = false
-indent_style = space
-indent_size = 4
 
 [{*.gd,*.gdf}]
 indent_style = tab
 tab_width = 4
 
-[*.{appxmanifest,asax,ascx,aspx,axaml,blockshader,c,c++,c++m,cc,ccm,cginc,compute,cp,cpp,cppm,cs,cshtml,cu,cuh,cxx,cxxm,dtd,fs,fsi,fsscript,fsx,fx,fxh,h,h++,hh,hlsl,hlsli,hlslinc,hp,hpp,hxx,icc,inc,inl,ino,ipp,ixx,master,ml,mli,mpp,mq4,mq5,mqh,mxx,nuspec,paml,pssl,pssli,razor,resw,resx,shader,shaderFoundry,skin,tcc,tpp,urtshader,usf,ush,uxml,vb,xaml,xamlx,xoml,xsd}]
-indent_style = space
-indent_size = 4
-tab_width = 4
+[**/.godot/mono/temp/obj/**.cs]
+generated_code = true
+
+[*.generated/*.cs]
+generated_code = true

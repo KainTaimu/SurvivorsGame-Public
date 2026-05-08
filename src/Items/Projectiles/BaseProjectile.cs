@@ -8,7 +8,7 @@ public abstract partial class BaseProjectile : Node2D
     public float ProjectileSpeed;
     public int PierceLimit;
 
-    protected bool _isInitialized;
+    protected bool IsInitialized;
 
     public abstract void Initialize();
 }

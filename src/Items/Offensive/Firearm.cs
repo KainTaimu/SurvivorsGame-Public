@@ -1,7 +1,5 @@
 using Game.Core.Settings;
-using Game.Items.Projectiles;
 using Game.Levels.Controllers;
-using Game.Players;
 using Game.UI;
 using Game.Utils;
 
@@ -27,9 +25,9 @@ public abstract partial class Firearm
     [Export]
     public AudioStreamPlayer? ReloadAudioPlayer;
 
-    public int MagazineCapacity => FirearmStats?.MagazineCapacity ?? 30;
+    public int MagazineCapacity => FirearmStats.MagazineCapacity;
 
-    public int MagazineCount => _magazineCount;
+    public int MagazineCount { get; set; }
 
     public bool IsReloading
     {
@@ -48,11 +46,11 @@ public abstract partial class Firearm
     {
         get
         {
-            if (_fireCooldown > 0)
+            if (FireCooldown > 0)
                 return false;
             if (IsReloading)
                 return false;
-            if (_magazineCount <= 0)
+            if (MagazineCount <= 0)
                 return false;
             return true;
         }
@@ -62,39 +60,32 @@ public abstract partial class Firearm
 
     public string? AttackActionString { get; set; }
 
-    protected double _fireCooldown;
-    protected int _magazineCount;
+    protected double FireCooldown;
 
-    protected float ReloadTime => FirearmStats?.ReloadTime ?? 1.5f;
+    protected float ReloadTime => FirearmStats.ReloadTime;
 
-    protected float BloomCoefficientDeg =>
-        FirearmStats?.BloomCoefficientDeg ?? 0.03f;
+    protected float BloomCoefficientDeg => FirearmStats.BloomCoefficientDeg;
 
-    protected float HorizontalRecoilMin =>
-        FirearmStats?.HorizontalRecoilMin ?? 1f;
+    protected float HorizontalRecoilMin => FirearmStats.HorizontalRecoilMin;
 
-    protected float HorizontalBaseRecoil =>
-        FirearmStats?.HorizontalBaseRecoil ?? 3f;
+    protected float HorizontalBaseRecoil => FirearmStats.HorizontalBaseRecoil;
 
     protected float HorizontalRecoilRandom =>
-        FirearmStats?.HorizontalRecoilRandom ?? 1f;
+        FirearmStats.HorizontalRecoilRandom;
 
-    protected float VerticalRecoilMin => FirearmStats?.VerticalRecoilMin ?? 2f;
+    protected float VerticalRecoilMin => FirearmStats.VerticalRecoilMin;
 
-    protected float VerticalBaseRecoil =>
-        FirearmStats?.VerticalBaseRecoil ?? 3f;
+    protected float VerticalBaseRecoil => FirearmStats.VerticalBaseRecoil;
 
-    protected float VerticalRecoilRandom =>
-        FirearmStats?.VerticalRecoilRandom ?? 0.1f;
+    protected float VerticalRecoilRandom => FirearmStats.VerticalRecoilRandom;
 
-    protected float RecoilScale => FirearmStats?.RecoilScale ?? 1f;
+    protected float RecoilScale => FirearmStats.RecoilScale;
 
     protected float RecoilAccumilationScale =>
-        FirearmStats?.RecoilAccumilationScale ?? 1f;
+        FirearmStats.RecoilAccumilationScale;
 
     protected float CameraRecoilScale =>
-        FirearmStats?.CameraRecoilScale * GameSettings.Instance.CameraShakeScale
-        ?? 1f;
+        FirearmStats.CameraRecoilScale * GameSettings.Instance.CameraShakeScale;
 
     protected Crosshair? Crosshair => Crosshair.Instance;
 
@@ -104,7 +95,7 @@ public abstract partial class Firearm
     {
         UpdateAdditionalFields();
         OnStatsChanged += UpdateAdditionalFields;
-        _magazineCount = FirearmStats?.MagazineCapacity ?? 30;
+        MagazineCount = FirearmStats.MagazineCapacity;
 
         // HACK: Too lazy to add ProjectilePool for all existing Firearms.
         // Should avoid creating nodes programatically unless for pooling
@@ -117,7 +108,7 @@ public abstract partial class Firearm
 
     public override void Attack()
     {
-        if (_magazineCount <= 0)
+        if (MagazineCount <= 0)
         {
             Reload();
             return;
@@ -128,8 +119,8 @@ public abstract partial class Firearm
 
         ShootAudioPlayer?.Play();
 
-        _fireCooldown = Stats.AttackSpeed;
-        _magazineCount--;
+        FireCooldown = Stats.AttackSpeed;
+        MagazineCount--;
 
         var playerVector = Player.GetCanvasTransform() * Player.Position;
 
@@ -150,7 +141,7 @@ public abstract partial class Firearm
 
         rotation += bloom;
 
-        var projectile = (BaseProjectile)ProjectilePool.GetProjectile();
+        var projectile = ProjectilePool.GetProjectile();
 
         projectile.Origin = this;
         projectile.SetScale(Vector2.One * Stats.ProjectileScaleMultiplier);
@@ -158,7 +149,7 @@ public abstract partial class Firearm
         projectile.SetRotation(rotation);
         projectile.ProjectileSpeed = Stats.ProjectileSpeed;
         projectile.PierceLimit = Stats.PierceLimit;
-        projectile.HitRadius = FirearmStats?.ProjectileRadius ?? 24;
+        projectile.HitRadius = FirearmStats.ProjectileRadius;
         projectile.Initialize();
 
         ApplyCursorRecoil();
@@ -173,7 +164,7 @@ public abstract partial class Firearm
             return;
         GetTree().CreateTimer(ReloadTime, false).Timeout += () =>
         {
-            _magazineCount = MagazineCapacity;
+            MagazineCount = MagazineCapacity;
             IsReloading = false;
         };
         IsReloading = true;
@@ -228,13 +219,13 @@ public abstract partial class Firearm
 
         for (var i = 0; i < 6; i++)
         {
-            static int rand()
+            static int Rand()
             {
                 return GD.RandRange(-1, 1);
             }
 
             var shake =
-                new Vector2(rand(), rand())
+                new Vector2(Rand(), Rand())
                 * GD.RandRange(4, 9)
                 * CameraRecoilScale;
 
@@ -251,7 +242,7 @@ public abstract partial class Firearm
 
     private void UpdateAdditionalFields()
     {
-        _fireCooldown = 0;
+        FireCooldown = 0;
 
         Logger.LogDebug(
             "Updated Stats\n",

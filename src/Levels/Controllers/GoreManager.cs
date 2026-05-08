@@ -60,9 +60,6 @@ public partial class GoreManager : Node
 
     private void UpdateParticles(int maxParticles)
     {
-        if (_enemyDeathParticlesScene is null)
-            return;
-
         var particlesLeft =
             maxParticles - _activeParticles.Count - _inactiveParticles.Count;
 

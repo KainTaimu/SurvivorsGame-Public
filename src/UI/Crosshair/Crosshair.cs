@@ -32,15 +32,17 @@ public partial class Crosshair : Node2D
 
     public float PrimaryCrosshairSpreadRatio =>
         PrimaryCrosshairSprite.Frame
-        / PrimaryCrosshairSprite.SpriteFrames.GetFrameCount(
-            PrimaryCrosshairSprite.Animation
-        );
+        / (float)
+            PrimaryCrosshairSprite.SpriteFrames.GetFrameCount(
+                PrimaryCrosshairSprite.Animation
+            );
 
     public float SecondaryCrosshairSpreadRatio =>
         SecondaryCrosshairSprite.Frame
-        / SecondaryCrosshairSprite.SpriteFrames.GetFrameCount(
-            SecondaryCrosshairSprite.Animation
-        );
+        / (float)
+            SecondaryCrosshairSprite.SpriteFrames.GetFrameCount(
+                SecondaryCrosshairSprite.Animation
+            );
 
     public Vector2 CanvasSpacePosition =>
         PrimaryCrosshairSprite.GetCanvasTransform()

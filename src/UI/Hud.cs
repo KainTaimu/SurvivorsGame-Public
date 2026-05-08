@@ -6,29 +6,29 @@ namespace Game.UI;
 public partial class Hud : Node
 {
     [Export]
-    private Label? PlayerHealthLabel;
+    private Label? _playerHealthLabel;
 
     [Export]
-    private Label? EnemyCountLabel;
+    private Label? _enemyCountLabel;
 
     [Export]
-    private Label? MoneyLabel;
+    private Label? _moneyLabel;
 
-    private Player? Player => GameWorld.Instance.MainPlayer;
-    private CharacterStats? Stats => Player?.Character.CharacterStats;
+    private Player Player => GameWorld.Instance.MainPlayer;
+    private CharacterStats Stats => Player.Character.CharacterStats;
     private EnemyWaveController? WaveController => EnemyWaveController.Instance;
     private LevelData? LevelData => LevelData.Instance;
 
     public override void _Ready()
     {
         LevelData?.OnMoneyChanged += (_) =>
-            MoneyLabel?.Text = $"${LevelData.Money}";
-        MoneyLabel?.Text = $"${LevelData?.Money}";
+            _moneyLabel?.Text = $"${LevelData.Money}";
+        _moneyLabel?.Text = $"${LevelData?.Money}";
     }
 
     public override void _Process(double delta)
     {
-        PlayerHealthLabel?.Text = "Health: " + Stats?.Health.ToString();
-        EnemyCountLabel?.Text = "Enemies: " + WaveController?.Alive.ToString();
+        _playerHealthLabel?.Text = "Health: " + Stats.Health.ToString();
+        _enemyCountLabel?.Text = "Enemies: " + WaveController?.Alive.ToString();
     }
 }

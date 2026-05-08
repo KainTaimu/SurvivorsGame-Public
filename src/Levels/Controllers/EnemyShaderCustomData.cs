@@ -21,33 +21,33 @@ public class EnemyShaderCustomData(
     public bool Flip = flip; // 1 bit
     public byte Opacity = opacity; // 2 byte = 8 bit
     public byte Flash = flash;
-    private const int FlipPosition = 0;
-    private const int OpacityPosition = 1;
-    private const int FlashPosition = 9;
+    private const int FLIP_POSITION = 0;
+    private const int OPACITY_POSITION = 1;
+    private const int FLASH_POSITION = 9;
 
     // Channel B
     public readonly byte FrameX = frameX;
     public readonly byte FrameY = frameY;
     public readonly byte FrameIdxX = frameIdxX;
     public readonly byte FrameIdxY = frameIdxY;
-    private const int FrameXPosition = 0;
-    private const int FrameYPosition = 8;
-    private const int FrameIdxXPosition = 16;
-    private const int FrameIdxYPosition = 24;
+    private const int FRAME_X_POSITION = 0;
+    private const int FRAME_Y_POSITION = 8;
+    private const int FRAME_IDX_X_POSITION = 16;
+    private const int FRAME_IDX_Y_POSITION = 24;
 
     // Channel A
     public readonly byte FrameSizePxX = frameSizePxX;
     public readonly byte FrameSizePxY = frameSizePxY;
-    private const int FrameSizePxXPosition = 0;
-    private const int FrameSizePxYPosition = 8;
+    private const int FRAME_SIZE_PX_X_POSITION = 0;
+    private const int FRAME_SIZE_PX_Y_POSITION = 8;
 
     private float GetR()
     {
         var bits = 0u;
 
-        bits ^= (Flip ? 1u : 0u) << FlipPosition;
-        bits ^= (uint)Opacity << OpacityPosition;
-        bits ^= (uint)Flash << FlashPosition;
+        bits ^= (Flip ? 1u : 0u) << FLIP_POSITION;
+        bits ^= (uint)Opacity << OPACITY_POSITION;
+        bits ^= (uint)Flash << FLASH_POSITION;
 
         return BitConverter.UInt32BitsToSingle(bits);
     }
@@ -62,10 +62,10 @@ public class EnemyShaderCustomData(
     {
         var bits = 0u;
 
-        bits ^= (uint)FrameX << FrameXPosition;
-        bits ^= (uint)FrameY << FrameYPosition;
-        bits ^= (uint)FrameIdxX << FrameIdxXPosition;
-        bits ^= (uint)FrameIdxY << FrameIdxYPosition;
+        bits ^= (uint)FrameX << FRAME_X_POSITION;
+        bits ^= (uint)FrameY << FRAME_Y_POSITION;
+        bits ^= (uint)FrameIdxX << FRAME_IDX_X_POSITION;
+        bits ^= (uint)FrameIdxY << FRAME_IDX_Y_POSITION;
 
         return BitConverter.UInt32BitsToSingle(bits);
     }
@@ -74,8 +74,8 @@ public class EnemyShaderCustomData(
     {
         var bits = 0u;
 
-        bits ^= (uint)FrameSizePxX << FrameSizePxXPosition;
-        bits ^= (uint)FrameSizePxY << FrameSizePxYPosition;
+        bits ^= (uint)FrameSizePxX << FRAME_SIZE_PX_X_POSITION;
+        bits ^= (uint)FrameSizePxY << FRAME_SIZE_PX_Y_POSITION;
 
         return BitConverter.UInt32BitsToSingle(bits);
     }

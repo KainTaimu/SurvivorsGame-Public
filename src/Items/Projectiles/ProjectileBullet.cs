@@ -29,7 +29,7 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
             return;
         }
 
-        if (!_isInitialized)
+        if (!IsInitialized)
         {
             Logger.LogWarning(
                 $"Projectile {GetType().Name} is processing but is not initialized"
@@ -50,7 +50,7 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
         _pierceCount = 0;
         _hits.Clear();
         ProjectilePool.ReturnProjectile(this);
-        _isInitialized = false;
+        IsInitialized = false;
     }
 
     public override void Initialize()
@@ -60,7 +60,7 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
             .SetEase(Tween.EaseType.In);
         var finalScale = Scale * new Vector2(8, 1);
         tweenScale.TweenProperty(Sprite, "scale", finalScale, 0.05);
-        _isInitialized = true;
+        IsInitialized = true;
 
         if (
             !TargetQuery.GetTargetsRayCast(

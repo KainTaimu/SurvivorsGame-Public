@@ -72,6 +72,7 @@ public partial class PlayerWeaponController : Node
                 case IManualAttack:
                     AddManualOffensive(offensive);
                     break;
+                // ReSharper disable once SuspiciousTypeConversion.Global
                 case IAutomaticAttack:
                     throw new NotImplementedException();
             }

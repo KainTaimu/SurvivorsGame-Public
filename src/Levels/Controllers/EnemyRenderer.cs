@@ -16,19 +16,18 @@ public partial class EnemyRenderer : Node
     [Export]
     private float _renderDistanceFactor = 1.2f;
 
-    private const int GridSize = 64;
-
     // Only for checking visibility. Nothing stored inside
     private CenteredMovingUniformGrid<object> _visibilityGrid = null!;
     private readonly Dictionary<MultiMesh, int> _mmiVisibilityCount = [];
 
     private readonly Dictionary<string, MultiMesh> _spriteToMultiMesh = [];
 
-    private const int _initialInstanceCount = 2000;
-    private const float _instanceGrowthMultiplier = 1.5f;
+    private const int GRID_SIZE = 64;
+    private const int INITIAL_INSTANCE_COUNT = 2000;
+    private const float INSTANCE_GROWTH_MULTIPLIER = 1.5f;
 
     private Vector2 PlayerPosition =>
-        GameWorld.Instance.MainPlayer?.GlobalPosition ?? Vector2.Zero;
+        GameWorld.Instance.MainPlayer.GlobalPosition;
 
     public override void _Ready()
     {
@@ -38,7 +37,7 @@ public partial class EnemyRenderer : Node
 
         var windowSize = viewport.GetVisibleRect().Size * _renderDistanceFactor;
         _visibilityGrid = new CenteredMovingUniformGrid<object>(
-            GridSize,
+            GRID_SIZE,
             windowSize
         );
 
@@ -72,7 +71,7 @@ public partial class EnemyRenderer : Node
             if (count >= mmi.InstanceCount)
             {
                 mmi.InstanceCount = (int)(
-                    mmi.InstanceCount * _instanceGrowthMultiplier
+                    mmi.InstanceCount * INSTANCE_GROWTH_MULTIPLIER
                 );
             }
 
@@ -130,7 +129,7 @@ public partial class EnemyRenderer : Node
     {
         var mmi = _multiMesh.Instantiate<MultiMeshInstance2D>();
         // To avoid flickering, pre-initialize _initialInstanceCount instances
-        mmi.Multimesh.InstanceCount = _initialInstanceCount;
+        mmi.Multimesh.InstanceCount = INITIAL_INSTANCE_COUNT;
         mmi.Multimesh.VisibleInstanceCount = 0;
 
         var ss = ServiceLocator.GetService<SpriteFrameMappingsService>();

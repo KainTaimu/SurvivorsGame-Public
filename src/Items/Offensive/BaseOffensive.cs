@@ -25,7 +25,9 @@ public abstract partial class BaseOffensive : BaseItem
         set
         {
             if (
-                field is not null
+                // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+                field
+                    is not null
                 && field.IsConnected(
                     Resource.SignalName.Changed,
                     Callable.From(EmitSignalOnStatsChanged)
@@ -72,6 +74,7 @@ public abstract partial class BaseOffensive : BaseItem
     }
 
     /// <summary> Handle the damage to the enemy </summary>
+    // ReSharper disable once InconsistentNaming
     protected void HandleDamageECS(int id)
     {
         if (!ComponentStore.GetComponent<HealthComponent>(id, out var health))
@@ -100,6 +103,7 @@ public abstract partial class BaseOffensive : BaseItem
     }
 
     /// <summary> Handle additional effects to the enemy like knockback </summary>
+    // ReSharper disable once InconsistentNaming
     protected virtual void HandleHitECS(int id) { }
 
     // protected abstract void HandleHitNode(Node node);

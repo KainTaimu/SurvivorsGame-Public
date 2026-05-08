@@ -10,8 +10,6 @@ public partial class EnemyMover : Node
     public override void _Process(double delta)
     {
         var player = GameWorld.Instance.MainPlayer;
-        if (player is null)
-            return;
         var playerPos = player.GlobalPosition;
 
         foreach (
@@ -26,7 +24,7 @@ public partial class EnemyMover : Node
                 moveSpeed.MoveSpeed * (float)delta
             );
 
-            _entities.UpdateComponent(id, pos with { Position = p });
+            _entities.UpdateComponent(id, new PositionComponent(Position: p));
         }
     }
 }

@@ -17,7 +17,7 @@ public partial class Revolver : Firearm
         base._Ready();
         OnAttack += () =>
         {
-            GetTree().CreateTimer(_fireCooldown, false).Timeout += () =>
+            GetTree().CreateTimer(FireCooldown, false).Timeout += () =>
             {
                 _ammoCount.RotateCylinder();
                 if (MagazineCount != 0)
@@ -59,7 +59,7 @@ public partial class Revolver : Firearm
 
     public override void _Process(double delta)
     {
-        _fireCooldown -= delta;
+        FireCooldown -= delta;
         if (Input.IsActionPressed(InputMapNames.WeaponReload))
         {
             Reload();
@@ -87,10 +87,7 @@ public partial class Revolver : Firearm
 
         ComponentStore.SetComponent(
             id,
-            pos with
-            {
-                Position = pos.Position + knockbackVector,
-            }
+            new PositionComponent(Position: pos.Position + knockbackVector)
         );
     }
 }

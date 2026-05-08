@@ -5,8 +5,8 @@ namespace Game.Levels.Controllers;
 
 public partial class EnemyHitFeedbackController : Node
 {
-    [Export]
-    private EntityComponentStore ComponentStore = null!;
+    private EntityComponentStore ComponentStore =>
+        EntityComponentStore.Instance;
 
     [Export]
     private AudioStreamPlayer? _hitmarkerStreamPlayer;

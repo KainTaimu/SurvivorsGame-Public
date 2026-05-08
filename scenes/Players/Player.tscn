@@ -187,5 +187,5 @@ script = ExtResource("5_yecw2")
 
 [node name="WipeScreen" parent="PlayerWeaponController" unique_id=462338799 instance=ExtResource("11_ragxt")]
 
-[node name="CurrentWeaponUI" parent="." unique_id=2135368036 node_paths=PackedStringArray("WeaponController") instance=ExtResource("14_8rask")]
-WeaponController = NodePath("../PlayerWeaponController")
+[node name="CurrentWeaponUI" parent="." unique_id=2135368036 node_paths=PackedStringArray("_weaponController") instance=ExtResource("14_8rask")]
+_weaponController = NodePath("../PlayerWeaponController")

@@ -13,7 +13,7 @@ public partial class Ak47 : Firearm
 
     public override void _Process(double delta)
     {
-        _fireCooldown -= delta;
+        FireCooldown -= delta;
         if (Input.IsActionPressed(InputMapNames.WeaponReload))
         {
             Reload();
@@ -42,10 +42,7 @@ public partial class Ak47 : Firearm
 
         ComponentStore.SetComponent(
             id,
-            pos with
-            {
-                Position = pos.Position + knockbackVector,
-            }
+            new PositionComponent(Position: pos.Position + knockbackVector)
         );
     }
 }

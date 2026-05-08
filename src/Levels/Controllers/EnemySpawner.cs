@@ -5,7 +5,7 @@ namespace Game.Levels.Controllers;
 
 public partial class EnemySpawner : Node
 {
-    private EntityComponentStore? ComponentStore =>
+    private EntityComponentStore ComponentStore =>
         EntityComponentStore.Instance;
 
     public static EnemySpawner? Instance;
@@ -17,12 +17,6 @@ public partial class EnemySpawner : Node
 
     public int SpawnEnemy(EnemyBlueprint bp)
     {
-        if (ComponentStore is null)
-        {
-            Logger.LogError("ComponentStore is null");
-            return -1;
-        }
-
         var ss = ServiceLocator.GetService<SpriteFrameMappingsService>();
         if (ss is null)
         {

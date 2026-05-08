@@ -18,7 +18,7 @@ public partial class EnemyTargetQuery : Node
     private EnemyRenderer _renderer = null!;
 
     // BREAKING: Changing this value breaks Projectile radius of weapons
-    private const int _gridSize = 32;
+    private const int GRID_SIZE = 32;
 
     public CenteredMovingUniformGrid<int> Grid => _grid;
 
@@ -37,7 +37,7 @@ public partial class EnemyTargetQuery : Node
         }
 
         var windowSize = viewport.GetVisibleRect().Size * 1.2f;
-        _grid = new CenteredMovingUniformGrid<int>(_gridSize, windowSize);
+        _grid = new CenteredMovingUniformGrid<int>(GRID_SIZE, windowSize);
     }
 
     public override void _Process(double delta)
@@ -143,11 +143,11 @@ public partial class EnemyTargetQuery : Node
         var cellsOnRayList = cellsOnRay.ToList();
         cellsOnRayList.Sort(
             (a, b) =>
-                (new Vector2(a.X, a.Y) * _gridSize + _grid.TopLeft - from)
+                (new Vector2(a.X, a.Y) * GRID_SIZE + _grid.TopLeft - from)
                     .LengthSquared()
                     .CompareTo(
                         (
-                            new Vector2(b.X, b.Y) * _gridSize
+                            new Vector2(b.X, b.Y) * GRID_SIZE
                             + _grid.TopLeft
                             - from
                         ).LengthSquared()
@@ -170,10 +170,10 @@ public partial class EnemyTargetQuery : Node
                 (a, b) =>
                 {
                     var cellWorldA =
-                        new Vector2(a.X * _gridSize, a.Y * _gridSize)
+                        new Vector2(a.X * GRID_SIZE, a.Y * GRID_SIZE)
                         + _grid.TopLeft;
                     var cellWorldB =
-                        new Vector2(b.X * _gridSize, b.Y * _gridSize)
+                        new Vector2(b.X * GRID_SIZE, b.Y * GRID_SIZE)
                         + _grid.TopLeft;
                     return DistanceSquaredPointToRay(
                             cellWorldA,

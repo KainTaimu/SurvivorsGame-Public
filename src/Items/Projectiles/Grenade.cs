@@ -15,7 +15,6 @@ public partial class Grenade : RigidBody2D
     private EntityComponentStore ComponentStore =>
         EntityComponentStore.Instance;
 
-    private readonly HashSet<int> _hits = [];
     private double _t;
 
     private float TimeToExplode =>
@@ -78,13 +77,13 @@ public partial class Grenade : RigidBody2D
 
         for (var i = 0; i < 6; i++)
         {
-            static int rand()
+            static int Rand()
             {
                 return GD.RandRange(-1, 1);
             }
 
             var shake =
-                new Vector2(rand(), rand())
+                new Vector2(Rand(), Rand())
                 * GD.RandRange(4, 9)
                 * CameraRecoilScale;
 

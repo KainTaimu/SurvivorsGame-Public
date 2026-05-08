@@ -29,14 +29,14 @@ public partial class RevolverAmmoCount : CanvasLayer
     private Marker2D _rightPosition = null!;
 
     private float _cylinderRotation = 60f * (Mathf.Pi / 180);
-    private const int _maxCylinderCount = 6;
+    private const int MAX_CYLINDER_COUNT = 6;
     private Vector2 _originalPosition;
 
     private PlayerWeaponController WeaponController =>
         GameWorld.Instance.MainPlayer.WeaponController;
 
     private int MagazineCapacity =>
-        Math.Clamp(_revolver.MagazineCapacity, 0, _maxCylinderCount);
+        Math.Clamp(_revolver.MagazineCapacity, 0, MAX_CYLINDER_COUNT);
 
     public override void _Ready()
     {
@@ -75,7 +75,7 @@ public partial class RevolverAmmoCount : CanvasLayer
                 _revolverCylinderSprite,
                 "rotation",
                 _revolverCylinderSprite.Rotation - _cylinderRotation * 6,
-                _revolver.FirearmStats?.ReloadTime / 2 ?? 0
+                _revolver.FirearmStats.ReloadTime / 2
             );
         };
         _revolver.OnReloadEnd += () =>
@@ -94,7 +94,7 @@ public partial class RevolverAmmoCount : CanvasLayer
                 _revolverCylinderSprite,
                 "rotation",
                 0,
-                _revolver.FirearmStats?.ReloadTime / 2 ?? 0
+                _revolver.FirearmStats.ReloadTime / 2
             );
         };
         _revolver.OnAttack += () =>
@@ -103,12 +103,12 @@ public partial class RevolverAmmoCount : CanvasLayer
             // Cylinder Shake
             for (var i = 0; i < 6; i++)
             {
-                static int rand()
+                static int Rand()
                 {
                     return GD.RandRange(-1, 1);
                 }
 
-                var shake = new Vector2(rand(), rand()) * GD.RandRange(4, 9);
+                var shake = new Vector2(Rand(), Rand()) * GD.RandRange(4, 9);
 
                 tween.TweenProperty(
                     _revolverCylinderSprite,

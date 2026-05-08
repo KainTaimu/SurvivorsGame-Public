@@ -3,10 +3,10 @@ namespace Game.Players.Controllers;
 public partial class PlayerCameraController : Camera2D
 {
     [Export]
-    public float _minZoom = 0.1f;
+    public float MinZoom = 0.1f;
 
     [Export]
-    public float _maxZoom = 0.9f;
+    public float MaxZoom = 0.9f;
 
     public override void _Input(InputEvent @event)
     {
@@ -21,6 +21,6 @@ public partial class PlayerCameraController : Camera2D
         else if (mouse.ButtonIndex == MouseButton.WheelDown)
             zoom -= Vector2.One * 0.1f;
 
-        Zoom = zoom.Clamp(Vector2.One * _minZoom, Vector2.One * _maxZoom);
+        Zoom = zoom.Clamp(Vector2.One * MinZoom, Vector2.One * MaxZoom);
     }
 }

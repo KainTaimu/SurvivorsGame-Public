@@ -3,6 +3,7 @@ using Game.Core.ECS;
 
 namespace Game.Items.Offensive;
 
+// ReSharper disable once InconsistentNaming
 public partial class TP9 : Firearm
 {
     public override void _Ready()
@@ -13,7 +14,7 @@ public partial class TP9 : Firearm
 
     public override void _Process(double delta)
     {
-        _fireCooldown -= delta;
+        FireCooldown -= delta;
         if (Input.IsActionPressed(InputMapNames.WeaponReload))
         {
             Reload();
@@ -42,10 +43,7 @@ public partial class TP9 : Firearm
 
         ComponentStore.SetComponent(
             id,
-            pos with
-            {
-                Position = pos.Position + knockbackVector,
-            }
+            new PositionComponent(Position: pos.Position + knockbackVector)
         );
     }
 }

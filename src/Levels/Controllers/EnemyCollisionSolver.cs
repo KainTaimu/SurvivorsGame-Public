@@ -8,7 +8,7 @@ public partial class EnemyCollisionSolver : Node
 {
     [ExportCategory("Configuration")]
     [Export]
-    private byte GridSize = 64;
+    private byte _gridSize = 64;
 
     [Export]
     private float _solverRangeFactor = 3f;
@@ -54,7 +54,7 @@ public partial class EnemyCollisionSolver : Node
 
         var windowSize = viewport.GetVisibleRect().Size * _solverRangeFactor;
         _grid = new CenteredMovingUniformGrid<(Vector2, int)>(
-            GridSize,
+            _gridSize,
             new Vector2(windowSize.X, windowSize.X)
         );
 
@@ -73,8 +73,6 @@ public partial class EnemyCollisionSolver : Node
             return;
 
         var player = GameWorld.Instance.MainPlayer;
-        if (player is null)
-            return;
         _grid.Recenter(player.GlobalPosition);
 
         _writeBuffer.Clear();
@@ -238,7 +236,7 @@ public partial class EnemyCollisionSolver : Node
             var rect = new ReferenceRect
             {
                 Name = $"rect-{cell.Index}",
-                Size = new Vector2(GridSize, GridSize),
+                Size = new Vector2(_gridSize, _gridSize),
                 Position = cell.Position,
                 Visible = true,
                 EditorOnly = false,

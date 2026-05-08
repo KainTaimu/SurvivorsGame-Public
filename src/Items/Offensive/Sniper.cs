@@ -38,7 +38,7 @@ public partial class Sniper : Firearm
     private double MoveDamageMax =>
         Stats.Additional["MoveDamageMax"].AsDouble();
 
-    private PlayerMovementController? MovementController =>
+    private PlayerMovementController MovementController =>
         GameWorld.Instance.MainPlayer.MovementController;
 
     public override void _Ready()
@@ -49,7 +49,7 @@ public partial class Sniper : Firearm
 
     public override void _Process(double delta)
     {
-        _fireCooldown -= delta;
+        FireCooldown -= delta;
 
         UpdateMoveTimeBloom(delta);
 
@@ -77,10 +77,7 @@ public partial class Sniper : Firearm
                 );
         }
 
-        if (FirearmStats is not null)
-            AttackWithMoveTimeBloom(FirearmStats);
-        else
-            Attack();
+        AttackWithMoveTimeBloom(FirearmStats);
     }
 
     private void AttackWithMoveTimeBloom(FirearmStats firearmStats)
@@ -95,7 +92,7 @@ public partial class Sniper : Firearm
     private void UpdateMoveTimeBloom(double delta)
     {
         if (
-            MovementController?.Velocity.LengthSquared() > 0
+            MovementController.Velocity.LengthSquared() > 0
             || Crosshair?.CrosshairVelocity.LengthSquared() > 0
         )
             MoveTime += delta * MoveBloomGrowthRate;
@@ -133,10 +130,7 @@ public partial class Sniper : Firearm
 
         ComponentStore.SetComponent(
             id,
-            pos with
-            {
-                Position = pos.Position + knockbackVector,
-            }
+            new PositionComponent(Position: pos.Position + knockbackVector)
         );
     }
 }

@@ -66,7 +66,7 @@ public partial class AirdropManager : Node2D
             (float)GD.RandRange(-1f, 1f),
             (float)GD.RandRange(-1f, 1f)
         );
-        rand *= 1920 / 2;
+        rand *= 1920 / 2f;
         var startPosition = dropPosition + rotVec;
 
         var aircraft = _airdropPlaneScene.Instantiate<AirdropPlane>();

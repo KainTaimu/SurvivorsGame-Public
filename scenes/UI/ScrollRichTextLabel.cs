@@ -28,8 +28,8 @@ public partial class ScrollRichTextLabel : ScrollContainer
 
     public override void _GuiInput(InputEvent @event)
     {
-        if (@event is not InputEventMouse mouse)
-            return;
+        //if (@event is not InputEventMouse mouse)
+        //    return;
 
         // HoverScroll(mouse.GetPosition());
     }

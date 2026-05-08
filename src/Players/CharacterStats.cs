@@ -142,21 +142,13 @@ public partial class CharacterStats : Resource
         {
             // health may be uninitialized on first access.
             if (_health == -1)
-            {
                 _health = _maxHealth;
-                return _health;
-            }
 
             return _health;
         }
         set
         {
-            if (_health == -1)
-                _health = _maxHealth;
-
             var clamped = Math.Clamp(value, 0, _maxHealth);
-            if (_health == clamped)
-                return;
 
             var oldValue = _health;
             _health = clamped;
@@ -171,8 +163,6 @@ public partial class CharacterStats : Resource
         set
         {
             var clamped = Math.Clamp(value, 0, int.MaxValue);
-            if (_maxHealth == clamped)
-                return;
 
             var oldValue = _maxHealth;
             _maxHealth = clamped;
@@ -190,8 +180,6 @@ public partial class CharacterStats : Resource
         set
         {
             var clamped = Math.Max(value, 0);
-            if (_moveSpeed == clamped)
-                return;
 
             var oldValue = _moveSpeed;
             _moveSpeed = clamped;
@@ -200,15 +188,13 @@ public partial class CharacterStats : Resource
     }
 
     [Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-    /// Flat defense
+    // Flat defense
     public required int Defense
     {
         get => _defense;
         set
         {
             var clamped = Math.Clamp(value, 0, int.MaxValue);
-            if (_defense == clamped)
-                return;
 
             var oldValue = _defense;
             _defense = clamped;
@@ -223,8 +209,6 @@ public partial class CharacterStats : Resource
         set
         {
             var clamped = Math.Max(value, 0);
-            if (_criticalChance == clamped)
-                return;
 
             var oldValue = _criticalChance;
             _criticalChance = clamped;
@@ -243,8 +227,6 @@ public partial class CharacterStats : Resource
         set
         {
             var clamped = Math.Max(value, 0);
-            if (_pickupRangeRadius == clamped)
-                return;
 
             var oldValue = _pickupRangeRadius;
             _pickupRangeRadius = clamped;
@@ -263,8 +245,6 @@ public partial class CharacterStats : Resource
         set
         {
             var clamped = Math.Clamp(value, 0, int.MaxValue);
-            if (_healthRegenPerSecond == clamped)
-                return;
 
             var oldValue = _healthRegenPerSecond;
             _healthRegenPerSecond = clamped;
@@ -283,8 +263,6 @@ public partial class CharacterStats : Resource
         set
         {
             var clamped = Math.Max(value, 0);
-            if (_invincibilityTime == clamped)
-                return;
 
             var oldValue = _invincibilityTime;
             _invincibilityTime = clamped;
@@ -303,8 +281,6 @@ public partial class CharacterStats : Resource
         set
         {
             var clamped = Math.Max(value, 0);
-            if (_hitboxRadius == clamped)
-                return;
 
             var oldValue = _hitboxRadius;
             _hitboxRadius = clamped;
@@ -320,8 +296,6 @@ public partial class CharacterStats : Resource
         set
         {
             var clamped = Math.Max(value, 0);
-            if (_healthMultiplier == clamped)
-                return;
 
             var oldValue = _healthMultiplier;
             _healthMultiplier = clamped;
@@ -340,8 +314,6 @@ public partial class CharacterStats : Resource
         set
         {
             var clamped = Math.Max(value, 0);
-            if (_moveSpeedMultiplier == clamped)
-                return;
 
             var oldValue = _moveSpeedMultiplier;
             _moveSpeedMultiplier = clamped;
@@ -360,8 +332,6 @@ public partial class CharacterStats : Resource
         set
         {
             var clamped = Math.Max(value, 0);
-            if (_incomingDamageMultiplier == clamped)
-                return;
 
             var oldValue = _incomingDamageMultiplier;
             _incomingDamageMultiplier = clamped;
@@ -380,8 +350,6 @@ public partial class CharacterStats : Resource
         set
         {
             var clamped = Math.Max(value, 0);
-            if (_outgoingDamageMultiplier == clamped)
-                return;
 
             var oldValue = _outgoingDamageMultiplier;
             _outgoingDamageMultiplier = clamped;
@@ -400,8 +368,6 @@ public partial class CharacterStats : Resource
         set
         {
             var clamped = Math.Max(value, 0);
-            if (_criticalChanceMultiplier == clamped)
-                return;
 
             var oldValue = _criticalChanceMultiplier;
             _criticalChanceMultiplier = clamped;
@@ -420,8 +386,6 @@ public partial class CharacterStats : Resource
         set
         {
             var clamped = Math.Max(value, 0);
-            if (_criticalDamageMultiplier == clamped)
-                return;
 
             var oldValue = _criticalDamageMultiplier;
             _criticalDamageMultiplier = clamped;
@@ -440,8 +404,6 @@ public partial class CharacterStats : Resource
         set
         {
             var clamped = Math.Max(value, 0);
-            if (_attackSpeedMultiplier == clamped)
-                return;
 
             var oldValue = _attackSpeedMultiplier;
             _attackSpeedMultiplier = clamped;
@@ -460,8 +422,6 @@ public partial class CharacterStats : Resource
         set
         {
             var clamped = Math.Max(value, 0);
-            if (_projectileMultiplier == clamped)
-                return;
 
             var oldValue = _projectileMultiplier;
             _projectileMultiplier = clamped;
@@ -480,8 +440,6 @@ public partial class CharacterStats : Resource
         set
         {
             var clamped = Math.Max(value, 0);
-            if (_xpMultiplier == clamped)
-                return;
 
             var oldValue = _xpMultiplier;
             _xpMultiplier = clamped;
