@@ -9,6 +9,8 @@
 [ext_resource type="Script" uid="uid://bjnekrn8u4tcu" path="res://src/Core/ECS/EntityComponentStoreV1.cs" id="6_qaj6y"]
 [ext_resource type="Script" uid="uid://bkpyb01olop50" path="res://src/Levels/Controllers/EnemyRenderer.cs" id="7_ajdj3"]
 [ext_resource type="Resource" uid="uid://d3ao5d4ym77ad" path="res://scenes/Enemies/Blueprints/Duck.tres" id="8_1c6ul"]
+[ext_resource type="Script" uid="uid://cksmwvaxx1m18" path="res://src/Levels/Controllers/EnemyWaveSpawnCount.cs" id="8_eh1w1"]
+[ext_resource type="Script" uid="uid://b7ol6jtjagoe" path="res://src/Levels/Controllers/EnemyWaveDuration.cs" id="9_aig1n"]
 [ext_resource type="Resource" uid="uid://6rycr3xfb4ax" path="res://scenes/Enemies/Blueprints/Vanoss.tres" id="9_occlw"]
 [ext_resource type="PackedScene" uid="uid://umbqj1xym7lp" path="res://scenes/Core/FodderMultiMeshInstance2D.tscn" id="9_ror81"]
 [ext_resource type="Script" uid="uid://cwkq6cfxp7jub" path="res://src/Levels/Controllers/EnemyCollisionSolver.cs" id="10_ajdj3"]
@@ -16,7 +18,6 @@
 [ext_resource type="Script" uid="uid://bct2mtni7a82f" path="res://src/Levels/Controllers/EnemyMover.cs" id="10_sh7eq"]
 [ext_resource type="Script" uid="uid://citywxiolgxtm" path="res://src/Levels/Controllers/EnemyWaveController.cs" id="11_aredf"]
 [ext_resource type="Script" uid="uid://cuxwdf1ugwtxm" path="res://src/Levels/Controllers/EnemySpawner.cs" id="12_qsiuk"]
-[ext_resource type="Script" uid="uid://cwbl163hsg1db" path="res://src/Levels/Controllers/EnemyWave.cs" id="12_x7tv3"]
 [ext_resource type="PackedScene" uid="uid://bpgtq48wt7r32" path="res://scenes/Levels/EnemyHitFeedbackController.tscn" id="13_vg5sh"]
 [ext_resource type="PackedScene" uid="uid://c8d8andvaknho" path="res://scenes/Levels/EnemyDeathManager.tscn" id="14_aig1n"]
 [ext_resource type="PackedScene" uid="uid://cjx5nc7bql8d0" path="res://scenes/UI/Crosshair.tscn" id="15_aredf"]
@@ -25,15 +26,23 @@
 [ext_resource type="PackedScene" uid="uid://bh4q5xe8eps71" path="res://scenes/Levels/AirdropManager.tscn" id="20_qsiuk"]
 [ext_resource type="PackedScene" uid="uid://do6p1pg4x0vkf" path="res://scenes/UI/Hud.tscn" id="20_vg5sh"]
 
-[sub_resource type="Resource" id="Resource_x7tv3"]
-script = ExtResource("12_x7tv3")
-EnemyBlueprints = Array[Object]([ExtResource("8_1c6ul"), ExtResource("10_d4hlt"), ExtResource("9_occlw")])
-Duration = 3.0
-MaxMobs = 1000
-SpawnMinTime = 0.001
+[sub_resource type="Resource" id="Resource_aig1n"]
+script = ExtResource("8_eh1w1")
+SpawnCountTarget = 5000
+EnemyBlueprints = Array[Object]([ExtResource("10_d4hlt"), ExtResource("9_occlw"), ExtResource("8_1c6ul")])
+SpawnMinTime = 0.01
 SpawnMaxTime = 0.01
-SpawnBatchMin = 5000
-SpawnBatchMax = 0
+SpawnBatchMin = 50
+SpawnBatchMax = 100
+metadata/_custom_type_script = "uid://cksmwvaxx1m18"
+
+[sub_resource type="Resource" id="Resource_27qwr"]
+script = ExtResource("9_aig1n")
+Duration = 9999.0
+EnemyBlueprints = Array[Object]([ExtResource("8_1c6ul"), ExtResource("9_occlw"), ExtResource("10_d4hlt")])
+SpawnMaxTime = 0.8
+SpawnBatchMax = 2
+metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 
 [node name="Level" type="Node2D" unique_id=2141389114]
 z_index = -999
@@ -81,7 +90,7 @@ script = ExtResource("6_qaj6y")
 
 [node name="EnemyWaveController" type="Node" parent="Systems/EnemySystems" unique_id=247564660 node_paths=PackedStringArray("EntityComponentStore")]
 script = ExtResource("11_aredf")
-Waves = Array[Object]([SubResource("Resource_x7tv3")])
+Waves = Array[Object]([SubResource("Resource_aig1n"), SubResource("Resource_27qwr")])
 EntityComponentStore = NodePath("../../EntityComponentStore")
 
 [node name="EnemySpawner" type="Node" parent="Systems/EnemySystems/EnemyWaveController" unique_id=836765334]

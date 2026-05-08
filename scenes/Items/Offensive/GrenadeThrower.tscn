@@ -19,7 +19,7 @@ ProjectileRadius = 200
 AttackSpeed = 0.2
 PierceLimit = 999
 Additional = Dictionary[String, Variant]({
-"CameraRecoilScale": 4.0,
+"CameraRecoilScale": 4.2,
 "TimeToExplode": 0.5
 })
 metadata/_custom_type_script = "uid://os8ycjo6m7r0"
