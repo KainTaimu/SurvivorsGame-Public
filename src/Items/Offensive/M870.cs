@@ -13,8 +13,7 @@ public partial class M870 : Firearm
 	private bool _isShotgunReloading;
 	private double _reloadCooldown;
 
-	private int PelletCount =>
-		Stats.Additional.GetValueOrDefault("PelletCount").AsInt32();
+	private int PelletCount => Stats.Additional.GetValueOrDefault("PelletCount").AsInt32();
 
 	public override void _Ready()
 	{
@@ -37,8 +36,7 @@ public partial class M870 : Firearm
 		ShootAudioPlayer?.Play();
 		if (_cockingAudioPlayer is not null)
 		{
-			GetTree().CreateTimer(Stats.AttackSpeed / 2).Timeout += () =>
-				_cockingAudioPlayer.Play();
+			GetTree().CreateTimer(Stats.AttackSpeed / 2).Timeout += () => _cockingAudioPlayer.Play();
 		}
 
 		FireCooldown = Stats.AttackSpeed;
@@ -50,8 +48,7 @@ public partial class M870 : Firearm
 		if (Crosshair is not null)
 		{
 			mouseVector =
-				Crosshair.PrimaryCrosshairSprite.GetCanvasTransform()
-				* Crosshair.PrimaryCrosshairSprite.GlobalPosition;
+				Crosshair.PrimaryCrosshairSprite.GetCanvasTransform() * Crosshair.PrimaryCrosshairSprite.GlobalPosition;
 		}
 		else
 			mouseVector = Player.GetGlobalMousePosition();
@@ -70,8 +67,7 @@ public partial class M870 : Firearm
 			projectile.SetScale(Vector2.One * Stats.ProjectileScaleMultiplier);
 			projectile.SetPosition(Player.Position);
 			projectile.SetRotation(rotation);
-			projectile.ProjectileSpeed =
-				Stats.ProjectileSpeed * (float)GD.RandRange(1f, 2f);
+			projectile.ProjectileSpeed = Stats.ProjectileSpeed * (float)GD.RandRange(1f, 2f);
 			projectile.PierceLimit = Stats.PierceLimit;
 			projectile.HitRadius = FirearmStats?.ProjectileRadius ?? 24;
 			projectile.Initialize();
@@ -125,11 +121,7 @@ public partial class M870 : Firearm
 			return;
 		}
 
-		if (
-			!Input.IsActionJustPressed(
-				AttackActionString ?? InputMapNames.PrimaryAttack
-			)
-		)
+		if (!Input.IsActionJustPressed(AttackActionString ?? InputMapNames.PrimaryAttack))
 			return;
 
 		Attack();

@@ -53,10 +53,13 @@ public partial class EnemyCollisionSolver : Node
 		}
 
 		var windowSize = viewport.GetVisibleRect().Size * _solverRangeFactor;
-		_grid = new CenteredMovingUniformGrid<(Vector2, int)>(
-			_gridSize,
-			new Vector2(windowSize.X, windowSize.X)
-		);
+
+		// _grid uses a square due to enemy "spill" when large amounts of
+		// enemies previously not affected by the collision solver are
+		// suddenly affected by it, causing a large amount of enemies
+		// to be shoved towards player. The smaller height of 16:9 display
+		// makes it harder for player to avoid the spilled enemies.
+		_grid = new CenteredMovingUniformGrid<(Vector2, int)>(_gridSize, new Vector2(windowSize.X, windowSize.X));
 
 		Logger.LogDebug("in", _grid.Dimensions, _grid.CellSize);
 
@@ -93,10 +96,7 @@ public partial class EnemyCollisionSolver : Node
 	{
 		foreach (var (id, pos) in _writeBuffer)
 		{
-			_entities.UpdateComponent(
-				id,
-				new PositionComponent(pos) { Position = pos }
-			);
+			_entities.UpdateComponent(id, new PositionComponent(pos) { Position = pos });
 		}
 	}
 
@@ -141,14 +141,8 @@ public partial class EnemyCollisionSolver : Node
 
 						SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y)); // E
 						SolveCellPairCollisions(cell, _grid.GetCell(x, y + 1)); // S
-						SolveCellPairCollisions(
-							cell,
-							_grid.GetCell(x + 1, y + 1)
-						); // SE
-						SolveCellPairCollisions(
-							cell,
-							_grid.GetCell(x + 1, y - 1)
-						); // NE
+						SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y + 1)); // SE
+						SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y - 1)); // NE
 					}
 				}
 			),
@@ -157,9 +151,7 @@ public partial class EnemyCollisionSolver : Node
 		WorkerThreadPool.WaitForGroupTaskCompletion(id);
 	}
 
-	private void SolveCellInternalCollisions(
-		UniformGridCell<(Vector2 pos, int id)> cell
-	)
+	private void SolveCellInternalCollisions(UniformGridCell<(Vector2 pos, int id)> cell)
 	{
 		for (var i = 0; i < cell.Count; i++)
 		{
@@ -206,14 +198,9 @@ public partial class EnemyCollisionSolver : Node
 		// NOTE: Delta is accounted for in the Timer that calls Process.
 		var push = _distBeforeShove * 0.5f * _pushAmount;
 
-		if (
-			cellA.Count >= _cramLimitBeforeExtraPush
-			|| cellB.Count >= _cramLimitBeforeExtraPush
-		)
+		if (cellA.Count >= _cramLimitBeforeExtraPush || cellB.Count >= _cramLimitBeforeExtraPush)
 		{
-			var extraPush =
-				Mathf.Log((cellA.Count + cellB.Count) / 1.5f)
-				* _cramExtraPushFactor;
+			var extraPush = Mathf.Log((cellA.Count + cellB.Count) / 1.5f) * _cramExtraPushFactor;
 			push *= Math.Abs(extraPush);
 		}
 
@@ -248,10 +235,7 @@ public partial class EnemyCollisionSolver : Node
 				Scale = new Vector2(0.75f, 0.75f),
 				Position = cell.Position,
 				Text = cell.Position + "\n" + cell.Index + "\n" + cell.Count,
-				LabelSettings = new LabelSettings
-				{
-					FontColor = new Color(0, 0, 0),
-				},
+				LabelSettings = new LabelSettings { FontColor = new Color(0, 0, 0) },
 			};
 
 			AddChild(rect);

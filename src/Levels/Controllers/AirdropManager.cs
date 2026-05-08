@@ -33,19 +33,9 @@ public partial class AirdropManager : Node2D
 			DeployItemAirdrop(PlayerPosition, GD.RandRange(0, 360), 8);
 	}
 
-	public void DeployItemAirdrop(
-		Vector2 dropPosition,
-		float arrivalAngleDeg,
-		float timeToArrivalSec
-	)
+	public void DeployItemAirdrop(Vector2 dropPosition, float arrivalAngleDeg, float timeToArrivalSec)
 	{
-		DeployAirdrop(
-			dropPosition,
-			arrivalAngleDeg,
-			timeToArrivalSec,
-			_itemDropScene,
-			this
-		);
+		DeployAirdrop(dropPosition, arrivalAngleDeg, timeToArrivalSec, _itemDropScene, this);
 	}
 
 	private void DeployAirdrop(
@@ -57,15 +47,10 @@ public partial class AirdropManager : Node2D
 	)
 	{
 		var distance = PlaneVelocity * timeToArrivalSec;
-		var rotVec = Vector2.One.Rotated(
-			(arrivalAngleDeg - 180) * Mathf.Pi / 180
-		);
+		var rotVec = Vector2.One.Rotated((arrivalAngleDeg - 180) * Mathf.Pi / 180);
 		rotVec *= distance;
 
-		var rand = new Vector2(
-			(float)GD.RandRange(-1f, 1f),
-			(float)GD.RandRange(-1f, 1f)
-		);
+		var rand = new Vector2((float)GD.RandRange(-1f, 1f), (float)GD.RandRange(-1f, 1f));
 		rand *= 1920 / 2f;
 		var startPosition = dropPosition + rotVec;
 
@@ -80,8 +65,6 @@ public partial class AirdropManager : Node2D
 			dropScene: dropScene,
 			dropParent: dropParent
 		);
-		Logger.LogInfo(
-			$"Spawned airdrop : Drop={dropPosition} : TTA={timeToArrivalSec} : Angle={arrivalAngleDeg}"
-		);
+		Logger.LogInfo($"Spawned airdrop : Drop={dropPosition} : TTA={timeToArrivalSec} : Angle={arrivalAngleDeg}");
 	}
 }

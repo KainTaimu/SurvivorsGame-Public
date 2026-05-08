@@ -12,17 +12,9 @@ public partial class EnemyMover : Node
 		var player = GameWorld.Instance.MainPlayer;
 		var playerPos = player.GlobalPosition;
 
-		foreach (
-			var (id, pos, moveSpeed) in _entities.Query<
-				PositionComponent,
-				MoveSpeedComponent
-			>()
-		)
+		foreach (var (id, pos, moveSpeed) in _entities.Query<PositionComponent, MoveSpeedComponent>())
 		{
-			var p = pos.Position.MoveToward(
-				playerPos,
-				moveSpeed.MoveSpeed * (float)delta
-			);
+			var p = pos.Position.MoveToward(playerPos, moveSpeed.MoveSpeed * (float)delta);
 
 			_entities.UpdateComponent(id, new PositionComponent(p));
 		}

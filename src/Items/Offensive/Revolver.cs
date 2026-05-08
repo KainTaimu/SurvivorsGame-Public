@@ -47,12 +47,8 @@ public partial class Revolver : Firearm
 		{
 			for (var i = 0; i < 6; i++)
 			{
-				GetTree()
-					.CreateTimer(
-						FirearmStats?.ReloadTime / 5 / 6 * i ?? 0,
-						false
-					)
-					.Timeout += () => CockAudioPlayer?.Play();
+				GetTree().CreateTimer(FirearmStats?.ReloadTime / 5 / 6 * i ?? 0, false).Timeout += () =>
+					CockAudioPlayer?.Play();
 			}
 		};
 	}
@@ -66,11 +62,7 @@ public partial class Revolver : Firearm
 			return;
 		}
 
-		if (
-			!Input.IsActionPressed(
-				AttackActionString ?? InputMapNames.PrimaryAttack
-			)
-		)
+		if (!Input.IsActionPressed(AttackActionString ?? InputMapNames.PrimaryAttack))
 			return;
 		Attack();
 	}
@@ -79,15 +71,10 @@ public partial class Revolver : Firearm
 	{
 		if (!ComponentStore.GetComponent<PositionComponent>(id, out var pos))
 			return;
-		var knockback = Stats
-			.Additional.GetValueOrDefault("Knockback")
-			.AsSingle();
+		var knockback = Stats.Additional.GetValueOrDefault("Knockback").AsSingle();
 		var knockbackVector = Player.GlobalPosition.DirectionTo(pos.Position);
 		knockbackVector *= knockback;
 
-		ComponentStore.SetComponent(
-			id,
-			new PositionComponent(pos.Position + knockbackVector)
-		);
+		ComponentStore.SetComponent(id, new PositionComponent(pos.Position + knockbackVector));
 	}
 }

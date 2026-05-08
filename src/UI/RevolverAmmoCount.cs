@@ -32,11 +32,9 @@ public partial class RevolverAmmoCount : CanvasLayer
 	private const int MAX_CYLINDER_COUNT = 6;
 	private Vector2 _originalPosition;
 
-	private PlayerWeaponController WeaponController =>
-		GameWorld.Instance.MainPlayer.WeaponController;
+	private PlayerWeaponController WeaponController => GameWorld.Instance.MainPlayer.WeaponController;
 
-	private int MagazineCapacity =>
-		Math.Clamp(_revolver.MagazineCapacity, 0, MAX_CYLINDER_COUNT);
+	private int MagazineCapacity => Math.Clamp(_revolver.MagazineCapacity, 0, MAX_CYLINDER_COUNT);
 
 	public override void _Ready()
 	{
@@ -67,9 +65,7 @@ public partial class RevolverAmmoCount : CanvasLayer
 				sprite.Hide();
 			}
 
-			var tween = CreateTween()
-				.SetEase(Tween.EaseType.Out)
-				.SetTrans(Tween.TransitionType.Spring);
+			var tween = CreateTween().SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Spring);
 			_revolverCylinderSprite.Rotation = 0;
 			tween.TweenProperty(
 				_revolverCylinderSprite,
@@ -87,15 +83,8 @@ public partial class RevolverAmmoCount : CanvasLayer
 				sprite.Texture = _unfiredCartridge;
 			}
 
-			var tween = CreateTween()
-				.SetEase(Tween.EaseType.Out)
-				.SetTrans(Tween.TransitionType.Spring);
-			tween.TweenProperty(
-				_revolverCylinderSprite,
-				"rotation",
-				0,
-				_revolver.FirearmStats.ReloadTime / 2
-			);
+			var tween = CreateTween().SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Spring);
+			tween.TweenProperty(_revolverCylinderSprite, "rotation", 0, _revolver.FirearmStats.ReloadTime / 2);
 		};
 		_revolver.OnAttack += () =>
 		{
@@ -118,20 +107,11 @@ public partial class RevolverAmmoCount : CanvasLayer
 				);
 			}
 
-			tween.TweenProperty(
-				_revolverCylinderSprite,
-				"position",
-				_originalPosition,
-				1 / 8f
-			);
-			_cartidgeSprites[
-				MagazineCapacity - _revolver.MagazineCount - 1
-			].Texture = _firedCartridge;
+			tween.TweenProperty(_revolverCylinderSprite, "position", _originalPosition, 1 / 8f);
+			_cartidgeSprites[MagazineCapacity - _revolver.MagazineCount - 1].Texture = _firedCartridge;
 		};
-		WeaponController.OnPrimaryAttackReassigned += () =>
-			Callable.From(SwapCylinderSide).CallDeferred();
-		WeaponController.OnSecondaryAttackReassigned += () =>
-			Callable.From(SwapCylinderSide).CallDeferred();
+		WeaponController.OnPrimaryAttackReassigned += () => Callable.From(SwapCylinderSide).CallDeferred();
+		WeaponController.OnSecondaryAttackReassigned += () => Callable.From(SwapCylinderSide).CallDeferred();
 	}
 
 	private void SwapCylinderSide()
@@ -144,14 +124,11 @@ public partial class RevolverAmmoCount : CanvasLayer
 		else
 			Show();
 
-		var useLeft =
-			_revolver.AttackActionString == InputMapNames.PrimaryAttack;
+		var useLeft = _revolver.AttackActionString == InputMapNames.PrimaryAttack;
 		if (useLeft)
 			_revolverCylinderSprite.Reparent(_leftPosition, false);
 		else
 			_revolverCylinderSprite.Reparent(_rightPosition, false);
-
-		// _originalPosition = _revolverCylinderSprite.Position;
 	}
 
 	public void RotateCylinder()
@@ -161,11 +138,6 @@ public partial class RevolverAmmoCount : CanvasLayer
 		var tween = CreateTween();
 		tween.SetEase(Tween.EaseType.Out);
 		tween.SetTrans(Tween.TransitionType.Spring);
-		tween.TweenProperty(
-			_revolverCylinderSprite,
-			"rotation",
-			nextRotation,
-			0.3f
-		);
+		tween.TweenProperty(_revolverCylinderSprite, "rotation", nextRotation, 0.3f);
 	}
 }

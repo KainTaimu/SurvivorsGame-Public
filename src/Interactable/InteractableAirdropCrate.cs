@@ -35,22 +35,15 @@ public partial class InteractableAirdropCrate : BaseInteractable
 			HideInteractableCircle();
 		}
 
-		if (
-			!_isMouseInsideArea
-			|| !Input.IsActionPressed(InputMapNames.Interact)
-		)
+		if (!_isMouseInsideArea || !Input.IsActionPressed(InputMapNames.Interact))
 		{
 			_interactableInnerCircle.Scale -= Vector2.One * (float)delta;
-			_interactableInnerCircle.Scale =
-				_interactableInnerCircle.Scale.Clamp(Vector2.Zero, Vector2.One);
+			_interactableInnerCircle.Scale = _interactableInnerCircle.Scale.Clamp(Vector2.Zero, Vector2.One);
 			return;
 		}
 
 		_interactableInnerCircle.Scale += Vector2.One * (float)delta;
-		_interactableInnerCircle.Scale = _interactableInnerCircle.Scale.Clamp(
-			Vector2.Zero,
-			Vector2.One
-		);
+		_interactableInnerCircle.Scale = _interactableInnerCircle.Scale.Clamp(Vector2.Zero, Vector2.One);
 
 		if (_interactableInnerCircle.Scale == Vector2.One)
 			Interact();
@@ -61,12 +54,7 @@ public partial class InteractableAirdropCrate : BaseInteractable
 		if (_isCircleShowing)
 			return;
 		var tween = CreateTween().SetTrans(Tween.TransitionType.Expo);
-		tween.TweenProperty(
-			_interactableCircle,
-			"modulate",
-			Colors.White,
-			0.5f
-		);
+		tween.TweenProperty(_interactableCircle, "modulate", Colors.White, 0.5f);
 		_isCircleShowing = true;
 	}
 
@@ -74,21 +62,9 @@ public partial class InteractableAirdropCrate : BaseInteractable
 	{
 		if (!_isCircleShowing)
 			return;
-		var tween = CreateTween()
-			.SetTrans(Tween.TransitionType.Expo)
-			.SetParallel();
-		tween.TweenProperty(
-			_interactableCircle,
-			"modulate",
-			Colors.Transparent,
-			0.5f
-		);
-		tween.TweenProperty(
-			_interactableInnerCircle,
-			"scale",
-			Vector2.Zero,
-			0.5f
-		);
+		var tween = CreateTween().SetTrans(Tween.TransitionType.Expo).SetParallel();
+		tween.TweenProperty(_interactableCircle, "modulate", Colors.Transparent, 0.5f);
+		tween.TweenProperty(_interactableInnerCircle, "scale", Vector2.Zero, 0.5f);
 		_isCircleShowing = false;
 	}
 
@@ -100,9 +76,7 @@ public partial class InteractableAirdropCrate : BaseInteractable
 		_hasBeenInteractedWith = true;
 
 		EmitSignalOnInteraction();
-		var tween = CreateTween()
-			.SetEase(Tween.EaseType.Out)
-			.SetTrans(Tween.TransitionType.Expo);
+		var tween = CreateTween().SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Expo);
 		tween.TweenProperty(this, "modulate", Colors.Transparent, 0.5f);
 		tween.TweenCallback(Callable.From(QueueFree));
 	}

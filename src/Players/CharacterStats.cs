@@ -9,112 +9,58 @@ namespace Game.Players;
 public partial class CharacterStats : Resource
 {
 	[Signal]
-	public delegate void OnHealthChangedEventHandler(
-		int oldValue,
-		int newValue
-	);
+	public delegate void OnHealthChangedEventHandler(int oldValue, int newValue);
 
 	[Signal]
-	public delegate void OnMaxHealthChangedEventHandler(
-		int oldValue,
-		int newValue
-	);
+	public delegate void OnMaxHealthChangedEventHandler(int oldValue, int newValue);
 
 	[Signal]
-	public delegate void OnMoveSpeedChangedEventHandler(
-		float oldValue,
-		float newValue
-	);
+	public delegate void OnMoveSpeedChangedEventHandler(float oldValue, float newValue);
 
 	[Signal]
-	public delegate void OnDefenseChangedEventHandler(
-		int oldValue,
-		int newValue
-	);
+	public delegate void OnDefenseChangedEventHandler(int oldValue, int newValue);
 
 	[Signal]
-	public delegate void OnCriticalChanceChangedEventHandler(
-		float oldValue,
-		float newValue
-	);
+	public delegate void OnCriticalChanceChangedEventHandler(float oldValue, float newValue);
 
 	[Signal]
-	public delegate void OnPickupRangeRadiusChangedEventHandler(
-		float oldValue,
-		float newValue
-	);
+	public delegate void OnPickupRangeRadiusChangedEventHandler(float oldValue, float newValue);
 
 	[Signal]
-	public delegate void OnHealthRegenPerSecondChangedEventHandler(
-		int oldValue,
-		int newValue
-	);
+	public delegate void OnHealthRegenPerSecondChangedEventHandler(int oldValue, int newValue);
 
 	[Signal]
-	public delegate void OnInvincibilityTimeChangedEventHandler(
-		float oldValue,
-		float newValue
-	);
+	public delegate void OnInvincibilityTimeChangedEventHandler(float oldValue, float newValue);
 
 	[Signal]
-	public delegate void OnHitboxRadiusChangedEventHandler(
-		float oldValue,
-		float newValue
-	);
+	public delegate void OnHitboxRadiusChangedEventHandler(float oldValue, float newValue);
 
 	[Signal]
-	public delegate void OnHealthMultiplierChangedEventHandler(
-		float oldValue,
-		float newValue
-	);
+	public delegate void OnHealthMultiplierChangedEventHandler(float oldValue, float newValue);
 
 	[Signal]
-	public delegate void OnMoveSpeedMultiplierChangedEventHandler(
-		float oldValue,
-		float newValue
-	);
+	public delegate void OnMoveSpeedMultiplierChangedEventHandler(float oldValue, float newValue);
 
 	[Signal]
-	public delegate void OnIncomingDamageMultiplierChangedEventHandler(
-		float oldValue,
-		float newValue
-	);
+	public delegate void OnIncomingDamageMultiplierChangedEventHandler(float oldValue, float newValue);
 
 	[Signal]
-	public delegate void OnOutgoingDamageMultiplierChangedEventHandler(
-		float oldValue,
-		float newValue
-	);
+	public delegate void OnOutgoingDamageMultiplierChangedEventHandler(float oldValue, float newValue);
 
 	[Signal]
-	public delegate void OnCriticalChanceMultiplierChangedEventHandler(
-		float oldValue,
-		float newValue
-	);
+	public delegate void OnCriticalChanceMultiplierChangedEventHandler(float oldValue, float newValue);
 
 	[Signal]
-	public delegate void OnCriticalDamageMultiplierChangedEventHandler(
-		float oldValue,
-		float newValue
-	);
+	public delegate void OnCriticalDamageMultiplierChangedEventHandler(float oldValue, float newValue);
 
 	[Signal]
-	public delegate void OnAttackSpeedMultiplierChangedEventHandler(
-		float oldValue,
-		float newValue
-	);
+	public delegate void OnAttackSpeedMultiplierChangedEventHandler(float oldValue, float newValue);
 
 	[Signal]
-	public delegate void OnProjectileMultiplierChangedEventHandler(
-		float oldValue,
-		float newValue
-	);
+	public delegate void OnProjectileMultiplierChangedEventHandler(float oldValue, float newValue);
 
 	[Signal]
-	public delegate void OnXpMultiplierChangedEventHandler(
-		float oldValue,
-		float newValue
-	);
+	public delegate void OnXpMultiplierChangedEventHandler(float oldValue, float newValue);
 
 	private int _health = -1;
 	private int _maxHealth = 100;
@@ -212,11 +158,7 @@ public partial class CharacterStats : Resource
 
 			var oldValue = _criticalChance;
 			_criticalChance = clamped;
-			EmitSignal(
-				SignalName.OnCriticalChanceChanged,
-				oldValue,
-				_criticalChance
-			);
+			EmitSignal(SignalName.OnCriticalChanceChanged, oldValue, _criticalChance);
 		}
 	}
 
@@ -230,11 +172,7 @@ public partial class CharacterStats : Resource
 
 			var oldValue = _pickupRangeRadius;
 			_pickupRangeRadius = clamped;
-			EmitSignal(
-				SignalName.OnPickupRangeRadiusChanged,
-				oldValue,
-				_pickupRangeRadius
-			);
+			EmitSignal(SignalName.OnPickupRangeRadiusChanged, oldValue, _pickupRangeRadius);
 		}
 	}
 
@@ -248,11 +186,7 @@ public partial class CharacterStats : Resource
 
 			var oldValue = _healthRegenPerSecond;
 			_healthRegenPerSecond = clamped;
-			EmitSignal(
-				SignalName.OnHealthRegenPerSecondChanged,
-				oldValue,
-				_healthRegenPerSecond
-			);
+			EmitSignal(SignalName.OnHealthRegenPerSecondChanged, oldValue, _healthRegenPerSecond);
 		}
 	}
 
@@ -266,11 +200,7 @@ public partial class CharacterStats : Resource
 
 			var oldValue = _invincibilityTime;
 			_invincibilityTime = clamped;
-			EmitSignal(
-				SignalName.OnInvincibilityTimeChanged,
-				oldValue,
-				_invincibilityTime
-			);
+			EmitSignal(SignalName.OnInvincibilityTimeChanged, oldValue, _invincibilityTime);
 		}
 	}
 
@@ -299,11 +229,7 @@ public partial class CharacterStats : Resource
 
 			var oldValue = _healthMultiplier;
 			_healthMultiplier = clamped;
-			EmitSignal(
-				SignalName.OnHealthMultiplierChanged,
-				oldValue,
-				_healthMultiplier
-			);
+			EmitSignal(SignalName.OnHealthMultiplierChanged, oldValue, _healthMultiplier);
 		}
 	}
 
@@ -317,11 +243,7 @@ public partial class CharacterStats : Resource
 
 			var oldValue = _moveSpeedMultiplier;
 			_moveSpeedMultiplier = clamped;
-			EmitSignal(
-				SignalName.OnMoveSpeedMultiplierChanged,
-				oldValue,
-				_moveSpeedMultiplier
-			);
+			EmitSignal(SignalName.OnMoveSpeedMultiplierChanged, oldValue, _moveSpeedMultiplier);
 		}
 	}
 
@@ -335,11 +257,7 @@ public partial class CharacterStats : Resource
 
 			var oldValue = _incomingDamageMultiplier;
 			_incomingDamageMultiplier = clamped;
-			EmitSignal(
-				SignalName.OnIncomingDamageMultiplierChanged,
-				oldValue,
-				_incomingDamageMultiplier
-			);
+			EmitSignal(SignalName.OnIncomingDamageMultiplierChanged, oldValue, _incomingDamageMultiplier);
 		}
 	}
 
@@ -353,11 +271,7 @@ public partial class CharacterStats : Resource
 
 			var oldValue = _outgoingDamageMultiplier;
 			_outgoingDamageMultiplier = clamped;
-			EmitSignal(
-				SignalName.OnOutgoingDamageMultiplierChanged,
-				oldValue,
-				_outgoingDamageMultiplier
-			);
+			EmitSignal(SignalName.OnOutgoingDamageMultiplierChanged, oldValue, _outgoingDamageMultiplier);
 		}
 	}
 
@@ -371,11 +285,7 @@ public partial class CharacterStats : Resource
 
 			var oldValue = _criticalChanceMultiplier;
 			_criticalChanceMultiplier = clamped;
-			EmitSignal(
-				SignalName.OnCriticalChanceMultiplierChanged,
-				oldValue,
-				_criticalChanceMultiplier
-			);
+			EmitSignal(SignalName.OnCriticalChanceMultiplierChanged, oldValue, _criticalChanceMultiplier);
 		}
 	}
 
@@ -389,11 +299,7 @@ public partial class CharacterStats : Resource
 
 			var oldValue = _criticalDamageMultiplier;
 			_criticalDamageMultiplier = clamped;
-			EmitSignal(
-				SignalName.OnCriticalDamageMultiplierChanged,
-				oldValue,
-				_criticalDamageMultiplier
-			);
+			EmitSignal(SignalName.OnCriticalDamageMultiplierChanged, oldValue, _criticalDamageMultiplier);
 		}
 	}
 
@@ -407,11 +313,7 @@ public partial class CharacterStats : Resource
 
 			var oldValue = _attackSpeedMultiplier;
 			_attackSpeedMultiplier = clamped;
-			EmitSignal(
-				SignalName.OnAttackSpeedMultiplierChanged,
-				oldValue,
-				_attackSpeedMultiplier
-			);
+			EmitSignal(SignalName.OnAttackSpeedMultiplierChanged, oldValue, _attackSpeedMultiplier);
 		}
 	}
 
@@ -425,11 +327,7 @@ public partial class CharacterStats : Resource
 
 			var oldValue = _projectileMultiplier;
 			_projectileMultiplier = clamped;
-			EmitSignal(
-				SignalName.OnProjectileMultiplierChanged,
-				oldValue,
-				_projectileMultiplier
-			);
+			EmitSignal(SignalName.OnProjectileMultiplierChanged, oldValue, _projectileMultiplier);
 		}
 	}
 
@@ -443,11 +341,7 @@ public partial class CharacterStats : Resource
 
 			var oldValue = _xpMultiplier;
 			_xpMultiplier = clamped;
-			EmitSignal(
-				SignalName.OnXpMultiplierChanged,
-				oldValue,
-				_xpMultiplier
-			);
+			EmitSignal(SignalName.OnXpMultiplierChanged, oldValue, _xpMultiplier);
 		}
 	}
 
@@ -461,9 +355,7 @@ public partial class CharacterStats : Resource
 		var clampedDamage = Math.Clamp(scaledDamage, 1, float.PositiveInfinity);
 		var totalDamage = Mathf.CeilToInt(clampedDamage);
 
-		Logger.LogDebug(
-			$"Player damaged {totalDamage}. Health: {Health - totalDamage}"
-		);
+		Logger.LogDebug($"Player damaged {totalDamage}. Health: {Health - totalDamage}");
 		Health -= totalDamage;
 	}
 }

@@ -5,8 +5,7 @@ namespace Game.Levels.Controllers;
 
 public partial class EnemyHitFeedbackController : Node
 {
-	private EntityComponentStore ComponentStore =>
-		EntityComponentStore.Instance;
+	private EntityComponentStore ComponentStore => EntityComponentStore.Instance;
 
 	[Export]
 	private AudioStreamPlayer? _hitmarkerStreamPlayer;
@@ -23,11 +22,7 @@ public partial class EnemyHitFeedbackController : Node
 		{
 			if (hit.HitTimeLeft <= 0)
 				continue;
-			var newHitTime = Math.Clamp(
-				hit.HitTimeLeft - delta,
-				0,
-				double.MaxValue
-			);
+			var newHitTime = Math.Clamp(hit.HitTimeLeft - delta, 0, double.MaxValue);
 			var flash = 255 * (newHitTime / hit.HitTime);
 
 			var newHit = hit with { HitTimeLeft = newHitTime };
@@ -41,11 +36,7 @@ public partial class EnemyHitFeedbackController : Node
 				ComponentStore.SetComponent(id, newHit);
 			else
 			{
-				DamageIndicatorPool.Instance?.GetIndicator(
-					pos.Position,
-					hit.Damage,
-					hit.IsCrit
-				);
+				DamageIndicatorPool.Instance?.GetIndicator(pos.Position, hit.Damage, hit.IsCrit);
 
 				ComponentStore.SetComponent(id, newHit with { Damage = -1 });
 				_hitmarkerStreamPlayer?.Play();

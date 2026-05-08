@@ -29,11 +29,7 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 	{
 		_fireCooldown -= delta;
 
-		if (
-			!Input.IsActionPressed(
-				AttackActionString ?? InputMapNames.PrimaryAttack
-			)
-		)
+		if (!Input.IsActionPressed(AttackActionString ?? InputMapNames.PrimaryAttack))
 			return;
 		Attack();
 	}
@@ -55,10 +51,7 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 		nade.OffensiveOrigin = this;
 		nade.GlobalPosition = Player.GlobalPosition;
 		var force =
-			new Vector2(
-				Mathf.Cos(Crosshair.AngleFromPlayer),
-				Mathf.Sin(Crosshair.AngleFromPlayer)
-			) * ThrowForce
+			new Vector2(Mathf.Cos(Crosshair.AngleFromPlayer), Mathf.Sin(Crosshair.AngleFromPlayer)) * ThrowForce
 			+ Player.MovementController.Velocity;
 		nade.ApplyImpulse(force);
 		// GetParent().AddChild(nade);
@@ -72,9 +65,6 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 			return;
 		if (health.Health > 0)
 			return;
-		ComponentStore.RegisterComponent(
-			id,
-			new DeathCauseComponent(DeathCauseEnum.Explosion)
-		);
+		ComponentStore.RegisterComponent(id, new DeathCauseComponent(DeathCauseEnum.Explosion));
 	}
 }

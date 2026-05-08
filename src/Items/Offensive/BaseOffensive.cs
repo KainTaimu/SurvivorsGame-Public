@@ -28,10 +28,7 @@ public abstract partial class BaseOffensive : BaseItem
 				// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
 				field
 					is not null
-				&& field.IsConnected(
-					Resource.SignalName.Changed,
-					Callable.From(EmitSignalOnStatsChanged)
-				)
+				&& field.IsConnected(Resource.SignalName.Changed, Callable.From(EmitSignalOnStatsChanged))
 			)
 				field.Changed -= EmitSignalOnStatsChanged;
 
@@ -45,8 +42,7 @@ public abstract partial class BaseOffensive : BaseItem
 
 	protected EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
 
-	protected EntityComponentStore ComponentStore =>
-		EntityComponentStore.Instance;
+	protected EntityComponentStore ComponentStore => EntityComponentStore.Instance;
 
 	public abstract void Attack();
 
@@ -81,10 +77,7 @@ public abstract partial class BaseOffensive : BaseItem
 			return;
 
 		var crit = CalculateCrit();
-		var randomDamage =
-			Stats.Damage > 1
-				? Mathf.CeilToInt(GD.RandRange(-0.15, 0.15) * Stats.Damage)
-				: 0;
+		var randomDamage = Stats.Damage > 1 ? Mathf.CeilToInt(GD.RandRange(-0.15, 0.15) * Stats.Damage) : 0;
 		var damage = Stats.Damage + crit + randomDamage;
 		var newHealth = health.Health - damage;
 
@@ -112,9 +105,7 @@ public abstract partial class BaseOffensive : BaseItem
 	{
 		var upgrade = Upgrades[newLevel];
 		Properties.CurrentLevel++;
-		Logger.LogDebug(
-			$"Upgraded {Properties.Name} to {Properties.CurrentLevel + 1}"
-		);
+		Logger.LogDebug($"Upgraded {Properties.Name} to {Properties.CurrentLevel + 1}");
 		Stats = upgrade;
 		PostUpgrade(newLevel);
 	}

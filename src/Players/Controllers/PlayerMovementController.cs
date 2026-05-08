@@ -18,9 +18,7 @@ public partial class PlayerMovementController : Node
 
 	public override void _Ready()
 	{
-		Callable
-			.From(() => Crosshair?.OnCrosshairMoved += FlipSprite)
-			.CallDeferred();
+		Callable.From(() => Crosshair?.OnCrosshairMoved += FlipSprite).CallDeferred();
 	}
 
 	public override void _Process(double delta)
@@ -51,16 +49,8 @@ public partial class PlayerMovementController : Node
 			_sprite.Animation = "idle";
 
 		var move = new Vector2(
-			inputX
-				* (
-					CharacterStats.MoveSpeed
-					* CharacterStats.MoveSpeedMultiplier
-				),
-			inputY
-				* (
-					CharacterStats.MoveSpeed
-					* CharacterStats.MoveSpeedMultiplier
-				)
+			inputX * (CharacterStats.MoveSpeed * CharacterStats.MoveSpeedMultiplier),
+			inputY * (CharacterStats.MoveSpeed * CharacterStats.MoveSpeedMultiplier)
 		);
 		Velocity = move;
 		move *= (float)delta;
@@ -75,8 +65,7 @@ public partial class PlayerMovementController : Node
 		if (Crosshair is null || Viewport is null)
 			return;
 
-		var mouse =
-			Crosshair.CanvasSpacePosition / Viewport.GetVisibleRect().Size;
+		var mouse = Crosshair.CanvasSpacePosition / Viewport.GetVisibleRect().Size;
 		_sprite.FlipH = mouse.X < 0.5;
 	}
 }

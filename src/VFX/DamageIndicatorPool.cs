@@ -22,9 +22,7 @@ public partial class DamageIndicatorPool : Node2D
 	{
 		GameSettings.Instance.OnDamageIndicatorsChanged += () =>
 		{
-			ProcessMode = Enabled
-				? ProcessModeEnum.Inherit
-				: ProcessModeEnum.Disabled;
+			ProcessMode = Enabled ? ProcessModeEnum.Inherit : ProcessModeEnum.Disabled;
 			if (Enabled)
 				PopulatePool();
 			else

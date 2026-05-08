@@ -21,8 +21,7 @@ public partial class Hud : Node
 
 	public override void _Ready()
 	{
-		LevelData?.OnMoneyChanged += (_) =>
-			_moneyLabel?.Text = $"${LevelData.Money}";
+		LevelData?.OnMoneyChanged += (_) => _moneyLabel?.Text = $"${LevelData.Money}";
 		_moneyLabel?.Text = $"${LevelData?.Money}";
 	}
 

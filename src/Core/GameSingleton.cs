@@ -37,10 +37,7 @@ public partial class GameSingleton : Node
 	private void WriteUserSettings(GameSettings settings)
 	{
 		var json = JsonConvert.SerializeObject(settings, Formatting.Indented);
-		using var settingsFile = FileAccess.Open(
-			"user://settings.json",
-			FileAccess.ModeFlags.Write
-		);
+		using var settingsFile = FileAccess.Open("user://settings.json", FileAccess.ModeFlags.Write);
 		settingsFile.StoreLine(json);
 	}
 
@@ -58,10 +55,7 @@ public partial class GameSingleton : Node
 			return;
 		}
 
-		using var settingsFile = FileAccess.Open(
-			SETTINGS_FILE,
-			FileAccess.ModeFlags.Read
-		);
+		using var settingsFile = FileAccess.Open(SETTINGS_FILE, FileAccess.ModeFlags.Read);
 
 		var s = new StringBuilder();
 		while (settingsFile.GetPosition() < settingsFile.GetLength())
@@ -79,11 +73,7 @@ public partial class GameSingleton : Node
 		}
 		catch (Exception exception)
 		{
-			Logger.LogError(
-				"Failed to read",
-				ProjectSettings.GlobalizePath(SETTINGS_FILE),
-				exception.ToString()
-			);
+			Logger.LogError("Failed to read", ProjectSettings.GlobalizePath(SETTINGS_FILE), exception.ToString());
 			GameSettings = GD.Load<GameSettings>(DEFAULT_SETTINGS);
 			return;
 		}
@@ -102,9 +92,7 @@ public partial class GameSingleton : Node
 
 		if (Input.IsPhysicalKeyPressed(Key.F12))
 		{
-			Logger.LogDebug(
-				$"Reloading current scene \"{GetTree().CurrentScene.Name}\""
-			);
+			Logger.LogDebug($"Reloading current scene \"{GetTree().CurrentScene.Name}\"");
 			GetTree().ReloadCurrentScene();
 			return;
 		}

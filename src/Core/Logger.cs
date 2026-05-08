@@ -6,26 +6,17 @@ public static class Logger
 {
 	public static void LogInfo(params object[] s)
 	{
-		SendLog(
-			GD.PrintRich,
-			$"[color=white][Info  :  {GetCallerName()}] {ConstructString(s)}[/color]"
-		);
+		SendLog(GD.PrintRich, $"[color=white][Info  :  {GetCallerName()}] {ConstructString(s)}[/color]");
 	}
 
 	public static void LogDebug(params object[] s)
 	{
-		SendLog(
-			GD.PrintRich,
-			$"[color=darkgray][Debug  :  {GetCallerName()}] {ConstructString(s)}[/color]"
-		);
+		SendLog(GD.PrintRich, $"[color=darkgray][Debug  :  {GetCallerName()}] {ConstructString(s)}[/color]");
 	}
 
 	public static void LogWarning(params object[] s)
 	{
-		SendLog(
-			GD.PrintRich,
-			$"[color=yellow][Warning  :  {GetCallerName()}] {ConstructString(s)}[/color]"
-		);
+		SendLog(GD.PrintRich, $"[color=yellow][Warning  :  {GetCallerName()}] {ConstructString(s)}[/color]");
 	}
 
 	public static void LogError(params object[] s)

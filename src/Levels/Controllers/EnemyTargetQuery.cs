@@ -62,11 +62,7 @@ public partial class EnemyTargetQuery : Node
 		}
 	}
 
-	public bool TryGetTargetsInArea(
-		Vector2 areaCenter,
-		float areaRadius,
-		out int[] targetIds
-	)
+	public bool TryGetTargetsInArea(Vector2 areaCenter, float areaRadius, out int[] targetIds)
 	{
 		// credit: https://www.redblobgames.com/grids/circle-drawing/
 		var targets = new List<int>();
@@ -125,12 +121,7 @@ public partial class EnemyTargetQuery : Node
 	/// <returns>
 	/// <c>true</c> when at least one target lies within raycast corridor.
 	/// </returns>
-	public bool GetTargetsRayCast(
-		Vector2 from,
-		float angle,
-		float width,
-		out int[] targetIds
-	)
+	public bool GetTargetsRayCast(Vector2 from, float angle, float width, out int[] targetIds)
 	{
 		var direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 		var rayLength = _grid.WindowSize.Length();
@@ -145,13 +136,7 @@ public partial class EnemyTargetQuery : Node
 			(a, b) =>
 				(new Vector2(a.X, a.Y) * GRID_SIZE + _grid.TopLeft - from)
 					.LengthSquared()
-					.CompareTo(
-						(
-							new Vector2(b.X, b.Y) * GRID_SIZE
-							+ _grid.TopLeft
-							- from
-						).LengthSquared()
-					)
+					.CompareTo((new Vector2(b.X, b.Y) * GRID_SIZE + _grid.TopLeft - from).LengthSquared())
 		);
 
 		var allCells = new List<Vector2I>();
@@ -169,26 +154,10 @@ public partial class EnemyTargetQuery : Node
 			surrounding.Sort(
 				(a, b) =>
 				{
-					var cellWorldA =
-						new Vector2(a.X * GRID_SIZE, a.Y * GRID_SIZE)
-						+ _grid.TopLeft;
-					var cellWorldB =
-						new Vector2(b.X * GRID_SIZE, b.Y * GRID_SIZE)
-						+ _grid.TopLeft;
-					return DistanceSquaredPointToRay(
-							cellWorldA,
-							from,
-							direction,
-							rayLength
-						)
-						.CompareTo(
-							DistanceSquaredPointToRay(
-								cellWorldB,
-								from,
-								direction,
-								rayLength
-							)
-						);
+					var cellWorldA = new Vector2(a.X * GRID_SIZE, a.Y * GRID_SIZE) + _grid.TopLeft;
+					var cellWorldB = new Vector2(b.X * GRID_SIZE, b.Y * GRID_SIZE) + _grid.TopLeft;
+					return DistanceSquaredPointToRay(cellWorldA, from, direction, rayLength)
+						.CompareTo(DistanceSquaredPointToRay(cellWorldB, from, direction, rayLength));
 				}
 			);
 
@@ -214,14 +183,7 @@ public partial class EnemyTargetQuery : Node
 				if (!_entities.GetComponent<PositionComponent>(id, out var pos))
 					continue;
 
-				if (
-					DistanceSquaredPointToRay(
-						pos.Position,
-						from,
-						direction,
-						rayLength
-					) <= widthSq
-				)
+				if (DistanceSquaredPointToRay(pos.Position, from, direction, rayLength) <= widthSq)
 					targets.Add(id);
 			}
 		}
@@ -230,11 +192,7 @@ public partial class EnemyTargetQuery : Node
 		return targets.Count > 0;
 	}
 
-	private void GetCellsAlongLine(
-		Vector2 start,
-		Vector2 end,
-		HashSet<Vector2I> cells
-	)
+	private void GetCellsAlongLine(Vector2 start, Vector2 end, HashSet<Vector2I> cells)
 	{
 		var startCell = _grid.GetCellWorld(start);
 		if (startCell is null)

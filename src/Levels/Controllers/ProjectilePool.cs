@@ -42,9 +42,7 @@ public partial class ProjectilePool : Node
 		if (projectile is not IPooledProjectile pooledProjectile)
 		{
 			projectile.QueueFree();
-			throw new Exception(
-				$"{ProjectileScene.ResourceName} must be IPooledProjectile"
-			);
+			throw new Exception($"{ProjectileScene.ResourceName} must be IPooledProjectile");
 		}
 
 		pooledProjectile.ProjectilePool = this;

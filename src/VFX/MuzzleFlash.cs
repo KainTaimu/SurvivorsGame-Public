@@ -21,8 +21,7 @@ public partial class MuzzleFlash : Node
 		{
 			Light.GlobalPosition = Player.GlobalPosition;
 			Light.GlobalRotation =
-				Light.GlobalPosition.AngleToPoint(Crosshair.GlobalSpacePosition)
-				+ 90 * Mathf.Pi / 180;
+				Light.GlobalPosition.AngleToPoint(Crosshair.GlobalSpacePosition) + 90 * Mathf.Pi / 180;
 			Light.Show();
 			GetTree().CreateTimer(0.05, false).Timeout += () => Light.Hide();
 		};

@@ -25,9 +25,7 @@ public abstract partial class EnemyWave : Resource, IEnemyWave
 		{
 			if (value > SpawnMaxTime)
 			{
-				Logger.LogWarning(
-					$"SpawnMinTime ({field}) clamped to SpawnMaxTime ({SpawnMaxTime})"
-				);
+				Logger.LogWarning($"SpawnMinTime ({field}) clamped to SpawnMaxTime ({SpawnMaxTime})");
 				field = SpawnMaxTime;
 				return;
 			}
@@ -44,9 +42,7 @@ public abstract partial class EnemyWave : Resource, IEnemyWave
 		{
 			if (value < SpawnMinTime)
 			{
-				Logger.LogWarning(
-					$"SpawnMaxTime ({field}) clamped to SpawnMinTime ({SpawnMinTime})"
-				);
+				Logger.LogWarning($"SpawnMaxTime ({field}) clamped to SpawnMinTime ({SpawnMinTime})");
 				field = SpawnMinTime;
 				return;
 			}

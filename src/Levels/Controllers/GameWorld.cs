@@ -10,8 +10,7 @@ public partial class GameWorld : Node
 	[Export]
 	private TileMapLayer _levelTileMap = null!;
 
-	public Vector2 LevelDimensions =>
-		_levelTileMap.GetUsedRect().Size * _levelTileMap.TileSet.TileSize;
+	public Vector2 LevelDimensions => _levelTileMap.GetUsedRect().Size * _levelTileMap.TileSet.TileSize;
 
 	public static GameWorld Instance { get; private set; } = null!;
 

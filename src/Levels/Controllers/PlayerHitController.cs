@@ -7,16 +7,13 @@ public partial class PlayerHitController : Node
 {
 	private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
 
-	private EntityComponentStore ComponentStore =>
-		EntityComponentStore.Instance;
+	private EntityComponentStore ComponentStore => EntityComponentStore.Instance;
 
 	private Player Player => GameWorld.Instance.MainPlayer;
 
-	private float PlayerHitboxRadius =>
-		Player.Character.CharacterStats.HitboxRadius;
+	private float PlayerHitboxRadius => Player.Character.CharacterStats.HitboxRadius;
 
-	private CharacterStats PlayerStats =>
-		GameWorld.Instance.MainPlayer.Character.CharacterStats;
+	private CharacterStats PlayerStats => GameWorld.Instance.MainPlayer.Character.CharacterStats;
 
 	private float _invisibilityTime;
 
@@ -31,13 +28,7 @@ public partial class PlayerHitController : Node
 		if (_invisibilityTime > 0)
 			return;
 
-		if (
-			!TargetQuery.TryGetTargetsInArea(
-				Player.GlobalPosition,
-				PlayerHitboxRadius,
-				out var ids
-			)
-		)
+		if (!TargetQuery.TryGetTargetsInArea(Player.GlobalPosition, PlayerHitboxRadius, out var ids))
 			return;
 
 		var largestDamage = 0;
@@ -45,12 +36,7 @@ public partial class PlayerHitController : Node
 
 		foreach (var id in ids)
 		{
-			if (
-				!ComponentStore.GetComponent<EnemyContactDamageComponent>(
-					id,
-					out var damage
-				)
-			)
+			if (!ComponentStore.GetComponent<EnemyContactDamageComponent>(id, out var damage))
 				continue;
 			if (damage.Damage > largestDamage)
 			{
@@ -85,10 +71,7 @@ public partial class PlayerHitController : Node
 		spriteShaderMaterial.SetShaderParameter("color", Colors.White);
 
 		tween.TweenMethod(
-			Callable.From(
-				(float i) =>
-					spriteShaderMaterial.SetShaderParameter("flash_state", i)
-			),
+			Callable.From((float i) => spriteShaderMaterial.SetShaderParameter("flash_state", i)),
 			1f,
 			0f,
 			1f

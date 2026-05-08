@@ -26,8 +26,7 @@ public partial class EnemyRenderer : Node
 	private const int INITIAL_INSTANCE_COUNT = 2000;
 	private const float INSTANCE_GROWTH_MULTIPLIER = 1.5f;
 
-	private Vector2 PlayerPosition =>
-		GameWorld.Instance.MainPlayer.GlobalPosition;
+	private Vector2 PlayerPosition => GameWorld.Instance.MainPlayer.GlobalPosition;
 
 	public override void _Ready()
 	{
@@ -36,10 +35,7 @@ public partial class EnemyRenderer : Node
 			return;
 
 		var windowSize = viewport.GetVisibleRect().Size * _renderDistanceFactor;
-		_visibilityGrid = new CenteredMovingUniformGrid<object>(
-			GRID_SIZE,
-			windowSize
-		);
+		_visibilityGrid = new CenteredMovingUniformGrid<object>(GRID_SIZE, windowSize);
 
 		// Render last to allow other systems to do their work first
 		ProcessPriority = 16;
@@ -54,12 +50,7 @@ public partial class EnemyRenderer : Node
 			mmi.VisibleInstanceCount = 0;
 		}
 
-		foreach (
-			var (id, pos, sprite) in _entities.Query<
-				PositionComponent,
-				AnimatedSpriteComponent
-			>()
-		)
+		foreach (var (id, pos, sprite) in _entities.Query<PositionComponent, AnimatedSpriteComponent>())
 		{
 			if (!_visibilityGrid.ContainsWorld(pos.Position))
 				continue;
@@ -70,9 +61,7 @@ public partial class EnemyRenderer : Node
 			var count = _mmiVisibilityCount[mmi]++;
 			if (count >= mmi.InstanceCount)
 			{
-				mmi.InstanceCount = (int)(
-					mmi.InstanceCount * INSTANCE_GROWTH_MULTIPLIER
-				);
+				mmi.InstanceCount = (int)(mmi.InstanceCount * INSTANCE_GROWTH_MULTIPLIER);
 			}
 
 			UpdateEnemyInstance(mmi, id, count, pos.Position, sprite);
@@ -136,10 +125,7 @@ public partial class EnemyRenderer : Node
 		if (ss is null)
 		{
 			Logger.LogError("Could not get SpriteFrameMappingsService.");
-			mmi.Texture = new PlaceholderTexture2D
-			{
-				Size = new Vector2(32, 32),
-			};
+			mmi.Texture = new PlaceholderTexture2D { Size = new Vector2(32, 32) };
 			_spriteToMultiMesh.Add(spriteName, mmi.Multimesh);
 			_mmiVisibilityCount.TryAdd(mmi.Multimesh, 0);
 			return mmi.Multimesh;

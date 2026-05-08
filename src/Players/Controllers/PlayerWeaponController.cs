@@ -9,9 +9,7 @@ namespace Game.Players.Controllers;
 public partial class PlayerWeaponController : Node
 {
 	[Signal]
-	public delegate void OnOffensiveListChangedEventHandler(
-		BaseOffensive newOffensive
-	);
+	public delegate void OnOffensiveListChangedEventHandler(BaseOffensive newOffensive);
 
 	[Signal]
 	public delegate void OnPrimaryAttackReassignedEventHandler();
@@ -81,7 +79,6 @@ public partial class PlayerWeaponController : Node
 
 	private void AddManualOffensive(BaseOffensive offensive)
 	{
-		AutomaticOffensives.Add(offensive);
 		if (offensive is not IManualAttack manualAttack)
 			return;
 

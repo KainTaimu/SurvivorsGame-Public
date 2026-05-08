@@ -16,8 +16,7 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 	private BaseOffensive OffensiveOrigin => (BaseOffensive)Origin;
 	private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
 
-	private EntityComponentStore ComponentStore =>
-		EntityComponentStore.Instance;
+	private EntityComponentStore ComponentStore => EntityComponentStore.Instance;
 
 	public ProjectilePool ProjectilePool { get; set; } = null!;
 
@@ -31,17 +30,12 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 
 		if (!IsInitialized)
 		{
-			Logger.LogWarning(
-				$"Projectile {GetType().Name} is processing but is not initialized"
-			);
+			Logger.LogWarning($"Projectile {GetType().Name} is processing but is not initialized");
 		}
 
 		var from = Position;
 
-		var moveVector =
-			new Vector2(1, 0).Rotated(Rotation)
-			* ProjectileSpeed
-			* (float)delta;
+		var moveVector = new Vector2(1, 0).Rotated(Rotation) * ProjectileSpeed * (float)delta;
 		Position = from + moveVector;
 	}
 
@@ -55,21 +49,12 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 
 	public override void Initialize()
 	{
-		var tweenScale = CreateTween()
-			.SetTrans(Tween.TransitionType.Linear)
-			.SetEase(Tween.EaseType.In);
+		var tweenScale = CreateTween().SetTrans(Tween.TransitionType.Linear).SetEase(Tween.EaseType.In);
 		var finalScale = Scale * new Vector2(8, 1);
 		tweenScale.TweenProperty(Sprite, "scale", finalScale, 0.05);
 		IsInitialized = true;
 
-		if (
-			!TargetQuery.GetTargetsRayCast(
-				Position,
-				Rotation,
-				HitRadius,
-				out var ids
-			)
-		)
+		if (!TargetQuery.GetTargetsRayCast(Position, Rotation, HitRadius, out var ids))
 			return;
 
 		foreach (var id in ids)
@@ -77,24 +62,14 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 			if (_hits.Contains(id))
 				continue;
 
-			if (
-				!ComponentStore.GetComponent<PositionComponent>(
-					id,
-					out var lastPos
-				)
-			)
+			if (!ComponentStore.GetComponent<PositionComponent>(id, out var lastPos))
 				continue;
 
 			Callable
 				.From(() =>
 				{
-					GetTree()
-						.CreateTimer(
-							Position.DistanceTo(lastPos.Position)
-								/ ProjectileSpeed,
-							false
-						)
-						.Timeout += () => OffensiveOrigin.HandleHit(id: id);
+					GetTree().CreateTimer(Position.DistanceTo(lastPos.Position) / ProjectileSpeed, false).Timeout +=
+						() => OffensiveOrigin.HandleHit(id: id);
 				})
 				.CallDeferred();
 
@@ -105,14 +80,8 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 				Callable
 					.From(() =>
 					{
-						GetTree()
-							.CreateTimer(
-								Position.DistanceTo(lastPos.Position)
-									/ ProjectileSpeed,
-								false
-							)
-							.Timeout += () =>
-							Callable.From(ReturnToPool).CallDeferred();
+						GetTree().CreateTimer(Position.DistanceTo(lastPos.Position) / ProjectileSpeed, false).Timeout +=
+							() => Callable.From(ReturnToPool).CallDeferred();
 					})
 					.CallDeferred();
 				return;

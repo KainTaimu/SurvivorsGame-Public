@@ -20,27 +20,16 @@ public partial class DamageIndicator : Node2D
 		var randomOffsetX = (float)GD.RandRange(-variation, variation);
 		var randomOffsetY = (float)GD.RandRange(-variation, variation);
 
-		Position = new Vector2(
-			pos.X + randomOffsetX,
-			pos.Y + randomOffsetY - 55
-		);
+		Position = new Vector2(pos.X + randomOffsetX, pos.Y + randomOffsetY - 55);
 		_label.Text = damage.ToString();
-		_label.LabelSettings.FontColor = isCrit
-			? Colors.OrangeRed
-			: Colors.White;
+		_label.LabelSettings.FontColor = isCrit ? Colors.OrangeRed : Colors.White;
 
 		_finalPosition = new Vector2(Position.X + 15, Position.Y - 15);
 
 		_tween?.Kill();
-		_tween = CreateTween()
-			.SetTrans(Tween.TransitionType.Quad)
-			.SetEase(Tween.EaseType.Out);
-		_tween
-			.Parallel()
-			.TweenProperty(this, "position", _finalPosition, 1.75f);
-		_tween
-			.Parallel()
-			.TweenProperty(this, "modulate", Colors.Transparent, 1.75f);
+		_tween = CreateTween().SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.Out);
+		_tween.Parallel().TweenProperty(this, "position", _finalPosition, 1.75f);
+		_tween.Parallel().TweenProperty(this, "modulate", Colors.Transparent, 1.75f);
 		_tween.TweenCallback(
 			Callable.From(() =>
 			{

@@ -21,11 +21,7 @@ public partial class TP9 : Firearm
 			return;
 		}
 
-		if (
-			!Input.IsActionPressed(
-				AttackActionString ?? InputMapNames.PrimaryAttack
-			)
-		)
+		if (!Input.IsActionPressed(AttackActionString ?? InputMapNames.PrimaryAttack))
 			return;
 
 		Attack();
@@ -35,15 +31,10 @@ public partial class TP9 : Firearm
 	{
 		if (!ComponentStore.GetComponent<PositionComponent>(id, out var pos))
 			return;
-		var knockback = Stats
-			.Additional.GetValueOrDefault("Knockback")
-			.AsSingle();
+		var knockback = Stats.Additional.GetValueOrDefault("Knockback").AsSingle();
 		var knockbackVector = Player.GlobalPosition.DirectionTo(pos.Position);
 		knockbackVector *= knockback;
 
-		ComponentStore.SetComponent(
-			id,
-			new PositionComponent(pos.Position + knockbackVector)
-		);
+		ComponentStore.SetComponent(id, new PositionComponent(pos.Position + knockbackVector));
 	}
 }

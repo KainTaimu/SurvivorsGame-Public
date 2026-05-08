@@ -22,14 +22,10 @@ public partial class CurrentWeaponUi : CanvasLayer
 
 	public override void _Ready()
 	{
-		_weaponController.OnPrimaryAttackReassigned += () =>
-			Callable.From(UpdateCarousel).CallDeferred();
-		_weaponController.OnSecondaryAttackReassigned += () =>
-			Callable.From(UpdateCarousel).CallDeferred();
-		_weaponController.OnOffensiveListChanged += _ =>
-			Callable.From(UpdateCarousel).CallDeferred();
-		_weaponController.ChildOrderChanged += () =>
-			Callable.From(UpdateCarousel).CallDeferred();
+		_weaponController.OnPrimaryAttackReassigned += () => Callable.From(UpdateCarousel).CallDeferred();
+		_weaponController.OnSecondaryAttackReassigned += () => Callable.From(UpdateCarousel).CallDeferred();
+		_weaponController.OnOffensiveListChanged += _ => Callable.From(UpdateCarousel).CallDeferred();
+		_weaponController.ChildOrderChanged += () => Callable.From(UpdateCarousel).CallDeferred();
 		Callable.From(UpdateCarousel).CallDeferred();
 	}
 
@@ -48,8 +44,7 @@ public partial class CurrentWeaponUi : CanvasLayer
 				_primaryWeaponAmmo.Text = "Reloading...";
 			else
 			{
-				_primaryWeaponAmmo.Text =
-					$"{primary.MagazineCount}/{primary.MagazineCapacity}";
+				_primaryWeaponAmmo.Text = $"{primary.MagazineCount}/{primary.MagazineCapacity}";
 			}
 		}
 		else
@@ -62,8 +57,7 @@ public partial class CurrentWeaponUi : CanvasLayer
 				_secondaryWeaponAmmo.Text = "Reloading...";
 			else
 			{
-				_secondaryWeaponAmmo.Text =
-					$"{secondary.MagazineCount}/{secondary.MagazineCapacity}";
+				_secondaryWeaponAmmo.Text = $"{secondary.MagazineCount}/{secondary.MagazineCapacity}";
 			}
 		}
 		else
@@ -72,9 +66,7 @@ public partial class CurrentWeaponUi : CanvasLayer
 
 	public void UpdateCarousel()
 	{
-		var diff =
-			_weaponController.Offensives.Count
-			- _weaponCarousel.GetChildCount();
+		var diff = _weaponController.Offensives.Count - _weaponCarousel.GetChildCount();
 		while (diff > 0)
 		{
 			var weaponItem = _weaponCarouselItemScene.Instantiate<WeaponItem>();

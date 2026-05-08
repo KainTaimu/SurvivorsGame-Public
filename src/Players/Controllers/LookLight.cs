@@ -11,8 +11,6 @@ public partial class LookLight : PointLight2D
 	{
 		if (Crosshair is null)
 			return;
-		GlobalRotation =
-			GlobalPosition.AngleToPoint(Crosshair.GlobalSpacePosition)
-			+ 90 * Mathf.Pi / 180;
+		GlobalRotation = GlobalPosition.AngleToPoint(Crosshair.GlobalSpacePosition) + 90 * Mathf.Pi / 180;
 	}
 }

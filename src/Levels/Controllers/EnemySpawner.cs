@@ -5,8 +5,7 @@ namespace Game.Levels.Controllers;
 
 public partial class EnemySpawner : Node
 {
-	private EntityComponentStore ComponentStore =>
-		EntityComponentStore.Instance;
+	private EntityComponentStore ComponentStore => EntityComponentStore.Instance;
 
 	public static EnemySpawner? Instance;
 
@@ -33,15 +32,9 @@ public partial class EnemySpawner : Node
 
 		var spriteInfo = ss.GetSpriteInfo(bp.Name);
 
-		ComponentStore.RegisterComponent(
-			id,
-			new HealthComponent(stats.MaxHealth)
-		);
+		ComponentStore.RegisterComponent(id, new HealthComponent(stats.MaxHealth));
 		ComponentStore.RegisterComponent(id, new EntityTypeComponent(bp.Type));
-		ComponentStore.RegisterComponent(
-			id,
-			new PositionComponent { Position = pos }
-		);
+		ComponentStore.RegisterComponent(id, new PositionComponent { Position = pos });
 		ComponentStore.RegisterComponent(
 			id,
 			new AnimatedSpriteComponent
@@ -58,23 +51,15 @@ public partial class EnemySpawner : Node
 		);
 		ComponentStore.RegisterComponent(
 			id,
-			new MoveSpeedComponent(
-				Mathf.CeilToInt(stats.MoveSpeed * stats.MoveSpeedMultiplier)
-			)
+			new MoveSpeedComponent(Mathf.CeilToInt(stats.MoveSpeed * stats.MoveSpeedMultiplier))
 		);
 		ComponentStore.RegisterComponent(
 			id,
-			new EnemyContactDamageComponent(
-				Mathf.CeilToInt(
-					stats.DamageOnContact * stats.ContactDamageMultiplier
-				)
-			)
+			new EnemyContactDamageComponent(Mathf.CeilToInt(stats.DamageOnContact * stats.ContactDamageMultiplier))
 		);
 		ComponentStore.RegisterComponent(
 			id,
-			new DeathRewardComponent(
-				Mathf.CeilToInt(stats.MoneyDrop * stats.MoneyDropMultiplier)
-			)
+			new DeathRewardComponent(Mathf.CeilToInt(stats.MoneyDrop * stats.MoneyDropMultiplier))
 		);
 		return id;
 	}
@@ -96,8 +81,7 @@ public partial class EnemySpawner : Node
 						screenCenterPosition.X - viewportRectEnd.X / 2 - margin,
 						screenCenterPosition.X + viewportRectEnd.X / 2 + margin
 					);
-				spawnVector.Y =
-					screenCenterPosition.Y - viewportRectEnd.Y / 2 - margin;
+				spawnVector.Y = screenCenterPosition.Y - viewportRectEnd.Y / 2 - margin;
 				break;
 
 			case 1: // BOTTOM
@@ -106,13 +90,11 @@ public partial class EnemySpawner : Node
 						screenCenterPosition.X - viewportRectEnd.X / 2 - margin,
 						screenCenterPosition.X + viewportRectEnd.X / 2 + margin
 					);
-				spawnVector.Y =
-					screenCenterPosition.Y + viewportRectEnd.Y / 2 + margin;
+				spawnVector.Y = screenCenterPosition.Y + viewportRectEnd.Y / 2 + margin;
 				break;
 
 			case 2: // LEFT
-				spawnVector.X =
-					screenCenterPosition.X - viewportRectEnd.X / 2 - margin;
+				spawnVector.X = screenCenterPosition.X - viewportRectEnd.X / 2 - margin;
 				spawnVector.Y = (float)
 					GD.RandRange(
 						screenCenterPosition.Y - viewportRectEnd.Y / 2 - margin,
@@ -121,8 +103,7 @@ public partial class EnemySpawner : Node
 				break;
 
 			case 3: // RIGHT
-				spawnVector.X =
-					screenCenterPosition.X + viewportRectEnd.X / 2 + margin;
+				spawnVector.X = screenCenterPosition.X + viewportRectEnd.X / 2 + margin;
 				spawnVector.Y = (float)
 					GD.RandRange(
 						screenCenterPosition.Y - viewportRectEnd.Y / 2 - margin,

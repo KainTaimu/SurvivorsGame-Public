@@ -73,7 +73,6 @@ public partial class EnemyWaveDuration : EnemyWave
 
 	public override string ToString()
 	{
-		return $"Wave {Index} : {Duration}s duration: {EnemyBlueprints.Count}"
-			+ $" types";
+		return $"Wave {Index} : {Duration}s duration: {EnemyBlueprints.Count}" + $" types";
 	}
 }

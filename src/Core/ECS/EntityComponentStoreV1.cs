@@ -48,9 +48,7 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 
 		if (idx == MAX_SIZE)
 		{
-			Logger.LogWarning(
-				$"Couldn't register entity {id} with index {idx}. Store at max capacity"
-			);
+			Logger.LogWarning($"Couldn't register entity {id} with index {idx}. Store at max capacity");
 			return -1;
 		}
 
@@ -89,19 +87,13 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 	{
 		if (!_frozenIdToIndexTable.TryGetValue(id, out var idx))
 		{
-			Logger.LogWarning(
-				"Couldn't register component. Entity with id",
-				id,
-				"does not exist"
-			);
+			Logger.LogWarning("Couldn't register component. Entity with id", id, "does not exist");
 			return;
 		}
 
 		if (idx < 0 || idx >= MAX_SIZE)
 		{
-			Logger.LogWarning(
-				$"Couldn't register component {id} with index {idx}. Index out of bounds"
-			);
+			Logger.LogWarning($"Couldn't register component {id} with index {idx}. Index out of bounds");
 			return;
 		}
 
@@ -116,19 +108,13 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 	{
 		if (!_frozenIdToIndexTable.TryGetValue(id, out var idx))
 		{
-			Logger.LogWarning(
-				"Couldn't unregister component. Entity with id",
-				id,
-				"does not exist"
-			);
+			Logger.LogWarning("Couldn't unregister component. Entity with id", id, "does not exist");
 			return;
 		}
 
 		if (idx < 0 || idx >= MAX_SIZE)
 		{
-			Logger.LogWarning(
-				$"Couldn't unregister component {id} with index {idx}. Index out of bounds"
-			);
+			Logger.LogWarning($"Couldn't unregister component {id} with index {idx}. Index out of bounds");
 			return;
 		}
 
@@ -141,19 +127,13 @@ public partial class EntityComponentStoreV1 : EntityComponentStore
 	{
 		if (!_frozenIdToIndexTable.TryGetValue(id, out var idx))
 		{
-			Logger.LogWarning(
-				"Couldn't update component. Entity with id",
-				id,
-				"does not exist"
-			);
+			Logger.LogWarning("Couldn't update component. Entity with id", id, "does not exist");
 			return;
 		}
 
 		if (idx < 0 || idx >= MAX_SIZE)
 		{
-			Logger.LogWarning(
-				$"Couldn't update component {id} with index {idx}. Index out of bounds"
-			);
+			Logger.LogWarning($"Couldn't update component {id} with index {idx}. Index out of bounds");
 			return;
 		}
 

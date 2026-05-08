@@ -47,8 +47,7 @@ public partial class AirdropPlane : Node2D
 		GlobalPosition = startPosition;
 		_distanceToDrop =
 			startPosition.DistanceTo(dropPosition)
-			+ GD.RandRange(dropPrecision / 2, dropPrecision)
-				* GD.RandRange(-1, 1);
+			+ GD.RandRange(dropPrecision / 2, dropPrecision) * GD.RandRange(-1, 1);
 		Speed = speed;
 		_isStarted = true;
 		_timeToExpire = timeToExpire;
@@ -64,9 +63,7 @@ public partial class AirdropPlane : Node2D
 			var drop = _dropScene.InstantiateOrNull<Node2D>();
 			if (drop is null)
 			{
-				Logger.LogError(
-					"Failed to instantiate drop. Does it inherit from Node2D?"
-				);
+				Logger.LogError("Failed to instantiate drop. Does it inherit from Node2D?");
 				return;
 			}
 

@@ -26,8 +26,11 @@ public partial class EnemyWaveController : Node
 		get;
 		set =>
 			// Spawned should not be decremented because we rely on it to create unique ids
-			field =
-				Math.Clamp(value, field, EntityComponentStore.MAX_SIZE);
+			field = Math.Clamp(
+				value,
+				field,
+				EntityComponentStore.MAX_SIZE
+			);
 	}
 
 	public int Alive

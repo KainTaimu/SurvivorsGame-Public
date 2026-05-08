@@ -66,8 +66,7 @@ public partial class EnemyWaveSpawnCount : EnemyWave, IEnemyWave
 
 	public override string ToString()
 	{
-		return $"Wave {Index} : {SpawnCountTarget} spawn count: "
-			+ $"{EnemyBlueprints
+		return $"Wave {Index} : {SpawnCountTarget} spawn count: " + $"{EnemyBlueprints
 				.Count} types";
 	}
 }

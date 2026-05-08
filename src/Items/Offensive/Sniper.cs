@@ -13,33 +13,23 @@ public partial class Sniper : Firearm
 		set => field = Math.Clamp(value, 0, MoveTimeToMaxBloom);
 	}
 
-	private double MoveTimeFactor =>
-		MoveTime
-		/ (MoveTimeToMaxBloom != 0 ? MoveTimeToMaxBloom : 1 / double.MaxValue);
+	private double MoveTimeFactor => MoveTime / (MoveTimeToMaxBloom != 0 ? MoveTimeToMaxBloom : 1 / double.MaxValue);
 
-	private double MoveTimeToMaxBloom =>
-		Stats.Additional["MoveTimeToMaxBloom"].AsDouble();
+	private double MoveTimeToMaxBloom => Stats.Additional["MoveTimeToMaxBloom"].AsDouble();
 
-	private double MoveBloomGrowthRate =>
-		Stats.Additional["MoveTimeGrowthRate"].AsDouble();
+	private double MoveBloomGrowthRate => Stats.Additional["MoveTimeGrowthRate"].AsDouble();
 
-	private double MoveBloomShrinkRate =>
-		Stats.Additional["MoveTimeShrinkRate"].AsDouble();
+	private double MoveBloomShrinkRate => Stats.Additional["MoveTimeShrinkRate"].AsDouble();
 
-	private double MoveBloomMinDeg =>
-		Stats.Additional["MoveBloomMinDeg"].AsDouble();
+	private double MoveBloomMinDeg => Stats.Additional["MoveBloomMinDeg"].AsDouble();
 
-	private double MoveBloomMaxDeg =>
-		Stats.Additional["MoveBloomMaxDeg"].AsDouble();
+	private double MoveBloomMaxDeg => Stats.Additional["MoveBloomMaxDeg"].AsDouble();
 
-	private double MoveDamageMin =>
-		Stats.Additional["MoveDamageMin"].AsDouble();
+	private double MoveDamageMin => Stats.Additional["MoveDamageMin"].AsDouble();
 
-	private double MoveDamageMax =>
-		Stats.Additional["MoveDamageMax"].AsDouble();
+	private double MoveDamageMax => Stats.Additional["MoveDamageMax"].AsDouble();
 
-	private PlayerMovementController MovementController =>
-		GameWorld.Instance.MainPlayer.MovementController;
+	private PlayerMovementController MovementController => GameWorld.Instance.MainPlayer.MovementController;
 
 	public override void _Ready()
 	{
@@ -59,22 +49,13 @@ public partial class Sniper : Firearm
 			return;
 		}
 
-		if (
-			!Input.IsActionPressed(
-				AttackActionString ?? InputMapNames.PrimaryAttack
-			)
-		)
+		if (!Input.IsActionPressed(AttackActionString ?? InputMapNames.PrimaryAttack))
 			return;
 
 		if (IsReadyToShoot)
 		{
 			Stats.CritChanceProportion = (float)(1 - MoveTimeFactor);
-			Stats.Damage = (int)
-				Math.Clamp(
-					MoveDamageMax * (1 - MoveTimeFactor),
-					MoveDamageMin,
-					MoveDamageMax
-				);
+			Stats.Damage = (int)Math.Clamp(MoveDamageMax * (1 - MoveTimeFactor), MoveDamageMin, MoveDamageMax);
 		}
 
 		AttackWithMoveTimeBloom(FirearmStats);
@@ -91,10 +72,7 @@ public partial class Sniper : Firearm
 
 	private void UpdateMoveTimeBloom(double delta)
 	{
-		if (
-			MovementController.Velocity.LengthSquared() > 0
-			|| Crosshair?.CrosshairVelocity.LengthSquared() > 0
-		)
+		if (MovementController.Velocity.LengthSquared() > 0 || Crosshair?.CrosshairVelocity.LengthSquared() > 0)
 			MoveTime += delta * MoveBloomGrowthRate;
 		else
 			MoveTime -= delta * MoveBloomShrinkRate;
@@ -122,15 +100,10 @@ public partial class Sniper : Firearm
 	{
 		if (!ComponentStore.GetComponent<PositionComponent>(id, out var pos))
 			return;
-		var knockback = Stats
-			.Additional.GetValueOrDefault("Knockback")
-			.AsSingle();
+		var knockback = Stats.Additional.GetValueOrDefault("Knockback").AsSingle();
 		var knockbackVector = Player.GlobalPosition.DirectionTo(pos.Position);
 		knockbackVector *= knockback;
 
-		ComponentStore.SetComponent(
-			id,
-			new PositionComponent(pos.Position + knockbackVector)
-		);
+		ComponentStore.SetComponent(id, new PositionComponent(pos.Position + knockbackVector));
 	}
 }

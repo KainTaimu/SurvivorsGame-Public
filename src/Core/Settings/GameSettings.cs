@@ -68,8 +68,7 @@ public partial class GameSettings : Resource
 		}
 	} = GoreEffectsEnum.Medium;
 
-	public int GoreEffectsValue =>
-		GoreEffectsConfigs.GoreEffectsMap[GoreEffects];
+	public int GoreEffectsValue => GoreEffectsConfigs.GoreEffectsMap[GoreEffects];
 
 	[ExportGroup("DEV")]
 	[Export]

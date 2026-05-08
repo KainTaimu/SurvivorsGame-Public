@@ -7,8 +7,7 @@ public partial class EnemyDeathManager : Node
 	[Export]
 	public GoreManager? GoreManager;
 
-	private EntityComponentStore ComponentStore =>
-		EntityComponentStore.Instance;
+	private EntityComponentStore ComponentStore => EntityComponentStore.Instance;
 
 	public override void _Process(double delta)
 	{
@@ -23,28 +22,15 @@ public partial class EnemyDeathManager : Node
 	{
 		if (ComponentStore.GetComponent<PositionComponent>(id, out var pos))
 		{
-			if (
-				!ComponentStore.GetComponent<DeathCauseComponent>(
-					id,
-					out var causeComponent
-				)
-			)
+			if (!ComponentStore.GetComponent<DeathCauseComponent>(id, out var causeComponent))
 				GoreManager?.SpawnParticles(pos.Position);
 			else
 			{
-				GoreManager?.SpawnParticles(
-					pos.Position,
-					causeComponent.CauseEnum
-				);
+				GoreManager?.SpawnParticles(pos.Position, causeComponent.CauseEnum);
 			}
 		}
 
-		if (
-			ComponentStore.GetComponent<DeathRewardComponent>(
-				id,
-				out var reward
-			)
-		)
+		if (ComponentStore.GetComponent<DeathRewardComponent>(id, out var reward))
 			LevelData.Instance?.Money += reward.Money;
 
 		ComponentStore.UnregisterEntity(id);

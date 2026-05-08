@@ -15,8 +15,7 @@ public partial class GoreManager : Node
 		ParticleProcessMaterial
 	> _deathParticleProcessMaterialsByCause = [];
 
-	private EntityComponentStore ComponentStore =>
-		EntityComponentStore.Instance;
+	private EntityComponentStore ComponentStore => EntityComponentStore.Instance;
 
 	private int MaxActiveParticles
 	{
@@ -32,16 +31,12 @@ public partial class GoreManager : Node
 	public override void _Ready()
 	{
 		UpdateParticles(MaxActiveParticles);
-		GameSettings.Instance.OnGoreEffectsChanged += () =>
-			UpdateParticles(MaxActiveParticles);
+		GameSettings.Instance.OnGoreEffectsChanged += () => UpdateParticles(MaxActiveParticles);
 	}
 
 	// PERF: Large amount of particles causes a draw call per active particles.
 	// TODO: Find out a way to reduce draw calls
-	public void SpawnParticles(
-		Vector2 pos,
-		DeathCauseEnum cause = DeathCauseEnum.Normal
-	)
+	public void SpawnParticles(Vector2 pos, DeathCauseEnum cause = DeathCauseEnum.Normal)
 	{
 		if (MaxActiveParticles <= 0)
 			return;
@@ -60,8 +55,7 @@ public partial class GoreManager : Node
 
 	private void UpdateParticles(int maxParticles)
 	{
-		var particlesLeft =
-			maxParticles - _activeParticles.Count - _inactiveParticles.Count;
+		var particlesLeft = maxParticles - _activeParticles.Count - _inactiveParticles.Count;
 
 		while (particlesLeft < 0)
 		{
@@ -81,8 +75,7 @@ public partial class GoreManager : Node
 
 		for (var i = 0; i < particlesLeft; i++)
 		{
-			var particles =
-				_enemyDeathParticlesScene.Instantiate<GpuParticles2D>();
+			var particles = _enemyDeathParticlesScene.Instantiate<GpuParticles2D>();
 			_particlesOriginalProcessMode ??= particles.ProcessMode;
 
 			particles.Finished += () =>
@@ -107,11 +100,8 @@ public partial class GoreManager : Node
 		particles.GlobalPosition = position;
 		particles.Show();
 		particles.Restart();
-		particles.ProcessMode =
-			_particlesOriginalProcessMode ?? ProcessModeEnum.Inherit;
-		particles.ProcessMaterial = _deathParticleProcessMaterialsByCause[
-			cause
-		];
+		particles.ProcessMode = _particlesOriginalProcessMode ?? ProcessModeEnum.Inherit;
+		particles.ProcessMaterial = _deathParticleProcessMaterialsByCause[cause];
 	}
 
 	private void DisableParticles(GpuParticles2D particles)

@@ -5,10 +5,7 @@ using Game.Utils;
 
 namespace Game.Items.Offensive;
 
-public abstract partial class Firearm
-	: BaseOffensive,
-		IReloadable,
-		IManualAttack
+public abstract partial class Firearm : BaseOffensive, IReloadable, IManualAttack
 {
 	[Signal]
 	public delegate void OnReloadStartEventHandler();
@@ -70,8 +67,7 @@ public abstract partial class Firearm
 
 	protected float HorizontalBaseRecoil => FirearmStats.HorizontalBaseRecoil;
 
-	protected float HorizontalRecoilRandom =>
-		FirearmStats.HorizontalRecoilRandom;
+	protected float HorizontalRecoilRandom => FirearmStats.HorizontalRecoilRandom;
 
 	protected float VerticalRecoilMin => FirearmStats.VerticalRecoilMin;
 
@@ -81,11 +77,9 @@ public abstract partial class Firearm
 
 	protected float RecoilScale => FirearmStats.RecoilScale;
 
-	protected float RecoilAccumilationScale =>
-		FirearmStats.RecoilAccumilationScale;
+	protected float RecoilAccumilationScale => FirearmStats.RecoilAccumilationScale;
 
-	protected float CameraRecoilScale =>
-		FirearmStats.CameraRecoilScale * GameSettings.Instance.CameraShakeScale;
+	protected float CameraRecoilScale => FirearmStats.CameraRecoilScale * GameSettings.Instance.CameraShakeScale;
 
 	protected Crosshair? Crosshair => Crosshair.Instance;
 
@@ -99,10 +93,7 @@ public abstract partial class Firearm
 
 		// HACK: Too lazy to add ProjectilePool for all existing Firearms.
 		// Should avoid creating nodes programatically unless for pooling
-		ProjectilePool = new ProjectilePool
-		{
-			ProjectileScene = _projectileScene,
-		};
+		ProjectilePool = new ProjectilePool { ProjectileScene = _projectileScene };
 		AddChild(ProjectilePool);
 	}
 
@@ -128,8 +119,7 @@ public abstract partial class Firearm
 		if (Crosshair is not null)
 		{
 			mouseVector =
-				Crosshair.PrimaryCrosshairSprite.GetCanvasTransform()
-				* Crosshair.PrimaryCrosshairSprite.GlobalPosition;
+				Crosshair.PrimaryCrosshairSprite.GetCanvasTransform() * Crosshair.PrimaryCrosshairSprite.GlobalPosition;
 		}
 		else
 			mouseVector = Player.GetGlobalMousePosition();
@@ -180,23 +170,10 @@ public abstract partial class Firearm
 			return;
 
 		var recoilX = (float)
-			GD.Randfn(
-				0,
-				HorizontalBaseRecoil
-					+ GD.RandRange(
-						-HorizontalRecoilRandom,
-						HorizontalRecoilRandom
-					)
-			);
-		recoilX = Math.Clamp(
-			recoilX,
-			-Math.Abs(HorizontalRecoilMin),
-			float.MaxValue
-		);
+			GD.Randfn(0, HorizontalBaseRecoil + GD.RandRange(-HorizontalRecoilRandom, HorizontalRecoilRandom));
+		recoilX = Math.Clamp(recoilX, -Math.Abs(HorizontalRecoilMin), float.MaxValue);
 
-		var recoilY =
-			VerticalBaseRecoil
-			+ Math.Abs((float)GD.Randfn(0, VerticalRecoilRandom));
+		var recoilY = VerticalBaseRecoil + Math.Abs((float)GD.Randfn(0, VerticalRecoilRandom));
 		recoilY = Math.Clamp(recoilY, VerticalRecoilMin, float.MaxValue);
 
 		var recoil = new Vector2(recoilX, -recoilY) * RecoilScale;
@@ -224,17 +201,9 @@ public abstract partial class Firearm
 				return GD.RandRange(-1, 1);
 			}
 
-			var shake =
-				new Vector2(Rand(), Rand())
-				* GD.RandRange(4, 9)
-				* CameraRecoilScale;
+			var shake = new Vector2(Rand(), Rand()) * GD.RandRange(4, 9) * CameraRecoilScale;
 
-			tween.TweenProperty(
-				camera,
-				"offset",
-				camera.Position + shake,
-				1 / 30f
-			);
+			tween.TweenProperty(camera, "offset", camera.Position + shake, 1 / 30f);
 		}
 
 		tween.TweenProperty(camera, "offset", origPos, 1 / 8f);
@@ -244,9 +213,6 @@ public abstract partial class Firearm
 	{
 		FireCooldown = 0;
 
-		Logger.LogDebug(
-			"Updated Stats\n",
-			ClassInspector.GetClassPropertiesString(Stats)
-		);
+		Logger.LogDebug("Updated Stats\n", ClassInspector.GetClassPropertiesString(Stats));
 	}
 }
