@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://ceimmtu3q4x6n" path="res://scenes/Items/Offensive/GrenadeThrower.tscn" id="11_espgp"]
 [ext_resource type="PackedScene" uid="uid://lvm5jo1ua73i" path="res://scenes/Items/Offensive/M870.tscn" id="11_jgr36"]
 [ext_resource type="PackedScene" uid="uid://dkhkglqxq0j2p" path="res://scenes/Items/Offensive/WipeScreen.tscn" id="11_ragxt"]
+[ext_resource type="PackedScene" uid="uid://okgy2hpbgy53" path="res://scenes/Items/Offensive/Blick.tscn" id="13_k8uaa"]
 [ext_resource type="PackedScene" uid="uid://c5q166p2d4241" path="res://scenes/UI/CurrentWeaponUi.tscn" id="14_8rask"]
 
 [sub_resource type="Resource" id="Resource_pqexr"]
@@ -176,6 +177,8 @@ _sprite = NodePath("../AnimatedSprite2D")
 
 [node name="PlayerWeaponController" type="Node" parent="." unique_id=752109662]
 script = ExtResource("5_yecw2")
+
+[node name="Blick" parent="PlayerWeaponController" unique_id=1989500741 instance=ExtResource("13_k8uaa")]
 
 [node name="TP9" parent="PlayerWeaponController" unique_id=1472391115 instance=ExtResource("8_8rask")]
 

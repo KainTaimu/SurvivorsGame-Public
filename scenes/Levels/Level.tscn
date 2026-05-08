@@ -141,7 +141,6 @@ _pauseController = NodePath("../../Systems/PauseController")
 [node name="Crosshair" type="CanvasLayer" parent="UI" unique_id=1911762679]
 
 [node name="Crosshair" parent="UI/Crosshair" unique_id=587001361 node_paths=PackedStringArray("Player", "PauseController") instance=ExtResource("15_aredf")]
-modulate = Color(0, 1, 1, 1)
 Player = NodePath("../../../Player")
 PauseController = NodePath("../../../Systems/PauseController")
 
