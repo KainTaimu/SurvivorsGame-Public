@@ -9,6 +9,12 @@ public partial class GoreManager : Node
     [Export]
     private PackedScene _enemyDeathParticlesScene = null!;
 
+    [Export]
+    private Godot.Collections.Dictionary<
+        DeathCauseEnum,
+        ParticleProcessMaterial
+    > _deathParticleProcessMaterialsByCause = [];
+
     private EntityComponentStore ComponentStore =>
         EntityComponentStore.Instance;
 
@@ -32,7 +38,10 @@ public partial class GoreManager : Node
 
     // PERF: Large amount of particles causes a draw call per active particles.
     // TODO: Find out a way to reduce draw calls
-    public void SpawnParticles(Vector2 pos)
+    public void SpawnParticles(
+        Vector2 pos,
+        DeathCauseEnum cause = DeathCauseEnum.Normal
+    )
     {
         if (MaxActiveParticles <= 0)
             return;
@@ -44,7 +53,7 @@ public partial class GoreManager : Node
         }
 
         var particles = _inactiveParticles.Dequeue();
-        EnableParticles(particles, pos);
+        EnableParticles(particles, pos, cause);
 
         _activeParticles.Enqueue(particles);
     }
@@ -92,13 +101,20 @@ public partial class GoreManager : Node
         }
     }
 
-    private void EnableParticles(GpuParticles2D particles, Vector2 position)
+    private void EnableParticles(
+        GpuParticles2D particles,
+        Vector2 position,
+        DeathCauseEnum cause = DeathCauseEnum.Normal
+    )
     {
         particles.GlobalPosition = position;
         particles.Show();
         particles.Restart();
         particles.ProcessMode =
             _particlesOriginalProcessMode ?? ProcessModeEnum.Inherit;
+        particles.ProcessMaterial = _deathParticleProcessMaterialsByCause[
+            cause
+        ];
     }
 
     private void DisableParticles(GpuParticles2D particles)

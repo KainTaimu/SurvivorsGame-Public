@@ -1,3 +1,4 @@
+using Game.Core.ECS;
 using Game.Levels.Controllers;
 using Game.UI;
 
@@ -61,5 +62,18 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
         nade.ApplyImpulse(force);
         // GetParent().AddChild(nade);
         GetTree().Root.CallDeferred(Window.MethodName.AddChild, nade);
+    }
+
+    protected override void HandleHitECS(int id)
+    {
+        base.HandleHitECS(id);
+        if (!ComponentStore.GetComponent<HealthComponent>(id, out var health))
+            return;
+        if (health.Health > 0)
+            return;
+        ComponentStore.RegisterComponent(
+            id,
+            new DeathCauseComponent(DeathCauseEnum.Explosion)
+        );
     }
 }

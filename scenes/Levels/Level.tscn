@@ -29,7 +29,7 @@
 script = ExtResource("12_x7tv3")
 EnemyBlueprints = Array[Object]([ExtResource("8_1c6ul"), ExtResource("10_d4hlt"), ExtResource("9_occlw")])
 Duration = 3.0
-MaxMobs = 5000
+MaxMobs = 1000
 SpawnMinTime = 0.001
 SpawnMaxTime = 0.01
 SpawnBatchMin = 5000
