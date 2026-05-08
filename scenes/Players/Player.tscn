@@ -187,6 +187,10 @@ script = ExtResource("5_yecw2")
 
 [node name="GrenadeThrower" parent="PlayerWeaponController" unique_id=1000269585 instance=ExtResource("11_espgp")]
 
+[node name="GrenadeThrower2" parent="PlayerWeaponController" unique_id=220272771 instance=ExtResource("11_espgp")]
+
+[node name="GrenadeThrower3" parent="PlayerWeaponController" unique_id=1139270156 instance=ExtResource("11_espgp")]
+
 [node name="Revolver" parent="PlayerWeaponController" unique_id=1857571471 instance=ExtResource("6_eai52")]
 
 [node name="Sniper" parent="PlayerWeaponController" unique_id=753371605 instance=ExtResource("10_2g2d6")]

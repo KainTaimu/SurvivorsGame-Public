@@ -54,8 +54,8 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 			new Vector2(Mathf.Cos(Crosshair.AngleFromPlayer), Mathf.Sin(Crosshair.AngleFromPlayer)) * ThrowForce
 			+ Player.MovementController.Velocity;
 		nade.ApplyImpulse(force);
-		// GetParent().AddChild(nade);
 		GetTree().Root.CallDeferred(Window.MethodName.AddChild, nade);
+		GetTree().CreateTimer(Stats.AttackSpeed * 0.5).Timeout += QueueFree;
 	}
 
 	protected override void HandleHitECS(int id)
