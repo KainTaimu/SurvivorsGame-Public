@@ -46,8 +46,6 @@ public partial class EnemyTargetQuery : Node
 	public override void _Process(double delta)
 	{
 		var player = GameWorld.Instance.MainPlayer;
-		if (player is null)
-			return;
 		var playerPos = player.GlobalPosition;
 
 		_grid.ClearGrid();
@@ -101,7 +99,7 @@ public partial class EnemyTargetQuery : Node
 		}
 
 		targetIds = [.. targets];
-		return true;
+		return targets.Count > 0;
 	}
 
 	public IEnumerable<int> GetTargetsInScreen()
@@ -117,165 +115,6 @@ public partial class EnemyTargetQuery : Node
 					yield return cell.Array[i];
 			}
 		}
-	}
-
-	/// <summary>
-	/// Finds all targets intersecting swept segment corridor.
-	/// </summary>
-	/// <param name="from">Segment start in world coordinates.</param>
-	/// <param name="to">Segment end in world coordinates.</param>
-	/// <param name="hitRadius">Corridor radius around segment.</param>
-	/// <param name="targetIds">Output entity ids.</param>
-	/// <returns>
-	/// <c>true</c> when at least one target lies within swept corridor.
-	/// </returns>
-	/// <remarks>
-	/// hitRadius is capped at _gridSize due to this method checking at most a
-	/// 3x3 area around the corrider.
-	/// </remarks>
-	public bool TryGetTargetsAlongSegment(
-		Vector2 from,
-		Vector2 to,
-		float hitRadius,
-		out int[] targetIds
-	)
-	{
-		var targets = new HashSet<int>();
-		var visited = new HashSet<UniformGridCell<int>>();
-
-		var delta = to - from;
-		var length = delta.Length();
-		var step =
-			_gridSize * Performance.GetMonitor(Performance.Monitor.TimeProcess);
-		var sampleCount = Math.Max(100, Mathf.CeilToInt(length / step));
-
-		var hitRadiusSq = hitRadius * hitRadius;
-
-		for (var i = 0; i <= sampleCount; i++)
-		{
-			var t = sampleCount == 0 ? 0f : (float)i / sampleCount;
-			var sample = from.Lerp(to, t);
-
-			var sampleCell = _grid.GetCellWorld(sample);
-			if (sampleCell is null)
-				continue;
-			if (visited.Contains(sampleCell))
-				continue;
-
-			visited.Add(sampleCell);
-
-			FindTargetsAlongSegmentInNeighborCells(
-				sampleCell.Index,
-				from,
-				to,
-				hitRadiusSq,
-				targets,
-				visited
-			);
-		}
-
-		if (targets.Count == 0)
-		{
-			targetIds = [];
-			return false;
-		}
-
-		targetIds = [.. targets];
-		return true;
-	}
-
-	/// <summary>
-	/// Updates closest swept-hit candidate in 3x3 neighborhood around a cell.
-	/// </summary>
-	/// <param name="centerCell">Center cell index for neighborhood scan.</param>
-	/// <param name="from">Segment start.</param>
-	/// <param name="to">Segment end.</param>
-	/// <param name="hitRadiusSq">Squared corridor radius threshold.</param>
-	/// <param name="closestId">Best candidate id tracked by reference.</param>
-	/// <param name="closestDistSq">
-	/// Best candidate squared distance tracked by reference.
-	/// </param>
-	private void FindTargetsAlongSegmentInNeighborCells(
-		Vector2I centerCell,
-		Vector2 from,
-		Vector2 to,
-		float hitRadiusSq,
-		HashSet<int> targets,
-		HashSet<UniformGridCell<int>> visited
-	)
-	{
-		for (var x = -1; x <= 1; x++)
-		for (var y = -1; y <= 1; y++)
-		{
-			var cell = _grid.GetCell(centerCell.X + x, centerCell.Y + y);
-			if (cell is null)
-				continue;
-			if (visited.Contains(cell))
-				continue;
-			visited.Add(cell);
-
-			FindTargetsAlongSegmentInCell(cell, from, to, hitRadiusSq, targets);
-		}
-	}
-
-	/// <summary>
-	/// Updates closest swept-hit candidate from one grid cell.
-	/// </summary>
-	/// <param name="cell">Cell containing candidate enemy ids.</param>
-	/// <param name="from">Segment start.</param>
-	/// <param name="to">Segment end.</param>
-	/// <param name="hitRadiusSq">Squared corridor radius threshold.</param>
-	/// <param name="closestId">Best candidate id tracked by reference.</param>
-	/// <param name="closestDistSq">
-	/// Best candidate squared distance tracked by reference.
-	/// </param>
-	private void FindTargetsAlongSegmentInCell(
-		UniformGridCell<int> cell,
-		Vector2 from,
-		Vector2 to,
-		float hitRadiusSq,
-		HashSet<int> targets
-	)
-	{
-		for (var i = 0; i < cell.Count; i++)
-		{
-			var id = cell.Array[i];
-			if (targets.Contains(id))
-				continue;
-			if (!_entities.GetComponent<PositionComponent>(id, out var ipos))
-				continue;
-
-			var distSq = DistanceSquaredPointToSegment(ipos.Position, from, to);
-			if (distSq > hitRadiusSq)
-				continue;
-
-			targets.Add(id);
-		}
-	}
-
-	/// <summary>
-	/// Computes squared distance from point to finite segment.
-	/// </summary>
-	/// <param name="point">Point to test.</param>
-	/// <param name="start">Segment start.</param>
-	/// <param name="end">Segment end.</param>
-	/// <returns>Squared distance to nearest point on segment.</returns>
-	private static float DistanceSquaredPointToSegment(
-		Vector2 point,
-		Vector2 start,
-		Vector2 end
-	)
-	{
-		var segment = end - start;
-		var segmentLengthSq = segment.LengthSquared();
-		if (segmentLengthSq <= 0.0001f)
-			return point.DistanceSquaredTo(start);
-
-		var t = (point - start).Dot(segment) / segmentLengthSq;
-		t = Mathf.Clamp(t, 0f, 1f);
-
-		var closest = start + segment * t;
-		return point.DistanceSquaredTo(closest);
 	}
 
 	/// <summary>

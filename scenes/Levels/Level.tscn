@@ -46,6 +46,7 @@ color = Color(0.0004478309, 0.00044783013, 0.00044783056, 1)
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=951832910]
 visible = false
+z_index = -99
 repeat_size = Vector2(1920, 1139)
 repeat_times = 2
 metadata/_edit_lock_ = true

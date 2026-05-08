@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://d1nqrtaecqgq7"]
+
+[ext_resource type="Script" uid="uid://bh0y8e3kwml5r" path="res://src/Items/Offensive/Grenade.cs" id="1_0cjwe"]
+[ext_resource type="Texture2D" uid="uid://b4m51u8lfnpny" path="res://assets/Sprites/grenade_hot.png" id="2_0cjwe"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tmchr"]
+
+[node name="Grenade" type="RigidBody2D" unique_id=1135986602]
+mass = 0.001
+angular_velocity = 17.435839
+constant_torque = 720.0
+script = ExtResource("1_0cjwe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1936193029]
+shape = SubResource("CircleShape2D_tmchr")
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1743088039]
+position = Vector2(1, -3)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("2_0cjwe")
+metadata/_edit_lock_ = true
