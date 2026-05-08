@@ -58,7 +58,8 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
             new Vector2(
                 Mathf.Cos(Crosshair.AngleFromPlayer),
                 Mathf.Sin(Crosshair.AngleFromPlayer)
-            ) * ThrowForce;
+            ) * ThrowForce
+            + Player.MovementController.Velocity;
         nade.ApplyImpulse(force);
         // GetParent().AddChild(nade);
         GetTree().Root.CallDeferred(Window.MethodName.AddChild, nade);

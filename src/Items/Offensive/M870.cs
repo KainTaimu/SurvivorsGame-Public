@@ -102,6 +102,8 @@ public partial class M870 : Firearm
             .TweenCallback(
                 Callable.From(() =>
                 {
+                    if (!_isShotgunReloading)
+                        return;
                     _magazineCount++;
                     _shellReloadAudioPlayer?.Play();
                     if (_magazineCount == MagazineCapacity)
@@ -112,9 +114,6 @@ public partial class M870 : Firearm
                 })
             )
             .SetDelay(ReloadTime);
-        _reloadTween.TweenCallback(
-            Callable.From(() => _isShotgunReloading = false)
-        );
     }
 
     public override void _Process(double delta)
