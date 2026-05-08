@@ -4,6 +4,6 @@ namespace Game.Items.Projectiles;
 
 public interface IPooledProjectile
 {
-    ProjectilePool ProjectilePool { get; set; }
-    void ReturnToPool();
+	ProjectilePool ProjectilePool { get; set; }
+	void ReturnToPool();
 }

@@ -2,8 +2,8 @@ namespace Game.Core.ECS;
 
 public enum DeathCauseEnum
 {
-    Normal,
-    Explosion,
+	Normal,
+	Explosion,
 }
 
 public readonly record struct DeathCauseComponent(DeathCauseEnum CauseEnum);

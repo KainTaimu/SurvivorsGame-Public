@@ -5,8 +5,8 @@ namespace Game.Items;
 
 public abstract partial class BaseItem : Node
 {
-    public static Player Player => GameWorld.Instance.MainPlayer;
+	public static Player Player => GameWorld.Instance.MainPlayer;
 
-    public static CharacterStats PlayerStats =>
-        GameWorld.Instance.MainPlayer.Character.CharacterStats;
+	public static CharacterStats PlayerStats =>
+		GameWorld.Instance.MainPlayer.Character.CharacterStats;
 }

@@ -6,247 +6,247 @@ using Game.Utils;
 namespace Game.Items.Offensive;
 
 public abstract partial class Firearm
-    : BaseOffensive,
-        IReloadable,
-        IManualAttack
+	: BaseOffensive,
+		IReloadable,
+		IManualAttack
 {
-    [Signal]
-    public delegate void OnReloadStartEventHandler();
+	[Signal]
+	public delegate void OnReloadStartEventHandler();
 
-    [Signal]
-    public delegate void OnReloadEndEventHandler();
+	[Signal]
+	public delegate void OnReloadEndEventHandler();
 
-    [Export]
-    private PackedScene _projectileScene = null!;
+	[Export]
+	private PackedScene _projectileScene = null!;
 
-    [Export]
-    public AudioStreamPlayer? ShootAudioPlayer;
+	[Export]
+	public AudioStreamPlayer? ShootAudioPlayer;
 
-    [Export]
-    public AudioStreamPlayer? ReloadAudioPlayer;
+	[Export]
+	public AudioStreamPlayer? ReloadAudioPlayer;
 
-    public int MagazineCapacity => FirearmStats.MagazineCapacity;
+	public int MagazineCapacity => FirearmStats.MagazineCapacity;
 
-    public int MagazineCount { get; set; }
+	public int MagazineCount { get; set; }
 
-    public bool IsReloading
-    {
-        get;
-        set
-        {
-            if (value)
-                EmitSignalOnReloadStart();
-            else
-                EmitSignalOnReloadEnd();
-            field = value;
-        }
-    }
+	public bool IsReloading
+	{
+		get;
+		set
+		{
+			if (value)
+				EmitSignalOnReloadStart();
+			else
+				EmitSignalOnReloadEnd();
+			field = value;
+		}
+	}
 
-    public bool IsReadyToShoot
-    {
-        get
-        {
-            if (FireCooldown > 0)
-                return false;
-            if (IsReloading)
-                return false;
-            if (MagazineCount <= 0)
-                return false;
-            return true;
-        }
-    }
+	public bool IsReadyToShoot
+	{
+		get
+		{
+			if (FireCooldown > 0)
+				return false;
+			if (IsReloading)
+				return false;
+			if (MagazineCount <= 0)
+				return false;
+			return true;
+		}
+	}
 
-    public FirearmStats FirearmStats => (Stats as FirearmStats)!;
+	public FirearmStats FirearmStats => (Stats as FirearmStats)!;
 
-    public string? AttackActionString { get; set; }
+	public string? AttackActionString { get; set; }
 
-    protected double FireCooldown;
+	protected double FireCooldown;
 
-    protected float ReloadTime => FirearmStats.ReloadTime;
+	protected float ReloadTime => FirearmStats.ReloadTime;
 
-    protected float BloomCoefficientDeg => FirearmStats.BloomCoefficientDeg;
+	protected float BloomCoefficientDeg => FirearmStats.BloomCoefficientDeg;
 
-    protected float HorizontalRecoilMin => FirearmStats.HorizontalRecoilMin;
+	protected float HorizontalRecoilMin => FirearmStats.HorizontalRecoilMin;
 
-    protected float HorizontalBaseRecoil => FirearmStats.HorizontalBaseRecoil;
+	protected float HorizontalBaseRecoil => FirearmStats.HorizontalBaseRecoil;
 
-    protected float HorizontalRecoilRandom =>
-        FirearmStats.HorizontalRecoilRandom;
+	protected float HorizontalRecoilRandom =>
+		FirearmStats.HorizontalRecoilRandom;
 
-    protected float VerticalRecoilMin => FirearmStats.VerticalRecoilMin;
+	protected float VerticalRecoilMin => FirearmStats.VerticalRecoilMin;
 
-    protected float VerticalBaseRecoil => FirearmStats.VerticalBaseRecoil;
+	protected float VerticalBaseRecoil => FirearmStats.VerticalBaseRecoil;
 
-    protected float VerticalRecoilRandom => FirearmStats.VerticalRecoilRandom;
+	protected float VerticalRecoilRandom => FirearmStats.VerticalRecoilRandom;
 
-    protected float RecoilScale => FirearmStats.RecoilScale;
+	protected float RecoilScale => FirearmStats.RecoilScale;
 
-    protected float RecoilAccumilationScale =>
-        FirearmStats.RecoilAccumilationScale;
+	protected float RecoilAccumilationScale =>
+		FirearmStats.RecoilAccumilationScale;
 
-    protected float CameraRecoilScale =>
-        FirearmStats.CameraRecoilScale * GameSettings.Instance.CameraShakeScale;
+	protected float CameraRecoilScale =>
+		FirearmStats.CameraRecoilScale * GameSettings.Instance.CameraShakeScale;
 
-    protected Crosshair? Crosshair => Crosshair.Instance;
+	protected Crosshair? Crosshair => Crosshair.Instance;
 
-    protected ProjectilePool ProjectilePool = null!;
+	protected ProjectilePool ProjectilePool = null!;
 
-    public override void _Ready()
-    {
-        UpdateAdditionalFields();
-        OnStatsChanged += UpdateAdditionalFields;
-        MagazineCount = FirearmStats.MagazineCapacity;
+	public override void _Ready()
+	{
+		UpdateAdditionalFields();
+		OnStatsChanged += UpdateAdditionalFields;
+		MagazineCount = FirearmStats.MagazineCapacity;
 
-        // HACK: Too lazy to add ProjectilePool for all existing Firearms.
-        // Should avoid creating nodes programatically unless for pooling
-        ProjectilePool = new ProjectilePool
-        {
-            ProjectileScene = _projectileScene,
-        };
-        AddChild(ProjectilePool);
-    }
+		// HACK: Too lazy to add ProjectilePool for all existing Firearms.
+		// Should avoid creating nodes programatically unless for pooling
+		ProjectilePool = new ProjectilePool
+		{
+			ProjectileScene = _projectileScene,
+		};
+		AddChild(ProjectilePool);
+	}
 
-    public override void Attack()
-    {
-        if (MagazineCount <= 0)
-        {
-            Reload();
-            return;
-        }
+	public override void Attack()
+	{
+		if (MagazineCount <= 0)
+		{
+			Reload();
+			return;
+		}
 
-        if (!IsReadyToShoot)
-            return;
+		if (!IsReadyToShoot)
+			return;
 
-        ShootAudioPlayer?.Play();
+		ShootAudioPlayer?.Play();
 
-        FireCooldown = Stats.AttackSpeed;
-        MagazineCount--;
+		FireCooldown = Stats.AttackSpeed;
+		MagazineCount--;
 
-        var playerVector = Player.GetCanvasTransform() * Player.Position;
+		var playerVector = Player.GetCanvasTransform() * Player.Position;
 
-        Vector2 mouseVector;
-        if (Crosshair is not null)
-        {
-            mouseVector =
-                Crosshair.PrimaryCrosshairSprite.GetCanvasTransform()
-                * Crosshair.PrimaryCrosshairSprite.GlobalPosition;
-        }
-        else
-            mouseVector = Player.GetGlobalMousePosition();
+		Vector2 mouseVector;
+		if (Crosshair is not null)
+		{
+			mouseVector =
+				Crosshair.PrimaryCrosshairSprite.GetCanvasTransform()
+				* Crosshair.PrimaryCrosshairSprite.GlobalPosition;
+		}
+		else
+			mouseVector = Player.GetGlobalMousePosition();
 
-        var rotation = playerVector.AngleToPoint(mouseVector);
+		var rotation = playerVector.AngleToPoint(mouseVector);
 
-        var bloomRad = BloomCoefficientDeg * (Math.PI / 180);
-        var bloom = (float)GD.RandRange(-bloomRad / 2, bloomRad / 2);
+		var bloomRad = BloomCoefficientDeg * (Math.PI / 180);
+		var bloom = (float)GD.RandRange(-bloomRad / 2, bloomRad / 2);
 
-        rotation += bloom;
+		rotation += bloom;
 
-        var projectile = ProjectilePool.GetProjectile();
+		var projectile = ProjectilePool.GetProjectile();
 
-        projectile.Origin = this;
-        projectile.SetScale(Vector2.One * Stats.ProjectileScaleMultiplier);
-        projectile.SetPosition(Player.Position);
-        projectile.SetRotation(rotation);
-        projectile.ProjectileSpeed = Stats.ProjectileSpeed;
-        projectile.PierceLimit = Stats.PierceLimit;
-        projectile.HitRadius = FirearmStats.ProjectileRadius;
-        projectile.Initialize();
+		projectile.Origin = this;
+		projectile.SetScale(Vector2.One * Stats.ProjectileScaleMultiplier);
+		projectile.SetPosition(Player.Position);
+		projectile.SetRotation(rotation);
+		projectile.ProjectileSpeed = Stats.ProjectileSpeed;
+		projectile.PierceLimit = Stats.PierceLimit;
+		projectile.HitRadius = FirearmStats.ProjectileRadius;
+		projectile.Initialize();
 
-        ApplyCursorRecoil();
-        EmitSignalOnAttack();
-    }
+		ApplyCursorRecoil();
+		EmitSignalOnAttack();
+	}
 
-    public virtual void Reload()
-    {
-        if (IsReloading)
-            return;
-        if (MagazineCount == MagazineCapacity)
-            return;
-        GetTree().CreateTimer(ReloadTime, false).Timeout += () =>
-        {
-            MagazineCount = MagazineCapacity;
-            IsReloading = false;
-        };
-        IsReloading = true;
-        ReloadAudioPlayer?.Play();
-    }
+	public virtual void Reload()
+	{
+		if (IsReloading)
+			return;
+		if (MagazineCount == MagazineCapacity)
+			return;
+		GetTree().CreateTimer(ReloadTime, false).Timeout += () =>
+		{
+			MagazineCount = MagazineCapacity;
+			IsReloading = false;
+		};
+		IsReloading = true;
+		ReloadAudioPlayer?.Play();
+	}
 
-    // BUG:
-    // Extreme recoil due to accumilated impulse in Crosshair recoil system
-    // if shooting two high recoil weapons at once
-    protected void ApplyCursorRecoil()
-    {
-        if (Crosshair is null)
-            return;
+	// BUG:
+	// Extreme recoil due to accumilated impulse in Crosshair recoil system
+	// if shooting two high recoil weapons at once
+	protected void ApplyCursorRecoil()
+	{
+		if (Crosshair is null)
+			return;
 
-        var recoilX = (float)
-            GD.Randfn(
-                0,
-                HorizontalBaseRecoil
-                    + GD.RandRange(
-                        -HorizontalRecoilRandom,
-                        HorizontalRecoilRandom
-                    )
-            );
-        recoilX = Math.Clamp(
-            recoilX,
-            -Math.Abs(HorizontalRecoilMin),
-            float.MaxValue
-        );
+		var recoilX = (float)
+			GD.Randfn(
+				0,
+				HorizontalBaseRecoil
+					+ GD.RandRange(
+						-HorizontalRecoilRandom,
+						HorizontalRecoilRandom
+					)
+			);
+		recoilX = Math.Clamp(
+			recoilX,
+			-Math.Abs(HorizontalRecoilMin),
+			float.MaxValue
+		);
 
-        var recoilY =
-            VerticalBaseRecoil
-            + Math.Abs((float)GD.Randfn(0, VerticalRecoilRandom));
-        recoilY = Math.Clamp(recoilY, VerticalRecoilMin, float.MaxValue);
+		var recoilY =
+			VerticalBaseRecoil
+			+ Math.Abs((float)GD.Randfn(0, VerticalRecoilRandom));
+		recoilY = Math.Clamp(recoilY, VerticalRecoilMin, float.MaxValue);
 
-        var recoil = new Vector2(recoilX, -recoilY) * RecoilScale;
-        Crosshair.Recoil.ApplyImpulse(recoil);
-    }
+		var recoil = new Vector2(recoilX, -recoilY) * RecoilScale;
+		Crosshair.Recoil.ApplyImpulse(recoil);
+	}
 
-    // TODO: Move camera recoil to a method in PlayerCameraController
-    // and have this call that instead.
-    protected void ApplyCameraRecoil()
-    {
-        if (!GameSettings.Instance.EnableCameraShake)
-            return;
-        if (CameraRecoilScale == 0)
-            return;
+	// TODO: Move camera recoil to a method in PlayerCameraController
+	// and have this call that instead.
+	protected void ApplyCameraRecoil()
+	{
+		if (!GameSettings.Instance.EnableCameraShake)
+			return;
+		if (CameraRecoilScale == 0)
+			return;
 
-        var camera = GetViewport().GetCamera2D();
+		var camera = GetViewport().GetCamera2D();
 
-        var origPos = camera.Position;
-        var tween = CreateTween().SetTrans(Tween.TransitionType.Spring);
+		var origPos = camera.Position;
+		var tween = CreateTween().SetTrans(Tween.TransitionType.Spring);
 
-        for (var i = 0; i < 6; i++)
-        {
-            static int Rand()
-            {
-                return GD.RandRange(-1, 1);
-            }
+		for (var i = 0; i < 6; i++)
+		{
+			static int Rand()
+			{
+				return GD.RandRange(-1, 1);
+			}
 
-            var shake =
-                new Vector2(Rand(), Rand())
-                * GD.RandRange(4, 9)
-                * CameraRecoilScale;
+			var shake =
+				new Vector2(Rand(), Rand())
+				* GD.RandRange(4, 9)
+				* CameraRecoilScale;
 
-            tween.TweenProperty(
-                camera,
-                "offset",
-                camera.Position + shake,
-                1 / 30f
-            );
-        }
+			tween.TweenProperty(
+				camera,
+				"offset",
+				camera.Position + shake,
+				1 / 30f
+			);
+		}
 
-        tween.TweenProperty(camera, "offset", origPos, 1 / 8f);
-    }
+		tween.TweenProperty(camera, "offset", origPos, 1 / 8f);
+	}
 
-    private void UpdateAdditionalFields()
-    {
-        FireCooldown = 0;
+	private void UpdateAdditionalFields()
+	{
+		FireCooldown = 0;
 
-        Logger.LogDebug(
-            "Updated Stats\n",
-            ClassInspector.GetClassPropertiesString(Stats)
-        );
-    }
+		Logger.LogDebug(
+			"Updated Stats\n",
+			ClassInspector.GetClassPropertiesString(Stats)
+		);
+	}
 }

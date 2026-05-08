@@ -2,5 +2,5 @@ namespace Game.Models;
 
 public interface IEffect
 {
-    float TimeLeft { get; set; }
+	float TimeLeft { get; set; }
 }

@@ -8,93 +8,94 @@ namespace Game.Items.Offensive;
 
 public partial class Grenade : RigidBody2D
 {
-    public BaseOffensive OffensiveOrigin = null!;
+	public BaseOffensive OffensiveOrigin = null!;
 
-    private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
+	private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
 
-    private EntityComponentStore ComponentStore =>
-        EntityComponentStore.Instance;
+	private EntityComponentStore ComponentStore =>
+		EntityComponentStore.Instance;
 
-    private double _t;
+	private double _t;
 
-    private float TimeToExplode =>
-        OffensiveOrigin
-            .Stats.Additional.GetValueOrDefault("TimeToExplode")
-            .AsSingle();
-    private float CameraRecoilScale =>
-        OffensiveOrigin
-            .Stats.Additional.GetValueOrDefault("CameraRecoilScale")
-            .AsSingle();
+	private float TimeToExplode =>
+		OffensiveOrigin
+			.Stats.Additional.GetValueOrDefault("TimeToExplode")
+			.AsSingle();
 
-    public override void _Ready()
-    {
-        _t = TimeToExplode;
-    }
+	private float CameraRecoilScale =>
+		OffensiveOrigin
+			.Stats.Additional.GetValueOrDefault("CameraRecoilScale")
+			.AsSingle();
 
-    public override void _Process(double delta)
-    {
-        _t -= delta;
+	public override void _Ready()
+	{
+		_t = TimeToExplode;
+	}
 
-        if (Engine.GetProcessFrames() % 10 != 0)
-            return;
+	public override void _Process(double delta)
+	{
+		_t -= delta;
 
-        TargetQuery.TryGetTargetsInArea(
-            Position,
-            OffensiveOrigin.Stats.ProjectileRadius,
-            out var ids
-        );
+		if (Engine.GetProcessFrames() % 10 != 0)
+			return;
 
-        if (ids.Count() > 6 && _t < 0.1f)
-        {
-            foreach (var id in ids)
-                OffensiveOrigin.HandleHit(id: id);
-            ApplyCameraRecoil();
-            QueueFree();
-        }
+		TargetQuery.TryGetTargetsInArea(
+			Position,
+			OffensiveOrigin.Stats.ProjectileRadius,
+			out var ids
+		);
 
-        if (_t <= 0)
-        {
-            foreach (var id in ids)
-                OffensiveOrigin.HandleHit(id: id);
-            ApplyCameraRecoil();
-            QueueFree();
-        }
-    }
+		if (ids.Count() > 6 && _t < 0.1f)
+		{
+			foreach (var id in ids)
+				OffensiveOrigin.HandleHit(id: id);
+			ApplyCameraRecoil();
+			QueueFree();
+		}
 
-    private void ApplyCameraRecoil()
-    {
-        if (!GameSettings.Instance.EnableCameraShake)
-            return;
-        if (CameraRecoilScale == 0)
-            return;
+		if (_t <= 0)
+		{
+			foreach (var id in ids)
+				OffensiveOrigin.HandleHit(id: id);
+			ApplyCameraRecoil();
+			QueueFree();
+		}
+	}
 
-        var camera = GetViewport().GetCamera2D();
+	private void ApplyCameraRecoil()
+	{
+		if (!GameSettings.Instance.EnableCameraShake)
+			return;
+		if (CameraRecoilScale == 0)
+			return;
 
-        var origPos = camera.Position;
-        var tween = GetTree()
-            .CreateTween()
-            .SetTrans(Tween.TransitionType.Spring);
+		var camera = GetViewport().GetCamera2D();
 
-        for (var i = 0; i < 6; i++)
-        {
-            static int Rand()
-            {
-                return GD.RandRange(-1, 1);
-            }
+		var origPos = camera.Position;
+		var tween = GetTree()
+			.CreateTween()
+			.SetTrans(Tween.TransitionType.Spring);
 
-            var shake =
-                new Vector2(Rand(), Rand())
-                * GD.RandRange(4, 9)
-                * CameraRecoilScale;
+		for (var i = 0; i < 6; i++)
+		{
+			static int Rand()
+			{
+				return GD.RandRange(-1, 1);
+			}
 
-            tween.TweenProperty(
-                camera,
-                "offset",
-                camera.Position + shake,
-                1 / 30f
-            );
-        }
+			var shake =
+				new Vector2(Rand(), Rand())
+				* GD.RandRange(4, 9)
+				* CameraRecoilScale;
 
-        tween.TweenProperty(camera, "offset", origPos, 1 / 8f);
-    }
+			tween.TweenProperty(
+				camera,
+				"offset",
+				camera.Position + shake,
+				1 / 30f
+			);
+		}
+
+		tween.TweenProperty(camera, "offset", origPos, 1 / 8f);
+	}
 }

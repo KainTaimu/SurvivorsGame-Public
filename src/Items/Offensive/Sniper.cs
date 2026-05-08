@@ -7,130 +7,130 @@ namespace Game.Items.Offensive;
 
 public partial class Sniper : Firearm
 {
-    private double MoveTime
-    {
-        get;
-        set => field = Math.Clamp(value, 0, MoveTimeToMaxBloom);
-    }
+	private double MoveTime
+	{
+		get;
+		set => field = Math.Clamp(value, 0, MoveTimeToMaxBloom);
+	}
 
-    private double MoveTimeFactor =>
-        MoveTime
-        / (MoveTimeToMaxBloom != 0 ? MoveTimeToMaxBloom : 1 / double.MaxValue);
+	private double MoveTimeFactor =>
+		MoveTime
+		/ (MoveTimeToMaxBloom != 0 ? MoveTimeToMaxBloom : 1 / double.MaxValue);
 
-    private double MoveTimeToMaxBloom =>
-        Stats.Additional["MoveTimeToMaxBloom"].AsDouble();
+	private double MoveTimeToMaxBloom =>
+		Stats.Additional["MoveTimeToMaxBloom"].AsDouble();
 
-    private double MoveBloomGrowthRate =>
-        Stats.Additional["MoveTimeGrowthRate"].AsDouble();
+	private double MoveBloomGrowthRate =>
+		Stats.Additional["MoveTimeGrowthRate"].AsDouble();
 
-    private double MoveBloomShrinkRate =>
-        Stats.Additional["MoveTimeShrinkRate"].AsDouble();
+	private double MoveBloomShrinkRate =>
+		Stats.Additional["MoveTimeShrinkRate"].AsDouble();
 
-    private double MoveBloomMinDeg =>
-        Stats.Additional["MoveBloomMinDeg"].AsDouble();
+	private double MoveBloomMinDeg =>
+		Stats.Additional["MoveBloomMinDeg"].AsDouble();
 
-    private double MoveBloomMaxDeg =>
-        Stats.Additional["MoveBloomMaxDeg"].AsDouble();
+	private double MoveBloomMaxDeg =>
+		Stats.Additional["MoveBloomMaxDeg"].AsDouble();
 
-    private double MoveDamageMin =>
-        Stats.Additional["MoveDamageMin"].AsDouble();
+	private double MoveDamageMin =>
+		Stats.Additional["MoveDamageMin"].AsDouble();
 
-    private double MoveDamageMax =>
-        Stats.Additional["MoveDamageMax"].AsDouble();
+	private double MoveDamageMax =>
+		Stats.Additional["MoveDamageMax"].AsDouble();
 
-    private PlayerMovementController MovementController =>
-        GameWorld.Instance.MainPlayer.MovementController;
+	private PlayerMovementController MovementController =>
+		GameWorld.Instance.MainPlayer.MovementController;
 
-    public override void _Ready()
-    {
-        base._Ready();
-        OnAttack += ApplyCameraRecoil;
-    }
+	public override void _Ready()
+	{
+		base._Ready();
+		OnAttack += ApplyCameraRecoil;
+	}
 
-    public override void _Process(double delta)
-    {
-        FireCooldown -= delta;
+	public override void _Process(double delta)
+	{
+		FireCooldown -= delta;
 
-        UpdateMoveTimeBloom(delta);
+		UpdateMoveTimeBloom(delta);
 
-        if (Input.IsActionPressed(InputMapNames.WeaponReload))
-        {
-            Reload();
-            return;
-        }
+		if (Input.IsActionPressed(InputMapNames.WeaponReload))
+		{
+			Reload();
+			return;
+		}
 
-        if (
-            !Input.IsActionPressed(
-                AttackActionString ?? InputMapNames.PrimaryAttack
-            )
-        )
-            return;
+		if (
+			!Input.IsActionPressed(
+				AttackActionString ?? InputMapNames.PrimaryAttack
+			)
+		)
+			return;
 
-        if (IsReadyToShoot)
-        {
-            Stats.CritChanceProportion = (float)(1 - MoveTimeFactor);
-            Stats.Damage = (int)
-                Math.Clamp(
-                    MoveDamageMax * (1 - MoveTimeFactor),
-                    MoveDamageMin,
-                    MoveDamageMax
-                );
-        }
+		if (IsReadyToShoot)
+		{
+			Stats.CritChanceProportion = (float)(1 - MoveTimeFactor);
+			Stats.Damage = (int)
+				Math.Clamp(
+					MoveDamageMax * (1 - MoveTimeFactor),
+					MoveDamageMin,
+					MoveDamageMax
+				);
+		}
 
-        AttackWithMoveTimeBloom(FirearmStats);
-    }
+		AttackWithMoveTimeBloom(FirearmStats);
+	}
 
-    private void AttackWithMoveTimeBloom(FirearmStats firearmStats)
-    {
-        var bloom = MoveBloomMaxDeg * MoveTimeFactor;
-        bloom = Math.Clamp(bloom, MoveBloomMinDeg, MoveBloomMaxDeg);
+	private void AttackWithMoveTimeBloom(FirearmStats firearmStats)
+	{
+		var bloom = MoveBloomMaxDeg * MoveTimeFactor;
+		bloom = Math.Clamp(bloom, MoveBloomMinDeg, MoveBloomMaxDeg);
 
-        firearmStats.BloomCoefficientDeg = (float)bloom;
-        Attack();
-    }
+		firearmStats.BloomCoefficientDeg = (float)bloom;
+		Attack();
+	}
 
-    private void UpdateMoveTimeBloom(double delta)
-    {
-        if (
-            MovementController.Velocity.LengthSquared() > 0
-            || Crosshair?.CrosshairVelocity.LengthSquared() > 0
-        )
-            MoveTime += delta * MoveBloomGrowthRate;
-        else
-            MoveTime -= delta * MoveBloomShrinkRate;
+	private void UpdateMoveTimeBloom(double delta)
+	{
+		if (
+			MovementController.Velocity.LengthSquared() > 0
+			|| Crosshair?.CrosshairVelocity.LengthSquared() > 0
+		)
+			MoveTime += delta * MoveBloomGrowthRate;
+		else
+			MoveTime -= delta * MoveBloomShrinkRate;
 
-        SpreadCrosshair((float)MoveTimeFactor);
-    }
+		SpreadCrosshair((float)MoveTimeFactor);
+	}
 
-    private void SpreadCrosshair(float spreadRatio)
-    {
-        if (AttackActionString is null)
-        {
-            Crosshair?.ChangePrimaryCrosshairSpread(spreadRatio);
-            return;
-        }
+	private void SpreadCrosshair(float spreadRatio)
+	{
+		if (AttackActionString is null)
+		{
+			Crosshair?.ChangePrimaryCrosshairSpread(spreadRatio);
+			return;
+		}
 
-        if (AttackActionString == InputMapNames.PrimaryAttack)
-            Crosshair?.ChangePrimaryCrosshairSpread(spreadRatio);
-        else if (AttackActionString == InputMapNames.SecondaryAttack)
-            Crosshair?.ChangeSecondaryCrosshairSpread(spreadRatio);
-        else
-            Crosshair?.ChangePrimaryCrosshairSpread(spreadRatio);
-    }
+		if (AttackActionString == InputMapNames.PrimaryAttack)
+			Crosshair?.ChangePrimaryCrosshairSpread(spreadRatio);
+		else if (AttackActionString == InputMapNames.SecondaryAttack)
+			Crosshair?.ChangeSecondaryCrosshairSpread(spreadRatio);
+		else
+			Crosshair?.ChangePrimaryCrosshairSpread(spreadRatio);
+	}
 
-    protected override void HandleHitECS(int id)
-    {
-        if (!ComponentStore.GetComponent<PositionComponent>(id, out var pos))
-            return;
-        var knockback = Stats
-            .Additional.GetValueOrDefault("Knockback")
-            .AsSingle();
-        var knockbackVector = Player.GlobalPosition.DirectionTo(pos.Position);
-        knockbackVector *= knockback;
+	protected override void HandleHitECS(int id)
+	{
+		if (!ComponentStore.GetComponent<PositionComponent>(id, out var pos))
+			return;
+		var knockback = Stats
+			.Additional.GetValueOrDefault("Knockback")
+			.AsSingle();
+		var knockbackVector = Player.GlobalPosition.DirectionTo(pos.Position);
+		knockbackVector *= knockback;
 
-        ComponentStore.SetComponent(
-            id,
-            new PositionComponent(Position: pos.Position + knockbackVector)
-        );
-    }
+		ComponentStore.SetComponent(
+			id,
+			new PositionComponent(pos.Position + knockbackVector)
+		);
+	}
 }
