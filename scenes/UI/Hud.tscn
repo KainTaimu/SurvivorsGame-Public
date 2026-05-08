@@ -11,11 +11,11 @@ font_size = 24
 [sub_resource type="LabelSettings" id="LabelSettings_bg4j7"]
 font_size = 24
 
-[node name="HUD" type="CanvasLayer" unique_id=1626912566 node_paths=PackedStringArray("PlayerHealthLabel", "EnemyCountLabel", "MoneyLabel")]
+[node name="HUD" type="CanvasLayer" unique_id=1626912566 node_paths=PackedStringArray("_playerHealthLabel", "_enemyCountLabel", "_moneyLabel")]
 script = ExtResource("1_47idg")
-PlayerHealthLabel = NodePath("VBoxContainer/Label")
-EnemyCountLabel = NodePath("VBoxContainer/Label2")
-MoneyLabel = NodePath("Label")
+_playerHealthLabel = NodePath("VBoxContainer/Label")
+_enemyCountLabel = NodePath("VBoxContainer/Label2")
+_moneyLabel = NodePath("Label")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1180246057]
 anchors_preset = 15
