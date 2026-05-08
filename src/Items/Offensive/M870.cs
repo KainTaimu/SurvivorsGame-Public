@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Game.Items.Projectiles;
 
 namespace Game.Items.Offensive;
 
@@ -64,7 +65,7 @@ public partial class M870 : Firearm
 
             var rotation = baseRotation + bloom;
 
-            var projectile = ProjectilePool.GetProjectile();
+            var projectile = (BaseProjectile)ProjectilePool.GetProjectile();
 
             projectile.Origin = this;
             projectile.SetScale(Vector2.One * Stats.ProjectileScaleMultiplier);

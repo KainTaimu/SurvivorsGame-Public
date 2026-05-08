@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://d1nqrtaecqgq7"]
 
-[ext_resource type="Script" uid="uid://bh0y8e3kwml5r" path="res://src/Items/Offensive/Grenade.cs" id="1_0cjwe"]
+[ext_resource type="Script" uid="uid://bh0y8e3kwml5r" path="res://src/Items/Projectiles/Grenade.cs" id="1_0cjwe"]
 [ext_resource type="Texture2D" uid="uid://b4m51u8lfnpny" path="res://assets/Sprites/grenade_hot.png" id="2_0cjwe"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tmchr"]

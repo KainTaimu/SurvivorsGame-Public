@@ -1,4 +1,5 @@
 using Game.Core.Settings;
+using Game.Items.Projectiles;
 using Game.Levels.Controllers;
 using Game.Players;
 using Game.UI;
@@ -149,7 +150,7 @@ public abstract partial class Firearm
 
         rotation += bloom;
 
-        var projectile = ProjectilePool.GetProjectile();
+        var projectile = (BaseProjectile)ProjectilePool.GetProjectile();
 
         projectile.Origin = this;
         projectile.SetScale(Vector2.One * Stats.ProjectileScaleMultiplier);

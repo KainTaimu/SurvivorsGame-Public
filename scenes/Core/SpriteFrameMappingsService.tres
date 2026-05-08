@@ -3,8 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://cld7o2wop1s72" path="res://assets/Enemies/duck_run.png" id="1_5ouet"]
 [ext_resource type="Script" uid="uid://bnoq5noicfau6" path="res://src/Levels/Controllers/FodderEnemySpriteInfo.cs" id="2_xcs0u"]
 [ext_resource type="Script" uid="uid://s7wc6pn7yuev" path="res://src/Core/Services/SpriteFrameMappingsService.cs" id="3_5ouet"]
-[ext_resource type="Texture2D" uid="uid://dgbqs3nq7mvej" path="res://assets/Enemies/shondo_desat.png" id="3_xcs0u"]
-[ext_resource type="Texture2D" uid="uid://c2rtfggucpya6" path="res://assets/Enemies/vanoss_run_desat.png" id="4_5ouet"]
+[ext_resource type="Texture2D" uid="uid://coljm8hobe4v6" path="res://assets/Players/shondo.png" id="3_xcs0u"]
+[ext_resource type="Texture2D" uid="uid://xp5sa420xcnt" path="res://assets/Enemies/vanoss_run.png" id="4_l6vn6"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_sangk"]
 size = Vector2(32, 32)
@@ -29,7 +29,7 @@ metadata/_custom_type_script = "uid://bnoq5noicfau6"
 
 [sub_resource type="Resource" id="Resource_0uk3q"]
 script = ExtResource("2_xcs0u")
-SpriteFrames = ExtResource("4_5ouet")
+SpriteFrames = ExtResource("4_l6vn6")
 SpriteName = "vanoss"
 AnimationSpeed = 0.1
 FrameCountX = 4

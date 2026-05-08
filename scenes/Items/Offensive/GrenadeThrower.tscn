@@ -18,6 +18,10 @@ CritChanceProportion = 0.94
 ProjectileRadius = 200
 AttackSpeed = 0.2
 PierceLimit = 999
+Additional = Dictionary[String, Variant]({
+"CameraRecoilScale": 4.0,
+"TimeToExplode": 0.5
+})
 metadata/_custom_type_script = "uid://os8ycjo6m7r0"
 
 [node name="GrenadeThrower" type="Node2D" unique_id=1000269585]

@@ -1,3 +1,4 @@
+using Game.Levels.Controllers;
 using Game.UI;
 
 namespace Game.Items.Offensive;
@@ -14,6 +15,14 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 
     private Crosshair? Crosshair => Crosshair.Instance;
     private double _fireCooldown;
+
+    private ProjectilePool _projectilePool = null!;
+
+    public override void _Ready()
+    {
+        _projectilePool = new ProjectilePool { ProjectileScene = GrenadeScene };
+        AddChild(_projectilePool);
+    }
 
     public override void _Process(double delta)
     {
@@ -50,6 +59,7 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
                 Mathf.Sin(Crosshair.AngleFromPlayer)
             ) * ThrowForce;
         nade.ApplyImpulse(force);
-        AddChild(nade);
+        // GetParent().AddChild(nade);
+        GetTree().Root.CallDeferred(Window.MethodName.AddChild, nade);
     }
 }
