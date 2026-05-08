@@ -75,7 +75,7 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
         foreach (var id in ids)
         {
             if (_hits.Contains(id))
-                return;
+                continue;
 
             if (
                 !ComponentStore.GetComponent<PositionComponent>(
@@ -83,7 +83,7 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
                     out var lastPos
                 )
             )
-                return;
+                continue;
 
             Callable
                 .From(() =>
