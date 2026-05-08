@@ -7,43 +7,40 @@ namespace Game.Items.Offensive;
 
 public partial class Grenade : RigidBody2D
 {
-	public BaseOffensive OffensiveOrigin = null!;
+    public BaseOffensive OffensiveOrigin = null!;
 
-	private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
-	private EntityComponentStore ComponentStore =>
-		EntityComponentStore.Instance;
+    private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
 
-	private readonly HashSet<int> _hits = [];
-	private double _t = 0.5;
+    private EntityComponentStore ComponentStore =>
+        EntityComponentStore.Instance;
 
-	public override void _Process(double delta)
-	{
-		_t -= delta;
+    private readonly HashSet<int> _hits = [];
+    private double _t = 0.5;
 
-		TargetQuery.TryGetTargetsInArea(
-			Position,
-			OffensiveOrigin.Stats.ProjectileRadius,
-			out var ids
-		);
+    public override void _Process(double delta)
+    {
+        _t -= delta;
 
-		if (ids.Count() > 6 && _t < 0.1f)
-		{
-			foreach (var id in ids)
-			{
-				OffensiveOrigin.HandleHit(id: id);
-			}
-			QueueFree();
-		}
+        TargetQuery.TryGetTargetsInArea(
+            Position,
+            OffensiveOrigin.Stats.ProjectileRadius,
+            out var ids
+        );
 
-		if (_t <= 0)
-		{
-			Logger.LogDebug(string.Join(", ", ids));
+        if (ids.Count() > 6 && _t < 0.1f)
+        {
+            foreach (var id in ids)
+                OffensiveOrigin.HandleHit(id: id);
+            QueueFree();
+        }
 
-			foreach (var id in ids)
-			{
-				OffensiveOrigin.HandleHit(id: id);
-			}
-			QueueFree();
-		}
-	}
+        if (_t <= 0)
+        {
+            Logger.LogDebug(string.Join(", ", ids));
+
+            foreach (var id in ids)
+                OffensiveOrigin.HandleHit(id: id);
+            QueueFree();
+        }
+    }
 }

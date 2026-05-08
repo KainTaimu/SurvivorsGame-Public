@@ -2,8 +2,8 @@ namespace Game.Core;
 
 public enum EnemyType
 {
-	None,
-	Fodder,
-	Smart,
-	Boss,
+    None,
+    Fodder,
+    Smart,
+    Boss,
 }

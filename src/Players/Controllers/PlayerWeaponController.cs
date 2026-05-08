@@ -8,205 +8,209 @@ namespace Game.Players.Controllers;
 // zooming in with snipers or locking on target with missile?
 public partial class PlayerWeaponController : Node
 {
-	[Signal]
-	public delegate void OnOffensiveListChangedEventHandler(
-		BaseOffensive newOffensive
-	);
+    [Signal]
+    public delegate void OnOffensiveListChangedEventHandler(
+        BaseOffensive newOffensive
+    );
 
-	[Signal]
-	public delegate void OnPrimaryAttackReassignedEventHandler();
+    [Signal]
+    public delegate void OnPrimaryAttackReassignedEventHandler();
 
-	[Signal]
-	public delegate void OnSecondaryAttackReassignedEventHandler();
+    [Signal]
+    public delegate void OnSecondaryAttackReassignedEventHandler();
 
-	public IManualAttack? PrimaryAttack
-	{
-		get;
-		private set
-		{
-			field = value;
-			EmitSignalOnPrimaryAttackReassigned();
-		}
-	}
-	public IManualAttack? SecondaryAttack
-	{
-		get;
-		private set
-		{
-			field = value;
-			if (field is not null)
-				EmitSignalOnSecondaryAttackReassigned();
-		}
-	}
+    public IManualAttack? PrimaryAttack
+    {
+        get;
+        private set
+        {
+            field = value;
+            EmitSignalOnPrimaryAttackReassigned();
+        }
+    }
 
-	public readonly List<BaseOffensive> Offensives = [];
-	public readonly List<BaseOffensive> AutomaticOffensives = [];
-	public readonly List<IManualAttack> ManualOffensives = [];
+    public IManualAttack? SecondaryAttack
+    {
+        get;
+        private set
+        {
+            field = value;
+            if (field is not null)
+                EmitSignalOnSecondaryAttackReassigned();
+        }
+    }
 
-	public override void _Ready()
-	{
-		ChildOrderChanged += InitializeWeaponNodes;
-		InitializeWeaponNodes();
-	}
+    public readonly List<BaseOffensive> Offensives = [];
+    public readonly List<BaseOffensive> AutomaticOffensives = [];
+    public readonly List<IManualAttack> ManualOffensives = [];
 
-	private void InitializeWeaponNodes()
-	{
-		if (PrimaryAttack is not null)
-			DisableManualOffensive(PrimaryAttack);
-		if (SecondaryAttack is not null)
-			DisableManualOffensive(SecondaryAttack);
-		PrimaryAttack = null;
-		SecondaryAttack = null;
+    public override void _Ready()
+    {
+        ChildOrderChanged += InitializeWeaponNodes;
+        InitializeWeaponNodes();
+    }
 
-		Offensives.Clear();
-		AutomaticOffensives.Clear();
-		ManualOffensives.Clear();
-		foreach (var node in GetChildren())
-		{
-			if (node is not BaseOffensive offensive)
-				continue;
+    private void InitializeWeaponNodes()
+    {
+        if (PrimaryAttack is not null)
+            DisableManualOffensive(PrimaryAttack);
+        if (SecondaryAttack is not null)
+            DisableManualOffensive(SecondaryAttack);
+        PrimaryAttack = null;
+        SecondaryAttack = null;
 
-			switch (offensive)
-			{
-				case IManualAttack:
-					AddManualOffensive(offensive);
-					break;
-				case IAutomaticAttack:
-					throw new NotImplementedException();
-			}
-		}
-	}
+        Offensives.Clear();
+        AutomaticOffensives.Clear();
+        ManualOffensives.Clear();
+        foreach (var node in GetChildren())
+        {
+            if (node is not BaseOffensive offensive)
+                continue;
 
-	private void AddManualOffensive(BaseOffensive offensive)
-	{
-		AutomaticOffensives.Add(offensive);
-		if (offensive is not IManualAttack manualAttack)
-			return;
+            switch (offensive)
+            {
+                case IManualAttack:
+                    AddManualOffensive(offensive);
+                    break;
+                case IAutomaticAttack:
+                    throw new NotImplementedException();
+            }
+        }
+    }
 
-		if (PrimaryAttack is null)
-		{
-			manualAttack.AttackActionString = InputMapNames.PrimaryAttack;
-			offensive.ProcessMode = ProcessModeEnum.Inherit;
-			PrimaryAttack = manualAttack;
-		}
-		else if (SecondaryAttack is null)
-		{
-			manualAttack.AttackActionString = InputMapNames.SecondaryAttack;
-			offensive.ProcessMode = ProcessModeEnum.Inherit;
-			SecondaryAttack = manualAttack;
-		}
-		else
-		{
-			offensive.ProcessMode = ProcessModeEnum.Disabled;
-		}
-		ManualOffensives.Add(manualAttack);
-		Offensives.Add(offensive);
-		EmitSignalOnOffensiveListChanged(offensive);
-	}
+    private void AddManualOffensive(BaseOffensive offensive)
+    {
+        AutomaticOffensives.Add(offensive);
+        if (offensive is not IManualAttack manualAttack)
+            return;
 
-	public override void _Input(InputEvent @event)
-	{
-		if (@event is not InputEventMouseButton motion)
-			return;
-		if (@event.IsReleased())
-			return;
+        if (PrimaryAttack is null)
+        {
+            manualAttack.AttackActionString = InputMapNames.PrimaryAttack;
+            offensive.ProcessMode = ProcessModeEnum.Inherit;
+            PrimaryAttack = manualAttack;
+        }
+        else if (SecondaryAttack is null)
+        {
+            manualAttack.AttackActionString = InputMapNames.SecondaryAttack;
+            offensive.ProcessMode = ProcessModeEnum.Inherit;
+            SecondaryAttack = manualAttack;
+        }
+        else
+            offensive.ProcessMode = ProcessModeEnum.Disabled;
 
-		switch (motion.ButtonIndex)
-		{
-			case MouseButton.WheelUp:
-				NextManualAttack();
-				break;
-			case MouseButton.WheelDown:
-				PreviousManualAttack();
-				break;
-		}
-	}
+        ManualOffensives.Add(manualAttack);
+        Offensives.Add(offensive);
+        EmitSignalOnOffensiveListChanged(offensive);
+    }
 
-	private void NextManualAttack()
-	{
-		if (PrimaryAttack is null || SecondaryAttack is null)
-			return;
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is not InputEventMouseButton motion)
+            return;
+        if (@event.IsReleased())
+            return;
 
-		if (ManualOffensives.Count == 2)
-		{
-			// csharpier-ignore
-			(PrimaryAttack.AttackActionString, SecondaryAttack.AttackActionString) =
-			(
-				SecondaryAttack.AttackActionString, PrimaryAttack.AttackActionString
-			);
-			(PrimaryAttack, SecondaryAttack) = (SecondaryAttack, PrimaryAttack);
-			return;
-		}
+        switch (motion.ButtonIndex)
+        {
+            case MouseButton.WheelUp:
+                NextManualAttack();
+                break;
+            case MouseButton.WheelDown:
+                PreviousManualAttack();
+                break;
+        }
+    }
 
-		var oldPrimary = PrimaryAttack;
-		oldPrimary.AttackActionString = null;
-		DisableManualOffensive(oldPrimary);
+    private void NextManualAttack()
+    {
+        if (PrimaryAttack is null || SecondaryAttack is null)
+            return;
 
-		var newPrimary = SecondaryAttack;
-		var newSecondary = ManualOffensives[2];
+        if (ManualOffensives.Count == 2)
+        {
+            // csharpier-ignore
+            (PrimaryAttack.AttackActionString,
+                    SecondaryAttack.AttackActionString) =
+                (
+                    SecondaryAttack.AttackActionString,
+                    PrimaryAttack.AttackActionString
+                );
+            (PrimaryAttack, SecondaryAttack) = (SecondaryAttack, PrimaryAttack);
+            return;
+        }
 
-		ManualOffensives.RemoveAt(0);
-		ManualOffensives.Add(oldPrimary);
+        var oldPrimary = PrimaryAttack;
+        oldPrimary.AttackActionString = null;
+        DisableManualOffensive(oldPrimary);
 
-		PrimaryAttack = newPrimary;
-		PrimaryAttack.AttackActionString = InputMapNames.PrimaryAttack;
-		SecondaryAttack = newSecondary;
-		SecondaryAttack.AttackActionString = InputMapNames.SecondaryAttack;
+        var newPrimary = SecondaryAttack;
+        var newSecondary = ManualOffensives[2];
 
-		EnableManualOffensive(newSecondary);
-	}
+        ManualOffensives.RemoveAt(0);
+        ManualOffensives.Add(oldPrimary);
 
-	private void PreviousManualAttack()
-	{
-		if (PrimaryAttack is null || SecondaryAttack is null)
-			return;
+        PrimaryAttack = newPrimary;
+        PrimaryAttack.AttackActionString = InputMapNames.PrimaryAttack;
+        SecondaryAttack = newSecondary;
+        SecondaryAttack.AttackActionString = InputMapNames.SecondaryAttack;
 
-		if (ManualOffensives.Count == 2)
-		{
-			// csharpier-ignore
-			(PrimaryAttack.AttackActionString, SecondaryAttack.AttackActionString) =
-			(
-				SecondaryAttack.AttackActionString, PrimaryAttack.AttackActionString
-			);
-			(PrimaryAttack, SecondaryAttack) = (SecondaryAttack, PrimaryAttack);
-			return;
-		}
+        EnableManualOffensive(newSecondary);
+    }
 
-		var oldSecondary = SecondaryAttack;
-		oldSecondary.AttackActionString = null;
-		DisableManualOffensive(oldSecondary);
+    private void PreviousManualAttack()
+    {
+        if (PrimaryAttack is null || SecondaryAttack is null)
+            return;
 
-		var oldPrimary = PrimaryAttack;
-		var newPrimary = ManualOffensives.Last();
+        if (ManualOffensives.Count == 2)
+        {
+            // csharpier-ignore
+            (PrimaryAttack.AttackActionString,
+                    SecondaryAttack.AttackActionString) =
+                (
+                    SecondaryAttack.AttackActionString,
+                    PrimaryAttack.AttackActionString
+                );
+            (PrimaryAttack, SecondaryAttack) = (SecondaryAttack, PrimaryAttack);
+            return;
+        }
 
-		ManualOffensives.RemoveAt(ManualOffensives.Count - 1);
-		ManualOffensives.Insert(0, newPrimary);
+        var oldSecondary = SecondaryAttack;
+        oldSecondary.AttackActionString = null;
+        DisableManualOffensive(oldSecondary);
 
-		PrimaryAttack = newPrimary;
-		PrimaryAttack.AttackActionString = InputMapNames.PrimaryAttack;
-		SecondaryAttack = oldPrimary;
-		SecondaryAttack.AttackActionString = InputMapNames.SecondaryAttack;
+        var oldPrimary = PrimaryAttack;
+        var newPrimary = ManualOffensives.Last();
 
-		EnableManualOffensive(newPrimary);
-	}
+        ManualOffensives.RemoveAt(ManualOffensives.Count - 1);
+        ManualOffensives.Insert(0, newPrimary);
 
-	// NOTE:
-	// May break if the nodes ProcessMode is was not originally
-	// Inherit
-	private void EnableManualOffensive(IManualAttack manual)
-	{
-		var node = (manual as Node)!;
-		node.ProcessMode = ProcessModeEnum.Inherit;
-		if (node is Node2D node2D)
-			node2D.Show();
-	}
+        PrimaryAttack = newPrimary;
+        PrimaryAttack.AttackActionString = InputMapNames.PrimaryAttack;
+        SecondaryAttack = oldPrimary;
+        SecondaryAttack.AttackActionString = InputMapNames.SecondaryAttack;
 
-	private void DisableManualOffensive(IManualAttack manual)
-	{
-		var node = (manual as Node)!;
-		manual.AttackActionString = null;
-		node.ProcessMode = ProcessModeEnum.Disabled;
-		if (node is Node2D node2D)
-			node2D.Hide();
-	}
+        EnableManualOffensive(newPrimary);
+    }
+
+    // NOTE:
+    // May break if the nodes ProcessMode is was not originally
+    // Inherit
+    private void EnableManualOffensive(IManualAttack manual)
+    {
+        var node = (manual as Node)!;
+        node.ProcessMode = ProcessModeEnum.Inherit;
+        if (node is Node2D node2D)
+            node2D.Show();
+    }
+
+    private void DisableManualOffensive(IManualAttack manual)
+    {
+        var node = (manual as Node)!;
+        manual.AttackActionString = null;
+        node.ProcessMode = ProcessModeEnum.Disabled;
+        if (node is Node2D node2D)
+            node2D.Hide();
+    }
 }

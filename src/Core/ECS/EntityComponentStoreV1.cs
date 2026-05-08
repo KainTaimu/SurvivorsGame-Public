@@ -7,283 +7,276 @@ namespace Game.Core.ECS;
 
 public partial class EntityComponentStoreV1 : EntityComponentStore
 {
-	private readonly BitArray _alive = new(MAX_SIZE, false);
+    private readonly BitArray _alive = new(MAX_SIZE, false);
 
-	private readonly Dictionary<int, int> _idToIndexTable = []; // {Id: Index to position}
-	private readonly Dictionary<int, int> _indexToIdTable = []; // {Index to position: Id}
+    private readonly Dictionary<int, int> _idToIndexTable = []; // {Id: Index to position}
 
-	private FrozenDictionary<int, int> _frozenIdToIndexTable = null!;
-	private FrozenDictionary<int, int> _frozenIndexToIdTable = null!;
+    private readonly Dictionary<int, int> _indexToIdTable = []; // {Index to position: Id}
 
-	private int _count;
+    private FrozenDictionary<int, int> _frozenIdToIndexTable = null!;
+    private FrozenDictionary<int, int> _frozenIndexToIdTable = null!;
 
-	// Array is of size MAX_SIZE
-	private readonly Dictionary<Type, Array> _components = [];
+    private int _count;
 
-	public override void _Ready()
-	{
-		Instance = this;
-		_idToIndexTable.EnsureCapacity(MAX_SIZE);
-		_indexToIdTable.EnsureCapacity(MAX_SIZE);
-	}
+    // Array is of size MAX_SIZE
+    private readonly Dictionary<Type, Array> _components = [];
 
-	/// <summary>
-	/// Returns true if successfully registered. False otherwise.
-	/// Return value must be checked and handled in the case of unsuccessful register
-	/// </summary>
-	/// <remarks>
-	/// Does not handle when an enemy is registered with an already existing id.
-	/// </remarks>
-	public override int RegisterEntity()
-	{
-		var id = _count;
-		// Find free index
-		int idx;
-		for (idx = 0; idx < MAX_SIZE; idx++)
-		{
-			if (!_alive[idx])
-				break;
-		}
-		if (idx == MAX_SIZE)
-		{
-			Logger.LogWarning(
-				$"Couldn't register entity {id} with index {idx}. Store at max capacity"
-			);
-			return -1;
-		}
+    public override void _Ready()
+    {
+        Instance = this;
+        _idToIndexTable.EnsureCapacity(MAX_SIZE);
+        _indexToIdTable.EnsureCapacity(MAX_SIZE);
+    }
 
-		_alive[idx] = true;
-		_idToIndexTable[id] = idx;
-		_indexToIdTable[idx] = id;
+    /// <summary>
+    /// Returns true if successfully registered. False otherwise.
+    /// Return value must be checked and handled in the case of unsuccessful register
+    /// </summary>
+    /// <remarks>
+    /// Does not handle when an enemy is registered with an already existing id.
+    /// </remarks>
+    public override int RegisterEntity()
+    {
+        var id = _count;
+        // Find free index
+        int idx;
+        for (idx = 0; idx < MAX_SIZE; idx++)
+        {
+            if (!_alive[idx])
+                break;
+        }
 
-		_frozenIdToIndexTable = _idToIndexTable.ToFrozenDictionary();
-		_frozenIndexToIdTable = _indexToIdTable.ToFrozenDictionary();
+        if (idx == MAX_SIZE)
+        {
+            Logger.LogWarning(
+                $"Couldn't register entity {id} with index {idx}. Store at max capacity"
+            );
+            return -1;
+        }
 
-		_count++;
-		return id;
-	}
+        _alive[idx] = true;
+        _idToIndexTable[id] = idx;
+        _indexToIdTable[idx] = id;
 
-	public override void UnregisterEntity(int id)
-	{
-		if (!_idToIndexTable.ContainsKey(id))
-			return;
+        _frozenIdToIndexTable = _idToIndexTable.ToFrozenDictionary();
+        _frozenIndexToIdTable = _indexToIdTable.ToFrozenDictionary();
 
-		// Allow systems to handle removed entities before data is cleared
-		EmitSignal(SignalName.BeforeEntityUnregistered, id);
+        _count++;
+        return id;
+    }
 
-		var idx = _idToIndexTable[id];
-		foreach (var type in _components.Keys)
-			_components[type].SetValue(Activator.CreateInstance(type), idx);
+    public override void UnregisterEntity(int id)
+    {
+        if (!_idToIndexTable.ContainsKey(id))
+            return;
 
-		_idToIndexTable.Remove(id);
-		_indexToIdTable.Remove(idx);
-		_alive[idx] = false;
+        // Allow systems to handle removed entities before data is cleared
+        EmitSignal(SignalName.BeforeEntityUnregistered, id);
 
-		_frozenIdToIndexTable = _idToIndexTable.ToFrozenDictionary();
-		_frozenIndexToIdTable = _indexToIdTable.ToFrozenDictionary();
-	}
+        var idx = _idToIndexTable[id];
+        foreach (var type in _components.Keys)
+            _components[type].SetValue(Activator.CreateInstance(type), idx);
 
-	public override void RegisterComponent<T>(int id, T data)
-	{
-		if (!_frozenIdToIndexTable.TryGetValue(id, out var idx))
-		{
-			Logger.LogWarning(
-				"Couldn't register component. Entity with id",
-				id,
-				"does not exist"
-			);
-			return;
-		}
-		if (idx < 0 || idx >= MAX_SIZE)
-		{
-			Logger.LogWarning(
-				$"Couldn't register component {id} with index {idx}. Index out of bounds"
-			);
-			return;
-		}
+        _idToIndexTable.Remove(id);
+        _indexToIdTable.Remove(idx);
+        _alive[idx] = false;
 
-		var type = typeof(T);
-		if (!_components.ContainsKey(type))
-			_components.Add(type, Array.CreateInstance(type, MAX_SIZE));
+        _frozenIdToIndexTable = _idToIndexTable.ToFrozenDictionary();
+        _frozenIndexToIdTable = _indexToIdTable.ToFrozenDictionary();
+    }
 
-		_components[type].SetValue(data, idx);
-	}
+    public override void RegisterComponent<T>(int id, T data)
+    {
+        if (!_frozenIdToIndexTable.TryGetValue(id, out var idx))
+        {
+            Logger.LogWarning(
+                "Couldn't register component. Entity with id",
+                id,
+                "does not exist"
+            );
+            return;
+        }
 
-	public override void UnregisterComponent<T>(int id)
-	{
-		if (!_frozenIdToIndexTable.TryGetValue(id, out var idx))
-		{
-			Logger.LogWarning(
-				"Couldn't unregister component. Entity with id",
-				id,
-				"does not exist"
-			);
-			return;
-		}
-		if (idx < 0 || idx >= MAX_SIZE)
-		{
-			Logger.LogWarning(
-				$"Couldn't unregister component {id} with index {idx}. Index out of bounds"
-			);
-			return;
-		}
+        if (idx < 0 || idx >= MAX_SIZE)
+        {
+            Logger.LogWarning(
+                $"Couldn't register component {id} with index {idx}. Index out of bounds"
+            );
+            return;
+        }
 
-		var type = typeof(T);
-		_components.Remove(type);
-	}
+        var type = typeof(T);
+        if (!_components.ContainsKey(type))
+            _components.Add(type, Array.CreateInstance(type, MAX_SIZE));
 
-	// PERF: Two dictionary accesses, one in GetComponents
-	public override void UpdateComponent<T>(int id, T data)
-	{
-		if (!_frozenIdToIndexTable.TryGetValue(id, out var idx))
-		{
-			Logger.LogWarning(
-				"Couldn't update component. Entity with id",
-				id,
-				"does not exist"
-			);
-			return;
-		}
-		if (idx < 0 || idx >= MAX_SIZE)
-		{
-			Logger.LogWarning(
-				$"Couldn't update component {id} with index {idx}. Index out of bounds"
-			);
-			return;
-		}
+        _components[type].SetValue(data, idx);
+    }
 
-		var components = GetComponents<T>();
-		if (components is null)
-			return;
+    public override void UnregisterComponent<T>(int id)
+    {
+        if (!_frozenIdToIndexTable.TryGetValue(id, out var idx))
+        {
+            Logger.LogWarning(
+                "Couldn't unregister component. Entity with id",
+                id,
+                "does not exist"
+            );
+            return;
+        }
 
-		components[idx] = data;
-	}
+        if (idx < 0 || idx >= MAX_SIZE)
+        {
+            Logger.LogWarning(
+                $"Couldn't unregister component {id} with index {idx}. Index out of bounds"
+            );
+            return;
+        }
 
-	// ===== Queries =====
-	// Could use generators if we need more queries
+        var type = typeof(T);
+        _components.Remove(type);
+    }
 
-	private T[]? GetComponents<T>()
-	{
-		var type = typeof(T);
-		if (!_components.TryGetValue(type, out var collection))
-			return null;
+    // PERF: Two dictionary accesses, one in GetComponents
+    public override void UpdateComponent<T>(int id, T data)
+    {
+        if (!_frozenIdToIndexTable.TryGetValue(id, out var idx))
+        {
+            Logger.LogWarning(
+                "Couldn't update component. Entity with id",
+                id,
+                "does not exist"
+            );
+            return;
+        }
 
-		return Unsafe.As<T[]>(collection);
-	}
+        if (idx < 0 || idx >= MAX_SIZE)
+        {
+            Logger.LogWarning(
+                $"Couldn't update component {id} with index {idx}. Index out of bounds"
+            );
+            return;
+        }
 
-	public override bool GetComponent<T>(int id, out T component)
-	{
-		component = default!;
-		if (!_frozenIdToIndexTable.TryGetValue(id, out var idx))
-			return false;
+        var components = GetComponents<T>();
+        if (components is null)
+            return;
 
-		var components = GetComponents<T>();
-		if (components is null)
-			return false;
+        components[idx] = data;
+    }
 
-		component = components[idx];
-		return true;
-	}
+    // ===== Queries =====
+    // Could use generators if we need more queries
 
-	/// <summary>
-	/// Returns the entity ID, and the value of T1
-	/// </summary>
-	public override IEnumerable<(int, T1)> Query<T1>()
-	{
-		var components = GetComponents<T1>();
-		if (components is null)
-		{
-			yield break;
-		}
+    private T[]? GetComponents<T>()
+    {
+        var type = typeof(T);
+        if (!_components.TryGetValue(type, out var collection))
+            return null;
 
-		for (var i = 0; i < MAX_SIZE; i++)
-		{
-			if (!_alive[i])
-				continue;
+        return Unsafe.As<T[]>(collection);
+    }
 
-			if (!_frozenIndexToIdTable.TryGetValue(i, out var id))
-				continue;
+    public override bool GetComponent<T>(int id, out T component)
+    {
+        component = default!;
+        if (!_frozenIdToIndexTable.TryGetValue(id, out var idx))
+            return false;
 
-			yield return (id, components[i]);
-		}
-	}
+        var components = GetComponents<T>();
+        if (components is null)
+            return false;
 
-	public override IEnumerable<(int, T1, T2)> Query<T1, T2>()
-	{
-		var c1 = GetComponents<T1>();
-		if (c1 is null)
-		{
-			yield break;
-		}
+        component = components[idx];
+        return true;
+    }
 
-		var c2 = GetComponents<T2>();
-		if (c2 is null)
-		{
-			yield break;
-		}
+    /// <summary>
+    /// Returns the entity ID, and the value of T1
+    /// </summary>
+    public override IEnumerable<(int, T1)> Query<T1>()
+    {
+        var components = GetComponents<T1>();
+        if (components is null)
+            yield break;
 
-		for (var i = 0; i < MAX_SIZE; i++)
-		{
-			if (!_alive[i])
-				continue;
+        for (var i = 0; i < MAX_SIZE; i++)
+        {
+            if (!_alive[i])
+                continue;
 
-			if (!_frozenIndexToIdTable.TryGetValue(i, out var id))
-				continue;
+            if (!_frozenIndexToIdTable.TryGetValue(i, out var id))
+                continue;
 
-			yield return (id, c1[i], c2[i]);
-		}
-	}
+            yield return (id, components[i]);
+        }
+    }
 
-	public override IEnumerable<(int, T1, T2, T3)> Query<T1, T2, T3>()
-	{
-		var c1 = GetComponents<T1>();
-		if (c1 is null)
-		{
-			yield break;
-		}
+    public override IEnumerable<(int, T1, T2)> Query<T1, T2>()
+    {
+        var c1 = GetComponents<T1>();
+        if (c1 is null)
+            yield break;
 
-		var c2 = GetComponents<T2>();
-		if (c2 is null)
-		{
-			yield break;
-		}
+        var c2 = GetComponents<T2>();
+        if (c2 is null)
+            yield break;
 
-		var c3 = GetComponents<T3>();
-		if (c3 is null)
-		{
-			yield break;
-		}
+        for (var i = 0; i < MAX_SIZE; i++)
+        {
+            if (!_alive[i])
+                continue;
 
-		for (var i = 0; i < MAX_SIZE; i++)
-		{
-			if (!_alive[i])
-				continue;
+            if (!_frozenIndexToIdTable.TryGetValue(i, out var id))
+                continue;
 
-			if (!_frozenIndexToIdTable.TryGetValue(i, out var id))
-				continue;
+            yield return (id, c1[i], c2[i]);
+        }
+    }
 
-			yield return (id, c1[i], c2[i], c3[i]);
-		}
-	}
+    public override IEnumerable<(int, T1, T2, T3)> Query<T1, T2, T3>()
+    {
+        var c1 = GetComponents<T1>();
+        if (c1 is null)
+            yield break;
 
-	public override bool GetIsAlive(int id)
-	{
-		if (!_idToIndexTable.TryGetValue(id, out var idx))
-			return false;
+        var c2 = GetComponents<T2>();
+        if (c2 is null)
+            yield break;
 
-		return _alive[idx];
-	}
+        var c3 = GetComponents<T3>();
+        if (c3 is null)
+            yield break;
 
-	// ===== Sets =====
-	public override void SetComponent<T>(int id, T newData)
-	{
-		if (!_frozenIdToIndexTable.TryGetValue(id, out var idx))
-			return;
+        for (var i = 0; i < MAX_SIZE; i++)
+        {
+            if (!_alive[i])
+                continue;
 
-		var components = GetComponents<T>();
-		if (components is null)
-			return;
+            if (!_frozenIndexToIdTable.TryGetValue(i, out var id))
+                continue;
 
-		components[idx] = newData;
-	}
+            yield return (id, c1[i], c2[i], c3[i]);
+        }
+    }
+
+    public override bool GetIsAlive(int id)
+    {
+        if (!_idToIndexTable.TryGetValue(id, out var idx))
+            return false;
+
+        return _alive[idx];
+    }
+
+    // ===== Sets =====
+    public override void SetComponent<T>(int id, T newData)
+    {
+        if (!_frozenIdToIndexTable.TryGetValue(id, out var idx))
+            return;
+
+        var components = GetComponents<T>();
+        if (components is null)
+            return;
+
+        components[idx] = newData;
+    }
 }

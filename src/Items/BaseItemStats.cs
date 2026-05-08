@@ -2,9 +2,9 @@ namespace Game.Items;
 
 public enum ItemType
 {
-	Offensive,
+    Offensive,
 
-	Passive,
+    Passive,
 }
 
 [GlobalClass]

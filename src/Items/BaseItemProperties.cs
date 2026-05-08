@@ -3,14 +3,14 @@ namespace Game.Items;
 [GlobalClass]
 public partial class BaseItemProperties : Resource
 {
-	[Export]
-	public string Name = "";
+    [Export]
+    public string Name = "";
 
-	[Export]
-	public ItemType ItemType;
+    [Export]
+    public ItemType ItemType;
 
-	public int CurrentLevel;
+    public int CurrentLevel;
 
-	[Export(PropertyHint.MultilineText)]
-	public string Description = "";
+    [Export(PropertyHint.MultilineText)]
+    public string Description = "";
 }

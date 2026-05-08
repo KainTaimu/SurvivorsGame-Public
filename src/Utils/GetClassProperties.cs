@@ -4,43 +4,45 @@ namespace Game.Utils;
 
 public static class ClassInspector
 {
-	public static string GetClassPropertiesString(object obj)
-	{
-		var s = new StringBuilder();
+    public static string GetClassPropertiesString(object obj)
+    {
+        var s = new StringBuilder();
 
-		var pType = obj.GetType();
-		var properties = pType.GetProperties(
-			System.Reflection.BindingFlags.Public
-				| System.Reflection.BindingFlags.NonPublic
-				| System.Reflection.BindingFlags.Instance
-		);
-		foreach (var property in properties)
-		{
-			var value = property.GetValue(obj);
-			if (value is null)
-				continue;
-			s.AppendLine($"{property.Name}: {value}");
-		}
-		return s.ToString();
-	}
+        var pType = obj.GetType();
+        var properties = pType.GetProperties(
+            System.Reflection.BindingFlags.Public
+                | System.Reflection.BindingFlags.NonPublic
+                | System.Reflection.BindingFlags.Instance
+        );
+        foreach (var property in properties)
+        {
+            var value = property.GetValue(obj);
+            if (value is null)
+                continue;
+            s.AppendLine($"{property.Name}: {value}");
+        }
 
-	public static string GetClassFieldsString(object obj)
-	{
-		var s = new StringBuilder();
+        return s.ToString();
+    }
 
-		var pType = obj.GetType();
-		var fields = pType.GetFields(
-			System.Reflection.BindingFlags.Public
-				| System.Reflection.BindingFlags.NonPublic
-				| System.Reflection.BindingFlags.Instance
-		);
-		foreach (var field in fields)
-		{
-			var value = field.GetValue(obj);
-			if (value is null)
-				continue;
-			s.AppendLine($"{field.Name}: {value}");
-		}
-		return s.ToString();
-	}
+    public static string GetClassFieldsString(object obj)
+    {
+        var s = new StringBuilder();
+
+        var pType = obj.GetType();
+        var fields = pType.GetFields(
+            System.Reflection.BindingFlags.Public
+                | System.Reflection.BindingFlags.NonPublic
+                | System.Reflection.BindingFlags.Instance
+        );
+        foreach (var field in fields)
+        {
+            var value = field.GetValue(obj);
+            if (value is null)
+                continue;
+            s.AppendLine($"{field.Name}: {value}");
+        }
+
+        return s.ToString();
+    }
 }

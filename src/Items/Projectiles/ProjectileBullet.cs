@@ -7,112 +7,116 @@ namespace Game.Items.Projectiles;
 
 public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 {
-	[Export]
-	public Sprite2D Sprite = null!;
+    [Export]
+    public Sprite2D Sprite = null!;
 
-	private int _pierceCount;
-	private readonly List<int> _hits = [];
+    private int _pierceCount;
+    private readonly List<int> _hits = [];
 
-	private BaseOffensive OffensiveOrigin => (BaseOffensive)Origin;
-	private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
-	private EntityComponentStore ComponentStore =>
-		EntityComponentStore.Instance;
+    private BaseOffensive OffensiveOrigin => (BaseOffensive)Origin;
+    private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
 
-	public ProjectilePool ProjectilePool { get; set; } = null!;
+    private EntityComponentStore ComponentStore =>
+        EntityComponentStore.Instance;
 
-	public override void _Process(double delta)
-	{
-		if (!TargetQuery.Grid.ContainsWorld(Position))
-		{
-			ReturnToPool();
-			return;
-		}
-		if (!_isInitialized)
-			Logger.LogWarning(
-				$"Projectile {GetType().Name} is processing but is not initialized"
-			);
+    public ProjectilePool ProjectilePool { get; set; } = null!;
 
-		var from = Position;
+    public override void _Process(double delta)
+    {
+        if (!TargetQuery.Grid.ContainsWorld(Position))
+        {
+            ReturnToPool();
+            return;
+        }
 
-		var moveVector =
-			new Vector2(1, 0).Rotated(Rotation)
-			* ProjectileSpeed
-			* (float)delta;
-		Position = from + moveVector;
-	}
+        if (!_isInitialized)
+        {
+            Logger.LogWarning(
+                $"Projectile {GetType().Name} is processing but is not initialized"
+            );
+        }
 
-	public void ReturnToPool()
-	{
-		_pierceCount = 0;
-		_hits.Clear();
-		ProjectilePool.ReturnProjectile(this);
-		_isInitialized = false;
-	}
+        var from = Position;
 
-	public override void Initialize()
-	{
-		var tweenScale = CreateTween()
-			.SetTrans(Tween.TransitionType.Linear)
-			.SetEase(Tween.EaseType.In);
-		var finalScale = Scale * new Vector2(8, 1);
-		tweenScale.TweenProperty(Sprite, "scale", finalScale, 0.05);
-		_isInitialized = true;
+        var moveVector =
+            new Vector2(1, 0).Rotated(Rotation)
+            * ProjectileSpeed
+            * (float)delta;
+        Position = from + moveVector;
+    }
 
-		if (
-			!TargetQuery.GetTargetsRayCast(
-				Position,
-				Rotation,
-				HitRadius,
-				out var ids
-			)
-		)
-			return;
+    public void ReturnToPool()
+    {
+        _pierceCount = 0;
+        _hits.Clear();
+        ProjectilePool.ReturnProjectile(this);
+        _isInitialized = false;
+    }
 
-		foreach (var id in ids)
-		{
-			if (_hits.Contains(id))
-				return;
+    public override void Initialize()
+    {
+        var tweenScale = CreateTween()
+            .SetTrans(Tween.TransitionType.Linear)
+            .SetEase(Tween.EaseType.In);
+        var finalScale = Scale * new Vector2(8, 1);
+        tweenScale.TweenProperty(Sprite, "scale", finalScale, 0.05);
+        _isInitialized = true;
 
-			if (
-				!ComponentStore.GetComponent<PositionComponent>(
-					id,
-					out var lastPos
-				)
-			)
-				return;
+        if (
+            !TargetQuery.GetTargetsRayCast(
+                Position,
+                Rotation,
+                HitRadius,
+                out var ids
+            )
+        )
+            return;
 
-			Callable
-				.From(() =>
-				{
-					GetTree()
-						.CreateTimer(
-							Position.DistanceTo(lastPos.Position)
-								/ ProjectileSpeed,
-							false
-						)
-						.Timeout += () => OffensiveOrigin.HandleHit(id: id);
-				})
-				.CallDeferred();
+        foreach (var id in ids)
+        {
+            if (_hits.Contains(id))
+                return;
 
-			_hits.Add(id);
-			_pierceCount++;
-			if (_pierceCount >= PierceLimit)
-			{
-				Callable
-					.From(() =>
-					{
-						GetTree()
-							.CreateTimer(
-								Position.DistanceTo(lastPos.Position)
-									/ ProjectileSpeed,
-								false
-							)
-							.Timeout += () =>
-							Callable.From(ReturnToPool).CallDeferred();
-					})
-					.CallDeferred();
-				return;
-			}
-		}
-	}
+            if (
+                !ComponentStore.GetComponent<PositionComponent>(
+                    id,
+                    out var lastPos
+                )
+            )
+                return;
+
+            Callable
+                .From(() =>
+                {
+                    GetTree()
+                        .CreateTimer(
+                            Position.DistanceTo(lastPos.Position)
+                                / ProjectileSpeed,
+                            false
+                        )
+                        .Timeout += () => OffensiveOrigin.HandleHit(id: id);
+                })
+                .CallDeferred();
+
+            _hits.Add(id);
+            _pierceCount++;
+            if (_pierceCount >= PierceLimit)
+            {
+                Callable
+                    .From(() =>
+                    {
+                        GetTree()
+                            .CreateTimer(
+                                Position.DistanceTo(lastPos.Position)
+                                    / ProjectileSpeed,
+                                false
+                            )
+                            .Timeout += () =>
+                            Callable.From(ReturnToPool).CallDeferred();
+                    })
+                    .CallDeferred();
+                return;
+            }
+        }
+    }
 }

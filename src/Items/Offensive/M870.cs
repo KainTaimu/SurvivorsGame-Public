@@ -4,132 +4,135 @@ namespace Game.Items.Offensive;
 
 public partial class M870 : Firearm
 {
-	[Export]
-	private AudioStreamPlayer? _shellReloadAudioPlayer;
+    [Export]
+    private AudioStreamPlayer? _shellReloadAudioPlayer;
 
-	[Export]
-	private AudioStreamPlayer? _cockingAudioPlayer;
+    [Export]
+    private AudioStreamPlayer? _cockingAudioPlayer;
 
-	private bool _isShotgunReloading;
-	private double _reloadCooldown;
+    private bool _isShotgunReloading;
+    private double _reloadCooldown;
 
-	private int PelletCount =>
-		Stats.Additional.GetValueOrDefault("PelletCount").AsInt32();
+    private int PelletCount =>
+        Stats.Additional.GetValueOrDefault("PelletCount").AsInt32();
 
-	public override void _Ready()
-	{
-		base._Ready();
-		OnAttack += ApplyCameraRecoil;
-	}
+    public override void _Ready()
+    {
+        base._Ready();
+        OnAttack += ApplyCameraRecoil;
+    }
 
-	public override void Attack()
-	{
-		if (_magazineCount <= 0)
-		{
-			Reload();
-			return;
-		}
-		if (!IsReadyToShoot)
-			return;
-		_isShotgunReloading = false;
+    public override void Attack()
+    {
+        if (_magazineCount <= 0)
+        {
+            Reload();
+            return;
+        }
 
-		ShootAudioPlayer?.Play();
-		if (_cockingAudioPlayer is not null)
-			GetTree().CreateTimer(Stats.AttackSpeed / 2).Timeout += () =>
-				_cockingAudioPlayer.Play();
+        if (!IsReadyToShoot)
+            return;
+        _isShotgunReloading = false;
 
-		_fireCooldown = Stats.AttackSpeed;
-		_magazineCount--;
+        ShootAudioPlayer?.Play();
+        if (_cockingAudioPlayer is not null)
+        {
+            GetTree().CreateTimer(Stats.AttackSpeed / 2).Timeout += () =>
+                _cockingAudioPlayer.Play();
+        }
 
-		var playerVector = Player.GetCanvasTransform() * Player.Position;
+        _fireCooldown = Stats.AttackSpeed;
+        _magazineCount--;
 
-		Vector2 mouseVector;
-		if (Crosshair is not null)
-		{
-			mouseVector =
-				Crosshair.PrimaryCrosshairSprite.GetCanvasTransform()
-				* Crosshair.PrimaryCrosshairSprite.GlobalPosition;
-		}
-		else
-		{
-			mouseVector = Player.GetGlobalMousePosition();
-		}
+        var playerVector = Player.GetCanvasTransform() * Player.Position;
 
-		var baseRotation = playerVector.AngleToPoint(mouseVector);
-		for (var i = 0; i < PelletCount; i++)
-		{
-			var bloomRad = BloomCoefficientDeg * (Math.PI / 180);
-			var bloom = (float)GD.RandRange(-bloomRad / 2, bloomRad / 2);
+        Vector2 mouseVector;
+        if (Crosshair is not null)
+        {
+            mouseVector =
+                Crosshair.PrimaryCrosshairSprite.GetCanvasTransform()
+                * Crosshair.PrimaryCrosshairSprite.GlobalPosition;
+        }
+        else
+            mouseVector = Player.GetGlobalMousePosition();
 
-			var rotation = baseRotation + bloom;
+        var baseRotation = playerVector.AngleToPoint(mouseVector);
+        for (var i = 0; i < PelletCount; i++)
+        {
+            var bloomRad = BloomCoefficientDeg * (Math.PI / 180);
+            var bloom = (float)GD.RandRange(-bloomRad / 2, bloomRad / 2);
 
-			var projectile = ProjectilePool.GetProjectile();
+            var rotation = baseRotation + bloom;
 
-			projectile.Origin = this;
-			projectile.SetScale(Vector2.One * Stats.ProjectileScaleMultiplier);
-			projectile.SetPosition(Player.Position);
-			projectile.SetRotation(rotation);
-			projectile.ProjectileSpeed =
-				Stats.ProjectileSpeed * (float)GD.RandRange(1f, 2f);
-			projectile.PierceLimit = Stats.PierceLimit;
-			projectile.HitRadius = FirearmStats?.ProjectileRadius ?? 24;
-			projectile.Initialize();
-		}
-		ApplyCursorRecoil();
-		EmitSignalOnAttack();
-	}
+            var projectile = ProjectilePool.GetProjectile();
 
-	private Tween? _reloadTween;
+            projectile.Origin = this;
+            projectile.SetScale(Vector2.One * Stats.ProjectileScaleMultiplier);
+            projectile.SetPosition(Player.Position);
+            projectile.SetRotation(rotation);
+            projectile.ProjectileSpeed =
+                Stats.ProjectileSpeed * (float)GD.RandRange(1f, 2f);
+            projectile.PierceLimit = Stats.PierceLimit;
+            projectile.HitRadius = FirearmStats?.ProjectileRadius ?? 24;
+            projectile.Initialize();
+        }
 
-	public override void Reload()
-	{
-		if (_reloadCooldown > 0)
-			return;
-		if (MagazineCount == MagazineCapacity)
-			return;
+        ApplyCursorRecoil();
+        EmitSignalOnAttack();
+    }
 
-		_reloadTween?.Kill();
-		_reloadTween = null;
-		_isShotgunReloading = true;
+    private Tween? _reloadTween;
 
-		// Add delay before reloading sequence to punish reload/shoot spam
+    public override void Reload()
+    {
+        if (_reloadCooldown > 0)
+            return;
+        if (MagazineCount == MagazineCapacity)
+            return;
 
-		_reloadTween = CreateTween().SetLoops(MagazineCapacity - MagazineCount);
-		_reloadTween
-			.TweenCallback(
-				Callable.From(() =>
-				{
-					_magazineCount++;
-					_shellReloadAudioPlayer?.Play();
-					if (_magazineCount == MagazineCapacity)
-					{
-						_isShotgunReloading = false;
-						_reloadTween.Kill();
-					}
-				})
-			)
-			.SetDelay(ReloadTime);
-		_reloadTween.TweenCallback(
-			Callable.From(() => _isShotgunReloading = false)
-		);
-	}
+        _reloadTween?.Kill();
+        _reloadTween = null;
+        _isShotgunReloading = true;
 
-	public override void _Process(double delta)
-	{
-		_fireCooldown -= delta;
+        // Add delay before reloading sequence to punish reload/shoot spam
 
-		if (Input.IsActionJustPressed(InputMapNames.WeaponReload))
-		{
-			Reload();
-			return;
-		}
-		if (
-			!Input.IsActionJustPressed(
-				AttackActionString ?? InputMapNames.PrimaryAttack
-			)
-		)
-			return;
+        _reloadTween = CreateTween().SetLoops(MagazineCapacity - MagazineCount);
+        _reloadTween
+            .TweenCallback(
+                Callable.From(() =>
+                {
+                    _magazineCount++;
+                    _shellReloadAudioPlayer?.Play();
+                    if (_magazineCount == MagazineCapacity)
+                    {
+                        _isShotgunReloading = false;
+                        _reloadTween.Kill();
+                    }
+                })
+            )
+            .SetDelay(ReloadTime);
+        _reloadTween.TweenCallback(
+            Callable.From(() => _isShotgunReloading = false)
+        );
+    }
 
-		Attack();
-	}
+    public override void _Process(double delta)
+    {
+        _fireCooldown -= delta;
+
+        if (Input.IsActionJustPressed(InputMapNames.WeaponReload))
+        {
+            Reload();
+            return;
+        }
+
+        if (
+            !Input.IsActionJustPressed(
+                AttackActionString ?? InputMapNames.PrimaryAttack
+            )
+        )
+            return;
+
+        Attack();
+    }
 }

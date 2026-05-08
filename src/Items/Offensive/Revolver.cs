@@ -6,86 +6,91 @@ namespace Game.Items.Offensive;
 
 public partial class Revolver : Firearm
 {
-	[Export]
-	private RevolverAmmoCount _ammoCount = null!;
+    [Export]
+    private RevolverAmmoCount _ammoCount = null!;
 
-	[Export]
-	public AudioStreamPlayer? CockAudioPlayer;
+    [Export]
+    public AudioStreamPlayer? CockAudioPlayer;
 
-	public override void _Ready()
-	{
-		base._Ready();
-		OnAttack += () =>
-		{
-			GetTree().CreateTimer(_fireCooldown, false).Timeout += () =>
-			{
-				_ammoCount.RotateCylinder();
-				if (MagazineCount != 0)
-					CockAudioPlayer?.Play();
-			};
-			ApplyCameraRecoil();
-		};
+    public override void _Ready()
+    {
+        base._Ready();
+        OnAttack += () =>
+        {
+            GetTree().CreateTimer(_fireCooldown, false).Timeout += () =>
+            {
+                _ammoCount.RotateCylinder();
+                if (MagazineCount != 0)
+                    CockAudioPlayer?.Play();
+            };
+            ApplyCameraRecoil();
+        };
 
-		// Reload SFX
-		OnReloadStart += () =>
-		{
-			for (var i = 0; i < 6; i++)
-				GetTree()
-					.CreateTimer(
-						FirearmStats?.ReloadTime
-							/ 5 // Arbitrary
-							/ 6 // Amount of cylinder spin
-							* i
-							?? 0,
-						false
-					)
-					.Timeout += () => CockAudioPlayer?.Play();
-		};
-		OnReloadEnd += () =>
-		{
-			for (var i = 0; i < 6; i++)
-				GetTree()
-					.CreateTimer(
-						FirearmStats?.ReloadTime / 5 / 6 * i ?? 0,
-						false
-					)
-					.Timeout += () => CockAudioPlayer?.Play();
-		};
-	}
+        // Reload SFX
+        OnReloadStart += () =>
+        {
+            for (var i = 0; i < 6; i++)
+            {
+                GetTree()
+                    .CreateTimer(
+                        FirearmStats?.ReloadTime
+                            / 5 // Arbitrary
+                            / 6 // Amount of cylinder spin
+                            * i
+                            ?? 0,
+                        false
+                    )
+                    .Timeout += () => CockAudioPlayer?.Play();
+            }
+        };
+        OnReloadEnd += () =>
+        {
+            for (var i = 0; i < 6; i++)
+            {
+                GetTree()
+                    .CreateTimer(
+                        FirearmStats?.ReloadTime / 5 / 6 * i ?? 0,
+                        false
+                    )
+                    .Timeout += () => CockAudioPlayer?.Play();
+            }
+        };
+    }
 
-	public override void _Process(double delta)
-	{
-		_fireCooldown -= delta;
-		if (Input.IsActionPressed(InputMapNames.WeaponReload))
-		{
-			Reload();
-			return;
-		}
-		if (
-			!Input.IsActionPressed(
-				AttackActionString ?? InputMapNames.PrimaryAttack
-			)
-		)
-			return;
-		Attack();
-	}
+    public override void _Process(double delta)
+    {
+        _fireCooldown -= delta;
+        if (Input.IsActionPressed(InputMapNames.WeaponReload))
+        {
+            Reload();
+            return;
+        }
 
-	protected override void HandleHitECS(int id)
-	{
-		if (!ComponentStore.GetComponent<PositionComponent>(id, out var pos))
-			return;
-		var knockback = Stats
-			.Additional.GetValueOrDefault("Knockback")
-			.AsSingle();
-		var knockbackVector = Player.GlobalPosition.DirectionTo(pos.Position);
-		knockbackVector *= knockback;
+        if (
+            !Input.IsActionPressed(
+                AttackActionString ?? InputMapNames.PrimaryAttack
+            )
+        )
+            return;
+        Attack();
+    }
 
-		ComponentStore.SetComponent(
-			id,
-			pos with
-			{
-				Position = pos.Position + knockbackVector,
-			}
-		);
-	}
+    protected override void HandleHitECS(int id)
+    {
+        if (!ComponentStore.GetComponent<PositionComponent>(id, out var pos))
+            return;
+        var knockback = Stats
+            .Additional.GetValueOrDefault("Knockback")
+            .AsSingle();
+        var knockbackVector = Player.GlobalPosition.DirectionTo(pos.Position);
+        knockbackVector *= knockback;
+
+        ComponentStore.SetComponent(
+            id,
+            pos with
+            {
+                Position = pos.Position + knockbackVector,
+            }
+        );
+    }
 }

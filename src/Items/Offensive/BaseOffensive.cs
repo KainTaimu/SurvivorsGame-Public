@@ -6,137 +6,136 @@ namespace Game.Items.Offensive;
 
 public abstract partial class BaseOffensive : BaseItem
 {
-	[Signal]
-	public delegate void OnStatsChangedEventHandler();
+    [Signal]
+    public delegate void OnStatsChangedEventHandler();
 
-	[Signal]
-	public delegate void OnStatUpgradesChangedEventHandler();
+    [Signal]
+    public delegate void OnStatUpgradesChangedEventHandler();
 
-	[Signal]
-	public delegate void OnAttackEventHandler();
+    [Signal]
+    public delegate void OnAttackEventHandler();
 
-	[Export]
-	public BaseItemProperties Properties = null!;
+    [Export]
+    public BaseItemProperties Properties = null!;
 
-	[Export]
-	public BaseOffensiveStats Stats
-	{
-		get;
-		set
-		{
-			if (
-				field is not null
-				&& field.IsConnected(
-					Resource.SignalName.Changed,
-					Callable.From(EmitSignalOnStatsChanged)
-				)
-			)
-				field.Changed -= EmitSignalOnStatsChanged;
+    [Export]
+    public BaseOffensiveStats Stats
+    {
+        get;
+        set
+        {
+            if (
+                field is not null
+                && field.IsConnected(
+                    Resource.SignalName.Changed,
+                    Callable.From(EmitSignalOnStatsChanged)
+                )
+            )
+                field.Changed -= EmitSignalOnStatsChanged;
 
-			field = value;
-			value.Changed += EmitSignalOnStatsChanged;
-		}
-	} = null!;
+            field = value;
+            value.Changed += EmitSignalOnStatsChanged;
+        }
+    } = null!;
 
-	[Export]
-	public Array<BaseOffensiveStats> Upgrades = [];
+    [Export]
+    public Array<BaseOffensiveStats> Upgrades = [];
 
-	protected EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
-	protected EntityComponentStore ComponentStore =>
-		EntityComponentStore.Instance;
+    protected EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
 
-	public abstract void Attack();
+    protected EntityComponentStore ComponentStore =>
+        EntityComponentStore.Instance;
 
-	protected virtual void PostUpgrade(int newLevel) { }
+    public abstract void Attack();
 
-	public void HandleHit(Node? node = null, int? id = null)
-	{
-		if (!(node is null ^ id is null))
-		{
-			// Logger.LogError("cannot pass both node and id");
-			throw new ArgumentException("cannot pass both node and id");
-		}
-		if (node is not null)
-		{
-			// HandleHitNode(node);
-			throw new NotImplementedException();
-		}
-		if (id is not null)
-		{
-			HandleDamageECS(id.Value);
-			HandleHitECS(id.Value);
-		}
-	}
+    protected virtual void PostUpgrade(int newLevel) { }
 
-	/// <summary> Handle the damage to the enemy </summary>
-	protected void HandleDamageECS(int id)
-	{
-		if (!ComponentStore.GetComponent<HealthComponent>(id, out var health))
-			return;
+    public void HandleHit(Node? node = null, int? id = null)
+    {
+        if (!(node is null ^ id is null))
+        {
+            // Logger.LogError("cannot pass both node and id");
+            throw new ArgumentException("cannot pass both node and id");
+        }
 
-		var crit = CalculateCrit();
-		var randomDamage =
-			Stats.Damage > 1
-				? Mathf.CeilToInt(GD.RandRange(-0.15, 0.15) * Stats.Damage)
-				: 0;
-		var damage = Stats.Damage + crit + randomDamage;
-		var newHealth = health.Health - damage;
+        if (node is not null)
+        {
+            // HandleHitNode(node);
+            throw new NotImplementedException();
+        }
 
-		var hit = new HitFeedbackComponent()
-		{
-			HitTime = 0.5f,
-			Damage = damage,
-			IsCrit = crit > 0,
-		};
-		if (!ComponentStore.GetComponent<HitFeedbackComponent>(id, out var _))
-			ComponentStore.RegisterComponent(id, hit);
-		else
-			ComponentStore.SetComponent(id, hit);
+        if (id is not null)
+        {
+            HandleDamageECS(id.Value);
+            HandleHitECS(id.Value);
+        }
+    }
 
-		ComponentStore.SetComponent(id, health with { Health = newHealth });
-	}
+    /// <summary> Handle the damage to the enemy </summary>
+    protected void HandleDamageECS(int id)
+    {
+        if (!ComponentStore.GetComponent<HealthComponent>(id, out var health))
+            return;
 
-	/// <summary> Handle additional effects to the enemy like knockback </summary>
-	protected virtual void HandleHitECS(int id) { }
+        var crit = CalculateCrit();
+        var randomDamage =
+            Stats.Damage > 1
+                ? Mathf.CeilToInt(GD.RandRange(-0.15, 0.15) * Stats.Damage)
+                : 0;
+        var damage = Stats.Damage + crit + randomDamage;
+        var newHealth = health.Health - damage;
 
-	// protected abstract void HandleHitNode(Node node);
+        var hit = new HitFeedbackComponent
+        {
+            HitTime = 0.5f,
+            Damage = damage,
+            IsCrit = crit > 0,
+        };
+        if (!ComponentStore.GetComponent<HitFeedbackComponent>(id, out _))
+            ComponentStore.RegisterComponent(id, hit);
+        else
+            ComponentStore.SetComponent(id, hit);
 
-	protected void Upgrade(int newLevel)
-	{
-		var upgrade = Upgrades[newLevel];
-		Properties.CurrentLevel++;
-		Logger.LogDebug(
-			$"Upgraded {Properties.Name} to {Properties.CurrentLevel + 1}"
-		);
-		Stats = upgrade;
-		PostUpgrade(newLevel);
-	}
+        ComponentStore.SetComponent(id, health with { Health = newHealth });
+    }
 
-	public void TryUpgrade()
-	{
-		Logger.LogWarning("Attempted to upgrade past max level");
-		var incrementLevel = Properties.CurrentLevel + 1;
-		if (incrementLevel > Upgrades.Count)
-		{
-			return;
-		}
+    /// <summary> Handle additional effects to the enemy like knockback </summary>
+    protected virtual void HandleHitECS(int id) { }
 
-		Upgrade(Properties.CurrentLevel);
-	}
+    // protected abstract void HandleHitNode(Node node);
 
-	protected float GetAttackSpeed()
-	{
-		return Stats.AttackSpeed * PlayerStats.AttackSpeedMultiplier;
-	}
+    protected void Upgrade(int newLevel)
+    {
+        var upgrade = Upgrades[newLevel];
+        Properties.CurrentLevel++;
+        Logger.LogDebug(
+            $"Upgraded {Properties.Name} to {Properties.CurrentLevel + 1}"
+        );
+        Stats = upgrade;
+        PostUpgrade(newLevel);
+    }
 
-	protected int CalculateCrit()
-	{
-		var roll = GD.Randf();
-		if (roll > Stats.CritChanceProportion)
-		{
-			return 0;
-		}
+    public void TryUpgrade()
+    {
+        Logger.LogWarning("Attempted to upgrade past max level");
+        var incrementLevel = Properties.CurrentLevel + 1;
+        if (incrementLevel > Upgrades.Count)
+            return;
 
-		return Mathf.CeilToInt(Stats.Damage * Stats.CritDamageMultiplier);
-	}
+        Upgrade(Properties.CurrentLevel);
+    }
+
+    protected float GetAttackSpeed()
+    {
+        return Stats.AttackSpeed * PlayerStats.AttackSpeedMultiplier;
+    }
+
+    protected int CalculateCrit()
+    {
+        var roll = GD.Randf();
+        if (roll > Stats.CritChanceProportion)
+            return 0;
+
+        return Mathf.CeilToInt(Stats.Damage * Stats.CritDamageMultiplier);
+    }
 }

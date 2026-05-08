@@ -5,89 +5,93 @@ namespace Game.Levels.Controllers;
 
 public partial class PlayerHitController : Node
 {
-	private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
-	private EntityComponentStore ComponentStore =>
-		EntityComponentStore.Instance;
-	private Player Player => GameWorld.Instance.MainPlayer;
-	private float PlayerHitboxRadius =>
-		Player.Character.CharacterStats.HitboxRadius;
+    private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
 
-	private CharacterStats PlayerStats =>
-		GameWorld.Instance.MainPlayer.Character.CharacterStats;
+    private EntityComponentStore ComponentStore =>
+        EntityComponentStore.Instance;
 
-	private float _invisibilityTime;
+    private Player Player => GameWorld.Instance.MainPlayer;
 
-	public override void _Process(double delta)
-	{
-		_invisibilityTime -= (float)delta;
-		ProcessContacts();
-	}
+    private float PlayerHitboxRadius =>
+        Player.Character.CharacterStats.HitboxRadius;
 
-	private void ProcessContacts()
-	{
-		if (_invisibilityTime > 0)
-			return;
+    private CharacterStats PlayerStats =>
+        GameWorld.Instance.MainPlayer.Character.CharacterStats;
 
-		if (
-			!TargetQuery.TryGetTargetsInArea(
-				Player.GlobalPosition,
-				PlayerHitboxRadius,
-				out var ids
-			)
-		)
-			return;
+    private float _invisibilityTime;
 
-		int largestDamage = 0;
-		int largestDamageId = int.MinValue;
+    public override void _Process(double delta)
+    {
+        _invisibilityTime -= (float)delta;
+        ProcessContacts();
+    }
 
-		foreach (var id in ids)
-		{
-			if (
-				!ComponentStore.GetComponent<EnemyContactDamageComponent>(
-					id,
-					out var damage
-				)
-			)
-				continue;
-			if (damage.Damage > largestDamage)
-			{
-				largestDamage = damage.Damage;
-				largestDamageId = id;
-			}
-		}
-		if (largestDamageId == int.MinValue)
-			return;
+    private void ProcessContacts()
+    {
+        if (_invisibilityTime > 0)
+            return;
 
-		_invisibilityTime = PlayerStats.InvincibilityTime;
-		PlayerStats.Damage(largestDamage);
+        if (
+            !TargetQuery.TryGetTargetsInArea(
+                Player.GlobalPosition,
+                PlayerHitboxRadius,
+                out var ids
+            )
+        )
+            return;
 
-		DamageFeedback();
-	}
+        var largestDamage = 0;
+        var largestDamageId = int.MinValue;
 
-	private void DamageFeedback()
-	{
-		var sprite = Player.GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
-		if (sprite is null)
-			return;
+        foreach (var id in ids)
+        {
+            if (
+                !ComponentStore.GetComponent<EnemyContactDamageComponent>(
+                    id,
+                    out var damage
+                )
+            )
+                continue;
+            if (damage.Damage > largestDamage)
+            {
+                largestDamage = damage.Damage;
+                largestDamageId = id;
+            }
+        }
 
-		if (sprite.Material is not ShaderMaterial spriteShaderMaterial)
-			return;
+        if (largestDamageId == int.MinValue)
+            return;
 
-		var tween = CreateTween();
-		tween.SetTrans(Tween.TransitionType.Expo);
-		tween.SetEase(Tween.EaseType.Out);
+        _invisibilityTime = PlayerStats.InvincibilityTime;
+        PlayerStats.Damage(largestDamage);
 
-		spriteShaderMaterial.SetShaderParameter("flash_state", 1f);
-		spriteShaderMaterial.SetShaderParameter("color", Colors.White);
+        DamageFeedback();
+    }
 
-		tween.TweenMethod(
-			Callable.From(
-				(float i) =>
-					spriteShaderMaterial.SetShaderParameter("flash_state", i)
-			),
-			1f,
-			0f,
-			1f
-		);
-	}
+    private void DamageFeedback()
+    {
+        var sprite = Player.GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
+        if (sprite is null)
+            return;
+
+        if (sprite.Material is not ShaderMaterial spriteShaderMaterial)
+            return;
+
+        var tween = CreateTween();
+        tween.SetTrans(Tween.TransitionType.Expo);
+        tween.SetEase(Tween.EaseType.Out);
+
+        spriteShaderMaterial.SetShaderParameter("flash_state", 1f);
+        spriteShaderMaterial.SetShaderParameter("color", Colors.White);
+
+        tween.TweenMethod(
+            Callable.From(
+                (float i) =>
+                    spriteShaderMaterial.SetShaderParameter("flash_state", i)
+            ),
+            1f,
+            0f,
+            1f
+        );
+    }
 }
