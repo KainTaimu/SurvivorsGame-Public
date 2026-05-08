@@ -8,6 +8,9 @@ namespace Game.Items.Offensive;
 
 public partial class Grenade : RigidBody2D
 {
+	[Export]
+	private PackedScene _explosionScene = null!;
+
 	public BaseOffensive OffensiveOrigin = null!;
 
 	private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
@@ -24,6 +27,14 @@ public partial class Grenade : RigidBody2D
 	public override void _Ready()
 	{
 		_t = TimeToExplode;
+	}
+
+	public override void _ExitTree()
+	{
+		var explosion = _explosionScene.Instantiate<GpuParticles2D>();
+		explosion.Emitting = true;
+		explosion.GlobalPosition = GlobalPosition;
+		GetTree().Root.CallDeferred(Window.MethodName.AddChild, explosion);
 	}
 
 	public override void _Process(double delta)

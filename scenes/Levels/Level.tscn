@@ -28,7 +28,7 @@
 
 [sub_resource type="Resource" id="Resource_aig1n"]
 script = ExtResource("8_eh1w1")
-SpawnCountTarget = 5000
+SpawnCountTarget = 3000
 EnemyBlueprints = Array[Object]([ExtResource("10_d4hlt"), ExtResource("9_occlw"), ExtResource("8_1c6ul")])
 SpawnMinTime = 0.01
 SpawnMaxTime = 0.01
