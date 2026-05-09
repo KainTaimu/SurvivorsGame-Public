@@ -15,5 +15,4 @@ explosiveness = 1.0
 fixed_fps = 20
 visibility_rect = Rect2(-8192, -8192, 16384, 16384)
 local_coords = true
-draw_order = 0
 process_material = ExtResource("2_w5u0a")

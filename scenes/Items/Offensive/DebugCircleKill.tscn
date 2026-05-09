@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://c18mvu8kqrmng"]
+
+[ext_resource type="Script" uid="uid://cbfjls4e6upqh" path="res://src/Items/Offensive/Airstrike.cs" id="1_dw7oa"]
+[ext_resource type="Script" uid="uid://os8ycjo6m7r0" path="res://src/Items/Offensive/BaseOffensiveStats.cs" id="2_4qcml"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_jc3so"]
+
+[sub_resource type="Resource" id="Resource_d4ip8"]
+script = ExtResource("2_4qcml")
+Damage = 5
+CritChanceProportion = 0.0
+AttackSpeed = 0.1
+metadata/_custom_type_script = "uid://os8ycjo6m7r0"
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hfpx8"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_ugfqd"]
+script = ExtResource("3_jc3so")
+Name = "DEBUG_CIRCLE_KILL"
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
+[node name="DebugCircleKill" type="Node" unique_id=94679970]
+script = ExtResource("1_dw7oa")
+Stats = SubResource("Resource_d4ip8")
+Properties = SubResource("Resource_ugfqd")

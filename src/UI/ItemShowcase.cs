@@ -19,9 +19,22 @@ public partial class ItemShowcase : MarginContainer
 	[Export]
 	private PanelContainer _panel = null!;
 
+	private bool _isMouseInside;
 	private bool _itemSelected;
 	private PackedScene? _itemScene;
 	private BaseItemProperties? _itemProperties;
+
+	public override void _Ready()
+	{
+		MouseEntered += () =>
+		{
+			_isMouseInside = true;
+		};
+		MouseExited += () =>
+		{
+			_isMouseInside = false;
+		};
+	}
 
 	public override void _GuiInput(InputEvent @event)
 	{
@@ -34,11 +47,14 @@ public partial class ItemShowcase : MarginContainer
 			else
 				MouseDefaultCursorShape = CursorShape.Arrow;
 		}
-		if (@event is InputEventMouseButton { ButtonIndex: MouseButton.Left })
-		{
-			EmitSignalOnItemSelected(_itemScene, _itemProperties);
-			_itemSelected = true;
-		}
+		if (!_isMouseInside)
+			return;
+
+		if (@event is not InputEventMouseButton { ButtonIndex: MouseButton.Left } mouse || !mouse.IsReleased())
+			return;
+
+		EmitSignalOnItemSelected(_itemScene, _itemProperties);
+		_itemSelected = true;
 	}
 
 	public void AssignItem(PackedScene itemScene, BaseItemProperties properties)

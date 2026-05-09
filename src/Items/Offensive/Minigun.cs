@@ -3,7 +3,7 @@ using Game.Core.ECS;
 
 namespace Game.Items.Offensive;
 
-public partial class Blick : Firearm
+public partial class Minigun : Firearm
 {
 	public override void _Ready()
 	{
@@ -27,6 +27,11 @@ public partial class Blick : Firearm
 			return;
 
 		Attack();
+	}
+
+	public override void Reload()
+	{
+		QueueFree();
 	}
 
 	protected override void HandleHitECS(int id)

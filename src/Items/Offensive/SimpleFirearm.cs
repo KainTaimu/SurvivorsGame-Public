@@ -3,7 +3,7 @@ using Game.Core.ECS;
 
 namespace Game.Items.Offensive;
 
-public partial class Ak47 : Firearm
+public partial class SimpleFirearm : Firearm
 {
 	public override void _Ready()
 	{
@@ -14,13 +14,16 @@ public partial class Ak47 : Firearm
 	public override void _Process(double delta)
 	{
 		FireCooldown -= delta;
+		if (AttackActionString is null)
+			return;
+
 		if (Input.IsActionPressed(InputMapNames.WeaponReload))
 		{
 			Reload();
 			return;
 		}
 
-		if (!Input.IsActionPressed(AttackActionString ?? InputMapNames.PrimaryAttack))
+		if (!Input.IsActionPressed(AttackActionString))
 			return;
 
 		Attack();

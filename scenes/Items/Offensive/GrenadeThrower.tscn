@@ -1,18 +1,13 @@
 [gd_scene format=3 uid="uid://ceimmtu3q4x6n"]
 
 [ext_resource type="Script" uid="uid://bhmou5mah3e4m" path="res://src/Items/Offensive/GrenadeThrower.cs" id="1_oiqqx"]
-[ext_resource type="PackedScene" uid="uid://d1nqrtaecqgq7" path="res://scenes/Items/Offensive/Grenade.tscn" id="2_18auf"]
+[ext_resource type="PackedScene" uid="uid://d1nqrtaecqgq7" path="res://scenes/Projectiles/Grenade.tscn" id="2_18auf"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_5d54y"]
 [ext_resource type="Script" uid="uid://os8ycjo6m7r0" path="res://src/Items/Offensive/BaseOffensiveStats.cs" id="4_gjjd4"]
 
-[sub_resource type="Resource" id="Resource_r85fg"]
-script = ExtResource("3_5d54y")
-Name = "Grenades"
-metadata/_custom_type_script = "uid://8rt54h4imtxv"
-
 [sub_resource type="Resource" id="Resource_jlsja"]
 script = ExtResource("4_gjjd4")
-Damage = 9999999999999
+Damage = 67
 CritDamageMultiplier = 0.1
 CritChanceProportion = 0.94
 ProjectileRadius = 200
@@ -24,9 +19,17 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://os8ycjo6m7r0"
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_18auf"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_r85fg"]
+script = ExtResource("3_5d54y")
+Name = "Grenade"
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
 [node name="GrenadeThrower" type="Node2D" unique_id=1000269585]
 script = ExtResource("1_oiqqx")
 GrenadeScene = ExtResource("2_18auf")
 ThrowForce = 1000.0
-Properties = SubResource("Resource_r85fg")
 Stats = SubResource("Resource_jlsja")
+Properties = SubResource("Resource_r85fg")

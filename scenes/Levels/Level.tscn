@@ -18,8 +18,10 @@
 [ext_resource type="Script" uid="uid://bct2mtni7a82f" path="res://src/Levels/Controllers/EnemyMover.cs" id="10_sh7eq"]
 [ext_resource type="Script" uid="uid://citywxiolgxtm" path="res://src/Levels/Controllers/EnemyWaveController.cs" id="11_aredf"]
 [ext_resource type="Script" uid="uid://cuxwdf1ugwtxm" path="res://src/Levels/Controllers/EnemySpawner.cs" id="12_qsiuk"]
+[ext_resource type="Script" uid="uid://y77qtp32wo00" path="res://src/Enemies/EnemyStats.cs" id="13_jnit0"]
 [ext_resource type="PackedScene" uid="uid://bpgtq48wt7r32" path="res://scenes/Levels/EnemyHitFeedbackController.tscn" id="13_vg5sh"]
 [ext_resource type="PackedScene" uid="uid://c8d8andvaknho" path="res://scenes/Levels/EnemyDeathManager.tscn" id="14_aig1n"]
+[ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="14_w4qib"]
 [ext_resource type="PackedScene" uid="uid://cjx5nc7bql8d0" path="res://scenes/UI/Crosshair.tscn" id="15_aredf"]
 [ext_resource type="Script" uid="uid://djv8orxale1c3" path="res://src/Levels/Controllers/EnemyTargetQuery.cs" id="16_x7tv3"]
 [ext_resource type="Script" uid="uid://bpqjji00j8p6x" path="res://src/Levels/Controllers/PlayerHitController.cs" id="19_aig1n"]
@@ -27,20 +29,64 @@
 [ext_resource type="PackedScene" uid="uid://do6p1pg4x0vkf" path="res://scenes/UI/Hud.tscn" id="20_vg5sh"]
 [ext_resource type="PackedScene" uid="uid://cbpyycvkwcedb" path="res://scenes/UI/PickupUi.tscn" id="26_faxpm"]
 
-[sub_resource type="Resource" id="Resource_aig1n"]
-script = ExtResource("8_eh1w1")
-SpawnCountTarget = 3000
-EnemyBlueprints = Array[Object]([ExtResource("10_d4hlt"), ExtResource("9_occlw"), ExtResource("8_1c6ul")])
-SpawnMinTime = 0.01
-SpawnMaxTime = 0.01
-SpawnBatchMin = 50
-SpawnBatchMax = 100
-metadata/_custom_type_script = "uid://cksmwvaxx1m18"
-
 [sub_resource type="Resource" id="Resource_27qwr"]
 script = ExtResource("9_aig1n")
-Duration = 9999.0
+Duration = 20.0
 EnemyBlueprints = Array[Object]([ExtResource("8_1c6ul"), ExtResource("9_occlw"), ExtResource("10_d4hlt")])
+SpawnMaxTime = 0.8
+SpawnBatchMax = 2
+metadata/_custom_type_script = "uid://b7ol6jtjagoe"
+
+[sub_resource type="Resource" id="Resource_li0nt"]
+script = ExtResource("8_eh1w1")
+SpawnCountTarget = 9999
+EnemyBlueprints = Array[Object]([ExtResource("10_d4hlt")])
+SpawnMinTime = 0.1
+SpawnMaxTime = 0.1
+SpawnBatchMax = 2
+metadata/_custom_type_script = "uid://cksmwvaxx1m18"
+
+[sub_resource type="Resource" id="Resource_t3a6r"]
+script = ExtResource("13_jnit0")
+MoneyDrop = 1
+metadata/_custom_type_script = "uid://y77qtp32wo00"
+
+[sub_resource type="Resource" id="Resource_a3qk2"]
+script = ExtResource("14_w4qib")
+Name = "duck"
+Type = 1
+Stats = SubResource("Resource_t3a6r")
+metadata/_custom_type_script = "uid://fti2ky20j85c"
+
+[sub_resource type="Resource" id="Resource_mybqu"]
+script = ExtResource("13_jnit0")
+DamageOnContact = 6
+MoneyDrop = 3
+metadata/_custom_type_script = "uid://y77qtp32wo00"
+
+[sub_resource type="Resource" id="Resource_3nhtq"]
+script = ExtResource("14_w4qib")
+Name = "vanoss"
+Type = 1
+Stats = SubResource("Resource_mybqu")
+metadata/_custom_type_script = "uid://fti2ky20j85c"
+
+[sub_resource type="Resource" id="Resource_g1w0t"]
+script = ExtResource("13_jnit0")
+DamageOnContact = 4
+metadata/_custom_type_script = "uid://y77qtp32wo00"
+
+[sub_resource type="Resource" id="Resource_cccga"]
+script = ExtResource("14_w4qib")
+Name = "shondo"
+Type = 1
+Stats = SubResource("Resource_g1w0t")
+metadata/_custom_type_script = "uid://fti2ky20j85c"
+
+[sub_resource type="Resource" id="Resource_71ilp"]
+script = ExtResource("9_aig1n")
+Duration = 9999.0
+EnemyBlueprints = Array[Object]([SubResource("Resource_a3qk2"), SubResource("Resource_3nhtq"), SubResource("Resource_cccga")])
 SpawnMaxTime = 0.8
 SpawnBatchMax = 2
 metadata/_custom_type_script = "uid://b7ol6jtjagoe"
@@ -91,7 +137,7 @@ script = ExtResource("6_qaj6y")
 
 [node name="EnemyWaveController" type="Node" parent="Systems/EnemySystems" unique_id=247564660 node_paths=PackedStringArray("EntityComponentStore")]
 script = ExtResource("11_aredf")
-Waves = Array[Object]([SubResource("Resource_aig1n"), SubResource("Resource_27qwr")])
+Waves = Array[Object]([SubResource("Resource_27qwr"), SubResource("Resource_li0nt"), SubResource("Resource_71ilp")])
 EntityComponentStore = NodePath("../../EntityComponentStore")
 
 [node name="EnemySpawner" type="Node" parent="Systems/EnemySystems/EnemyWaveController" unique_id=836765334]

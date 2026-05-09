@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://2gxjr5yjrfut"]
+
+[ext_resource type="Script" uid="uid://bra005d2d2mrj" path="res://src/Items/Offensive/Minigun.cs" id="1_6kirf"]
+[ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_6kirf"]
+[ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="3_hfpx8"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="4_qugsk"]
+[ext_resource type="AudioStream" uid="uid://cebms7f3dx4yf" path="res://assets/SFX/hitmarker.wav" id="5_6kirf"]
+
+[sub_resource type="Resource" id="Resource_6kirf"]
+script = ExtResource("3_hfpx8")
+ReloadTime = 1.0
+BloomCoefficientDeg = 20.0
+MagazineCapacity = 500
+HorizontalRecoilMin = 50.0
+HorizontalBaseRecoil = 50.0
+HorizontalRecoilRandom = 40.0
+VerticalRecoilMin = 8.0
+VerticalBaseRecoil = 8.0
+VerticalRecoilRandom = 1.0
+RecoilScale = 0.04
+CameraRecoilScale = 5.0
+Damage = 2
+CritChanceProportion = 0.0
+ProjectileSpeed = 8000
+ProjectileScaleMultiplier = 0.6
+ProjectileRadius = 30
+AttackSpeed = 0.001
+PierceLimit = 2
+Additional = Dictionary[String, Variant]({
+"Knockback": 10.0
+})
+metadata/_custom_type_script = "uid://di81uufgmcsog"
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hfpx8"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_y2vvo"]
+script = ExtResource("4_qugsk")
+Name = "M134 Minigun"
+Description = "Dakka"
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
+[node name="M134" type="Node" unique_id=636864915 node_paths=PackedStringArray("ShootAudioPlayer")]
+script = ExtResource("1_6kirf")
+_projectileScene = ExtResource("2_6kirf")
+ShootAudioPlayer = NodePath("AudioStreamPlayer")
+Stats = SubResource("Resource_6kirf")
+Properties = SubResource("Resource_y2vvo")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1297129913]
+stream = ExtResource("5_6kirf")
+volume_db = 8.0
+pitch_scale = 1.83
