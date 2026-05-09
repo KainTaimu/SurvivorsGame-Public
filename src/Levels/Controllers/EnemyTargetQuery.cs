@@ -141,7 +141,6 @@ public partial class EnemyTargetQuery : Node
 		var direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 		var rayLength = _grid.WindowSize.Length();
 		var rayEnd = from + direction * rayLength;
-		var widthSq = width * width;
 
 		var cellsOnRay = new HashSet<Vector2I>();
 		GetCellsAlongLine(from, rayEnd, cellsOnRay);
