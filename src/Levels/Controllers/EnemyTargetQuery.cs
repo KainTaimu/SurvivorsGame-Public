@@ -37,7 +37,7 @@ public partial class EnemyTargetQuery : Node
 			return;
 		}
 
-		var windowSize = viewport.GetVisibleRect().Size * 1.2f;
+		var windowSize = viewport.GetVisibleRect().Size * 1.3f;
 		_grid = new CenteredMovingUniformGrid<int>(GRID_SIZE, windowSize);
 
 		ComponentStore.BeforeEntityUnregistered += (id) => Dead.Add(id);
