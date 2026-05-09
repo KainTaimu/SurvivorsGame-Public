@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemyWaveSpawnCount" format=3 uid="uid://b0ppf3hqm67qh"]
+
+[ext_resource type="Script" uid="uid://cksmwvaxx1m18" path="res://src/Levels/Controllers/EnemyWaveSpawnCount.cs" id="1_gpfel"]
+[ext_resource type="Resource" uid="uid://dl1a0sq36f524" path="res://scenes/Enemies/Blueprints/Shondo.tres" id="1_w5pwt"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_gpfel")
+EnemyBlueprints = Array[Object]([ExtResource("1_w5pwt")])
+metadata/_custom_type_script = "uid://cksmwvaxx1m18"

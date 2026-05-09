@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="EnemyWaveDuration" format=3 uid="uid://dqug076es4qxb"]
+
+[ext_resource type="Script" uid="uid://b7ol6jtjagoe" path="res://src/Levels/Controllers/EnemyWaveDuration.cs" id="1_8fdam"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_8fdam")
+EnemyBlueprints = null
+metadata/_custom_type_script = "uid://b7ol6jtjagoe"

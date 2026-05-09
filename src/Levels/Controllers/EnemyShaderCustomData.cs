@@ -9,7 +9,8 @@ public class EnemyShaderCustomData(
 	byte frameIdxY = 0,
 	bool flip = false,
 	byte opacity = 255,
-	byte flash = 0
+	byte flash = 0,
+	byte scale = 1
 )
 {
 	public float R => GetR();
@@ -17,15 +18,16 @@ public class EnemyShaderCustomData(
 	public float B => GetB();
 	public float A => GetA();
 
-	// Channel R
+	// float has 32 bits
+	// Channel R | 17 bits
 	public bool Flip = flip; // 1 bit
-	public byte Opacity = opacity; // 2 byte = 8 bit
-	public byte Flash = flash;
+	public byte Opacity = opacity; // 1 byte 8 bits
+	public byte Flash = flash; // 1 byte 8 bits
 	private const int FLIP_POSITION = 0;
 	private const int OPACITY_POSITION = 1;
 	private const int FLASH_POSITION = 9;
 
-	// Channel B
+	// Channel B | 4 bytes 32 bits
 	public readonly byte FrameX = frameX;
 	public readonly byte FrameY = frameY;
 	public readonly byte FrameIdxX = frameIdxX;
@@ -35,11 +37,13 @@ public class EnemyShaderCustomData(
 	private const int FRAME_IDX_X_POSITION = 16;
 	private const int FRAME_IDX_Y_POSITION = 24;
 
-	// Channel A
+	// Channel A | 3 bytes 24 bits
 	public readonly byte FrameSizePxX = frameSizePxX;
 	public readonly byte FrameSizePxY = frameSizePxY;
+	public readonly byte Scale = scale;
 	private const int FRAME_SIZE_PX_X_POSITION = 0;
 	private const int FRAME_SIZE_PX_Y_POSITION = 8;
+	private const int SCALE_X_POSITION = 16;
 
 	private float GetR()
 	{
@@ -76,6 +80,7 @@ public class EnemyShaderCustomData(
 
 		bits ^= (uint)FrameSizePxX << FRAME_SIZE_PX_X_POSITION;
 		bits ^= (uint)FrameSizePxY << FRAME_SIZE_PX_Y_POSITION;
+		bits ^= (uint)Scale << SCALE_X_POSITION;
 
 		return BitConverter.UInt32BitsToSingle(bits);
 	}

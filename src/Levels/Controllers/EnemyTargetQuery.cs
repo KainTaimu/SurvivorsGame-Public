@@ -62,6 +62,17 @@ public partial class EnemyTargetQuery : Node
 		}
 	}
 
+	private bool CircleHitTest(Vector2 projPos, float projRadius, int targetId)
+	{
+		if (!_entities.GetComponent<PositionComponent>(targetId, out var pos))
+			return false;
+		if (!_entities.GetComponent<CircleHitboxComponent>(targetId, out var hitbox))
+			return false;
+
+		var radiusSum = projRadius + hitbox.Radius;
+		return pos.Position.DistanceSquaredTo(projPos) <= radiusSum * radiusSum;
+	}
+
 	public bool TryGetTargetsInArea(Vector2 areaCenter, float areaRadius, out int[] targetIds)
 	{
 		// credit: https://www.redblobgames.com/grids/circle-drawing/
@@ -86,7 +97,8 @@ public partial class EnemyTargetQuery : Node
 					var id = cell.Array[i];
 					if (targets.Contains(id))
 						continue;
-					targets.Add(id);
+					if (CircleHitTest(areaCenter, areaRadius, id))
+						targets.Add(id);
 				}
 			}
 		}
@@ -182,8 +194,12 @@ public partial class EnemyTargetQuery : Node
 
 				if (!_entities.GetComponent<PositionComponent>(id, out var pos))
 					continue;
+				if (!_entities.GetComponent<CircleHitboxComponent>(id, out var hitbox))
+					continue;
 
-				if (DistanceSquaredPointToRay(pos.Position, from, direction, rayLength) <= widthSq)
+				var distSq = DistanceSquaredPointToRay(pos.Position, from, direction, rayLength);
+				var radiusSum = width + hitbox.Radius;
+				if (distSq <= radiusSum * radiusSum)
 					targets.Add(id);
 			}
 		}

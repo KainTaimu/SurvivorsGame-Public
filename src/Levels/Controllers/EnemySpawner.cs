@@ -47,8 +47,10 @@ public partial class EnemySpawner : Node
 				FrameSizePxY = spriteInfo?.FrameSizePxY ?? 32,
 				Opacity = spriteInfo?.Opacity ?? 255,
 				Flash = spriteInfo?.Flash ?? 0,
+				Scale = bp.Stats.SpriteScaleMultiplier,
 			}
 		);
+		ComponentStore.RegisterComponent(id, new CircleHitboxComponent(bp.Stats.SpriteScaleMultiplier * 16f));
 		ComponentStore.RegisterComponent(
 			id,
 			new MoveSpeedComponent(Mathf.CeilToInt(stats.MoveSpeed * stats.MoveSpeedMultiplier))

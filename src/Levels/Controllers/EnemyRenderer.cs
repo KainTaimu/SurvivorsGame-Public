@@ -106,7 +106,8 @@ public partial class EnemyRenderer : Node
 			updatedSprite.FrameIdxX,
 			flip: flip,
 			opacity: updatedSprite.Opacity,
-			flash: updatedSprite.Flash
+			flash: updatedSprite.Flash,
+			scale: (byte)Mathf.Clamp((updatedSprite.Scale - 0.5f) / 4.5f * 255f, 0, 255)
 		);
 		var data = new Color(custom.R, custom.G, custom.B, custom.A);
 

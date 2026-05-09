@@ -15,6 +15,9 @@ public partial class EnemyStats : Resource
 	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
 	public int Defense;
 
+	[Export(PropertyHint.Range, "0.5,5,or_greater,hide_slider")]
+	public float SpriteScaleMultiplier = 1;
+
 	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
 	public int MoneyDrop = 10;
 
@@ -36,12 +39,6 @@ public partial class EnemyStats : Resource
 
 	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
 	public float OutgoingDamageMultiplier = 1;
-
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	public float AttackSpeedMultiplier = 1;
-
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	public float ProjectileMultiplier = 1;
 
 	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
 	public float XpDropMultiplier = 1;

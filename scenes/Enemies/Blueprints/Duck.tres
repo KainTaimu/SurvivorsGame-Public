@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://y77qtp32wo00" path="res://src/Enemies/EnemyStats.cs" id="1_abnrt"]
 [ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="2_ag0wl"]
 
-[sub_resource type="Resource" id="Resource_ag0wl"]
+[sub_resource type="Resource" id="Resource_abnrt"]
 script = ExtResource("1_abnrt")
 MoneyDrop = 1
 metadata/_custom_type_script = "uid://y77qtp32wo00"
@@ -12,5 +12,5 @@ metadata/_custom_type_script = "uid://y77qtp32wo00"
 script = ExtResource("2_ag0wl")
 Name = "duck"
 Type = 1
-Stats = SubResource("Resource_ag0wl")
+Stats = SubResource("Resource_abnrt")
 metadata/_custom_type_script = "uid://fti2ky20j85c"

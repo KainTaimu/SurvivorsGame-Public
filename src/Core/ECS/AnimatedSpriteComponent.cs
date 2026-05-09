@@ -10,7 +10,8 @@ public record struct AnimatedSpriteComponent(
 	byte FrameIdxX = 0,
 	byte FrameIdxY = 0,
 	byte Opacity = 25,
-	byte Flash = 0
+	byte Flash = 0,
+	float Scale = 1
 )
 {
 	public double AnimationTime { get; set; } = AnimationSpeed;
