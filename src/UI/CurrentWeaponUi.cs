@@ -44,11 +44,23 @@ public partial class CurrentWeaponUi : CanvasLayer
 				_primaryWeaponAmmo.Text = "Reloading...";
 			else
 			{
-				_primaryWeaponAmmo.Text = $"{primary.MagazineCount}/{primary.MagazineCapacity}";
+				if (primary.MagazineCount > primary.MagazineCapacity)
+				{
+					var extra = primary.MagazineCount - primary.MagazineCapacity;
+					_primaryWeaponAmmo.Text =
+						$"{primary.MagazineCount -extra}+{extra}/{primary
+						.MagazineCapacity}";
+				}
+				else
+				{
+					_primaryWeaponAmmo.Text = $"{primary.MagazineCount}/{primary.MagazineCapacity}";
+				}
 			}
 		}
 		else
+		{
 			_primaryWeaponAmmo.Hide();
+		}
 
 		if (_weaponController.SecondaryAttack is IReloadable secondary)
 		{
@@ -57,11 +69,23 @@ public partial class CurrentWeaponUi : CanvasLayer
 				_secondaryWeaponAmmo.Text = "Reloading...";
 			else
 			{
-				_secondaryWeaponAmmo.Text = $"{secondary.MagazineCount}/{secondary.MagazineCapacity}";
+				if (secondary.MagazineCount > secondary.MagazineCapacity)
+				{
+					var extra = secondary.MagazineCount - secondary.MagazineCapacity;
+					_secondaryWeaponAmmo.Text =
+						$"{secondary.MagazineCount -extra}+{extra}/{secondary
+						.MagazineCapacity}";
+				}
+				else
+				{
+					_secondaryWeaponAmmo.Text = $"{secondary.MagazineCount}/{secondary.MagazineCapacity}";
+				}
 			}
 		}
 		else
+		{
 			_secondaryWeaponAmmo.Hide();
+		}
 	}
 
 	public void UpdateCarousel()

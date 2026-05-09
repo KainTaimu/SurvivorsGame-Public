@@ -12,12 +12,12 @@ BloomCoefficientDeg = 3.5
 VerticalRecoilMin = 4.0
 VerticalBaseRecoil = 4.0
 VerticalRecoilRandom = 1.0
-RecoilScale = 0.9
+RecoilScale = 0.6
 RecoilAccumilationScale = 0.0
 CameraRecoilScale = 0.4
 Damage = 3
-CritDamageMultiplier = 1.6
-CritChanceProportion = 0.05
+CritDamageMultiplier = 0.6
+CritChanceProportion = 0.1
 ProjectileSpeed = 4200
 ProjectileScaleMultiplier = 0.6
 AttackSpeed = 0.067
@@ -35,10 +35,11 @@ script = ExtResource("4_ffmje")
 Name = "M4 Carbine"
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
-[node name="M4" type="Node" unique_id=2085270843 node_paths=PackedStringArray("ShootAudioPlayer")]
+[node name="M4" type="Node2D" unique_id=265287884 node_paths=PackedStringArray("ShootAudioPlayer", "SpentCasingParticles")]
 script = ExtResource("1_yodjk")
 _projectileScene = ExtResource("2_ffmje")
 ShootAudioPlayer = NodePath("AudioStreamPlayer")
+SpentCasingParticles = NodePath("")
 Stats = SubResource("Resource_2fu6x")
 Properties = SubResource("Resource_40q5n")
 

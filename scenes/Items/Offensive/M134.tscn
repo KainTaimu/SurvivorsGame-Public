@@ -31,7 +31,7 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hfpx8"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_qugsk"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_y2vvo"]
@@ -40,10 +40,11 @@ Name = "M134 Minigun"
 Description = "Dakka"
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
-[node name="M134" type="Node" unique_id=636864915 node_paths=PackedStringArray("ShootAudioPlayer")]
+[node name="M134" type="Node" unique_id=636864915 node_paths=PackedStringArray("ShootAudioPlayer", "SpentCasingParticles")]
 script = ExtResource("1_6kirf")
 _projectileScene = ExtResource("2_6kirf")
 ShootAudioPlayer = NodePath("AudioStreamPlayer")
+SpentCasingParticles = NodePath("")
 Stats = SubResource("Resource_6kirf")
 Properties = SubResource("Resource_y2vvo")
 

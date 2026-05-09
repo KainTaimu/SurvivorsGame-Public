@@ -44,6 +44,9 @@ public partial class Crosshair : Node2D
 
 	public static Crosshair? Instance { get; private set; }
 
+	/// <summary>
+	/// Angle from player to crosshair in radians.
+	/// </summary>
 	public float AngleFromPlayer => GetAngleFromPlayer();
 	public Vector2 CrosshairVelocity;
 

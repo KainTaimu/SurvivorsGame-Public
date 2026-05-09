@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Game.Core.Settings;
 using Game.Levels.Controllers;
 using Game.UI;
@@ -21,6 +22,9 @@ public abstract partial class Firearm : BaseOffensive, IReloadable, IManualAttac
 
 	[Export]
 	public AudioStreamPlayer? ReloadAudioPlayer;
+
+	[Export]
+	public GpuParticles2D? SpentCasingParticles;
 
 	public int MagazineCapacity => FirearmStats.MagazineCapacity;
 
@@ -143,7 +147,36 @@ public abstract partial class Firearm : BaseOffensive, IReloadable, IManualAttac
 		projectile.Initialize();
 
 		ApplyCursorRecoil();
+		SpawnCasingParticle();
 		EmitSignalOnAttack();
+	}
+
+	[SuppressMessage("ReSharper", "BitwiseOperatorOnEnumWithoutFlags")]
+	public void SpawnCasingParticle()
+	{
+		if (SpentCasingParticles is null)
+			return;
+		var rotation = (Crosshair?.AngleFromPlayer ?? 0) + (Mathf.Pi / 2f);
+		rotation += (float)GD.RandRange(-15f, 15f) * (Mathf.Pi / 180f);
+		var transform = new Transform2D(rotation, Player.GlobalPosition).ScaledLocal(Vector2.One * 0.5f);
+		var velocity = Vector2.Right * (float)GD.RandRange(300f, 1000f);
+		velocity = velocity.Rotated(rotation);
+		velocity += Player.MovementController.Velocity;
+		Logger.LogDebug(
+			$"Casing particle spawned at {Player.GlobalPosition} with rotation {rotation * (180 / Math.PI)}"
+		);
+
+		SpentCasingParticles.EmitParticle(
+			transform,
+			velocity,
+			Colors.Black,
+			Colors.Black,
+			(uint)(
+				GpuParticles2D.EmitFlags.RotationScale
+				| GpuParticles2D.EmitFlags.Position
+				| GpuParticles2D.EmitFlags.Velocity
+			)
+		);
 	}
 
 	public virtual void Reload()
@@ -154,7 +187,10 @@ public abstract partial class Firearm : BaseOffensive, IReloadable, IManualAttac
 			return;
 		GetTree().CreateTimer(ReloadTime, false).Timeout += () =>
 		{
-			MagazineCount = MagazineCapacity;
+			if (MagazineCount == 0)
+				MagazineCount = MagazineCapacity;
+			else
+				MagazineCount = MagazineCapacity + 1; // Round in chamber
 			IsReloading = false;
 		};
 		IsReloading = true;
