@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://d226hpep613tv"]
 
 [ext_resource type="LabelSettings" uid="uid://c0lq4rqaj62dx" path="res://scenes/UI/SettingsLabelSettings.tres" id="1_g0tyt"]
-[ext_resource type="Script" uid="uid://hiaypuga6gnf" path="res://scenes/UI/Settings.cs" id="1_ydmms"]
+[ext_resource type="Script" uid="uid://hiaypuga6gnf" path="res://src/Core/Settings/Settings.cs" id="1_ydmms"]
 
 [node name="Settings" type="MarginContainer" unique_id=83201529 node_paths=PackedStringArray("GoreSelection", "CameraShake", "CameraShakeScale", "CrosshairScale", "CrosshairScaleLabel", "DamageIndicators")]
 process_mode = 3
@@ -13,28 +13,26 @@ anchor_bottom = 1.0
 offset_left = -320.0
 grow_horizontal = 0
 grow_vertical = 2
-theme_override_constants/margin_left = 14
-theme_override_constants/margin_right = 14
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_right = 7
 script = ExtResource("1_ydmms")
-GoreSelection = NodePath("HSplitContainer/VBoxContainer2/Gore")
-CameraShake = NodePath("HSplitContainer/VBoxContainer2/CameraShake")
-CameraShakeScale = NodePath("HSplitContainer/VBoxContainer2/CameraShakeScale")
-CrosshairScale = NodePath("HSplitContainer/VBoxContainer2/CrosshairScale/HSlider2")
-CrosshairScaleLabel = NodePath("HSplitContainer/VBoxContainer2/CrosshairScale/Label")
-DamageIndicators = NodePath("HSplitContainer/VBoxContainer2/DamageIndicators")
+GoreSelection = NodePath("VBoxContainer/HBoxContainer/Gore2")
+CameraShake = NodePath("VBoxContainer/HBoxContainer2/CameraShake2")
+CameraShakeScale = NodePath("VBoxContainer/HBoxContainer3/CameraShakeScale2")
+CrosshairScale = NodePath("VBoxContainer/HBoxContainer4/CrosshairScale2/HSlider2")
+CrosshairScaleLabel = NodePath("VBoxContainer/HBoxContainer4/CrosshairScale2/Label")
+DamageIndicators = NodePath("VBoxContainer/HBoxContainer5/DamageIndicators2")
 
-[node name="HSplitContainer" type="HSplitContainer" parent="." unique_id=1300123499]
-layout_mode = 2
-split_offsets = PackedInt32Array(152)
-dragging_enabled = false
-dragger_visibility = 1
-split_offset = 152
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer" unique_id=1471734743]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1471734743]
 layout_mode = 2
 alignment = 1
 
-[node name="Gore" type="Label" parent="HSplitContainer/VBoxContainer" unique_id=1430589299]
+[node name="HBoxContainer" type="HSplitContainer" parent="VBoxContainer" unique_id=151415757]
+layout_mode = 2
+split_offsets = PackedInt32Array(160)
+split_offset = 160
+
+[node name="Gore" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=1430589299]
 custom_minimum_size = Vector2(0, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
@@ -44,51 +42,7 @@ horizontal_alignment = 2
 vertical_alignment = 1
 uppercase = true
 
-[node name="CameraShake" type="Label" parent="HSplitContainer/VBoxContainer" unique_id=1307140608]
-custom_minimum_size = Vector2(0, 32)
-custom_maximum_size = Vector2(-1, 32)
-layout_mode = 2
-text = "Camera shake"
-label_settings = ExtResource("1_g0tyt")
-horizontal_alignment = 2
-vertical_alignment = 1
-uppercase = true
-
-[node name="CameraShakeScale" type="Label" parent="HSplitContainer/VBoxContainer" unique_id=1820403670]
-custom_minimum_size = Vector2(0, 32)
-custom_maximum_size = Vector2(-1, 32)
-layout_mode = 2
-text = "Camera shake scale"
-label_settings = ExtResource("1_g0tyt")
-horizontal_alignment = 2
-vertical_alignment = 1
-uppercase = true
-
-[node name="CrosshairScale" type="Label" parent="HSplitContainer/VBoxContainer" unique_id=319481044]
-custom_minimum_size = Vector2(0, 32)
-custom_maximum_size = Vector2(-1, 32)
-layout_mode = 2
-text = "Crosshair scale"
-label_settings = ExtResource("1_g0tyt")
-horizontal_alignment = 2
-vertical_alignment = 1
-uppercase = true
-
-[node name="DamageIndicators" type="Label" parent="HSplitContainer/VBoxContainer" unique_id=969029046]
-custom_minimum_size = Vector2(0, 32)
-custom_maximum_size = Vector2(-1, 32)
-layout_mode = 2
-text = "Damage indicators"
-label_settings = ExtResource("1_g0tyt")
-horizontal_alignment = 2
-vertical_alignment = 1
-uppercase = true
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="HSplitContainer" unique_id=1592039985]
-layout_mode = 2
-alignment = 1
-
-[node name="Gore" type="OptionButton" parent="HSplitContainer/VBoxContainer2" unique_id=1749146436]
+[node name="Gore2" type="OptionButton" parent="VBoxContainer/HBoxContainer" unique_id=1749146436]
 custom_minimum_size = Vector2(0, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
@@ -102,7 +56,22 @@ popup/item_2/id = 2
 popup/item_3/text = "High"
 popup/item_3/id = 3
 
-[node name="CameraShake" type="OptionButton" parent="HSplitContainer/VBoxContainer2" unique_id=1592180540]
+[node name="HBoxContainer2" type="HSplitContainer" parent="VBoxContainer" unique_id=1536564626]
+layout_mode = 2
+split_offsets = PackedInt32Array(160)
+split_offset = 160
+
+[node name="CameraShake" type="Label" parent="VBoxContainer/HBoxContainer2" unique_id=1307140608]
+custom_minimum_size = Vector2(0, 32)
+custom_maximum_size = Vector2(-1, 32)
+layout_mode = 2
+text = "Camera shake"
+label_settings = ExtResource("1_g0tyt")
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="CameraShake2" type="OptionButton" parent="VBoxContainer/HBoxContainer2" unique_id=1592180540]
 custom_minimum_size = Vector2(0, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
@@ -112,7 +81,22 @@ popup/item_0/id = 0
 popup/item_1/text = "Enabled"
 popup/item_1/id = 1
 
-[node name="CameraShakeScale" type="HSlider" parent="HSplitContainer/VBoxContainer2" unique_id=932763337]
+[node name="HBoxContainer3" type="HSplitContainer" parent="VBoxContainer" unique_id=1804785226]
+layout_mode = 2
+split_offsets = PackedInt32Array(160)
+split_offset = 160
+
+[node name="CameraShakeScale" type="Label" parent="VBoxContainer/HBoxContainer3" unique_id=1820403670]
+custom_minimum_size = Vector2(0, 32)
+custom_maximum_size = Vector2(-1, 32)
+layout_mode = 2
+text = "Camera shake scale"
+label_settings = ExtResource("1_g0tyt")
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="CameraShakeScale2" type="HSlider" parent="VBoxContainer/HBoxContainer3" unique_id=932763337]
 custom_minimum_size = Vector2(83.677, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
@@ -123,14 +107,29 @@ tick_count = 7
 ticks_on_borders = true
 ticks_position = 3
 
-[node name="CrosshairScale" type="HSplitContainer" parent="HSplitContainer/VBoxContainer2" unique_id=1104852987]
+[node name="HBoxContainer4" type="HSplitContainer" parent="VBoxContainer" unique_id=149106139]
+layout_mode = 2
+split_offsets = PackedInt32Array(160)
+split_offset = 160
+
+[node name="CrosshairScale" type="Label" parent="VBoxContainer/HBoxContainer4" unique_id=319481044]
+custom_minimum_size = Vector2(0, 32)
+custom_maximum_size = Vector2(-1, 32)
+layout_mode = 2
+text = "Crosshair scale"
+label_settings = ExtResource("1_g0tyt")
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="CrosshairScale2" type="HSplitContainer" parent="VBoxContainer/HBoxContainer4" unique_id=1104852987]
 layout_mode = 2
 split_offsets = PackedInt32Array(94)
 dragging_enabled = false
 dragger_visibility = 1
 split_offset = 94
 
-[node name="HSlider2" type="HSlider" parent="HSplitContainer/VBoxContainer2/CrosshairScale" unique_id=404113078]
+[node name="HSlider2" type="HSlider" parent="VBoxContainer/HBoxContainer4/CrosshairScale2" unique_id=404113078]
 custom_minimum_size = Vector2(83.677, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
@@ -142,13 +141,28 @@ tick_count = 10
 ticks_on_borders = true
 ticks_position = 3
 
-[node name="Label" type="Label" parent="HSplitContainer/VBoxContainer2/CrosshairScale" unique_id=395033495]
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer4/CrosshairScale2" unique_id=395033495]
 layout_mode = 2
 text = "X.X"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="DamageIndicators" type="OptionButton" parent="HSplitContainer/VBoxContainer2" unique_id=1966174239]
+[node name="HBoxContainer5" type="HSplitContainer" parent="VBoxContainer" unique_id=1543293664]
+layout_mode = 2
+split_offsets = PackedInt32Array(160)
+split_offset = 160
+
+[node name="DamageIndicators" type="Label" parent="VBoxContainer/HBoxContainer5" unique_id=969029046]
+custom_minimum_size = Vector2(0, 32)
+custom_maximum_size = Vector2(-1, 32)
+layout_mode = 2
+text = "Damage indicators"
+label_settings = ExtResource("1_g0tyt")
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="DamageIndicators2" type="OptionButton" parent="VBoxContainer/HBoxContainer5" unique_id=1966174239]
 custom_minimum_size = Vector2(0, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
