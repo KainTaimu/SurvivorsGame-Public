@@ -50,6 +50,7 @@ public partial class ProjectilePool : Node
 		projectile.Hide();
 
 		projectile.ProcessMode = ProcessModeEnum.Disabled;
+		projectile.Name = $"{projectile.GetType().Name}_{_activePool.Count}";
 		return projectile;
 	}
 }

@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://c7kegqurrrx0w" path="res://assets/VFX/small_chevron.png" id="9_c66x0"]
 [ext_resource type="Script" uid="uid://d2moqmcv2k22p" path="res://src/Players/Controllers/LookHeader.cs" id="10_k7ubp"]
 [ext_resource type="PackedScene" uid="uid://ceimmtu3q4x6n" path="res://scenes/Items/Offensive/GrenadeThrower.tscn" id="11_espgp"]
+[ext_resource type="PackedScene" uid="uid://b6pcia1iql0ct" path="res://scenes/Items/Offensive/Ak47.tscn" id="13_ragxt"]
 [ext_resource type="PackedScene" uid="uid://c5q166p2d4241" path="res://scenes/UI/CurrentWeaponUi.tscn" id="14_8rask"]
 
 [sub_resource type="Resource" id="Resource_pqexr"]
@@ -169,6 +170,8 @@ _sprite = NodePath("../AnimatedSprite2D")
 
 [node name="PlayerWeaponController" type="Node" parent="." unique_id=752109662]
 script = ExtResource("5_yecw2")
+
+[node name="Ak47" parent="PlayerWeaponController" unique_id=915008798 instance=ExtResource("13_ragxt")]
 
 [node name="GrenadeThrower" parent="PlayerWeaponController" unique_id=1000269585 instance=ExtResource("11_espgp")]
 

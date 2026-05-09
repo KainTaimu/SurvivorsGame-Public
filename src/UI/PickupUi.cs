@@ -10,6 +10,9 @@ namespace Game.UI;
 public partial class PickupUi : Control
 {
 	[Export]
+	public bool ShowOnStart = true;
+
+	[Export]
 	public Array<PackedScene> AvailableItemScenes = null!;
 
 	[Export]
@@ -27,8 +30,12 @@ public partial class PickupUi : Control
 				HideUi();
 			};
 		}
-		PopulateItemsRandom(_showcases.Count);
-		ShowUi();
+
+		if (ShowOnStart)
+		{
+			PopulateItemsRandom(_showcases.Count);
+			ShowUi();
+		}
 	}
 
 	public override void _UnhandledKeyInput(InputEvent @event)

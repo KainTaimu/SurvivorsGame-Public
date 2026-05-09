@@ -42,13 +42,13 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 	public void ReturnToPool()
 	{
 		_pierceCount = 0;
-		_hits.Clear();
 		ProjectilePool.ReturnProjectile(this);
 		IsInitialized = false;
 	}
 
 	public override void Initialize()
 	{
+		_hits.Clear();
 		var tweenScale = CreateTween().SetTrans(Tween.TransitionType.Linear).SetEase(Tween.EaseType.In);
 		var finalScale = Scale * new Vector2(8, 1);
 		tweenScale.TweenProperty(Sprite, "scale", finalScale, 0.05);
@@ -65,25 +65,15 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 			if (!ComponentStore.GetComponent<PositionComponent>(id, out var lastPos))
 				continue;
 
-			Callable
-				.From(() =>
-				{
-					GetTree().CreateTimer(Position.DistanceTo(lastPos.Position) / ProjectileSpeed, false).Timeout +=
-						() => OffensiveOrigin.HandleHit(id: id);
-				})
-				.CallDeferred();
+			Origin.GetTree().CreateTimer(Position.DistanceTo(lastPos.Position) / ProjectileSpeed, false).Timeout +=
+				() => OffensiveOrigin.HandleHit(id: id);
 
 			_hits.Add(id);
 			_pierceCount++;
 			if (_pierceCount >= PierceLimit)
 			{
-				Callable
-					.From(() =>
-					{
-						GetTree().CreateTimer(Position.DistanceTo(lastPos.Position) / ProjectileSpeed, false).Timeout +=
-							() => Callable.From(ReturnToPool).CallDeferred();
-					})
-					.CallDeferred();
+				Origin.GetTree().CreateTimer(Position.DistanceTo(lastPos.Position) / ProjectileSpeed, false).Timeout +=
+					ReturnToPool;
 				return;
 			}
 		}

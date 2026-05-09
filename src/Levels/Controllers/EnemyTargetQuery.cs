@@ -12,10 +12,9 @@ namespace Game.Levels.Controllers;
 public partial class EnemyTargetQuery : Node
 {
 	[Export]
-	private EntityComponentStore _entities = null!;
-
-	[Export]
 	private EnemyRenderer _renderer = null!;
+
+	public readonly HashSet<int> Dead = [];
 
 	// BREAKING: Changing this value breaks Projectile radius of weapons
 	private const int GRID_SIZE = 32;
@@ -26,7 +25,9 @@ public partial class EnemyTargetQuery : Node
 
 	public static EnemyTargetQuery Instance { get; private set; } = null!;
 
-	public override void _EnterTree()
+	private EntityComponentStore ComponentStore => EntityComponentStore.Instance;
+
+	public override void _Ready()
 	{
 		Instance = this;
 		var viewport = GetViewport();
@@ -38,6 +39,8 @@ public partial class EnemyTargetQuery : Node
 
 		var windowSize = viewport.GetVisibleRect().Size * 1.2f;
 		_grid = new CenteredMovingUniformGrid<int>(GRID_SIZE, windowSize);
+
+		ComponentStore.BeforeEntityUnregistered += (id) => Dead.Add(id);
 	}
 
 	public override void _Process(double delta)
@@ -52,7 +55,7 @@ public partial class EnemyTargetQuery : Node
 
 	private void AddObjectsToGrid()
 	{
-		foreach (var (id, pos) in _entities.Query<PositionComponent>())
+		foreach (var (id, pos) in ComponentStore.Query<PositionComponent>())
 		{
 			if (!_grid.ContainsWorld(pos.Position))
 				continue;
@@ -64,9 +67,9 @@ public partial class EnemyTargetQuery : Node
 
 	private bool CircleHitTest(Vector2 projPos, float projRadius, int targetId)
 	{
-		if (!_entities.GetComponent<PositionComponent>(targetId, out var pos))
+		if (!ComponentStore.GetComponent<PositionComponent>(targetId, out var pos))
 			return false;
-		if (!_entities.GetComponent<CircleHitboxComponent>(targetId, out var hitbox))
+		if (!ComponentStore.GetComponent<CircleHitboxComponent>(targetId, out var hitbox))
 			return false;
 
 		var radiusSum = projRadius + hitbox.Radius;
@@ -97,7 +100,7 @@ public partial class EnemyTargetQuery : Node
 					var id = cell.Array[i];
 					if (targets.Contains(id))
 						continue;
-					if (CircleHitTest(areaCenter, areaRadius, id))
+					if (CircleHitTest(areaCenter, areaRadius, id) && !Dead.Contains(id))
 						targets.Add(id);
 				}
 			}
@@ -188,18 +191,17 @@ public partial class EnemyTargetQuery : Node
 			for (var i = 0; i < cell.Count; i++)
 			{
 				var id = cell.Array[i];
-				if (seenIds.Contains(id))
+				if (!seenIds.Add(id))
 					continue;
-				seenIds.Add(id);
 
-				if (!_entities.GetComponent<PositionComponent>(id, out var pos))
+				if (!ComponentStore.GetComponent<PositionComponent>(id, out var pos))
 					continue;
-				if (!_entities.GetComponent<CircleHitboxComponent>(id, out var hitbox))
+				if (!ComponentStore.GetComponent<CircleHitboxComponent>(id, out var hitbox))
 					continue;
 
 				var distSq = DistanceSquaredPointToRay(pos.Position, from, direction, rayLength);
 				var radiusSum = width + hitbox.Radius;
-				if (distSq <= radiusSum * radiusSum)
+				if (distSq <= radiusSum * radiusSum && !Dead.Contains(id))
 					targets.Add(id);
 			}
 		}
