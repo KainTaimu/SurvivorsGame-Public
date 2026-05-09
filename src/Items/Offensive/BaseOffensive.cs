@@ -16,9 +16,6 @@ public abstract partial class BaseOffensive : BaseItem
 	public delegate void OnAttackEventHandler();
 
 	[Export]
-	public BaseItemProperties Properties = null!;
-
-	[Export]
 	public BaseOffensiveStats Stats
 	{
 		get;

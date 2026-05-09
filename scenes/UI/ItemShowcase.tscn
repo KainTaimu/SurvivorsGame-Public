@@ -1,7 +1,15 @@
 [gd_scene format=3 uid="uid://c0svlhjww3qot"]
 
 [ext_resource type="Texture2D" uid="uid://djm14uecps0mk" path="res://assets/UI/pistol.png" id="1_7b1sg"]
+[ext_resource type="Script" uid="uid://dnq7tf5lo8037" path="res://src/UI/ItemShowcase.cs" id="1_cy1ac"]
 [ext_resource type="Script" uid="uid://ceajjqumnjnat" path="res://scenes/UI/ScrollRichTextLabel.cs" id="2_ci30e"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cy1ac"]
+bg_color = Color(0.003921569, 0.003921569, 0.003921569, 0.49803922)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
 
 [sub_resource type="Animation" id="Animation_ci30e"]
 length = 0.001
@@ -15,56 +23,79 @@ _data = {
 &"scroll": SubResource("Animation_cy1ac")
 }
 
-[node name="PanelContainer" type="PanelContainer" unique_id=2089056310]
-custom_minimum_size = Vector2(600, 256)
-offset_right = 600.0
-offset_bottom = 256.0
+[node name="ItemShowcase" type="MarginContainer" unique_id=1482916139 node_paths=PackedStringArray("ItemNameLabel", "ItemDescriptionLabel", "ItemIconRect", "_panel")]
+mouse_filter = 0
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+script = ExtResource("1_cy1ac")
+ItemNameLabel = NodePath("PanelContainer/PanelContainer/VSplitContainer/MarginContainer/Top/ItemName")
+ItemDescriptionLabel = NodePath("PanelContainer/PanelContainer/VSplitContainer/Bottom/ScrollContainer/ItemDesc")
+ItemIconRect = NodePath("PanelContainer/PanelContainer/VSplitContainer/MarginContainer/Top/TextureRect")
+_panel = NodePath("PanelContainer")
 
-[node name="VSplitContainer" type="VBoxContainer" parent="." unique_id=940677940]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=277047719]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(600, 256)
 layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cy1ac")
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer" unique_id=981567343]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="VSplitContainer" type="VBoxContainer" parent="PanelContainer/PanelContainer" unique_id=360483907]
+layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="VSplitContainer" unique_id=1142730094]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/PanelContainer/VSplitContainer" unique_id=566647555]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="Top" type="HSplitContainer" parent="VSplitContainer/MarginContainer" unique_id=1642363631]
+[node name="Top" type="HSplitContainer" parent="PanelContainer/PanelContainer/VSplitContainer/MarginContainer" unique_id=1149868974]
 layout_mode = 2
+mouse_filter = 2
 split_offsets = PackedInt32Array(64)
 dragging_enabled = false
 split_offset = 64
 
-[node name="TextureRect" type="TextureRect" parent="VSplitContainer/MarginContainer/Top" unique_id=912550820]
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/PanelContainer/VSplitContainer/MarginContainer/Top" unique_id=1131188002]
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("1_7b1sg")
 expand_mode = 4
 
-[node name="ItemName" type="Label" parent="VSplitContainer/MarginContainer/Top" unique_id=1715539151]
+[node name="ItemName" type="Label" parent="PanelContainer/PanelContainer/VSplitContainer/MarginContainer/Top" unique_id=1945996815]
 layout_mode = 2
 text = "FIREARM"
 
-[node name="Bottom" type="MarginContainer" parent="VSplitContainer" unique_id=106540326]
+[node name="Bottom" type="MarginContainer" parent="PanelContainer/PanelContainer/VSplitContainer" unique_id=441746001]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_right = 8
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="VSplitContainer/Bottom" unique_id=2130690544]
-root_node = NodePath("../../..")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PanelContainer/PanelContainer/VSplitContainer/Bottom" unique_id=2041311460]
+root_node = NodePath("../../../..")
 libraries/ = SubResource("AnimationLibrary_qlmw6")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VSplitContainer/Bottom" unique_id=803488058 node_paths=PackedStringArray("ScrollAnimationPlayer", "_panelParent", "_label")]
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/PanelContainer/VSplitContainer/Bottom" unique_id=2060723370 node_paths=PackedStringArray("ScrollAnimationPlayer", "_panelParent", "_label")]
 layout_mode = 2
-mouse_filter = 0
+mouse_filter = 2
 script = ExtResource("2_ci30e")
 ScrollAnimationPlayer = NodePath("../AnimationPlayer")
-_panelParent = NodePath("../../..")
-_label = NodePath("Label")
+_panelParent = NodePath("../../../..")
+_label = NodePath("ItemDesc")
 
-[node name="Label" type="Label" parent="VSplitContainer/Bottom/ScrollContainer" unique_id=842229286]
+[node name="ItemDesc" type="Label" parent="PanelContainer/PanelContainer/VSplitContainer/Bottom/ScrollContainer" unique_id=1093435157]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -78,3 +109,6 @@ Nunc sit amet aliquet lorem. Nam a risus tempus turpis ultricies laoreet. Fusce 
 
 Donec eu suscipit nunc. Donec sem ligula, ornare nec gravida iaculis, bibendum ut augue. Sed hendrerit at massa eu porttitor. Maecenas efficitur elementum efficitur. Vestibulum fringilla, lorem sed tristique interdum, nibh dui consectetur diam, ac bibendum elit lacus id sem. Praesent commodo erat mollis pulvinar facilisis. Aenean suscipit fermentum nisi vitae scelerisque. Duis posuere ut lacus id sollicitudin. Proin tempus, ex vitae porta lobortis, arcu ante pulvinar quam, eu volutpat orci lorem sed dolor. Integer varius rhoncus pellentesque. Quisque auctor eros massa, at elementum magna blandit in. Mauris maximus tincidunt maximus. "
 autowrap_mode = 2
+
+[connection signal="mouse_entered" from="." to="." method="Highlight" binds= [true]]
+[connection signal="mouse_exited" from="." to="." method="Highlight" binds= [false]]

@@ -2,8 +2,18 @@
 
 [ext_resource type="Script" uid="uid://4qxgf6f1hof8" path="res://src/UI/PickupUi.cs" id="1_kja30"]
 [ext_resource type="PackedScene" uid="uid://c0svlhjww3qot" path="res://scenes/UI/ItemShowcase.tscn" id="2_5cant"]
+[ext_resource type="PackedScene" uid="uid://c18mvu8kqrmng" path="res://scenes/Items/Offensive/Airstrike.tscn" id="2_7nw7q"]
+[ext_resource type="PackedScene" uid="uid://b6pcia1iql0ct" path="res://scenes/Items/Offensive/Ak47.tscn" id="3_a3m5u"]
+[ext_resource type="PackedScene" uid="uid://okgy2hpbgy53" path="res://scenes/Items/Offensive/Blick.tscn" id="4_b61a7"]
+[ext_resource type="PackedScene" uid="uid://ceimmtu3q4x6n" path="res://scenes/Items/Offensive/GrenadeThrower.tscn" id="6_od6uw"]
+[ext_resource type="PackedScene" uid="uid://lvm5jo1ua73i" path="res://scenes/Items/Offensive/M870.tscn" id="7_n64n8"]
+[ext_resource type="PackedScene" uid="uid://twvhgblbtovy" path="res://scenes/Items/Offensive/Revolver.tscn" id="8_m4edj"]
+[ext_resource type="PackedScene" uid="uid://cuerorgcryk5k" path="res://scenes/Items/Offensive/Sniper.tscn" id="9_82sse"]
+[ext_resource type="PackedScene" uid="uid://dwyqdinyji8tt" path="res://scenes/Items/Offensive/TP9.tscn" id="10_ny0j0"]
+[ext_resource type="PackedScene" uid="uid://dkhkglqxq0j2p" path="res://scenes/Items/Offensive/WipeScreen.tscn" id="11_i68ip"]
 
-[node name="Control" type="PanelContainer" unique_id=1639386775]
+[node name="PickupUi" type="PanelContainer" unique_id=1639386775 node_paths=PackedStringArray("_showcases")]
+process_mode = 3
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
@@ -12,71 +22,40 @@ offset_top = -284.0
 offset_bottom = 292.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_kja30")
+AvailableItemScenes = Array[PackedScene]([ExtResource("3_a3m5u"), ExtResource("4_b61a7"), ExtResource("6_od6uw"), ExtResource("7_n64n8"), ExtResource("8_m4edj"), ExtResource("9_82sse"), ExtResource("10_ny0j0"), ExtResource("3_a3m5u"), ExtResource("4_b61a7"), ExtResource("6_od6uw"), ExtResource("7_n64n8"), ExtResource("8_m4edj"), ExtResource("9_82sse"), ExtResource("10_ny0j0"), ExtResource("3_a3m5u"), ExtResource("4_b61a7"), ExtResource("6_od6uw"), ExtResource("7_n64n8"), ExtResource("8_m4edj"), ExtResource("9_82sse"), ExtResource("10_ny0j0"), ExtResource("2_7nw7q"), ExtResource("11_i68ip")])
+_showcases = [NodePath("CenterContainer/GridContainer/ItemShowcase"), NodePath("CenterContainer/GridContainer/ItemShowcase2"), NodePath("CenterContainer/GridContainer/ItemShowcase3"), NodePath("CenterContainer/GridContainer/ItemShowcase4"), NodePath("CenterContainer/GridContainer/ItemShowcase5"), NodePath("CenterContainer/GridContainer/ItemShowcase6")]
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=328059922]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="GridContainer" type="GridContainer" parent="CenterContainer" unique_id=323042347]
 layout_mode = 2
+mouse_filter = 2
 columns = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/GridContainer" unique_id=1819032143]
-layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
-
-[node name="PanelContainer" parent="CenterContainer/GridContainer/MarginContainer" unique_id=2089056310 instance=ExtResource("2_5cant")]
+[node name="ItemShowcase" parent="CenterContainer/GridContainer" unique_id=1482916139 instance=ExtResource("2_5cant")]
+visible = false
 layout_mode = 2
 
-[node name="MarginContainer2" type="MarginContainer" parent="CenterContainer/GridContainer" unique_id=1052883514]
-layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
-
-[node name="PanelContainer" parent="CenterContainer/GridContainer/MarginContainer2" unique_id=198266432 instance=ExtResource("2_5cant")]
+[node name="ItemShowcase2" parent="CenterContainer/GridContainer" unique_id=771367867 instance=ExtResource("2_5cant")]
+visible = false
 layout_mode = 2
 
-[node name="MarginContainer3" type="MarginContainer" parent="CenterContainer/GridContainer" unique_id=1523761533]
-layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
-
-[node name="PanelContainer" parent="CenterContainer/GridContainer/MarginContainer3" unique_id=1462905690 instance=ExtResource("2_5cant")]
+[node name="ItemShowcase3" parent="CenterContainer/GridContainer" unique_id=2021797756 instance=ExtResource("2_5cant")]
+visible = false
 layout_mode = 2
 
-[node name="MarginContainer4" type="MarginContainer" parent="CenterContainer/GridContainer" unique_id=415895383]
-layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
-
-[node name="PanelContainer" parent="CenterContainer/GridContainer/MarginContainer4" unique_id=1024655287 instance=ExtResource("2_5cant")]
+[node name="ItemShowcase4" parent="CenterContainer/GridContainer" unique_id=1255880091 instance=ExtResource("2_5cant")]
+visible = false
 layout_mode = 2
 
-[node name="MarginContainer5" type="MarginContainer" parent="CenterContainer/GridContainer" unique_id=1418744948]
-layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
-
-[node name="PanelContainer" parent="CenterContainer/GridContainer/MarginContainer5" unique_id=1403051556 instance=ExtResource("2_5cant")]
+[node name="ItemShowcase5" parent="CenterContainer/GridContainer" unique_id=2145547556 instance=ExtResource("2_5cant")]
+visible = false
 layout_mode = 2
 
-[node name="MarginContainer6" type="MarginContainer" parent="CenterContainer/GridContainer" unique_id=1007692241]
-layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
-
-[node name="PanelContainer" parent="CenterContainer/GridContainer/MarginContainer6" unique_id=160845631 instance=ExtResource("2_5cant")]
+[node name="ItemShowcase6" parent="CenterContainer/GridContainer" unique_id=628245680 instance=ExtResource("2_5cant")]
+visible = false
 layout_mode = 2

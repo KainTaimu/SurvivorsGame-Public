@@ -5,11 +5,6 @@
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_yc6ub"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_6nomv"]
 
-[sub_resource type="Resource" id="Resource_jkkrv"]
-script = ExtResource("3_yc6ub")
-Name = "Blick"
-metadata/_custom_type_script = "uid://8rt54h4imtxv"
-
 [sub_resource type="Resource" id="Resource_k3dr5"]
 script = ExtResource("4_6nomv")
 MagazineCapacity = 17
@@ -20,8 +15,14 @@ ProjectileSpeed = 3200
 ProjectileScaleMultiplier = 0.8
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
+[sub_resource type="Resource" id="Resource_jkkrv"]
+script = ExtResource("3_yc6ub")
+Name = "Blick"
+Description = "Basic-ass pistol"
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
 [node name="Blick" type="Node" unique_id=1989500741]
 script = ExtResource("1_3c71c")
 _projectileScene = ExtResource("2_1j0xa")
-Properties = SubResource("Resource_jkkrv")
 Stats = SubResource("Resource_k3dr5")
+Properties = SubResource("Resource_jkkrv")

@@ -29,7 +29,7 @@ public partial class DamageIndicator : Node2D
 		_tween?.Kill();
 		_tween = CreateTween().SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.Out);
 		_tween.Parallel().TweenProperty(this, "position", _finalPosition, 1.75f);
-		_tween.Parallel().TweenProperty(this, "modulate", Colors.Transparent, 1.75f);
+		_tween.Parallel().TweenProperty(this, "modulate", Colors.Transparent, 1.75f).SetDelay(0.2f);
 		_tween.TweenCallback(
 			Callable.From(() =>
 			{

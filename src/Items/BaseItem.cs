@@ -5,6 +5,9 @@ namespace Game.Items;
 
 public abstract partial class BaseItem : Node
 {
+	[Export]
+	public BaseItemProperties Properties = null!;
+
 	public static Player Player => GameWorld.Instance.MainPlayer;
 
 	public static CharacterStats PlayerStats => GameWorld.Instance.MainPlayer.Character.CharacterStats;

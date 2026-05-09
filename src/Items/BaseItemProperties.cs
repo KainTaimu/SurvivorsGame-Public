@@ -4,13 +4,16 @@ namespace Game.Items;
 public partial class BaseItemProperties : Resource
 {
 	[Export]
-	public string Name = "";
+	public string Name = "PLACEHOLDER_NAME";
 
 	[Export]
 	public ItemType ItemType;
 
-	public int CurrentLevel;
-
 	[Export(PropertyHint.MultilineText)]
-	public string Description = "";
+	public string Description = "PLACEHOLDER_DESCRIPTION";
+
+	[Export]
+	public Texture2D ItemIcon = new PlaceholderTexture2D() { Size = Vector2I.One * 32 };
+
+	public int CurrentLevel;
 }

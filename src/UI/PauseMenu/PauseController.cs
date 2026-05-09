@@ -13,10 +13,22 @@ public partial class PauseController : Node
 	public Node? LockedBy { get; private set; }
 	private SceneTree Tree => GetTree();
 
+	public static PauseController? Instance { get; private set; }
+
+	public override void _EnterTree()
+	{
+		Instance = this;
+	}
+
 	public void Lock(Node locker)
 	{
 		if (locker != LockedBy && LockedBy is not null)
 			return;
+		if (locker.ProcessMode != ProcessModeEnum.Always)
+		{
+			Logger.LogError("Locker must have ProcessMode set to Always to lock the pause controller.");
+			return;
+		}
 
 		LockedBy = locker;
 	}

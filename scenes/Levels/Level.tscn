@@ -25,6 +25,7 @@
 [ext_resource type="Script" uid="uid://bpqjji00j8p6x" path="res://src/Levels/Controllers/PlayerHitController.cs" id="19_aig1n"]
 [ext_resource type="PackedScene" uid="uid://bh4q5xe8eps71" path="res://scenes/Levels/AirdropManager.tscn" id="20_qsiuk"]
 [ext_resource type="PackedScene" uid="uid://do6p1pg4x0vkf" path="res://scenes/UI/Hud.tscn" id="20_vg5sh"]
+[ext_resource type="PackedScene" uid="uid://cbpyycvkwcedb" path="res://scenes/UI/PickupUi.tscn" id="26_faxpm"]
 
 [sub_resource type="Resource" id="Resource_aig1n"]
 script = ExtResource("8_eh1w1")
@@ -145,3 +146,8 @@ Player = NodePath("../../../Player")
 PauseController = NodePath("../../../Systems/PauseController")
 
 [node name="HUD" parent="UI" unique_id=1626912566 instance=ExtResource("20_vg5sh")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="UI" unique_id=253133387]
+
+[node name="PickupUi" parent="UI/CanvasLayer" unique_id=1639386775 instance=ExtResource("26_faxpm")]
+visible = false
