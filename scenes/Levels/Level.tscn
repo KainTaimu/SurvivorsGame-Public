@@ -60,7 +60,7 @@ metadata/_custom_type_script = "uid://cksmwvaxx1m18"
 [sub_resource type="Resource" id="Resource_faxpm"]
 script = ExtResource("13_jnit0")
 DamageOnContact = 4
-MaxHealth = 10
+MaxHealth = 15
 metadata/_custom_type_script = "uid://y77qtp32wo00"
 
 [sub_resource type="Resource" id="Resource_5ykgu"]
@@ -86,7 +86,7 @@ metadata/_custom_type_script = "uid://fti2ky20j85c"
 [sub_resource type="Resource" id="Resource_3nhtq"]
 script = ExtResource("13_jnit0")
 DamageOnContact = 6
-MaxHealth = 10
+MaxHealth = 20
 MoneyDrop = 3
 metadata/_custom_type_script = "uid://y77qtp32wo00"
 
