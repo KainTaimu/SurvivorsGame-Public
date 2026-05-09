@@ -8,29 +8,30 @@
 
 [sub_resource type="Resource" id="Resource_nihe0"]
 script = ExtResource("4_tg8rs")
-BloomCoefficientDeg = 7.0
+BloomCoefficientDeg = 15.0
 VerticalRecoilMin = 8.0
 VerticalBaseRecoil = 8.0
 VerticalRecoilRandom = 1.0
 RecoilAccumilationScale = 0.0
 CameraRecoilScale = 0.5
-Damage = 10
+Damage = 11
 CritDamageMultiplier = 0.9
 CritChanceProportion = 0.2
 ProjectileSpeed = 2800
 ProjectileScaleMultiplier = 0.8
 AttackSpeed = 0.1
 Additional = Dictionary[String, Variant]({
-"Knockback": 20.0
+"Knockback": 30.0
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ffmje"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_f52b2"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_eai52"]
 script = ExtResource("3_ld3kt")
 Name = "AK-47"
+Description = "The famous Soviet rifle chambered in 7.62x39mm. It fires a heavy bullet, dealing [b][u]XX[/u][/b] damage, but at the cost of inaccuracy."
 
 [node name="Ak47" type="Node" unique_id=915008798 node_paths=PackedStringArray("ShootAudioPlayer")]
 script = ExtResource("1_rp6n0")

@@ -192,7 +192,7 @@ public partial class Crosshair : Node2D
 				return;
 			var crosshairScreenPosRatio = crosshair.CanvasSpacePosition / crosshair.GetViewport().GetVisibleRect().Size;
 			if (
-				(crosshairScreenPosRatio.Y < 0.3 || crosshairScreenPosRatio.Y > 0.7)
+				(crosshairScreenPosRatio.Y < 0.35 || crosshairScreenPosRatio.Y > 0.7)
 				&& crosshairScreenPosRatio.X > 0.3
 				&& crosshairScreenPosRatio.X < 0.7
 			)

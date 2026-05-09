@@ -18,7 +18,7 @@ public partial class ScrollRichTextLabel : ScrollContainer
 	private PanelContainer _panelParent = null!;
 
 	[Export]
-	private Label _label = null!;
+	private RichTextLabel _label = null!;
 
 	public override void _Ready()
 	{

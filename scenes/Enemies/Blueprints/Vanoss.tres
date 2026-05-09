@@ -3,9 +3,10 @@
 [ext_resource type="Script" uid="uid://y77qtp32wo00" path="res://src/Enemies/EnemyStats.cs" id="1_hs4vj"]
 [ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="2_a1bkk"]
 
-[sub_resource type="Resource" id="Resource_hs4vj"]
+[sub_resource type="Resource" id="Resource_3nhtq"]
 script = ExtResource("1_hs4vj")
 DamageOnContact = 6
+MaxHealth = 20
 MoneyDrop = 3
 metadata/_custom_type_script = "uid://y77qtp32wo00"
 
@@ -13,5 +14,5 @@ metadata/_custom_type_script = "uid://y77qtp32wo00"
 script = ExtResource("2_a1bkk")
 Name = "vanoss"
 Type = 1
-Stats = SubResource("Resource_hs4vj")
+Stats = SubResource("Resource_3nhtq")
 metadata/_custom_type_script = "uid://fti2ky20j85c"

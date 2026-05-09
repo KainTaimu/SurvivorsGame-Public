@@ -8,10 +8,10 @@ public partial class ItemShowcase : MarginContainer
 	public delegate void OnItemSelectedEventHandler(PackedScene scene, BaseItemProperties properties);
 
 	[Export]
-	public Label ItemNameLabel = null!;
+	public RichTextLabel ItemNameLabel = null!;
 
 	[Export]
-	public Label ItemDescriptionLabel = null!;
+	public RichTextLabel ItemDescriptionLabel = null!;
 
 	[Export]
 	public TextureRect ItemIconRect = null!;

@@ -5,11 +5,11 @@
 [ext_resource type="PackedScene" uid="uid://b6pcia1iql0ct" path="res://scenes/Items/Offensive/Ak47.tscn" id="3_a3m5u"]
 [ext_resource type="PackedScene" uid="uid://okgy2hpbgy53" path="res://scenes/Items/Offensive/Blick.tscn" id="4_b61a7"]
 [ext_resource type="PackedScene" uid="uid://ceimmtu3q4x6n" path="res://scenes/Items/Offensive/GrenadeThrower.tscn" id="6_od6uw"]
-[ext_resource type="PackedScene" uid="uid://lvm5jo1ua73i" path="res://scenes/Items/Offensive/M870.tscn" id="7_n64n8"]
+[ext_resource type="PackedScene" uid="uid://lvm5jo1ua73i" path="res://scenes/Items/Offensive/Shotgun.tscn" id="7_n64n8"]
 [ext_resource type="PackedScene" uid="uid://twvhgblbtovy" path="res://scenes/Items/Offensive/Revolver.tscn" id="8_m4edj"]
 [ext_resource type="PackedScene" uid="uid://cuerorgcryk5k" path="res://scenes/Items/Offensive/Sniper.tscn" id="9_82sse"]
-[ext_resource type="PackedScene" uid="uid://dwyqdinyji8tt" path="res://scenes/Items/Offensive/TP9.tscn" id="10_ny0j0"]
-[ext_resource type="PackedScene" uid="uid://2gxjr5yjrfut" path="res://scenes/Items/Offensive/M134.tscn" id="11_7nw7q"]
+[ext_resource type="PackedScene" uid="uid://dwyqdinyji8tt" path="res://scenes/Items/Offensive/Smg.tscn" id="10_ny0j0"]
+[ext_resource type="PackedScene" uid="uid://2gxjr5yjrfut" path="res://scenes/Items/Offensive/Minigun.tscn" id="11_7nw7q"]
 
 [node name="PickupUi" type="PanelContainer" unique_id=1639386775 node_paths=PackedStringArray("_showcases")]
 process_mode = 3
@@ -36,7 +36,6 @@ mouse_filter = 2
 columns = 3
 
 [node name="ItemShowcase" parent="CenterContainer/GridContainer" unique_id=1482916139 instance=ExtResource("2_5cant")]
-visible = false
 layout_mode = 2
 
 [node name="ItemShowcase2" parent="CenterContainer/GridContainer" unique_id=771367867 instance=ExtResource("2_5cant")]

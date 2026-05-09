@@ -29,12 +29,13 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_3c71c"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_f52b2"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_dkd5d"]
 script = ExtResource("3_jpa4p")
 Name = "TP9 SMG"
+Description = "A rapid-firing submachine gun chambered in 9x39mm. "
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [node name="TP9" type="Node" unique_id=1472391115 node_paths=PackedStringArray("ShootAudioPlayer")]

@@ -2,7 +2,6 @@
 
 [ext_resource type="Texture2D" uid="uid://djm14uecps0mk" path="res://assets/UI/pistol.png" id="1_7b1sg"]
 [ext_resource type="Script" uid="uid://dnq7tf5lo8037" path="res://src/UI/ItemShowcase.cs" id="1_cy1ac"]
-[ext_resource type="Script" uid="uid://ceajjqumnjnat" path="res://scenes/UI/ScrollRichTextLabel.cs" id="2_ci30e"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cy1ac"]
 bg_color = Color(0.003921569, 0.003921569, 0.003921569, 0.49803922)
@@ -23,21 +22,22 @@ _data = {
 &"scroll": SubResource("Animation_cy1ac")
 }
 
+[sub_resource type="FontVariation" id="FontVariation_cy1ac"]
+variation_embolden = 0.41
+
 [node name="ItemShowcase" type="MarginContainer" unique_id=1482916139 node_paths=PackedStringArray("ItemNameLabel", "ItemDescriptionLabel", "ItemIconRect", "_panel")]
+custom_minimum_size = Vector2(600, 264)
+offset_right = 608.0
+offset_bottom = 264.0
 mouse_filter = 0
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
 script = ExtResource("1_cy1ac")
 ItemNameLabel = NodePath("PanelContainer/PanelContainer/VSplitContainer/MarginContainer/Top/ItemName")
-ItemDescriptionLabel = NodePath("PanelContainer/PanelContainer/VSplitContainer/Bottom/ScrollContainer/ItemDesc")
+ItemDescriptionLabel = NodePath("PanelContainer/PanelContainer/VSplitContainer/Bottom/ScrollContainer/ItemDescription")
 ItemIconRect = NodePath("PanelContainer/PanelContainer/VSplitContainer/MarginContainer/Top/TextureRect")
 _panel = NodePath("PanelContainer")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=277047719]
 self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(600, 256)
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_cy1ac")
@@ -72,9 +72,14 @@ mouse_filter = 2
 texture = ExtResource("1_7b1sg")
 expand_mode = 4
 
-[node name="ItemName" type="Label" parent="PanelContainer/PanelContainer/VSplitContainer/MarginContainer/Top" unique_id=1945996815]
+[node name="ItemName" type="RichTextLabel" parent="PanelContainer/PanelContainer/VSplitContainer/MarginContainer/Top" unique_id=81032482]
 layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+bbcode_enabled = true
 text = "FIREARM"
+fit_content = true
+vertical_alignment = 1
 
 [node name="Bottom" type="MarginContainer" parent="PanelContainer/PanelContainer/VSplitContainer" unique_id=441746001]
 layout_mode = 2
@@ -87,15 +92,31 @@ theme_override_constants/margin_right = 8
 root_node = NodePath("../../../..")
 libraries/ = SubResource("AnimationLibrary_qlmw6")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/PanelContainer/VSplitContainer/Bottom" unique_id=2060723370 node_paths=PackedStringArray("ScrollAnimationPlayer", "_panelParent", "_label")]
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/PanelContainer/VSplitContainer/Bottom" unique_id=2060723370]
 layout_mode = 2
 mouse_filter = 2
-script = ExtResource("2_ci30e")
-ScrollAnimationPlayer = NodePath("../AnimationPlayer")
-_panelParent = NodePath("../../../..")
-_label = NodePath("ItemDesc")
+
+[node name="ItemDescription" type="RichTextLabel" parent="PanelContainer/PanelContainer/VSplitContainer/Bottom/ScrollContainer" unique_id=1715270447]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_fonts/bold_font = SubResource("FontVariation_cy1ac")
+bbcode_enabled = true
+text = " Lorem ipsum [b]{dolor}[/b] sit amet, consectetur adipiscing elit. Proin tristique lacus ac purus tincidunt, ut congue leo lobortis. Aenean congue et magna fermentum molestie. Etiam gravida ante at neque dignissim, vitae auctor turpis consequat. Cras vel dictum mi. Etiam vitae urna congue, tempor sem sit amet, consectetur dui. Aliquam vitae ante porttitor, porttitor nibh eu, maximus est. Suspendisse sed vestibulum metus. Curabitur volutpat, mauris ac varius sodales, massa justo malesuada odio, nec volutpat leo lectus hendrerit felis. Aliquam vitae volutpat neque. Donec sem ex, mattis vitae ligula non, luctus faucibus nibh. Vivamus tempor vel libero vel suscipit. Mauris vitae velit rutrum, venenatis massa id, auctor purus.
+
+Nam vel eros vel felis imperdiet efficitur sed non quam. Morbi dignissim ornare nisl vitae finibus. Duis diam lorem, fermentum in nibh non, fermentum placerat nisi. Curabitur ex dolor, congue non libero in, elementum tempor nulla. Vestibulum sed erat iaculis eros sagittis ornare. Donec laoreet viverra libero a porttitor. Pellentesque tincidunt laoreet purus, ut congue felis tincidunt eget. Donec sollicitudin tortor vel lacus vulputate, nec sollicitudin arcu ullamcorper. Cras sem orci, mattis eget dictum ac, pellentesque ac velit. Nullam tempor venenatis tortor, et rhoncus lorem. Morbi placerat volutpat sollicitudin. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam pulvinar suscipit urna et blandit.
+
+Nunc iaculis et nulla sed mollis. Quisque nec volutpat purus, sit amet scelerisque mi. Integer diam ipsum, finibus sit amet venenatis sed, pharetra vel mi. In hendrerit egestas lectus, id viverra risus pulvinar et. Donec luctus lacus vitae lectus molestie aliquet. Nulla volutpat condimentum arcu, ac laoreet lorem hendrerit eu. Ut vestibulum maximus risus, non facilisis nunc auctor vitae. Suspendisse sed massa dignissim, placerat justo a, pharetra mi.
+
+Nunc sit amet aliquet lorem. Nam a risus tempus turpis ultricies laoreet. Fusce vel risus laoreet, bibendum tortor id, ultrices nunc. Suspendisse posuere posuere felis vitae cursus. Nulla tempor elit quis fringilla aliquet. Vestibulum semper arcu magna, sit amet aliquet ante commodo id. Quisque tellus nibh, interdum ut nunc ut, accumsan ultrices orci. Donec nunc tortor, varius et velit id, euismod commodo ante. Suspendisse malesuada, nisl et pharetra faucibus, dui nibh tempus magna, at tristique arcu turpis vitae arcu. Phasellus interdum sapien in hendrerit sollicitudin. Etiam venenatis at nulla eu placerat. Pellentesque diam lectus, egestas id nulla sed, tristique pharetra quam. Nulla faucibus erat in magna iaculis, non fermentum orci blandit. Nam aliquam turpis vitae urna sodales tincidunt. Quisque tincidunt eu nibh a finibus. Praesent egestas nisi non mi rhoncus, quis pretium nulla condimentum.
+
+Donec eu suscipit nunc. Donec sem ligula, ornare nec gravida iaculis, bibendum ut augue. Sed hendrerit at massa eu porttitor. Maecenas efficitur elementum efficitur. Vestibulum fringilla, lorem sed tristique interdum, nibh dui consectetur diam, ac bibendum elit lacus id sem. Praesent commodo erat mollis pulvinar facilisis. Aenean suscipit fermentum nisi vitae scelerisque. Duis posuere ut lacus id sollicitudin. Proin tempus, ex vitae porta lobortis, arcu ante pulvinar quam, eu volutpat orci lorem sed dolor. Integer varius rhoncus pellentesque. Quisque auctor eros massa, at elementum magna blandit in. Mauris maximus tincidunt maximus. "
+fit_content = true
+scroll_active = false
 
 [node name="ItemDesc" type="Label" parent="PanelContainer/PanelContainer/VSplitContainer/Bottom/ScrollContainer" unique_id=1093435157]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
