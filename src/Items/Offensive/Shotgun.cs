@@ -13,7 +13,7 @@ public partial class Shotgun : Firearm
 	private bool _isShotgunReloading;
 	private double _reloadCooldown;
 
-	private int PelletCount => Stats.Additional.GetValueOrDefault("PelletCount").AsInt32();
+	private int PelletCount => OffensiveStats.Additional.GetValueOrDefault("PelletCount").AsInt32();
 
 	public override void _Ready()
 	{
@@ -36,10 +36,10 @@ public partial class Shotgun : Firearm
 		ShootAudioPlayer?.Play();
 		if (_cockingAudioPlayer is not null)
 		{
-			GetTree().CreateTimer(Stats.AttackSpeed / 2).Timeout += () => _cockingAudioPlayer.Play();
+			GetTree().CreateTimer(OffensiveStats.AttackSpeed / 2).Timeout += () => _cockingAudioPlayer.Play();
 		}
 
-		FireCooldown = Stats.AttackSpeed;
+		FireCooldown = OffensiveStats.AttackSpeed;
 		MagazineCount--;
 		if (MagazineCount <= 0)
 		{
@@ -68,11 +68,11 @@ public partial class Shotgun : Firearm
 			var projectile = ProjectilePool.GetProjectile();
 
 			projectile.Origin = this;
-			projectile.SetScale(Vector2.One * Stats.ProjectileScaleMultiplier);
+			projectile.SetScale(Vector2.One * OffensiveStats.ProjectileScaleMultiplier);
 			projectile.SetPosition(Player.Position);
 			projectile.SetRotation(rotation);
-			projectile.ProjectileSpeed = Stats.ProjectileSpeed * (float)GD.RandRange(1f, 2f);
-			projectile.PierceLimit = Stats.PierceLimit;
+			projectile.ProjectileSpeed = OffensiveStats.ProjectileSpeed * (float)GD.RandRange(1f, 2f);
+			projectile.PierceLimit = OffensiveStats.PierceLimit;
 			projectile.HitRadius = FirearmStats?.ProjectileRadius ?? 24;
 			projectile.Initialize();
 		}

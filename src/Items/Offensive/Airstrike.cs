@@ -24,7 +24,7 @@ public partial class Airstrike : BaseOffensive, IManualAttack
 	{
 		if (_fireCooldown > 0)
 			return;
-		_fireCooldown = Stats.AttackSpeed;
+		_fireCooldown = OffensiveStats.AttackSpeed;
 
 		var mousePos = Crosshair.GlobalSpacePosition;
 

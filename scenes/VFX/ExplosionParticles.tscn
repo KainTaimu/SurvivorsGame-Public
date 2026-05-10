@@ -57,6 +57,7 @@ material = SubResource("CanvasItemMaterial_y81o2")
 emitting = false
 amount = 1200
 texture = SubResource("AtlasTexture_ssqlr")
+lifetime = 1.2
 one_shot = true
 explosiveness = 1.0
 visibility_rect = Rect2(-8192, -8192, 16384, 16384)

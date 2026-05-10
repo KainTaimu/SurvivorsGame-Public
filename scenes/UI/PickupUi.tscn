@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c0svlhjww3qot" path="res://scenes/UI/ItemShowcase.tscn" id="2_5cant"]
 [ext_resource type="PackedScene" uid="uid://b6pcia1iql0ct" path="res://scenes/Items/Offensive/Ak47.tscn" id="3_a3m5u"]
 [ext_resource type="PackedScene" uid="uid://okgy2hpbgy53" path="res://scenes/Items/Offensive/Blick.tscn" id="4_b61a7"]
+[ext_resource type="PackedScene" uid="uid://chrgb8gqwh4s0" path="res://scenes/Items/Offensive/M4.tscn" id="5_ttslj"]
 [ext_resource type="PackedScene" uid="uid://ceimmtu3q4x6n" path="res://scenes/Items/Offensive/GrenadeThrower.tscn" id="6_od6uw"]
 [ext_resource type="PackedScene" uid="uid://lvm5jo1ua73i" path="res://scenes/Items/Offensive/Shotgun.tscn" id="7_n64n8"]
 [ext_resource type="PackedScene" uid="uid://twvhgblbtovy" path="res://scenes/Items/Offensive/Revolver.tscn" id="8_m4edj"]
@@ -23,7 +24,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_kja30")
-AvailableItemScenes = Array[PackedScene]([ExtResource("3_a3m5u"), ExtResource("4_b61a7"), ExtResource("6_od6uw"), ExtResource("11_7nw7q"), ExtResource("7_n64n8"), ExtResource("8_m4edj"), ExtResource("9_82sse"), ExtResource("10_ny0j0")])
+AvailableItemScenes = Array[PackedScene]([ExtResource("3_a3m5u"), ExtResource("4_b61a7"), ExtResource("6_od6uw"), ExtResource("5_ttslj"), ExtResource("11_7nw7q"), ExtResource("8_m4edj"), ExtResource("7_n64n8"), ExtResource("10_ny0j0"), ExtResource("9_82sse")])
 _showcases = [NodePath("CenterContainer/GridContainer/ItemShowcase"), NodePath("CenterContainer/GridContainer/ItemShowcase2"), NodePath("CenterContainer/GridContainer/ItemShowcase3"), NodePath("CenterContainer/GridContainer/ItemShowcase4"), NodePath("CenterContainer/GridContainer/ItemShowcase5"), NodePath("CenterContainer/GridContainer/ItemShowcase6")]
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=328059922]

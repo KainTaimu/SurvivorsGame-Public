@@ -43,14 +43,4 @@ public partial class BaseOffensiveStats : BaseItemStats
 		}
 	} = [];
 
-	[Export]
-	public Dictionary<string, Variant> Additional
-	{
-		get;
-		set
-		{
-			field = value;
-			EmitChanged();
-		}
-	} = [];
 }

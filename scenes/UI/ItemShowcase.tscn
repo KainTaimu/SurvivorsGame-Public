@@ -100,13 +100,12 @@ libraries/ = SubResource("AnimationLibrary_qlmw6")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/PanelContainer/VSplitContainer/Bottom" unique_id=2060723370]
 layout_mode = 2
-mouse_filter = 2
 
 [node name="ItemDescription" type="RichTextLabel" parent="PanelContainer/PanelContainer/VSplitContainer/Bottom/ScrollContainer" unique_id=1715270447]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
+mouse_filter = 1
 theme_override_fonts/bold_font = SubResource("FontVariation_cy1ac")
 theme_override_font_sizes/normal_font_size = 17
 theme_override_font_sizes/bold_font_size = 17

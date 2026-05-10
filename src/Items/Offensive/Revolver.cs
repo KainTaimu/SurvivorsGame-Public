@@ -71,7 +71,7 @@ public partial class Revolver : Firearm
 	{
 		if (!ComponentStore.GetComponent<PositionComponent>(id, out var pos))
 			return;
-		var knockback = Stats.Additional.GetValueOrDefault("Knockback").AsSingle();
+		var knockback = OffensiveStats.Additional.GetValueOrDefault("Knockback").AsSingle();
 		var knockbackVector = Player.GlobalPosition.DirectionTo(pos.Position);
 		knockbackVector *= knockback;
 

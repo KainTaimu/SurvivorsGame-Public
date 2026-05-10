@@ -24,7 +24,7 @@ public partial class WipeScreen : BaseOffensive, IManualAttack
 	{
 		if (_fireCooldown > 0)
 			return;
-		_fireCooldown = Stats.AttackSpeed;
+		_fireCooldown = OffensiveStats.AttackSpeed;
 
 		foreach (var id in TargetQuery.GetTargetsInScreen())
 			HandleHit(id: id);

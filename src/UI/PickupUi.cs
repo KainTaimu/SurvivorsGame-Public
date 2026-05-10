@@ -99,8 +99,9 @@ public partial class PickupUi : Control
 			pickedItems.Add(randomItemScene);
 
 			var properties = item.Properties;
+			var stats = item.Stats;
 			var pickedShowcase = _showcases[i];
-			pickedShowcase.AssignItem(randomItemScene, properties);
+			pickedShowcase.AssignItem(randomItemScene, properties, stats);
 			pickedShowcase.Show();
 
 			assignedShowcases++;

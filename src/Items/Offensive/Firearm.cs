@@ -113,7 +113,7 @@ public abstract partial class Firearm : BaseOffensive, IReloadable, IManualAttac
 		if (MagazineCount <= 6)
 			AlmostEmptyAudioPlayer?.Play();
 
-		FireCooldown = Stats.AttackSpeed;
+		FireCooldown = OffensiveStats.AttackSpeed;
 		MagazineCount--;
 
 		if (MagazineCount == 0)
@@ -140,11 +140,11 @@ public abstract partial class Firearm : BaseOffensive, IReloadable, IManualAttac
 		var projectile = ProjectilePool.GetProjectile();
 
 		projectile.Origin = this;
-		projectile.SetScale(Vector2.One * Stats.ProjectileScaleMultiplier);
+		projectile.SetScale(Vector2.One * OffensiveStats.ProjectileScaleMultiplier);
 		projectile.SetPosition(Player.Position);
 		projectile.SetRotation(rotation);
-		projectile.ProjectileSpeed = Stats.ProjectileSpeed;
-		projectile.PierceLimit = Stats.PierceLimit;
+		projectile.ProjectileSpeed = OffensiveStats.ProjectileSpeed;
+		projectile.PierceLimit = OffensiveStats.PierceLimit;
 		projectile.HitRadius = FirearmStats.ProjectileRadius;
 		projectile.Initialize();
 

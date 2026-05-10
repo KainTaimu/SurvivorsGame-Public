@@ -7,35 +7,12 @@ namespace Game.Items.Offensive;
 public abstract partial class BaseOffensive : BaseItem
 {
 	[Signal]
-	public delegate void OnStatsChangedEventHandler();
-
-	[Signal]
-	public delegate void OnStatUpgradesChangedEventHandler();
-
-	[Signal]
 	public delegate void OnAttackEventHandler();
-
-	[Export]
-	public BaseOffensiveStats Stats
-	{
-		get;
-		set
-		{
-			if (
-				// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-				field
-					is not null
-				&& field.IsConnected(Resource.SignalName.Changed, Callable.From(EmitSignalOnStatsChanged))
-			)
-				field.Changed -= EmitSignalOnStatsChanged;
-
-			field = value;
-			value.Changed += EmitSignalOnStatsChanged;
-		}
-	} = null!;
-
+	
 	[Export]
 	public Array<BaseOffensiveStats> Upgrades = [];
+	
+	public BaseOffensiveStats OffensiveStats => (BaseOffensiveStats)Stats;
 
 	protected EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
 
@@ -74,8 +51,8 @@ public abstract partial class BaseOffensive : BaseItem
 			return;
 
 		var crit = CalculateCrit();
-		var randomDamage = Stats.Damage > 1 ? Mathf.CeilToInt(GD.RandRange(-0.15, 0.15) * Stats.Damage) : 0;
-		var damage = Stats.Damage + crit + randomDamage;
+		var randomDamage = OffensiveStats.Damage > 1 ? Mathf.CeilToInt(GD.RandRange(-0.15, 0.15) * OffensiveStats.Damage) : 0;
+		var damage = OffensiveStats.Damage + crit + randomDamage;
 		var newHealth = health.Health - damage;
 
 		var hit = new HitFeedbackComponent
@@ -119,15 +96,15 @@ public abstract partial class BaseOffensive : BaseItem
 
 	protected float GetAttackSpeed()
 	{
-		return Stats.AttackSpeed * PlayerStats.AttackSpeedMultiplier;
+		return OffensiveStats.AttackSpeed * PlayerStats.AttackSpeedMultiplier;
 	}
 
 	protected int CalculateCrit()
 	{
 		var roll = GD.Randf();
-		if (roll > Stats.CritChanceProportion)
+		if (roll > OffensiveStats.CritChanceProportion)
 			return 0;
 
-		return Mathf.CeilToInt(Stats.Damage * Stats.CritDamageMultiplier);
+		return Mathf.CeilToInt(OffensiveStats.Damage * OffensiveStats.CritDamageMultiplier);
 	}
 }

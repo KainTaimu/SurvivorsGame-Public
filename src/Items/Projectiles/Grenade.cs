@@ -52,7 +52,7 @@ public partial class Grenade : RigidBody2D
 		if (Engine.GetProcessFrames() % 10 != 0)
 			return;
 
-		TargetQuery.TryGetTargetsInArea(Position, OffensiveOrigin.Stats.ProjectileRadius, out var ids);
+		TargetQuery.TryGetTargetsInArea(Position, OffensiveOrigin.OffensiveStats.ProjectileRadius, out var ids);
 
 		if (ids.Count() > 6 && _t < 0.1f)
 		{

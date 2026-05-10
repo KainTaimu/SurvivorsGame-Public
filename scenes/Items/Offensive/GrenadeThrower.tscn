@@ -6,6 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://86rk4yr07033" path="res://assets/Sprites/grenade.png" id="4_5d54y"]
 [ext_resource type="Script" uid="uid://os8ycjo6m7r0" path="res://src/Items/Offensive/BaseOffensiveStats.cs" id="4_gjjd4"]
 
+[sub_resource type="Resource" id="Resource_r85fg"]
+script = ExtResource("3_5d54y")
+Name = "Grenade"
+Description = "A fragmentation grenade that deals massive damage to those caught in its blast. "
+ItemIcon = ExtResource("4_5d54y")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
 [sub_resource type="Resource" id="Resource_jlsja"]
 script = ExtResource("4_gjjd4")
 Damage = 67
@@ -20,16 +27,9 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://os8ycjo6m7r0"
 
-[sub_resource type="Resource" id="Resource_r85fg"]
-script = ExtResource("3_5d54y")
-Name = "Grenade"
-Description = "A fragmentation grenade that deals massive damage caught in its blast. "
-ItemIcon = ExtResource("4_5d54y")
-metadata/_custom_type_script = "uid://8rt54h4imtxv"
-
 [node name="GrenadeThrower" type="Node2D" unique_id=1000269585]
 script = ExtResource("1_oiqqx")
 GrenadeScene = ExtResource("2_18auf")
 ThrowForce = 1000.0
-Stats = SubResource("Resource_jlsja")
 Properties = SubResource("Resource_r85fg")
+Stats = SubResource("Resource_jlsja")

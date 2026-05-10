@@ -44,7 +44,7 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 
 		if (_fireCooldown > 0)
 			return;
-		_fireCooldown = Stats.AttackSpeed;
+		_fireCooldown = OffensiveStats.AttackSpeed;
 
 		var nade = GrenadeScene.Instantiate<Grenade>();
 
@@ -55,7 +55,7 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 			+ Player.MovementController.Velocity;
 		nade.ApplyImpulse(force);
 		GetTree().Root.CallDeferred(Window.MethodName.AddChild, nade);
-		GetTree().CreateTimer(Stats.AttackSpeed * 0.5).Timeout += QueueFree;
+		GetTree().CreateTimer(OffensiveStats.AttackSpeed * 0.5).Timeout += QueueFree;
 	}
 
 	protected override void HandleHitECS(int id)

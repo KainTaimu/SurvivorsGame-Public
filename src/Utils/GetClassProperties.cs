@@ -37,6 +37,8 @@ public static class ClassInspector
 		);
 		foreach (var field in fields)
 		{
+			if (field.Name == "NativePtr")
+				continue;
 			var value = field.GetValue(obj);
 			if (value is null)
 				continue;
