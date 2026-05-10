@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="3_jvsi7"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="4_ffmje"]
 [ext_resource type="AudioStream" uid="uid://csidm3n6qam6n" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Full Sound/5.56/WAV/556 Single WAV.wav" id="5_ffmje"]
+[ext_resource type="AudioStream" uid="uid://bmkybqxa3cdlq" path="res://assets/SFX/mag_almost_empty.wav" id="6_jvsi7"]
 
 [sub_resource type="Resource" id="Resource_2fu6x"]
 script = ExtResource("3_jvsi7")
@@ -28,7 +29,7 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ffmje"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_jvsi7"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_40q5n"]
@@ -37,13 +38,19 @@ Name = "M4 Carbine"
 Description = ""
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
-[node name="M4" type="Node2D" unique_id=265287884 node_paths=PackedStringArray("ShootAudioPlayer")]
+[node name="M4" type="Node2D" unique_id=265287884 node_paths=PackedStringArray("ShootAudioPlayer", "AlmostEmptyAudioPlayer")]
 script = ExtResource("1_yodjk")
 _projectileScene = ExtResource("2_ffmje")
 ShootAudioPlayer = NodePath("AudioStreamPlayer")
+AlmostEmptyAudioPlayer = NodePath("AudioStreamPlayer2")
 Stats = SubResource("Resource_2fu6x")
 Properties = SubResource("Resource_40q5n")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=372155076]
 stream = ExtResource("5_ffmje")
+max_polyphony = 30
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="." unique_id=1267577873]
+stream = ExtResource("6_jvsi7")
+volume_db = 12.0
 max_polyphony = 30

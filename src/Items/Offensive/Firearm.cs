@@ -24,6 +24,9 @@ public abstract partial class Firearm : BaseOffensive, IReloadable, IManualAttac
 	public AudioStreamPlayer? ReloadAudioPlayer;
 
 	[Export]
+	public AudioStreamPlayer? AlmostEmptyAudioPlayer;
+
+	[Export]
 	public GpuParticles2D? SpentCasingParticles;
 
 	public int MagazineCapacity => FirearmStats.MagazineCapacity;
@@ -103,19 +106,18 @@ public abstract partial class Firearm : BaseOffensive, IReloadable, IManualAttac
 
 	public override void Attack()
 	{
-		if (MagazineCount <= 0)
-		{
-			Reload();
-			return;
-		}
-
 		if (!IsReadyToShoot)
 			return;
 
 		ShootAudioPlayer?.Play();
+		if (MagazineCount <= 5)
+			AlmostEmptyAudioPlayer?.Play();
 
 		FireCooldown = Stats.AttackSpeed;
 		MagazineCount--;
+
+		if (MagazineCount == 0)
+			Reload();
 
 		var playerVector = Player.GetCanvasTransform() * Player.Position;
 
@@ -183,7 +185,7 @@ public abstract partial class Firearm : BaseOffensive, IReloadable, IManualAttac
 	{
 		if (IsReloading)
 			return;
-		if (MagazineCount == MagazineCapacity)
+		if (MagazineCount >= MagazineCapacity)
 			return;
 		GetTree().CreateTimer(ReloadTime, false).Timeout += () =>
 		{

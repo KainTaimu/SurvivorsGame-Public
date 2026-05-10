@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_ld3kt"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_tg8rs"]
 [ext_resource type="AudioStream" uid="uid://d3yyntc5ktx40" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Full Sound/7.62x39/WAV/762x39 Single WAV.wav" id="5_rp6n0"]
+[ext_resource type="AudioStream" uid="uid://bmkybqxa3cdlq" path="res://assets/SFX/mag_almost_empty.wav" id="6_ld3kt"]
 
 [sub_resource type="Resource" id="Resource_nihe0"]
 script = ExtResource("4_tg8rs")
@@ -25,7 +26,7 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_c62cd"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ld3kt"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_eai52"]
@@ -33,13 +34,19 @@ script = ExtResource("3_ld3kt")
 Name = "AK-47"
 Description = "The famous Soviet rifle chambered in 7.62x39mm. It fires a heavy bullet, dealing [b][u]XX[/u][/b] damage, but at the cost of inaccuracy."
 
-[node name="Ak47" type="Node" unique_id=915008798 node_paths=PackedStringArray("ShootAudioPlayer")]
+[node name="Ak47" type="Node" unique_id=915008798 node_paths=PackedStringArray("ShootAudioPlayer", "AlmostEmptyAudioPlayer")]
 script = ExtResource("1_rp6n0")
 _projectileScene = ExtResource("2_rp6n0")
 ShootAudioPlayer = NodePath("AudioStreamPlayer")
+AlmostEmptyAudioPlayer = NodePath("AudioStreamPlayer2")
 Stats = SubResource("Resource_nihe0")
 Properties = SubResource("Resource_eai52")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=458425301]
 process_mode = 3
 stream = ExtResource("5_rp6n0")
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="." unique_id=1506708634]
+stream = ExtResource("6_ld3kt")
+volume_db = 12.0
+max_polyphony = 30
