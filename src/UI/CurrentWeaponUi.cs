@@ -6,7 +6,7 @@ namespace Game.UI;
 public partial class CurrentWeaponUi : CanvasLayer
 {
 	[Export]
-	private PlayerWeaponController _weaponController = null!;
+	private AbstractPlayerWeaponController _weaponController = null!;
 
 	[Export]
 	private PackedScene _weaponCarouselItemScene = null!;

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Game.Items.Offensive;
 
@@ -6,42 +5,8 @@ namespace Game.Players.Controllers;
 
 // TODO: How to handle weapons that may need to use both mouse buttons like
 // zooming in with snipers or locking on target with missile?
-public partial class PlayerWeaponController : Node
+public partial class PlayerWeaponControllerDoubleWield : AbstractPlayerWeaponController
 {
-	[Signal]
-	public delegate void OnOffensiveListChangedEventHandler(BaseOffensive newOffensive);
-
-	[Signal]
-	public delegate void OnPrimaryAttackReassignedEventHandler();
-
-	[Signal]
-	public delegate void OnSecondaryAttackReassignedEventHandler();
-
-	public IManualAttack? PrimaryAttack
-	{
-		get;
-		private set
-		{
-			field = value;
-			EmitSignalOnPrimaryAttackReassigned();
-		}
-	}
-
-	public IManualAttack? SecondaryAttack
-	{
-		get;
-		private set
-		{
-			field = value;
-			if (field is not null)
-				EmitSignalOnSecondaryAttackReassigned();
-		}
-	}
-
-	public readonly List<BaseOffensive> Offensives = [];
-	public readonly List<BaseOffensive> AutomaticOffensives = [];
-	public readonly List<IManualAttack> ManualOffensives = [];
-
 	public override void _Ready()
 	{
 		ChildOrderChanged += InitializeWeaponNodes;
@@ -190,25 +155,5 @@ public partial class PlayerWeaponController : Node
 		SecondaryAttack.AttackActionString = InputMapNames.SecondaryAttack;
 
 		EnableManualOffensive(newPrimary);
-	}
-
-	// NOTE:
-	// May break if the nodes ProcessMode is was not originally
-	// Inherit
-	private void EnableManualOffensive(IManualAttack manual)
-	{
-		var node = (manual as Node)!;
-		node.ProcessMode = ProcessModeEnum.Inherit;
-		if (node is Node2D node2D)
-			node2D.Show();
-	}
-
-	private void DisableManualOffensive(IManualAttack manual)
-	{
-		var node = (manual as Node)!;
-		manual.AttackActionString = null;
-		node.ProcessMode = ProcessModeEnum.Disabled;
-		if (node is Node2D node2D)
-			node2D.Hide();
 	}
 }

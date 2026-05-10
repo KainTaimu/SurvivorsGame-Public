@@ -32,7 +32,7 @@ public partial class RevolverAmmoCount : CanvasLayer
 	private const int MAX_CYLINDER_COUNT = 6;
 	private Vector2 _originalPosition;
 
-	private PlayerWeaponController WeaponController => GameWorld.Instance.MainPlayer.WeaponController;
+	private AbstractPlayerWeaponController WeaponController => GameWorld.Instance.MainPlayer.WeaponController;
 
 	private int MagazineCapacity => Math.Clamp(_revolver.MagazineCapacity, 0, MAX_CYLINDER_COUNT);
 

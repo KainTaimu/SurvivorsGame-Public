@@ -18,7 +18,7 @@ public partial class PickupUi : Control
 	[Export]
 	private Array<ItemShowcase> _showcases = null!;
 
-	private PlayerWeaponController PlayerWeaponController => GameWorld.Instance.MainPlayer.WeaponController;
+	private AbstractPlayerWeaponController PlayerWeaponController => GameWorld.Instance.MainPlayer.WeaponController;
 
 	public override void _Ready()
 	{
