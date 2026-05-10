@@ -25,7 +25,7 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_f52b2"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_rp6n0"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_eai52"]
@@ -41,6 +41,7 @@ Stats = SubResource("Resource_nihe0")
 Properties = SubResource("Resource_eai52")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=458425301]
+process_mode = 3
 stream = ExtResource("5_rp6n0")
 volume_db = 20.0
 pitch_scale = 0.59

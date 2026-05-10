@@ -9,6 +9,7 @@ script = ExtResource("1_sp5c2")
 _hitmarkerStreamPlayer = NodePath("AudioStreamPlayer")
 
 [node name="DamageIndicatorPool" parent="." unique_id=1041537640 instance=ExtResource("2_4defx")]
+PoolCount = 200
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1438174894]
 stream = ExtResource("3_4defx")

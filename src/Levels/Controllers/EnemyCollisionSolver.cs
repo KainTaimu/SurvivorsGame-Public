@@ -25,9 +25,6 @@ public partial class EnemyCollisionSolver : Node
 	[Export]
 	private float _cramExtraPushFactor = 6f;
 
-	[Export]
-	public bool DebugEnabled;
-
 	[ExportCategory("Toggles")]
 	[Export]
 	public bool Enabled = true;
@@ -62,12 +59,6 @@ public partial class EnemyCollisionSolver : Node
 		_grid = new CenteredMovingUniformGrid<(Vector2, int)>(_gridSize, new Vector2(windowSize.X, windowSize.X));
 
 		Logger.LogDebug("in", _grid.Dimensions, _grid.CellSize);
-
-		if (!Enabled)
-			return;
-
-		if (DebugEnabled)
-			CreateDebugDisplayGridBounds();
 	}
 
 	public override void _Process(double delta)
@@ -88,8 +79,6 @@ public partial class EnemyCollisionSolver : Node
 		}
 
 		ApplyCollisions();
-		if (DebugEnabled)
-			UpdateDebug();
 	}
 
 	private void ApplyCollisions()
@@ -212,45 +201,5 @@ public partial class EnemyCollisionSolver : Node
 
 		_writeBuffer[idA] = posA;
 		_writeBuffer[idB] = posB;
-	}
-
-	private void CreateDebugDisplayGridBounds()
-	{
-		for (var x = 0; x < _grid.Dimensions.X; x++)
-		for (var y = 0; y < _grid.Dimensions.Y; y++)
-		{
-			var cell = _grid.Cells[x, y];
-			var rect = new ReferenceRect
-			{
-				Name = $"rect-{cell.Index}",
-				Size = new Vector2(_gridSize, _gridSize),
-				Position = cell.Position,
-				Visible = true,
-				EditorOnly = false,
-			};
-
-			var text = new Label
-			{
-				Name = $"text-{cell.Index}",
-				Scale = new Vector2(0.75f, 0.75f),
-				Position = cell.Position,
-				Text = cell.Position + "\n" + cell.Index + "\n" + cell.Count,
-				LabelSettings = new LabelSettings { FontColor = new Color(0, 0, 0) },
-			};
-
-			AddChild(rect);
-			AddChild(text);
-		}
-	}
-
-	private void UpdateDebug()
-	{
-		for (var x = 0; x < _grid.Dimensions.X; x++)
-		for (var y = 0; y < _grid.Dimensions.Y; y++)
-		{
-			var cell = _grid.Cells[x, y];
-			var text = GetNode<Label>($"text-{cell.Index}");
-			text.Text = cell.Position + "\n" + cell.Index + "\n" + cell.Count;
-		}
 	}
 }
