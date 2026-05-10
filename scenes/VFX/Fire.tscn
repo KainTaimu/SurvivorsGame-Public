@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://bxoaaswv72j6m"]
+
+[ext_resource type="Texture2D" uid="uid://cgo8hucmx2qnc" path="res://assets/VFX/Pixel fire asset pack v1.2/Pixel Fire Asset Pack Floored/fire asset red floored/Group 5 - 1.png" id="1_ouu28"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_o5tdg"]
+particles_animation = true
+particles_anim_h_frames = 8
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="Curve" id="Curve_hut5v"]
+_limits = [0.0, 100.0, 0.0, 0.108781055]
+_data = [Vector2(0, 0), 0.0, 962.6194, 0, 1, Vector2(0.10388322, 100), 0.0, 0.0, 0, 0, Vector2(0.108781055, 100), 0.0, 0.0, 1, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ka0w7"]
+texture_mode = 1
+curve = SubResource("Curve_hut5v")
+
+[sub_resource type="Curve" id="Curve_ouu28"]
+_data = [Vector2(0.78450525, 0.9890386), -3.2313578, -0.0955729, 0, 0, Vector2(0.9581849, 0.8111971), -1.9746825, -1.9746825, 0, 0, Vector2(1, 0), -19.39962, 0.0, 1, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_o5tdg"]
+curve = SubResource("Curve_ouu28")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_c8xgg"]
+lifetime_randomness = 0.25
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 294.37
+initial_velocity_max = 829.17
+gravity = Vector3(0, 0, 0)
+damping_min = 100.00001
+damping_max = 100.00001
+damping_curve = SubResource("CurveTexture_ka0w7")
+scale_min = 0.59999996
+scale_max = 0.9
+scale_curve = SubResource("CurveTexture_o5tdg")
+anim_speed_min = 52.36
+anim_speed_max = 67.64
+
+[node name="Fire" type="GPUParticles2D" unique_id=834632335]
+z_index = -1
+material = SubResource("CanvasItemMaterial_o5tdg")
+emitting = false
+amount = 24
+texture = ExtResource("1_ouu28")
+lifetime = 32.0
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 20
+visibility_rect = Rect2(-8192, -8192, 16384, 16384)
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_c8xgg")
+
+[connection signal="finished" from="." to="." method="queue_free"]

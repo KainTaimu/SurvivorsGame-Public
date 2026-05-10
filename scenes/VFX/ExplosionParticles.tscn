@@ -52,12 +52,14 @@ script/source = "extends GPUParticles2D
 [node name="ExplosionParticles" type="GPUParticles2D" unique_id=463393442]
 modulate = Color(1.1509413, 1.1509413, 1.1509413, 0.96862745)
 top_level = true
+z_index = 1
 material = SubResource("CanvasItemMaterial_y81o2")
 emitting = false
 amount = 1200
 texture = SubResource("AtlasTexture_ssqlr")
 one_shot = true
 explosiveness = 1.0
+visibility_rect = Rect2(-8192, -8192, 16384, 16384)
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_xxofo")
 script = SubResource("GDScript_351pr")

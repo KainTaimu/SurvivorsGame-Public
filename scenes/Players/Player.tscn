@@ -156,7 +156,7 @@ metadata/_edit_lock_ = true
 [node name="LookLight" type="PointLight2D" parent="." unique_id=1398023543]
 visible = false
 scale = Vector2(1.577, 1.577)
-energy = 0.5
+energy = 0.7
 shadow_color = Color(0, 0, 0, 1)
 texture = ExtResource("4_eai52")
 offset = Vector2(0, -256)
