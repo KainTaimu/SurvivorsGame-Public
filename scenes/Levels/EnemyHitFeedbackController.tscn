@@ -13,5 +13,4 @@ PoolCount = 200
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1438174894]
 stream = ExtResource("3_4defx")
-volume_db = 10.0
 max_polyphony = 50
