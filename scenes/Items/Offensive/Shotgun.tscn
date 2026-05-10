@@ -8,6 +8,15 @@
 [ext_resource type="AudioStream" uid="uid://dukuiytyl14r4" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Reloads, Cycling & More/WAV/Pump Shell Load WAV.wav" id="5_u167f"]
 [ext_resource type="AudioStream" uid="uid://caepfvq0t0m64" path="res://assets/SFX/shotgun_cocking.mp3" id="6_fvcvv"]
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ld3kt"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_fvcvv"]
+script = ExtResource("3_yjw8k")
+Name = "M870"
+Description = "A shotgun that holds [b][u]7[/u][/b] 12-gauge shells."
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
 [sub_resource type="Resource" id="Resource_mvme6"]
 script = ExtResource("4_60s7d")
 ReloadTime = 0.6
@@ -32,28 +41,20 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_g0kem"]
-size = Vector2(32, 32)
-
-[sub_resource type="Resource" id="Resource_fvcvv"]
-script = ExtResource("3_yjw8k")
-Name = "M870"
-Description = "A shotgun that holds [b][u]7[/u][/b] 12-gauge shells."
-metadata/_custom_type_script = "uid://8rt54h4imtxv"
-
 [node name="M870" type="Node" unique_id=1997007315 node_paths=PackedStringArray("_shellReloadAudioPlayer", "_cockingAudioPlayer", "ShootAudioPlayer")]
 script = ExtResource("1_f4o5x")
 _shellReloadAudioPlayer = NodePath("ShellReload")
 _cockingAudioPlayer = NodePath("Cocking")
 _projectileScene = ExtResource("2_e0ol0")
 ShootAudioPlayer = NodePath("Shoot")
-Stats = SubResource("Resource_mvme6")
 Properties = SubResource("Resource_fvcvv")
+Stats = SubResource("Resource_mvme6")
 
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=1307650162]
 process_mode = 3
 stream = ExtResource("5_g0kem")
 volume_db = 15.0
+bus = &"ShootSfx"
 
 [node name="ShellReload" type="AudioStreamPlayer" parent="." unique_id=2020652289]
 process_mode = 3

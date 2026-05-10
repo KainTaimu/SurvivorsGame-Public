@@ -7,10 +7,19 @@
 [ext_resource type="AudioStream" uid="uid://bk4ur13n1hsy2" path="res://assets/SFX/Shoot/Snake's SECOND Authentic Gun Sounds/Full Sounds/9mm/WAV/9mm Single.wav" id="5_2lvmq"]
 [ext_resource type="AudioStream" uid="uid://bmkybqxa3cdlq" path="res://assets/SFX/mag_almost_empty.wav" id="6_snjij"]
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_snjij"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_dkd5d"]
+script = ExtResource("3_jpa4p")
+Name = "TP9 SMG"
+Description = "A rapid-firing submachine gun chambered in 9x39mm. "
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
 [sub_resource type="Resource" id="Resource_34bgn"]
 script = ExtResource("4_hsj8o")
 ReloadTime = 1.0
-BloomCoefficientDeg = 20.0
+BloomCoefficientDeg = 30.0
 MagazineCapacity = 40
 HorizontalRecoilMin = 8.0
 HorizontalBaseRecoil = 8.0
@@ -20,32 +29,25 @@ VerticalBaseRecoil = 8.0
 VerticalRecoilRandom = 1.0
 RecoilScale = 0.2
 CameraRecoilScale = 0.4
-Damage = 2
-CritChanceProportion = 0.0
+Damage = 3
+CritDamageMultiplier = 0.9
+CritChanceProportion = 0.5
 ProjectileSpeed = 6000
 ProjectileScaleMultiplier = 0.6
 AttackSpeed = 0.05
+PierceLimit = 2
 Additional = Dictionary[String, Variant]({
 "Knockback": 10.0
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ld3kt"]
-size = Vector2(32, 32)
-
-[sub_resource type="Resource" id="Resource_dkd5d"]
-script = ExtResource("3_jpa4p")
-Name = "TP9 SMG"
-Description = "A rapid-firing submachine gun chambered in 9x39mm. "
-metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [node name="TP9" type="Node" unique_id=1472391115 node_paths=PackedStringArray("ShootAudioPlayer", "AlmostEmptyAudioPlayer")]
 script = ExtResource("1_34bgn")
 _projectileScene = ExtResource("2_34bgn")
 ShootAudioPlayer = NodePath("Shoot")
 AlmostEmptyAudioPlayer = NodePath("MagAlmostEmpty")
-Stats = SubResource("Resource_34bgn")
 Properties = SubResource("Resource_dkd5d")
+Stats = SubResource("Resource_34bgn")
 
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=1380114539]
 process_mode = 3

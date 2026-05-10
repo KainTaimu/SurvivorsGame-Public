@@ -96,7 +96,7 @@ public partial class Shotgun : Firearm
 
 		// Add delay before reloading sequence to punish reload/shoot spam
 
-		_reloadTween = CreateTween().SetLoops(MagazineCapacity - MagazineCount);
+		_reloadTween = GetTree().CreateTween().SetLoops(MagazineCapacity - MagazineCount);
 		_reloadTween
 			.TweenCallback(
 				Callable.From(() =>

@@ -4,7 +4,16 @@
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_u7hyr"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_f52b2"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_u7hyr"]
-[ext_resource type="AudioStream" uid="uid://byaqp87dpfq3j" path="res://assets/SFX/revolver_gunshot.mp3" id="5_f52b2"]
+[ext_resource type="AudioStream" uid="uid://brpgaue5ixgat" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Full Sound/7.62x54R/WAV/762x54r Single WAV.wav" id="5_f52b2"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_f52b2"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_iky5m"]
+script = ExtResource("3_f52b2")
+Name = "BM-50"
+Description = "A .50 caliber, single-shot sniper rifle that fires high-velocity [b][u]penetrating[/u][/b] rounds."
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_f52b2"]
 script = ExtResource("4_u7hyr")
@@ -37,24 +46,14 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ld3kt"]
-size = Vector2(32, 32)
-
-[sub_resource type="Resource" id="Resource_iky5m"]
-script = ExtResource("3_f52b2")
-Name = "BM-50"
-Description = "A .50 caliber, single-shot sniper rifle that fires high-velocity [b][u]penetrating[/u][/b] rounds."
-metadata/_custom_type_script = "uid://8rt54h4imtxv"
-
 [node name="Sniper" type="Node" unique_id=753371605 node_paths=PackedStringArray("ShootAudioPlayer")]
 script = ExtResource("1_jg7ce")
 _projectileScene = ExtResource("2_u7hyr")
 ShootAudioPlayer = NodePath("Shoot")
-Stats = SubResource("Resource_f52b2")
 Properties = SubResource("Resource_iky5m")
+Stats = SubResource("Resource_f52b2")
 
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=2103641847]
 process_mode = 3
 stream = ExtResource("5_f52b2")
-volume_db = 16.0
-pitch_scale = 1.66
+volume_db = 24.0
