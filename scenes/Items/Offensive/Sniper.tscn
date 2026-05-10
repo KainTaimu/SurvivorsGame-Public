@@ -37,7 +37,7 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_rp6n0"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_c62cd"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_iky5m"]
