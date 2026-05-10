@@ -31,7 +31,7 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_c62cd"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ld3kt"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_y2vvo"]
@@ -43,11 +43,12 @@ metadata/_custom_type_script = "uid://8rt54h4imtxv"
 [node name="M134" type="Node" unique_id=636864915 node_paths=PackedStringArray("ShootAudioPlayer")]
 script = ExtResource("1_6kirf")
 _projectileScene = ExtResource("2_6kirf")
-ShootAudioPlayer = NodePath("AudioStreamPlayer")
+ShootAudioPlayer = NodePath("Shoot")
 Stats = SubResource("Resource_6kirf")
 Properties = SubResource("Resource_y2vvo")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1297129913]
+[node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=1297129913]
+process_mode = 3
 stream = ExtResource("5_6kirf")
 volume_db = 8.0
 pitch_scale = 1.83

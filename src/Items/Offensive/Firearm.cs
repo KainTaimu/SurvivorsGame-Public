@@ -110,7 +110,7 @@ public abstract partial class Firearm : BaseOffensive, IReloadable, IManualAttac
 			return;
 
 		ShootAudioPlayer?.Play();
-		if (MagazineCount <= 5)
+		if (MagazineCount <= 6)
 			AlmostEmptyAudioPlayer?.Play();
 
 		FireCooldown = Stats.AttackSpeed;

@@ -10,6 +10,10 @@ border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 
+[sub_resource type="FontVariation" id="FontVariation_ci30e"]
+variation_embolden = 0.41
+spacing_glyph = 2
+
 [sub_resource type="Animation" id="Animation_ci30e"]
 length = 0.001
 
@@ -76,8 +80,10 @@ expand_mode = 4
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
+theme_override_fonts/bold_font = SubResource("FontVariation_ci30e")
+theme_override_font_sizes/bold_font_size = 18
 bbcode_enabled = true
-text = "FIREARM"
+text = "[b]FIREARM[/b]"
 fit_content = true
 vertical_alignment = 1
 
@@ -102,6 +108,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 theme_override_fonts/bold_font = SubResource("FontVariation_cy1ac")
+theme_override_font_sizes/normal_font_size = 17
+theme_override_font_sizes/bold_font_size = 17
 bbcode_enabled = true
 text = " Lorem ipsum [b]{dolor}[/b] sit amet, consectetur adipiscing elit. Proin tristique lacus ac purus tincidunt, ut congue leo lobortis. Aenean congue et magna fermentum molestie. Etiam gravida ante at neque dignissim, vitae auctor turpis consequat. Cras vel dictum mi. Etiam vitae urna congue, tempor sem sit amet, consectetur dui. Aliquam vitae ante porttitor, porttitor nibh eu, maximus est. Suspendisse sed vestibulum metus. Curabitur volutpat, mauris ac varius sodales, massa justo malesuada odio, nec volutpat leo lectus hendrerit felis. Aliquam vitae volutpat neque. Donec sem ex, mattis vitae ligula non, luctus faucibus nibh. Vivamus tempor vel libero vel suscipit. Mauris vitae velit rutrum, venenatis massa id, auctor purus.
 
@@ -114,22 +122,6 @@ Nunc sit amet aliquet lorem. Nam a risus tempus turpis ultricies laoreet. Fusce 
 Donec eu suscipit nunc. Donec sem ligula, ornare nec gravida iaculis, bibendum ut augue. Sed hendrerit at massa eu porttitor. Maecenas efficitur elementum efficitur. Vestibulum fringilla, lorem sed tristique interdum, nibh dui consectetur diam, ac bibendum elit lacus id sem. Praesent commodo erat mollis pulvinar facilisis. Aenean suscipit fermentum nisi vitae scelerisque. Duis posuere ut lacus id sollicitudin. Proin tempus, ex vitae porta lobortis, arcu ante pulvinar quam, eu volutpat orci lorem sed dolor. Integer varius rhoncus pellentesque. Quisque auctor eros massa, at elementum magna blandit in. Mauris maximus tincidunt maximus. "
 fit_content = true
 scroll_active = false
-
-[node name="ItemDesc" type="Label" parent="PanelContainer/PanelContainer/VSplitContainer/Bottom/ScrollContainer" unique_id=1093435157]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique lacus ac purus tincidunt, ut congue leo lobortis. Aenean congue et magna fermentum molestie. Etiam gravida ante at neque dignissim, vitae auctor turpis consequat. Cras vel dictum mi. Etiam vitae urna congue, tempor sem sit amet, consectetur dui. Aliquam vitae ante porttitor, porttitor nibh eu, maximus est. Suspendisse sed vestibulum metus. Curabitur volutpat, mauris ac varius sodales, massa justo malesuada odio, nec volutpat leo lectus hendrerit felis. Aliquam vitae volutpat neque. Donec sem ex, mattis vitae ligula non, luctus faucibus nibh. Vivamus tempor vel libero vel suscipit. Mauris vitae velit rutrum, venenatis massa id, auctor purus.
-
-Nam vel eros vel felis imperdiet efficitur sed non quam. Morbi dignissim ornare nisl vitae finibus. Duis diam lorem, fermentum in nibh non, fermentum placerat nisi. Curabitur ex dolor, congue non libero in, elementum tempor nulla. Vestibulum sed erat iaculis eros sagittis ornare. Donec laoreet viverra libero a porttitor. Pellentesque tincidunt laoreet purus, ut congue felis tincidunt eget. Donec sollicitudin tortor vel lacus vulputate, nec sollicitudin arcu ullamcorper. Cras sem orci, mattis eget dictum ac, pellentesque ac velit. Nullam tempor venenatis tortor, et rhoncus lorem. Morbi placerat volutpat sollicitudin. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam pulvinar suscipit urna et blandit.
-
-Nunc iaculis et nulla sed mollis. Quisque nec volutpat purus, sit amet scelerisque mi. Integer diam ipsum, finibus sit amet venenatis sed, pharetra vel mi. In hendrerit egestas lectus, id viverra risus pulvinar et. Donec luctus lacus vitae lectus molestie aliquet. Nulla volutpat condimentum arcu, ac laoreet lorem hendrerit eu. Ut vestibulum maximus risus, non facilisis nunc auctor vitae. Suspendisse sed massa dignissim, placerat justo a, pharetra mi.
-
-Nunc sit amet aliquet lorem. Nam a risus tempus turpis ultricies laoreet. Fusce vel risus laoreet, bibendum tortor id, ultrices nunc. Suspendisse posuere posuere felis vitae cursus. Nulla tempor elit quis fringilla aliquet. Vestibulum semper arcu magna, sit amet aliquet ante commodo id. Quisque tellus nibh, interdum ut nunc ut, accumsan ultrices orci. Donec nunc tortor, varius et velit id, euismod commodo ante. Suspendisse malesuada, nisl et pharetra faucibus, dui nibh tempus magna, at tristique arcu turpis vitae arcu. Phasellus interdum sapien in hendrerit sollicitudin. Etiam venenatis at nulla eu placerat. Pellentesque diam lectus, egestas id nulla sed, tristique pharetra quam. Nulla faucibus erat in magna iaculis, non fermentum orci blandit. Nam aliquam turpis vitae urna sodales tincidunt. Quisque tincidunt eu nibh a finibus. Praesent egestas nisi non mi rhoncus, quis pretium nulla condimentum.
-
-Donec eu suscipit nunc. Donec sem ligula, ornare nec gravida iaculis, bibendum ut augue. Sed hendrerit at massa eu porttitor. Maecenas efficitur elementum efficitur. Vestibulum fringilla, lorem sed tristique interdum, nibh dui consectetur diam, ac bibendum elit lacus id sem. Praesent commodo erat mollis pulvinar facilisis. Aenean suscipit fermentum nisi vitae scelerisque. Duis posuere ut lacus id sollicitudin. Proin tempus, ex vitae porta lobortis, arcu ante pulvinar quam, eu volutpat orci lorem sed dolor. Integer varius rhoncus pellentesque. Quisque auctor eros massa, at elementum magna blandit in. Mauris maximus tincidunt maximus. "
-autowrap_mode = 2
 
 [connection signal="mouse_entered" from="." to="." method="Highlight" binds= [true]]
 [connection signal="mouse_exited" from="." to="." method="Highlight" binds= [false]]

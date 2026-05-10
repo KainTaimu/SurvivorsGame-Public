@@ -182,19 +182,21 @@ script = ExtResource("5_yecw2")
 
 [node name="Ak47" parent="PlayerWeaponController" unique_id=915008798 instance=ExtResource("13_ragxt")]
 
-[node name="Blick" parent="PlayerWeaponController" unique_id=1989500741 instance=ExtResource("15_k8uaa")]
-
-[node name="M134" parent="PlayerWeaponController" unique_id=636864915 instance=ExtResource("16_4ua1a")]
-
-[node name="Revolver" parent="PlayerWeaponController" unique_id=1975794211 instance=ExtResource("17_jrnl7")]
-
 [node name="M870" parent="PlayerWeaponController" unique_id=1997007315 instance=ExtResource("18_f1vlf")]
 
 [node name="TP9" parent="PlayerWeaponController" unique_id=1472391115 instance=ExtResource("19_xsyvw")]
 
+[node name="Blick" parent="PlayerWeaponController" unique_id=1989500741 instance=ExtResource("15_k8uaa")]
+
+[node name="Revolver" parent="PlayerWeaponController" unique_id=1975794211 instance=ExtResource("17_jrnl7")]
+
 [node name="Sniper" parent="PlayerWeaponController" unique_id=753371605 instance=ExtResource("20_k7o84")]
 
+[node name="M134" parent="PlayerWeaponController" unique_id=636864915 instance=ExtResource("16_4ua1a")]
+
 [node name="GrenadeThrower" parent="PlayerWeaponController" unique_id=1000269585 instance=ExtResource("11_espgp")]
+
+[node name="GrenadeThrower2" parent="PlayerWeaponController" unique_id=707047992 instance=ExtResource("11_espgp")]
 
 [node name="CurrentWeaponUI" parent="." unique_id=2135368036 node_paths=PackedStringArray("_weaponController") instance=ExtResource("14_8rask")]
 _weaponController = NodePath("../PlayerWeaponController")

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Game.Items.Offensive;
 
-public partial class M870 : Firearm
+public partial class Shotgun : Firearm
 {
 	[Export]
 	private AudioStreamPlayer? _shellReloadAudioPlayer;
@@ -41,6 +41,10 @@ public partial class M870 : Firearm
 
 		FireCooldown = Stats.AttackSpeed;
 		MagazineCount--;
+		if (MagazineCount <= 0)
+		{
+			Reload();
+		}
 
 		var playerVector = Player.GetCanvasTransform() * Player.Position;
 

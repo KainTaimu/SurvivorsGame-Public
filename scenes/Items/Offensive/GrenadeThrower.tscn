@@ -23,6 +23,7 @@ metadata/_custom_type_script = "uid://os8ycjo6m7r0"
 [sub_resource type="Resource" id="Resource_r85fg"]
 script = ExtResource("3_5d54y")
 Name = "Grenade"
+Description = "A fragmentation grenade that deals massive damage caught in its blast. "
 ItemIcon = ExtResource("4_5d54y")
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 

@@ -1,17 +1,18 @@
 [gd_scene format=3 uid="uid://lvm5jo1ua73i"]
 
-[ext_resource type="Script" uid="uid://d16s2voefyry4" path="res://src/Items/Offensive/M870.cs" id="1_f4o5x"]
+[ext_resource type="Script" uid="uid://d16s2voefyry4" path="res://src/Items/Offensive/Shotgun.cs" id="1_f4o5x"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_e0ol0"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_yjw8k"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_60s7d"]
+[ext_resource type="AudioStream" uid="uid://dsx6wt658eqq7" path="res://assets/SFX/Shoot/Snake's SECOND Authentic Gun Sounds/Full Sounds/20 Gauge/WAV/20 Gauge Single.wav" id="5_g0kem"]
 [ext_resource type="AudioStream" uid="uid://dukuiytyl14r4" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Reloads, Cycling & More/WAV/Pump Shell Load WAV.wav" id="5_u167f"]
 [ext_resource type="AudioStream" uid="uid://caepfvq0t0m64" path="res://assets/SFX/shotgun_cocking.mp3" id="6_fvcvv"]
 
 [sub_resource type="Resource" id="Resource_mvme6"]
 script = ExtResource("4_60s7d")
-ReloadTime = 0.3
+ReloadTime = 0.6
 BloomCoefficientDeg = 25.0
-MagazineCapacity = 6
+MagazineCapacity = 7
 HorizontalRecoilMin = 20.0
 HorizontalBaseRecoil = 20.0
 HorizontalRecoilRandom = 20.0
@@ -19,38 +20,48 @@ VerticalRecoilMin = 80.0
 VerticalBaseRecoil = 80.0
 VerticalRecoilRandom = 40.0
 CameraRecoilScale = 2.0
-Damage = 12
-CritDamageMultiplier = 1.2
-CritChanceProportion = 0.2
-ProjectileSpeed = 3200
+Damage = 15
+CritDamageMultiplier = 1.0
+CritChanceProportion = 0.3
+ProjectileSpeed = 2700
 ProjectileScaleMultiplier = 0.8
 AttackSpeed = 1.3
-PierceLimit = 2
+PierceLimit = 4
 Additional = Dictionary[String, Variant]({
 "PelletCount": 16
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_c62cd"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_g0kem"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_fvcvv"]
 script = ExtResource("3_yjw8k")
 Name = "M870"
+Description = "A shotgun that holds [b][u]7[/u][/b] 12-gauge shells."
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
-[node name="M870" type="Node" unique_id=1997007315 node_paths=PackedStringArray("_shellReloadAudioPlayer", "_cockingAudioPlayer")]
+[node name="M870" type="Node" unique_id=1997007315 node_paths=PackedStringArray("_shellReloadAudioPlayer", "_cockingAudioPlayer", "ShootAudioPlayer")]
 script = ExtResource("1_f4o5x")
 _shellReloadAudioPlayer = NodePath("ShellReload")
 _cockingAudioPlayer = NodePath("Cocking")
 _projectileScene = ExtResource("2_e0ol0")
+ShootAudioPlayer = NodePath("Shoot")
 Stats = SubResource("Resource_mvme6")
 Properties = SubResource("Resource_fvcvv")
 
+[node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=1307650162]
+process_mode = 3
+stream = ExtResource("5_g0kem")
+volume_db = 15.0
+
 [node name="ShellReload" type="AudioStreamPlayer" parent="." unique_id=2020652289]
+process_mode = 3
 stream = ExtResource("5_u167f")
-volume_db = 5.0
+volume_db = 10.0
+max_polyphony = 3
 
 [node name="Cocking" type="AudioStreamPlayer" parent="." unique_id=138581488]
+process_mode = 3
 stream = ExtResource("6_fvcvv")
 volume_db = 5.0

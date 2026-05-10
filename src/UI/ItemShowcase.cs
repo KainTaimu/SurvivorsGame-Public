@@ -59,7 +59,7 @@ public partial class ItemShowcase : MarginContainer
 
 	public void AssignItem(PackedScene itemScene, BaseItemProperties properties)
 	{
-		ItemNameLabel.Text = properties.Name;
+		ItemNameLabel.Text = "[b]" + properties.Name + "[/b]";
 		ItemDescriptionLabel.Text = properties.Description;
 		ItemIconRect.Texture = properties.ItemIcon;
 		_itemScene = itemScene;
