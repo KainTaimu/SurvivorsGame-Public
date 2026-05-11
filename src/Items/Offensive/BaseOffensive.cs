@@ -8,10 +8,10 @@ public abstract partial class BaseOffensive : BaseItem
 {
 	[Signal]
 	public delegate void OnAttackEventHandler();
-	
+
 	[Export]
 	public Array<BaseOffensiveStats> Upgrades = [];
-	
+
 	public BaseOffensiveStats OffensiveStats => (BaseOffensiveStats)Stats;
 
 	protected EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
@@ -51,7 +51,8 @@ public abstract partial class BaseOffensive : BaseItem
 			return;
 
 		var crit = CalculateCrit();
-		var randomDamage = OffensiveStats.Damage > 1 ? Mathf.CeilToInt(GD.RandRange(-0.15, 0.15) * OffensiveStats.Damage) : 0;
+		var randomDamage =
+			OffensiveStats.Damage > 1 ? Mathf.CeilToInt(GD.RandRange(-0.15, 0.15) * OffensiveStats.Damage) : 0;
 		var damage = OffensiveStats.Damage + crit + randomDamage;
 		var newHealth = health.Health - damage;
 

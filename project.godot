@@ -27,6 +27,7 @@ buses/default_bus_layout="uid://cd1ytmgy4kjgv"
 
 DebugMenu="*uid://cggqb75a8w8r"
 Game="*uid://brlugd2ju6667"
+AudioManager="*uid://b6x82ongi5yps"
 ServiceLocator="*res://scenes/Core/ServiceLocator.tscn"
 
 [debug]

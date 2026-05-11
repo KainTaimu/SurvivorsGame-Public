@@ -5,6 +5,9 @@ namespace Game.UI;
 public partial class Settings : Control
 {
 	[Export]
+	public Slider MasterVolume = null!;
+
+	[Export]
 	public OptionButton GoreSelection = null!;
 
 	[Export]
@@ -35,6 +38,7 @@ public partial class Settings : Control
 
 	private void UpdateOptions()
 	{
+		MasterVolume.Value = GameSettings.Instance.MasterVolume;
 		GoreSelection.Selected = GameSettings.Instance.GoreEffects switch
 		{
 			GoreEffectsEnum.Disabled => 0,
@@ -48,20 +52,18 @@ public partial class Settings : Control
 
 		CrosshairScale.Value = GameSettings.Instance.CrosshairScale;
 		CrosshairScaleLabel.Text = CrosshairScale.Value.ToString("0.##");
-		DamageIndicators.Selected = GameSettings.Instance.EnableDamageIndicators
-			? 1
-			: 0;
+		DamageIndicators.Selected = GameSettings.Instance.EnableDamageIndicators ? 1 : 0;
 	}
 
 	private void SubscribeOptions()
 	{
+		MasterVolume.ValueChanged += (value) => GameSettings.Instance.MasterVolume = (float)value;
 		GoreSelection.ItemSelected += (idx) =>
 		{
 			switch (idx)
 			{
 				case 0:
-					GameSettings.Instance.GoreEffects =
-						GoreEffectsEnum.Disabled;
+					GameSettings.Instance.GoreEffects = GoreEffectsEnum.Disabled;
 					break;
 				case 1:
 					GameSettings.Instance.GoreEffects = GoreEffectsEnum.Low;
@@ -86,8 +88,7 @@ public partial class Settings : Control
 					break;
 			}
 		};
-		CameraShakeScale.ValueChanged += (value) =>
-			GameSettings.Instance.CameraShakeScale = (float)value;
+		CameraShakeScale.ValueChanged += (value) => GameSettings.Instance.CameraShakeScale = (float)value;
 		CrosshairScale.ValueChanged += (value) =>
 		{
 			GameSettings.Instance.CrosshairScale = (float)value;
@@ -95,16 +96,21 @@ public partial class Settings : Control
 		};
 		DamageIndicators.ItemSelected += (idx) =>
 		{
-			switch (idx)
+			GameSettings.Instance.EnableDamageIndicators = idx switch
 			{
-				case 0:
-					GameSettings.Instance.EnableDamageIndicators = false;
-					break;
-				case 1:
-					GameSettings.Instance.EnableDamageIndicators = true;
-					break;
-			}
+				0 => false,
+				1 => true,
+				_ => GameSettings.Instance.EnableDamageIndicators
+			};
 		};
+	}
+
+	private void ResetMasterVolume(InputEvent @event)
+	{
+		if (@event is not InputEventMouseButton mb)
+			return;
+		if (mb.ButtonIndex == MouseButton.Right)
+			MasterVolume.Value = 0f;
 	}
 
 	private void ResetCrosshairScale(InputEvent @event)

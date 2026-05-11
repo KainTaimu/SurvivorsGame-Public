@@ -7,13 +7,13 @@ public partial class Minigun : Firearm
 {
 	[Export]
 	private Curve _windupCurve = null!;
-	
+
 	private double _windupTime;
-	private float WindupAttackSpeed => Math.Clamp(_windupCurve.Sample((float)_windupTime), OffensiveStats
-		.AttackSpeed, _windupCurve.MaxDomain);
-	
+	private float WindupAttackSpeed =>
+		Math.Clamp(_windupCurve.Sample((float)_windupTime), OffensiveStats.AttackSpeed, _windupCurve.MaxDomain);
+
 	private float PlayerPushPerShot => OffensiveStats.Additional.GetValueOrDefault("PlayerPushPerShot").AsSingle();
-	
+
 	public override void _Ready()
 	{
 		base._Ready();
@@ -24,7 +24,7 @@ public partial class Minigun : Firearm
 	{
 		if (AttackActionString is null)
 			return;
-		
+
 		if (Input.IsActionPressed(AttackActionString))
 		{
 			FireCooldown -= delta;
@@ -36,7 +36,7 @@ public partial class Minigun : Firearm
 			_windupTime = Math.Clamp(_windupTime - delta * 3, 0, _windupCurve.MaxDomain);
 		}
 	}
-	
+
 	public override void Attack()
 	{
 		if (FireCooldown > 0)
@@ -75,18 +75,19 @@ public partial class Minigun : Firearm
 		projectile.SetPosition(Player.Position);
 		projectile.SetRotation(rotation);
 		projectile.ProjectileSpeed = OffensiveStats.ProjectileSpeed;
+		projectile.ProjectileSpeed += (float)GD.RandRange(-projectile.ProjectileSpeed * 0.2, projectile.ProjectileSpeed
+				* 0.2);
 		projectile.PierceLimit = OffensiveStats.PierceLimit;
 		projectile.HitRadius = FirearmStats.ProjectileRadius;
 		projectile.Initialize();
 
-		Player.GlobalPosition += Vector2.Right.Rotated(rotation - Mathf.Pi + bloom) * PlayerPushPerShot * (float)
-			GetProcessDeltaTime();
+		Player.GlobalPosition +=
+			Vector2.Right.Rotated(rotation - Mathf.Pi + bloom) * PlayerPushPerShot * (float)GetProcessDeltaTime();
 
 		ApplyCursorRecoil();
 		SpawnCasingParticle();
 		EmitSignalOnAttack();
 	}
-
 
 	public override void Reload()
 	{

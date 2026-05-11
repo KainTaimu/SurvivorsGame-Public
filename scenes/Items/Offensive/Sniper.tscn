@@ -61,5 +61,6 @@ volume_db = 18.0
 
 [node name="ShootReady" type="AudioStreamPlayer" parent="." unique_id=1900327009]
 stream = ExtResource("6_oq2q4")
+volume_db = 5.0
 
 [connection signal="OnReloadEnd" from="." to="ShootReady" method="play"]

@@ -5,7 +5,7 @@ namespace Game.Items;
 
 public abstract partial class BaseItem : Node
 {
-		[Signal]
+	[Signal]
 	public delegate void OnStatsChangedEventHandler();
 
 	[Signal]
@@ -13,9 +13,10 @@ public abstract partial class BaseItem : Node
 
 	[Export]
 	public BaseItemProperties Properties = null!;
-	
+
 	[Export]
-	public BaseItemStats Stats 	{
+	public BaseItemStats Stats
+	{
 		get;
 		set
 		{
@@ -31,7 +32,6 @@ public abstract partial class BaseItem : Node
 			value.Changed += EmitSignalOnStatsChanged;
 		}
 	} = null!;
-
 
 	public static Player Player => GameWorld.Instance.MainPlayer;
 

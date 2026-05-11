@@ -42,5 +42,4 @@ public partial class BaseOffensiveStats : BaseItemStats
 			EmitChanged();
 		}
 	} = [];
-
 }

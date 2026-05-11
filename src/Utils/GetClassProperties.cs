@@ -4,14 +4,18 @@ namespace Game.Utils;
 
 public static class ClassInspector
 {
-	public static string GetClassPropertiesString(object obj, System.Reflection.BindingFlags flags = System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+	public static string GetClassPropertiesString(
+		object obj,
+		System.Reflection.BindingFlags flags =
+			System.Reflection.BindingFlags.Public
+			| System.Reflection.BindingFlags.NonPublic
+			| System.Reflection.BindingFlags.Instance
+	)
 	{
 		var s = new StringBuilder();
 
 		var pType = obj.GetType();
-		var properties = pType.GetProperties(
-			flags
-		);
+		var properties = pType.GetProperties(flags);
 		foreach (var property in properties)
 		{
 			var value = property.GetValue(obj);
@@ -23,15 +27,18 @@ public static class ClassInspector
 		return s.ToString();
 	}
 
-	public static string GetClassFieldsString(object obj, System.Reflection.BindingFlags flags = System.Reflection
-			.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+	public static string GetClassFieldsString(
+		object obj,
+		System.Reflection.BindingFlags flags =
+			System.Reflection.BindingFlags.Public
+			| System.Reflection.BindingFlags.NonPublic
+			| System.Reflection.BindingFlags.Instance
+	)
 	{
 		var s = new StringBuilder();
 
 		var pType = obj.GetType();
-		var fields = pType.GetFields(
-			flags
-		);
+		var fields = pType.GetFields(flags);
 		foreach (var field in fields)
 		{
 			if (field.Name == "NativePtr")

@@ -3,7 +3,7 @@
 [ext_resource type="LabelSettings" uid="uid://c0lq4rqaj62dx" path="res://scenes/UI/SettingsLabelSettings.tres" id="1_g0tyt"]
 [ext_resource type="Script" uid="uid://hiaypuga6gnf" path="res://src/Core/Settings/Settings.cs" id="1_ydmms"]
 
-[node name="Settings" type="MarginContainer" unique_id=83201529 node_paths=PackedStringArray("GoreSelection", "CameraShake", "CameraShakeScale", "CrosshairScale", "CrosshairScaleLabel", "DamageIndicators")]
+[node name="Settings" type="MarginContainer" unique_id=83201529 node_paths=PackedStringArray("MasterVolume", "GoreSelection", "CameraShake", "CameraShakeScale", "CrosshairScale", "CrosshairScaleLabel", "DamageIndicators")]
 process_mode = 3
 process_priority = -9999
 anchors_preset = 11
@@ -16,23 +16,49 @@ grow_vertical = 2
 theme_override_constants/margin_left = 7
 theme_override_constants/margin_right = 7
 script = ExtResource("1_ydmms")
-GoreSelection = NodePath("VBoxContainer/HBoxContainer/Gore2")
-CameraShake = NodePath("VBoxContainer/HBoxContainer2/CameraShake2")
-CameraShakeScale = NodePath("VBoxContainer/HBoxContainer3/CameraShakeScale2")
-CrosshairScale = NodePath("VBoxContainer/HBoxContainer4/CrosshairScale2/HSlider2")
-CrosshairScaleLabel = NodePath("VBoxContainer/HBoxContainer4/CrosshairScale2/Label")
-DamageIndicators = NodePath("VBoxContainer/HBoxContainer5/DamageIndicators2")
+MasterVolume = NodePath("VBoxContainer/MasterVolume/MasterVolume")
+GoreSelection = NodePath("VBoxContainer/Gore/Gore2")
+CameraShake = NodePath("VBoxContainer/CameraShake/CameraShake2")
+CameraShakeScale = NodePath("VBoxContainer/CamShakeScale/CameraShakeScale2")
+CrosshairScale = NodePath("VBoxContainer/CrosshairScale/CrosshairScale2/HSlider2")
+CrosshairScaleLabel = NodePath("VBoxContainer/CrosshairScale/CrosshairScale2/Label")
+DamageIndicators = NodePath("VBoxContainer/DamageIndicators/DamageIndicators2")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1471734743]
 layout_mode = 2
 alignment = 1
 
-[node name="HBoxContainer" type="HSplitContainer" parent="VBoxContainer" unique_id=151415757]
+[node name="MasterVolume" type="HSplitContainer" parent="VBoxContainer" unique_id=651266347]
 layout_mode = 2
 split_offsets = PackedInt32Array(160)
 split_offset = 160
 
-[node name="Gore" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=1430589299]
+[node name="Vol" type="Label" parent="VBoxContainer/MasterVolume" unique_id=1798918036]
+custom_minimum_size = Vector2(0, 32)
+custom_maximum_size = Vector2(-1, 32)
+layout_mode = 2
+text = "Master volume"
+label_settings = ExtResource("1_g0tyt")
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="MasterVolume" type="HSlider" parent="VBoxContainer/MasterVolume" unique_id=1936729639]
+custom_minimum_size = Vector2(83.677, 32)
+custom_maximum_size = Vector2(-1, 32)
+layout_mode = 2
+min_value = -10.0
+max_value = 10.0
+tick_count = 10
+ticks_on_borders = true
+ticks_position = 3
+
+[node name="Gore" type="HSplitContainer" parent="VBoxContainer" unique_id=151415757]
+layout_mode = 2
+split_offsets = PackedInt32Array(160)
+split_offset = 160
+
+[node name="Gore" type="Label" parent="VBoxContainer/Gore" unique_id=1430589299]
 custom_minimum_size = Vector2(0, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
@@ -42,7 +68,7 @@ horizontal_alignment = 2
 vertical_alignment = 1
 uppercase = true
 
-[node name="Gore2" type="OptionButton" parent="VBoxContainer/HBoxContainer" unique_id=1749146436]
+[node name="Gore2" type="OptionButton" parent="VBoxContainer/Gore" unique_id=1749146436]
 custom_minimum_size = Vector2(0, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
@@ -56,12 +82,12 @@ popup/item_2/id = 2
 popup/item_3/text = "High"
 popup/item_3/id = 3
 
-[node name="HBoxContainer2" type="HSplitContainer" parent="VBoxContainer" unique_id=1536564626]
+[node name="CameraShake" type="HSplitContainer" parent="VBoxContainer" unique_id=1536564626]
 layout_mode = 2
 split_offsets = PackedInt32Array(160)
 split_offset = 160
 
-[node name="CameraShake" type="Label" parent="VBoxContainer/HBoxContainer2" unique_id=1307140608]
+[node name="CameraShake" type="Label" parent="VBoxContainer/CameraShake" unique_id=1307140608]
 custom_minimum_size = Vector2(0, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
@@ -71,7 +97,7 @@ horizontal_alignment = 2
 vertical_alignment = 1
 uppercase = true
 
-[node name="CameraShake2" type="OptionButton" parent="VBoxContainer/HBoxContainer2" unique_id=1592180540]
+[node name="CameraShake2" type="OptionButton" parent="VBoxContainer/CameraShake" unique_id=1592180540]
 custom_minimum_size = Vector2(0, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
@@ -81,12 +107,12 @@ popup/item_0/id = 0
 popup/item_1/text = "Enabled"
 popup/item_1/id = 1
 
-[node name="HBoxContainer3" type="HSplitContainer" parent="VBoxContainer" unique_id=1804785226]
+[node name="CamShakeScale" type="HSplitContainer" parent="VBoxContainer" unique_id=1804785226]
 layout_mode = 2
 split_offsets = PackedInt32Array(160)
 split_offset = 160
 
-[node name="CameraShakeScale" type="Label" parent="VBoxContainer/HBoxContainer3" unique_id=1820403670]
+[node name="CameraShakeScale" type="Label" parent="VBoxContainer/CamShakeScale" unique_id=1820403670]
 custom_minimum_size = Vector2(0, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
@@ -96,7 +122,7 @@ horizontal_alignment = 2
 vertical_alignment = 1
 uppercase = true
 
-[node name="CameraShakeScale2" type="HSlider" parent="VBoxContainer/HBoxContainer3" unique_id=932763337]
+[node name="CameraShakeScale2" type="HSlider" parent="VBoxContainer/CamShakeScale" unique_id=932763337]
 custom_minimum_size = Vector2(83.677, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
@@ -107,12 +133,12 @@ tick_count = 7
 ticks_on_borders = true
 ticks_position = 3
 
-[node name="HBoxContainer4" type="HSplitContainer" parent="VBoxContainer" unique_id=149106139]
+[node name="CrosshairScale" type="HSplitContainer" parent="VBoxContainer" unique_id=149106139]
 layout_mode = 2
 split_offsets = PackedInt32Array(160)
 split_offset = 160
 
-[node name="CrosshairScale" type="Label" parent="VBoxContainer/HBoxContainer4" unique_id=319481044]
+[node name="CrosshairScale" type="Label" parent="VBoxContainer/CrosshairScale" unique_id=319481044]
 custom_minimum_size = Vector2(0, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
@@ -122,14 +148,14 @@ horizontal_alignment = 2
 vertical_alignment = 1
 uppercase = true
 
-[node name="CrosshairScale2" type="HSplitContainer" parent="VBoxContainer/HBoxContainer4" unique_id=1104852987]
+[node name="CrosshairScale2" type="HSplitContainer" parent="VBoxContainer/CrosshairScale" unique_id=1104852987]
 layout_mode = 2
 split_offsets = PackedInt32Array(94)
 dragging_enabled = false
 dragger_visibility = 1
 split_offset = 94
 
-[node name="HSlider2" type="HSlider" parent="VBoxContainer/HBoxContainer4/CrosshairScale2" unique_id=404113078]
+[node name="HSlider2" type="HSlider" parent="VBoxContainer/CrosshairScale/CrosshairScale2" unique_id=404113078]
 custom_minimum_size = Vector2(83.677, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
@@ -141,18 +167,18 @@ tick_count = 10
 ticks_on_borders = true
 ticks_position = 3
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer4/CrosshairScale2" unique_id=395033495]
+[node name="Label" type="Label" parent="VBoxContainer/CrosshairScale/CrosshairScale2" unique_id=395033495]
 layout_mode = 2
 text = "X.X"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="HBoxContainer5" type="HSplitContainer" parent="VBoxContainer" unique_id=1543293664]
+[node name="DamageIndicators" type="HSplitContainer" parent="VBoxContainer" unique_id=1543293664]
 layout_mode = 2
 split_offsets = PackedInt32Array(160)
 split_offset = 160
 
-[node name="DamageIndicators" type="Label" parent="VBoxContainer/HBoxContainer5" unique_id=969029046]
+[node name="DamageIndicators" type="Label" parent="VBoxContainer/DamageIndicators" unique_id=969029046]
 custom_minimum_size = Vector2(0, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
@@ -162,7 +188,7 @@ horizontal_alignment = 2
 vertical_alignment = 1
 uppercase = true
 
-[node name="DamageIndicators2" type="OptionButton" parent="VBoxContainer/HBoxContainer5" unique_id=1966174239]
+[node name="DamageIndicators2" type="OptionButton" parent="VBoxContainer/DamageIndicators" unique_id=1966174239]
 custom_minimum_size = Vector2(0, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
@@ -171,3 +197,6 @@ popup/item_0/text = "Disabled"
 popup/item_0/id = 0
 popup/item_1/text = "Enabled"
 popup/item_1/id = 1
+
+[connection signal="gui_input" from="VBoxContainer/MasterVolume/MasterVolume" to="." method="ResetMasterVolume"]
+[connection signal="gui_input" from="VBoxContainer/CrosshairScale/CrosshairScale2/HSlider2" to="." method="ResetCrosshairScale"]

@@ -6,6 +6,19 @@ namespace Game.Core.Settings;
 [JsonObject(MemberSerialization.OptIn)]
 public partial class GameSettings : Resource
 {
+	[ExportGroup("Sound")]
+	[Export]
+	[JsonProperty]
+	public float MasterVolume
+	{
+		get;
+		set
+		{
+			field = value;
+			EmitSignalOnMasterVolumeChanged();
+		}
+	} = 0f;
+
 	[ExportGroup("Game")]
 	[Export]
 	[JsonProperty]
@@ -73,6 +86,9 @@ public partial class GameSettings : Resource
 	[ExportGroup("DEV")]
 	[Export]
 	public bool EnableCrosshairHorizontalRecoilPunish = true;
+
+	[Signal]
+	public delegate void OnMasterVolumeChangedEventHandler();
 
 	[Signal]
 	public delegate void OnGoreEffectsChangedEventHandler();

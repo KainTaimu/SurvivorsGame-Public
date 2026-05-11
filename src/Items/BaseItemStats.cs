@@ -14,7 +14,6 @@ public enum ItemType
 [GlobalClass]
 public partial class BaseItemStats : Resource
 {
-	
 	[Export]
 	public Dictionary<string, Variant> Additional
 	{
@@ -33,7 +32,7 @@ public partial class BaseItemStats : Resource
 		var sbuilder = new StringBuilder();
 		foreach (var (key, value) in Additional)
 			sbuilder.AppendLine($"{key}: {value}");
-		
+
 		var s = $"{fields}{sbuilder}";
 		return s;
 	}

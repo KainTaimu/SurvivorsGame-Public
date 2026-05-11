@@ -7,10 +7,10 @@ public partial class ItemDebugInfo : CanvasLayer
 {
 	[Export]
 	public Node? Target;
-	
+
 	[Export]
 	public AbstractPlayerWeaponController? PlayerWeaponController;
-	
+
 	[Export]
 	public Label Label = null!;
 
@@ -35,10 +35,20 @@ public partial class ItemDebugInfo : CanvasLayer
 		}
 		if (!Visible)
 			Show();
-		
+
 		var s = new StringBuilder();
-		s.AppendLine(ClassInspector.GetClassFieldsString(target, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance));
-		s.AppendLine(ClassInspector.GetClassPropertiesString(target, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance));
+		s.AppendLine(
+			ClassInspector.GetClassFieldsString(
+				target,
+				System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance
+			)
+		);
+		s.AppendLine(
+			ClassInspector.GetClassPropertiesString(
+				target,
+				System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance
+			)
+		);
 		Label.Text = s.ToString();
 	}
 }
