@@ -15,7 +15,7 @@ public abstract partial class EnemyWave : Resource, IEnemyWave
 
 	[ExportGroup("Base")]
 	[Export]
-	public Array<EnemyBlueprint> EnemyBlueprints = null!;
+	public AbstractWaveBlueprintCollection EnemyBlueprints = null!;
 
 	[Export]
 	public double SpawnMinTime
@@ -78,6 +78,6 @@ public abstract partial class EnemyWave : Resource, IEnemyWave
 
 	public override string ToString()
 	{
-		return $"Wave {Index} : {EnemyBlueprints.Count} types";
+		return $"Wave {Index}";
 	}
 }

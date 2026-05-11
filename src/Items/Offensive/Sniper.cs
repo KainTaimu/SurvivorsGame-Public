@@ -25,7 +25,9 @@ public partial class Sniper : Firearm
 
 	private double MoveBloomMaxDeg => Stats.Additional["MoveBloomMaxDeg"].AsDouble();
 
-	private double MoveDamageMin => Stats.Additional["MoveDamageMin"].AsDouble();
+	private int MoveDamageMin => Stats.Additional["MoveDamageMin"].AsInt32();
+
+	private int MoveDamageMax => Stats.Additional["MoveDamageMax"].AsInt32();
 
 	private PlayerMovementController MovementController => GameWorld.Instance.MainPlayer.MovementController;
 
@@ -33,6 +35,13 @@ public partial class Sniper : Firearm
 	{
 		base._Ready();
 		OnAttack += ApplyCameraRecoil;
+
+		if (OffensiveStats.Damage > 0)
+		{
+			Logger.LogError(
+				$"Sniper {Name} has base damage {OffensiveStats.Damage}, but it will be overridden by move time damage. Consider setting base damage to 0."
+			);
+		}
 	}
 
 	public override void _Process(double delta)
@@ -68,8 +77,7 @@ public partial class Sniper : Firearm
 		if (IsReadyToShoot)
 		{
 			OffensiveStats.CritChanceProportion = (float)(1 - MoveTimeFactor);
-			OffensiveStats.Damage = (int)
-				Math.Clamp(OffensiveStats.Damage * (1 - MoveTimeFactor), MoveDamageMin, OffensiveStats.Damage);
+			OffensiveStats.Damage = (int)Math.Clamp(MoveDamageMax * (1 - MoveTimeFactor), MoveDamageMin, MoveDamageMax);
 		}
 
 		AttackWithMoveTimeBloom(FirearmStats);
@@ -81,6 +89,7 @@ public partial class Sniper : Firearm
 		bloom = Math.Clamp(bloom, MoveBloomMinDeg, MoveBloomMaxDeg);
 
 		firearmStats.BloomCoefficientDeg = (float)bloom;
+
 		Attack();
 	}
 

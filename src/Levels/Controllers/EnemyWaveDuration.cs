@@ -59,7 +59,7 @@ public partial class EnemyWaveDuration : EnemyWave
 
 		SpawnTimeLeft = GD.RandRange(SpawnMinTime, SpawnMaxTime);
 
-		var bp = EnemyBlueprints.PickRandom();
+		var bp = EnemyBlueprints.GetBlueprint();
 		var id = Spawner.SpawnEnemy(bp);
 		if (id == -1)
 		{

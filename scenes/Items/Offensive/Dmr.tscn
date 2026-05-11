@@ -1,51 +1,57 @@
 [gd_scene format=3 uid="uid://qxx1q01ys1cd"]
 
-[ext_resource type="Script" uid="uid://dsoi8oc5exk1o" path="res://src/Items/Offensive/Sniper.cs" id="1_n7xak"]
+[ext_resource type="Script" uid="uid://brww1ycug2hf2" path="res://src/Items/Offensive/MarksmanRifle.cs" id="1_lnmnp"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_nt1f2"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_0f2tb"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_f5pnb"]
 [ext_resource type="AudioStream" uid="uid://csidm3n6qam6n" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Full Sound/5.56/WAV/556 Single WAV.wav" id="5_db67r"]
 [ext_resource type="AudioStream" uid="uid://bmkybqxa3cdlq" path="res://assets/SFX/mag_almost_empty.wav" id="6_icohf"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_jvsi7"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_oq2q4"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_o65qt"]
 script = ExtResource("3_0f2tb")
 Name = "RSASS"
-Description = "A designated marksman rifle firing the 7.62x51mm cartridge. It can deal a large amount of damage to a single enemy."
+Description = "A designated marksman rifle firing the 7.62x51mm cartridge. It can deal a [b][u]large amount of damage[/u][/b] to a single enemy. It includes a large muzzle break to lower recoil and can [b][u]push enemies[/u][/b] with its blast."
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_lnmnp"]
 script = ExtResource("4_f5pnb")
 ReloadTime = 2.2
 BloomCoefficientDeg = 5.0
-MagazineCapacity = 20
+MagazineCapacity = 10
 HorizontalBaseRecoil = 5.0
 HorizontalRecoilRandom = 10.0
 VerticalRecoilMin = 10.0
 VerticalBaseRecoil = 10.0
 VerticalRecoilRandom = 5.0
+RecoilScale = 1.5
 CameraRecoilScale = 0.8
 FireGroup = 0
-Damage = 26
+Damage = -1
 CritDamageMultiplier = 1.1
 CritChanceProportion = 0.2
 ProjectileSpeed = 8000
+ProjectileScaleMultiplier = 0.8
 ProjectileRadius = 32
 AttackSpeed = 0.25
+PierceLimit = 3
 Additional = Dictionary[String, Variant]({
 "MoveBloomMaxDeg": 20.0,
 "MoveBloomMinDeg": 2.0,
+"MoveDamageMax": 56,
 "MoveDamageMin": 18,
 "MoveTimeGrowthRate": 1.0,
 "MoveTimeShrinkRate": 1.2,
-"MoveTimeToMaxBloom": 0.3
+"MoveTimeToMaxBloom": 0.3,
+"NearbyPushAmount": 35.0,
+"NearbyPushRadius": 125.0
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
 [node name="DMR" type="Node" unique_id=901001043 node_paths=PackedStringArray("ShootAudioPlayer", "AlmostEmptyAudioPlayer")]
-script = ExtResource("1_n7xak")
+script = ExtResource("1_lnmnp")
 _projectileScene = ExtResource("2_nt1f2")
 ShootAudioPlayer = NodePath("Shoot")
 AlmostEmptyAudioPlayer = NodePath("MagAlmostEmpty")

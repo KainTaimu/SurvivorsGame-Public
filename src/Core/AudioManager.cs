@@ -9,7 +9,7 @@ public partial class AudioManager : Node
 		get => GameSettings.Instance.MasterVolume;
 		set => UpdateMasterBusVolume();
 	}
-	
+
 	public override void _Ready()
 	{
 		GameSettings.Instance.OnMasterVolumeChanged += () =>
@@ -21,7 +21,7 @@ public partial class AudioManager : Node
 	private void UpdateMasterBusVolume()
 	{
 		var masterBusIndex = AudioServer.GetBusIndex("Master");
-		
+
 		AudioServer.SetBusVolumeDb(masterBusIndex, MasterVolume);
 		Logger.LogDebug($"Updated master bus volume to {AudioServer.GetBusVolumeDb(masterBusIndex)} dB");
 		Logger.LogDebug($"Master volume: {MasterVolume}");
