@@ -6,6 +6,17 @@ namespace Game.Utils;
 public partial class ItemDebugInfo : CanvasLayer
 {
 	[Export]
+	public bool Enabled
+	{
+		get;
+		set
+		{
+			field = value;
+			Visible = field;
+		}
+	}
+	
+	[Export]
 	public Node? Target;
 
 	[Export]
@@ -14,19 +25,16 @@ public partial class ItemDebugInfo : CanvasLayer
 	[Export]
 	public Label Label = null!;
 
-	public override void _UnhandledKeyInput(InputEvent @event)
+	public override void _Ready()
 	{
-		if (@event is InputEventKey { Pressed: true, Keycode: Key.F4 })
-		{
-			if (Visible)
-				Hide();
-			else
-				Show();
-		}
+		Visible = Enabled;
 	}
 
 	public override void _Process(double delta)
 	{
+		if (!Enabled)
+			return;
+		
 		var target = Target ?? PlayerWeaponController?.PrimaryAttack as Node;
 		if (target is null)
 		{
