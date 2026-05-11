@@ -65,6 +65,10 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 			if (!ComponentStore.GetComponent<PositionComponent>(id, out var lastPos))
 				continue;
 
+			// BUG:
+			// URGENT
+			// Because of the ray cast, the projectile may still hit an enemy that the projectile in front of
+			// it has killed.
 			Origin.GetTree().CreateTimer(Position.DistanceTo(lastPos.Position) / ProjectileSpeed, false).Timeout +=
 				() => OffensiveOrigin.HandleHit(id: id);
 

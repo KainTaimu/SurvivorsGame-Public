@@ -40,7 +40,7 @@ Additional = Dictionary[String, Variant]({
 "MoveBloomMaxDeg": 50.0,
 "MoveBloomMinDeg": 0.0,
 "MoveDamageMax": 200.0,
-"MoveDamageMin": 10,
+"MoveDamageMin": 50,
 "MoveTimeGrowthRate": 1.0,
 "MoveTimeShrinkRate": 0.4,
 "MoveTimeToMaxBloom": 0.2
