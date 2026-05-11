@@ -39,4 +39,14 @@ public partial class FirearmStats : BaseOffensiveStats
 
 	[Export]
 	public float CameraRecoilScale = 1f;
+	
+	[Export]
+	public FireGroup FireGroup = FireGroup.Auto;
+}
+
+public enum FireGroup
+{
+	Single,
+	Burst,
+	Auto
 }

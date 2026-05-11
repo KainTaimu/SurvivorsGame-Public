@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://ceimmtu3q4x6n" path="res://scenes/Items/Offensive/GrenadeThrower.tscn" id="11_espgp"]
 [ext_resource type="Script" uid="uid://x6msxk7k3d2h" path="res://src/Players/Controllers/PlayerWeaponControllerSingleHanded.cs" id="12_k8uaa"]
 [ext_resource type="PackedScene" uid="uid://chrgb8gqwh4s0" path="res://scenes/Items/Offensive/M4.tscn" id="13_2g2d6"]
+[ext_resource type="PackedScene" uid="uid://qxx1q01ys1cd" path="res://scenes/Items/Offensive/Dmr.tscn" id="13_jrnl7"]
 [ext_resource type="PackedScene" uid="uid://b6pcia1iql0ct" path="res://scenes/Items/Offensive/Ak47.tscn" id="13_ragxt"]
 [ext_resource type="PackedScene" uid="uid://c5q166p2d4241" path="res://scenes/UI/CurrentWeaponUi.tscn" id="14_8rask"]
 [ext_resource type="PackedScene" uid="uid://okgy2hpbgy53" path="res://scenes/Items/Offensive/Blick.tscn" id="15_k8uaa"]
@@ -179,8 +180,6 @@ _sprite = NodePath("../AnimatedSprite2D")
 [node name="PlayerWeaponController" type="Node" parent="." unique_id=752109662]
 script = ExtResource("12_k8uaa")
 
-[node name="M134" parent="PlayerWeaponController" unique_id=636864915 instance=ExtResource("16_4ua1a")]
-
 [node name="M4" parent="PlayerWeaponController" unique_id=265287884 instance=ExtResource("13_2g2d6")]
 
 [node name="Ak47" parent="PlayerWeaponController" unique_id=915008798 instance=ExtResource("13_ragxt")]
@@ -193,7 +192,11 @@ script = ExtResource("12_k8uaa")
 
 [node name="Revolver" parent="PlayerWeaponController" unique_id=1975794211 instance=ExtResource("17_jrnl7")]
 
+[node name="DMR" parent="PlayerWeaponController" unique_id=901001043 instance=ExtResource("13_jrnl7")]
+
 [node name="Sniper" parent="PlayerWeaponController" unique_id=753371605 instance=ExtResource("20_k7o84")]
+
+[node name="M134" parent="PlayerWeaponController" unique_id=636864915 instance=ExtResource("16_4ua1a")]
 
 [node name="GrenadeThrower" parent="PlayerWeaponController" unique_id=1000269585 instance=ExtResource("11_espgp")]
 

@@ -27,8 +27,6 @@ public partial class Sniper : Firearm
 
 	private double MoveDamageMin => Stats.Additional["MoveDamageMin"].AsDouble();
 
-	private double MoveDamageMax => Stats.Additional["MoveDamageMax"].AsDouble();
-
 	private PlayerMovementController MovementController => GameWorld.Instance.MainPlayer.MovementController;
 
 	public override void _Ready()
@@ -40,6 +38,8 @@ public partial class Sniper : Firearm
 	public override void _Process(double delta)
 	{
 		FireCooldown -= delta;
+		if (AttackActionString is null)
+			return;
 
 		UpdateMoveTimeBloom(delta);
 
@@ -49,13 +49,27 @@ public partial class Sniper : Firearm
 			return;
 		}
 
-		if (!Input.IsActionPressed(AttackActionString ?? InputMapNames.PrimaryAttack))
-			return;
+		switch (FirearmStats.FireGroup)
+		{
+			case FireGroup.Single:
+				if (!Input.IsActionJustPressed(AttackActionString))
+					return;
+				break;
+			case FireGroup.Burst:
+				throw new NotImplementedException();
+			case FireGroup.Auto:
+				if (!Input.IsActionPressed(AttackActionString))
+					return;
+				break;
+			default:
+				throw new ArgumentOutOfRangeException();
+		}
 
 		if (IsReadyToShoot)
 		{
 			OffensiveStats.CritChanceProportion = (float)(1 - MoveTimeFactor);
-			OffensiveStats.Damage = (int)Math.Clamp(MoveDamageMax * (1 - MoveTimeFactor), MoveDamageMin, MoveDamageMax);
+			OffensiveStats.Damage = (int)
+				Math.Clamp(OffensiveStats.Damage * (1 - MoveTimeFactor), MoveDamageMin, OffensiveStats.Damage);
 		}
 
 		AttackWithMoveTimeBloom(FirearmStats);

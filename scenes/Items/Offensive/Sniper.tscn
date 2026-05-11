@@ -7,7 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://brpgaue5ixgat" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Full Sound/7.62x54R/WAV/762x54r Single WAV.wav" id="5_f52b2"]
 [ext_resource type="AudioStream" uid="uid://d0gr0p02wcgp6" path="res://assets/SFX/Shoot/Snake's SECOND Authentic Gun Sounds/& More/Mag Pack/WAV/Bolt Mag Pack.wav" id="6_oq2q4"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_e6too"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_oq2q4"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_iky5m"]
@@ -28,7 +28,7 @@ VerticalRecoilMin = 120.0
 VerticalBaseRecoil = 120.0
 VerticalRecoilRandom = 40.0
 CameraRecoilScale = 3.0
-Damage = 10
+Damage = 20
 CritDamageMultiplier = 1.0
 CritChanceProportion = 1.0
 ProjectileSpeed = 10000
@@ -39,7 +39,6 @@ PierceLimit = 9999
 Additional = Dictionary[String, Variant]({
 "MoveBloomMaxDeg": 50.0,
 "MoveBloomMinDeg": 0.0,
-"MoveDamageMax": 20,
 "MoveDamageMin": 10,
 "MoveTimeGrowthRate": 1.0,
 "MoveTimeShrinkRate": 0.4,

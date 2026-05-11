@@ -23,8 +23,21 @@ public partial class SimpleFirearm : Firearm
 			return;
 		}
 
-		if (!Input.IsActionPressed(AttackActionString))
-			return;
+		switch (FirearmStats.FireGroup)
+		{
+			case FireGroup.Single:
+				if (!Input.IsActionJustPressed(AttackActionString))
+					return;
+				break;
+			case FireGroup.Burst:
+				throw new NotImplementedException();
+			case FireGroup.Auto:
+				if (!Input.IsActionPressed(AttackActionString))
+					return;
+				break;
+			default:
+				throw new ArgumentOutOfRangeException();
+		}
 
 		Attack();
 	}
