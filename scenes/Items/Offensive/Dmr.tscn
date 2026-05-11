@@ -7,7 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://csidm3n6qam6n" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Full Sound/5.56/WAV/556 Single WAV.wav" id="5_db67r"]
 [ext_resource type="AudioStream" uid="uid://bmkybqxa3cdlq" path="res://assets/SFX/mag_almost_empty.wav" id="6_icohf"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_oq2q4"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_jvsi7"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_o65qt"]
@@ -23,10 +23,10 @@ BloomCoefficientDeg = 5.0
 MagazineCapacity = 20
 HorizontalBaseRecoil = 5.0
 HorizontalRecoilRandom = 10.0
-VerticalRecoilMin = 5.0
+VerticalRecoilMin = 10.0
 VerticalBaseRecoil = 10.0
 VerticalRecoilRandom = 5.0
-CameraRecoilScale = 0.5
+CameraRecoilScale = 0.8
 FireGroup = 0
 Damage = 26
 CritDamageMultiplier = 1.1

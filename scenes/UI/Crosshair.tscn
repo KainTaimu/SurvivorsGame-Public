@@ -116,12 +116,14 @@ SecondaryCrosshairSprite = NodePath("AnimatedSprite2D/AnimatedSprite2D2")
 sprite_frames = SubResource("SpriteFrames_r7dij")
 
 [node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=1185691409]
+visible = false
 modulate = Color(0.012617188, 0.012617188, 0.012617188, 1)
 z_index = -1
 position = Vector2(1, 1)
 sprite_frames = SubResource("SpriteFrames_r7dij")
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="AnimatedSprite2D" unique_id=1787195296]
+visible = false
 scale = Vector2(1.7, 1.7)
 sprite_frames = SubResource("SpriteFrames_v23f2")
 
