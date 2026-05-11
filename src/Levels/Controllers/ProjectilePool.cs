@@ -53,4 +53,9 @@ public partial class ProjectilePool : Node
 		projectile.Name = $"{projectile.GetType().Name}_{_activePool.Count}";
 		return projectile;
 	}
+
+	public override string ToString()
+	{
+		return $"{_activePool.Count} active, {_inactivePool.Count} inactive";
+	}
 }

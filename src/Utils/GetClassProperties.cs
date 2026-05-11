@@ -4,15 +4,13 @@ namespace Game.Utils;
 
 public static class ClassInspector
 {
-	public static string GetClassPropertiesString(object obj)
+	public static string GetClassPropertiesString(object obj, System.Reflection.BindingFlags flags = System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
 	{
 		var s = new StringBuilder();
 
 		var pType = obj.GetType();
 		var properties = pType.GetProperties(
-			System.Reflection.BindingFlags.Public
-				| System.Reflection.BindingFlags.NonPublic
-				| System.Reflection.BindingFlags.Instance
+			flags
 		);
 		foreach (var property in properties)
 		{
@@ -25,15 +23,14 @@ public static class ClassInspector
 		return s.ToString();
 	}
 
-	public static string GetClassFieldsString(object obj)
+	public static string GetClassFieldsString(object obj, System.Reflection.BindingFlags flags = System.Reflection
+			.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
 	{
 		var s = new StringBuilder();
 
 		var pType = obj.GetType();
 		var fields = pType.GetFields(
-			System.Reflection.BindingFlags.Public
-				| System.Reflection.BindingFlags.NonPublic
-				| System.Reflection.BindingFlags.Instance
+			flags
 		);
 		foreach (var field in fields)
 		{

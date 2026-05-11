@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://bsw4dh2fya7ka"]
+
+[ext_resource type="Script" uid="uid://56ejkhdfy8tg" path="res://src/Utils/ItemDebugInfo.cs" id="1_tmfea"]
+[ext_resource type="FontFile" uid="uid://imomsqhxc2fu" path="res://assets/Fonts/MunroSmall-wPZw.ttf" id="2_iwdqe"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1f7rb"]
+font = ExtResource("2_iwdqe")
+font_color = Color(0, 1, 0, 1)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="ItemDebugInfo" type="CanvasLayer" unique_id=79685039 node_paths=PackedStringArray("Label")]
+process_mode = 3
+script = ExtResource("1_tmfea")
+Label = NodePath("PanelContainer/MarginContainer/Label")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=313164471]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1822219199]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer" unique_id=1127340813]
+custom_minimum_size = Vector2(512, 0)
+custom_maximum_size = Vector2(512, -1)
+layout_mode = 2
+text = "BLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLA"
+label_settings = SubResource("LabelSettings_1f7rb")
+autowrap_mode = 3

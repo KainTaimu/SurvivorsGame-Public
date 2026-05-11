@@ -5,6 +5,15 @@ namespace Game.Items.Offensive;
 
 public partial class Minigun : Firearm
 {
+	[Export]
+	private Curve _windupCurve = null!;
+	
+	private double _windupTime;
+	private float WindupAttackSpeed => Math.Clamp(_windupCurve.Sample((float)_windupTime), OffensiveStats
+		.AttackSpeed, _windupCurve.MaxDomain);
+	
+	private float PlayerPushPerShot => OffensiveStats.Additional.GetValueOrDefault("PlayerPushPerShot").AsSingle();
+	
 	public override void _Ready()
 	{
 		base._Ready();
@@ -13,21 +22,71 @@ public partial class Minigun : Firearm
 
 	public override void _Process(double delta)
 	{
-		FireCooldown -= delta;
 		if (AttackActionString is null)
 			return;
-
-		if (Input.IsActionPressed(InputMapNames.WeaponReload))
+		
+		if (Input.IsActionPressed(AttackActionString))
 		{
-			Reload();
-			return;
+			FireCooldown -= delta;
+			_windupTime = Math.Clamp(_windupTime + delta, 0, _windupCurve.MaxDomain);
+			Attack();
 		}
-
-		if (!Input.IsActionPressed(AttackActionString))
+		else
+		{
+			_windupTime = Math.Clamp(_windupTime - delta * 3, 0, _windupCurve.MaxDomain);
+		}
+	}
+	
+	public override void Attack()
+	{
+		if (FireCooldown > 0)
 			return;
 
-		Attack();
+		ShootAudioPlayer?.Play();
+
+		FireCooldown = WindupAttackSpeed;
+		MagazineCount--;
+
+		if (MagazineCount == 0)
+			Reload();
+
+		var playerVector = Player.GetCanvasTransform() * Player.Position;
+
+		Vector2 mouseVector;
+		if (Crosshair is not null)
+		{
+			mouseVector =
+				Crosshair.PrimaryCrosshairSprite.GetCanvasTransform() * Crosshair.PrimaryCrosshairSprite.GlobalPosition;
+		}
+		else
+			mouseVector = Player.GetGlobalMousePosition();
+
+		var rotation = playerVector.AngleToPoint(mouseVector);
+
+		var bloomRad = BloomCoefficientDeg * (Math.PI / 180);
+		var bloom = (float)GD.RandRange(-bloomRad / 2, bloomRad / 2);
+
+		rotation += bloom;
+
+		var projectile = ProjectilePool.GetProjectile();
+
+		projectile.Origin = this;
+		projectile.SetScale(Vector2.One * OffensiveStats.ProjectileScaleMultiplier);
+		projectile.SetPosition(Player.Position);
+		projectile.SetRotation(rotation);
+		projectile.ProjectileSpeed = OffensiveStats.ProjectileSpeed;
+		projectile.PierceLimit = OffensiveStats.PierceLimit;
+		projectile.HitRadius = FirearmStats.ProjectileRadius;
+		projectile.Initialize();
+
+		Player.GlobalPosition += Vector2.Right.Rotated(rotation - Mathf.Pi + bloom) * PlayerPushPerShot * (float)
+			GetProcessDeltaTime();
+
+		ApplyCursorRecoil();
+		SpawnCasingParticle();
+		EmitSignalOnAttack();
 	}
+
 
 	public override void Reload()
 	{

@@ -4,34 +4,14 @@
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_6kirf"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="3_hfpx8"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="4_qugsk"]
-[ext_resource type="AudioStream" uid="uid://cebms7f3dx4yf" path="res://assets/SFX/hitmarker.wav" id="5_6kirf"]
+[ext_resource type="AudioStream" uid="uid://cfq4doprbtei8" path="res://assets/SFX/Shoot/762x54r Single Isolated MP3.mp3" id="5_wkwsw"]
 
-[sub_resource type="Resource" id="Resource_6kirf"]
-script = ExtResource("3_hfpx8")
-ReloadTime = 1.0
-BloomCoefficientDeg = 20.0
-MagazineCapacity = 500
-HorizontalRecoilMin = 50.0
-HorizontalBaseRecoil = 50.0
-HorizontalRecoilRandom = 40.0
-VerticalRecoilMin = 8.0
-VerticalBaseRecoil = 8.0
-VerticalRecoilRandom = 1.0
-RecoilScale = 0.04
-CameraRecoilScale = 5.0
-Damage = 2
-CritChanceProportion = 0.0
-ProjectileSpeed = 8000
-ProjectileScaleMultiplier = 0.6
-ProjectileRadius = 30
-AttackSpeed = 0.001
-PierceLimit = 2
-Additional = Dictionary[String, Variant]({
-"Knockback": 10.0
-})
-metadata/_custom_type_script = "uid://di81uufgmcsog"
+[sub_resource type="Curve" id="Curve_e6too"]
+_limits = [0.0, 0.5, 0.0, 3.0]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(3, 0), 0.0, 0.0, 0, 0]
+point_count = 2
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ld3kt"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_e6too"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_y2vvo"]
@@ -40,15 +20,43 @@ Name = "M134 Minigun"
 Description = "Dakka"
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
-[node name="M134" type="Node" unique_id=636864915 node_paths=PackedStringArray("ShootAudioPlayer")]
+[sub_resource type="Resource" id="Resource_6kirf"]
+script = ExtResource("3_hfpx8")
+ReloadTime = 1.0
+BloomCoefficientDeg = 30.0
+MagazineCapacity = 9999
+HorizontalRecoilMin = 50.0
+HorizontalBaseRecoil = 50.0
+HorizontalRecoilRandom = 50.0
+VerticalRecoilMin = 15.0
+VerticalBaseRecoil = 15.0
+VerticalRecoilRandom = 15.0
+RecoilScale = 0.15
+CameraRecoilScale = 0.6
+Damage = 5
+CritChanceProportion = 0.0
+ProjectileSpeed = 8000
+ProjectileScaleMultiplier = 0.6
+ProjectileRadius = 30
+AttackSpeed = 0.025
+PierceLimit = 3
+Additional = Dictionary[String, Variant]({
+"Knockback": 10.0,
+"PlayerPushPerShot": 2600.0
+})
+metadata/_custom_type_script = "uid://di81uufgmcsog"
+
+[node name="Minigun" type="Node" unique_id=636864915 node_paths=PackedStringArray("ShootAudioPlayer")]
 script = ExtResource("1_6kirf")
+_windupCurve = SubResource("Curve_e6too")
 _projectileScene = ExtResource("2_6kirf")
 ShootAudioPlayer = NodePath("Shoot")
-Stats = SubResource("Resource_6kirf")
 Properties = SubResource("Resource_y2vvo")
+Stats = SubResource("Resource_6kirf")
 
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=1297129913]
 process_mode = 3
-stream = ExtResource("5_6kirf")
-volume_db = 8.0
-pitch_scale = 1.83
+stream = ExtResource("5_wkwsw")
+pitch_scale = 0.8
+max_polyphony = 5
+bus = &"ShootSfx"

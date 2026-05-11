@@ -5,8 +5,9 @@
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_f52b2"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_u7hyr"]
 [ext_resource type="AudioStream" uid="uid://brpgaue5ixgat" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Full Sound/7.62x54R/WAV/762x54r Single WAV.wav" id="5_f52b2"]
+[ext_resource type="AudioStream" uid="uid://d0gr0p02wcgp6" path="res://assets/SFX/Shoot/Snake's SECOND Authentic Gun Sounds/& More/Mag Pack/WAV/Bolt Mag Pack.wav" id="6_oq2q4"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_f52b2"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_e6too"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_iky5m"]
@@ -56,4 +57,9 @@ Stats = SubResource("Resource_f52b2")
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=2103641847]
 process_mode = 3
 stream = ExtResource("5_f52b2")
-volume_db = 24.0
+volume_db = 18.0
+
+[node name="ShootReady" type="AudioStreamPlayer" parent="." unique_id=1900327009]
+stream = ExtResource("6_oq2q4")
+
+[connection signal="OnReloadEnd" from="." to="ShootReady" method="play"]
