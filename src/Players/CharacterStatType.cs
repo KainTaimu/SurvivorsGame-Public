@@ -10,6 +10,7 @@ public enum CharacterStatType
 	PickupRangeRadius,
 	HealthRegen,
 	InvincibilityTime,
+	HitboxRadius,
 	HealthMultiplier,
 	MoveSpeedMultiplier,
 	IncomingDamageMultiplier,
@@ -19,4 +20,5 @@ public enum CharacterStatType
 	AttackSpeedMultiplier,
 	ProjectileMultiplier,
 	XpMultiplier,
+	HitboxRadiusMultiplier,
 }

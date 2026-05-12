@@ -1,86 +1,64 @@
 namespace Game.Players;
 
-// =============
-// Each Stat contains a XChangedEventHandler which fires when one is changed.
-// Most Stat setters are the same, except for Health which is clamped between 0 to MaxHealth, and MaxHealth which clamps Health to its value.
-// Health is initially set to MaxHealth.
-// =============
 [GlobalClass]
 public partial class CharacterStats : Resource
 {
-	[Signal]
-	public delegate void OnHealthChangedEventHandler(int oldValue, int newValue);
-
-	[Signal]
-	public delegate void OnMaxHealthChangedEventHandler(int oldValue, int newValue);
-
-	[Signal]
-	public delegate void OnMoveSpeedChangedEventHandler(float oldValue, float newValue);
-
-	[Signal]
-	public delegate void OnDefenseChangedEventHandler(int oldValue, int newValue);
-
-	[Signal]
-	public delegate void OnCriticalChanceChangedEventHandler(float oldValue, float newValue);
-
-	[Signal]
-	public delegate void OnPickupRangeRadiusChangedEventHandler(float oldValue, float newValue);
-
-	[Signal]
-	public delegate void OnHealthRegenPerSecondChangedEventHandler(int oldValue, int newValue);
-
-	[Signal]
-	public delegate void OnInvincibilityTimeChangedEventHandler(float oldValue, float newValue);
-
-	[Signal]
-	public delegate void OnHitboxRadiusChangedEventHandler(float oldValue, float newValue);
-
-	[Signal]
-	public delegate void OnHealthMultiplierChangedEventHandler(float oldValue, float newValue);
-
-	[Signal]
-	public delegate void OnMoveSpeedMultiplierChangedEventHandler(float oldValue, float newValue);
-
-	[Signal]
-	public delegate void OnIncomingDamageMultiplierChangedEventHandler(float oldValue, float newValue);
-
-	[Signal]
-	public delegate void OnOutgoingDamageMultiplierChangedEventHandler(float oldValue, float newValue);
-
-	[Signal]
-	public delegate void OnCriticalChanceMultiplierChangedEventHandler(float oldValue, float newValue);
-
-	[Signal]
-	public delegate void OnCriticalDamageMultiplierChangedEventHandler(float oldValue, float newValue);
-
-	[Signal]
-	public delegate void OnAttackSpeedMultiplierChangedEventHandler(float oldValue, float newValue);
-
-	[Signal]
-	public delegate void OnProjectileMultiplierChangedEventHandler(float oldValue, float newValue);
-
-	[Signal]
-	public delegate void OnXpMultiplierChangedEventHandler(float oldValue, float newValue);
-
 	private int _health = -1;
-	private int _maxHealth = 100;
-	private float _moveSpeed = 800;
-	private int _defense;
-	private float _criticalChance;
-	private float _pickupRangeRadius = 500;
-	private int _healthRegenPerSecond;
-	private float _invincibilityTime;
 
-	private float _healthMultiplier = 1;
-	private float _moveSpeedMultiplier = 1;
-	private float _incomingDamageMultiplier = 1;
-	private float _outgoingDamageMultiplier = 1;
-	private float _criticalChanceMultiplier = 1;
-	private float _criticalDamageMultiplier = 1;
-	private float _attackSpeedMultiplier = 1;
-	private float _projectileMultiplier = 1;
-	private float _xpMultiplier = 1;
+	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
+	private int _maxHealth = 100;
+
+	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
+	private float _moveSpeed = 600;
+
+	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
+	private int _defense;
+
+	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
+	private float _criticalChance;
+
+	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
+	private float _pickupRangeRadius = 500;
+
+	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
+	private int _healthRegenPerSecond;
+
+	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
+	private float _invincibilityTime = 1;
+
+	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
 	private float _hitboxRadius = 32;
+
+	[ExportCategory("Multiplier attributes")]
+	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
+	private float _healthMultiplier = 1;
+
+	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
+	private float _moveSpeedMultiplier = 1;
+
+	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
+	private float _defenseMultiplier = 1;
+
+	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
+	private float _incomingDamageMultiplier = 1;
+
+	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
+	private float _outgoingDamageMultiplier = 1;
+
+	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
+	private float _criticalChanceMultiplier = 1;
+
+	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
+	private float _criticalDamageMultiplier = 1;
+
+	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
+	private float _attackSpeedMultiplier = 1;
+
+	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
+	private float _projectileMultiplier = 1;
+
+	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
+	private float _xpMultiplier = 1;
 
 	public int Health
 	{
@@ -92,261 +70,108 @@ public partial class CharacterStats : Resource
 
 			return _health;
 		}
-		set
-		{
-			var clamped = Math.Clamp(value, 0, _maxHealth);
-
-			var oldValue = _health;
-			_health = clamped;
-			EmitSignal(SignalName.OnHealthChanged, oldValue, _health);
-		}
 	}
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	public required int MaxHealth
+	public int MaxHealth
 	{
-		get => _maxHealth;
-		set
-		{
-			var clamped = Math.Clamp(value, 0, int.MaxValue);
-
-			var oldValue = _maxHealth;
-			_maxHealth = clamped;
-			EmitSignal(SignalName.OnMaxHealthChanged, oldValue, _maxHealth);
-
-			if (_health > _maxHealth)
-				Health = _maxHealth;
-		}
+		get { return Mathf.CeilToInt(_maxHealth * _healthMultiplier); }
 	}
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	public required float MoveSpeed
+	public float MoveSpeed
 	{
-		get => _moveSpeed;
-		set
-		{
-			var clamped = Math.Max(value, 0);
-
-			var oldValue = _moveSpeed;
-			_moveSpeed = clamped;
-			EmitSignal(SignalName.OnMoveSpeedChanged, oldValue, _moveSpeed);
-		}
+		get { return _moveSpeed * _moveSpeedMultiplier; }
 	}
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
 	// Flat defense
-	public required int Defense
+	public int Defense
 	{
-		get => _defense;
-		set
-		{
-			var clamped = Math.Clamp(value, 0, int.MaxValue);
-
-			var oldValue = _defense;
-			_defense = clamped;
-			EmitSignal(SignalName.OnDefenseChanged, oldValue, _defense);
-		}
+		get { return Mathf.CeilToInt(_defense * _defenseMultiplier); }
 	}
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	public required float CriticalChance
+	public float CriticalChance
 	{
-		get => _criticalChance;
-		set
-		{
-			var clamped = Math.Max(value, 0);
-
-			var oldValue = _criticalChance;
-			_criticalChance = clamped;
-			EmitSignal(SignalName.OnCriticalChanceChanged, oldValue, _criticalChance);
-		}
+		get { return _criticalChance * _criticalChanceMultiplier; }
 	}
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	public required float PickupRangeRadius
+	public float PickupRangeRadius
 	{
-		get => _pickupRangeRadius;
-		set
-		{
-			var clamped = Math.Max(value, 0);
-
-			var oldValue = _pickupRangeRadius;
-			_pickupRangeRadius = clamped;
-			EmitSignal(SignalName.OnPickupRangeRadiusChanged, oldValue, _pickupRangeRadius);
-		}
+		get { return _pickupRangeRadius; }
 	}
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	public required int HealthRegenPerSecond
+	public int HealthRegenPerSecond
 	{
-		get => _healthRegenPerSecond;
-		set
-		{
-			var clamped = Math.Clamp(value, 0, int.MaxValue);
-
-			var oldValue = _healthRegenPerSecond;
-			_healthRegenPerSecond = clamped;
-			EmitSignal(SignalName.OnHealthRegenPerSecondChanged, oldValue, _healthRegenPerSecond);
-		}
+		get { return _healthRegenPerSecond; }
 	}
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	public required float InvincibilityTime
+	public float InvincibilityTime
 	{
-		get => _invincibilityTime;
-		set
-		{
-			var clamped = Math.Max(value, 0);
-
-			var oldValue = _invincibilityTime;
-			_invincibilityTime = clamped;
-			EmitSignal(SignalName.OnInvincibilityTimeChanged, oldValue, _invincibilityTime);
-		}
+		get { return _invincibilityTime; }
 	}
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	public required float HitboxRadius
+	public float HitboxRadius
 	{
-		get => _hitboxRadius;
-		set
-		{
-			var clamped = Math.Max(value, 0);
-
-			var oldValue = _hitboxRadius;
-			_hitboxRadius = clamped;
-			EmitSignalOnHitboxRadiusChanged(oldValue, _hitboxRadius);
-		}
+		get { return _hitboxRadius; }
 	}
 
-	[ExportCategory("Multiplier attributes")]
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	public required float HealthMultiplier
+	public float HealthMultiplier
 	{
-		get => _healthMultiplier;
-		set
-		{
-			var clamped = Math.Max(value, 0);
-
-			var oldValue = _healthMultiplier;
-			_healthMultiplier = clamped;
-			EmitSignal(SignalName.OnHealthMultiplierChanged, oldValue, _healthMultiplier);
-		}
+		get { return _healthMultiplier; }
 	}
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	public required float MoveSpeedMultiplier
+	public float MoveSpeedMultiplier
 	{
-		get => _moveSpeedMultiplier;
-		set
-		{
-			var clamped = Math.Max(value, 0);
-
-			var oldValue = _moveSpeedMultiplier;
-			_moveSpeedMultiplier = clamped;
-			EmitSignal(SignalName.OnMoveSpeedMultiplierChanged, oldValue, _moveSpeedMultiplier);
-		}
+		get { return _moveSpeedMultiplier; }
 	}
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	public required float IncomingDamageMultiplier
+	public float DefenseMultiplier
 	{
-		get => _incomingDamageMultiplier;
-		set
-		{
-			var clamped = Math.Max(value, 0);
-
-			var oldValue = _incomingDamageMultiplier;
-			_incomingDamageMultiplier = clamped;
-			EmitSignal(SignalName.OnIncomingDamageMultiplierChanged, oldValue, _incomingDamageMultiplier);
-		}
+		get { return _defenseMultiplier; }
 	}
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	public required float OutgoingDamageMultiplier
+	public float IncomingDamageMultiplier
 	{
-		get => _outgoingDamageMultiplier;
-		set
-		{
-			var clamped = Math.Max(value, 0);
-
-			var oldValue = _outgoingDamageMultiplier;
-			_outgoingDamageMultiplier = clamped;
-			EmitSignal(SignalName.OnOutgoingDamageMultiplierChanged, oldValue, _outgoingDamageMultiplier);
-		}
+		get { return _incomingDamageMultiplier; }
 	}
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	public required float CriticalChanceMultiplier
+	public float OutgoingDamageMultiplier
 	{
-		get => _criticalChanceMultiplier;
-		set
-		{
-			var clamped = Math.Max(value, 0);
-
-			var oldValue = _criticalChanceMultiplier;
-			_criticalChanceMultiplier = clamped;
-			EmitSignal(SignalName.OnCriticalChanceMultiplierChanged, oldValue, _criticalChanceMultiplier);
-		}
+		get { return _outgoingDamageMultiplier; }
 	}
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	public required float CriticalDamageMultiplier
+	public float CriticalChanceMultiplier
 	{
-		get => _criticalDamageMultiplier;
-		set
-		{
-			var clamped = Math.Max(value, 0);
-
-			var oldValue = _criticalDamageMultiplier;
-			_criticalDamageMultiplier = clamped;
-			EmitSignal(SignalName.OnCriticalDamageMultiplierChanged, oldValue, _criticalDamageMultiplier);
-		}
+		get { return _criticalChanceMultiplier; }
 	}
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	public required float AttackSpeedMultiplier
+	public float CriticalDamageMultiplier
 	{
-		get => _attackSpeedMultiplier;
-		set
-		{
-			var clamped = Math.Max(value, 0);
-
-			var oldValue = _attackSpeedMultiplier;
-			_attackSpeedMultiplier = clamped;
-			EmitSignal(SignalName.OnAttackSpeedMultiplierChanged, oldValue, _attackSpeedMultiplier);
-		}
+		get { return _criticalDamageMultiplier; }
 	}
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	public required float ProjectileMultiplier
+	public float AttackSpeedMultiplier
 	{
-		get => _projectileMultiplier;
-		set
-		{
-			var clamped = Math.Max(value, 0);
-
-			var oldValue = _projectileMultiplier;
-			_projectileMultiplier = clamped;
-			EmitSignal(SignalName.OnProjectileMultiplierChanged, oldValue, _projectileMultiplier);
-		}
+		get { return _attackSpeedMultiplier; }
 	}
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	public required float XpMultiplier
+	public float ProjectileMultiplier
 	{
-		get => _xpMultiplier;
-		set
-		{
-			var clamped = Math.Max(value, 0);
-
-			var oldValue = _xpMultiplier;
-			_xpMultiplier = clamped;
-			EmitSignal(SignalName.OnXpMultiplierChanged, oldValue, _xpMultiplier);
-		}
+		get { return _projectileMultiplier; }
 	}
 
-	public int TotalMaxHealth => Mathf.CeilToInt(MaxHealth * HealthMultiplier);
-	public float TotalMoveSpeed => MoveSpeed * MoveSpeedMultiplier;
+	public float XpMultiplier
+	{
+		get { return _xpMultiplier; }
+	}
+
+	public int TotalMaxHealth
+	{
+		get { return Mathf.CeilToInt(MaxHealth * HealthMultiplier); }
+	}
+
+	public float TotalMoveSpeed
+	{
+		get { return MoveSpeed * MoveSpeedMultiplier; }
+	}
 
 	public void Damage(int damage)
 	{
@@ -356,6 +181,6 @@ public partial class CharacterStats : Resource
 		var totalDamage = Mathf.CeilToInt(clampedDamage);
 
 		Logger.LogDebug($"Player damaged {totalDamage}. Health: {Health - totalDamage}");
-		Health -= totalDamage;
+		_health -= totalDamage;
 	}
 }
