@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Game.Core.ECS;
+using Game.Players.Controllers;
 
 namespace Game.Items.Offensive;
 
@@ -14,10 +15,31 @@ public partial class Minigun : Firearm
 
 	private float PlayerPushPerShot => OffensiveStats.Additional.GetValueOrDefault("PlayerPushPerShot").AsSingle();
 
+	[Export]
+	private StatusEffect? _movementPenaltyStatusEffect;
+
+	private bool _isMovementPenaltyApplied;
+
 	public override void _Ready()
 	{
 		base._Ready();
 		OnAttack += ApplyCameraRecoil;
+
+		OnEquipped += () =>
+		{
+			if (_movementPenaltyStatusEffect is null || _isMovementPenaltyApplied)
+				return;
+			Player.StatusEffectController.AddStatusEffect(_movementPenaltyStatusEffect);
+			_isMovementPenaltyApplied = true;
+		};
+		OnUnequipped += () =>
+		{
+			if (_movementPenaltyStatusEffect is not null && _isMovementPenaltyApplied)
+			{
+				Player.StatusEffectController.RemoveStatusEffect(_movementPenaltyStatusEffect);
+				_isMovementPenaltyApplied = false;
+			}
+		};
 	}
 
 	public override void _Process(double delta)

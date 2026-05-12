@@ -7,7 +7,10 @@ namespace Game.Players.Controllers;
 public partial class PlayerStatusEffectController : Node
 {
 	[Signal]
-	public delegate void OnStatusEffectAppliedEventHandler();
+	public delegate void OnStatusEffectAppliedEventHandler(StatusEffect statusEffect);
+
+	[Signal]
+	public delegate void OnStatusEffectRemovedEventHandler(StatusEffect statusEffect);
 
 	[Export]
 	public Player Player = null!;
@@ -36,7 +39,10 @@ public partial class PlayerStatusEffectController : Node
 		var toRemove = new List<StatusEffect>();
 		foreach (var activeEffect in _activeEffects)
 		{
-			activeEffect.Duration -= (float)delta;
+			if (activeEffect.Permanent)
+				continue;
+
+			activeEffect.Process((float)delta);
 			if (activeEffect.Duration <= 0)
 				toRemove.Add(activeEffect);
 		}
@@ -45,8 +51,13 @@ public partial class PlayerStatusEffectController : Node
 			RemoveStatusEffect(statusEffect);
 	}
 
-	private void RemoveStatusEffect(StatusEffect statusEffect)
+	public void RemoveStatusEffect(StatusEffect statusEffect)
 	{
+		if (!_activeEffects.Contains(statusEffect))
+		{
+			Logger.LogError($"Attempt to remove status effect {statusEffect.Name} that has not been applied.");
+			return;
+		}
 		foreach (var modifier in statusEffect.Modifiers)
 		{
 			var targetStat = _statToStatField[modifier.StatName];
@@ -64,11 +75,14 @@ public partial class PlayerStatusEffectController : Node
 		}
 
 		_activeEffects.Remove(statusEffect);
+		Logger.LogDebug($"Player status effect removed: {statusEffect}");
+		EmitSignalOnStatusEffectRemoved(statusEffect);
 	}
 
 	public void AddStatusEffect(StatusEffect statusEffect)
 	{
-		statusEffect.Duration = statusEffect.InitialDuration;
+		statusEffect.Initialize();
+
 		foreach (var modifier in statusEffect.Modifiers)
 		{
 			if (!_statToStatField.TryGetValue(modifier.StatName, out var targetStat))
@@ -87,9 +101,11 @@ public partial class PlayerStatusEffectController : Node
 				default:
 					throw new ArgumentOutOfRangeException();
 			}
-			Logger.LogInfo($"New ST: {statusEffect}");
 		}
+
 		_activeEffects.Add(statusEffect);
+		EmitSignalOnStatusEffectApplied(statusEffect);
+		Logger.LogDebug($"New status effect applied to Player: {statusEffect}");
 	}
 
 	private void InitializeStatStacks()

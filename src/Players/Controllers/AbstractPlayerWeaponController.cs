@@ -48,6 +48,8 @@ public abstract partial class AbstractPlayerWeaponController : Node
 		node.ProcessMode = ProcessModeEnum.Inherit;
 		if (node is Node2D node2D)
 			node2D.Show();
+		var offensive = (manual as BaseOffensive)!;
+		offensive.EmitSignal(BaseOffensive.SignalName.OnEquipped);
 	}
 
 	protected void DisableManualOffensive(IManualAttack manual)
@@ -57,5 +59,7 @@ public abstract partial class AbstractPlayerWeaponController : Node
 		node.ProcessMode = ProcessModeEnum.Disabled;
 		if (node is Node2D node2D)
 			node2D.Hide();
+		var offensive = (manual as BaseOffensive)!;
+		offensive.EmitSignal(BaseOffensive.SignalName.OnUnequipped);
 	}
 }

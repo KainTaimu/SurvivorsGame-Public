@@ -9,6 +9,12 @@ public abstract partial class BaseOffensive : BaseItem
 	[Signal]
 	public delegate void OnAttackEventHandler();
 
+	[Signal]
+	public delegate void OnEquippedEventHandler();
+
+	[Signal]
+	public delegate void OnUnequippedEventHandler();
+
 	[Export]
 	public Array<BaseOffensiveStats> Upgrades = [];
 

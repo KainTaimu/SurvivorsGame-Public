@@ -4,12 +4,14 @@
 
 [sub_resource type="SystemFont" id="SystemFont_fpx2f"]
 font_names = PackedStringArray("Monospace")
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_j8f5f"]
 font = SubResource("SystemFont_fpx2f")
 font_color = Color(0, 1, 0, 1)
 
 [node name="DebugClassInspector" type="CanvasLayer" unique_id=1989388267 node_paths=PackedStringArray("_label")]
+process_mode = 3
 script = ExtResource("1_bu3gy")
 BindingFlags = 38
 _label = NodePath("PanelContainer/MarginContainer/Label")
@@ -18,9 +20,9 @@ _label = NodePath("PanelContainer/MarginContainer/Label")
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = -20.0
-offset_right = 40.0
-offset_bottom = 20.0
+offset_top = -162.5
+offset_right = 528.0
+offset_bottom = 162.5
 grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1467172368]
