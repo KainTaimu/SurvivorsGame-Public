@@ -121,8 +121,8 @@ public partial class RevolverAmmoCount : CanvasLayer
 			Hide();
 			return;
 		}
-		else
-			Show();
+
+		Show();
 
 		var useLeft = _revolver.AttackActionString == InputMapNames.PrimaryAttack;
 		if (useLeft)

@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text;
 using Game.Players;
 
@@ -55,11 +56,7 @@ public partial class PauseMenu : CanvasLayer
 		var playerStats = _player.Character.CharacterStats;
 
 		var pType = playerStats.GetType();
-		var fields = pType.GetProperties(
-			System.Reflection.BindingFlags.Public
-				| System.Reflection.BindingFlags.Instance
-				| System.Reflection.BindingFlags.DeclaredOnly
-		);
+		var fields = pType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 		foreach (var f in fields)
 		{
 			var value = f.GetValue(playerStats);

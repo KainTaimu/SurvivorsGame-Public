@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text;
 using Game.Players.Controllers;
 using Node = Godot.Node;
@@ -46,18 +47,8 @@ public partial class ItemDebugInfo : CanvasLayer
 			Show();
 
 		var s = new StringBuilder();
-		s.AppendLine(
-			ClassInspector.GetClassFieldsString(
-				target,
-				System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance
-			)
-		);
-		s.AppendLine(
-			ClassInspector.GetClassPropertiesString(
-				target,
-				System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance
-			)
-		);
+		s.AppendLine(ClassInspector.GetClassFieldsString(target, BindingFlags.NonPublic | BindingFlags.Instance));
+		s.AppendLine(ClassInspector.GetClassPropertiesString(target, BindingFlags.NonPublic | BindingFlags.Instance));
 		Label.Text = s.ToString();
 	}
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Reflection;
+using Godot.Collections;
 
 namespace Game.Players.Controllers;
 
@@ -12,13 +13,13 @@ public partial class PlayerStatusEffectController : Node
 	public Player Player = null!;
 
 	[Export]
-	private Godot.Collections.Array<StatusEffect> _testEffect = [];
+	private Array<StatusEffect> _testEffect = [];
 
 	private CharacterStats Stats => Player.Character.CharacterStats;
 
-	private readonly Godot.Collections.Array<StatusEffect> _activeEffects = [];
+	private readonly Array<StatusEffect> _activeEffects = [];
 
-	private readonly Dictionary<CharacterStatType, AbstractStat> _statToStatField = [];
+	private readonly System.Collections.Generic.Dictionary<CharacterStatType, AbstractStat> _statToStatField = [];
 
 	public override void _Ready()
 	{

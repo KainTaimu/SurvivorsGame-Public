@@ -117,24 +117,22 @@ public partial class EnemyCollisionSolver : Node
 	private void SolveCollisions()
 	{
 		var id = WorkerThreadPool.AddGroupTask(
-			Callable.From<int>(
-				(x) =>
+			Callable.From<int>(x =>
+			{
+				for (var y = 0; y < _grid.Dimensions.Y; y++)
 				{
-					for (var y = 0; y < _grid.Dimensions.Y; y++)
-					{
-						var cell = _grid.GetCell(x, y);
-						if (cell is null || cell.Count <= 1)
-							continue;
+					var cell = _grid.GetCell(x, y);
+					if (cell is null || cell.Count <= 1)
+						continue;
 
-						SolveCellInternalCollisions(cell);
+					SolveCellInternalCollisions(cell);
 
-						SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y)); // E
-						SolveCellPairCollisions(cell, _grid.GetCell(x, y + 1)); // S
-						SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y + 1)); // SE
-						SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y - 1)); // NE
-					}
+					SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y)); // E
+					SolveCellPairCollisions(cell, _grid.GetCell(x, y + 1)); // S
+					SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y + 1)); // SE
+					SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y - 1)); // NE
 				}
-			),
+			}),
 			_grid.Dimensions.X
 		);
 		WorkerThreadPool.WaitForGroupTaskCompletion(id);

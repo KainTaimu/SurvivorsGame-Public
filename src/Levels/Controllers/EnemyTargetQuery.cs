@@ -40,7 +40,7 @@ public partial class EnemyTargetQuery : Node
 		var windowSize = viewport.GetVisibleRect().Size * 1.3f;
 		_grid = new CenteredMovingUniformGrid<int>(GRID_SIZE, windowSize);
 
-		ComponentStore.BeforeEntityUnregistered += (id) => Dead.Add(id);
+		ComponentStore.BeforeEntityUnregistered += id => Dead.Add(id);
 	}
 
 	public override void _Process(double delta)

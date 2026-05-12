@@ -94,7 +94,6 @@ public partial class GameSingleton : Node
 		{
 			Logger.LogDebug($"Reloading current scene \"{GetTree().CurrentScene.Name}\"");
 			GetTree().ReloadCurrentScene();
-			return;
 		}
 	}
 }

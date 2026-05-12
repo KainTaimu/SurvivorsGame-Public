@@ -49,7 +49,7 @@ public partial class EnemyWaveController : Node
 	{
 		Instance = this;
 
-		EntityComponentStore.BeforeEntityUnregistered += (_) => Alive--;
+		EntityComponentStore.BeforeEntityUnregistered += _ => Alive--;
 
 		foreach (var wave in Waves)
 			wave.Initialize(this);

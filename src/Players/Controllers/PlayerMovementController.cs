@@ -2,7 +2,7 @@ using Game.UI;
 
 namespace Game.Players.Controllers;
 
-public partial class PlayerMovementController : Godot.Node
+public partial class PlayerMovementController : Node
 {
 	[Export]
 	private Player _player = null!;

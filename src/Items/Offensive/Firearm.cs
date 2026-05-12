@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using Game.Core.Settings;
 using Game.Levels.Controllers;
 using Game.UI;
-using Game.Utils;
 
 namespace Game.Items.Offensive;
 

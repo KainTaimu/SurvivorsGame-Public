@@ -1,6 +1,5 @@
 using System.Linq;
 using Godot.Collections;
-using Array = Godot.Collections.Array;
 
 namespace Game.Levels.Controllers;
 

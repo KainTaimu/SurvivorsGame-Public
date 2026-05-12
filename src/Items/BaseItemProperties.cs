@@ -13,7 +13,7 @@ public partial class BaseItemProperties : Resource
 	public string Description = "PLACEHOLDER_DESCRIPTION";
 
 	[Export]
-	public Texture2D ItemIcon = new PlaceholderTexture2D() { Size = Vector2I.One * 32 };
+	public Texture2D ItemIcon = new PlaceholderTexture2D { Size = Vector2I.One * 32 };
 
 	public int CurrentLevel;
 }

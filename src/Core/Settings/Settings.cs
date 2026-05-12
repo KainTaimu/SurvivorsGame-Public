@@ -61,12 +61,12 @@ public partial class Settings : Control
 
 	private void SubscribeOptions()
 	{
-		MasterVolume.ValueChanged += (value) =>
+		MasterVolume.ValueChanged += value =>
 		{
 			GameSettings.Instance.MasterVolume = (float)value;
 			MasterVolumeSideLabel.Text = $"{GameSettings.Instance.MasterVolume}dB";
 		};
-		GoreSelection.ItemSelected += (idx) =>
+		GoreSelection.ItemSelected += idx =>
 		{
 			switch (idx)
 			{
@@ -84,7 +84,7 @@ public partial class Settings : Control
 					break;
 			}
 		};
-		CameraShake.ItemSelected += (idx) =>
+		CameraShake.ItemSelected += idx =>
 		{
 			switch (idx)
 			{
@@ -96,13 +96,13 @@ public partial class Settings : Control
 					break;
 			}
 		};
-		CameraShakeScale.ValueChanged += (value) => GameSettings.Instance.CameraShakeScale = (float)value;
-		CrosshairScale.ValueChanged += (value) =>
+		CameraShakeScale.ValueChanged += value => GameSettings.Instance.CameraShakeScale = (float)value;
+		CrosshairScale.ValueChanged += value =>
 		{
 			GameSettings.Instance.CrosshairScale = (float)value;
 			CrosshairScaleLabel.Text = CrosshairScale.Value.ToString("0.##");
 		};
-		DamageIndicators.ItemSelected += (idx) =>
+		DamageIndicators.ItemSelected += idx =>
 		{
 			GameSettings.Instance.EnableDamageIndicators = idx switch
 			{

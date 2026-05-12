@@ -46,7 +46,6 @@ public partial class PickupUi : Control
 		{
 			PopulateItemsRandom(_showcases.Count);
 			ShowUi();
-			return;
 		}
 	}
 

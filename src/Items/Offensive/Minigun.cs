@@ -75,8 +75,8 @@ public partial class Minigun : Firearm
 		projectile.SetPosition(Player.Position);
 		projectile.SetRotation(rotation);
 		projectile.ProjectileSpeed = OffensiveStats.ProjectileSpeed;
-		projectile.ProjectileSpeed += (float)GD.RandRange(-projectile.ProjectileSpeed * 0.2, projectile.ProjectileSpeed
-				* 0.2);
+		projectile.ProjectileSpeed += (float)
+			GD.RandRange(-projectile.ProjectileSpeed * 0.2, projectile.ProjectileSpeed * 0.2);
 		projectile.PierceLimit = OffensiveStats.PierceLimit;
 		projectile.HitRadius = FirearmStats.ProjectileRadius;
 		projectile.Initialize();

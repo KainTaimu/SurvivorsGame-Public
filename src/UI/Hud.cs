@@ -21,13 +21,13 @@ public partial class Hud : Node
 
 	public override void _Ready()
 	{
-		LevelData?.OnMoneyChanged += (_) => _moneyLabel?.Text = $"${LevelData.Money}";
+		LevelData?.OnMoneyChanged += _ => _moneyLabel?.Text = $"${LevelData.Money}";
 		_moneyLabel?.Text = $"${LevelData?.Money}";
 	}
 
 	public override void _Process(double delta)
 	{
-		_playerHealthLabel?.Text = "Health: " + Stats.Health.ToString();
-		_enemyCountLabel?.Text = "Enemies: " + WaveController?.Alive.ToString();
+		_playerHealthLabel?.Text = "Health: " + Stats.Health;
+		_enemyCountLabel?.Text = "Enemies: " + WaveController?.Alive;
 	}
 }

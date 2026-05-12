@@ -1,5 +1,3 @@
-using Array = Godot.Collections.Array;
-
 namespace Game.Levels.Controllers;
 
 [GlobalClass]

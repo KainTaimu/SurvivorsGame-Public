@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text;
 
 namespace Game.Utils;
@@ -6,10 +7,7 @@ public static class ClassInspector
 {
 	public static string GetClassPropertiesString(
 		object obj,
-		System.Reflection.BindingFlags flags =
-			System.Reflection.BindingFlags.Public
-			| System.Reflection.BindingFlags.NonPublic
-			| System.Reflection.BindingFlags.Instance
+		BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance
 	)
 	{
 		var s = new StringBuilder();
@@ -29,10 +27,7 @@ public static class ClassInspector
 
 	public static string GetClassFieldsString(
 		object obj,
-		System.Reflection.BindingFlags flags =
-			System.Reflection.BindingFlags.Public
-			| System.Reflection.BindingFlags.NonPublic
-			| System.Reflection.BindingFlags.Instance
+		BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance
 	)
 	{
 		var s = new StringBuilder();

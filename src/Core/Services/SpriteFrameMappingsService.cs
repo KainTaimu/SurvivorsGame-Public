@@ -1,4 +1,5 @@
 using Game.Levels.Controllers;
+using Godot.Collections;
 
 namespace Game.Core.Services;
 
@@ -6,7 +7,7 @@ namespace Game.Core.Services;
 public partial class SpriteFrameMappingsService : Service
 {
 	[Export]
-	private Godot.Collections.Dictionary<string, FodderEnemySpriteInfo> _spriteMapping = null!;
+	private Dictionary<string, FodderEnemySpriteInfo> _spriteMapping = null!;
 
 	[Export]
 	public Texture2D PlaceholderSpriteFrame { get; private set; } = null!;
