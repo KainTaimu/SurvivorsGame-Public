@@ -4,7 +4,7 @@ namespace Game.Players.Controllers;
 public partial class StatusEffectModifier : Resource
 {
 	[Export]
-	public string StatName = "";
+	public CharacterStatType StatName;
 
 	[Export]
 	public StatusEffectModifierOperation Operation;

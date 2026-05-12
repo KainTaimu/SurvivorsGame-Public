@@ -13,6 +13,8 @@
 [ext_resource type="Script" uid="uid://d2moqmcv2k22p" path="res://src/Players/Controllers/LookHeader.cs" id="10_k7ubp"]
 [ext_resource type="PackedScene" uid="uid://ceimmtu3q4x6n" path="res://scenes/Items/Offensive/GrenadeThrower.tscn" id="11_espgp"]
 [ext_resource type="Script" uid="uid://cp1kck1yb1g48" path="res://src/Players/Controllers/PlayerStatusEffectController.cs" id="11_f1vlf"]
+[ext_resource type="Script" uid="uid://d31d8uns5faa5" path="res://src/Players/Controllers/StatusEffectModifier.cs" id="12_jkkrv"]
+[ext_resource type="Script" uid="uid://bdk4fdcqvypav" path="res://src/Players/Controllers/StatusEffect.cs" id="12_k7o84"]
 [ext_resource type="Script" uid="uid://x6msxk7k3d2h" path="res://src/Players/Controllers/PlayerWeaponControllerSingleHanded.cs" id="12_k8uaa"]
 [ext_resource type="PackedScene" uid="uid://chrgb8gqwh4s0" path="res://scenes/Items/Offensive/M4.tscn" id="13_2g2d6"]
 [ext_resource type="PackedScene" uid="uid://qxx1q01ys1cd" path="res://scenes/Items/Offensive/Dmr.tscn" id="13_jrnl7"]
@@ -25,7 +27,6 @@
 [ext_resource type="PackedScene" uid="uid://dwyqdinyji8tt" path="res://scenes/Items/Offensive/Smg.tscn" id="19_xsyvw"]
 [ext_resource type="PackedScene" uid="uid://cuerorgcryk5k" path="res://scenes/Items/Offensive/Sniper.tscn" id="20_k7o84"]
 [ext_resource type="PackedScene" uid="uid://bsw4dh2fya7ka" path="res://scenes/UI/ItemDebugInfo.tscn" id="22_4ua1a"]
-[ext_resource type="PackedScene" uid="uid://dyh06qakgf4q2" path="res://scenes/Players/DebugClassInspector.tscn" id="24_xsyvw"]
 
 [sub_resource type="Resource" id="Resource_yecw2"]
 script = ExtResource("3_kfojw")
@@ -119,6 +120,20 @@ height = 1024
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
+[sub_resource type="Resource" id="Resource_k7o84"]
+script = ExtResource("12_jkkrv")
+StatName = 2
+Operation = 1
+Value = 5.0
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_jkkrv"]
+script = ExtResource("12_k7o84")
+Name = "Start"
+InitialDuration = 30.0
+Modifiers = Array[ExtResource("12_jkkrv")]([SubResource("Resource_k7o84")])
+metadata/_custom_type_script = "uid://bdk4fdcqvypav"
+
 [node name="Player" type="Node2D" unique_id=1386970244 node_paths=PackedStringArray("MovementController", "WeaponController", "StatusEffectController")]
 top_level = true
 z_index = 32
@@ -169,8 +184,7 @@ script = ExtResource("10_k7ubp")
 [node name="PlayerStatusEffectController" type="Node" parent="." unique_id=1019311816 node_paths=PackedStringArray("Player")]
 script = ExtResource("11_f1vlf")
 Player = NodePath("..")
-
-[node name="DebugPlayerStatusEffect" parent="PlayerStatusEffectController" unique_id=1989388267 instance=ExtResource("24_xsyvw")]
+_testEffect = Array[ExtResource("12_k7o84")]([SubResource("Resource_jkkrv")])
 
 [node name="PlayerMovementController" type="Node" parent="." unique_id=1602338086 node_paths=PackedStringArray("_player", "_sprite")]
 script = ExtResource("4_kfojw")
@@ -203,6 +217,7 @@ script = ExtResource("12_k8uaa")
 [node name="GrenadeThrower2" parent="PlayerWeaponController" unique_id=707047992 instance=ExtResource("11_espgp")]
 
 [node name="ItemDebugInfo" parent="." unique_id=79685039 node_paths=PackedStringArray("PlayerWeaponController") instance=ExtResource("22_4ua1a")]
+visible = false
 PlayerWeaponController = NodePath("../PlayerWeaponController")
 
 [node name="CurrentWeaponUI" parent="." unique_id=2135368036 node_paths=PackedStringArray("_weaponController") instance=ExtResource("14_8rask")]

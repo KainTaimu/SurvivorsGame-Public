@@ -3,20 +3,21 @@
 [ext_resource type="LabelSettings" uid="uid://c0lq4rqaj62dx" path="res://scenes/UI/SettingsLabelSettings.tres" id="1_g0tyt"]
 [ext_resource type="Script" uid="uid://hiaypuga6gnf" path="res://src/Core/Settings/Settings.cs" id="1_ydmms"]
 
-[node name="Settings" type="MarginContainer" unique_id=83201529 node_paths=PackedStringArray("MasterVolume", "GoreSelection", "CameraShake", "CameraShakeScale", "CrosshairScale", "CrosshairScaleLabel", "DamageIndicators")]
+[node name="Settings" type="MarginContainer" unique_id=83201529 node_paths=PackedStringArray("MasterVolume", "MasterVolumeSideLabel", "GoreSelection", "CameraShake", "CameraShakeScale", "CrosshairScale", "CrosshairScaleLabel", "DamageIndicators")]
 process_mode = 3
 process_priority = -9999
 anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -320.0
+offset_left = -384.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_constants/margin_left = 7
 theme_override_constants/margin_right = 7
 script = ExtResource("1_ydmms")
 MasterVolume = NodePath("VBoxContainer/MasterVolume/MasterVolume")
+MasterVolumeSideLabel = NodePath("VBoxContainer/MasterVolume/Label")
 GoreSelection = NodePath("VBoxContainer/Gore/Gore2")
 CameraShake = NodePath("VBoxContainer/CameraShake/CameraShake2")
 CameraShakeScale = NodePath("VBoxContainer/CamShakeScale/CameraShakeScale2")
@@ -30,7 +31,9 @@ alignment = 1
 
 [node name="MasterVolume" type="HSplitContainer" parent="VBoxContainer" unique_id=651266347]
 layout_mode = 2
-split_offsets = PackedInt32Array(160)
+split_offsets = PackedInt32Array(160, 0)
+dragging_enabled = false
+dragger_visibility = 1
 split_offset = 160
 
 [node name="Vol" type="Label" parent="VBoxContainer/MasterVolume" unique_id=1798918036]
@@ -47,15 +50,25 @@ uppercase = true
 custom_minimum_size = Vector2(83.677, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
-min_value = -10.0
-max_value = 10.0
+size_flags_horizontal = 3
+min_value = -30.0
+max_value = 30.0
 tick_count = 10
 ticks_on_borders = true
 ticks_position = 3
 
+[node name="Label" type="Label" parent="VBoxContainer/MasterVolume" unique_id=1286710646]
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 2
+text = "X.XdB"
+horizontal_alignment = 2
+vertical_alignment = 1
+
 [node name="Gore" type="HSplitContainer" parent="VBoxContainer" unique_id=151415757]
 layout_mode = 2
 split_offsets = PackedInt32Array(160)
+dragging_enabled = false
+dragger_visibility = 1
 split_offset = 160
 
 [node name="Gore" type="Label" parent="VBoxContainer/Gore" unique_id=1430589299]
@@ -85,6 +98,8 @@ popup/item_3/id = 3
 [node name="CameraShake" type="HSplitContainer" parent="VBoxContainer" unique_id=1536564626]
 layout_mode = 2
 split_offsets = PackedInt32Array(160)
+dragging_enabled = false
+dragger_visibility = 1
 split_offset = 160
 
 [node name="CameraShake" type="Label" parent="VBoxContainer/CameraShake" unique_id=1307140608]
@@ -110,6 +125,8 @@ popup/item_1/id = 1
 [node name="CamShakeScale" type="HSplitContainer" parent="VBoxContainer" unique_id=1804785226]
 layout_mode = 2
 split_offsets = PackedInt32Array(160)
+dragging_enabled = false
+dragger_visibility = 1
 split_offset = 160
 
 [node name="CameraShakeScale" type="Label" parent="VBoxContainer/CamShakeScale" unique_id=1820403670]
@@ -136,6 +153,8 @@ ticks_position = 3
 [node name="CrosshairScale" type="HSplitContainer" parent="VBoxContainer" unique_id=149106139]
 layout_mode = 2
 split_offsets = PackedInt32Array(160)
+dragging_enabled = false
+dragger_visibility = 1
 split_offset = 160
 
 [node name="CrosshairScale" type="Label" parent="VBoxContainer/CrosshairScale" unique_id=319481044]
@@ -159,6 +178,7 @@ split_offset = 94
 custom_minimum_size = Vector2(83.677, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
+size_flags_horizontal = 3
 min_value = 1.0
 max_value = 4.0
 step = 0.1
@@ -168,6 +188,7 @@ ticks_on_borders = true
 ticks_position = 3
 
 [node name="Label" type="Label" parent="VBoxContainer/CrosshairScale/CrosshairScale2" unique_id=395033495]
+custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
 text = "X.X"
 horizontal_alignment = 2
@@ -176,6 +197,8 @@ vertical_alignment = 1
 [node name="DamageIndicators" type="HSplitContainer" parent="VBoxContainer" unique_id=1543293664]
 layout_mode = 2
 split_offsets = PackedInt32Array(160)
+dragging_enabled = false
+dragger_visibility = 1
 split_offset = 160
 
 [node name="DamageIndicators" type="Label" parent="VBoxContainer/DamageIndicators" unique_id=969029046]

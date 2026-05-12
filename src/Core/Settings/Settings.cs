@@ -8,6 +8,9 @@ public partial class Settings : Control
 	public Slider MasterVolume = null!;
 
 	[Export]
+	public Label MasterVolumeSideLabel = null!;
+
+	[Export]
 	public OptionButton GoreSelection = null!;
 
 	[Export]
@@ -39,6 +42,7 @@ public partial class Settings : Control
 	private void UpdateOptions()
 	{
 		MasterVolume.Value = GameSettings.Instance.MasterVolume;
+		MasterVolumeSideLabel.Text = $"{GameSettings.Instance.MasterVolume}dB";
 		GoreSelection.Selected = GameSettings.Instance.GoreEffects switch
 		{
 			GoreEffectsEnum.Disabled => 0,
@@ -57,7 +61,11 @@ public partial class Settings : Control
 
 	private void SubscribeOptions()
 	{
-		MasterVolume.ValueChanged += (value) => GameSettings.Instance.MasterVolume = (float)value;
+		MasterVolume.ValueChanged += (value) =>
+		{
+			GameSettings.Instance.MasterVolume = (float)value;
+			MasterVolumeSideLabel.Text = $"{GameSettings.Instance.MasterVolume}dB";
+		};
 		GoreSelection.ItemSelected += (idx) =>
 		{
 			switch (idx)
@@ -100,7 +108,7 @@ public partial class Settings : Control
 			{
 				0 => false,
 				1 => true,
-				_ => GameSettings.Instance.EnableDamageIndicators
+				_ => GameSettings.Instance.EnableDamageIndicators,
 			};
 		};
 	}

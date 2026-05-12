@@ -18,13 +18,16 @@ public partial class PlayerStatusEffectController : Node
 
 	private readonly Godot.Collections.Array<StatusEffect> _activeEffects = [];
 
-	private readonly Dictionary<string, AbstractStat> _statToStatField = [];
+	private readonly Dictionary<CharacterStatType, AbstractStat> _statToStatField = [];
 
 	public override void _Ready()
 	{
 		InitializeStatStacks();
+
+#if DEBUG
 		foreach (var statusEffect in _testEffect)
 			AddStatusEffect(statusEffect);
+#endif
 	}
 
 	public override void _Process(double delta)
@@ -38,9 +41,7 @@ public partial class PlayerStatusEffectController : Node
 		}
 
 		foreach (var statusEffect in toRemove)
-		{
 			RemoveStatusEffect(statusEffect);
-		}
 	}
 
 	private void RemoveStatusEffect(StatusEffect statusEffect)
@@ -69,19 +70,21 @@ public partial class PlayerStatusEffectController : Node
 		statusEffect.Duration = statusEffect.InitialDuration;
 		foreach (var modifier in statusEffect.Modifiers)
 		{
-			var targetStat = _statToStatField[modifier.StatName];
+			if (!_statToStatField.TryGetValue(modifier.StatName, out var targetStat))
 			{
-				switch (modifier.Operation)
-				{
-					case StatusEffectModifier.StatusEffectModifierOperation.Add:
-						targetStat.Flat.Add(modifier.Value);
-						break;
-					case StatusEffectModifier.StatusEffectModifierOperation.Multiply:
-						targetStat.Multipliers.Add(modifier.Value);
-						break;
-					default:
-						throw new ArgumentOutOfRangeException();
-				}
+				Logger.LogError("Unknown stat name");
+				continue;
+			}
+			switch (modifier.Operation)
+			{
+				case StatusEffectModifier.StatusEffectModifierOperation.Add:
+					targetStat.Flat.Add(modifier.Value);
+					break;
+				case StatusEffectModifier.StatusEffectModifierOperation.Multiply:
+					targetStat.Multipliers.Add(modifier.Value);
+					break;
+				default:
+					throw new ArgumentOutOfRangeException();
 			}
 			Logger.LogInfo($"New ST: {statusEffect}");
 		}
@@ -91,11 +94,7 @@ public partial class PlayerStatusEffectController : Node
 	private void InitializeStatStacks()
 	{
 		const BindingFlags flags =
-			BindingFlags.Public
-			| BindingFlags.NonPublic
-			| BindingFlags.Instance
-			| BindingFlags.DeclaredOnly
-			| BindingFlags.IgnoreCase;
+			BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.IgnoreCase;
 		var pType = Stats.GetType();
 		var properties = pType.GetFields(flags);
 		foreach (var field in properties)
@@ -104,9 +103,30 @@ public partial class PlayerStatusEffectController : Node
 			if (value is null)
 				continue;
 
+			var statEnum = field.Name switch
+			{
+				"_health" => CharacterStatType.Health,
+				"_maxHealth" => CharacterStatType.MaxHealth,
+				"_moveSpeed" => CharacterStatType.MoveSpeed,
+				"_defense" => CharacterStatType.Defense,
+				"_criticalChance" => CharacterStatType.CriticalChance,
+				"_pickupRangeRadius" => CharacterStatType.PickupRangeRadius,
+				"_healthRegenPerSecond" => CharacterStatType.HealthRegenPerSecond,
+				"_invincibilityTime" => CharacterStatType.InvincibilityTime,
+				"_hitboxRadius" => CharacterStatType.HitboxRadius,
+				"_incomingDamageMultiplier" => CharacterStatType.IncomingDamageMultiplier,
+				"_outgoingDamageMultiplier" => CharacterStatType.OutgoingDamageMultiplier,
+				"_criticalChanceMultiplier" => CharacterStatType.CriticalChanceMultiplier,
+				"_criticalDamageMultiplier" => CharacterStatType.CriticalDamageMultiplier,
+				"_attackSpeedMultiplier" => CharacterStatType.AttackSpeedMultiplier,
+				"_projectileMultiplier" => CharacterStatType.ProjectileMultiplier,
+				"_xpMultiplier" => CharacterStatType.XpMultiplier,
+				_ => throw new ArgumentOutOfRangeException(),
+			};
+
 			try
 			{
-				_statToStatField[field.Name] = (AbstractStat)value;
+				_statToStatField[statEnum] = (AbstractStat)value;
 			}
 			catch (InvalidCastException) { }
 		}

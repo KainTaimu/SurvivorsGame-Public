@@ -16,6 +16,7 @@ public partial class AudioManager : Node
 		{
 			MasterVolume = GameSettings.Instance.MasterVolume;
 		};
+		MasterVolume = GameSettings.Instance.MasterVolume;
 	}
 
 	private void UpdateMasterBusVolume()

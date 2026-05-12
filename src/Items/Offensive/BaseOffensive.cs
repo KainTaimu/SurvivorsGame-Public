@@ -53,7 +53,9 @@ public abstract partial class BaseOffensive : BaseItem
 		var crit = CalculateCrit();
 		var randomDamage =
 			OffensiveStats.Damage > 1 ? Mathf.CeilToInt(GD.RandRange(-0.15, 0.15) * OffensiveStats.Damage) : 0;
-		var damage = OffensiveStats.Damage + crit + randomDamage;
+		var damage = Mathf.CeilToInt(
+			(OffensiveStats.Damage + crit + randomDamage) * PlayerStats.OutgoingDamageMultiplier
+		);
 		var newHealth = health.Health - damage;
 
 		var hit = new HitFeedbackComponent
