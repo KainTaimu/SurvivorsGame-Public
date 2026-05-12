@@ -37,6 +37,9 @@ public partial class StatusEffect : Resource
 	public bool Permanent;
 
 	[Export]
+	public Texture2D Icon = new PlaceholderTexture2D() { Size = Vector2.One * 32 };
+
+	[Export]
 	public required Array<StatusEffectTags> Tags = [];
 
 	[Export]

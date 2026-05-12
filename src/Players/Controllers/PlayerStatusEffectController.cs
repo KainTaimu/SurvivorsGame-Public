@@ -30,7 +30,7 @@ public partial class PlayerStatusEffectController : Node
 
 #if DEBUG
 		foreach (var statusEffect in _testEffect)
-			AddStatusEffect(statusEffect);
+			CallDeferred(MethodName.AddStatusEffect, statusEffect);
 #endif
 	}
 

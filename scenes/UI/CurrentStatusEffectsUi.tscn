@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://jqf8r7a2ybte"]
+
+[ext_resource type="Script" uid="uid://dvl815a6rciwp" path="res://src/UI/CurrentStatusEffectsUi.cs" id="1_ioa6s"]
+[ext_resource type="PackedScene" uid="uid://bctgteedlbfmj" path="res://scenes/UI/StatusEffectLabel.tscn" id="2_8boxm"]
+
+[node name="CurrentStatusEffectsUI" type="CanvasLayer" unique_id=1231089179 node_paths=PackedStringArray("_labelControl")]
+script = ExtResource("1_ioa6s")
+_labelScene = ExtResource("2_8boxm")
+_labelControl = NodePath("VBoxContainer")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1776377109]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -128.0
+offset_top = -128.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 3
+alignment = 2
