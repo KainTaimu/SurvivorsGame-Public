@@ -1,5 +1,6 @@
 using System.Text;
 using Game.Players.Controllers;
+using Node = Godot.Node;
 
 namespace Game.Utils;
 
@@ -15,7 +16,7 @@ public partial class ItemDebugInfo : CanvasLayer
 			Visible = field;
 		}
 	}
-	
+
 	[Export]
 	public Node? Target;
 
@@ -34,7 +35,7 @@ public partial class ItemDebugInfo : CanvasLayer
 	{
 		if (!Enabled)
 			return;
-		
+
 		var target = Target ?? PlayerWeaponController?.PrimaryAttack as Node;
 		if (target is null)
 		{

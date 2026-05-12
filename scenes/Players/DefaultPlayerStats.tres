@@ -1,0 +1,103 @@
+[gd_resource type="Resource" script_class="CharacterStats" format=3 uid="uid://6wxxpstfm1ha"]
+
+[ext_resource type="Script" uid="uid://wsto3khl70md" path="res://src/Players/FloatStat.cs" id="1_pds1w"]
+[ext_resource type="Script" uid="uid://tfaqh3bcxdha" path="res://src/Players/IntStat.cs" id="2_n37c6"]
+[ext_resource type="Script" uid="uid://rykv3f6ereih" path="res://src/Players/CharacterStats.cs" id="3_2ogdu"]
+
+[sub_resource type="Resource" id="Resource_pds1w"]
+script = ExtResource("1_pds1w")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_n37c6"]
+script = ExtResource("1_pds1w")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_2ogdu"]
+script = ExtResource("1_pds1w")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_8fgqt"]
+script = ExtResource("1_pds1w")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_whvxp"]
+script = ExtResource("2_n37c6")
+metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+
+[sub_resource type="Resource" id="Resource_7d5e1"]
+script = ExtResource("1_pds1w")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_flcwh"]
+script = ExtResource("1_pds1w")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_sfksd"]
+script = ExtResource("2_n37c6")
+metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+
+[sub_resource type="Resource" id="Resource_ygj7d"]
+script = ExtResource("1_pds1w")
+_value = 32.0
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_xbbcj"]
+script = ExtResource("1_pds1w")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_mffm2"]
+script = ExtResource("1_pds1w")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_xe3sk"]
+script = ExtResource("2_n37c6")
+_value = 200
+metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+
+[sub_resource type="Resource" id="Resource_spdmk"]
+script = ExtResource("1_pds1w")
+_value = 600.0
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_yt3uc"]
+script = ExtResource("1_pds1w")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_wbs8r"]
+script = ExtResource("1_pds1w")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_6r6a4"]
+script = ExtResource("1_pds1w")
+_value = 100.0
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_gao6p"]
+script = ExtResource("1_pds1w")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_0xayp"]
+script = ExtResource("1_pds1w")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[resource]
+script = ExtResource("3_2ogdu")
+_maxHealth = SubResource("Resource_xe3sk")
+_moveSpeed = SubResource("Resource_spdmk")
+_defense = SubResource("Resource_whvxp")
+_criticalChance = SubResource("Resource_n37c6")
+_pickupRangeRadius = SubResource("Resource_6r6a4")
+_healthRegenPerSecond = SubResource("Resource_sfksd")
+_invincibilityTime = SubResource("Resource_mffm2")
+_hitboxRadius = SubResource("Resource_ygj7d")
+_healthMultiplier = SubResource("Resource_flcwh")
+_moveSpeedMultiplier = SubResource("Resource_yt3uc")
+_defenseMultiplier = SubResource("Resource_7d5e1")
+_incomingDamageMultiplier = SubResource("Resource_xbbcj")
+_outgoingDamageMultiplier = SubResource("Resource_wbs8r")
+_criticalChanceMultiplier = SubResource("Resource_2ogdu")
+_criticalDamageMultiplier = SubResource("Resource_8fgqt")
+_attackSpeedMultiplier = SubResource("Resource_pds1w")
+_projectileMultiplier = SubResource("Resource_gao6p")
+_xpMultiplier = SubResource("Resource_0xayp")
+metadata/_custom_type_script = "uid://rykv3f6ereih"

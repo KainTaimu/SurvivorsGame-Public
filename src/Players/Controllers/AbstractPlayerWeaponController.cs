@@ -3,7 +3,7 @@ using Game.Items.Offensive;
 
 namespace Game.Players.Controllers;
 
-public abstract partial class AbstractPlayerWeaponController : Node
+public abstract partial class AbstractPlayerWeaponController : Godot.Node
 {
 	[Signal]
 	public delegate void OnOffensiveListChangedEventHandler(BaseOffensive newOffensive);
@@ -44,7 +44,7 @@ public abstract partial class AbstractPlayerWeaponController : Node
 	// Inherit
 	protected void EnableManualOffensive(IManualAttack manual)
 	{
-		var node = (manual as Node)!;
+		var node = (manual as Godot.Node)!;
 		node.ProcessMode = ProcessModeEnum.Inherit;
 		if (node is Node2D node2D)
 			node2D.Show();
@@ -52,7 +52,7 @@ public abstract partial class AbstractPlayerWeaponController : Node
 
 	protected void DisableManualOffensive(IManualAttack manual)
 	{
-		var node = (manual as Node)!;
+		var node = (manual as Godot.Node)!;
 		manual.AttackActionString = null;
 		node.ProcessMode = ProcessModeEnum.Disabled;
 		if (node is Node2D node2D)

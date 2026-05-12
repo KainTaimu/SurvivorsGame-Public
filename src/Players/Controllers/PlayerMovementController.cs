@@ -2,7 +2,7 @@ using Game.UI;
 
 namespace Game.Players.Controllers;
 
-public partial class PlayerMovementController : Node
+public partial class PlayerMovementController : Godot.Node
 {
 	[Export]
 	private Player _player = null!;
@@ -33,6 +33,9 @@ public partial class PlayerMovementController : Node
 		var down = Input.IsActionPressed(InputMapNames.MoveDown) ? 1 : 0;
 		var left = Input.IsActionPressed(InputMapNames.MoveLeft) ? 1 : 0;
 		var right = Input.IsActionPressed(InputMapNames.MoveRight) ? 1 : 0;
+
+		if (up + down + left + right <= 0)
+			return;
 
 		float inputX = right - left;
 		float inputY = down - up;

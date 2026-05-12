@@ -13,5 +13,8 @@ public partial class Player : Node2D
 	[Export]
 	public AbstractPlayerWeaponController WeaponController { get; private set; } = null!;
 
+	[Export]
+	public PlayerStatusEffectController StatusEffectController { get; private set; } = null!;
+
 	public bool IsAlive => Character.CharacterStats.Health == 0;
 }

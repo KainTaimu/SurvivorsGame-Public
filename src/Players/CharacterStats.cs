@@ -5,60 +5,51 @@ public partial class CharacterStats : Resource
 {
 	private int _health = -1;
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	private int _maxHealth = 100;
+	[Export]
+	private IntStat _maxHealth = null!;
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	private float _moveSpeed = 600;
+	[Export]
+	private FloatStat _moveSpeed = null!;
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	private int _defense;
+	[Export]
+	private IntStat _defense = null!;
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	private float _criticalChance;
+	[Export]
+	private FloatStat _criticalChance = null!;
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	private float _pickupRangeRadius = 500;
+	[Export]
+	private FloatStat _pickupRangeRadius = null!;
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	private int _healthRegenPerSecond;
+	[Export]
+	private IntStat _healthRegenPerSecond = null!;
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	private float _invincibilityTime = 1;
+	[Export]
+	private FloatStat _invincibilityTime = null!;
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	private float _hitboxRadius = 32;
+	[Export]
+	private FloatStat _hitboxRadius = null!;
 
 	[ExportCategory("Multiplier attributes")]
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	private float _healthMultiplier = 1;
+	[Export]
+	private FloatStat _incomingDamageMultiplier = null!;
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	private float _moveSpeedMultiplier = 1;
+	[Export]
+	private FloatStat _outgoingDamageMultiplier = null!;
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	private float _defenseMultiplier = 1;
+	[Export]
+	private FloatStat _criticalChanceMultiplier = null!;
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	private float _incomingDamageMultiplier = 1;
+	[Export]
+	private FloatStat _criticalDamageMultiplier = null!;
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	private float _outgoingDamageMultiplier = 1;
+	[Export]
+	private FloatStat _attackSpeedMultiplier = null!;
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	private float _criticalChanceMultiplier = 1;
+	[Export]
+	private FloatStat _projectileMultiplier = null!;
 
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	private float _criticalDamageMultiplier = 1;
-
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	private float _attackSpeedMultiplier = 1;
-
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	private float _projectileMultiplier = 1;
-
-	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
-	private float _xpMultiplier = 1;
+	[Export]
+	private FloatStat _xpMultiplier = null!;
 
 	public int Health
 	{
@@ -66,112 +57,39 @@ public partial class CharacterStats : Resource
 		{
 			// health may be uninitialized on first access.
 			if (_health == -1)
-				_health = _maxHealth;
+				_health = _maxHealth.Value;
 
 			return _health;
 		}
 	}
 
-	public int MaxHealth
-	{
-		get { return Mathf.CeilToInt(_maxHealth * _healthMultiplier); }
-	}
+	public int MaxHealth => _maxHealth.Value;
 
-	public float MoveSpeed
-	{
-		get { return _moveSpeed * _moveSpeedMultiplier; }
-	}
+	public float MoveSpeed => _moveSpeed.Value;
 
-	// Flat defense
-	public int Defense
-	{
-		get { return Mathf.CeilToInt(_defense * _defenseMultiplier); }
-	}
+	public int Defense => _defense.Value;
 
-	public float CriticalChance
-	{
-		get { return _criticalChance * _criticalChanceMultiplier; }
-	}
+	public float PickupRangeRadius => _pickupRangeRadius.Value;
 
-	public float PickupRangeRadius
-	{
-		get { return _pickupRangeRadius; }
-	}
+	public int HealthRegenPerSecond => _healthRegenPerSecond.Value;
 
-	public int HealthRegenPerSecond
-	{
-		get { return _healthRegenPerSecond; }
-	}
+	public float InvincibilityTime => _invincibilityTime.Value;
 
-	public float InvincibilityTime
-	{
-		get { return _invincibilityTime; }
-	}
+	public float HitboxRadius => _hitboxRadius.Value;
 
-	public float HitboxRadius
-	{
-		get { return _hitboxRadius; }
-	}
+	public float IncomingDamageMultiplier => _incomingDamageMultiplier.Value;
 
-	public float HealthMultiplier
-	{
-		get { return _healthMultiplier; }
-	}
+	public float OutgoingDamageMultiplier => _outgoingDamageMultiplier.Value;
 
-	public float MoveSpeedMultiplier
-	{
-		get { return _moveSpeedMultiplier; }
-	}
+	public float CriticalChanceMultiplier => _criticalChanceMultiplier.Value;
 
-	public float DefenseMultiplier
-	{
-		get { return _defenseMultiplier; }
-	}
+	public float CriticalDamageMultiplier => _criticalDamageMultiplier.Value;
 
-	public float IncomingDamageMultiplier
-	{
-		get { return _incomingDamageMultiplier; }
-	}
+	public float AttackSpeedMultiplier => _attackSpeedMultiplier.Value;
 
-	public float OutgoingDamageMultiplier
-	{
-		get { return _outgoingDamageMultiplier; }
-	}
+	public float ProjectileMultiplier => _projectileMultiplier.Value;
 
-	public float CriticalChanceMultiplier
-	{
-		get { return _criticalChanceMultiplier; }
-	}
-
-	public float CriticalDamageMultiplier
-	{
-		get { return _criticalDamageMultiplier; }
-	}
-
-	public float AttackSpeedMultiplier
-	{
-		get { return _attackSpeedMultiplier; }
-	}
-
-	public float ProjectileMultiplier
-	{
-		get { return _projectileMultiplier; }
-	}
-
-	public float XpMultiplier
-	{
-		get { return _xpMultiplier; }
-	}
-
-	public int TotalMaxHealth
-	{
-		get { return Mathf.CeilToInt(MaxHealth * HealthMultiplier); }
-	}
-
-	public float TotalMoveSpeed
-	{
-		get { return MoveSpeed * MoveSpeedMultiplier; }
-	}
+	public float XpMultiplier => _xpMultiplier.Value;
 
 	public void Damage(int damage)
 	{

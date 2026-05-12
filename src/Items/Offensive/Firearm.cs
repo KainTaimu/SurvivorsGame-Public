@@ -250,7 +250,5 @@ public abstract partial class Firearm : BaseOffensive, IReloadable, IManualAttac
 	private void UpdateAdditionalFields()
 	{
 		FireCooldown = 0;
-
-		Logger.LogDebug("Updated Stats\n", ClassInspector.GetClassPropertiesString(Stats));
 	}
 }

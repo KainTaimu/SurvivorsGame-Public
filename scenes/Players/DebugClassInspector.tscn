@@ -1,17 +1,18 @@
 [gd_scene format=3 uid="uid://dyh06qakgf4q2"]
 
-[ext_resource type="Script" uid="uid://bkbj2yohnsj6a" path="res://src/Players/Controllers/DebugPlayerStatusEffect.cs" id="1_veitk"]
-[ext_resource type="FontFile" uid="uid://imomsqhxc2fu" path="res://assets/Fonts/MunroSmall-wPZw.ttf" id="2_jkkek"]
+[ext_resource type="Script" uid="uid://bkbj2yohnsj6a" path="res://src/Players/Controllers/DebugClassInspector.cs" id="1_bu3gy"]
+
+[sub_resource type="SystemFont" id="SystemFont_fpx2f"]
+font_names = PackedStringArray("Monospace")
 
 [sub_resource type="LabelSettings" id="LabelSettings_j8f5f"]
-font = ExtResource("2_jkkek")
+font = SubResource("SystemFont_fpx2f")
 font_color = Color(0, 1, 0, 1)
-shadow_size = 4
-shadow_color = Color(0, 0, 0, 1)
 
-[node name="DebugPlayerStatusEffect" type="CanvasLayer" unique_id=1989388267 node_paths=PackedStringArray("Label")]
-script = ExtResource("1_veitk")
-Label = NodePath("PanelContainer/MarginContainer/Label")
+[node name="DebugClassInspector" type="CanvasLayer" unique_id=1989388267 node_paths=PackedStringArray("_label")]
+script = ExtResource("1_bu3gy")
+BindingFlags = 38
+_label = NodePath("PanelContainer/MarginContainer/Label")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=489429066]
 anchors_preset = 4
@@ -35,4 +36,5 @@ custom_maximum_size = Vector2(512, -1)
 layout_mode = 2
 text = "BLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLA"
 label_settings = SubResource("LabelSettings_j8f5f")
+vertical_alignment = 1
 autowrap_mode = 3
