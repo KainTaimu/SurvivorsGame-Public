@@ -87,7 +87,7 @@ public partial class PlayerStatusEffectController : Node
 		{
 			if (!_statToStatField.TryGetValue(modifier.StatName, out var targetStat))
 			{
-				Logger.LogError("Unknown stat name");
+				Logger.LogError($"Unknown stat name {modifier.StatName}");
 				continue;
 			}
 			switch (modifier.Operation)
@@ -138,6 +138,8 @@ public partial class PlayerStatusEffectController : Node
 				"_attackSpeedMultiplier" => CharacterStatType.AttackSpeedMultiplier,
 				"_projectileMultiplier" => CharacterStatType.ProjectileMultiplier,
 				"_xpMultiplier" => CharacterStatType.XpMultiplier,
+				"_bloomMultiplier" => CharacterStatType.BloomMultiplier,
+				"_recoilMultiplier" => CharacterStatType.RecoilMultiplier,
 				_ => throw new ArgumentOutOfRangeException(),
 			};
 

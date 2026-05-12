@@ -15,7 +15,7 @@ script = ExtResource("3_ld3kt")
 Name = "AK-47"
 Description = "The infamous Soviet rifle chambered in 7.62x39mm. It deals a large amount of damage at the cost of inaccuracy and recoil."
 
-[sub_resource type="Resource" id="Resource_nihe0"]
+[sub_resource type="Resource" id="Resource_ld3kt"]
 script = ExtResource("4_tg8rs")
 BloomCoefficientDeg = 15.0
 VerticalRecoilMin = 8.0
@@ -23,12 +23,12 @@ VerticalBaseRecoil = 8.0
 VerticalRecoilRandom = 1.0
 RecoilAccumilationScale = 0.0
 CameraRecoilScale = 0.5
-Damage = 11
-CritDamageMultiplier = 0.9
-CritChanceProportion = 0.2
-ProjectileSpeed = 2800
-ProjectileScaleMultiplier = 0.8
-AttackSpeed = 0.1
+BaseDamage = 11
+BaseCritDamageMultiplier = 0.9
+BaseCritChanceProportion = 0.2
+BaseProjectileSpeed = 2800
+BaseProjectileScaleMultiplier = 0.8
+BaseAttackSpeed = 0.1
 Additional = Dictionary[String, Variant]({
 "Knockback": 30.0
 })
@@ -40,7 +40,7 @@ _projectileScene = ExtResource("2_rp6n0")
 ShootAudioPlayer = NodePath("Shoot")
 AlmostEmptyAudioPlayer = NodePath("MagAlmostEmpty")
 Properties = SubResource("Resource_eai52")
-Stats = SubResource("Resource_nihe0")
+Stats = SubResource("Resource_ld3kt")
 
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=458425301]
 process_mode = 3

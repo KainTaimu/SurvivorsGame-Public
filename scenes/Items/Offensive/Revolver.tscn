@@ -11,6 +11,14 @@
 [ext_resource type="Texture2D" uid="uid://bywdcxqghufl4" path="res://assets/UI/revolver_fired.tres" id="8_y3hip"]
 [ext_resource type="Texture2D" uid="uid://xssw45w6smmp" path="res://assets/UI/revolver_unfired.tres" id="9_n3sky"]
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ld3kt"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_whe3a"]
+script = ExtResource("2_wc6to")
+Name = "Revolver"
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
 [sub_resource type="Resource" id="Resource_n3sky"]
 script = ExtResource("4_y3hip")
 ReloadTime = 1.8
@@ -24,26 +32,18 @@ VerticalBaseRecoil = 120.0
 VerticalRecoilRandom = 40.0
 RecoilScale = 0.8
 CameraRecoilScale = 1.8
-Damage = 15
-CritDamageMultiplier = 1.0
-CritChanceProportion = 0.5
-ProjectileSpeed = 5000
-ProjectileScaleMultiplier = 1.2
-ProjectileRadius = 42
-AttackSpeed = 1.0
-PierceLimit = 8
+BaseDamage = 15
+BaseCritDamageMultiplier = 1.0
+BaseCritChanceProportion = 0.5
+BaseProjectileSpeed = 5000
+BaseProjectileScaleMultiplier = 1.2
+BaseProjectileRadius = 42
+BaseAttackSpeed = 1.0
+BasePierceLimit = 8
 Additional = Dictionary[String, Variant]({
 "Knockback": 50.0
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_y3hip"]
-size = Vector2(32, 32)
-
-[sub_resource type="Resource" id="Resource_whe3a"]
-script = ExtResource("2_wc6to")
-Name = "Revolver"
-metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [node name="Revolver" type="Node2D" unique_id=1975794211 node_paths=PackedStringArray("_ammoCount", "CockAudioPlayer", "ShootAudioPlayer")]
 script = ExtResource("1_0wf3b")
@@ -51,8 +51,8 @@ _ammoCount = NodePath("CanvasLayer")
 CockAudioPlayer = NodePath("CockAudioPlayer")
 _projectileScene = ExtResource("2_o3lg4")
 ShootAudioPlayer = NodePath("ShootAudioPlayer")
-Stats = SubResource("Resource_n3sky")
 Properties = SubResource("Resource_whe3a")
+Stats = SubResource("Resource_n3sky")
 
 [node name="ShootAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1706054987]
 process_mode = 3

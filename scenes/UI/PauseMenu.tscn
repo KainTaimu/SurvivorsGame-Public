@@ -2,18 +2,27 @@
 
 [ext_resource type="Script" uid="uid://b6smyajb38bae" path="res://src/UI/PauseMenu/PauseMenu.cs" id="1_fsae6"]
 [ext_resource type="Shader" uid="uid://cjavr4nj3ysk" path="res://src/Shaders/bw.gdshader" id="2_avwb0"]
-[ext_resource type="LabelSettings" uid="uid://c0lq4rqaj62dx" path="res://scenes/UI/SettingsLabelSettings.tres" id="3_4r2wj"]
 [ext_resource type="PackedScene" uid="uid://d226hpep613tv" path="res://scenes/UI/Settings.tscn" id="5_73e60"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_73e60"]
 shader = ExtResource("2_avwb0")
 shader_parameter/saturation = 0.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4r2wj"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_4r2wj"]
+font_names = PackedStringArray("Monospace")
+
+[sub_resource type="LabelSettings" id="LabelSettings_avwb0"]
+font = SubResource("SystemFont_4r2wj")
+font_size = 20
+
 [node name="PauseMenu" type="CanvasLayer" unique_id=1796089998 node_paths=PackedStringArray("_playerStats")]
 process_mode = 3
 layer = 2
 script = ExtResource("1_fsae6")
-_playerStats = NodePath("LeftPanel/Label")
+_playerStats = NodePath("LeftPanel/ColorRect/Label")
 
 [node name="Grayscale" type="ColorRect" parent="." unique_id=573509053]
 material = SubResource("ShaderMaterial_73e60")
@@ -40,19 +49,23 @@ offset_top = -540.0
 offset_right = 384.0
 offset_bottom = 540.0
 grow_vertical = 2
-color = Color(0.011764706, 0.011764706, 0.011764706, 1)
+color = Color(0, 0, 0, 1)
 
-[node name="Label" type="Label" parent="LeftPanel" unique_id=1852902350]
+[node name="ColorRect" type="PanelContainer" parent="LeftPanel" unique_id=1120681017]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = -11.5
-offset_right = 40.0
-offset_bottom = 11.5
+offset_top = -20.0
+offset_right = 60.0
+offset_bottom = 20.0
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4r2wj")
+
+[node name="Label" type="Label" parent="LeftPanel/ColorRect" unique_id=1852902350]
+layout_mode = 2
 text = "STATS"
-label_settings = ExtResource("3_4r2wj")
+label_settings = SubResource("LabelSettings_avwb0")
 
 [node name="RightPanel" type="ColorRect" parent="." unique_id=755710647]
 anchors_preset = 11

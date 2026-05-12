@@ -103,11 +103,6 @@ public abstract partial class BaseOffensive : BaseItem
 		Upgrade(Properties.CurrentLevel);
 	}
 
-	protected float GetAttackSpeed()
-	{
-		return OffensiveStats.AttackSpeed * PlayerStats.AttackSpeedMultiplier;
-	}
-
 	protected int CalculateCrit()
 	{
 		var roll = GD.Randf();

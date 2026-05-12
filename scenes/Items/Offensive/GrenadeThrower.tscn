@@ -15,12 +15,12 @@ metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_jlsja"]
 script = ExtResource("4_gjjd4")
-Damage = 67
-CritDamageMultiplier = 0.1
-CritChanceProportion = 0.94
-ProjectileRadius = 200
-AttackSpeed = 1.0
-PierceLimit = 999
+BaseDamage = 67
+BaseCritDamageMultiplier = 0.1
+BaseCritChanceProportion = 1.0
+BaseProjectileRadius = 200
+BaseAttackSpeed = 1.0
+BasePierceLimit = 999
 Additional = Dictionary[String, Variant]({
 "CameraRecoilScale": 4.2,
 "TimeToExplode": 0.5

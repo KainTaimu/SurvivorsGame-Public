@@ -10,6 +10,6 @@ public partial class IntStat : AbstractStat
 
 	public override string ToString()
 	{
-		return Value.ToString();
+		return $"{Value} ({_value} + {GetFlatSum():F2} * {GetMultipliersSum():F2})";
 	}
 }

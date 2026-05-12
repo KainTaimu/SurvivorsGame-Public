@@ -76,8 +76,9 @@ public partial class Sniper : Firearm
 
 		if (IsReadyToShoot)
 		{
-			OffensiveStats.CritChanceProportion = (float)(1 - MoveTimeFactor);
-			OffensiveStats.Damage = (int)Math.Clamp(MoveDamageMax * (1 - MoveTimeFactor), MoveDamageMin, MoveDamageMax);
+			OffensiveStats.BaseCritChanceProportion = (float)(1 - MoveTimeFactor);
+			OffensiveStats.BaseDamage = (int)
+				Math.Clamp(MoveDamageMax * (1 - MoveTimeFactor), MoveDamageMin, MoveDamageMax);
 		}
 
 		AttackWithMoveTimeBloom(FirearmStats);

@@ -67,7 +67,7 @@ public abstract partial class Firearm : BaseOffensive, IReloadable, IManualAttac
 
 	protected float ReloadTime => FirearmStats.ReloadTime;
 
-	protected float BloomCoefficientDeg => FirearmStats.BloomCoefficientDeg;
+	protected float BloomCoefficientDeg => FirearmStats.BloomCoefficientDeg * PlayerStats.BloomMultiplier;
 
 	protected float HorizontalRecoilMin => FirearmStats.HorizontalRecoilMin;
 
@@ -81,11 +81,12 @@ public abstract partial class Firearm : BaseOffensive, IReloadable, IManualAttac
 
 	protected float VerticalRecoilRandom => FirearmStats.VerticalRecoilRandom;
 
-	protected float RecoilScale => FirearmStats.RecoilScale;
+	protected float RecoilScale => FirearmStats.RecoilScale * PlayerStats.RecoilMultiplier;
 
 	protected float RecoilAccumilationScale => FirearmStats.RecoilAccumilationScale;
 
-	protected float CameraRecoilScale => FirearmStats.CameraRecoilScale * GameSettings.Instance.CameraShakeScale;
+	protected float CameraRecoilScale =>
+		FirearmStats.CameraRecoilScale * PlayerStats.RecoilMultiplier * GameSettings.Instance.CameraShakeScale;
 
 	protected Crosshair? Crosshair => Crosshair.Instance;
 

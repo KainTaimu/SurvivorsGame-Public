@@ -1,6 +1,5 @@
 namespace Game.Players;
 
-// TODO: Currently unused. Remove?
 public enum CharacterStatType
 {
 	Health,
@@ -19,4 +18,6 @@ public enum CharacterStatType
 	AttackSpeedMultiplier,
 	ProjectileMultiplier,
 	XpMultiplier,
+	BloomMultiplier,
+	RecoilMultiplier,
 }

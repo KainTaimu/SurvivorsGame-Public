@@ -1,4 +1,5 @@
-using Godot.Collections;
+using Game.Levels.Controllers;
+using Game.Players;
 
 namespace Game.Items.Offensive;
 
@@ -6,40 +7,40 @@ namespace Game.Items.Offensive;
 public partial class BaseOffensiveStats : BaseItemStats
 {
 	[Export]
-	public int Damage = 4;
+	public int BaseDamage = 4;
 
 	/// <summary>
 	/// Damage is calculated as: Base Damage + (Base Damage * CritDamageMultiplier)
 	/// </summary>
 	[Export(PropertyHint.Range, "0,3,0.1,or_greater")]
-	public float CritDamageMultiplier = 1.5f;
+	public float BaseCritDamageMultiplier = 1.5f;
 
 	[Export(PropertyHint.Range, "0,1,0.01")]
-	public float CritChanceProportion = 0.1f;
+	public float BaseCritChanceProportion = 0.1f;
 
 	[Export]
-	public int ProjectileSpeed = 3600;
+	public int BaseProjectileSpeed = 3600;
 
 	[Export]
-	public float ProjectileScaleMultiplier = 1;
+	public float BaseProjectileScaleMultiplier = 1;
 
 	[Export]
-	public int ProjectileRadius = 24;
+	public int BaseProjectileRadius = 24;
 
 	[Export]
-	public float AttackSpeed = 0.2f;
+	public float BaseAttackSpeed = 0.2f;
 
 	[Export]
-	public int PierceLimit = 1;
+	public int BasePierceLimit = 1;
 
-	[Export]
-	public Array<Resource> ProjectileEffects
-	{
-		get;
-		set
-		{
-			field = value;
-			EmitChanged();
-		}
-	} = [];
+	private CharacterStats? PlayerStats => GameWorld.Instance.MainPlayer?.Character.CharacterStats;
+
+	public int Damage => BaseDamage;
+	public float CritDamageMultiplier => BaseCritDamageMultiplier * (PlayerStats?.CriticalDamageMultiplier ?? 1f);
+	public float CritChanceProportion => BaseCritChanceProportion * (PlayerStats?.CriticalChanceMultiplier ?? 1f);
+	public int ProjectileSpeed => BaseProjectileSpeed;
+	public float ProjectileScaleMultiplier => BaseProjectileScaleMultiplier;
+	public int ProjectileRadius => BaseProjectileRadius;
+	public float AttackSpeed => BaseAttackSpeed * (PlayerStats?.AttackSpeedMultiplier ?? 1f);
+	public int PierceLimit => BasePierceLimit;
 }

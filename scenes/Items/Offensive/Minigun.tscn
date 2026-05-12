@@ -31,7 +31,7 @@ Tags = Array[int]([2])
 Modifiers = Array[ExtResource("2_oxxwr")]([SubResource("Resource_1j5om")])
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hoxu3"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ld3kt"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_y2vvo"]
@@ -53,13 +53,13 @@ VerticalBaseRecoil = 15.0
 VerticalRecoilRandom = 15.0
 RecoilScale = 0.15
 CameraRecoilScale = 0.6
-Damage = 5
-CritChanceProportion = 0.0
-ProjectileSpeed = 6000
-ProjectileScaleMultiplier = 0.8
-ProjectileRadius = 30
-AttackSpeed = 0.025
-PierceLimit = 3
+BaseDamage = 5
+BaseCritChanceProportion = 0.0
+BaseProjectileSpeed = 6000
+BaseProjectileScaleMultiplier = 0.8
+BaseProjectileRadius = 30
+BaseAttackSpeed = 0.025
+BasePierceLimit = 3
 Additional = Dictionary[String, Variant]({
 "Knockback": 10.0,
 "PlayerPushPerShot": 2600.0

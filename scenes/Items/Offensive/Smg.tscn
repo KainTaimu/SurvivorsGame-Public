@@ -7,7 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://bk4ur13n1hsy2" path="res://assets/SFX/Shoot/Snake's SECOND Authentic Gun Sounds/Full Sounds/9mm/WAV/9mm Single.wav" id="5_2lvmq"]
 [ext_resource type="AudioStream" uid="uid://bmkybqxa3cdlq" path="res://assets/SFX/mag_almost_empty.wav" id="6_snjij"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_snjij"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ld3kt"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_dkd5d"]
@@ -29,13 +29,13 @@ VerticalBaseRecoil = 8.0
 VerticalRecoilRandom = 1.0
 RecoilScale = 0.2
 CameraRecoilScale = 0.4
-Damage = 3
-CritDamageMultiplier = 0.9
-CritChanceProportion = 0.5
-ProjectileSpeed = 6000
-ProjectileScaleMultiplier = 0.6
-AttackSpeed = 0.05
-PierceLimit = 2
+BaseDamage = 3
+BaseCritDamageMultiplier = 0.9
+BaseCritChanceProportion = 0.5
+BaseProjectileSpeed = 6000
+BaseProjectileScaleMultiplier = 0.6
+BaseAttackSpeed = 0.05
+BasePierceLimit = 2
 Additional = Dictionary[String, Variant]({
 "Knockback": 10.0
 })

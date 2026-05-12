@@ -1,5 +1,9 @@
 namespace Game.Players;
 
+/// <summary>
+/// Removing or adding fields requires changing CharacterStatType, and the switch inside
+/// PlayerStatusEffectController.InitializeStatStacks
+/// </summary>
 [GlobalClass]
 public partial class CharacterStats : Resource
 {
@@ -46,7 +50,10 @@ public partial class CharacterStats : Resource
 	private FloatStat _attackSpeedMultiplier = null!;
 
 	[Export]
-	private FloatStat _projectileMultiplier = null!;
+	private FloatStat _bloomMultiplier = null!;
+
+	[Export]
+	private FloatStat _recoilMultiplier = null!;
 
 	[Export]
 	private FloatStat _xpMultiplier = null!;
@@ -87,7 +94,9 @@ public partial class CharacterStats : Resource
 
 	public float AttackSpeedMultiplier => _attackSpeedMultiplier.Value;
 
-	public float ProjectileMultiplier => _projectileMultiplier.Value;
+	public float BloomMultiplier => _bloomMultiplier.Value;
+
+	public float RecoilMultiplier => _recoilMultiplier.Value;
 
 	public float XpMultiplier => _xpMultiplier.Value;
 

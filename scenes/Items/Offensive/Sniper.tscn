@@ -28,14 +28,14 @@ VerticalRecoilMin = 120.0
 VerticalBaseRecoil = 120.0
 VerticalRecoilRandom = 40.0
 CameraRecoilScale = 3.0
-Damage = -1
-CritDamageMultiplier = 1.0
-CritChanceProportion = 1.0
-ProjectileSpeed = 10000
-ProjectileScaleMultiplier = 1.5
-ProjectileRadius = 64
-AttackSpeed = 2.0
-PierceLimit = 9999
+BaseDamage = -1
+BaseCritDamageMultiplier = 1.0
+BaseCritChanceProportion = 1.0
+BaseProjectileSpeed = 10000
+BaseProjectileScaleMultiplier = 1.5
+BaseProjectileRadius = 64
+BaseAttackSpeed = 2.0
+BasePierceLimit = 9999
 Additional = Dictionary[String, Variant]({
 "MoveBloomMaxDeg": 50.0,
 "MoveBloomMinDeg": 0.0,
