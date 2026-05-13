@@ -63,7 +63,11 @@ public abstract partial class Firearm : BaseOffensive, IReloadable, IManualAttac
 
 	public string? AttackActionString { get; set; }
 
-	protected double FireCooldown;
+	protected double FireCooldown
+	{
+		get;
+		set => field = Math.Clamp(value, 0, double.MaxValue);
+	}
 
 	protected float ReloadTime => FirearmStats.ReloadTime;
 

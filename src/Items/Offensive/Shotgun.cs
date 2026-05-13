@@ -31,6 +31,7 @@ public partial class Shotgun : Firearm
 
 		if (!IsReadyToShoot)
 			return;
+
 		_isShotgunReloading = false;
 
 		ShootAudioPlayer?.Play();

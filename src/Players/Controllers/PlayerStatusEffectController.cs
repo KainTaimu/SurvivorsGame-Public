@@ -79,6 +79,7 @@ public partial class PlayerStatusEffectController : Node
 		EmitSignalOnStatusEffectRemoved(statusEffect);
 	}
 
+	// TODO: Handle already existing status effect. Reset duration?
 	public void AddStatusEffect(StatusEffect statusEffect)
 	{
 		statusEffect.Initialize();

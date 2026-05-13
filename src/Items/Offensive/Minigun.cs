@@ -18,7 +18,11 @@ public partial class Minigun : Firearm
 	[Export]
 	private StatusEffect? _movementPenaltyStatusEffect;
 
+	[Export]
+	private StatusEffect? _movementPenaltyWearOffStatusEffect;
+
 	private bool _isMovementPenaltyApplied;
+	private bool _isMovementPenaltyWearOffApplied;
 
 	public override void _Ready()
 	{
@@ -27,17 +31,32 @@ public partial class Minigun : Firearm
 
 		OnEquipped += () =>
 		{
-			if (_movementPenaltyStatusEffect is null || _isMovementPenaltyApplied)
+			if (_movementPenaltyStatusEffect is null || _movementPenaltyWearOffStatusEffect is null)
+				return;
+			if (_isMovementPenaltyApplied)
 				return;
 			Player.StatusEffectController.AddStatusEffect(_movementPenaltyStatusEffect);
 			_isMovementPenaltyApplied = true;
+
+			if (_isMovementPenaltyWearOffApplied)
+			{
+				Player.StatusEffectController.RemoveStatusEffect(_movementPenaltyWearOffStatusEffect);
+				_isMovementPenaltyWearOffApplied = false;
+			}
 		};
 		OnUnequipped += () =>
 		{
-			if (_movementPenaltyStatusEffect is not null && _isMovementPenaltyApplied)
+			if (_movementPenaltyStatusEffect is null || _movementPenaltyWearOffStatusEffect is null)
+				return;
+			if (!_isMovementPenaltyApplied)
+				return;
+			Player.StatusEffectController.RemoveStatusEffect(_movementPenaltyStatusEffect);
+			_isMovementPenaltyApplied = false;
+
+			if (!_isMovementPenaltyWearOffApplied)
 			{
-				Player.StatusEffectController.RemoveStatusEffect(_movementPenaltyStatusEffect);
-				_isMovementPenaltyApplied = false;
+				Player.StatusEffectController.AddStatusEffect(_movementPenaltyWearOffStatusEffect);
+				_isMovementPenaltyWearOffApplied = true;
 			}
 		};
 	}
