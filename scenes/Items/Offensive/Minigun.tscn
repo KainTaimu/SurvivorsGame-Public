@@ -42,7 +42,7 @@ InitialDuration = 2.0
 Modifiers = Array[ExtResource("2_oxxwr")]([SubResource("Resource_1j5om")])
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_1j5om"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ld3kt"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_y2vvo"]
@@ -63,7 +63,7 @@ VerticalRecoilMin = 15.0
 VerticalBaseRecoil = 15.0
 VerticalRecoilRandom = 15.0
 RecoilScale = 0.15
-CameraRecoilScale = 0.6
+CameraRecoilScale = 0.9
 BaseDamage = 5
 BaseCritChanceProportion = 0.0
 BaseProjectileSpeed = 6000

@@ -8,7 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://dukuiytyl14r4" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Reloads, Cycling & More/WAV/Pump Shell Load WAV.wav" id="5_u167f"]
 [ext_resource type="AudioStream" uid="uid://caepfvq0t0m64" path="res://assets/SFX/shotgun_cocking.mp3" id="6_fvcvv"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ld3kt"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_g0kem"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_fvcvv"]
@@ -35,7 +35,7 @@ BaseCritChanceProportion = 0.3
 BaseProjectileSpeed = 2700
 BaseProjectileScaleMultiplier = 0.8
 BaseAttackSpeed = 1.3
-BasePierceLimit = 4
+BasePierceLimit = 2
 Additional = Dictionary[String, Variant]({
 "PelletCount": 16
 })

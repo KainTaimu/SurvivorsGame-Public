@@ -18,7 +18,7 @@ metadata/_custom_type_script = "uid://8rt54h4imtxv"
 [sub_resource type="Resource" id="Resource_k3dr5"]
 script = ExtResource("4_6nomv")
 MagazineCapacity = 17
-CameraRecoilScale = 0.3
+CameraRecoilScale = 0.2
 BaseDamage = 3
 BaseProjectileSpeed = 3200
 BaseProjectileScaleMultiplier = 0.8
