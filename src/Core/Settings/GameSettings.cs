@@ -106,4 +106,11 @@ public partial class GameSettings : Resource
 	public delegate void OnCrosshairScaleChangedEventHandler();
 
 	public static GameSettings Instance = null!;
+
+	public const string DEFAULT_SETTINGS = "uid://21pymi1puoaf";
+
+	public static GameSettings GetDefaultGameSettings()
+	{
+		return GD.Load<GameSettings>(DEFAULT_SETTINGS);
+	}
 }

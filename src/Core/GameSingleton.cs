@@ -20,7 +20,6 @@ public partial class GameSingleton : Node
 	public static GameSingleton Instance = null!;
 
 	public const string SETTINGS_FILE = "user://settings.json";
-	public const string DEFAULT_SETTINGS = "uid://21pymi1puoaf";
 
 	public override void _EnterTree()
 	{
@@ -43,7 +42,7 @@ public partial class GameSingleton : Node
 
 	private void WriteDefaultUserSettings()
 	{
-		var defaultSettings = GD.Load<GameSettings>(DEFAULT_SETTINGS);
+		var defaultSettings = GD.Load<GameSettings>(GameSettings.DEFAULT_SETTINGS);
 		WriteUserSettings(defaultSettings);
 	}
 
@@ -74,7 +73,7 @@ public partial class GameSingleton : Node
 		catch (Exception exception)
 		{
 			Logger.LogError("Failed to read", ProjectSettings.GlobalizePath(SETTINGS_FILE), exception.ToString());
-			GameSettings = GD.Load<GameSettings>(DEFAULT_SETTINGS);
+			GameSettings = GD.Load<GameSettings>(GameSettings.DEFAULT_SETTINGS);
 			return;
 		}
 

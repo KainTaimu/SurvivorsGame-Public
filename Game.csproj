@@ -1,10 +1,10 @@
-<Project Sdk="Godot.NET.Sdk/4.7.0-beta.1">
+<Project Sdk="Godot.NET.Sdk/4.7.0-beta.2">
   <!-- Base Configuration -->
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net8.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>preview</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
     <!-- Performance: JIT Compilation -->

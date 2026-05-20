@@ -118,7 +118,7 @@ public partial class Settings : Control
 		if (@event is not InputEventMouseButton mb)
 			return;
 		if (mb.ButtonIndex == MouseButton.Right)
-			MasterVolume.Value = 0f;
+			MasterVolume.Value = GameSettings.GetDefaultGameSettings().MasterVolume;
 	}
 
 	private void ResetCrosshairScale(InputEvent @event)
@@ -126,6 +126,6 @@ public partial class Settings : Control
 		if (@event is not InputEventMouseButton mb)
 			return;
 		if (mb.ButtonIndex == MouseButton.Right)
-			CrosshairScale.Value = 1.5;
+			CrosshairScale.Value = GameSettings.GetDefaultGameSettings().CrosshairScale;
 	}
 }
