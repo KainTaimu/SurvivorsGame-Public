@@ -31,6 +31,8 @@ public partial class Sniper : Firearm
 
 	private PlayerMovementController MovementController => GameWorld.Instance.MainPlayer.MovementController;
 
+	private bool _isFireQueued;
+
 	public override void _Ready()
 	{
 		base._Ready();
@@ -91,7 +93,22 @@ public partial class Sniper : Firearm
 
 		firearmStats.BloomCoefficientDeg = (float)bloom;
 
-		Attack();
+		if (FireCooldown <= 0)
+		{
+			Attack();
+			_isFireQueued = false;
+			return;
+		}
+
+		if (_isFireQueued)
+			return;
+
+		_isFireQueued = true;
+		GetTree().CreateTimer(FireCooldown, false).Timeout += () =>
+		{
+			Attack();
+			_isFireQueued = false;
+		};
 	}
 
 	private void UpdateMoveTimeBloom(double delta)

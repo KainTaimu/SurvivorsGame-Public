@@ -31,18 +31,7 @@ Tags = Array[int]([2])
 Modifiers = Array[ExtResource("2_oxxwr")]([SubResource("Resource_1j5om")])
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hoxu3"]
-size = Vector2(32, 32)
-
-[sub_resource type="Resource" id="Resource_m53d4"]
-script = ExtResource("3_hoxu3")
-Name = "Overweight"
-Cause = 2
-InitialDuration = 2.0
-Modifiers = Array[ExtResource("2_oxxwr")]([SubResource("Resource_1j5om")])
-metadata/_custom_type_script = "uid://bdk4fdcqvypav"
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ld3kt"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_6etis"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_y2vvo"]
@@ -81,7 +70,6 @@ metadata/_custom_type_script = "uid://di81uufgmcsog"
 script = ExtResource("1_6kirf")
 _windupCurve = SubResource("Curve_e6too")
 _movementPenaltyStatusEffect = SubResource("Resource_6etis")
-_movementPenaltyWearOffStatusEffect = SubResource("Resource_m53d4")
 _projectileScene = ExtResource("2_6kirf")
 ShootAudioPlayer = NodePath("Shoot")
 Properties = SubResource("Resource_y2vvo")

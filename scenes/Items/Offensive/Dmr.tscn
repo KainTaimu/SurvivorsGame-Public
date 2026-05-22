@@ -7,7 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://csidm3n6qam6n" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Full Sound/5.56/WAV/556 Single WAV.wav" id="5_db67r"]
 [ext_resource type="AudioStream" uid="uid://bmkybqxa3cdlq" path="res://assets/SFX/mag_almost_empty.wav" id="6_icohf"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ld3kt"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_lnmnp"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_o65qt"]
