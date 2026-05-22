@@ -7,6 +7,9 @@ namespace Game.Core.ECS;
 public partial class EntityComponentStore : Node
 {
 	[Signal]
+	public delegate void OnEntityRegisteredEventHandler(int id);
+
+	[Signal]
 	public delegate void BeforeEntityUnregisteredEventHandler(int id);
 
 	public const int MAX_SIZE = 65_536;
@@ -60,6 +63,7 @@ public partial class EntityComponentStore : Node
 		_indexToIdTable[idx] = id;
 
 		_count++;
+		EmitSignalOnEntityRegistered(id);
 		return id;
 	}
 

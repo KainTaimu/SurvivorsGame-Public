@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://conjw4f6t4f3m" path="res://src/UI/PauseMenu/PauseController.cs" id="5_ajbtw"]
 [ext_resource type="Script" uid="uid://bjnekrn8u4tcu" path="res://src/Core/ECS/EntityComponentStore.cs" id="6_qaj6y"]
 [ext_resource type="Script" uid="uid://bkpyb01olop50" path="res://src/Levels/Controllers/EnemyRenderer.cs" id="7_ajdj3"]
+[ext_resource type="Script" uid="uid://dhdkif3afteh0" path="res://src/Levels/Controllers/EcsDebugVisualizer.cs" id="7_t3a6r"]
 [ext_resource type="Resource" uid="uid://d3ao5d4ym77ad" path="res://scenes/Enemies/Blueprints/Duck.tres" id="8_1c6ul"]
 [ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="8_5ykgu"]
 [ext_resource type="Script" uid="uid://b7ol6jtjagoe" path="res://src/Levels/Controllers/EnemyWaveDuration.cs" id="9_aig1n"]
@@ -284,6 +285,13 @@ script = ExtResource("5_ajbtw")
 
 [node name="EntityComponentStore" type="Node" parent="Systems" unique_id=1131826051]
 script = ExtResource("6_qaj6y")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Systems/EntityComponentStore" unique_id=328967555]
+
+[node name="ECSDebugVisualizer" type="Node2D" parent="Systems/EntityComponentStore/CanvasLayer" unique_id=903254170 node_paths=PackedStringArray("_componentStore")]
+script = ExtResource("7_t3a6r")
+_componentStore = NodePath("../..")
+_boxSize = 8.0
 
 [node name="EnemySystems" type="Node" parent="Systems" unique_id=1808118587]
 
