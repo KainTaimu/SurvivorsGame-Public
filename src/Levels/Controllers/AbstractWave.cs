@@ -4,7 +4,7 @@ using Game.Core.ECS;
 namespace Game.Levels.Controllers;
 
 [GlobalClass]
-public abstract partial class EnemyWave : Resource, IEnemyWave
+public abstract partial class AbstractWave : Resource, IEnemyWave
 {
 	[Signal]
 	public delegate void OnWaveStartEventHandler();

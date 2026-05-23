@@ -8,7 +8,7 @@ namespace Game.Levels.Controllers;
 public partial class EnemyWaveController : Node
 {
 	[Export]
-	public Array<EnemyWave> Waves = null!;
+	public Array<AbstractWave> Waves = null!;
 
 	[Export]
 	public EntityComponentStore EntityComponentStore = null!;
@@ -39,7 +39,7 @@ public partial class EnemyWaveController : Node
 		set => field = Math.Clamp(value, 0, EntityComponentStore.MAX_SIZE);
 	}
 
-	private EnemyWave? _currentWave;
+	private AbstractWave? _currentWave;
 	private int _currentWaveIndex;
 	public readonly List<int> SpawnedIds = [];
 

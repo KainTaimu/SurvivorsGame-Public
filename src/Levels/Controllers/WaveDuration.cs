@@ -1,16 +1,22 @@
 namespace Game.Levels.Controllers;
 
 [GlobalClass]
-public partial class EnemyWaveSpawnCount : EnemyWave, IEnemyWave
+public partial class WaveDuration : AbstractWave
 {
 	[Export]
-	public int SpawnCountTarget = 30;
+	public double Duration = 30;
+
+	[Export]
+	public uint MaxMobs = 50;
+
+	private double _waveTimeLeft;
 
 	public override void Process(double delta)
 	{
+		_waveTimeLeft -= delta;
 		SpawnTimeLeft -= delta;
 
-		if (SpawnedIds.Count >= SpawnCountTarget)
+		if (_waveTimeLeft <= 0)
 		{
 			EndWave();
 			return;
@@ -32,6 +38,7 @@ public partial class EnemyWaveSpawnCount : EnemyWave, IEnemyWave
 
 	public override void StartWave(int waveIndex)
 	{
+		_waveTimeLeft = Duration;
 		SpawnTimeLeft = SpawnMaxTime;
 		Index = waveIndex;
 		EmitSignalOnWaveStart();
@@ -47,7 +54,7 @@ public partial class EnemyWaveSpawnCount : EnemyWave, IEnemyWave
 	{
 		if (Spawner is null)
 			return;
-		if (SpawnedIds.Count >= SpawnCountTarget)
+		if (WaveController.Alive >= MaxMobs)
 			return;
 
 		SpawnTimeLeft = GD.RandRange(SpawnMinTime, SpawnMaxTime);
@@ -66,7 +73,6 @@ public partial class EnemyWaveSpawnCount : EnemyWave, IEnemyWave
 
 	public override string ToString()
 	{
-		return $"Wave {Index} : {SpawnCountTarget} spawn count: " + $"{EnemyBlueprints
-				.Count} types";
+		return $"Wave {Index} : {Duration}s duration: {EnemyBlueprints.Count}" + $" types";
 	}
 }
