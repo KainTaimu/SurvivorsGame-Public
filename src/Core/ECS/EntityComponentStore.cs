@@ -22,7 +22,8 @@ public partial class EntityComponentStore : Node
 
 	private readonly Dictionary<int, int> _indexToIdTable = []; // {Index to position: Id}
 
-	private int _count;
+	// Do not decrement! Used in RegisterEntity()
+	private int _nextEntityId;
 
 	// Array is of size MAX_SIZE
 	private readonly Dictionary<Type, Array> _components = [];
@@ -43,7 +44,7 @@ public partial class EntityComponentStore : Node
 	/// </remarks>
 	public int RegisterEntity()
 	{
-		var id = _count;
+		var id = _nextEntityId;
 		// Find free index
 		int idx;
 		for (idx = 0; idx < MAX_SIZE; idx++)
@@ -62,7 +63,7 @@ public partial class EntityComponentStore : Node
 		_idToIndexTable[id] = idx;
 		_indexToIdTable[idx] = id;
 
-		_count++;
+		_nextEntityId++;
 		EmitSignalOnEntityRegistered(id);
 		return id;
 	}

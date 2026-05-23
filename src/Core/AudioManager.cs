@@ -4,10 +4,16 @@ namespace Game.Core;
 
 public partial class AudioManager : Node
 {
+	private float _masterVolume;
+
 	public float MasterVolume
 	{
 		get => GameSettings.Instance.MasterVolume;
-		set => UpdateMasterBusVolume();
+		set
+		{
+			_masterVolume = value;
+			UpdateMasterBusVolume();
+		}
 	}
 
 	public override void _Ready()

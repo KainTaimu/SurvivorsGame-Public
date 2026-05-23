@@ -41,7 +41,7 @@ public partial class EcsDebugVisualizer : Node2D
 		var index = idToIndexTable[id];
 
 		var x = (index % 16) * _boxSize;
-		var y = (index / 16) * _boxSize;
+		var y = (index / 16f) * _boxSize;
 		var pos = new Vector2(x, y);
 		var rect = new Rect2() { Size = Vector2.One * _boxSize, Position = pos };
 		_drawnRects.Add(id, new DrawnRect(rect, true));

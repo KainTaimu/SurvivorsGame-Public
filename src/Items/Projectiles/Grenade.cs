@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Game.Core.ECS;
 using Game.Core.Settings;
 using Game.Levels.Controllers;
 
@@ -17,8 +16,6 @@ public partial class Grenade : RigidBody2D
 	public BaseOffensive OffensiveOrigin = null!;
 
 	private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
-
-	private EntityComponentStore ComponentStore => EntityComponentStore.Instance;
 
 	private double _t;
 

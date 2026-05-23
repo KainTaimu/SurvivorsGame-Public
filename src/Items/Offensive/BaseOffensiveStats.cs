@@ -33,14 +33,14 @@ public partial class BaseOffensiveStats : BaseItemStats
 	[Export]
 	public int BasePierceLimit = 1;
 
-	private CharacterStats? PlayerStats => GameWorld.Instance.MainPlayer?.Character.CharacterStats;
+	private CharacterStats PlayerStats => GameWorld.Instance.MainPlayer.Character.CharacterStats;
 
 	public int Damage => BaseDamage;
-	public float CritDamageMultiplier => BaseCritDamageMultiplier * (PlayerStats?.CriticalDamageMultiplier ?? 1f);
-	public float CritChanceProportion => BaseCritChanceProportion * (PlayerStats?.CriticalChanceMultiplier ?? 1f);
+	public float CritDamageMultiplier => BaseCritDamageMultiplier * PlayerStats.CriticalDamageMultiplier;
+	public float CritChanceProportion => BaseCritChanceProportion * PlayerStats.CriticalChanceMultiplier;
 	public int ProjectileSpeed => BaseProjectileSpeed;
 	public float ProjectileScaleMultiplier => BaseProjectileScaleMultiplier;
 	public int ProjectileRadius => BaseProjectileRadius;
-	public float AttackSpeed => BaseAttackSpeed * (PlayerStats?.AttackSpeedMultiplier ?? 1f);
+	public float AttackSpeed => BaseAttackSpeed * PlayerStats.AttackSpeedMultiplier;
 	public int PierceLimit => BasePierceLimit;
 }
