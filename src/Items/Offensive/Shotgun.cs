@@ -36,16 +36,12 @@ public partial class Shotgun : Firearm
 
 		ShootAudioPlayer?.Play();
 		if (_cockingAudioPlayer is not null)
-		{
 			GetTree().CreateTimer(OffensiveStats.AttackSpeed / 2).Timeout += () => _cockingAudioPlayer.Play();
-		}
 
 		FireCooldown = OffensiveStats.AttackSpeed;
 		MagazineCount--;
 		if (MagazineCount <= 0)
-		{
 			Reload();
-		}
 
 		var playerVector = Player.GetCanvasTransform() * Player.Position;
 
@@ -84,37 +80,37 @@ public partial class Shotgun : Firearm
 
 	private Tween? _reloadTween;
 
-	public override void Reload()
-	{
-		if (_reloadCooldown > 0)
-			return;
-		if (MagazineCount == MagazineCapacity)
-			return;
-
-		_reloadTween?.Kill();
-		_reloadTween = null;
-		_isShotgunReloading = true;
-
-		// Add delay before reloading sequence to punish reload/shoot spam
-
-		_reloadTween = GetTree().CreateTween().SetLoops(MagazineCapacity - MagazineCount);
-		_reloadTween
-			.TweenCallback(
-				Callable.From(() =>
-				{
-					if (!_isShotgunReloading)
-						return;
-					MagazineCount++;
-					_shellReloadAudioPlayer?.Play();
-					if (MagazineCount == MagazineCapacity)
-					{
-						_isShotgunReloading = false;
-						_reloadTween.Kill();
-					}
-				})
-			)
-			.SetDelay(ReloadTime);
-	}
+	// public override void Reload()
+	// {
+	// 	if (_reloadCooldown > 0)
+	// 		return;
+	// 	if (MagazineCount == MagazineCapacity)
+	// 		return;
+	//
+	// 	_reloadTween?.Kill();
+	// 	_reloadTween = null;
+	// 	_isShotgunReloading = true;
+	//
+	// 	// Add delay before reloading sequence to punish reload/shoot spam
+	//
+	// 	_reloadTween = GetTree().CreateTween().SetLoops(MagazineCapacity - MagazineCount);
+	// 	_reloadTween
+	// 		.TweenCallback(
+	// 			Callable.From(() =>
+	// 			{
+	// 				if (!_isShotgunReloading)
+	// 					return;
+	// 				MagazineCount++;
+	// 				_shellReloadAudioPlayer?.Play();
+	// 				if (MagazineCount == MagazineCapacity)
+	// 				{
+	// 					_isShotgunReloading = false;
+	// 					_reloadTween.Kill();
+	// 				}
+	// 			})
+	// 		)
+	// 		.SetDelay(ReloadTime);
+	// }
 
 	public override void _Process(double delta)
 	{

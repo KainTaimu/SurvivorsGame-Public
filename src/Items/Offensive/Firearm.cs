@@ -5,6 +5,7 @@ using Game.UI;
 
 namespace Game.Items.Offensive;
 
+// TODO: Bad design. Do not inherit, use composition via interface.
 public abstract partial class Firearm : BaseOffensive, IReloadable, IManualAttack
 {
 	[Signal]
@@ -219,7 +220,8 @@ public abstract partial class Firearm : BaseOffensive, IReloadable, IManualAttac
 		recoilY = Math.Clamp(recoilY, VerticalRecoilMin, float.MaxValue);
 
 		var recoil = new Vector2(recoilX, -recoilY) * RecoilScale;
-		Crosshair.Recoil.ApplyImpulse(recoil);
+		var shouldHorizontalRecoil = FirearmStats.FireGroup != FireGroup.Single;
+		Crosshair.Recoil.ApplyImpulse(recoil, applyHorizontalRecoil: shouldHorizontalRecoil);
 	}
 
 	// TODO: Move camera recoil to a method in PlayerCameraController

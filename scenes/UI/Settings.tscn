@@ -3,7 +3,7 @@
 [ext_resource type="LabelSettings" uid="uid://c0lq4rqaj62dx" path="res://scenes/UI/SettingsLabelSettings.tres" id="1_g0tyt"]
 [ext_resource type="Script" uid="uid://hiaypuga6gnf" path="res://src/Core/Settings/Settings.cs" id="1_ydmms"]
 
-[node name="Settings" type="MarginContainer" unique_id=83201529 node_paths=PackedStringArray("MasterVolume", "MasterVolumeSideLabel", "GoreSelection", "CameraShake", "CameraShakeScale", "CrosshairScale", "CrosshairScaleLabel", "DamageIndicators")]
+[node name="Settings" type="MarginContainer" unique_id=83201529 node_paths=PackedStringArray("MouseSensitivity", "MouseSensitivitySideLabel", "MasterVolume", "MasterVolumeSideLabel", "GoreSelection", "CameraShake", "CameraShakeScale", "CrosshairScale", "CrosshairScaleLabel", "DamageIndicators")]
 process_mode = 3
 process_priority = -9999
 anchors_preset = 11
@@ -16,6 +16,8 @@ grow_vertical = 2
 theme_override_constants/margin_left = 7
 theme_override_constants/margin_right = 7
 script = ExtResource("1_ydmms")
+MouseSensitivity = NodePath("VBoxContainer/MouseSensitivity/Sens2")
+MouseSensitivitySideLabel = NodePath("VBoxContainer/MouseSensitivity/Label")
 MasterVolume = NodePath("VBoxContainer/MasterVolume/MasterVolume")
 MasterVolumeSideLabel = NodePath("VBoxContainer/MasterVolume/Label")
 GoreSelection = NodePath("VBoxContainer/Gore/Gore2")
@@ -28,6 +30,43 @@ DamageIndicators = NodePath("VBoxContainer/DamageIndicators/DamageIndicators2")
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1471734743]
 layout_mode = 2
 alignment = 1
+
+[node name="MouseSensitivity" type="HSplitContainer" parent="VBoxContainer" unique_id=1049569565]
+layout_mode = 2
+split_offsets = PackedInt32Array(160, 0)
+dragging_enabled = false
+dragger_visibility = 1
+split_offset = 160
+
+[node name="Sens" type="Label" parent="VBoxContainer/MouseSensitivity" unique_id=610270521]
+custom_minimum_size = Vector2(0, 32)
+custom_maximum_size = Vector2(-1, 32)
+layout_mode = 2
+text = "Mouse Sensitivity"
+label_settings = ExtResource("1_g0tyt")
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="Sens2" type="HSlider" parent="VBoxContainer/MouseSensitivity" unique_id=526384963]
+custom_minimum_size = Vector2(83.677, 32)
+custom_maximum_size = Vector2(-1, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.1
+max_value = 2.0
+step = 0.01
+value = 1.1
+tick_count = 10
+ticks_on_borders = true
+ticks_position = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/MouseSensitivity" unique_id=1528514529]
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 2
+text = "X.X"
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="MasterVolume" type="HSplitContainer" parent="VBoxContainer" unique_id=651266347]
 layout_mode = 2
@@ -221,5 +260,6 @@ popup/item_0/id = 0
 popup/item_1/text = "Enabled"
 popup/item_1/id = 1
 
+[connection signal="gui_input" from="VBoxContainer/MouseSensitivity/Sens2" to="." method="ResetMouseSensitivity"]
 [connection signal="gui_input" from="VBoxContainer/MasterVolume/MasterVolume" to="." method="ResetMasterVolume"]
 [connection signal="gui_input" from="VBoxContainer/CrosshairScale/CrosshairScale2/HSlider2" to="." method="ResetCrosshairScale"]

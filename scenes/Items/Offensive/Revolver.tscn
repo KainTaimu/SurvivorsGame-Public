@@ -1,17 +1,13 @@
 [gd_scene format=3 uid="uid://twvhgblbtovy"]
 
 [ext_resource type="Script" uid="uid://ccxu0f6wcpxw8" path="res://src/Items/Offensive/Revolver.cs" id="1_0wf3b"]
-[ext_resource type="Texture2D" uid="uid://bh2t3jjtgjys7" path="res://assets/UI/revolver_cylinder.png" id="2_0ntdy"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_o3lg4"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="2_wc6to"]
-[ext_resource type="Script" uid="uid://wf7jhuhepxtp" path="res://src/UI/RevolverAmmoCount.cs" id="2_wjj7r"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_y3hip"]
 [ext_resource type="AudioStream" uid="uid://dspbe1b535vno" path="res://assets/SFX/revolver_cocking.mp3" id="6_0u5yb"]
 [ext_resource type="AudioStream" uid="uid://byaqp87dpfq3j" path="res://assets/SFX/revolver_gunshot.mp3" id="6_fgf34"]
-[ext_resource type="Texture2D" uid="uid://bywdcxqghufl4" path="res://assets/UI/revolver_fired.tres" id="8_y3hip"]
-[ext_resource type="Texture2D" uid="uid://xssw45w6smmp" path="res://assets/UI/revolver_unfired.tres" id="9_n3sky"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ld3kt"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_o3lg4"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_whe3a"]
@@ -30,24 +26,24 @@ HorizontalRecoilRandom = 20.0
 VerticalRecoilMin = 120.0
 VerticalBaseRecoil = 120.0
 VerticalRecoilRandom = 40.0
-RecoilScale = 0.8
+RecoilScale = 0.6
 CameraRecoilScale = 1.8
-BaseDamage = 15
+FireGroup = 0
+BaseDamage = 30
 BaseCritDamageMultiplier = 1.0
 BaseCritChanceProportion = 0.5
 BaseProjectileSpeed = 5000
 BaseProjectileScaleMultiplier = 1.2
 BaseProjectileRadius = 42
-BaseAttackSpeed = 1.0
+BaseAttackSpeed = 0.2
 BasePierceLimit = 8
 Additional = Dictionary[String, Variant]({
 "Knockback": 50.0
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[node name="Revolver" type="Node2D" unique_id=1975794211 node_paths=PackedStringArray("_ammoCount", "CockAudioPlayer", "ShootAudioPlayer")]
+[node name="Revolver" type="Node2D" unique_id=1975794211 node_paths=PackedStringArray("CockAudioPlayer", "ShootAudioPlayer")]
 script = ExtResource("1_0wf3b")
-_ammoCount = NodePath("CanvasLayer")
 CockAudioPlayer = NodePath("CockAudioPlayer")
 _projectileScene = ExtResource("2_o3lg4")
 ShootAudioPlayer = NodePath("ShootAudioPlayer")
@@ -58,6 +54,7 @@ Stats = SubResource("Resource_n3sky")
 process_mode = 3
 stream = ExtResource("6_fgf34")
 volume_db = -7.0
+max_polyphony = 2
 
 [node name="CockAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1261930206]
 process_mode = 3
@@ -65,54 +62,3 @@ stream = ExtResource("6_0u5yb")
 volume_db = 12.0
 mix_target = 2
 max_polyphony = 6
-
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1938930498 node_paths=PackedStringArray("_revolver", "_revolverCylinderSprite", "_cartidgeSprites", "_leftPosition", "_rightPosition")]
-visible = false
-script = ExtResource("2_wjj7r")
-_revolver = NodePath("..")
-_revolverCylinderSprite = NodePath("RevolverCylinder")
-_cartidgeSprites = [NodePath("RevolverCylinder/Cartridge1"), NodePath("RevolverCylinder/Cartridge2"), NodePath("RevolverCylinder/Cartridge3"), NodePath("RevolverCylinder/Cartridge4"), NodePath("RevolverCylinder/Cartridge5"), NodePath("RevolverCylinder/Cartridge6")]
-_firedCartridge = ExtResource("8_y3hip")
-_unfiredCartridge = ExtResource("9_n3sky")
-_leftPosition = NodePath("Left")
-_rightPosition = NodePath("Right")
-
-[node name="Left" type="Marker2D" parent="CanvasLayer" unique_id=395434852]
-position = Vector2(96, 984)
-
-[node name="Right" type="Marker2D" parent="CanvasLayer" unique_id=1905433381]
-position = Vector2(1824, 984)
-
-[node name="RevolverCylinder" type="Sprite2D" parent="CanvasLayer" unique_id=1078624920]
-scale = Vector2(0.192, 0.192)
-texture = ExtResource("2_0ntdy")
-
-[node name="Cartridge1" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=817127743]
-position = Vector2(0, -291.6665)
-scale = Vector2(1.036, 1.036)
-texture = ExtResource("9_n3sky")
-
-[node name="Cartridge2" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=196050588]
-position = Vector2(250, -145.83301)
-scale = Vector2(1.036, 1.036)
-texture = ExtResource("9_n3sky")
-
-[node name="Cartridge3" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1686300093]
-position = Vector2(250, 145.83398)
-scale = Vector2(1.036, 1.036)
-texture = ExtResource("9_n3sky")
-
-[node name="Cartridge4" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=2107974818]
-position = Vector2(0, 291.66748)
-scale = Vector2(1.036, 1.036)
-texture = ExtResource("9_n3sky")
-
-[node name="Cartridge5" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=1922285309]
-position = Vector2(-250, 145.83398)
-scale = Vector2(1.036, 1.036)
-texture = ExtResource("9_n3sky")
-
-[node name="Cartridge6" type="Sprite2D" parent="CanvasLayer/RevolverCylinder" unique_id=936040375]
-position = Vector2(-250, -145.83301)
-scale = Vector2(1.036, 1.036)
-texture = ExtResource("9_n3sky")

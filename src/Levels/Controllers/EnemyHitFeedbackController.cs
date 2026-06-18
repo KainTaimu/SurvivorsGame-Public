@@ -1,4 +1,5 @@
 using Game.Core.ECS;
+using Game.Core.Settings;
 using Game.VFX;
 
 namespace Game.Levels.Controllers;
@@ -6,6 +7,9 @@ namespace Game.Levels.Controllers;
 public partial class EnemyHitFeedbackController : Node
 {
 	private EntityComponentStore ComponentStore => EntityComponentStore.Instance;
+
+	[Export]
+	private GoreManager? _goreManager;
 
 	[Export]
 	private AudioStreamPlayer? _hitmarkerStreamPlayer;
@@ -37,6 +41,11 @@ public partial class EnemyHitFeedbackController : Node
 			else
 			{
 				DamageIndicatorPool.Instance?.GetIndicator(pos.Position, hit.Damage, hit.IsCrit);
+				if (GameSettings.Instance.GoreEffects >= GoreEffectsEnum.Medium)
+				{
+					var spurtDirection = GameWorld.Instance.MainPlayer.GlobalPosition.AngleToPoint(pos.Position);
+					_goreManager?.SpawnHitSpurtPaticles(pos.Position, spurtDirection);
+				}
 
 				ComponentStore.SetComponent(id, newHit with { Damage = -1 });
 				_hitmarkerStreamPlayer?.Play();

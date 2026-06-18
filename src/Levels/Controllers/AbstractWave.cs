@@ -51,10 +51,19 @@ public abstract partial class AbstractWave : Resource, IEnemyWave
 	} = 1;
 
 	[Export]
+	public Curve? SpawnTimeCurveOverMaxTime;
+
+	[Export]
 	public int SpawnBatchMin = 1;
 
 	[Export]
 	public int SpawnBatchMax = 1;
+
+	private float RandomSpawnTime =>
+		(float)(
+			GD.RandRange(SpawnMinTime, SpawnMaxTime)
+			* (SpawnTimeCurveOverMaxTime?.Sample((float)(SpawnTimeLeft / SpawnMaxTime)) ?? 1f)
+		);
 
 	public List<int> SpawnedIds => WaveController.SpawnedIds;
 
@@ -74,6 +83,11 @@ public abstract partial class AbstractWave : Resource, IEnemyWave
 	public abstract void EndWave();
 
 	public abstract void SpawnEnemy();
+
+	public virtual float GetRandomSpawnTime()
+	{
+		return RandomSpawnTime;
+	}
 
 	public override string ToString()
 	{

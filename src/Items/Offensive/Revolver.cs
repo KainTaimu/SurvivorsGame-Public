@@ -7,7 +7,7 @@ namespace Game.Items.Offensive;
 public partial class Revolver : Firearm
 {
 	[Export]
-	private RevolverAmmoCount _ammoCount = null!;
+	private RevolverAmmoCount? _ammoCount;
 
 	[Export]
 	public AudioStreamPlayer? CockAudioPlayer;
@@ -15,17 +15,17 @@ public partial class Revolver : Firearm
 	public override void _Ready()
 	{
 		base._Ready();
-		OnAttack += () =>
-		{
-			GetTree().CreateTimer(FireCooldown, false).Timeout += () =>
-			{
-				_ammoCount.RotateCylinder();
-				if (MagazineCount != 0)
-					CockAudioPlayer?.Play();
-			};
-			ApplyCameraRecoil();
-		};
-
+		// OnAttack += () =>
+		// {
+		// 	GetTree().CreateTimer(FireCooldown, false).Timeout += () =>
+		// 	{
+		// 		_ammoCount?.RotateCylinder();
+		// 		if (MagazineCount != 0)
+		// 			CockAudioPlayer?.Play();
+		// 	};
+		// 	ApplyCameraRecoil();
+		// };
+		//
 		// Reload SFX
 		OnReloadStart += () =>
 		{
@@ -62,7 +62,7 @@ public partial class Revolver : Firearm
 			return;
 		}
 
-		if (!Input.IsActionPressed(AttackActionString ?? InputMapNames.PrimaryAttack))
+		if (!Input.IsActionJustPressed(AttackActionString ?? InputMapNames.PrimaryAttack))
 			return;
 		Attack();
 	}

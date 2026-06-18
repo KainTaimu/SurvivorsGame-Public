@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bh0y8e3kwml5r" path="res://src/Items/Projectiles/Grenade.cs" id="1_0cjwe"]
 [ext_resource type="Texture2D" uid="uid://b4m51u8lfnpny" path="res://assets/Sprites/grenade_hot.png" id="2_0cjwe"]
 [ext_resource type="PackedScene" uid="uid://pihky31jidp2" path="res://scenes/VFX/ExplosionParticles.tscn" id="2_delvo"]
-[ext_resource type="PackedScene" uid="uid://bxoaaswv72j6m" path="res://scenes/VFX/Fire.tscn" id="3_oct76"]
+[ext_resource type="PackedScene" uid="uid://bxoaaswv72j6m" path="res://scenes/VFX/ExplosionFireParticles.tscn" id="3_oct76"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tmchr"]
 

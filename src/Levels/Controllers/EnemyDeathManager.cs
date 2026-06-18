@@ -23,11 +23,9 @@ public partial class EnemyDeathManager : Node
 		if (ComponentStore.GetComponent<PositionComponent>(id, out var pos))
 		{
 			if (!ComponentStore.GetComponent<DeathCauseComponent>(id, out var causeComponent))
-				GoreManager?.SpawnParticles(pos.Position);
+				GoreManager?.SpawnDeathParticles(pos.Position);
 			else
-			{
-				GoreManager?.SpawnParticles(pos.Position, causeComponent.CauseEnum);
-			}
+				GoreManager?.SpawnDeathParticles(pos.Position, causeComponent.CauseEnum);
 		}
 
 		if (ComponentStore.GetComponent<DeathRewardComponent>(id, out var reward))

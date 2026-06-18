@@ -79,6 +79,8 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 	{
 		if (PrimaryAttack is null)
 			return;
+		if (ManualOffensives.Count <= 1)
+			return;
 
 		var oldPrimary = PrimaryAttack;
 		oldPrimary.AttackActionString = null;
@@ -97,6 +99,8 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 	private void PreviousManualAttack()
 	{
 		if (PrimaryAttack is null)
+			return;
+		if (ManualOffensives.Count <= 1)
 			return;
 
 		var oldPrimary = PrimaryAttack;

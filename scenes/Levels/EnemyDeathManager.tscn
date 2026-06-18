@@ -1,16 +1,6 @@
 [gd_scene format=3 uid="uid://c8d8andvaknho"]
 
 [ext_resource type="Script" uid="uid://cv0uegm46tv7j" path="res://src/Levels/Controllers/EnemyDeathManager.cs" id="1_xyvax"]
-[ext_resource type="PackedScene" uid="uid://1hchpk0m1v70" path="res://scenes/Levels/GoreManager.tscn" id="2_xyvax"]
-[ext_resource type="Material" uid="uid://dvi7xyjhs2chr" path="res://scenes/VFX/NormalDeathParticlesProcessMaterial.tres" id="3_l2so0"]
-[ext_resource type="Material" uid="uid://cholhn1qxqaej" path="res://scenes/VFX/ExplosionDeathParticlesProcessMaterial.tres" id="4_urcdq"]
 
-[node name="EnemyDeathManager" type="Node" unique_id=821545961 node_paths=PackedStringArray("GoreManager")]
+[node name="EnemyDeathManager" type="Node" unique_id=821545961]
 script = ExtResource("1_xyvax")
-GoreManager = NodePath("GoreManager")
-
-[node name="GoreManager" parent="." unique_id=623372769 instance=ExtResource("2_xyvax")]
-_deathParticleProcessMaterialsByCause = Dictionary[int, ParticleProcessMaterial]({
-0: ExtResource("3_l2so0"),
-1: ExtResource("4_urcdq")
-})

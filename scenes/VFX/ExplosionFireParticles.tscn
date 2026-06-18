@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bxoaaswv72j6m"]
 
-[ext_resource type="Texture2D" uid="uid://cgo8hucmx2qnc" path="res://assets/VFX/Pixel fire asset pack v1.2/Pixel Fire Asset Pack Floored/fire asset red floored/Group 5 - 1.png" id="1_ouu28"]
+[ext_resource type="Texture2D" uid="uid://cgo8hucmx2qnc" path="res://assets/VFX/Pixel fire asset pack v1.2/Pixel Fire Asset Pack Floored/fire asset red floored/Group 5 - 1.png" id="1_wogfj"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_o5tdg"]
 particles_animation = true
@@ -18,7 +18,7 @@ texture_mode = 1
 curve = SubResource("Curve_hut5v")
 
 [sub_resource type="Curve" id="Curve_ouu28"]
-_data = [Vector2(0.78450525, 0.9890386), -3.2313578, -0.0955729, 0, 0, Vector2(0.9581849, 0.8111971), -1.9746825, -1.9746825, 0, 0, Vector2(1, 0), -19.39962, 0.0, 1, 0]
+_data = [Vector2(0.78450525, 0.9890386), -3.2313578, -0.0955729, 0, 0, Vector2(0.8320921, 0.48394102), -4.624109, -4.624109, 0, 0, Vector2(1, 0), -2.88673, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="CurveTexture" id="CurveTexture_o5tdg"]
@@ -29,8 +29,8 @@ lifetime_randomness = 0.25
 particle_flag_disable_z = true
 direction = Vector3(0, 0, 0)
 spread = 180.0
-initial_velocity_min = 294.37
-initial_velocity_max = 829.17
+initial_velocity_min = 202.11
+initial_velocity_max = 1150.0
 gravity = Vector3(0, 0, 0)
 damping_min = 100.00001
 damping_max = 100.00001
@@ -45,9 +45,9 @@ anim_speed_max = 67.64
 z_index = -1
 material = SubResource("CanvasItemMaterial_o5tdg")
 emitting = false
-amount = 24
-texture = ExtResource("1_ouu28")
-lifetime = 32.0
+amount = 12
+texture = ExtResource("1_wogfj")
+lifetime = 8.0
 one_shot = true
 explosiveness = 1.0
 fixed_fps = 20

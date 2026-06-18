@@ -5,6 +5,12 @@ namespace Game.UI;
 public partial class Settings : Control
 {
 	[Export]
+	public Slider MouseSensitivity = null!;
+
+	[Export]
+	public Label MouseSensitivitySideLabel = null!;
+
+	[Export]
 	public Slider MasterVolume = null!;
 
 	[Export]
@@ -39,18 +45,33 @@ public partial class Settings : Control
 			.CallDeferred();
 	}
 
+	// Try to not cause an exception in UpdateOptions and SubscribeOptions so the other settings get applied as expected
+
 	private void UpdateOptions()
 	{
+		MouseSensitivity.Value = GameSettings.Instance.MouseSensitivity;
+		MouseSensitivitySideLabel.Text = GameSettings.Instance.MouseSensitivity.ToString();
 		MasterVolume.Value = GameSettings.Instance.MasterVolume;
 		MasterVolumeSideLabel.Text = $"{GameSettings.Instance.MasterVolume}dB";
-		GoreSelection.Selected = GameSettings.Instance.GoreEffects switch
+		switch (GameSettings.Instance.GoreEffects)
 		{
-			GoreEffectsEnum.Disabled => 0,
-			GoreEffectsEnum.Low => 1,
-			GoreEffectsEnum.Medium => 2,
-			GoreEffectsEnum.High => 3,
-			_ => throw new NotImplementedException(),
-		};
+			case GoreEffectsEnum.Disabled:
+				GoreSelection.Selected = 0;
+				break;
+			case GoreEffectsEnum.Low:
+				GoreSelection.Selected = 1;
+				break;
+			case GoreEffectsEnum.Medium:
+				GoreSelection.Selected = 2;
+				break;
+			case GoreEffectsEnum.High:
+				GoreSelection.Selected = 3;
+				break;
+			default:
+				Logger.LogError("Invalid GoreEffects toggle enum");
+				break;
+		}
+
 		CameraShake.Selected = GameSettings.Instance.EnableCameraShake ? 1 : 0;
 		CameraShakeScale.Value = GameSettings.Instance.CameraShakeScale;
 
@@ -61,6 +82,11 @@ public partial class Settings : Control
 
 	private void SubscribeOptions()
 	{
+		MouseSensitivity.ValueChanged += value =>
+		{
+			GameSettings.Instance.MouseSensitivity = (float)value;
+			MouseSensitivitySideLabel.Text = $"{GameSettings.Instance.MouseSensitivity}";
+		};
 		MasterVolume.ValueChanged += value =>
 		{
 			GameSettings.Instance.MasterVolume = (float)value;
@@ -82,6 +108,9 @@ public partial class Settings : Control
 				case 3:
 					GameSettings.Instance.GoreEffects = GoreEffectsEnum.High;
 					break;
+				default:
+					Logger.LogError("Invalid GoreEffects enum");
+					break;
 			}
 		};
 		CameraShake.ItemSelected += idx =>
@@ -94,6 +123,9 @@ public partial class Settings : Control
 				case 1:
 					GameSettings.Instance.EnableCameraShake = true;
 					break;
+				default:
+					Logger.LogError("Invalid CameraShake toggle enum");
+					break;
 			}
 		};
 		CameraShakeScale.ValueChanged += value => GameSettings.Instance.CameraShakeScale = (float)value;
@@ -104,13 +136,28 @@ public partial class Settings : Control
 		};
 		DamageIndicators.ItemSelected += idx =>
 		{
-			GameSettings.Instance.EnableDamageIndicators = idx switch
+			switch (idx)
 			{
-				0 => false,
-				1 => true,
-				_ => GameSettings.Instance.EnableDamageIndicators,
-			};
+				case 0:
+					GameSettings.Instance.EnableDamageIndicators = false;
+					break;
+				case 1:
+					GameSettings.Instance.EnableDamageIndicators = true;
+					break;
+				default:
+					Logger.LogError("Invalid DamageIndicators toggle enum");
+					break;
+			}
 		};
+	}
+
+	// subscribe the gui_input signal from the editor to these methods
+	private void ResetMouseSensitivity(InputEvent @event)
+	{
+		if (@event is not InputEventMouseButton mb)
+			return;
+		if (mb.ButtonIndex == MouseButton.Right)
+			MouseSensitivity.Value = GameSettings.GetDefaultGameSettings().MouseSensitivity;
 	}
 
 	private void ResetMasterVolume(InputEvent @event)

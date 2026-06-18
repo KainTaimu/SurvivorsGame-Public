@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://vke6hu033wdh"]
+
+[ext_resource type="Texture2D" uid="uid://s6cermv0tqif" path="res://assets/Sprites/exp2_0.png" id="1_h8ojb"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qekg8"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 4
+particles_anim_loop = true
+
+[sub_resource type="Curve" id="Curve_07dei"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 1.4, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_qekg8"]
+curve = SubResource("Curve_07dei")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_h8ojb"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 45.8
+inherit_velocity_ratio = 0.135
+spread = 180.0
+gravity = Vector3(0, -500, 0)
+scale_min = 0.19999999
+scale_max = 1.1
+scale_curve = SubResource("CurveTexture_qekg8")
+anim_speed_max = 7.56
+anim_offset_max = 0.3071
+turbulence_enabled = true
+turbulence_noise_strength = 8.85
+sub_emitter_mode = 2
+sub_emitter_amount_at_end = 1
+
+[node name="FireColumn" type="GPUParticles2D" unique_id=63514143]
+material = SubResource("CanvasItemMaterial_qekg8")
+amount = 500
+texture = ExtResource("1_h8ojb")
+lifetime = 4.109999999999999
+preprocess = 10.0
+randomness = 1.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_h8ojb")

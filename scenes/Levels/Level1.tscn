@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://cb8ri46pvs36a"]
+
+[ext_resource type="PackedScene" uid="uid://d3su0ak3dnifl" path="res://scenes/Levels/Level.tscn" id="1_h2u8a"]
+[ext_resource type="PackedScene" uid="uid://7kxy1v1ggvi8" path="res://scenes/Players/PlayerRookie.tscn" id="2_jkyfg"]
+[ext_resource type="Script" uid="uid://dau6m811dtep8" path="res://src/Levels/Controllers/BlueprintWeight.cs" id="13_yq63u"]
+[ext_resource type="Script" uid="uid://y77qtp32wo00" path="res://src/Enemies/EnemyStats.cs" id="16_6ykrs"]
+[ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="17_k3qtc"]
+[ext_resource type="Script" uid="uid://d2tvxgxbv87i2" path="res://src/Levels/Controllers/WeightedWaveBlueprintCollection.cs" id="18_aw5j3"]
+[ext_resource type="Script" uid="uid://b7ol6jtjagoe" path="res://src/Levels/Controllers/WaveDuration.cs" id="19_rdjc1"]
+
+[sub_resource type="Resource" id="Resource_vfbtg"]
+script = ExtResource("16_6ykrs")
+DamageOnContact = 4
+MaxHealth = 8
+MoveSpeed = 165.0
+metadata/_custom_type_script = "uid://y77qtp32wo00"
+
+[sub_resource type="Resource" id="Resource_jkyfg"]
+script = ExtResource("17_k3qtc")
+Name = "shondo"
+Type = 1
+Stats = SubResource("Resource_vfbtg")
+metadata/_custom_type_script = "uid://fti2ky20j85c"
+
+[sub_resource type="Resource" id="Resource_4h7ej"]
+script = ExtResource("13_yq63u")
+Blueprint = SubResource("Resource_jkyfg")
+metadata/_custom_type_script = "uid://dau6m811dtep8"
+
+[sub_resource type="Resource" id="Resource_8nqap"]
+script = ExtResource("16_6ykrs")
+DamageOnContact = 6
+MaxHealth = 10
+MoveSpeed = 171.0
+MoneyDrop = 3
+metadata/_custom_type_script = "uid://y77qtp32wo00"
+
+[sub_resource type="Resource" id="Resource_u4ox6"]
+script = ExtResource("17_k3qtc")
+Name = "vanoss"
+Type = 1
+Stats = SubResource("Resource_8nqap")
+metadata/_custom_type_script = "uid://fti2ky20j85c"
+
+[sub_resource type="Resource" id="Resource_o8yur"]
+script = ExtResource("13_yq63u")
+Blueprint = SubResource("Resource_u4ox6")
+metadata/_custom_type_script = "uid://dau6m811dtep8"
+
+[sub_resource type="Resource" id="Resource_nu2g1"]
+script = ExtResource("16_6ykrs")
+MaxHealth = 6
+MoveSpeed = 155.0
+MoneyDrop = 1
+metadata/_custom_type_script = "uid://y77qtp32wo00"
+
+[sub_resource type="Resource" id="Resource_5mhgh"]
+script = ExtResource("17_k3qtc")
+Name = "duck"
+Type = 1
+Stats = SubResource("Resource_nu2g1")
+metadata/_custom_type_script = "uid://fti2ky20j85c"
+
+[sub_resource type="Resource" id="Resource_dfih8"]
+script = ExtResource("13_yq63u")
+Blueprint = SubResource("Resource_5mhgh")
+metadata/_custom_type_script = "uid://dau6m811dtep8"
+
+[sub_resource type="Resource" id="Resource_n31k3"]
+script = ExtResource("18_aw5j3")
+Weights = Array[Object]([SubResource("Resource_4h7ej"), SubResource("Resource_o8yur"), SubResource("Resource_dfih8")])
+metadata/_custom_type_script = "uid://d2tvxgxbv87i2"
+
+[sub_resource type="Resource" id="Resource_jng41"]
+script = ExtResource("19_rdjc1")
+Duration = 9999.0
+MaxMobs = 100
+EnemyBlueprints = SubResource("Resource_n31k3")
+SpawnMinTime = 1.0
+SpawnMaxTime = 1.2
+metadata/_custom_type_script = "uid://b7ol6jtjagoe"
+
+[node name="Level1" unique_id=2141389114 instance=ExtResource("1_h2u8a")]
+
+[node name="Player" parent="." index="2" unique_id=1386970244 instance=ExtResource("2_jkyfg")]
+
+[node name="GameWorld" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="0" unique_id=562045734 node_paths=PackedStringArray("MainPlayer")]
+MainPlayer = NodePath("../../Player")
+
+[node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=247564660]
+Waves = Array[Object]([SubResource("Resource_jng41")])

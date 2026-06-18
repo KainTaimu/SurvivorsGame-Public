@@ -1,13 +1,13 @@
 using System.Reflection;
 using System.Text;
+using Game.Levels.Controllers;
 using Game.Players;
 
 namespace Game.UI.Menus;
 
 public partial class PauseMenu : CanvasLayer
 {
-	[Export]
-	private Player _player = null!;
+	private Player Player => GameWorld.Instance.MainPlayer;
 
 	[Export]
 	private PauseController _pauseController = null!;
@@ -53,7 +53,7 @@ public partial class PauseMenu : CanvasLayer
 	private void UpdatePlayerStats()
 	{
 		var statString = new StringBuilder();
-		var playerStats = _player.Character.CharacterStats;
+		var playerStats = Player.Character.CharacterStats;
 
 		var pType = playerStats.GetType();
 		var fields = pType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);

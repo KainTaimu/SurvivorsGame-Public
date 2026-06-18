@@ -22,6 +22,18 @@ public partial class GameSettings : Resource
 	[ExportGroup("Game")]
 	[Export]
 	[JsonProperty]
+	public float MouseSensitivity
+	{
+		get;
+		set
+		{
+			field = value;
+			EmitSignalOnMouseSensitivityChanged();
+		}
+	} = 1.0f;
+
+	[Export]
+	[JsonProperty]
 	public bool EnableCameraShake
 	{
 		get;
@@ -104,6 +116,9 @@ public partial class GameSettings : Resource
 
 	[Signal]
 	public delegate void OnCrosshairScaleChangedEventHandler();
+
+	[Signal]
+	public delegate void OnMouseSensitivityChangedEventHandler();
 
 	public static GameSettings Instance = null!;
 

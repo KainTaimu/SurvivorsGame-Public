@@ -57,7 +57,7 @@ public partial class WaveDuration : AbstractWave
 		if (WaveController.Alive >= MaxMobs)
 			return;
 
-		SpawnTimeLeft = GD.RandRange(SpawnMinTime, SpawnMaxTime);
+		SpawnTimeLeft = GetRandomSpawnTime();
 
 		var bp = EnemyBlueprints.GetBlueprint();
 		var id = Spawner.SpawnEnemy(bp);

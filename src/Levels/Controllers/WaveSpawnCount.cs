@@ -50,7 +50,7 @@ public partial class WaveSpawnCount : AbstractWave, IEnemyWave
 		if (SpawnedIds.Count >= SpawnCountTarget)
 			return;
 
-		SpawnTimeLeft = GD.RandRange(SpawnMinTime, SpawnMaxTime);
+		SpawnTimeLeft = GetRandomSpawnTime();
 
 		var bp = EnemyBlueprints.GetBlueprint();
 		var id = Spawner.SpawnEnemy(bp);

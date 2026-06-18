@@ -1,4 +1,5 @@
 using Game.Core.Settings;
+using Game.Levels.Controllers;
 using Game.Players;
 using Game.UI.Menus;
 
@@ -9,8 +10,7 @@ public partial class Crosshair : Node2D
 	[Signal]
 	public delegate void OnCrosshairMovedEventHandler();
 
-	[Export]
-	public Player Player = null!;
+	public Player Player => GameWorld.Instance.MainPlayer;
 
 	[Export]
 	public AnimatedSprite2D PrimaryCrosshairSprite { get; private set; } = null!;
@@ -21,12 +21,13 @@ public partial class Crosshair : Node2D
 	[Export]
 	public PauseController PauseController { get; private set; } = null!;
 
-	[Export(PropertyHint.Range, "0,5,0.25")]
 	private float CrosshairSize
 	{
 		get => GameSettings.Instance.CrosshairScale;
 		set { Callable.From(() => ChangeCrosshairSize(value)).CallDeferred(); }
 	}
+
+	private static float MouseSensitivity => GameSettings.Instance.MouseSensitivity;
 
 	public float PrimaryCrosshairSpreadRatio =>
 		PrimaryCrosshairSprite.Frame
@@ -90,8 +91,8 @@ public partial class Crosshair : Node2D
 	{
 		if (@event is not InputEventMouseMotion motion)
 			return;
-		Position += motion.Relative;
-		CrosshairVelocity += motion.Relative;
+		Position += motion.Relative * MouseSensitivity;
+		CrosshairVelocity += motion.Relative * MouseSensitivity;
 		ClampCrosshairToViewport();
 		EmitSignalOnCrosshairMoved();
 	}
@@ -155,7 +156,7 @@ public partial class Crosshair : Node2D
 		private Tween? _impulseTweener;
 		private Tween? _recoilJumpTweener;
 
-		public void ApplyImpulse(Vector2 impulse, float accumilatedImpuseFactor = 1f)
+		public void ApplyImpulse(Vector2 impulse, float accumilatedImpuseFactor = 1f, bool applyHorizontalRecoil = true)
 		{
 			const float easeReturn = 0.2f;
 
@@ -166,7 +167,8 @@ public partial class Crosshair : Node2D
 			_impulseScale = Math.Clamp(_impulseScale, 0f, 1f);
 
 			// Punish avoiding vertical recoil by shooting above or below center
-			ApplyHorizontalRecoilPunish(ref impulse);
+			if (applyHorizontalRecoil)
+				ApplyHorizontalRecoilPunish(ref impulse);
 
 			var finalImpulseVector = impulse + _accumilatedImpulse * _impulseScale;
 			var finalCrosshairPos = targetCrosshair.Position + finalImpulseVector;

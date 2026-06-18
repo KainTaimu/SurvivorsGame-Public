@@ -1,0 +1,174 @@
+[gd_scene format=3 uid="uid://7kxy1v1ggvi8"]
+
+[ext_resource type="PackedScene" uid="uid://bix8bkfo5pwko" path="res://scenes/Players/Player.tscn" id="1_y2s7r"]
+[ext_resource type="Script" uid="uid://wsto3khl70md" path="res://src/Players/FloatStat.cs" id="2_c6sut"]
+[ext_resource type="Texture2D" uid="uid://coljm8hobe4v6" path="res://assets/Players/shondo.png" id="2_xcl4g"]
+[ext_resource type="Script" uid="uid://tfaqh3bcxdha" path="res://src/Players/IntStat.cs" id="3_8uris"]
+[ext_resource type="Script" uid="uid://rykv3f6ereih" path="res://src/Players/CharacterStats.cs" id="4_mxkc7"]
+[ext_resource type="Script" uid="uid://ud6xfov0txuh" path="res://src/Players/Character.cs" id="5_6wc5x"]
+[ext_resource type="Shader" uid="uid://bgl0yr4nfmpqx" path="res://src/Shaders/flash.gdshader" id="6_6wc5x"]
+[ext_resource type="PackedScene" uid="uid://okgy2hpbgy53" path="res://scenes/Items/Offensive/Blick.tscn" id="7_8uris"]
+
+[sub_resource type="Resource" id="Resource_tvywd"]
+script = ExtResource("2_c6sut")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_855qw"]
+script = ExtResource("2_c6sut")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_j73re"]
+script = ExtResource("2_c6sut")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_mokft"]
+script = ExtResource("2_c6sut")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_igdhk"]
+script = ExtResource("2_c6sut")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_7c66e"]
+script = ExtResource("3_8uris")
+metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+
+[sub_resource type="Resource" id="Resource_7r3om"]
+script = ExtResource("3_8uris")
+metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+
+[sub_resource type="Resource" id="Resource_ay1ar"]
+script = ExtResource("2_c6sut")
+_value = 36.0
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_4giq6"]
+script = ExtResource("2_c6sut")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_lkiwy"]
+script = ExtResource("2_c6sut")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_kb4sv"]
+script = ExtResource("3_8uris")
+_value = 50
+metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+
+[sub_resource type="Resource" id="Resource_vmmr7"]
+script = ExtResource("2_c6sut")
+_value = 420.0
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_pje1o"]
+script = ExtResource("2_c6sut")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_l5xc2"]
+script = ExtResource("2_c6sut")
+_value = 100.0
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_nmhw4"]
+script = ExtResource("2_c6sut")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_h6xk1"]
+script = ExtResource("2_c6sut")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_cbfmd"]
+script = ExtResource("4_mxkc7")
+_maxHealth = SubResource("Resource_kb4sv")
+_moveSpeed = SubResource("Resource_vmmr7")
+_defense = SubResource("Resource_7c66e")
+_criticalChance = SubResource("Resource_j73re")
+_pickupRangeRadius = SubResource("Resource_l5xc2")
+_healthRegenPerSecond = SubResource("Resource_7r3om")
+_invincibilityTime = SubResource("Resource_lkiwy")
+_hitboxRadius = SubResource("Resource_ay1ar")
+_incomingDamageMultiplier = SubResource("Resource_4giq6")
+_outgoingDamageMultiplier = SubResource("Resource_pje1o")
+_criticalChanceMultiplier = SubResource("Resource_mokft")
+_criticalDamageMultiplier = SubResource("Resource_igdhk")
+_attackSpeedMultiplier = SubResource("Resource_tvywd")
+_bloomMultiplier = SubResource("Resource_855qw")
+_recoilMultiplier = SubResource("Resource_nmhw4")
+_xpMultiplier = SubResource("Resource_h6xk1")
+metadata/_custom_type_script = "uid://rykv3f6ereih"
+
+[sub_resource type="Resource" id="Resource_h2f2d"]
+script = ExtResource("5_6wc5x")
+CharacterName = "Rookie"
+Description = ""
+CharacterStats = SubResource("Resource_cbfmd")
+metadata/_custom_type_script = "uid://ud6xfov0txuh"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mxkc7"]
+shader = ExtResource("6_6wc5x")
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/flash_state = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wuwji"]
+atlas = ExtResource("2_xcl4g")
+region = Rect2(0, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5pqvm"]
+atlas = ExtResource("2_xcl4g")
+region = Rect2(31, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dpv53"]
+atlas = ExtResource("2_xcl4g")
+region = Rect2(62, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eai52"]
+atlas = ExtResource("2_xcl4g")
+region = Rect2(93, 0, 31, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tvywd"]
+resource_local_to_scene = true
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wuwji")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5pqvm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dpv53")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eai52")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wuwji")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5pqvm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dpv53")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eai52")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 7.0
+}]
+
+[node name="Player" unique_id=1386970244 instance=ExtResource("1_y2s7r")]
+position = Vector2(0, -1)
+Character = SubResource("Resource_h2f2d")
+
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=881638213]
+material = SubResource("ShaderMaterial_mxkc7")
+sprite_frames = SubResource("SpriteFrames_tvywd")
+
+[node name="Blick" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="0" unique_id=1989500741 instance=ExtResource("7_8uris")]
