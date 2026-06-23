@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Game.Core.ECS;
+using Arch.Core;
 using Godot.Collections;
 
 namespace Game.Levels.Controllers;
@@ -10,9 +10,6 @@ public partial class EnemyWaveController : Node
 	[Export]
 	public Array<AbstractWave> Waves = null!;
 
-	[Export]
-	public EntityComponentStore EntityComponentStore = null!;
-
 	[ExportCategory("Toggles")]
 	[Export]
 	public bool Enabled
@@ -21,27 +18,13 @@ public partial class EnemyWaveController : Node
 		set => field = value;
 	} = true;
 
-	public int TotalSpawned
-	{
-		get;
-		set =>
-			// Spawned should not be decremented because we rely on it to create unique ids
-			field = Math.Clamp(
-				value,
-				field,
-				EntityComponentStore.MAX_SIZE
-			);
-	}
+	public int TotalSpawned { get; set; }
 
-	public int Alive
-	{
-		get;
-		set => field = Math.Clamp(value, 0, EntityComponentStore.MAX_SIZE);
-	}
+	public int Alive { get; set; }
 
 	private AbstractWave? _currentWave;
 	private int _currentWaveIndex;
-	public readonly List<int> SpawnedIds = [];
+	public readonly List<Entity> SpawnedEntities = [];
 
 	public static EnemyWaveController? Instance;
 
@@ -49,7 +32,7 @@ public partial class EnemyWaveController : Node
 	{
 		Instance = this;
 
-		EntityComponentStore.BeforeEntityUnregistered += _ => Alive--;
+		GameWorld.World.SubscribeEntityCreated(((in _) => Alive--));
 
 		foreach (var wave in Waves)
 			wave.Initialize(this);

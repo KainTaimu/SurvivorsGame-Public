@@ -1,3 +1,4 @@
+using Arch.Core;
 using Game.Core.ECS;
 
 namespace Game.Levels.Controllers;
@@ -7,30 +8,40 @@ public partial class EnemyDeathManager : Node
 	[Export]
 	public GoreManager? GoreManager;
 
-	private EntityComponentStore ComponentStore => EntityComponentStore.Instance;
-
 	public override void _Process(double delta)
 	{
-		foreach (var (id, health) in ComponentStore.Query<HealthComponent>())
-		{
-			if (health.Health <= 0)
-				HandleDeath(id);
-		}
+		GameWorld.World.Query<HealthComponent, PositionComponent>(
+			in new QueryDescription().WithAll<HealthComponent>(),
+			(entity, ref health, ref position) =>
+			{
+				// if (Engine.GetProcessFrames() % 10 == 0)
+				// 	Logger.LogDebug($"id={entity.Id} version={entity.Version} health={health.Health}");
+				if (health.Health <= 0)
+					HandleDeath(entity, ref position);
+			}
+		);
 	}
 
-	private void HandleDeath(int id)
+	private void HandleDeath(Entity entity, ref PositionComponent pos)
 	{
-		if (ComponentStore.GetComponent<PositionComponent>(id, out var pos))
-		{
-			if (!ComponentStore.GetComponent<DeathCauseComponent>(id, out var causeComponent))
-				GoreManager?.SpawnDeathParticles(pos.Position);
-			else
-				GoreManager?.SpawnDeathParticles(pos.Position, causeComponent.CauseEnum);
-		}
+		if (GameWorld.World.TryGet<DeathCauseComponent>(entity, out var cause))
+			GoreManager?.SpawnDeathParticles(pos.Position, cause.CauseEnum);
+		else
+			GoreManager?.SpawnDeathParticles(pos.Position);
 
-		if (ComponentStore.GetComponent<DeathRewardComponent>(id, out var reward))
+		if (GameWorld.World.TryGet<DeathRewardComponent>(entity, out var reward))
 			LevelData.Instance?.Money += reward.Money;
 
-		ComponentStore.UnregisterEntity(id);
+		Callable
+			.From(() =>
+			{
+				DestroyEntity(entity);
+			})
+			.CallDeferred();
+	}
+
+	private static void DestroyEntity(Entity entity)
+	{
+		GameWorld.World.Destroy(entity);
 	}
 }

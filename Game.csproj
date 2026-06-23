@@ -1,4 +1,4 @@
-<Project Sdk="Godot.NET.Sdk/4.7.0-rc.3">
+<Project Sdk="Godot.NET.Sdk/4.7.0">
   <!-- Base Configuration -->
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -60,6 +60,7 @@
     <!-- <TrimMode>link</TrimMode> -->
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Arch-Events" Version="2.1.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="5.3.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

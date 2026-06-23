@@ -1,3 +1,6 @@
 namespace Game.Core.ECS;
 
-public readonly record struct PositionComponent(Vector2 Position) { }
+public struct PositionComponent(Vector2 position)
+{
+	public Vector2 Position = position;
+};

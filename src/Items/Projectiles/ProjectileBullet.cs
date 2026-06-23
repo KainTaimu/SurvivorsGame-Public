@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Arch.Core;
 using Game.Core.ECS;
 using Game.Items.Offensive;
 using Game.Levels.Controllers;
@@ -11,12 +12,10 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 	public Sprite2D Sprite = null!;
 
 	private int _pierceCount;
-	private readonly List<int> _hits = [];
+	private readonly List<Entity> _hits = [];
 
 	private BaseOffensive OffensiveOrigin => (BaseOffensive)Origin;
 	private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
-
-	private EntityComponentStore ComponentStore => EntityComponentStore.Instance;
 
 	public ProjectilePool ProjectilePool { get; set; } = null!;
 
@@ -54,31 +53,42 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 		tweenScale.TweenProperty(Sprite, "scale", finalScale, 0.05);
 		IsInitialized = true;
 
-		if (!TargetQuery.GetTargetsRayCast(Position, Rotation, HitRadius, out var ids))
+		if (
+			!TargetQuery.GetTargetsRayCast(
+				Position,
+				Rotation,
+				HitRadius,
+				out var hits,
+				OffensiveOrigin.OffensiveStats.PierceLimit
+			)
+		)
 			return;
 
-		foreach (var id in ids)
+		foreach (var entity in hits)
 		{
-			if (_hits.Contains(id))
-				continue;
+			if (_hits.Contains(entity))
+				return;
 
-			if (!ComponentStore.GetComponent<PositionComponent>(id, out var lastPos))
-				continue;
+			var lastPos = GameWorld.World.Get<PositionComponent>(entity);
 
 			// BUG:
 			// URGENT
 			// Because of the ray cast, the projectile may still hit an enemy that the projectile in front of
 			// it has killed.
 			Origin.GetTree().CreateTimer(Position.DistanceTo(lastPos.Position) / ProjectileSpeed, false).Timeout +=
-				() => OffensiveOrigin.HandleHit(id: id);
+				() =>
+				{
+					if (!GameWorld.World.IsAlive(entity))
+						return;
+					OffensiveOrigin.HandleHit(entity);
+				};
 
-			_hits.Add(id);
+			_hits.Add(entity);
 			_pierceCount++;
 			if (_pierceCount >= PierceLimit)
 			{
 				Origin.GetTree().CreateTimer(Position.DistanceTo(lastPos.Position) / ProjectileSpeed, false).Timeout +=
 					ReturnToPool;
-				return;
 			}
 		}
 	}

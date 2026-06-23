@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://btsjfyj4mvtfa" path="res://src/Levels/Controllers/GoreManager.cs" id="1_2mqri"]
 [ext_resource type="PackedScene" uid="uid://bqy6yv5uhrqp0" path="res://scenes/VFX/BloodKillParticles.tscn" id="2_pkkq0"]
+[ext_resource type="PackedScene" uid="uid://dxxi85vpicqhd" path="res://scenes/VFX/BloodSpurtParticles.tscn" id="3_0ylxp"]
 
 [node name="GoreManager" type="Node" unique_id=623372769]
 script = ExtResource("1_2mqri")
 _enemyDeathParticlesScene = ExtResource("2_pkkq0")
+_spurtParticlesScene = ExtResource("3_0ylxp")

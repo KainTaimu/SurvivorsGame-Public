@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Game.Core.ECS;
+using Arch.Core;
 
 namespace Game.Levels.Controllers;
 
@@ -65,11 +65,10 @@ public abstract partial class AbstractWave : Resource, IEnemyWave
 			* (SpawnTimeCurveOverMaxTime?.Sample((float)(SpawnTimeLeft / SpawnMaxTime)) ?? 1f)
 		);
 
-	public List<int> SpawnedIds => WaveController.SpawnedIds;
+	public List<Entity> SpawnedEntities => WaveController.SpawnedEntities;
 
 	public double SpawnTimeLeft;
 	protected EnemyWaveController WaveController = null!;
-	protected EntityComponentStore Entities = null!;
 	public int Index;
 
 	public EnemySpawner? Spawner => EnemySpawner.Instance;

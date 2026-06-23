@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Arch.Core;
 using Game.Core.ECS;
 using Game.Core.Services;
 using Game.Models;
@@ -7,9 +8,6 @@ namespace Game.Levels.Controllers;
 
 public partial class EnemyRenderer : Node
 {
-	[Export]
-	private EntityComponentStore _entities = null!;
-
 	[Export]
 	private PackedScene _multiMesh = null!;
 
@@ -50,30 +48,31 @@ public partial class EnemyRenderer : Node
 			mmi.VisibleInstanceCount = 0;
 		}
 
-		foreach (var (id, pos, sprite) in _entities.Query<PositionComponent, AnimatedSpriteComponent>())
-		{
-			if (!_visibilityGrid.ContainsWorld(pos.Position))
-				continue;
-
-			if (!_spriteToMultiMesh.TryGetValue(sprite.SpriteName, out var mmi))
-				mmi = CreateNewMultiMesh(sprite.SpriteName);
-
-			var count = _mmiVisibilityCount[mmi]++;
-			if (count >= mmi.InstanceCount)
+		GameWorld.World.Query<PositionComponent, AnimatedSpriteComponent>(
+			in new QueryDescription().WithAll<PositionComponent, AnimatedSpriteComponent>(),
+			(entity, ref pos, ref sprite) =>
 			{
-				mmi.InstanceCount = (int)(mmi.InstanceCount * INSTANCE_GROWTH_MULTIPLIER);
-			}
+				if (!_visibilityGrid.ContainsWorld(pos.Position))
+					return;
 
-			UpdateEnemyInstance(mmi, id, count, pos.Position, sprite);
-		}
+				if (!_spriteToMultiMesh.TryGetValue(sprite.SpriteName, out var mmi))
+					mmi = CreateNewMultiMesh(sprite.SpriteName);
+
+				var count = _mmiVisibilityCount[mmi]++;
+				if (count >= mmi.InstanceCount)
+					mmi.InstanceCount = (int)(mmi.InstanceCount * INSTANCE_GROWTH_MULTIPLIER);
+
+				UpdateEnemyInstance(entity, mmi, count, pos.Position, sprite);
+			}
+		);
 
 		foreach (var (mmi, visibleCount) in _mmiVisibilityCount)
 			mmi.VisibleInstanceCount = visibleCount;
 	}
 
 	private void UpdateEnemyInstance(
+		Entity entity,
 		MultiMesh multiMesh,
-		int entityId,
 		int instanceIdx,
 		Vector2 pos,
 		AnimatedSpriteComponent sprite
@@ -96,7 +95,7 @@ public partial class EnemyRenderer : Node
 		else
 			updatedSprite.AnimationTime -= GetProcessDeltaTime();
 
-		_entities.UpdateComponent(entityId, updatedSprite);
+		GameWorld.World.Set(entity, updatedSprite);
 
 		var custom = new EnemyShaderCustomData(
 			updatedSprite.FrameCountX,

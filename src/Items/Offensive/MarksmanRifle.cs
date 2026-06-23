@@ -1,4 +1,5 @@
 using Game.Core.ECS;
+using Game.Levels.Controllers;
 
 namespace Game.Items.Offensive;
 
@@ -21,11 +22,11 @@ public partial class MarksmanRifle : Sniper
 
 		foreach (var id in ids)
 		{
-			if (!ComponentStore.GetComponent<PositionComponent>(id, out var posComponent))
+			if (!GameWorld.World.TryGet<PositionComponent>(id, out var posComponent))
 				continue;
 
 			var pushForce = playerPos.DirectionTo(posComponent.Position) * NearbyPushAmount;
-			ComponentStore.SetComponent(id, new PositionComponent(posComponent.Position + pushForce));
+			GameWorld.World.Set(id, new PositionComponent(posComponent.Position + pushForce));
 		}
 	}
 }

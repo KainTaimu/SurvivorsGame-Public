@@ -1,3 +1,5 @@
+using Arch.Core;
+
 namespace Game.Levels.Controllers;
 
 [GlobalClass]
@@ -33,7 +35,6 @@ public partial class WaveDuration : AbstractWave
 	public override void Initialize(EnemyWaveController waveController)
 	{
 		WaveController = waveController;
-		Entities = waveController.EntityComponentStore;
 	}
 
 	public override void StartWave(int waveIndex)
@@ -60,15 +61,15 @@ public partial class WaveDuration : AbstractWave
 		SpawnTimeLeft = GetRandomSpawnTime();
 
 		var bp = EnemyBlueprints.GetBlueprint();
-		var id = Spawner.SpawnEnemy(bp);
-		if (id == -1)
+		var enemy = Spawner.SpawnEnemy(bp);
+		if (enemy is null)
 		{
 			Logger.LogError("failed to spawn");
 			return;
 		}
 
 		WaveController.Alive++;
-		SpawnedIds.Add(id);
+		SpawnedEntities.Add((Entity)enemy);
 	}
 
 	public override string ToString()

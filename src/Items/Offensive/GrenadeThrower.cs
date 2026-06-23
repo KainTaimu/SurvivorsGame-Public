@@ -1,3 +1,4 @@
+using Arch.Core;
 using Game.Core.ECS;
 using Game.Levels.Controllers;
 using Game.UI;
@@ -58,13 +59,13 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 		GetTree().CreateTimer(OffensiveStats.AttackSpeed * 0.5).Timeout += QueueFree;
 	}
 
-	protected override void HandleHitECS(int id)
+	protected override void HandleHitECS(Entity entity)
 	{
-		base.HandleHitECS(id);
-		if (!ComponentStore.GetComponent<HealthComponent>(id, out var health))
+		base.HandleHitECS(entity);
+		if (!GameWorld.World.TryGet<HealthComponent>(entity, out var health))
 			return;
 		if (health.Health > 0)
 			return;
-		ComponentStore.RegisterComponent(id, new DeathCauseComponent(DeathCauseEnum.Explosion));
+		GameWorld.World.Add(entity, new DeathCauseComponent(DeathCauseEnum.Explosion));
 	}
 }

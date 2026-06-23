@@ -1,3 +1,4 @@
+using Arch.Core;
 using Game.Core.ECS;
 using Game.Levels.Controllers;
 using Godot.Collections;
@@ -22,39 +23,26 @@ public abstract partial class BaseOffensive : BaseItem
 
 	protected EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
 
-	protected EntityComponentStore ComponentStore => EntityComponentStore.Instance;
-
 	public abstract void Attack();
 
 	protected virtual void PostUpgrade(int newLevel) { }
 
-	public void HandleHit(Node? node = null, int? id = null)
+	public void HandleHit(Entity entity)
 	{
-		if (!(node is null ^ id is null))
-		{
-			// Logger.LogError("cannot pass both node and id");
-			throw new ArgumentException("cannot pass both node and id");
-		}
-
-		if (node is not null)
-		{
-			// HandleHitNode(node);
-			throw new NotImplementedException();
-		}
-
-		if (id is not null)
-		{
-			HandleDamageECS(id.Value);
-			HandleHitECS(id.Value);
-		}
+		HandleDamageECS(entity);
+		HandleHitECS(entity);
 	}
 
 	/// <summary> Handle the damage to the enemy </summary>
 	// ReSharper disable once InconsistentNaming
-	protected void HandleDamageECS(int id)
+	protected void HandleDamageECS(Entity entity)
 	{
-		if (!ComponentStore.GetComponent<HealthComponent>(id, out var health))
+		if (!GameWorld.World.IsAlive(entity))
 			return;
+		if (!GameWorld.World.Has<HealthComponent>(entity))
+			return;
+
+		ref var health = ref GameWorld.World.Get<HealthComponent>(entity);
 
 		var crit = CalculateCrit();
 		var randomDamage =
@@ -70,17 +58,14 @@ public abstract partial class BaseOffensive : BaseItem
 			Damage = damage,
 			IsCrit = crit > 0,
 		};
-		if (!ComponentStore.GetComponent<HitFeedbackComponent>(id, out _))
-			ComponentStore.RegisterComponent(id, hit);
-		else
-			ComponentStore.SetComponent(id, hit);
+		GameWorld.World.Set(entity, hit);
 
-		ComponentStore.SetComponent(id, health with { Health = newHealth });
+		health.Health = newHealth;
 	}
 
 	/// <summary> Handle additional effects to the enemy like knockback </summary>
 	// ReSharper disable once InconsistentNaming
-	protected virtual void HandleHitECS(int id) { }
+	protected virtual void HandleHitECS(Entity entity) { }
 
 	// protected abstract void HandleHitNode(Node node);
 

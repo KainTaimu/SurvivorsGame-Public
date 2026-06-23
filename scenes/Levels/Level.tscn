@@ -5,9 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b802cb5a7o5fr" path="res://scenes/UI/PauseMenu.tscn" id="4_pi0ox"]
 [ext_resource type="Script" uid="uid://cyldy6fxdbadt" path="res://src/Levels/Controllers/LevelData.cs" id="4_qsiuk"]
 [ext_resource type="Script" uid="uid://conjw4f6t4f3m" path="res://src/UI/PauseMenu/PauseController.cs" id="5_ajbtw"]
-[ext_resource type="Script" uid="uid://bjnekrn8u4tcu" path="res://src/Core/ECS/EntityComponentStore.cs" id="6_qaj6y"]
 [ext_resource type="Script" uid="uid://bkpyb01olop50" path="res://src/Levels/Controllers/EnemyRenderer.cs" id="7_ajdj3"]
-[ext_resource type="Script" uid="uid://dhdkif3afteh0" path="res://src/Levels/Controllers/EcsDebugVisualizer.cs" id="7_t3a6r"]
 [ext_resource type="Script" uid="uid://cuxklvvvd40t4" path="res://scenes/Levels/EnemySystems.cs" id="8_t3a6r"]
 [ext_resource type="PackedScene" uid="uid://umbqj1xym7lp" path="res://scenes/Core/FodderMultiMeshInstance2D.tscn" id="9_ror81"]
 [ext_resource type="Script" uid="uid://cwkq6cfxp7jub" path="res://src/Levels/Controllers/EnemyCollisionSolver.cs" id="10_ajdj3"]
@@ -23,7 +21,6 @@
 [ext_resource type="PackedScene" uid="uid://do6p1pg4x0vkf" path="res://scenes/UI/Hud.tscn" id="20_vg5sh"]
 [ext_resource type="PackedScene" uid="uid://cbpyycvkwcedb" path="res://scenes/UI/PickupUi.tscn" id="26_faxpm"]
 [ext_resource type="PackedScene" uid="uid://1hchpk0m1v70" path="res://scenes/Levels/GoreManager.tscn" id="27_3nhtq"]
-[ext_resource type="PackedScene" uid="uid://dxxi85vpicqhd" path="res://scenes/VFX/BloodSpurtParticles.tscn" id="28_3nhtq"]
 [ext_resource type="Material" uid="uid://dvi7xyjhs2chr" path="res://scenes/VFX/NormalDeathParticlesProcessMaterial.tres" id="28_g1w0t"]
 [ext_resource type="Material" uid="uid://cholhn1qxqaej" path="res://scenes/VFX/ExplosionDeathParticlesProcessMaterial.tres" id="29_cccga"]
 [ext_resource type="Script" uid="uid://ddigkg5ndk0da" path="res://src/Levels/Controllers/HitParticlesInfo.cs" id="29_mybqu"]
@@ -82,17 +79,6 @@ script = ExtResource("4_qsiuk")
 [node name="PauseController" type="Node" parent="Systems" unique_id=867414551]
 script = ExtResource("5_ajbtw")
 
-[node name="EntityComponentStore" type="Node" parent="Systems" unique_id=1131826051]
-script = ExtResource("6_qaj6y")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="Systems/EntityComponentStore" unique_id=328967555]
-visible = false
-
-[node name="ECSDebugVisualizer" type="Node2D" parent="Systems/EntityComponentStore/CanvasLayer" unique_id=903254170 node_paths=PackedStringArray("_componentStore")]
-script = ExtResource("7_t3a6r")
-_componentStore = NodePath("../..")
-_boxSize = 8.0
-
 [node name="PlayerSystems" type="Node" parent="Systems" unique_id=1262578567]
 
 [node name="PlayerHitController" type="Node" parent="Systems/PlayerSystems" unique_id=1486291681]
@@ -105,16 +91,14 @@ script = ExtResource("19_aig1n")
 [node name="EnemySystems" type="Node" parent="Systems" unique_id=1808118587]
 script = ExtResource("8_t3a6r")
 
-[node name="EnemyWaveController" type="Node" parent="Systems/EnemySystems" unique_id=247564660 node_paths=PackedStringArray("EntityComponentStore")]
+[node name="EnemyWaveController" type="Node" parent="Systems/EnemySystems" unique_id=247564660]
 script = ExtResource("11_aredf")
-EntityComponentStore = NodePath("../../EntityComponentStore")
 
 [node name="EnemySpawner" type="Node" parent="Systems/EnemySystems/EnemyWaveController" unique_id=836765334]
 script = ExtResource("12_qsiuk")
 
-[node name="EnemyTargetQuery" type="Node" parent="Systems/EnemySystems" unique_id=991938994 node_paths=PackedStringArray("_renderer")]
+[node name="EnemyTargetQuery" type="Node" parent="Systems/EnemySystems" unique_id=991938994]
 script = ExtResource("16_x7tv3")
-_renderer = NodePath("../EnemyRenderer")
 
 [node name="EnemyHitFeedbackController" parent="Systems/EnemySystems" unique_id=1105191984 node_paths=PackedStringArray("_goreManager") instance=ExtResource("13_vg5sh")]
 _goreManager = NodePath("../GoreManager")
@@ -122,25 +106,21 @@ _goreManager = NodePath("../GoreManager")
 [node name="EnemyDeathManager" parent="Systems/EnemySystems" unique_id=821545961 node_paths=PackedStringArray("GoreManager") instance=ExtResource("14_aig1n")]
 GoreManager = NodePath("../GoreManager")
 
-[node name="EnemyMover" type="Node" parent="Systems/EnemySystems" unique_id=348078406 node_paths=PackedStringArray("_entities")]
+[node name="EnemyMover" type="Node" parent="Systems/EnemySystems" unique_id=348078406]
 script = ExtResource("10_sh7eq")
-_entities = NodePath("../../EntityComponentStore")
 
-[node name="EnemyCollisionSolver" type="Node" parent="Systems/EnemySystems" unique_id=2115688042 node_paths=PackedStringArray("_entities")]
+[node name="EnemyCollisionSolver" type="Node" parent="Systems/EnemySystems" unique_id=2115688042]
 script = ExtResource("10_ajdj3")
 _distBeforeShove = 45
 _pushAmount = 0.3
 SubSteps = 8
-_entities = NodePath("../../EntityComponentStore")
 
-[node name="EnemyRenderer" type="Node" parent="Systems/EnemySystems" unique_id=1054443393 node_paths=PackedStringArray("_entities")]
+[node name="EnemyRenderer" type="Node" parent="Systems/EnemySystems" unique_id=1054443393]
 process_priority = 16
 script = ExtResource("7_ajdj3")
-_entities = NodePath("../../EntityComponentStore")
 _multiMesh = ExtResource("9_ror81")
 
 [node name="GoreManager" parent="Systems/EnemySystems" unique_id=623372769 instance=ExtResource("27_3nhtq")]
-_spurtParticlesScene = ExtResource("28_3nhtq")
 _deathParticleProcessMaterialsByCause = Dictionary[int, ExtResource("29_mybqu")]({
 0: SubResource("Resource_a3qk2"),
 1: SubResource("Resource_r732t"),

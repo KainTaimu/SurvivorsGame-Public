@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://ud6xfov0txuh" path="res://src/Players/Character.cs" id="5_agk5e"]
 [ext_resource type="PackedScene" uid="uid://b6pcia1iql0ct" path="res://scenes/Items/Offensive/Ak47.tscn" id="5_klnc8"]
 [ext_resource type="PackedScene" uid="uid://lvm5jo1ua73i" path="res://scenes/Items/Offensive/Shotgun.tscn" id="6_mre4m"]
+[ext_resource type="Texture2D" uid="uid://c0d0pkcn6hw68" path="res://assets/Players/player.png" id="6_y52bq"]
 [ext_resource type="PackedScene" uid="uid://dwyqdinyji8tt" path="res://scenes/Items/Offensive/Smg.tscn" id="7_y52bq"]
 [ext_resource type="PackedScene" uid="uid://okgy2hpbgy53" path="res://scenes/Items/Offensive/Blick.tscn" id="8_qh10d"]
 [ext_resource type="PackedScene" uid="uid://twvhgblbtovy" path="res://scenes/Items/Offensive/Revolver.tscn" id="9_agk5e"]
@@ -110,10 +111,81 @@ CharacterName = "DEV"
 CharacterStats = SubResource("Resource_ya27f")
 metadata/_custom_type_script = "uid://ud6xfov0txuh"
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_2g2d6"]
+atlas = ExtResource("6_y52bq")
+region = Rect2(0, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rask"]
+atlas = ExtResource("6_y52bq")
+region = Rect2(31, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jgr36"]
+atlas = ExtResource("6_y52bq")
+region = Rect2(62, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_espgp"]
+atlas = ExtResource("6_y52bq")
+region = Rect2(93, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ragxt"]
+atlas = ExtResource("6_y52bq")
+region = Rect2(0, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c66x0"]
+atlas = ExtResource("6_y52bq")
+region = Rect2(31, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k7ubp"]
+atlas = ExtResource("6_y52bq")
+region = Rect2(62, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k8uaa"]
+atlas = ExtResource("6_y52bq")
+region = Rect2(93, 0, 31, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qh10d"]
+resource_local_to_scene = true
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2g2d6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8rask")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jgr36")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_espgp")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ragxt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c66x0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k7ubp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k8uaa")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 7.0
+}]
+
 [node name="Player" unique_id=1386970244 instance=ExtResource("1_rmun4")]
 Character = SubResource("Resource_qoswm")
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=881638213]
+sprite_frames = SubResource("SpriteFrames_qh10d")
 animation = &"idle"
 
 [node name="M4" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="0" unique_id=265287884 instance=ExtResource("4_23k0g")]

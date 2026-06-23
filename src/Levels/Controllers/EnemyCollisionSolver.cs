@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Arch.Core;
 using Game.Core.ECS;
 using Game.Models;
 
@@ -33,12 +34,9 @@ public partial class EnemyCollisionSolver : Node
 	public byte SubSteps = 6;
 
 	[ExportCategory("Components")]
-	[Export]
-	private EntityComponentStore _entities = null!;
+	private CenteredMovingUniformGrid<(Vector2, Entity)> _grid = null!;
 
-	private CenteredMovingUniformGrid<(Vector2, int)> _grid = null!;
-
-	private readonly Dictionary<int, Vector2> _writeBuffer = [];
+	private readonly Dictionary<Entity, Vector2> _writeBuffer = [];
 
 	public override void _Ready()
 	{
@@ -56,7 +54,7 @@ public partial class EnemyCollisionSolver : Node
 		// suddenly affected by it, causing a large amount of enemies
 		// to be shoved towards player. The smaller height of 16:9 display
 		// makes it harder for player to avoid the spilled enemies.
-		_grid = new CenteredMovingUniformGrid<(Vector2, int)>(_gridSize, new Vector2(windowSize.X, windowSize.X));
+		_grid = new CenteredMovingUniformGrid<(Vector2, Entity)>(_gridSize, new Vector2(windowSize.X, windowSize.X));
 
 		Logger.LogDebug("in", _grid.Dimensions, _grid.CellSize);
 	}
@@ -83,23 +81,26 @@ public partial class EnemyCollisionSolver : Node
 
 	private void ApplyCollisions()
 	{
-		foreach (var (id, pos) in _writeBuffer)
+		foreach (var (entity, pos) in _writeBuffer)
 		{
-			_entities.UpdateComponent(id, new PositionComponent(pos) { Position = pos });
+			GameWorld.World.Set(entity, new PositionComponent(pos) { Position = pos });
 		}
 	}
 
 	private void AddObjectsToGrid()
 	{
-		foreach (var (id, pos) in _entities.Query<PositionComponent>())
-		{
-			if (!_grid.ContainsWorld(pos.Position))
-				continue;
+		GameWorld.World.Query<PositionComponent>(
+			in new QueryDescription().WithAll<PositionComponent, FodderMarkerComponent>(),
+			(entity, ref pos) =>
+			{
+				if (!_grid.ContainsWorld(pos.Position))
+					return;
 
-			var cell = _grid.GetCellWorld(pos.Position);
-			cell?.Add((pos.Position, id));
-			_writeBuffer[id] = pos.Position;
-		}
+				var cell = _grid.GetCellWorld(pos.Position);
+				cell?.Add((pos.Position, entity));
+				_writeBuffer[entity] = pos.Position;
+			}
+		);
 	}
 
 	private void AddObjectsToGridFromBuffer()
@@ -138,7 +139,7 @@ public partial class EnemyCollisionSolver : Node
 		WorkerThreadPool.WaitForGroupTaskCompletion(id);
 	}
 
-	private void SolveCellInternalCollisions(UniformGridCell<(Vector2 pos, int id)> cell)
+	private void SolveCellInternalCollisions(UniformGridCell<(Vector2 pos, Entity entity)> cell)
 	{
 		for (var i = 0; i < cell.Count; i++)
 		{
@@ -148,8 +149,8 @@ public partial class EnemyCollisionSolver : Node
 	}
 
 	private void SolveCellPairCollisions(
-		UniformGridCell<(Vector2 pos, int id)> cellA,
-		UniformGridCell<(Vector2 pos, int id)>? cellB
+		UniformGridCell<(Vector2 pos, Entity entity)> cellA,
+		UniformGridCell<(Vector2 pos, Entity entity)>? cellB
 	)
 	{
 		if (cellB is null || cellB.Count == 0)
@@ -163,9 +164,9 @@ public partial class EnemyCollisionSolver : Node
 	}
 
 	private void SolveCollisionInPlace(
-		UniformGridCell<(Vector2 pos, int id)> cellA,
+		UniformGridCell<(Vector2 pos, Entity entity)> cellA,
 		int indexA,
-		UniformGridCell<(Vector2 pos, int id)> cellB,
+		UniformGridCell<(Vector2 pos, Entity entity)> cellB,
 		int indexB
 	)
 	{

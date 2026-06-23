@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Arch.Core;
 using Game.Core.ECS;
 using Game.Levels.Controllers;
 using Game.Players.Controllers;
@@ -137,14 +138,14 @@ public partial class Sniper : Firearm
 			Crosshair?.ChangePrimaryCrosshairSpread(spreadRatio);
 	}
 
-	protected override void HandleHitECS(int id)
+	protected override void HandleHitECS(Entity entity)
 	{
-		if (!ComponentStore.GetComponent<PositionComponent>(id, out var pos))
+		if (!GameWorld.World.TryGet<PositionComponent>(entity, out var pos))
 			return;
-		var knockback = Stats.Additional.GetValueOrDefault("Knockback").AsSingle();
+		var knockback = OffensiveStats.Additional.GetValueOrDefault("Knockback").AsSingle();
 		var knockbackVector = Player.GlobalPosition.DirectionTo(pos.Position);
 		knockbackVector *= knockback;
 
-		ComponentStore.SetComponent(id, new PositionComponent(pos.Position + knockbackVector));
+		GameWorld.World.Set(entity, new PositionComponent(pos.Position + knockbackVector));
 	}
 }

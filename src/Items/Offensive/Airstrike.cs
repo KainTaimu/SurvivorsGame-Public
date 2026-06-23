@@ -30,10 +30,8 @@ public partial class Airstrike : BaseOffensive, IManualAttack
 
 		if (TargetQuery.TryGetTargetsInArea(mousePos, 256, out var targetIds))
 		{
-			foreach (var id in targetIds)
-				HandleHit(id: id);
+			foreach (var entity in targetIds)
+				HandleHit(entity);
 		}
 	}
-
-	protected override void HandleHitECS(int id) { }
 }

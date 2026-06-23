@@ -15,8 +15,6 @@ public partial class GoreManager : Node
 	[Export]
 	private Godot.Collections.Dictionary<DeathCauseEnum, HitParticlesInfo> _deathParticleProcessMaterialsByCause = [];
 
-	private EntityComponentStore ComponentStore => EntityComponentStore.Instance;
-
 	private int MaxActiveParticles
 	{
 		get => GameSettings.Instance.GoreEffectsValue;

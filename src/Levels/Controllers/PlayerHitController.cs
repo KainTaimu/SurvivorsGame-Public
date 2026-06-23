@@ -1,3 +1,4 @@
+using Arch.Core;
 using Game.Core.ECS;
 using Game.Players;
 
@@ -6,8 +7,6 @@ namespace Game.Levels.Controllers;
 public partial class PlayerHitController : Node
 {
 	private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
-
-	private EntityComponentStore ComponentStore => EntityComponentStore.Instance;
 
 	private Player Player => GameWorld.Instance.MainPlayer;
 
@@ -28,24 +27,24 @@ public partial class PlayerHitController : Node
 		if (_invisibilityTime > 0)
 			return;
 
-		if (!TargetQuery.TryGetTargetsInArea(Player.GlobalPosition, PlayerHitboxRadius, out var ids))
+		if (!TargetQuery.TryGetTargetsInArea(Player.GlobalPosition, PlayerHitboxRadius, out var entities))
 			return;
 
 		var largestDamage = 0;
-		var largestDamageId = int.MinValue;
+		var largestDamageId = Entity.Null;
 
-		foreach (var id in ids)
+		foreach (var entity in entities)
 		{
-			if (!ComponentStore.GetComponent<EnemyContactDamageComponent>(id, out var damage))
+			if (!GameWorld.World.TryGet<EnemyContactDamageComponent>(entity, out var damage))
 				continue;
 			if (damage.Damage > largestDamage)
 			{
 				largestDamage = damage.Damage;
-				largestDamageId = id;
+				largestDamageId = entity;
 			}
 		}
 
-		if (largestDamageId == int.MinValue)
+		if (largestDamageId == Entity.Null)
 			return;
 
 		_invisibilityTime = PlayerStats.InvincibilityTime;

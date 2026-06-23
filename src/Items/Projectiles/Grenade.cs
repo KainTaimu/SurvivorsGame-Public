@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Game.Core.Settings;
 using Game.Levels.Controllers;
 
@@ -49,20 +48,20 @@ public partial class Grenade : RigidBody2D
 		if (Engine.GetProcessFrames() % 10 != 0)
 			return;
 
-		TargetQuery.TryGetTargetsInArea(Position, OffensiveOrigin.OffensiveStats.ProjectileRadius, out var ids);
+		TargetQuery.TryGetTargetsInArea(Position, OffensiveOrigin.OffensiveStats.ProjectileRadius, out var entities);
 
-		if (ids.Count() > 6 && _t < 0.1f)
+		if (entities.Length > 6 && _t < 0.1f)
 		{
-			foreach (var id in ids)
-				OffensiveOrigin.HandleHit(id: id);
+			foreach (var entity in entities)
+				OffensiveOrigin.HandleHit(entity);
 			ApplyCameraRecoil();
 			QueueFree();
 		}
 
 		if (_t <= 0)
 		{
-			foreach (var id in ids)
-				OffensiveOrigin.HandleHit(id: id);
+			foreach (var entity in entities)
+				OffensiveOrigin.HandleHit(entity);
 			ApplyCameraRecoil();
 			QueueFree();
 		}

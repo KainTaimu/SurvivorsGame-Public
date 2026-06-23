@@ -4,6 +4,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Arch.Core;
 using Game.Core.ECS;
 using Game.Models;
 
@@ -14,18 +15,16 @@ public partial class EnemyTargetQuery : Node
 	[Export]
 	private EnemyRenderer _renderer = null!;
 
-	public readonly HashSet<int> Dead = [];
+	public readonly HashSet<Entity> Dead = [];
 
 	// BREAKING: Changing this value breaks Projectile radius of weapons
 	private const int GRID_SIZE = 32;
 
-	public CenteredMovingUniformGrid<int> Grid => _grid;
+	public CenteredMovingUniformGrid<Entity> Grid => _grid;
 
-	private CenteredMovingUniformGrid<int> _grid = null!;
+	private CenteredMovingUniformGrid<Entity> _grid = null!;
 
 	public static EnemyTargetQuery Instance { get; private set; } = null!;
-
-	private EntityComponentStore ComponentStore => EntityComponentStore.Instance;
 
 	public override void _Ready()
 	{
@@ -38,9 +37,14 @@ public partial class EnemyTargetQuery : Node
 		}
 
 		var windowSize = viewport.GetVisibleRect().Size * 1.3f;
-		_grid = new CenteredMovingUniformGrid<int>(GRID_SIZE, windowSize);
+		_grid = new CenteredMovingUniformGrid<Entity>(GRID_SIZE, windowSize);
 
-		ComponentStore.BeforeEntityUnregistered += id => Dead.Add(id);
+		GameWorld.World.SubscribeEntityDestroyed(
+			(in entity) =>
+			{
+				Dead.Add(entity);
+			}
+		);
 	}
 
 	public override void _Process(double delta)
@@ -55,31 +59,34 @@ public partial class EnemyTargetQuery : Node
 
 	private void AddObjectsToGrid()
 	{
-		foreach (var (id, pos) in ComponentStore.Query<PositionComponent>())
-		{
-			if (!_grid.ContainsWorld(pos.Position))
-				continue;
+		GameWorld.World.Query<PositionComponent>(
+			in new QueryDescription().WithAll<PositionComponent>(),
+			(entity, ref pos) =>
+			{
+				if (!_grid.ContainsWorld(pos.Position))
+					return;
 
-			var cell = _grid.GetCellWorld(pos.Position);
-			cell?.Add(id);
-		}
+				var cell = _grid.GetCellWorld(pos.Position);
+				cell?.Add(entity);
+			}
+		);
 	}
 
-	private bool CircleHitTest(Vector2 projPos, float projRadius, int targetId)
+	private bool CircleHitTest(Vector2 projPos, float projRadius, Entity entity)
 	{
-		if (!ComponentStore.GetComponent<PositionComponent>(targetId, out var pos))
+		if (!GameWorld.World.TryGet<PositionComponent>(entity, out var pos))
 			return false;
-		if (!ComponentStore.GetComponent<CircleHitboxComponent>(targetId, out var hitbox))
+		if (!GameWorld.World.TryGet<CircleHitboxComponent>(entity, out var hitbox))
 			return false;
 
 		var radiusSum = projRadius + hitbox.Radius;
 		return pos.Position.DistanceSquaredTo(projPos) <= radiusSum * radiusSum;
 	}
 
-	public bool TryGetTargetsInArea(Vector2 areaCenter, float areaRadius, out int[] targetIds)
+	public bool TryGetTargetsInArea(Vector2 areaCenter, float areaRadius, out Entity[] targetIds)
 	{
 		// credit: https://www.redblobgames.com/grids/circle-drawing/
-		var targets = new List<int>();
+		var targets = new List<Entity>();
 
 		var top = Math.Ceiling(areaCenter.Y - areaRadius);
 		var bottom = Math.Floor(areaCenter.Y + areaRadius);
@@ -97,11 +104,11 @@ public partial class EnemyTargetQuery : Node
 
 				for (var i = 0; i < cell.Count; i++)
 				{
-					var id = cell.Array[i];
-					if (targets.Contains(id))
+					var entity = cell.Array[i];
+					if (targets.Contains(entity))
 						continue;
-					if (CircleHitTest(areaCenter, areaRadius, id) && !Dead.Contains(id))
-						targets.Add(id);
+					if (CircleHitTest(areaCenter, areaRadius, entity) && !Dead.Contains(entity))
+						targets.Add(entity);
 				}
 			}
 		}
@@ -110,7 +117,7 @@ public partial class EnemyTargetQuery : Node
 		return targets.Count > 0;
 	}
 
-	public IEnumerable<int> GetTargetsInScreen()
+	public IEnumerable<Entity> GetTargetsInScreen()
 	{
 		for (var x = 0; x < _grid.Dimensions.X; x++)
 		{
@@ -132,11 +139,12 @@ public partial class EnemyTargetQuery : Node
 	/// <param name="from">Ray origin in world coordinates.</param>
 	/// <param name="angle">Ray angle in radians.</param>
 	/// <param name="width">Ray thickness (radius perpendicular to direction).</param>
-	/// <param name="targetIds">Output entity ids.</param>
+	/// <param name="entities">Output entities ids.</param>
+	/// <param name="hitLimit">How many hits before giving up</param>
 	/// <returns>
 	/// <c>true</c> when at least one target lies within raycast corridor.
 	/// </returns>
-	public bool GetTargetsRayCast(Vector2 from, float angle, float width, out int[] targetIds)
+	public bool GetTargetsRayCast(Vector2 from, float angle, float width, out Entity[] entities, int hitLimit = -1)
 	{
 		var direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 		var rayLength = _grid.WindowSize.Length();
@@ -178,8 +186,10 @@ public partial class EnemyTargetQuery : Node
 			allCells.AddRange(surrounding);
 		}
 
-		var targets = new List<int>();
-		var seenIds = new HashSet<int>();
+		var targets = new List<Entity>();
+		var seenIds = new HashSet<Entity>();
+
+		var hitCount = 0;
 
 		foreach (var cellIndex in allCells)
 		{
@@ -189,23 +199,31 @@ public partial class EnemyTargetQuery : Node
 
 			for (var i = 0; i < cell.Count; i++)
 			{
-				var id = cell.Array[i];
-				if (!seenIds.Add(id))
+				var entity = cell.Array[i];
+				if (!GameWorld.World.IsAlive(entity))
+					continue;
+				if (!seenIds.Add(entity))
 					continue;
 
-				if (!ComponentStore.GetComponent<PositionComponent>(id, out var pos))
+				if (!GameWorld.World.TryGet<PositionComponent>(entity, out var pos))
 					continue;
-				if (!ComponentStore.GetComponent<CircleHitboxComponent>(id, out var hitbox))
+				if (!GameWorld.World.TryGet<CircleHitboxComponent>(entity, out var hitbox))
 					continue;
 
 				var distSq = DistanceSquaredPointToRay(pos.Position, from, direction, rayLength);
 				var radiusSum = width + hitbox.Radius;
-				if (distSq <= radiusSum * radiusSum && !Dead.Contains(id))
-					targets.Add(id);
+				if (distSq <= radiusSum * radiusSum && !Dead.Contains(entity))
+				{
+					targets.Add(entity);
+					hitCount++;
+					if (hitCount != -1 && hitCount >= hitLimit)
+						goto Exit;
+				}
 			}
 		}
 
-		targetIds = [.. targets];
+		Exit:
+		entities = [.. targets];
 		return targets.Count > 0;
 	}
 
