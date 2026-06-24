@@ -14,14 +14,26 @@ public partial class PerformanceMonitor : CanvasLayer
 	private BoxContainer _boxContainer = null!;
 
 	[Export]
-	private Label _collisionSolverlabel = null!;
+	private RichTextLabel _collisionSolverlabel = null!;
 
 	[Export]
-	private Label _rendererlabel = null!;
+	private RichTextLabel _rendererlabel = null!;
 
 	public override void _Process(double delta)
 	{
-		_collisionSolverlabel.Text = $"Collisions: {CollisionSolver?.ProcessTime}ms";
-		_rendererlabel.Text = $"Rendering: {EnemyRenderer?.ProcessTime}ms";
+		if (CollisionSolver is not null)
+		{
+			_collisionSolverlabel.Text =
+				CollisionSolver.ProcessTime < 10
+					? $"Collisions: {CollisionSolver.ProcessTime}ms"
+					: $"[color=orange]Collisions: {CollisionSolver.ProcessTime}ms[/color]";
+		}
+		if (EnemyRenderer is not null)
+		{
+			_rendererlabel.Text =
+				EnemyRenderer.ProcessTime < 5
+					? $"Rendering: {EnemyRenderer.ProcessTime}ms"
+					: $"[color=orange]Rendering: {EnemyRenderer.ProcessTime}ms[/color]";
+		}
 	}
 }

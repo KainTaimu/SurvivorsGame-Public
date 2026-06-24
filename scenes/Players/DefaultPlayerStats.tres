@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CharacterStats" format=3 uid="uid://6wxxpstfm1ha"]
+[gd_resource type="Resource" format=3 uid="uid://6wxxpstfm1ha"]
 
 [ext_resource type="Script" uid="uid://wsto3khl70md" path="res://src/Players/FloatStat.cs" id="1_pds1w"]
 [ext_resource type="Script" uid="uid://tfaqh3bcxdha" path="res://src/Players/IntStat.cs" id="2_n37c6"]

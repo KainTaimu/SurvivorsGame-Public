@@ -36,7 +36,7 @@ metadata/_custom_type_script = "uid://d2tvxgxbv87i2"
 
 [sub_resource type="Resource" id="Resource_p53ds"]
 script = ExtResource("8_qx3kv")
-SpawnCountTarget = 10000
+SpawnCountTarget = 4000
 EnemyBlueprints = SubResource("Resource_cccga")
 SpawnMinTime = 0.05
 SpawnMaxTime = 0.05
@@ -136,6 +136,9 @@ MainPlayer = NodePath("../../Player")
 
 [node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=247564660]
 Waves = Array[Object]([SubResource("Resource_p53ds"), SubResource("Resource_27qwr"), SubResource("Resource_qsiuk"), SubResource("Resource_ov80q")])
+
+[node name="PickupUi" parent="UI/CanvasLayer" parent_id_path=PackedInt32Array(253133387) index="0" unique_id=1639386775 node_paths=PackedStringArray("_showcases")]
+_showcases = []
 
 [node name="PerformanceMonitor" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="4" unique_id=1872396024 node_paths=PackedStringArray("CollisionSolver", "EnemyRenderer") instance=ExtResource("13_dxfda")]
 CollisionSolver = NodePath("../../Systems/EnemySystems/EnemyCollisionSolver")

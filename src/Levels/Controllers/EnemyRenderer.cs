@@ -14,10 +14,22 @@ public partial class EnemyRenderer : Node
 	private PackedScene _multiMesh = null!;
 
 	[Export]
-	private float _renderDistanceFactor = 1.2f;
+	private float RenderDistanceFactor
+	{
+		get;
+		set
+		{
+			field = value;
+			var viewport = GetViewport();
+			if (viewport is null)
+				return;
+			var windowSize = viewport.GetVisibleRect().Size * RenderDistanceFactor;
+			_visibilityGrid = new CenteredMovingUniformGrid<char>(GRID_SIZE, windowSize);
+		}
+	} = 1.2f;
 
 	// Only for checking visibility. Nothing stored inside
-	private CenteredMovingUniformGrid<object> _visibilityGrid = null!;
+	private CenteredMovingUniformGrid<char> _visibilityGrid = null!;
 	private readonly Dictionary<MultiMesh, int> _mmiVisibilityCount = [];
 
 	private readonly Dictionary<string, MultiMesh> _spriteToMultiMesh = [];
@@ -35,9 +47,8 @@ public partial class EnemyRenderer : Node
 		var viewport = GetViewport();
 		if (viewport is null)
 			return;
-
-		var windowSize = viewport.GetVisibleRect().Size * _renderDistanceFactor;
-		_visibilityGrid = new CenteredMovingUniformGrid<object>(GRID_SIZE, windowSize);
+		var windowSize = viewport.GetVisibleRect().Size * RenderDistanceFactor;
+		_visibilityGrid = new CenteredMovingUniformGrid<char>(GRID_SIZE, windowSize);
 
 		// Render last to allow other systems to do their work first
 		ProcessPriority = 16;

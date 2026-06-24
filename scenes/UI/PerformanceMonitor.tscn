@@ -23,14 +23,24 @@ grow_vertical = 0
 layout_mode = 2
 alignment = 2
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=814079451]
+[node name="Label" type="RichTextLabel" parent="MarginContainer/VBoxContainer" unique_id=2106043832]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
+mouse_filter = 2
+bbcode_enabled = true
 text = "A"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
 vertical_alignment = 1
 
-[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer" unique_id=307014752]
+[node name="Label2" type="RichTextLabel" parent="MarginContainer/VBoxContainer" unique_id=775893729]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
+mouse_filter = 2
+bbcode_enabled = true
 text = "A"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
 vertical_alignment = 1
