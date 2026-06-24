@@ -43,6 +43,7 @@ public partial class ItemDebugInfo : CanvasLayer
 			Hide();
 			return;
 		}
+
 		if (!Visible)
 			Show();
 

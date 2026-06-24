@@ -79,14 +79,6 @@ public partial class EnemyCollisionSolver : Node
 		ApplyCollisions();
 	}
 
-	private void ApplyCollisions()
-	{
-		foreach (var (entity, pos) in _writeBuffer)
-		{
-			GameWorld.World.Set(entity, new PositionComponent(pos) { Position = pos });
-		}
-	}
-
 	private void AddObjectsToGrid()
 	{
 		GameWorld.World.Query<PositionComponent>(
@@ -115,6 +107,12 @@ public partial class EnemyCollisionSolver : Node
 			var cell = _grid.GetCellWorld(pos);
 			cell?.Add((pos, id));
 		}
+	}
+
+	private void ApplyCollisions()
+	{
+		foreach (var (entity, pos) in _writeBuffer)
+			GameWorld.World.Set(entity, new PositionComponent(pos) { Position = pos });
 	}
 
 	private void SolveCollisions()

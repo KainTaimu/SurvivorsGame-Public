@@ -94,6 +94,7 @@ public partial class PickupUi : Control
 				Logger.LogError($"Failed to instantiate item {scene.GetType().Name}. Does it inherit from BaseItem?");
 				continue;
 			}
+
 			scene.QueueFree(); // wtf
 			pickedItems.Add(randomItemScene);
 
@@ -112,11 +113,11 @@ public static class Utils
 {
 	public static void Shuffle<T>(this IList<T> list)
 	{
-		int n = list.Count;
+		var n = list.Count;
 		Random rnd = new();
 		while (n > 1)
 		{
-			int k = rnd.Next(0, n) % n;
+			var k = rnd.Next(0, n) % n;
 			n--;
 			(list[n], list[k]) = (list[k], list[n]);
 		}

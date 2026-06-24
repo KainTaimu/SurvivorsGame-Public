@@ -29,6 +29,7 @@ public static class ClassInspector
 					value = GetCollectionPrettyString(collection);
 					break;
 			}
+
 			s.AppendLine($"{property.Name}: {value}");
 		}
 
@@ -81,12 +82,14 @@ public static class ClassInspector
 				b.Append($"...{enumerable.Count - maxItemsToShow} more");
 				break;
 			}
+
 			if (item is Node node)
 				b.AppendFormat(", {0}", node.Name);
 			else
 				b.AppendFormat(", {0}", item);
 			count++;
 		}
+
 		b.Append("]");
 		return b.ToString();
 	}

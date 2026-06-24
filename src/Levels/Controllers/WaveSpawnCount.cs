@@ -68,6 +68,6 @@ public partial class WaveSpawnCount : AbstractWave, IEnemyWave
 	public override string ToString()
 	{
 		return $"Wave {Index} : {SpawnCountTarget} spawn count: " + $"{EnemyBlueprints
-				.Count} types";
+			.Count} types";
 	}
 }

@@ -51,7 +51,7 @@ public partial class PlayerMovementController : Node
 		else
 			_sprite.Animation = "idle";
 
-		var move = new Vector2(inputX * (CharacterStats.MoveSpeed), inputY * (CharacterStats.MoveSpeed));
+		var move = new Vector2(inputX * CharacterStats.MoveSpeed, inputY * CharacterStats.MoveSpeed);
 		Velocity = move;
 		move *= (float)delta;
 		var originalPos = _player.GetPosition();

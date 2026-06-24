@@ -10,9 +10,15 @@ public abstract partial class AbstractStat : Resource
 
 	public List<float> Flat = [];
 
-	public float GetMultipliersSum() => Multipliers.Count != 0 ? Multipliers.Sum() : 1;
+	public float GetMultipliersSum()
+	{
+		return Multipliers.Count != 0 ? Multipliers.Sum() : 1;
+	}
 
-	public float GetFlatSum() => Flat.Sum();
+	public float GetFlatSum()
+	{
+		return Flat.Sum();
+	}
 
 	public override string ToString()
 	{

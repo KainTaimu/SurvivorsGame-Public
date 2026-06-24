@@ -47,6 +47,7 @@ public partial class ItemShowcase : MarginContainer
 			else
 				MouseDefaultCursorShape = CursorShape.Arrow;
 		}
+
 		if (!_isMouseInside)
 			return;
 

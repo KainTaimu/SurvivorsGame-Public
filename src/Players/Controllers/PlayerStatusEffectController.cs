@@ -58,6 +58,7 @@ public partial class PlayerStatusEffectController : Node
 			Logger.LogError($"Attempt to remove status effect {statusEffect.Name} that has not been applied.");
 			return;
 		}
+
 		foreach (var modifier in statusEffect.Modifiers)
 		{
 			var targetStat = _statToStatField[modifier.StatName];
@@ -91,6 +92,7 @@ public partial class PlayerStatusEffectController : Node
 				Logger.LogError($"Unknown stat name {modifier.StatName}");
 				continue;
 			}
+
 			switch (modifier.Operation)
 			{
 				case StatusEffectModifier.StatusEffectModifierOperation.Add:

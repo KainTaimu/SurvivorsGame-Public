@@ -32,7 +32,7 @@ public partial class EnemyWaveController : Node
 	{
 		Instance = this;
 
-		GameWorld.World.SubscribeEntityCreated(((in _) => Alive--));
+		GameWorld.World.SubscribeEntityCreated((in _) => Alive--);
 
 		foreach (var wave in Waves)
 			wave.Initialize(this);

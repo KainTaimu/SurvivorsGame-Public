@@ -12,6 +12,7 @@ public partial class Minigun : Firearm
 	private Curve _windupCurve = null!;
 
 	private double _windupTime;
+
 	private float WindupAttackSpeed =>
 		Math.Clamp(_windupCurve.Sample((float)_windupTime), OffensiveStats.AttackSpeed, _windupCurve.MaxDomain);
 
@@ -77,9 +78,7 @@ public partial class Minigun : Firearm
 			Attack();
 		}
 		else
-		{
 			_windupTime = Math.Clamp(_windupTime - delta * 3, 0, _windupCurve.MaxDomain);
-		}
 	}
 
 	public override void Attack()

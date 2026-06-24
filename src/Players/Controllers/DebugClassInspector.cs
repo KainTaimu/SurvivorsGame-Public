@@ -37,6 +37,7 @@ public partial class DebugClassInspector : CanvasLayer
 			Hide();
 			return;
 		}
+
 		if (!Visible)
 			Show();
 

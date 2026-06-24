@@ -163,7 +163,7 @@ public abstract partial class Firearm : BaseOffensive, IReloadable, IManualAttac
 	{
 		if (SpentCasingParticles is null)
 			return;
-		var rotation = (Crosshair?.AngleFromPlayer ?? 0) + (Mathf.Pi / 2f);
+		var rotation = (Crosshair?.AngleFromPlayer ?? 0) + Mathf.Pi / 2f;
 		rotation += (float)GD.RandRange(-15f, 15f) * (Mathf.Pi / 180f);
 		var transform = new Transform2D(rotation, Player.GlobalPosition).ScaledLocal(Vector2.One * 0.5f);
 		var velocity = Vector2.Right * (float)GD.RandRange(300f, 1000f);

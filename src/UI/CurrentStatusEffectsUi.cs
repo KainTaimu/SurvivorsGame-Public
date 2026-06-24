@@ -36,8 +36,6 @@ public partial class CurrentStatusEffectsUi : CanvasLayer
 	public override void _Process(double delta)
 	{
 		foreach (var (effect, label) in _labels)
-		{
 			label.Text = effect.Permanent ? $"{effect.Name} | Permanent" : $"{effect.Name} | {effect.Duration:F1}";
-		}
 	}
 }

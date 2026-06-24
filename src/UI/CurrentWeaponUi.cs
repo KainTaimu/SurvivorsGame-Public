@@ -48,19 +48,15 @@ public partial class CurrentWeaponUi : CanvasLayer
 				{
 					var extra = primary.MagazineCount - primary.MagazineCapacity;
 					_primaryWeaponAmmo.Text =
-						$"{primary.MagazineCount -extra}+{extra}/{primary
-						.MagazineCapacity}";
+						$"{primary.MagazineCount - extra}+{extra}/{primary
+							.MagazineCapacity}";
 				}
 				else
-				{
 					_primaryWeaponAmmo.Text = $"{primary.MagazineCount}/{primary.MagazineCapacity}";
-				}
 			}
 		}
 		else
-		{
 			_primaryWeaponAmmo.Hide();
-		}
 
 		if (_weaponController.SecondaryAttack is IReloadable secondary)
 		{
@@ -73,19 +69,15 @@ public partial class CurrentWeaponUi : CanvasLayer
 				{
 					var extra = secondary.MagazineCount - secondary.MagazineCapacity;
 					_secondaryWeaponAmmo.Text =
-						$"{secondary.MagazineCount -extra}+{extra}/{secondary
-						.MagazineCapacity}";
+						$"{secondary.MagazineCount - extra}+{extra}/{secondary
+							.MagazineCapacity}";
 				}
 				else
-				{
 					_secondaryWeaponAmmo.Text = $"{secondary.MagazineCount}/{secondary.MagazineCapacity}";
-				}
 			}
 		}
 		else
-		{
 			_secondaryWeaponAmmo.Hide();
-		}
 	}
 
 	public void UpdateCarousel()

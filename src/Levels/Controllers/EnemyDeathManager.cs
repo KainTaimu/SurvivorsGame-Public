@@ -45,7 +45,7 @@ public partial class EnemyDeathManager : Node
 				pos.Position += vel.Velocity * (float)delta;
 				spr.Flash = 255;
 				spr.Opacity = (byte)(
-					(dying.TimeLeftUntilDestroy / DyingMarkerComponent.Default.TimeLeftUntilDestroy) * 255
+					dying.TimeLeftUntilDestroy / DyingMarkerComponent.Default.TimeLeftUntilDestroy * 255
 				);
 			}
 		);
