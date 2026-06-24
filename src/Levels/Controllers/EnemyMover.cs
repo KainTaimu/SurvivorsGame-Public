@@ -6,6 +6,9 @@ namespace Game.Levels.Controllers;
 
 public partial class EnemyMover : Node
 {
+	[Export]
+	public float VelocityRecoveryFactor = 5f;
+
 	private static readonly QueryDescription _query = new QueryDescription()
 		.WithAll<PositionComponent, VelocityComponent, MoveSpeedComponent>()
 		.WithNone<DyingMarkerComponent>();
@@ -15,21 +18,28 @@ public partial class EnemyMover : Node
 		var player = GameWorld.Instance.MainPlayer;
 		var playerPos = player.GlobalPosition;
 
-		var update = new MoveUpdate(new PositionComponent(playerPos), (float)GameWorld.Instance.GetProcessDeltaTime());
+		var update = new MoveUpdate(
+			new PositionComponent(playerPos),
+			VelocityRecoveryFactor,
+			(float)GameWorld.Instance.GetProcessDeltaTime()
+		);
 		GameWorld.World.InlineParallelQuery<MoveUpdate, PositionComponent, VelocityComponent, MoveSpeedComponent>(
 			in _query,
 			ref update
 		);
 	}
-}
 
-public readonly struct MoveUpdate(PositionComponent moveToTarget, float delta)
-	: IForEach<PositionComponent, VelocityComponent, MoveSpeedComponent>
-{
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public void Update(ref PositionComponent pos, ref VelocityComponent velocity, ref MoveSpeedComponent moveSpeed)
+	private readonly struct MoveUpdate(PositionComponent moveToTarget, float recoveryRate, float delta)
+		: IForEach<PositionComponent, VelocityComponent, MoveSpeedComponent>
 	{
-		velocity.Velocity = pos.Position.DirectionTo(moveToTarget.Position) * moveSpeed.MoveSpeed;
-		pos.Position += velocity.Velocity * delta;
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public void Update(ref PositionComponent pos, ref VelocityComponent velocity, ref MoveSpeedComponent moveSpeed)
+		{
+			velocity.Velocity = velocity.Velocity.Lerp(
+				pos.Position.DirectionTo(moveToTarget.Position) * moveSpeed.MoveSpeed,
+				recoveryRate * delta
+			);
+			pos.Position += velocity.Velocity * delta;
+		}
 	}
 }

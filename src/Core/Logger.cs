@@ -4,31 +4,37 @@ using System.Text;
 
 public static class Logger
 {
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void LogInfo(params object[] s)
 	{
 		SendLog(GD.PrintRich, $"[color=white][Info  :  {GetCallerName()}] {ConstructString(s)}[/color]");
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void LogDebug(params object[] s)
 	{
 		SendLog(GD.PrintRich, $"[color=darkgray][Debug  :  {GetCallerName()}] {ConstructString(s)}[/color]");
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void LogWarning(params object[] s)
 	{
 		SendLog(GD.PrintRich, $"[color=yellow][Warning  :  {GetCallerName()}] {ConstructString(s)}[/color]");
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void LogError(params object[] s)
 	{
 		GD.PrintErr($"[Error  :  {GetCallerName()}] {ConstructString(s)}");
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static void SendLog(Action<string> method, string message)
 	{
 		method(message);
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static string ConstructString(object[] s)
 	{
 		var builder = new StringBuilder();

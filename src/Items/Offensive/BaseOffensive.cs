@@ -50,7 +50,7 @@ public abstract partial class BaseOffensive : BaseItem
 		var damage = Mathf.CeilToInt(
 			(OffensiveStats.Damage + crit + randomDamage) * PlayerStats.OutgoingDamageMultiplier
 		);
-		var newHealth = health.Health - damage;
+		health.Health -= damage;
 
 		var hit = new HitFeedbackComponent
 		{
@@ -59,8 +59,6 @@ public abstract partial class BaseOffensive : BaseItem
 			IsCrit = crit > 0,
 		};
 		GameWorld.World.Set(entity, hit);
-
-		health.Health = newHealth;
 	}
 
 	/// <summary> Handle additional effects to the enemy like knockback </summary>

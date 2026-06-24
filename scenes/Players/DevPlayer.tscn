@@ -143,7 +143,7 @@ region = Rect2(62, 0, 31, 31)
 atlas = ExtResource("6_y52bq")
 region = Rect2(93, 0, 31, 31)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_qh10d"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_mre4m"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -185,7 +185,7 @@ animations = [{
 Character = SubResource("Resource_qoswm")
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=881638213]
-sprite_frames = SubResource("SpriteFrames_qh10d")
+sprite_frames = SubResource("SpriteFrames_mre4m")
 animation = &"idle"
 
 [node name="M4" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="0" unique_id=265287884 instance=ExtResource("4_23k0g")]

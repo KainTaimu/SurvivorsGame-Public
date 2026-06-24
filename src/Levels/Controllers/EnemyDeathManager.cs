@@ -58,11 +58,6 @@ public partial class EnemyDeathManager : Node
 
 		GameWorld.World.Add(entity, DyingMarkerComponent.Default);
 
-		if (GameWorld.World.Has<MoveSpeedComponent>(entity))
-			GameWorld.World.Remove<MoveSpeedComponent>(entity);
-		if (GameWorld.World.Has<HitFeedbackComponent>(entity))
-			GameWorld.World.Remove<HitFeedbackComponent>(entity);
-
 		if (GameWorld.World.TryGet<DeathCauseComponent>(entity, out var cause))
 			GoreManager?.SpawnDeathParticles(deathPos, cause.CauseEnum);
 		else
