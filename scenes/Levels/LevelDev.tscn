@@ -35,12 +35,12 @@ metadata/_custom_type_script = "uid://d2tvxgxbv87i2"
 
 [sub_resource type="Resource" id="Resource_p53ds"]
 script = ExtResource("8_qx3kv")
-SpawnCountTarget = 20000
+SpawnCountTarget = 5000
 EnemyBlueprints = SubResource("Resource_cccga")
 SpawnMinTime = 0.05
 SpawnMaxTime = 0.05
-SpawnBatchMin = 100
-SpawnBatchMax = 100
+SpawnBatchMin = 500
+SpawnBatchMax = 500
 metadata/_custom_type_script = "uid://cksmwvaxx1m18"
 
 [sub_resource type="Resource" id="Resource_27qwr"]

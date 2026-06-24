@@ -61,7 +61,6 @@ public partial class WaveSpawnCount : AbstractWave, IEnemyWave
 			return;
 		}
 
-		WaveController.Alive++;
 		SpawnedEntities.Add((Entity)id);
 	}
 

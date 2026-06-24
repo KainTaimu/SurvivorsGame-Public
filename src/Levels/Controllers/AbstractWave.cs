@@ -65,7 +65,7 @@ public abstract partial class AbstractWave : Resource, IEnemyWave
 			* (SpawnTimeCurveOverMaxTime?.Sample((float)(SpawnTimeLeft / SpawnMaxTime)) ?? 1f)
 		);
 
-	public List<Entity> SpawnedEntities => WaveController.SpawnedEntities;
+	public HashSet<Entity> SpawnedEntities => WaveController.SpawnedEntities;
 
 	public double SpawnTimeLeft;
 	protected EnemyWaveController WaveController = null!;

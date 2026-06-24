@@ -68,7 +68,6 @@ public partial class WaveDuration : AbstractWave
 			return;
 		}
 
-		WaveController.Alive++;
 		SpawnedEntities.Add((Entity)enemy);
 	}
 

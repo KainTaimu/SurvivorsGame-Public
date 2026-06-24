@@ -20,19 +20,25 @@ public partial class EnemyWaveController : Node
 
 	public int TotalSpawned { get; set; }
 
-	public int Alive { get; set; }
+	public int Alive => SpawnedEntities.Count;
 
 	private AbstractWave? _currentWave;
 	private int _currentWaveIndex;
-	public readonly List<Entity> SpawnedEntities = [];
 
-	public static EnemyWaveController? Instance;
+	public readonly HashSet<Entity> SpawnedEntities = [];
+
+	public static EnemyWaveController? Instance { get; private set; }
 
 	public override void _Ready()
 	{
 		Instance = this;
 
-		GameWorld.World.SubscribeEntityCreated((in _) => Alive--);
+		GameWorld.World.SubscribeEntityDestroyed(
+			(in entity) =>
+			{
+				SpawnedEntities.Remove(entity);
+			}
+		);
 
 		foreach (var wave in Waves)
 			wave.Initialize(this);

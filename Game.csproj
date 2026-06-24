@@ -60,6 +60,7 @@
     <!-- <TrimMode>link</TrimMode> -->
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Arch-Events" Version="2.1.0" />
     <PackageReference Include="Arch-PureECS" Version="2.1.0" />
     <PackageReference Include="Arch.System" Version="1.1.0" />
     <PackageReference Include="Arch.System.SourceGenerator" Version="2.1.0" />

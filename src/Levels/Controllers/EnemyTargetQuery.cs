@@ -18,9 +18,6 @@ public partial class EnemyTargetQuery : Node
 	[Export]
 	private EnemyRenderer _renderer = null!;
 
-	// TODO: Stupid!
-	public readonly HashSet<Entity> Dead = [];
-
 	// BREAKING: Changing this value breaks Projectile radius of weapons
 	private const int GRID_SIZE = 16;
 
@@ -42,13 +39,6 @@ public partial class EnemyTargetQuery : Node
 
 		var windowSize = viewport.GetVisibleRect().Size * 1.3f;
 		_grid = new CenteredMovingUniformGrid<Entity>(GRID_SIZE, windowSize);
-
-		GameWorld.World.SubscribeEntityDestroyed(
-			(in entity) =>
-			{
-				Dead.Add(entity);
-			}
-		);
 	}
 
 	public override void _Process(double delta)
@@ -117,7 +107,7 @@ public partial class EnemyTargetQuery : Node
 					var entity = cell.Array[i];
 					if (targets.Contains(entity))
 						continue;
-					if (CircleHitTest(areaCenter, areaRadius, entity) && !Dead.Contains(entity))
+					if (CircleHitTest(areaCenter, areaRadius, entity))
 						targets.Add(entity);
 				}
 			}
@@ -222,7 +212,7 @@ public partial class EnemyTargetQuery : Node
 
 				var distSq = DistanceSquaredPointToRay(pos.Position, from, direction, rayLength);
 				var radiusSum = width + hitbox.Radius;
-				if (distSq <= radiusSum * radiusSum && !Dead.Contains(entity))
+				if (distSq <= radiusSum * radiusSum)
 				{
 					targets.Add(entity);
 					hitCount++;
