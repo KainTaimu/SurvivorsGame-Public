@@ -15,6 +15,7 @@ public partial class EnemyTargetQuery : Node
 	[Export]
 	private EnemyRenderer _renderer = null!;
 
+	// TODO: Stupid!
 	public readonly HashSet<Entity> Dead = [];
 
 	// BREAKING: Changing this value breaks Projectile radius of weapons
@@ -60,7 +61,7 @@ public partial class EnemyTargetQuery : Node
 	private void AddObjectsToGrid()
 	{
 		GameWorld.World.Query<PositionComponent>(
-			in new QueryDescription().WithAll<PositionComponent>(),
+			in new QueryDescription().WithAll<PositionComponent>().WithNone<DyingMarkerComponent>(),
 			(entity, ref pos) =>
 			{
 				if (!_grid.ContainsWorld(pos.Position))

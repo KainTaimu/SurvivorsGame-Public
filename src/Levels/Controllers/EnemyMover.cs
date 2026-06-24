@@ -6,27 +6,30 @@ namespace Game.Levels.Controllers;
 
 public partial class EnemyMover : Node
 {
+	private static readonly QueryDescription _query = new QueryDescription()
+		.WithAll<PositionComponent, VelocityComponent, MoveSpeedComponent>()
+		.WithNone<DyingMarkerComponent>();
+
 	public override void _Process(double delta)
 	{
 		var player = GameWorld.Instance.MainPlayer;
 		var playerPos = player.GlobalPosition;
 
-		var update = new MoveUpdate(new PositionComponent(playerPos));
-		GameWorld.World.InlineParallelQuery<MoveUpdate, PositionComponent, MoveSpeedComponent>(
-			in new QueryDescription().WithAll<PositionComponent, MoveSpeedComponent>(),
+		var update = new MoveUpdate(new PositionComponent(playerPos), (float)GameWorld.Instance.GetProcessDeltaTime());
+		GameWorld.World.InlineParallelQuery<MoveUpdate, PositionComponent, VelocityComponent, MoveSpeedComponent>(
+			in _query,
 			ref update
 		);
 	}
 }
 
-public readonly struct MoveUpdate(PositionComponent moveToTarget) : IForEach<PositionComponent, MoveSpeedComponent>
+public readonly struct MoveUpdate(PositionComponent moveToTarget, float delta)
+	: IForEach<PositionComponent, VelocityComponent, MoveSpeedComponent>
 {
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public void Update(ref PositionComponent pos, ref MoveSpeedComponent moveSpeed)
+	public void Update(ref PositionComponent pos, ref VelocityComponent velocity, ref MoveSpeedComponent moveSpeed)
 	{
-		pos.Position = pos.Position.MoveToward(
-			moveToTarget.Position,
-			(float)(moveSpeed.MoveSpeed * GameWorld.Instance.GetProcessDeltaTime())
-		);
+		velocity.Velocity = pos.Position.DirectionTo(moveToTarget.Position) * moveSpeed.MoveSpeed;
+		pos.Position += velocity.Velocity * delta;
 	}
 }

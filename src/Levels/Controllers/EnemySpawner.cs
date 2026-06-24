@@ -45,6 +45,7 @@ public partial class EnemySpawner : Node
 			},
 			new CircleHitboxComponent(bp.Stats.SpriteScaleMultiplier * 16f),
 			new MoveSpeedComponent(Mathf.CeilToInt(stats.MoveSpeed * stats.MoveSpeedMultiplier)),
+			VelocityComponent.Zero,
 			new EnemyContactDamageComponent(Mathf.CeilToInt(stats.DamageOnContact * stats.ContactDamageMultiplier)),
 			new DeathRewardComponent(Mathf.CeilToInt(stats.MoneyDrop * stats.MoneyDropMultiplier)),
 			new HitFeedbackComponent { HitTime = 0 }

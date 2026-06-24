@@ -7,7 +7,6 @@
 [ext_resource type="Resource" uid="uid://6rycr3xfb4ax" path="res://scenes/Enemies/Blueprints/Vanoss.tres" id="5_qx3kv"]
 [ext_resource type="Resource" uid="uid://d3ao5d4ym77ad" path="res://scenes/Enemies/Blueprints/Duck.tres" id="6_dxfda"]
 [ext_resource type="Script" uid="uid://y77qtp32wo00" path="res://src/Enemies/EnemyStats.cs" id="7_twx3g"]
-[ext_resource type="Script" uid="uid://cksmwvaxx1m18" path="res://src/Levels/Controllers/WaveSpawnCount.cs" id="8_qx3kv"]
 [ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="8_ww382"]
 [ext_resource type="Script" uid="uid://d2tvxgxbv87i2" path="res://src/Levels/Controllers/WeightedWaveBlueprintCollection.cs" id="9_2csoy"]
 [ext_resource type="Script" uid="uid://bhhh8235y54bg" path="res://src/Levels/Controllers/WaveDebugStopper.cs" id="9_dxfda"]
@@ -33,16 +32,6 @@ script = ExtResource("9_2csoy")
 Weights = Array[Object]([SubResource("Resource_li0nt"), SubResource("Resource_i8nxn"), SubResource("Resource_tfrx3")])
 metadata/_custom_type_script = "uid://d2tvxgxbv87i2"
 
-[sub_resource type="Resource" id="Resource_qx3kv"]
-script = ExtResource("8_qx3kv")
-SpawnCountTarget = 50000
-EnemyBlueprints = SubResource("Resource_cccga")
-SpawnMinTime = 0.01
-SpawnMaxTime = 0.1
-SpawnBatchMin = 50
-SpawnBatchMax = 50
-metadata/_custom_type_script = "uid://cksmwvaxx1m18"
-
 [sub_resource type="Resource" id="Resource_qsiuk"]
 script = ExtResource("10_2cd5g")
 MaxMobs = 5000
@@ -51,10 +40,6 @@ SpawnMinTime = 0.4
 SpawnMaxTime = 0.8
 SpawnBatchMax = 2
 metadata/_custom_type_script = "uid://b7ol6jtjagoe"
-
-[sub_resource type="Resource" id="Resource_27qwr"]
-script = ExtResource("9_dxfda")
-metadata/_custom_type_script = "uid://bhhh8235y54bg"
 
 [sub_resource type="Resource" id="Resource_w4qib"]
 script = ExtResource("7_twx3g")
@@ -126,6 +111,10 @@ SpawnMaxTime = 0.8
 SpawnBatchMax = 2
 metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 
+[sub_resource type="Resource" id="Resource_27qwr"]
+script = ExtResource("9_dxfda")
+metadata/_custom_type_script = "uid://bhhh8235y54bg"
+
 [node name="Level" unique_id=2141389114 instance=ExtResource("1_m1pph")]
 
 [node name="Player" parent="." index="2" unique_id=1386970244 instance=ExtResource("2_4pxeb")]
@@ -134,4 +123,4 @@ metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 MainPlayer = NodePath("../../Player")
 
 [node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=247564660]
-Waves = Array[Object]([SubResource("Resource_qx3kv"), SubResource("Resource_qsiuk"), SubResource("Resource_27qwr"), SubResource("Resource_ov80q")])
+Waves = Array[Object]([SubResource("Resource_qsiuk"), SubResource("Resource_ov80q"), SubResource("Resource_27qwr")])

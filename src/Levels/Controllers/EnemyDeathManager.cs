@@ -8,40 +8,67 @@ public partial class EnemyDeathManager : Node
 	[Export]
 	public GoreManager? GoreManager;
 
+	// private static readonly QueryDescription _query = ;
+
 	public override void _Process(double delta)
 	{
 		GameWorld.World.Query<HealthComponent, PositionComponent>(
-			in new QueryDescription().WithAll<HealthComponent>(),
+			in new QueryDescription().WithAll<HealthComponent, PositionComponent>().WithNone<DyingMarkerComponent>(),
 			(entity, ref health, ref position) =>
 			{
-				// if (Engine.GetProcessFrames() % 10 == 0)
-				// 	Logger.LogDebug($"id={entity.Id} version={entity.Version} health={health.Health}");
 				if (health.Health <= 0)
 					HandleDeath(entity, ref position);
+			}
+		);
+
+		GameWorld.World.Query<DyingMarkerComponent, PositionComponent, VelocityComponent, AnimatedSpriteComponent>(
+			in new QueryDescription().WithAll<
+				DyingMarkerComponent,
+				PositionComponent,
+				VelocityComponent,
+				AnimatedSpriteComponent
+			>(),
+			(entity, ref dying, ref pos, ref vel, ref spr) =>
+			{
+				if (dying.TimeLeftUntilDestroy <= 0)
+				{
+					Callable
+						.From(() =>
+						{
+							GameWorld.World.Destroy(entity);
+						})
+						.CallDeferred();
+					return;
+				}
+
+				dying.TimeLeftUntilDestroy -= (float)delta;
+				pos.Position += vel.Velocity * (float)delta;
+				spr.Flash = 255;
+				spr.Opacity = (byte)(
+					(dying.TimeLeftUntilDestroy / DyingMarkerComponent.Default.TimeLeftUntilDestroy) * 255
+				);
 			}
 		);
 	}
 
 	private void HandleDeath(Entity entity, ref PositionComponent pos)
 	{
+		// save so pos reference doesn't become invalid during the structural changes below
+		var deathPos = pos.Position;
+
+		GameWorld.World.Add(entity, DyingMarkerComponent.Default);
+
+		if (GameWorld.World.Has<MoveSpeedComponent>(entity))
+			GameWorld.World.Remove<MoveSpeedComponent>(entity);
+		if (GameWorld.World.Has<HitFeedbackComponent>(entity))
+			GameWorld.World.Remove<HitFeedbackComponent>(entity);
+
 		if (GameWorld.World.TryGet<DeathCauseComponent>(entity, out var cause))
-			GoreManager?.SpawnDeathParticles(pos.Position, cause.CauseEnum);
+			GoreManager?.SpawnDeathParticles(deathPos, cause.CauseEnum);
 		else
-			GoreManager?.SpawnDeathParticles(pos.Position);
+			GoreManager?.SpawnDeathParticles(deathPos);
 
 		if (GameWorld.World.TryGet<DeathRewardComponent>(entity, out var reward))
 			LevelData.Instance?.Money += reward.Money;
-
-		Callable
-			.From(() =>
-			{
-				DestroyEntity(entity);
-			})
-			.CallDeferred();
-	}
-
-	private static void DestroyEntity(Entity entity)
-	{
-		GameWorld.World.Destroy(entity);
 	}
 }
