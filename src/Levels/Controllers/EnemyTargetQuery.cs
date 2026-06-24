@@ -4,7 +4,10 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Arch.Core;
+using Arch.System;
+using Arch.System.SourceGenerator;
 using Game.Core.ECS;
 using Game.Models;
 
@@ -19,7 +22,7 @@ public partial class EnemyTargetQuery : Node
 	public readonly HashSet<Entity> Dead = [];
 
 	// BREAKING: Changing this value breaks Projectile radius of weapons
-	private const int GRID_SIZE = 32;
+	private const int GRID_SIZE = 16;
 
 	public CenteredMovingUniformGrid<Entity> Grid => _grid;
 
@@ -55,22 +58,24 @@ public partial class EnemyTargetQuery : Node
 
 		_grid.ClearGrid();
 		_grid.Recenter(playerPos);
-		AddObjectsToGrid();
+		AddObjectsToGridQuery(GameWorld.World, _grid);
 	}
 
-	private void AddObjectsToGrid()
+	[Query]
+	[All(typeof(PositionComponent), typeof(CircleHitboxComponent))]
+	[None<DyingMarkerComponent>]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static void AddObjectsToGrid(
+		[Data] in CenteredMovingUniformGrid<Entity> grid,
+		in Entity entity,
+		ref PositionComponent pos
+	)
 	{
-		GameWorld.World.Query<PositionComponent>(
-			in new QueryDescription().WithAll<PositionComponent>().WithNone<DyingMarkerComponent>(),
-			(entity, ref pos) =>
-			{
-				if (!_grid.ContainsWorld(pos.Position))
-					return;
+		if (!grid.ContainsWorld(pos.Position))
+			return;
 
-				var cell = _grid.GetCellWorld(pos.Position);
-				cell?.Add(entity);
-			}
-		);
+		var cell = grid.GetCellWorld(pos.Position);
+		cell?.Add(entity);
 	}
 
 	private bool CircleHitTest(Vector2 projPos, float projRadius, Entity entity)

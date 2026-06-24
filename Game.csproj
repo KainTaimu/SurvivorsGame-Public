@@ -61,6 +61,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Arch-PureECS" Version="2.1.0" />
+    <PackageReference Include="Arch.System" Version="1.1.0" />
+    <PackageReference Include="Arch.System.SourceGenerator" Version="2.1.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="5.3.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

@@ -1,5 +1,9 @@
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Arch.Core;
+using Arch.System;
+using Arch.System.SourceGenerator;
 using Game.Core.ECS;
 using Game.Models;
 
@@ -36,7 +40,7 @@ public partial class EnemyCollisionSolver : Node
 	[ExportCategory("Components")]
 	private CenteredMovingUniformGrid<(Vector2, Entity)> _grid = null!;
 
-	private readonly Dictionary<Entity, Vector2> _writeBuffer = [];
+	private readonly ConcurrentDictionary<Entity, Vector2> _writeBuffer = [];
 
 	public override void _Ready()
 	{
@@ -68,7 +72,7 @@ public partial class EnemyCollisionSolver : Node
 		_grid.Recenter(player.GlobalPosition);
 
 		_writeBuffer.Clear();
-		AddObjectsToGrid();
+		AddObjectsToGridQuery(GameWorld.World, _grid, _writeBuffer);
 		for (var i = 0; i < SubSteps; i++)
 		{
 			_grid.ClearGrid();
@@ -76,25 +80,26 @@ public partial class EnemyCollisionSolver : Node
 			SolveCollisions();
 		}
 
-		ApplyCollisions();
+		ApplyCollisionsQuery(GameWorld.World, _writeBuffer);
 	}
 
-	private void AddObjectsToGrid()
+	[Query(Parallel = true)]
+	[All<PositionComponent, FodderMarkerComponent>]
+	[None<DyingMarkerComponent>]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static void AddObjectsToGrid(
+		[Data] in CenteredMovingUniformGrid<(Vector2, Entity)> grid,
+		[Data] in ConcurrentDictionary<Entity, Vector2> writeBuffer,
+		in Entity entity,
+		ref PositionComponent pos
+	)
 	{
-		GameWorld.World.Query<PositionComponent>(
-			in new QueryDescription()
-				.WithAll<PositionComponent, FodderMarkerComponent>()
-				.WithNone<DyingMarkerComponent>(),
-			(entity, ref pos) =>
-			{
-				if (!_grid.ContainsWorld(pos.Position))
-					return;
+		if (!grid.ContainsWorld(pos.Position))
+			return;
 
-				var cell = _grid.GetCellWorld(pos.Position);
-				cell?.Add((pos.Position, entity));
-				_writeBuffer[entity] = pos.Position;
-			}
-		);
+		var cell = grid.GetCellWorld(pos.Position);
+		cell?.Add((pos.Position, entity));
+		writeBuffer[entity] = pos.Position;
 	}
 
 	private void AddObjectsToGridFromBuffer()
@@ -109,10 +114,18 @@ public partial class EnemyCollisionSolver : Node
 		}
 	}
 
-	private void ApplyCollisions()
+	[Query(Parallel = true)]
+	[All<PositionComponent>]
+	[None<DyingMarkerComponent>]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private static void ApplyCollisions(
+		[Data] in ConcurrentDictionary<Entity, Vector2> writeBuffer,
+		in Entity entity,
+		ref PositionComponent pos
+	)
 	{
-		foreach (var (entity, pos) in _writeBuffer)
-			GameWorld.World.Set(entity, new PositionComponent(pos) { Position = pos });
+		if (writeBuffer.TryGetValue(entity, out var newPos))
+			pos.Position = newPos;
 	}
 
 	private void SolveCollisions()

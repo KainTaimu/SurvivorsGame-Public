@@ -1,5 +1,8 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Arch.Core;
+using Arch.System;
+using Arch.System.SourceGenerator;
 using Game.Core.ECS;
 using Game.Core.Services;
 using Game.Models;
@@ -48,26 +51,28 @@ public partial class EnemyRenderer : Node
 			mmi.VisibleInstanceCount = 0;
 		}
 
-		GameWorld.World.Query<PositionComponent, AnimatedSpriteComponent>(
-			in new QueryDescription().WithAll<PositionComponent, AnimatedSpriteComponent>(),
-			(ref pos, ref sprite) =>
-			{
-				if (!_visibilityGrid.ContainsWorld(pos.Position))
-					return;
-
-				if (!_spriteToMultiMesh.TryGetValue(sprite.SpriteName, out var mmi))
-					mmi = CreateNewMultiMesh(sprite.SpriteName);
-
-				var count = _mmiVisibilityCount[mmi]++;
-				if (count >= mmi.InstanceCount)
-					mmi.InstanceCount = (int)(mmi.InstanceCount * INSTANCE_GROWTH_MULTIPLIER);
-
-				UpdateEnemyInstance(mmi, count, pos.Position, ref sprite);
-			}
-		);
+		UpdateEnemySpritesQuery(GameWorld.World);
 
 		foreach (var (mmi, visibleCount) in _mmiVisibilityCount)
 			mmi.VisibleInstanceCount = visibleCount;
+	}
+
+	[Query]
+	[All<PositionComponent, AnimatedSpriteComponent>]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private void UpdateEnemySprites(ref PositionComponent pos, ref AnimatedSpriteComponent sprite)
+	{
+		if (!_visibilityGrid.ContainsWorld(pos.Position))
+			return;
+
+		if (!_spriteToMultiMesh.TryGetValue(sprite.SpriteName, out var mmi))
+			mmi = CreateNewMultiMesh(sprite.SpriteName);
+
+		var count = _mmiVisibilityCount[mmi]++;
+		if (count >= mmi.InstanceCount)
+			mmi.InstanceCount = (int)(mmi.InstanceCount * INSTANCE_GROWTH_MULTIPLIER);
+
+		UpdateEnemyInstance(mmi, count, pos.Position, ref sprite);
 	}
 
 	private void UpdateEnemyInstance(

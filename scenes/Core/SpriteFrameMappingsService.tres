@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="SpriteFrameMappingsService" format=3 uid="uid://dxuafjpeqqim"]
 
-[ext_resource type="Texture2D" uid="uid://dld6i4p0hu0cx" path="res://assets/Enemies/shondo_desat-1.png.png" id="1_5ouet"]
+[ext_resource type="Texture2D" uid="uid://dld6i4p0hu0cx" path="res://assets/Enemies/enemy.png" id="1_5ouet"]
 [ext_resource type="Script" uid="uid://bnoq5noicfau6" path="res://src/Levels/Controllers/FodderEnemySpriteInfo.cs" id="2_xcs0u"]
 [ext_resource type="Script" uid="uid://s7wc6pn7yuev" path="res://src/Core/Services/SpriteFrameMappingsService.cs" id="3_5ouet"]
 
