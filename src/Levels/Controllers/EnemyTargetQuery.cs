@@ -61,11 +61,15 @@ public partial class EnemyTargetQuery : Node
 		AddObjectsToGridQuery(GameWorld.World, _grid);
 	}
 
+	// causes a build warning if you change this method's signature
+	// ReSharper disable once MemberCanBeMadeStatic.Local
+#pragma warning disable CA1822
 	[Query]
 	[All(typeof(PositionComponent), typeof(CircleHitboxComponent))]
 	[None<DyingMarkerComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static void AddObjectsToGrid(
+	private void AddObjectsToGrid(
+#pragma warning restore CA1822
 		[Data] in CenteredMovingUniformGrid<Entity> grid,
 		in Entity entity,
 		ref PositionComponent pos
