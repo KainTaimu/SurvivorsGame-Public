@@ -4,7 +4,6 @@ using Arch.System;
 using Arch.System.SourceGenerator;
 using Game.Core.ECS;
 using Game.Core.Services;
-using Game.Models;
 
 namespace Game.Levels.Controllers;
 
@@ -20,21 +19,15 @@ public partial class EnemyRenderer : Node
 		set
 		{
 			field = value;
-			var viewport = GetViewport();
-			if (viewport is null)
-				return;
-			var windowSize = viewport.GetVisibleRect().Size * RenderDistanceFactor;
-			_visibilityGrid = new CenteredMovingUniformGrid<char>(GRID_SIZE, windowSize);
+			CenterVisibilityGrid();
 		}
 	} = 1.2f;
 
-	// Only for checking visibility. Nothing stored inside
-	private CenteredMovingUniformGrid<char> _visibilityGrid = null!;
+	private Rect2 _visibilityRect;
 	private readonly Dictionary<MultiMesh, int> _mmiVisibilityCount = [];
 
 	private readonly Dictionary<string, MultiMesh> _spriteToMultiMesh = [];
 
-	private const int GRID_SIZE = 64;
 	private const int INITIAL_INSTANCE_COUNT = 2000;
 	private const float INSTANCE_GROWTH_MULTIPLIER = 1.5f;
 
@@ -44,19 +37,27 @@ public partial class EnemyRenderer : Node
 
 	public override void _Ready()
 	{
-		var viewport = GetViewport();
-		if (viewport is null)
-			return;
-		var windowSize = viewport.GetVisibleRect().Size * RenderDistanceFactor;
-		_visibilityGrid = new CenteredMovingUniformGrid<char>(GRID_SIZE, windowSize);
-
+		CenterVisibilityGrid();
 		// Render last to allow other systems to do their work first
 		ProcessPriority = 16;
 	}
 
+	private void CenterVisibilityGrid()
+	{
+		var viewport = GetViewport();
+		if (viewport is null)
+			return;
+		var windowSize = viewport.GetVisibleRect().Size * RenderDistanceFactor;
+		_visibilityRect = new Rect2(
+			PlayerPosition.X - windowSize.X / 2,
+			PlayerPosition.Y - windowSize.Y / 2,
+			windowSize
+		);
+	}
+
 	public override void _Process(double delta)
 	{
-		_visibilityGrid.Recenter(PlayerPosition);
+		CenterVisibilityGrid();
 		var start = Time.GetTicksMsec();
 		foreach (var mmi in _mmiVisibilityCount.Keys)
 		{
@@ -76,7 +77,7 @@ public partial class EnemyRenderer : Node
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private void UpdateEnemySprites(ref PositionComponent pos, ref AnimatedSpriteComponent sprite)
 	{
-		if (!_visibilityGrid.ContainsWorld(pos.Position))
+		if (!_visibilityRect.HasPoint(pos.Position))
 			return;
 
 		if (!_spriteToMultiMesh.TryGetValue(sprite.SpriteName, out var mmi))

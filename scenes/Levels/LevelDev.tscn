@@ -137,6 +137,9 @@ MainPlayer = NodePath("../../Player")
 [node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=247564660]
 Waves = Array[Object]([SubResource("Resource_p53ds"), SubResource("Resource_27qwr"), SubResource("Resource_qsiuk"), SubResource("Resource_ov80q")])
 
+[node name="EnemyRenderer" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="6" unique_id=1054443393]
+RenderDistanceFactor = 30.0
+
 [node name="PickupUi" parent="UI/CanvasLayer" parent_id_path=PackedInt32Array(253133387) index="0" unique_id=1639386775 node_paths=PackedStringArray("_showcases")]
 _showcases = []
 

@@ -81,6 +81,8 @@ public partial class EnemyCollisionSolver : Node
 			_grid.ClearGrid();
 			AddObjectsToGridFromBuffer();
 			SolveCollisions();
+			if (Time.GetTicksMsec() - start > 9)
+				break;
 		}
 		ApplyCollisionsQuery(GameWorld.World, _writeBuffer);
 		ProcessTime = Time.GetTicksMsec() - start;
