@@ -41,6 +41,8 @@ public partial class EnemyCollisionSolver : Node
 
 	private readonly ConcurrentDictionary<Entity, Vector2> _writeBuffer = [];
 
+	public double ProcessTime { get; private set; }
+
 	public override void _Ready()
 	{
 		var viewport = GetViewport();
@@ -71,6 +73,8 @@ public partial class EnemyCollisionSolver : Node
 		_grid.Recenter(player.GlobalPosition);
 
 		_writeBuffer.Clear();
+
+		var start = Time.GetTicksMsec();
 		AddObjectsToGridQuery(GameWorld.World, _grid, _writeBuffer);
 		for (var i = 0; i < SubSteps; i++)
 		{
@@ -78,8 +82,8 @@ public partial class EnemyCollisionSolver : Node
 			AddObjectsToGridFromBuffer();
 			SolveCollisions();
 		}
-
 		ApplyCollisionsQuery(GameWorld.World, _writeBuffer);
+		ProcessTime = Time.GetTicksMsec() - start;
 	}
 
 	[Query(Parallel = true)]

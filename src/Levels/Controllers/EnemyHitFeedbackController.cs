@@ -27,7 +27,7 @@ public partial class EnemyHitFeedbackController : Node
 				if (hit.HitTimeLeft <= 0)
 					return;
 
-				var flash = 255 * (newHitTime / hit.HitTime);
+				var flash = 128 * (newHitTime / hit.HitTime);
 				spr.Flash = (byte)flash;
 
 				if (hit.Damage <= 0)

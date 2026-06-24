@@ -23,6 +23,7 @@ BaseAttackSpeed = 1.0
 BasePierceLimit = 999
 Additional = Dictionary[String, Variant]({
 "CameraRecoilScale": 4.2,
+"Knockback": 150.0,
 "TimeToExplode": 0.5
 })
 metadata/_custom_type_script = "uid://os8ycjo6m7r0"

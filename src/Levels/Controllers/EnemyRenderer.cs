@@ -28,6 +28,8 @@ public partial class EnemyRenderer : Node
 
 	private Vector2 PlayerPosition => GameWorld.Instance.MainPlayer.GlobalPosition;
 
+	public double ProcessTime { get; private set; }
+
 	public override void _Ready()
 	{
 		var viewport = GetViewport();
@@ -44,6 +46,7 @@ public partial class EnemyRenderer : Node
 	public override void _Process(double delta)
 	{
 		_visibilityGrid.Recenter(PlayerPosition);
+		var start = Time.GetTicksMsec();
 		foreach (var mmi in _mmiVisibilityCount.Keys)
 		{
 			_mmiVisibilityCount[mmi] = 0;
@@ -54,6 +57,7 @@ public partial class EnemyRenderer : Node
 
 		foreach (var (mmi, visibleCount) in _mmiVisibilityCount)
 			mmi.VisibleInstanceCount = visibleCount;
+		ProcessTime = Time.GetTicksMsec() - start;
 	}
 
 	[Query]

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Arch.Core;
 using Game.Core.Settings;
 using Game.Levels.Controllers;
 
@@ -6,6 +7,9 @@ namespace Game.Items.Offensive;
 
 public partial class Grenade : RigidBody2D
 {
+	[Signal]
+	public delegate void OnExplodedEventHandler(Vector2 blastPosition);
+
 	[Export]
 	private PackedScene _explosionScene = null!;
 
@@ -52,19 +56,22 @@ public partial class Grenade : RigidBody2D
 
 		if (entities.Length > 6 && _t < 0.1f)
 		{
-			foreach (var entity in entities)
-				OffensiveOrigin.HandleHit(entity);
-			ApplyCameraRecoil();
-			QueueFree();
+			Explode(entities);
+			return;
 		}
 
 		if (_t <= 0)
-		{
-			foreach (var entity in entities)
-				OffensiveOrigin.HandleHit(entity);
-			ApplyCameraRecoil();
-			QueueFree();
-		}
+			Explode(entities);
+	}
+
+	private void Explode(Entity[] entitiesHit)
+	{
+		EmitSignalOnExploded(GlobalPosition);
+
+		foreach (var entity in entitiesHit)
+			OffensiveOrigin.HandleHit(entity);
+		ApplyCameraRecoil();
+		QueueFree();
 	}
 
 	private void ApplyCameraRecoil()

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Arch.Core;
 using Game.Core.ECS;
 using Game.Levels.Controllers;
@@ -19,6 +20,8 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 	private double _fireCooldown;
 
 	private ProjectilePool _projectilePool = null!;
+
+	private Vector2 _blastPosition;
 
 	public override void _Ready()
 	{
@@ -48,6 +51,7 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 		_fireCooldown = OffensiveStats.AttackSpeed;
 
 		var nade = GrenadeScene.Instantiate<Grenade>();
+		nade.OnExploded += (pos) => _blastPosition = pos;
 
 		nade.OffensiveOrigin = this;
 		nade.GlobalPosition = Player.GlobalPosition;
@@ -62,10 +66,26 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 	protected override void HandleHitECS(Entity entity)
 	{
 		base.HandleHitECS(entity);
+		if (GameWorld.World.Has<PositionComponent>(entity))
+		{
+			ref var pos = ref GameWorld.World.Get<PositionComponent>(entity);
+			var knockback = OffensiveStats.Additional.GetValueOrDefault("Knockback").AsSingle();
+			var knockbackVector = _blastPosition.DirectionTo(pos.Position);
+			knockbackVector *= knockback;
+			pos.Position += knockbackVector;
+		}
+
+		if (GameWorld.World.Has<VelocityComponent>(entity))
+		{
+			ref var vel = ref GameWorld.World.Get<VelocityComponent>(entity);
+			vel.Velocity = Vector2.Zero;
+		}
+
 		if (!GameWorld.World.TryGet<HealthComponent>(entity, out var health))
 			return;
 		if (health.Health > 0)
 			return;
+
 		GameWorld.World.Add(entity, new DeathCauseComponent(DeathCauseEnum.Explosion));
 	}
 }

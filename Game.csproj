@@ -1,25 +1,16 @@
 <Project Sdk="Godot.NET.Sdk/4.7.0">
   <!-- Base Configuration -->
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <LangVersion>preview</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
-    <!-- Performance: JIT Compilation -->
-    <TieredCompilation>true</TieredCompilation>
-    <TieredCompilationQuickJit>true</TieredCompilationQuickJit>
-
     <!-- Code Quality: Enforce Warnings as Errors -->
     <WarningLevel>9999</WarningLevel>
     <!-- <TreatWarningsAsErrors>true</TreatWarningsAsErrors> -->
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-
-    <!-- Performance: Remove Unused Features -->
-    <EventSourceSupport>false</EventSourceSupport>
-    <UseSystemResourceKeys>true</UseSystemResourceKeys>
-    <InvariantGlobalization>false</InvariantGlobalization>
   </PropertyGroup>
 
   <!-- Debug Configuration: Development with Hot-Reload -->

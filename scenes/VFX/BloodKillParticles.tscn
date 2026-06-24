@@ -7,13 +7,13 @@
 modulate = Color(1, 0, 0, 1)
 z_index = -2
 emitting = false
-amount = 70
+amount = 80
 texture = ExtResource("1_j17l3")
 lifetime = 120.0
 one_shot = true
 preprocess = 0.1
 explosiveness = 1.0
 fixed_fps = 20
-visibility_rect = Rect2(-8192, -8192, 16384, 16384)
+visibility_rect = Rect2(-213.31273, -204.3671, 350.64816, 322.91782)
 local_coords = true
 process_material = ExtResource("2_w5u0a")
