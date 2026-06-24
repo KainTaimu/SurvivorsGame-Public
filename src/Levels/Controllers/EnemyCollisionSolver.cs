@@ -90,7 +90,9 @@ public partial class EnemyCollisionSolver : Node
 	private void AddObjectsToGrid()
 	{
 		GameWorld.World.Query<PositionComponent>(
-			in new QueryDescription().WithAll<PositionComponent, FodderMarkerComponent>(),
+			in new QueryDescription()
+				.WithAll<PositionComponent, FodderMarkerComponent>()
+				.WithNone<DyingMarkerComponent>(),
 			(entity, ref pos) =>
 			{
 				if (!_grid.ContainsWorld(pos.Position))

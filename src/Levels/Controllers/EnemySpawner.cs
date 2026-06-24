@@ -68,7 +68,7 @@ public partial class EnemySpawner : Node
 		var screenCenterPosition = viewport.GetScreenCenterPosition();
 		var viewportRectEnd = viewport.GetViewportRect().Size;
 
-		const float margin = 100;
+		const float margin = 200;
 		var spawnVector = new Vector2();
 
 		switch (GD.RandRange(0, 3))

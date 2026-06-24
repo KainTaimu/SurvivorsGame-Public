@@ -16,7 +16,9 @@ public partial class EnemyHitFeedbackController : Node
 	public override void _Process(double delta)
 	{
 		GameWorld.World.Query<HitFeedbackComponent, PositionComponent, AnimatedSpriteComponent>(
-			in new QueryDescription().WithAll<HitFeedbackComponent, PositionComponent, AnimatedSpriteComponent>(),
+			in new QueryDescription()
+				.WithAll<HitFeedbackComponent, PositionComponent, AnimatedSpriteComponent>()
+				.WithNone<DyingMarkerComponent>(),
 			(ref hit, ref pos, ref spr) =>
 			{
 				var newHitTime = hit.HitTimeLeft - delta;
