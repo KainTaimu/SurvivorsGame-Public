@@ -33,13 +33,14 @@ script = ExtResource("9_2csoy")
 Weights = Array[Object]([SubResource("Resource_li0nt"), SubResource("Resource_i8nxn"), SubResource("Resource_tfrx3")])
 metadata/_custom_type_script = "uid://d2tvxgxbv87i2"
 
-[sub_resource type="Resource" id="Resource_faxpm"]
+[sub_resource type="Resource" id="Resource_qx3kv"]
 script = ExtResource("8_qx3kv")
-SpawnCountTarget = 2
+SpawnCountTarget = 50000
 EnemyBlueprints = SubResource("Resource_cccga")
-SpawnMinTime = 0.4
-SpawnMaxTime = 0.8
-SpawnBatchMax = 2
+SpawnMinTime = 0.01
+SpawnMaxTime = 0.1
+SpawnBatchMin = 50
+SpawnBatchMax = 50
 metadata/_custom_type_script = "uid://cksmwvaxx1m18"
 
 [sub_resource type="Resource" id="Resource_qsiuk"]
@@ -133,4 +134,4 @@ metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 MainPlayer = NodePath("../../Player")
 
 [node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=247564660]
-Waves = Array[Object]([SubResource("Resource_faxpm"), SubResource("Resource_qsiuk"), SubResource("Resource_27qwr"), SubResource("Resource_ov80q")])
+Waves = Array[Object]([SubResource("Resource_qx3kv"), SubResource("Resource_qsiuk"), SubResource("Resource_27qwr"), SubResource("Resource_ov80q")])

@@ -50,7 +50,7 @@ public partial class EnemyRenderer : Node
 
 		GameWorld.World.Query<PositionComponent, AnimatedSpriteComponent>(
 			in new QueryDescription().WithAll<PositionComponent, AnimatedSpriteComponent>(),
-			(entity, ref pos, ref sprite) =>
+			(ref pos, ref sprite) =>
 			{
 				if (!_visibilityGrid.ContainsWorld(pos.Position))
 					return;
@@ -62,7 +62,7 @@ public partial class EnemyRenderer : Node
 				if (count >= mmi.InstanceCount)
 					mmi.InstanceCount = (int)(mmi.InstanceCount * INSTANCE_GROWTH_MULTIPLIER);
 
-				UpdateEnemyInstance(entity, mmi, count, pos.Position, sprite);
+				UpdateEnemyInstance(mmi, count, pos.Position, ref sprite);
 			}
 		);
 
@@ -71,42 +71,38 @@ public partial class EnemyRenderer : Node
 	}
 
 	private void UpdateEnemyInstance(
-		Entity entity,
 		MultiMesh multiMesh,
 		int instanceIdx,
 		Vector2 pos,
-		AnimatedSpriteComponent sprite
+		ref AnimatedSpriteComponent sprite
 	)
 	{
 		var flip = PlayerPosition < pos;
 
-		var updatedSprite = sprite;
-		if (updatedSprite.AnimationTime <= 0)
+		if (sprite.AnimationTime <= 0)
 		{
 			// TODO: Will continue into empty sprite frame tiles due to
 			// AnimatedSpriteComponent not tracking which XY index in the last
 			// tile in the sprite frame
-			updatedSprite.AnimationTime = updatedSprite.AnimationSpeed;
-			if (updatedSprite.FrameIdxX + 1 >= updatedSprite.FrameCountX)
-				updatedSprite.FrameIdxX = 0;
+			sprite.AnimationTime = sprite.AnimationSpeed;
+			if (sprite.FrameIdxX + 1 >= sprite.FrameCountX)
+				sprite.FrameIdxX = 0;
 			else
-				updatedSprite.FrameIdxX++;
+				sprite.FrameIdxX++;
 		}
 		else
-			updatedSprite.AnimationTime -= GetProcessDeltaTime();
-
-		GameWorld.World.Set(entity, updatedSprite);
+			sprite.AnimationTime -= GetProcessDeltaTime();
 
 		var custom = new EnemyShaderCustomData(
-			updatedSprite.FrameCountX,
-			updatedSprite.FrameCountY,
-			updatedSprite.FrameSizePxX,
-			updatedSprite.FrameSizePxY,
-			updatedSprite.FrameIdxX,
+			sprite.FrameCountX,
+			sprite.FrameCountY,
+			sprite.FrameSizePxX,
+			sprite.FrameSizePxY,
+			sprite.FrameIdxX,
 			flip: flip,
-			opacity: updatedSprite.Opacity,
-			flash: updatedSprite.Flash,
-			scale: (byte)Mathf.Clamp((updatedSprite.Scale - 0.5f) / 4.5f * 255f, 0, 255)
+			opacity: sprite.Opacity,
+			flash: sprite.Flash,
+			scale: (byte)Mathf.Clamp((sprite.Scale - 0.5f) / 4.5f * 255f, 0, 255)
 		);
 		var data = new Color(custom.R, custom.G, custom.B, custom.A);
 

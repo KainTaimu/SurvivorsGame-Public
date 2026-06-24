@@ -11,20 +11,10 @@ public partial class EnemyMover : Node
 		var player = GameWorld.Instance.MainPlayer;
 		var playerPos = player.GlobalPosition;
 
-		// var update = new MoveUpdate(new PositionComponent(playerPos));
-		// GameWorld.World.InlineQuery<MoveUpdate, PositionComponent, MoveSpeedComponent>(
-		// 	in new QueryDescription().WithAll<PositionComponent, MoveSpeedComponent>(),
-		// 	ref update
-		// );
-		GameWorld.World.Query<PositionComponent, MoveSpeedComponent>(
+		var update = new MoveUpdate(new PositionComponent(playerPos));
+		GameWorld.World.InlineParallelQuery<MoveUpdate, PositionComponent, MoveSpeedComponent>(
 			in new QueryDescription().WithAll<PositionComponent, MoveSpeedComponent>(),
-			(ref pos, ref moveSpeed) =>
-			{
-				pos.Position = pos.Position.MoveToward(
-					playerPos,
-					(float)(moveSpeed.MoveSpeed * GameWorld.Instance.GetProcessDeltaTime())
-				);
-			}
+			ref update
 		);
 	}
 }
@@ -34,7 +24,7 @@ public readonly struct MoveUpdate(PositionComponent moveToTarget) : IForEach<Pos
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public void Update(ref PositionComponent pos, ref MoveSpeedComponent moveSpeed)
 	{
-		pos.Position.MoveToward(
+		pos.Position = pos.Position.MoveToward(
 			moveToTarget.Position,
 			(float)(moveSpeed.MoveSpeed * GameWorld.Instance.GetProcessDeltaTime())
 		);

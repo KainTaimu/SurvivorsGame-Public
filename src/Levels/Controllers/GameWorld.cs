@@ -1,5 +1,6 @@
 using Arch.Core;
 using Game.Players;
+using Schedulers;
 
 namespace Game.Levels.Controllers;
 
@@ -15,11 +16,13 @@ public partial class GameWorld : Node
 	public override void _EnterTree()
 	{
 		World = World.Create();
+		World.SharedJobScheduler = new JobScheduler(new JobScheduler.Config() { ThreadPrefixName = "GameWorld" });
 		Instance = this;
 	}
 
 	public override void _ExitTree()
 	{
+		World.SharedJobScheduler?.Dispose();
 		World.Dispose();
 		World = null!;
 	}
