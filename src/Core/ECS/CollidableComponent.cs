@@ -1,3 +1,3 @@
 namespace Game.Core.ECS;
 
-public record struct CollidableComponent(bool WithinRange);
+public record struct CollidableComponent;

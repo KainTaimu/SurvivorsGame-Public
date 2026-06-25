@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="EnemyBlueprint" format=3 uid="uid://bo0ohu302yg51"]
+
+[ext_resource type="Script" uid="uid://y77qtp32wo00" path="res://src/Enemies/EnemyStats.cs" id="1_qsasf"]
+[ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="2_evvw4"]
+
+[sub_resource type="Resource" id="Resource_pw3c2"]
+script = ExtResource("1_qsasf")
+DamageOnContact = 10
+MaxHealth = 50
+MoveSpeed = 200.0
+SpriteScaleMultiplier = 1.3
+metadata/_custom_type_script = "uid://y77qtp32wo00"
+
+[resource]
+script = ExtResource("2_evvw4")
+Name = "Big"
+SpriteName = "placeholder"
+Type = 1
+Stats = SubResource("Resource_pw3c2")

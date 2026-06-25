@@ -49,7 +49,7 @@ public partial class EnemySpawner : Node
 			new EnemyContactDamageComponent(Mathf.CeilToInt(stats.DamageOnContact * stats.ContactDamageMultiplier)),
 			new DeathRewardComponent(Mathf.CeilToInt(stats.MoneyDrop * stats.MoneyDropMultiplier)),
 			new HitFeedbackComponent { HitTime = 0 },
-			new CollidableComponent(false)
+			new CollidableComponent()
 		);
 		switch (bp.Type)
 		{

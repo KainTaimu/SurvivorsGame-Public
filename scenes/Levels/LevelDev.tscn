@@ -5,6 +5,8 @@
 [ext_resource type="Resource" uid="uid://d3sq28pskbjjy" path="res://scenes/Enemies/Blueprints/Walker.tres" id="3_5f0vo"]
 [ext_resource type="Resource" uid="uid://nvj82uku7ht1" path="res://scenes/Enemies/Blueprints/Sprinter.tres" id="3_he88e"]
 [ext_resource type="Script" uid="uid://dau6m811dtep8" path="res://src/Levels/Controllers/BlueprintWeight.cs" id="4_p53ds"]
+[ext_resource type="Resource" uid="uid://bo0ohu302yg51" path="res://scenes/Enemies/Blueprints/Big.tres" id="6_g22vo"]
+[ext_resource type="Script" uid="uid://cksmwvaxx1m18" path="res://src/Levels/Controllers/WaveSpawnCount.cs" id="8_p53ds"]
 [ext_resource type="Script" uid="uid://d2tvxgxbv87i2" path="res://src/Levels/Controllers/WeightedWaveBlueprintCollection.cs" id="9_2csoy"]
 [ext_resource type="Script" uid="uid://b7ol6jtjagoe" path="res://src/Levels/Controllers/WaveDuration.cs" id="10_2cd5g"]
 [ext_resource type="PackedScene" uid="uid://cb6opjo4xaaio" path="res://scenes/UI/PerformanceMonitor.tscn" id="13_dxfda"]
@@ -20,10 +22,26 @@ Blueprint = ExtResource("3_he88e")
 Weight = 0.25
 metadata/_custom_type_script = "uid://dau6m811dtep8"
 
+[sub_resource type="Resource" id="Resource_ctfmv"]
+script = ExtResource("4_p53ds")
+Blueprint = ExtResource("6_g22vo")
+Weight = 0.05
+metadata/_custom_type_script = "uid://dau6m811dtep8"
+
 [sub_resource type="Resource" id="Resource_d0wh2"]
 script = ExtResource("9_2csoy")
-Weights = Array[Object]([SubResource("Resource_he88e"), SubResource("Resource_lkuh3")])
+Weights = Array[Object]([SubResource("Resource_he88e"), SubResource("Resource_lkuh3"), SubResource("Resource_ctfmv")])
 metadata/_custom_type_script = "uid://d2tvxgxbv87i2"
+
+[sub_resource type="Resource" id="Resource_g22vo"]
+script = ExtResource("8_p53ds")
+SpawnCountTarget = 3000
+EnemyBlueprints = SubResource("Resource_d0wh2")
+SpawnMinTime = 0.1
+SpawnMaxTime = 0.1
+SpawnBatchMin = 100
+SpawnBatchMax = 100
+metadata/_custom_type_script = "uid://cksmwvaxx1m18"
 
 [sub_resource type="Resource" id="Resource_qx3kv"]
 script = ExtResource("10_2cd5g")
@@ -41,7 +59,7 @@ metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 MainPlayer = NodePath("../../Player")
 
 [node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=247564660]
-Waves = Array[Object]([SubResource("Resource_qx3kv")])
+Waves = Array[Object]([SubResource("Resource_g22vo"), SubResource("Resource_qx3kv")])
 
 [node name="EnemyMover" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="4" unique_id=348078406]
 VelocityRecoveryFactor = 2.0

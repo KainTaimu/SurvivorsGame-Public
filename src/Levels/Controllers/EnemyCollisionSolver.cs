@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Arch.Core;
 using Arch.System;
@@ -39,6 +40,8 @@ public partial class EnemyCollisionSolver : Node
 	[ExportCategory("Components")]
 	private CenteredMovingUniformGrid<(Vector2, Entity)> _grid = null!;
 
+	private readonly ConcurrentDictionary<Entity, float> _entityCollisionRadius = [];
+
 	private readonly ConcurrentDictionary<Entity, Vector2> _writeBuffer = [];
 
 	public double ProcessTime { get; private set; }
@@ -76,9 +79,10 @@ public partial class EnemyCollisionSolver : Node
 		_playerPosition = player.GlobalPosition;
 
 		_writeBuffer.Clear();
+		_entityCollisionRadius.Clear();
 
 		var start = Time.GetTicksMsec();
-		AddObjectsToGridQuery(GameWorld.World, _grid, _writeBuffer);
+		AddObjectsToGridQuery(GameWorld.World, _grid, _writeBuffer, _entityCollisionRadius);
 		for (var i = 0; i < SubSteps; i++)
 		{
 			_grid.ClearGrid();
@@ -92,27 +96,25 @@ public partial class EnemyCollisionSolver : Node
 	}
 
 	[Query(Parallel = true)]
-	[All<PositionComponent, CollidableComponent>]
+	[All<PositionComponent, CollidableComponent, CircleHitboxComponent>]
 	[None<DyingMarkerComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static void AddObjectsToGrid(
 		[Data] in CenteredMovingUniformGrid<(Vector2, Entity)> grid,
 		[Data] in ConcurrentDictionary<Entity, Vector2> writeBuffer,
+		[Data] in ConcurrentDictionary<Entity, float> entityCollisionRadius,
 		in Entity entity,
 		ref PositionComponent pos,
-		ref CollidableComponent collide
+		ref CircleHitboxComponent circle
 	)
 	{
 		if (!grid.ContainsWorld(pos.Position))
-		{
-			collide.WithinRange = false;
 			return;
-		}
-		collide.WithinRange = true;
 
 		var cell = grid.GetCellWorld(pos.Position);
 		cell?.Add((pos.Position, entity));
 		writeBuffer[entity] = pos.Position;
+		entityCollisionRadius.TryAdd(entity, circle.Radius);
 	}
 
 	private void AddObjectsToGridFromBuffer()
@@ -128,7 +130,7 @@ public partial class EnemyCollisionSolver : Node
 	}
 
 	[Query(Parallel = true)]
-	[All<PositionComponent>]
+	[All<PositionComponent, CircleHitboxComponent>]
 	[None<DyingMarkerComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static void ApplyCollisions(
@@ -202,8 +204,18 @@ public partial class EnemyCollisionSolver : Node
 		if (idA == idB)
 			return;
 
-		if (posA.DistanceSquaredTo(posB) >= _distBeforeShove * _distBeforeShove)
+		if (
+			!_entityCollisionRadius.TryGetValue(idA, out var radiusA)
+			|| !_entityCollisionRadius.TryGetValue(idB, out var radiusB)
+		)
 			return;
+
+		var largest = Math.Max(radiusA, radiusB) * 3;
+		if (posA.DistanceSquaredTo(posB) >= largest * largest)
+			return;
+
+		// if (posA.DistanceSquaredTo(posB) >= _distBeforeShove * _distBeforeShove)
+		// 	return;
 
 		var direction = posB.DirectionTo(posA);
 		if (direction == Vector2.Zero)

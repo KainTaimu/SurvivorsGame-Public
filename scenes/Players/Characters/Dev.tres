@@ -58,6 +58,7 @@ metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_ve1fr"]
 script = ExtResource("1_kooli")
+_value = 2.0
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_xtqlj"]
