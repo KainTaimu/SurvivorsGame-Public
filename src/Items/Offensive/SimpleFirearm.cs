@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using Arch.Core;
-using Game.Core.ECS;
-using Game.Levels.Controllers;
 
 namespace Game.Items.Offensive;
 

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="EnemyBlueprint" format=3 uid="uid://d3sq28pskbjjy"]
+
+[ext_resource type="Script" uid="uid://y77qtp32wo00" path="res://src/Enemies/EnemyStats.cs" id="1_jmr7q"]
+[ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="2_iqtvm"]
+
+[sub_resource type="Resource" id="Resource_jmr7q"]
+script = ExtResource("1_jmr7q")
+DamageOnContact = 4
+MaxHealth = 15
+MoveSpeed = 240.0
+metadata/_custom_type_script = "uid://y77qtp32wo00"
+
+[resource]
+script = ExtResource("2_iqtvm")
+Name = "Walker"
+SpriteName = "placeholder"
+Type = 1
+Stats = SubResource("Resource_jmr7q")

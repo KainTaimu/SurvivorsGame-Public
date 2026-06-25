@@ -7,7 +7,7 @@
 modulate = Color(1, 0, 0, 1)
 z_index = -2
 emitting = false
-amount = 80
+amount = 95
 texture = ExtResource("1_j17l3")
 lifetime = 120.0
 one_shot = true

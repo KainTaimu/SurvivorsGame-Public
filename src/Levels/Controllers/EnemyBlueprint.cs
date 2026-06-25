@@ -10,6 +10,9 @@ public partial class EnemyBlueprint : Resource
 	public string Name { get; private set; } = null!;
 
 	[Export]
+	public string SpriteName { get; private set; } = null!;
+
+	[Export]
 	public EnemyType Type { get; private set; }
 
 	[Export]

@@ -6,7 +6,7 @@
 [node name="BloodSpurtParticles" type="GPUParticles2D" unique_id=1449878972]
 modulate = Color(1, 0, 0, 1)
 z_index = -2
-amount = 30
+amount = 50
 texture = ExtResource("1_v4csj")
 lifetime = 80.0
 one_shot = true

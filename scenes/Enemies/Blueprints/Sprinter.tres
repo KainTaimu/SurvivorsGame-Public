@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="EnemyBlueprint" format=3 uid="uid://nvj82uku7ht1"]
+
+[ext_resource type="Script" uid="uid://y77qtp32wo00" path="res://src/Enemies/EnemyStats.cs" id="1_nbcib"]
+[ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="1_ru3no"]
+
+[sub_resource type="Resource" id="Resource_nbcib"]
+script = ExtResource("1_nbcib")
+MaxHealth = 2
+MoveSpeed = 300.0
+SpriteScaleMultiplier = 0.85
+metadata/_custom_type_script = "uid://y77qtp32wo00"
+
+[resource]
+script = ExtResource("1_ru3no")
+Name = "Sprinter"
+SpriteName = "placeholder"
+Type = 1
+Stats = SubResource("Resource_nbcib")

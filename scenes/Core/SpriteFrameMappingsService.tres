@@ -1,4 +1,4 @@
-[gd_resource type="Resource" format=3 uid="uid://dxuafjpeqqim"]
+[gd_resource type="Resource" script_class="SpriteFrameMappingsService" format=3 uid="uid://dxuafjpeqqim"]
 
 [ext_resource type="Texture2D" uid="uid://dld6i4p0hu0cx" path="res://assets/Enemies/enemy.png" id="1_5ouet"]
 [ext_resource type="Script" uid="uid://bnoq5noicfau6" path="res://src/Levels/Controllers/FodderEnemySpriteInfo.cs" id="2_xcs0u"]
@@ -7,28 +7,10 @@
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_sangk"]
 size = Vector2(32, 32)
 
-[sub_resource type="Resource" id="Resource_eju28"]
+[sub_resource type="Resource" id="Resource_5tod7"]
 script = ExtResource("2_xcs0u")
 SpriteFrames = ExtResource("1_5ouet")
-SpriteName = "duck"
-AnimationSpeed = 0.1
-FrameCountX = 4
-metadata/_custom_type_script = "uid://bnoq5noicfau6"
-
-[sub_resource type="Resource" id="Resource_nu24x"]
-script = ExtResource("2_xcs0u")
-SpriteFrames = ExtResource("1_5ouet")
-SpriteName = "shondo"
-AnimationSpeed = 0.1
-FrameCountX = 4
-FrameSizePxX = 31
-FrameSizePxY = 31
-metadata/_custom_type_script = "uid://bnoq5noicfau6"
-
-[sub_resource type="Resource" id="Resource_0uk3q"]
-script = ExtResource("2_xcs0u")
-SpriteFrames = ExtResource("1_5ouet")
-SpriteName = "vanoss"
+SpriteName = "placeholder"
 AnimationSpeed = 0.1
 FrameCountX = 4
 FrameSizePxX = 30
@@ -38,9 +20,7 @@ metadata/_custom_type_script = "uid://bnoq5noicfau6"
 [resource]
 script = ExtResource("3_5ouet")
 _spriteMapping = Dictionary[String, Object]({
-"duck": SubResource("Resource_eju28"),
-"shondo": SubResource("Resource_nu24x"),
-"vanoss": SubResource("Resource_0uk3q")
+"placeholder": SubResource("Resource_5tod7")
 })
 PlaceholderSpriteFrame = SubResource("PlaceholderTexture2D_sangk")
 metadata/_custom_type_script = "uid://s7wc6pn7yuev"

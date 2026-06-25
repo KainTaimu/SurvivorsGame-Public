@@ -50,6 +50,9 @@ public abstract partial class AbstractWave : Resource, IEnemyWave
 		}
 	} = 1;
 
+	/// <summary>
+	/// Max domain must be 1
+	/// </summary>
 	[Export]
 	public Curve? SpawnTimeCurveOverMaxTime;
 

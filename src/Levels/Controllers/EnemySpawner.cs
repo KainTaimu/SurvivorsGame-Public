@@ -26,7 +26,7 @@ public partial class EnemySpawner : Node
 		var pos = GetPositionOutsideViewport();
 
 		var stats = bp.Stats;
-		var spriteInfo = ss.GetSpriteInfo(bp.Name);
+		var spriteInfo = ss.GetSpriteInfo(bp.SpriteName);
 
 		var entity = GameWorld.World.Create(
 			new HealthComponent(stats.MaxHealth),
