@@ -43,6 +43,8 @@ public partial class EnemyCollisionSolver : Node
 
 	public double ProcessTime { get; private set; }
 
+	private Vector2 _playerPosition;
+
 	public override void _Ready()
 	{
 		var viewport = GetViewport();
@@ -71,6 +73,7 @@ public partial class EnemyCollisionSolver : Node
 
 		var player = GameWorld.Instance.MainPlayer;
 		_grid.Recenter(player.GlobalPosition);
+		_playerPosition = player.GlobalPosition;
 
 		_writeBuffer.Clear();
 
@@ -81,7 +84,7 @@ public partial class EnemyCollisionSolver : Node
 			_grid.ClearGrid();
 			AddObjectsToGridFromBuffer();
 			SolveCollisions();
-			if (Time.GetTicksMsec() - start > 9)
+			if (i > 1 && Time.GetTicksMsec() - start > 9)
 				break;
 		}
 		ApplyCollisionsQuery(GameWorld.World, _writeBuffer);
@@ -89,18 +92,23 @@ public partial class EnemyCollisionSolver : Node
 	}
 
 	[Query(Parallel = true)]
-	[All<PositionComponent, FodderMarkerComponent>]
+	[All<PositionComponent, CollidableComponent>]
 	[None<DyingMarkerComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static void AddObjectsToGrid(
 		[Data] in CenteredMovingUniformGrid<(Vector2, Entity)> grid,
 		[Data] in ConcurrentDictionary<Entity, Vector2> writeBuffer,
 		in Entity entity,
-		ref PositionComponent pos
+		ref PositionComponent pos,
+		ref CollidableComponent collide
 	)
 	{
 		if (!grid.ContainsWorld(pos.Position))
+		{
+			collide.WithinRange = false;
 			return;
+		}
+		collide.WithinRange = true;
 
 		var cell = grid.GetCellWorld(pos.Position);
 		cell?.Add((pos.Position, entity));
@@ -141,7 +149,7 @@ public partial class EnemyCollisionSolver : Node
 				for (var y = 0; y < _grid.Dimensions.Y; y++)
 				{
 					var cell = _grid.GetCell(x, y);
-					if (cell is null || cell.Count <= 1)
+					if (cell is null || cell.Count <= 1 || cell.Count > 10)
 						continue;
 
 					SolveCellInternalCollisions(cell);
@@ -207,6 +215,7 @@ public partial class EnemyCollisionSolver : Node
 		if (cellA.Count >= _cramLimitBeforeExtraPush || cellB.Count >= _cramLimitBeforeExtraPush)
 		{
 			var extraPush = Mathf.Log((cellA.Count + cellB.Count) / 1.5f) * _cramExtraPushFactor;
+			extraPush = Math.Abs(extraPush);
 			push *= Math.Abs(extraPush);
 		}
 

@@ -28,7 +28,7 @@ Cause = 2
 Permanent = true
 Icon = ExtResource("2_hoxu3")
 Tags = Array[int]([2])
-Modifiers = Array[ExtResource("2_oxxwr")]([SubResource("Resource_1j5om")])
+Modifiers = [SubResource("Resource_1j5om")]
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hoxu3"]
@@ -59,7 +59,7 @@ BaseProjectileSpeed = 6000
 BaseProjectileScaleMultiplier = 0.8
 BaseProjectileRadius = 30
 BaseAttackSpeed = 0.025
-BasePierceLimit = 3
+BasePierceLimit = 5
 Additional = Dictionary[String, Variant]({
 "Knockback": 10.0,
 "PlayerPushPerShot": 1700.0
