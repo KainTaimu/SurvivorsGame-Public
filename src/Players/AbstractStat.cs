@@ -6,9 +6,9 @@ namespace Game.Players;
 [GlobalClass]
 public abstract partial class AbstractStat : Resource
 {
-	public List<float> Multipliers = [];
+	public readonly List<float> Multipliers = [];
 
-	public List<float> Flat = [];
+	public readonly List<float> Flat = [];
 
 	public float GetMultipliersSum()
 	{

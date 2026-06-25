@@ -7,7 +7,7 @@ namespace Game.Players;
 [GlobalClass]
 public partial class CharacterStats : Resource
 {
-	private int _health = -1;
+	private int _health = int.MinValue;
 
 	[Export]
 	private IntStat _maxHealth = null!;
@@ -34,6 +34,9 @@ public partial class CharacterStats : Resource
 	private FloatStat _hitboxRadius = null!;
 
 	[ExportCategory("Multiplier attributes")]
+	[Export]
+	private FloatStat _moveSpeedMultiplier = null!;
+
 	[Export]
 	private FloatStat _incomingDamageMultiplier = null!;
 
@@ -63,7 +66,7 @@ public partial class CharacterStats : Resource
 		get
 		{
 			// health may be uninitialized on first access.
-			if (_health == -1)
+			if (_health == int.MinValue)
 				_health = _maxHealth.Value;
 
 			return _health;
@@ -83,6 +86,8 @@ public partial class CharacterStats : Resource
 	public float InvincibilityTime => _invincibilityTime.Value;
 
 	public float HitboxRadius => _hitboxRadius.Value;
+
+	public float MoveSpeedMultiplier => _moveSpeedMultiplier.Value;
 
 	public float IncomingDamageMultiplier => _incomingDamageMultiplier.Value;
 

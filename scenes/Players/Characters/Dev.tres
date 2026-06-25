@@ -1,0 +1,105 @@
+[gd_resource type="Resource" script_class="Character" format=3 uid="uid://b36ulgh0dx3ar"]
+
+[ext_resource type="Script" uid="uid://wsto3khl70md" path="res://src/Players/FloatStat.cs" id="1_kooli"]
+[ext_resource type="Script" uid="uid://tfaqh3bcxdha" path="res://src/Players/IntStat.cs" id="2_utsua"]
+[ext_resource type="Script" uid="uid://rykv3f6ereih" path="res://src/Players/CharacterStats.cs" id="3_8kvl7"]
+[ext_resource type="Script" uid="uid://ud6xfov0txuh" path="res://src/Players/Character.cs" id="4_exd0i"]
+
+[sub_resource type="Resource" id="Resource_kooli"]
+script = ExtResource("1_kooli")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_utsua"]
+script = ExtResource("1_kooli")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_8kvl7"]
+script = ExtResource("1_kooli")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_exd0i"]
+script = ExtResource("1_kooli")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_oubyx"]
+script = ExtResource("1_kooli")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_unoy2"]
+script = ExtResource("2_utsua")
+metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+
+[sub_resource type="Resource" id="Resource_qfdl2"]
+script = ExtResource("2_utsua")
+metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+
+[sub_resource type="Resource" id="Resource_vmqb7"]
+script = ExtResource("1_kooli")
+_value = 32.0
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_23nsd"]
+script = ExtResource("1_kooli")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_6ruiu"]
+script = ExtResource("1_kooli")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_3rhv1"]
+script = ExtResource("2_utsua")
+_value = 999999999
+metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+
+[sub_resource type="Resource" id="Resource_f0e3h"]
+script = ExtResource("1_kooli")
+_value = 310.0
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_ve1fr"]
+script = ExtResource("1_kooli")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_xtqlj"]
+script = ExtResource("1_kooli")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_lyej3"]
+script = ExtResource("1_kooli")
+_value = 100.0
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_6l42x"]
+script = ExtResource("1_kooli")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_uy3lh"]
+script = ExtResource("1_kooli")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_68aqc"]
+script = ExtResource("3_8kvl7")
+_maxHealth = SubResource("Resource_3rhv1")
+_moveSpeed = SubResource("Resource_f0e3h")
+_defense = SubResource("Resource_unoy2")
+_criticalChance = SubResource("Resource_8kvl7")
+_pickupRangeRadius = SubResource("Resource_lyej3")
+_healthRegenPerSecond = SubResource("Resource_qfdl2")
+_invincibilityTime = SubResource("Resource_6ruiu")
+_hitboxRadius = SubResource("Resource_vmqb7")
+_moveSpeedMultiplier = SubResource("Resource_ve1fr")
+_incomingDamageMultiplier = SubResource("Resource_23nsd")
+_outgoingDamageMultiplier = SubResource("Resource_xtqlj")
+_criticalChanceMultiplier = SubResource("Resource_exd0i")
+_criticalDamageMultiplier = SubResource("Resource_oubyx")
+_attackSpeedMultiplier = SubResource("Resource_kooli")
+_bloomMultiplier = SubResource("Resource_utsua")
+_recoilMultiplier = SubResource("Resource_6l42x")
+_xpMultiplier = SubResource("Resource_uy3lh")
+metadata/_custom_type_script = "uid://rykv3f6ereih"
+
+[resource]
+script = ExtResource("4_exd0i")
+CharacterName = "DEV"
+CharacterStats = SubResource("Resource_68aqc")
+metadata/_custom_type_script = "uid://ud6xfov0txuh"

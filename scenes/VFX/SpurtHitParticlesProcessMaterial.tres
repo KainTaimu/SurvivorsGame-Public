@@ -2,7 +2,7 @@
 
 [sub_resource type="Curve" id="Curve_j17l3"]
 _limits = [0.0, 100.0, 0.0, 0.05]
-_data = [Vector2(0, 0), 0.0, 996.4425, 0, 1, Vector2(0.05, 49.82213), 383.9866, 0.0, 0, 1]
+_data = [Vector2(0, 0), 0.0, 20145.06, 0, 1, Vector2(0.0037383176, 75.30864), 383.9866, 0.0, 0, 1]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_w5u0a"]

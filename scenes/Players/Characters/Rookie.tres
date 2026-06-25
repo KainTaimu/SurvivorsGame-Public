@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Character" format=3 uid="uid://dphs5xxc31rsm"]
+
+[ext_resource type="Resource" uid="uid://6wxxpstfm1ha" path="res://scenes/Players/DefaultPlayerStats.tres" id="1_8px3e"]
+[ext_resource type="Script" uid="uid://ud6xfov0txuh" path="res://src/Players/Character.cs" id="2_gmkna"]
+
+[resource]
+script = ExtResource("2_gmkna")
+CharacterName = "Rookie"
+CharacterStats = ExtResource("1_8px3e")
+metadata/_custom_type_script = "uid://ud6xfov0txuh"

@@ -134,6 +134,7 @@ public partial class PlayerStatusEffectController : Node
 				"_healthRegenPerSecond" => CharacterStatType.HealthRegenPerSecond,
 				"_invincibilityTime" => CharacterStatType.InvincibilityTime,
 				"_hitboxRadius" => CharacterStatType.HitboxRadius,
+				"_moveSpeedMultiplier" => CharacterStatType.MoveSpeedMultiplier,
 				"_incomingDamageMultiplier" => CharacterStatType.IncomingDamageMultiplier,
 				"_outgoingDamageMultiplier" => CharacterStatType.OutgoingDamageMultiplier,
 				"_criticalChanceMultiplier" => CharacterStatType.CriticalChanceMultiplier,

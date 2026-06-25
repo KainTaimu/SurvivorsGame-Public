@@ -52,7 +52,11 @@ metadata/_custom_type_script = "uid://tfaqh3bcxdha"
 
 [sub_resource type="Resource" id="Resource_spdmk"]
 script = ExtResource("1_pds1w")
-_value = 600.0
+_value = 310.0
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_3l5on"]
+script = ExtResource("1_pds1w")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_wbs8r"]
@@ -82,6 +86,7 @@ _pickupRangeRadius = SubResource("Resource_6r6a4")
 _healthRegenPerSecond = SubResource("Resource_sfksd")
 _invincibilityTime = SubResource("Resource_mffm2")
 _hitboxRadius = SubResource("Resource_ygj7d")
+_moveSpeedMultiplier = SubResource("Resource_3l5on")
 _incomingDamageMultiplier = SubResource("Resource_xbbcj")
 _outgoingDamageMultiplier = SubResource("Resource_wbs8r")
 _criticalChanceMultiplier = SubResource("Resource_2ogdu")

@@ -11,6 +11,7 @@ public enum CharacterStatType
 	HealthRegenPerSecond,
 	InvincibilityTime,
 	HitboxRadius,
+	MoveSpeedMultiplier,
 	IncomingDamageMultiplier,
 	OutgoingDamageMultiplier,
 	CriticalChanceMultiplier,
