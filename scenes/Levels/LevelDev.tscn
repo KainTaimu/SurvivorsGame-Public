@@ -6,13 +6,45 @@
 [ext_resource type="Script" uid="uid://dau6m811dtep8" path="res://src/Levels/Controllers/BlueprintWeight.cs" id="4_p53ds"]
 [ext_resource type="Resource" uid="uid://6rycr3xfb4ax" path="res://scenes/Enemies/Blueprints/Vanoss.tres" id="5_qx3kv"]
 [ext_resource type="Resource" uid="uid://d3ao5d4ym77ad" path="res://scenes/Enemies/Blueprints/Duck.tres" id="6_dxfda"]
-[ext_resource type="Script" uid="uid://y77qtp32wo00" path="res://src/Enemies/EnemyStats.cs" id="7_twx3g"]
 [ext_resource type="Script" uid="uid://cksmwvaxx1m18" path="res://src/Levels/Controllers/WaveSpawnCount.cs" id="8_qx3kv"]
-[ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="8_ww382"]
 [ext_resource type="Script" uid="uid://d2tvxgxbv87i2" path="res://src/Levels/Controllers/WeightedWaveBlueprintCollection.cs" id="9_2csoy"]
 [ext_resource type="Script" uid="uid://bhhh8235y54bg" path="res://src/Levels/Controllers/WaveDebugStopper.cs" id="9_dxfda"]
 [ext_resource type="Script" uid="uid://b7ol6jtjagoe" path="res://src/Levels/Controllers/WaveDuration.cs" id="10_2cd5g"]
 [ext_resource type="PackedScene" uid="uid://cb6opjo4xaaio" path="res://scenes/UI/PerformanceMonitor.tscn" id="13_dxfda"]
+
+[sub_resource type="Resource" id="Resource_jwici"]
+script = ExtResource("4_p53ds")
+Blueprint = ExtResource("3_4v0et")
+metadata/_custom_type_script = "uid://dau6m811dtep8"
+
+[sub_resource type="Resource" id="Resource_q0s0p"]
+script = ExtResource("4_p53ds")
+Blueprint = ExtResource("5_qx3kv")
+metadata/_custom_type_script = "uid://dau6m811dtep8"
+
+[sub_resource type="Resource" id="Resource_0jdxt"]
+script = ExtResource("4_p53ds")
+Blueprint = ExtResource("6_dxfda")
+metadata/_custom_type_script = "uid://dau6m811dtep8"
+
+[sub_resource type="Resource" id="Resource_5wsim"]
+script = ExtResource("9_2csoy")
+Weights = Array[Object]([SubResource("Resource_jwici"), SubResource("Resource_q0s0p"), SubResource("Resource_0jdxt")])
+metadata/_custom_type_script = "uid://d2tvxgxbv87i2"
+
+[sub_resource type="Resource" id="Resource_ov80q"]
+script = ExtResource("10_2cd5g")
+Duration = 9999.0
+MaxMobs = 5000
+EnemyBlueprints = SubResource("Resource_5wsim")
+SpawnMinTime = 0.4
+SpawnMaxTime = 0.8
+SpawnBatchMax = 2
+metadata/_custom_type_script = "uid://b7ol6jtjagoe"
+
+[sub_resource type="Resource" id="Resource_27qwr"]
+script = ExtResource("9_dxfda")
+metadata/_custom_type_script = "uid://bhhh8235y54bg"
 
 [sub_resource type="Resource" id="Resource_li0nt"]
 script = ExtResource("4_p53ds")
@@ -36,96 +68,13 @@ metadata/_custom_type_script = "uid://d2tvxgxbv87i2"
 
 [sub_resource type="Resource" id="Resource_p53ds"]
 script = ExtResource("8_qx3kv")
-SpawnCountTarget = 3000
+SpawnCountTarget = 10
 EnemyBlueprints = SubResource("Resource_cccga")
 SpawnMinTime = 0.05
 SpawnMaxTime = 0.05
 SpawnBatchMin = 1000
 SpawnBatchMax = 1000
 metadata/_custom_type_script = "uid://cksmwvaxx1m18"
-
-[sub_resource type="Resource" id="Resource_27qwr"]
-script = ExtResource("9_dxfda")
-metadata/_custom_type_script = "uid://bhhh8235y54bg"
-
-[sub_resource type="Resource" id="Resource_qsiuk"]
-script = ExtResource("10_2cd5g")
-MaxMobs = 5000
-EnemyBlueprints = SubResource("Resource_cccga")
-SpawnMinTime = 0.4
-SpawnMaxTime = 0.8
-SpawnBatchMax = 2
-metadata/_custom_type_script = "uid://b7ol6jtjagoe"
-
-[sub_resource type="Resource" id="Resource_w4qib"]
-script = ExtResource("7_twx3g")
-DamageOnContact = 4
-MaxHealth = 15
-metadata/_custom_type_script = "uid://y77qtp32wo00"
-
-[sub_resource type="Resource" id="Resource_71ilp"]
-script = ExtResource("8_ww382")
-Name = "shondo"
-Type = 1
-Stats = SubResource("Resource_w4qib")
-metadata/_custom_type_script = "uid://fti2ky20j85c"
-
-[sub_resource type="Resource" id="Resource_jwici"]
-script = ExtResource("4_p53ds")
-Blueprint = SubResource("Resource_71ilp")
-metadata/_custom_type_script = "uid://dau6m811dtep8"
-
-[sub_resource type="Resource" id="Resource_fr540"]
-script = ExtResource("7_twx3g")
-DamageOnContact = 6
-MaxHealth = 20
-MoneyDrop = 3
-metadata/_custom_type_script = "uid://y77qtp32wo00"
-
-[sub_resource type="Resource" id="Resource_nb32o"]
-script = ExtResource("8_ww382")
-Name = "vanoss"
-Type = 1
-Stats = SubResource("Resource_fr540")
-metadata/_custom_type_script = "uid://fti2ky20j85c"
-
-[sub_resource type="Resource" id="Resource_q0s0p"]
-script = ExtResource("4_p53ds")
-Blueprint = SubResource("Resource_nb32o")
-metadata/_custom_type_script = "uid://dau6m811dtep8"
-
-[sub_resource type="Resource" id="Resource_xn41p"]
-script = ExtResource("7_twx3g")
-MaxHealth = 10
-MoneyDrop = 1
-metadata/_custom_type_script = "uid://y77qtp32wo00"
-
-[sub_resource type="Resource" id="Resource_45xbb"]
-script = ExtResource("8_ww382")
-Name = "duck"
-Type = 1
-Stats = SubResource("Resource_xn41p")
-metadata/_custom_type_script = "uid://fti2ky20j85c"
-
-[sub_resource type="Resource" id="Resource_0jdxt"]
-script = ExtResource("4_p53ds")
-Blueprint = SubResource("Resource_45xbb")
-metadata/_custom_type_script = "uid://dau6m811dtep8"
-
-[sub_resource type="Resource" id="Resource_5wsim"]
-script = ExtResource("9_2csoy")
-Weights = Array[Object]([SubResource("Resource_jwici"), SubResource("Resource_q0s0p"), SubResource("Resource_0jdxt")])
-metadata/_custom_type_script = "uid://d2tvxgxbv87i2"
-
-[sub_resource type="Resource" id="Resource_ov80q"]
-script = ExtResource("10_2cd5g")
-Duration = 9999.0
-MaxMobs = 5000
-EnemyBlueprints = SubResource("Resource_5wsim")
-SpawnMinTime = 0.4
-SpawnMaxTime = 0.8
-SpawnBatchMax = 2
-metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 
 [node name="Level" unique_id=2141389114 instance=ExtResource("1_m1pph")]
 
@@ -135,7 +84,10 @@ metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 MainPlayer = NodePath("../../Player")
 
 [node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=247564660]
-Waves = Array[Object]([SubResource("Resource_p53ds"), SubResource("Resource_27qwr"), SubResource("Resource_qsiuk"), SubResource("Resource_ov80q")])
+Waves = Array[Object]([SubResource("Resource_ov80q"), SubResource("Resource_27qwr"), SubResource("Resource_p53ds")])
+
+[node name="EnemyMover" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="4" unique_id=348078406]
+VelocityRecoveryFactor = 2.0
 
 [node name="PickupUi" parent="UI/CanvasLayer" parent_id_path=PackedInt32Array(253133387) index="0" unique_id=1639386775 node_paths=PackedStringArray("_showcases")]
 _showcases = []

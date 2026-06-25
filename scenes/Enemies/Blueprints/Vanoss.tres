@@ -1,4 +1,4 @@
-[gd_resource type="Resource" format=3 uid="uid://6rycr3xfb4ax"]
+[gd_resource type="Resource" script_class="EnemyBlueprint" format=3 uid="uid://6rycr3xfb4ax"]
 
 [ext_resource type="Script" uid="uid://y77qtp32wo00" path="res://src/Enemies/EnemyStats.cs" id="1_hs4vj"]
 [ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="2_a1bkk"]
@@ -7,6 +7,7 @@
 script = ExtResource("1_hs4vj")
 DamageOnContact = 6
 MaxHealth = 20
+MoveSpeed = 240.0
 MoneyDrop = 3
 metadata/_custom_type_script = "uid://y77qtp32wo00"
 

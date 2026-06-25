@@ -26,7 +26,8 @@ BaseProjectileSpeed = 3200
 BaseProjectileScaleMultiplier = 0.8
 BaseAttackSpeed = 0.0
 Additional = Dictionary[String, Variant]({
-"Knockback": 20.0
+"Knockback": 20.0,
+"SlowMultiplier": 0.5
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 

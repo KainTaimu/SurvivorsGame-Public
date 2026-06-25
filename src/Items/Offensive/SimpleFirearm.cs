@@ -46,12 +46,14 @@ public partial class SimpleFirearm : Firearm
 
 	protected override void HandleHitECS(Entity entity)
 	{
-		if (!GameWorld.World.TryGet<PositionComponent>(entity, out var pos))
-			return;
-		var knockback = OffensiveStats.Additional.GetValueOrDefault("Knockback").AsSingle();
-		var knockbackVector = Player.GlobalPosition.DirectionTo(pos.Position);
-		knockbackVector *= knockback;
-
-		GameWorld.World.Set(entity, new PositionComponent(pos.Position + knockbackVector));
+		OffensiveEffects.ApplyKnockback(
+			entity,
+			Player.GlobalPosition,
+			OffensiveStats.Additional.GetValueOrDefault("Knockback", 0f).AsSingle()
+		);
+		OffensiveEffects.ApplyReduceVelocity(
+			entity,
+			OffensiveStats.Additional.GetValueOrDefault("SlowMultiplier", 1f).AsSingle()
+		);
 	}
 }

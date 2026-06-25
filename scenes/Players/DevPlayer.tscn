@@ -9,7 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://b6pcia1iql0ct" path="res://scenes/Items/Offensive/Ak47.tscn" id="5_klnc8"]
 [ext_resource type="PackedScene" uid="uid://lvm5jo1ua73i" path="res://scenes/Items/Offensive/Shotgun.tscn" id="6_mre4m"]
 [ext_resource type="Texture2D" uid="uid://c0d0pkcn6hw68" path="res://assets/Players/player.png" id="6_y52bq"]
+[ext_resource type="Script" uid="uid://bdk4fdcqvypav" path="res://src/Players/Controllers/StatusEffect.cs" id="7_qh10d"]
 [ext_resource type="PackedScene" uid="uid://dwyqdinyji8tt" path="res://scenes/Items/Offensive/Smg.tscn" id="7_y52bq"]
+[ext_resource type="Script" uid="uid://d31d8uns5faa5" path="res://src/Players/Controllers/StatusEffectModifier.cs" id="8_agk5e"]
 [ext_resource type="PackedScene" uid="uid://okgy2hpbgy53" path="res://scenes/Items/Offensive/Blick.tscn" id="8_qh10d"]
 [ext_resource type="PackedScene" uid="uid://twvhgblbtovy" path="res://scenes/Items/Offensive/Revolver.tscn" id="9_agk5e"]
 [ext_resource type="PackedScene" uid="uid://qxx1q01ys1cd" path="res://scenes/Items/Offensive/Dmr.tscn" id="10_vsrt8"]
@@ -181,12 +183,31 @@ animations = [{
 "speed": 7.0
 }]
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_qh10d"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_ygwx1"]
+script = ExtResource("8_agk5e")
+StatName = 9
+Operation = 1
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_agk5e"]
+script = ExtResource("7_qh10d")
+Name = "DEV"
+Permanent = true
+Modifiers = Array[ExtResource("8_agk5e")]([SubResource("Resource_ygwx1")])
+metadata/_custom_type_script = "uid://bdk4fdcqvypav"
+
 [node name="Player" unique_id=1386970244 instance=ExtResource("1_rmun4")]
 Character = SubResource("Resource_qoswm")
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=881638213]
 sprite_frames = SubResource("SpriteFrames_mre4m")
 animation = &"idle"
+
+[node name="PlayerStatusEffectController" parent="." index="5" unique_id=1019311816]
+_testEffect = Array[ExtResource("7_qh10d")]([SubResource("Resource_agk5e")])
 
 [node name="M4" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="0" unique_id=265287884 instance=ExtResource("4_23k0g")]
 
