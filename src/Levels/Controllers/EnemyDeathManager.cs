@@ -8,8 +8,6 @@ public partial class EnemyDeathManager : Node
 	[Export]
 	public GoreManager? GoreManager;
 
-	// private static readonly QueryDescription _query = ;
-
 	public override void _Process(double delta)
 	{
 		GameWorld.World.Query<HealthComponent, PositionComponent>(
@@ -53,7 +51,6 @@ public partial class EnemyDeathManager : Node
 
 	private void HandleDeath(Entity entity, ref PositionComponent pos)
 	{
-		// save so pos reference doesn't become invalid during the structural changes below
 		var deathPos = pos.Position;
 
 		GameWorld.World.Add(entity, DyingMarkerComponent.Default);

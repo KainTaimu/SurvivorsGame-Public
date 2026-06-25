@@ -7,7 +7,7 @@ public class UniformGridCell<T>
 	public required Vector2I Index;
 	public required Vector2I Position;
 
-	public T[] Array = new T[MAX_SIZE];
+	public readonly T[] Array = new T[MAX_SIZE];
 
 	public int Count
 	{
@@ -22,9 +22,7 @@ public class UniformGridCell<T>
 	{
 		if (Count >= MAX_SIZE)
 		{
-			var newArray = new T[Count * 2];
-			Array.CopyTo(newArray, 0);
-			Array = newArray;
+			return;
 		}
 
 		Array[Count] = obj;
