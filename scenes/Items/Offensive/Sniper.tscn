@@ -2,12 +2,22 @@
 
 [ext_resource type="Script" uid="uid://dsoi8oc5exk1o" path="res://src/Items/Offensive/Sniper.cs" id="1_jg7ce"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_u7hyr"]
+[ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/SemiAutoFireGroup.cs" id="3_0ap61"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_f52b2"]
+[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="4_11blq"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_u7hyr"]
 [ext_resource type="AudioStream" uid="uid://brpgaue5ixgat" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Full Sound/7.62x54R/WAV/762x54r Single WAV.wav" id="5_f52b2"]
 [ext_resource type="AudioStream" uid="uid://d0gr0p02wcgp6" path="res://assets/SFX/Shoot/Snake's SECOND Authentic Gun Sounds/& More/Mag Pack/WAV/Bolt Mag Pack.wav" id="6_oq2q4"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ld3kt"]
+[sub_resource type="Resource" id="Resource_a5w76"]
+script = ExtResource("3_0ap61")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
+
+[sub_resource type="Resource" id="Resource_c52kb"]
+script = ExtResource("4_11blq")
+metadata/_custom_type_script = "uid://dpq42sefws67v"
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nihe0"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_iky5m"]
@@ -19,7 +29,6 @@ metadata/_custom_type_script = "uid://8rt54h4imtxv"
 [sub_resource type="Resource" id="Resource_f52b2"]
 script = ExtResource("4_u7hyr")
 ReloadTime = 2.2
-BloomCoefficientDeg = 0.0
 MagazineCapacity = 1
 HorizontalRecoilMin = 20.0
 HorizontalBaseRecoil = 20.0
@@ -27,7 +36,9 @@ HorizontalRecoilRandom = 20.0
 VerticalRecoilMin = 120.0
 VerticalBaseRecoil = 120.0
 VerticalRecoilRandom = 40.0
+HorizontalRecoilPunish = false
 CameraRecoilScale = 3.0
+ChamberLoaded = false
 BaseDamage = -1
 BaseCritDamageMultiplier = 1.0
 BaseCritChanceProportion = 1.0
@@ -47,10 +58,11 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[node name="Sniper" type="Node" unique_id=753371605 node_paths=PackedStringArray("ShootAudioPlayer")]
+[node name="Sniper" type="Node" unique_id=753371605]
 script = ExtResource("1_jg7ce")
 _projectileScene = ExtResource("2_u7hyr")
-ShootAudioPlayer = NodePath("Shoot")
+_fireGroup = SubResource("Resource_a5w76")
+_projectileAttack = SubResource("Resource_c52kb")
 Properties = SubResource("Resource_iky5m")
 Stats = SubResource("Resource_f52b2")
 
@@ -63,4 +75,5 @@ volume_db = 18.0
 stream = ExtResource("6_oq2q4")
 volume_db = 5.0
 
+[connection signal="OnAttack" from="." to="Shoot" method="play"]
 [connection signal="OnReloadEnd" from="." to="ShootReady" method="play"]

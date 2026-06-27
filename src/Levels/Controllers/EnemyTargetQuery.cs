@@ -139,7 +139,7 @@ public partial class EnemyTargetQuery : Node
 	/// <param name="from">Ray origin in world coordinates.</param>
 	/// <param name="angle">Ray angle in radians.</param>
 	/// <param name="width">Ray thickness (radius perpendicular to direction).</param>
-	/// <param name="entities">Output entities ids.</param>
+	/// <param name="entities">Entities caught in ray. Sorted by distance</param>
 	/// <param name="hitLimit">How many hits before giving up</param>
 	/// <returns>
 	/// <c>true</c> when at least one target lies within raycast corridor.

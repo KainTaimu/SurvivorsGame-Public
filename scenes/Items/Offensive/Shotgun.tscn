@@ -2,13 +2,23 @@
 
 [ext_resource type="Script" uid="uid://d16s2voefyry4" path="res://src/Items/Offensive/Shotgun.cs" id="1_f4o5x"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_e0ol0"]
+[ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/SemiAutoFireGroup.cs" id="3_62a23"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_yjw8k"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_60s7d"]
+[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="4_d1d18"]
 [ext_resource type="AudioStream" uid="uid://dsx6wt658eqq7" path="res://assets/SFX/Shoot/Snake's SECOND Authentic Gun Sounds/Full Sounds/20 Gauge/WAV/20 Gauge Single.wav" id="5_g0kem"]
 [ext_resource type="AudioStream" uid="uid://dukuiytyl14r4" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Reloads, Cycling & More/WAV/Pump Shell Load WAV.wav" id="5_u167f"]
 [ext_resource type="AudioStream" uid="uid://caepfvq0t0m64" path="res://assets/SFX/shotgun_cocking.mp3" id="6_fvcvv"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_c62cd"]
+[sub_resource type="Resource" id="Resource_e3ubm"]
+script = ExtResource("3_62a23")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
+
+[sub_resource type="Resource" id="Resource_mkf0n"]
+script = ExtResource("4_d1d18")
+metadata/_custom_type_script = "uid://dpq42sefws67v"
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_62a23"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_fvcvv"]
@@ -29,7 +39,6 @@ VerticalRecoilMin = 80.0
 VerticalBaseRecoil = 80.0
 VerticalRecoilRandom = 40.0
 CameraRecoilScale = 2.0
-FireGroup = 0
 BaseDamage = 15
 BaseCritDamageMultiplier = 1.0
 BaseCritChanceProportion = 0.3
@@ -42,12 +51,13 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[node name="M870" type="Node" unique_id=1997007315 node_paths=PackedStringArray("_shellReloadAudioPlayer", "_cockingAudioPlayer", "ShootAudioPlayer")]
+[node name="M870" type="Node" unique_id=1997007315 node_paths=PackedStringArray("_shellReloadAudioPlayer", "_cockingAudioPlayer")]
 script = ExtResource("1_f4o5x")
+_projectileScene = ExtResource("2_e0ol0")
+_fireGroup = SubResource("Resource_e3ubm")
+_projectileAttack = SubResource("Resource_mkf0n")
 _shellReloadAudioPlayer = NodePath("ShellReload")
 _cockingAudioPlayer = NodePath("Cocking")
-_projectileScene = ExtResource("2_e0ol0")
-ShootAudioPlayer = NodePath("Shoot")
 Properties = SubResource("Resource_fvcvv")
 Stats = SubResource("Resource_mvme6")
 
@@ -67,3 +77,5 @@ max_polyphony = 3
 process_mode = 3
 stream = ExtResource("6_fvcvv")
 volume_db = 5.0
+
+[connection signal="OnAttack" from="." to="Shoot" method="play"]

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using Arch.Core;
 using Game.Core.ECS;
-using Game.Items.Offensive;
 using Game.Levels.Controllers;
 
 namespace Game.Items.Projectiles;
@@ -11,10 +11,11 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 	[Export]
 	public Sprite2D Sprite = null!;
 
+	private float _distanceTravelled;
 	private int _pierceCount;
-	private readonly List<Entity> _hits = [];
+	private readonly List<HitData> _hits = [];
+	private readonly List<HitData> _hitsHandled = [];
 
-	private BaseOffensive OffensiveOrigin => (BaseOffensive)Origin;
 	private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
 
 	public ProjectilePool ProjectilePool { get; set; } = null!;
@@ -32,18 +33,40 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 
 		var from = Position;
 
-		var moveVector = new Vector2(1, 0).Rotated(Rotation) * ProjectileSpeed * (float)delta;
+		var moveVector = Vector2.Right.Rotated(Rotation) * ProjectileSpeed * (float)delta;
+		_distanceTravelled += ProjectileSpeed * (float)delta;
 		Position = from + moveVector;
+
+		_hitsHandled.Clear();
+		foreach (var hit in _hits)
+		{
+			if (_distanceTravelled < hit.DistanceToHitPosition)
+				continue;
+
+			EmitSignalOnEntityHit(new EntityObject(hit.Target));
+			_hitsHandled.Add(hit);
+		}
+
+		foreach (var hit in _hitsHandled)
+		{
+			_hits.Remove(hit);
+		}
+
+		if (_pierceCount != 0 && _hits.Count == 0)
+			ReturnToPool();
 	}
 
 	public void ReturnToPool()
 	{
+		_hits.Clear();
+		_hitsHandled.Clear();
+		_distanceTravelled = 0;
 		_pierceCount = 0;
 		ProjectilePool.ReturnProjectile(this);
 		IsInitialized = false;
 	}
 
-	public override void Initialize()
+	protected override void PostInitialization()
 	{
 		_hits.Clear();
 		var tweenScale = CreateTween().SetTrans(Tween.TransitionType.Linear).SetEase(Tween.EaseType.In);
@@ -51,43 +74,24 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 		tweenScale.TweenProperty(Sprite, "scale", finalScale, 0.05);
 		IsInitialized = true;
 
-		if (
-			!TargetQuery.GetTargetsRayCast(
-				Position,
-				Rotation,
-				HitRadius,
-				out var hits,
-				OffensiveOrigin.OffensiveStats.PierceLimit
-			)
-		)
+		if (!TargetQuery.GetTargetsRayCast(Position, Rotation, HitRadius, out var hits, PierceLimit))
 			return;
 
 		foreach (var entity in hits)
 		{
-			if (_hits.Contains(entity))
+			// NOTE: Not sure if GetTargetsRayCast returns duplicates
+			if (_hits.Any((data => data.Target == entity)))
 				return;
 
-			var lastPos = GameWorld.World.Get<PositionComponent>(entity);
+			var entityPos = GameWorld.World.Get<PositionComponent>(entity);
+			var distance = GlobalPosition.DistanceTo(entityPos.Position);
 
-			// BUG:
-			// URGENT
-			// Because of the ray cast, the projectile may still hit an enemy that the projectile in front of
-			// it has killed.
-			Origin.GetTree().CreateTimer(Position.DistanceTo(lastPos.Position) / ProjectileSpeed, false).Timeout +=
-				() =>
-				{
-					if (!GameWorld.World.IsAlive(entity))
-						return;
-					OffensiveOrigin.HandleHit(entity);
-				};
-
-			_hits.Add(entity);
+			_hits.Add(new HitData(entity, entityPos.Position, distance));
 			_pierceCount++;
 			if (_pierceCount >= PierceLimit)
-			{
-				Origin.GetTree().CreateTimer(Position.DistanceTo(lastPos.Position) / ProjectileSpeed, false).Timeout +=
-					ReturnToPool;
-			}
+				break;
 		}
 	}
+
+	public readonly record struct HitData(Entity Target, Vector2 Position, float DistanceToHitPosition);
 }

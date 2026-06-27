@@ -1,23 +1,29 @@
 [gd_scene format=3 uid="uid://twvhgblbtovy"]
 
-[ext_resource type="Script" uid="uid://ccxu0f6wcpxw8" path="res://src/Items/Offensive/Revolver.cs" id="1_0wf3b"]
-[ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_o3lg4"]
-[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="2_wc6to"]
-[ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_y3hip"]
+[ext_resource type="Script" uid="uid://d4hn7uwvshdju" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_o3lg4"]
+[ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_whe3a"]
+[ext_resource type="Resource" uid="uid://cs331x12hmlod" path="res://scenes/Items/Offensive/SemiAutoFireGroup.tres" id="3_0u5yb"]
+[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="4_fgf34"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="5_0u5yb"]
 [ext_resource type="AudioStream" uid="uid://dspbe1b535vno" path="res://assets/SFX/revolver_cocking.mp3" id="6_0u5yb"]
 [ext_resource type="AudioStream" uid="uid://byaqp87dpfq3j" path="res://assets/SFX/revolver_gunshot.mp3" id="6_fgf34"]
+[ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_y3hip"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_o3lg4"]
+[sub_resource type="Resource" id="Resource_dar1o"]
+script = ExtResource("4_fgf34")
+metadata/_custom_type_script = "uid://dpq42sefws67v"
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0u5yb"]
 size = Vector2(32, 32)
 
-[sub_resource type="Resource" id="Resource_whe3a"]
-script = ExtResource("2_wc6to")
+[sub_resource type="Resource" id="Resource_y3hip"]
+script = ExtResource("5_0u5yb")
 Name = "Revolver"
+Description = ""
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_n3sky"]
-script = ExtResource("4_y3hip")
-ReloadTime = 1.8
+script = ExtResource("6_y3hip")
 BloomCoefficientDeg = 3.0
 MagazineCapacity = 6
 HorizontalRecoilMin = 20.0
@@ -27,27 +33,29 @@ VerticalRecoilMin = 120.0
 VerticalBaseRecoil = 120.0
 VerticalRecoilRandom = 40.0
 RecoilScale = 0.6
+HorizontalRecoilPunish = false
 CameraRecoilScale = 1.8
-FireGroup = 0
+ChamberLoaded = false
 BaseDamage = 30
 BaseCritDamageMultiplier = 1.0
 BaseCritChanceProportion = 0.5
 BaseProjectileSpeed = 5000
 BaseProjectileScaleMultiplier = 1.2
 BaseProjectileRadius = 42
-BaseAttackSpeed = 0.2
+BaseAttackSpeed = 0.4
 BasePierceLimit = 8
 Additional = Dictionary[String, Variant]({
-"Knockback": 50.0
+"Knockback": 5.0,
+"SlowMultiplier": 0.0
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[node name="Revolver" type="Node2D" unique_id=1975794211 node_paths=PackedStringArray("CockAudioPlayer", "ShootAudioPlayer")]
-script = ExtResource("1_0wf3b")
-CockAudioPlayer = NodePath("CockAudioPlayer")
-_projectileScene = ExtResource("2_o3lg4")
-ShootAudioPlayer = NodePath("ShootAudioPlayer")
-Properties = SubResource("Resource_whe3a")
+[node name="Revolver" type="Node2D" unique_id=1975794211]
+script = ExtResource("1_o3lg4")
+_projectileScene = ExtResource("2_whe3a")
+_fireGroup = ExtResource("3_0u5yb")
+_projectileAttack = SubResource("Resource_dar1o")
+Properties = SubResource("Resource_y3hip")
 Stats = SubResource("Resource_n3sky")
 
 [node name="ShootAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1706054987]
@@ -62,3 +70,5 @@ stream = ExtResource("6_0u5yb")
 volume_db = 12.0
 mix_target = 2
 max_polyphony = 6
+
+[connection signal="OnAttack" from="." to="ShootAudioPlayer" method="play"]

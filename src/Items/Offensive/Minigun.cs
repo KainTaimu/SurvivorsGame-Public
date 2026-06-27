@@ -1,20 +1,18 @@
 using System.Collections.Generic;
 using Arch.Core;
-using Game.Core.ECS;
 using Game.Levels.Controllers;
 using Game.Players.Controllers;
+using Game.UI;
 
 namespace Game.Items.Offensive;
 
-public partial class Minigun : Firearm
+public partial class Minigun : AbstractFirearm, IReloadable
 {
 	[Export]
-	private Curve _windupCurve = null!;
+	private PackedScene _projectileScene = null!;
 
-	private double _windupTime;
-
-	private float WindupAttackSpeed =>
-		Math.Clamp(_windupCurve.Sample((float)_windupTime), OffensiveStats.AttackSpeed, _windupCurve.MaxDomain);
+	[Export]
+	private AbstractProjectileAttack _projectileAttack = null!;
 
 	private float PlayerPushPerShot => OffensiveStats.Additional.GetValueOrDefault("PlayerPushPerShot").AsSingle();
 
@@ -27,10 +25,49 @@ public partial class Minigun : Firearm
 	private bool _isMovementPenaltyApplied;
 	private bool _isMovementPenaltyWearOffApplied;
 
+	public bool IsReloading => false;
+
+	private readonly ProjectilePool _pool = new();
+
+	private static Crosshair? Crosshair => Crosshair.Instance;
+
+	[Export]
+	private Curve _windupCurve = null!;
+
+	private double _windupTime;
+
+	private float WindupAttackSpeed =>
+		Math.Clamp(_windupCurve.Sample((float)_windupTime), OffensiveStats.AttackSpeed, _windupCurve.MaxDomain);
+
+	private float _fireCooldown;
+
 	public override void _Ready()
 	{
-		base._Ready();
-		OnAttack += ApplyCameraRecoil;
+		_pool.Initialize(
+			this,
+			_projectileScene,
+			p =>
+			{
+				p.OnEntityHit += e => HandleHit(e.Entity);
+			}
+		);
+
+		OnAttack += () => OffensiveEffects.ApplyCameraShake(FirearmStats.CameraRecoilScale, GetViewport, CreateTween);
+		OnAttack += () =>
+		{
+			if (Crosshair is not null)
+				OffensiveEffects.ApplyCrosshairRecoil(
+					Crosshair,
+					HorizontalBaseRecoil,
+					HorizontalRecoilMin,
+					HorizontalRecoilRandom,
+					VerticalBaseRecoil,
+					VerticalRecoilMin,
+					VerticalRecoilRandom,
+					RecoilScale,
+					RecoilAccumilationScale
+				);
+		};
 
 		OnEquipped += () =>
 		{
@@ -73,7 +110,7 @@ public partial class Minigun : Firearm
 
 		if (Input.IsActionPressed(AttackActionString))
 		{
-			FireCooldown -= delta;
+			_fireCooldown -= (float)delta;
 			_windupTime = Math.Clamp(_windupTime + delta, 0, _windupCurve.MaxDomain);
 			Attack();
 		}
@@ -81,71 +118,51 @@ public partial class Minigun : Firearm
 			_windupTime = Math.Clamp(_windupTime - delta * 3, 0, _windupCurve.MaxDomain);
 	}
 
-	public override void Attack()
+	public void Attack()
 	{
-		if (FireCooldown > 0)
+		if (_fireCooldown > 0)
 			return;
 
-		ShootAudioPlayer?.Play();
-
-		FireCooldown = WindupAttackSpeed;
 		MagazineCount--;
-
 		if (MagazineCount == 0)
 			Reload();
 
-		var playerVector = Player.GetCanvasTransform() * Player.Position;
+		var playerPosition = Player.GetCanvasTransform() * Player.Position;
 
-		Vector2 mouseVector;
-		if (Crosshair is not null)
-		{
-			mouseVector =
-				Crosshair.PrimaryCrosshairSprite.GetCanvasTransform() * Crosshair.PrimaryCrosshairSprite.GlobalPosition;
-		}
-		else
-			mouseVector = Player.GetGlobalMousePosition();
-
-		var rotation = playerVector.AngleToPoint(mouseVector);
+		var mouseVector = Crosshair?.CanvasSpacePosition ?? Player.GetGlobalMousePosition();
+		var rotation = playerPosition.AngleToPoint(mouseVector);
 
 		var bloomRad = BloomCoefficientDeg * (Math.PI / 180);
 		var bloom = (float)GD.RandRange(-bloomRad / 2, bloomRad / 2);
-
 		rotation += bloom;
 
-		var projectile = ProjectilePool.GetProjectile();
+		var scale = Vector2.One * FirearmStats.ProjectileScaleMultiplier;
 
-		projectile.Origin = this;
-		projectile.SetScale(Vector2.One * OffensiveStats.ProjectileScaleMultiplier);
-		projectile.SetPosition(Player.Position);
-		projectile.SetRotation(rotation);
-		projectile.ProjectileSpeed = OffensiveStats.ProjectileSpeed;
-		projectile.ProjectileSpeed += (float)
-			GD.RandRange(-projectile.ProjectileSpeed * 0.2, projectile.ProjectileSpeed * 0.2);
-		projectile.PierceLimit = OffensiveStats.PierceLimit;
-		projectile.HitRadius = FirearmStats.ProjectileRadius;
-		projectile.Initialize();
+		_projectileAttack.Attack(
+			_pool.GetProjectile,
+			Player.GlobalPosition,
+			rotation,
+			FirearmStats.ProjectileRadius,
+			FirearmStats.ProjectileSpeed,
+			FirearmStats.PierceLimit,
+			scale
+		);
 
-		Player.GlobalPosition +=
-			Vector2.Right.Rotated(rotation - Mathf.Pi + bloom) * PlayerPushPerShot * (float)GetProcessDeltaTime();
-
-		ApplyCursorRecoil();
-		SpawnCasingParticle();
+		_fireCooldown = WindupAttackSpeed;
 		EmitSignalOnAttack();
 	}
 
-	public override void Reload()
+	public void Reload()
 	{
 		QueueFree();
 	}
 
 	protected override void HandleHitECS(Entity entity)
 	{
-		if (!GameWorld.World.TryGet<PositionComponent>(entity, out var pos))
-			return;
-		var knockback = OffensiveStats.Additional.GetValueOrDefault("Knockback").AsSingle();
-		var knockbackVector = Player.GlobalPosition.DirectionTo(pos.Position);
-		knockbackVector *= knockback;
-
-		GameWorld.World.Set(entity, new PositionComponent(pos.Position + knockbackVector));
+		OffensiveEffects.ApplyKnockback(
+			entity,
+			Player.GlobalPosition,
+			OffensiveStats.Additional.GetValueOrDefault("Knockback", 0f).AsSingle()
+		);
 	}
 }

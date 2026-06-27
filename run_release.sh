@@ -1,2 +1,2 @@
 godot-mono-beta --path . --export-release Linux exports/linux/linux.x86_64 --headless
-./exports/linux/linux.x86_64
+gamemoderun ./exports/linux/linux.x86_64

@@ -38,7 +38,7 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 		Attack();
 	}
 
-	public override void Attack()
+	public void Attack()
 	{
 		if (Crosshair is null)
 		{
@@ -65,27 +65,24 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 
 	protected override void HandleHitECS(Entity entity)
 	{
-		base.HandleHitECS(entity);
-		if (GameWorld.World.Has<PositionComponent>(entity))
-		{
-			ref var pos = ref GameWorld.World.Get<PositionComponent>(entity);
-			var knockback = OffensiveStats.Additional.GetValueOrDefault("Knockback").AsSingle();
-			var knockbackVector = _blastPosition.DirectionTo(pos.Position);
-			knockbackVector *= knockback;
-			pos.Position += knockbackVector;
-		}
-
-		if (GameWorld.World.Has<VelocityComponent>(entity))
-		{
-			ref var vel = ref GameWorld.World.Get<VelocityComponent>(entity);
-			vel.Velocity = Vector2.Zero;
-		}
+		OffensiveEffects.ApplyDamage(
+			entity,
+			OffensiveStats.Damage,
+			CalculateCrit(),
+			OffensiveStats.DamageVarianceMultiplier,
+			PlayerStats.OutgoingDamageMultiplier
+		);
+		OffensiveEffects.ApplyKnockback(
+			entity,
+			_blastPosition,
+			OffensiveStats.Additional.GetValueOrDefault("Knockback", 0f).AsSingle()
+		);
+		OffensiveEffects.ApplyVelocityMultiplier(entity, 0f);
 
 		if (!GameWorld.World.TryGet<HealthComponent>(entity, out var health))
 			return;
 		if (health.Health > 0)
 			return;
-
 		GameWorld.World.Add(entity, new DeathCauseComponent(DeathCauseEnum.Explosion));
 	}
 }

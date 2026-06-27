@@ -3,7 +3,7 @@ using Game.Levels.Controllers;
 
 namespace Game.Items.Offensive;
 
-public partial class MarksmanRifle : Sniper
+public sealed partial class MarksmanRifle : Sniper
 {
 	private float NearbyPushRadius => FirearmStats.Additional["NearbyPushRadius"].AsSingle();
 	private float NearbyPushAmount => FirearmStats.Additional["NearbyPushAmount"].AsSingle();

@@ -12,6 +12,7 @@ public partial class SimpleWaveBlueprintCollection : AbstractWaveBlueprintCollec
 
 	public override EnemyBlueprint GetBlueprint()
 	{
-		throw new NotImplementedException();
+		var pickedScene = EnemyBlueprints.PickRandom();
+		return pickedScene;
 	}
 }

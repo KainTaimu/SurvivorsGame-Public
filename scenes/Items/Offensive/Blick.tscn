@@ -2,11 +2,22 @@
 
 [ext_resource type="Script" uid="uid://d4hn7uwvshdju" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_3c71c"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_1j0xa"]
+[ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/SemiAutoFireGroup.cs" id="3_6nomv"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_yc6ub"]
+[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="4_2l6dk"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_6nomv"]
 [ext_resource type="AudioStream" uid="uid://bk4ur13n1hsy2" path="res://assets/SFX/Shoot/Snake's SECOND Authentic Gun Sounds/Full Sounds/9mm/WAV/9mm Single.wav" id="5_1j0xa"]
+[ext_resource type="AudioStream" uid="uid://bmkybqxa3cdlq" path="res://assets/SFX/mag_almost_empty.wav" id="8_2l6dk"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_1j0xa"]
+[sub_resource type="Resource" id="Resource_2l6dk"]
+script = ExtResource("3_6nomv")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
+
+[sub_resource type="Resource" id="Resource_yc6ub"]
+script = ExtResource("4_2l6dk")
+metadata/_custom_type_script = "uid://dpq42sefws67v"
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_jjaxe"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_jkkrv"]
@@ -19,25 +30,35 @@ metadata/_custom_type_script = "uid://8rt54h4imtxv"
 script = ExtResource("4_6nomv")
 BloomCoefficientDeg = 6.0
 MagazineCapacity = 17
+HorizontalRecoilPunish = false
 CameraRecoilScale = 0.2
-FireGroup = 0
-BaseDamage = 6
+BaseDamage = 5
 BaseProjectileSpeed = 3200
 BaseProjectileScaleMultiplier = 0.8
 BaseAttackSpeed = 0.0
 Additional = Dictionary[String, Variant]({
-"Knockback": 20.0,
+"Knockback": 5.0,
 "SlowMultiplier": 0.5
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[node name="Blick" type="Node" unique_id=1989500741 node_paths=PackedStringArray("ShootAudioPlayer")]
+[node name="Blick" type="Node" unique_id=1989500741]
 script = ExtResource("1_3c71c")
 _projectileScene = ExtResource("2_1j0xa")
-ShootAudioPlayer = NodePath("Shoot")
+_fireGroup = SubResource("Resource_2l6dk")
+_projectileAttack = SubResource("Resource_yc6ub")
 Properties = SubResource("Resource_jkkrv")
 Stats = SubResource("Resource_k3dr5")
 
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=252809060]
 process_mode = 3
 stream = ExtResource("5_1j0xa")
+
+[node name="MagAlmostEmpty" type="AudioStreamPlayer" parent="." unique_id=110896041]
+process_mode = 3
+stream = ExtResource("8_2l6dk")
+volume_db = 16.0
+max_polyphony = 30
+
+[connection signal="AlmostEmpty" from="." to="MagAlmostEmpty" method="play"]
+[connection signal="OnAttack" from="." to="Shoot" method="play"]

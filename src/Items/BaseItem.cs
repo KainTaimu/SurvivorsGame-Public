@@ -30,6 +30,8 @@ public abstract partial class BaseItem : Node
 
 			field = value;
 			value.Changed += EmitSignalOnStatsChanged;
+			EmitSignalOnStatsChanged();
+			Logger.LogDebug("Stats changed");
 		}
 	} = null!;
 

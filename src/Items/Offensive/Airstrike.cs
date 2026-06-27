@@ -1,3 +1,4 @@
+using Arch.Core;
 using Game.UI;
 
 namespace Game.Items.Offensive;
@@ -20,7 +21,7 @@ public partial class Airstrike : BaseOffensive, IManualAttack
 			Attack();
 	}
 
-	public override void Attack()
+	public void Attack()
 	{
 		if (_fireCooldown > 0)
 			return;
@@ -34,4 +35,6 @@ public partial class Airstrike : BaseOffensive, IManualAttack
 				HandleHit(entity);
 		}
 	}
+
+	protected override void HandleHitECS(Entity entity) { }
 }

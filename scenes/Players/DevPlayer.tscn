@@ -2,19 +2,19 @@
 
 [ext_resource type="PackedScene" uid="uid://bix8bkfo5pwko" path="res://scenes/Players/Player.tscn" id="1_rmun4"]
 [ext_resource type="Resource" uid="uid://b36ulgh0dx3ar" path="res://scenes/Players/Characters/Dev.tres" id="2_klnc8"]
-[ext_resource type="PackedScene" uid="uid://chrgb8gqwh4s0" path="res://scenes/Items/Offensive/M4.tscn" id="4_23k0g"]
 [ext_resource type="PackedScene" uid="uid://b6pcia1iql0ct" path="res://scenes/Items/Offensive/Ak47.tscn" id="5_klnc8"]
-[ext_resource type="PackedScene" uid="uid://lvm5jo1ua73i" path="res://scenes/Items/Offensive/Shotgun.tscn" id="6_mre4m"]
+[ext_resource type="PackedScene" uid="uid://okgy2hpbgy53" path="res://scenes/Items/Offensive/Blick.tscn" id="6_comn3"]
+[ext_resource type="PackedScene" uid="uid://twvhgblbtovy" path="res://scenes/Items/Offensive/Revolver.tscn" id="6_vau0d"]
 [ext_resource type="Texture2D" uid="uid://c0d0pkcn6hw68" path="res://assets/Players/player.png" id="6_y52bq"]
 [ext_resource type="Script" uid="uid://bdk4fdcqvypav" path="res://src/Players/Controllers/StatusEffect.cs" id="7_qh10d"]
-[ext_resource type="PackedScene" uid="uid://dwyqdinyji8tt" path="res://scenes/Items/Offensive/Smg.tscn" id="7_y52bq"]
 [ext_resource type="Script" uid="uid://d31d8uns5faa5" path="res://src/Players/Controllers/StatusEffectModifier.cs" id="8_agk5e"]
-[ext_resource type="PackedScene" uid="uid://okgy2hpbgy53" path="res://scenes/Items/Offensive/Blick.tscn" id="8_qh10d"]
-[ext_resource type="PackedScene" uid="uid://twvhgblbtovy" path="res://scenes/Items/Offensive/Revolver.tscn" id="9_agk5e"]
-[ext_resource type="PackedScene" uid="uid://qxx1q01ys1cd" path="res://scenes/Items/Offensive/Dmr.tscn" id="10_vsrt8"]
-[ext_resource type="PackedScene" uid="uid://cuerorgcryk5k" path="res://scenes/Items/Offensive/Sniper.tscn" id="11_vujg4"]
-[ext_resource type="PackedScene" uid="uid://2gxjr5yjrfut" path="res://scenes/Items/Offensive/Minigun.tscn" id="12_t84yk"]
-[ext_resource type="PackedScene" uid="uid://ceimmtu3q4x6n" path="res://scenes/Items/Offensive/GrenadeThrower.tscn" id="13_bpnxk"]
+[ext_resource type="PackedScene" uid="uid://chrgb8gqwh4s0" path="res://scenes/Items/Offensive/M4.tscn" id="9_q2wbp"]
+[ext_resource type="PackedScene" uid="uid://dwyqdinyji8tt" path="res://scenes/Items/Offensive/Smg.tscn" id="10_klnc8"]
+[ext_resource type="PackedScene" uid="uid://qxx1q01ys1cd" path="res://scenes/Items/Offensive/Dmr.tscn" id="11_mre4m"]
+[ext_resource type="PackedScene" uid="uid://lvm5jo1ua73i" path="res://scenes/Items/Offensive/Shotgun.tscn" id="12_y52bq"]
+[ext_resource type="PackedScene" uid="uid://cuerorgcryk5k" path="res://scenes/Items/Offensive/Sniper.tscn" id="13_qh10d"]
+[ext_resource type="PackedScene" uid="uid://2gxjr5yjrfut" path="res://scenes/Items/Offensive/Minigun.tscn" id="14_agk5e"]
+[ext_resource type="PackedScene" uid="uid://ceimmtu3q4x6n" path="res://scenes/Items/Offensive/GrenadeThrower.tscn" id="15_vsrt8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2g2d6"]
 atlas = ExtResource("6_y52bq")
@@ -86,7 +86,7 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_klnc8"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_mre4m"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_agk5e"]
@@ -105,24 +105,22 @@ animation = &"idle"
 [node name="PlayerStatusEffectController" parent="." index="5" unique_id=1019311816]
 _testEffect = Array[ExtResource("7_qh10d")]([SubResource("Resource_agk5e")])
 
-[node name="M4" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="0" unique_id=265287884 instance=ExtResource("4_23k0g")]
+[node name="M4" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="0" unique_id=265287884 instance=ExtResource("9_q2wbp")]
 
 [node name="Ak47" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="1" unique_id=915008798 instance=ExtResource("5_klnc8")]
 
-[node name="M870" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="2" unique_id=1997007315 instance=ExtResource("6_mre4m")]
+[node name="Blick" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="2" unique_id=1989500741 instance=ExtResource("6_comn3")]
 
-[node name="TP9" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="3" unique_id=1472391115 instance=ExtResource("7_y52bq")]
+[node name="Revolver" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="3" unique_id=1975794211 instance=ExtResource("6_vau0d")]
 
-[node name="Blick" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="4" unique_id=1989500741 instance=ExtResource("8_qh10d")]
+[node name="TP9" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="4" unique_id=1472391115 instance=ExtResource("10_klnc8")]
 
-[node name="Revolver" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="5" unique_id=1975794211 instance=ExtResource("9_agk5e")]
+[node name="DMR" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="5" unique_id=901001043 instance=ExtResource("11_mre4m")]
 
-[node name="DMR" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="6" unique_id=901001043 instance=ExtResource("10_vsrt8")]
+[node name="M870" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="6" unique_id=1997007315 instance=ExtResource("12_y52bq")]
 
-[node name="Sniper" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="7" unique_id=753371605 instance=ExtResource("11_vujg4")]
+[node name="Sniper" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="7" unique_id=753371605 instance=ExtResource("13_qh10d")]
 
-[node name="M134" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="8" unique_id=636864915 instance=ExtResource("12_t84yk")]
+[node name="Minigun" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="8" unique_id=636864915 instance=ExtResource("14_agk5e")]
 
-[node name="GrenadeThrower" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="9" unique_id=1000269585 instance=ExtResource("13_bpnxk")]
-
-[node name="GrenadeThrower2" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="10" unique_id=596644210 instance=ExtResource("13_bpnxk")]
+[node name="GrenadeThrower" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="9" unique_id=1000269585 instance=ExtResource("15_vsrt8")]

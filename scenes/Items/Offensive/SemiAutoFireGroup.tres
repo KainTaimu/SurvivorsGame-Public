@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="SemiAutoFireGroup" format=3 uid="uid://cs331x12hmlod"]
+
+[ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/SemiAutoFireGroup.cs" id="1_2jutk"]
+
+[resource]
+script = ExtResource("1_2jutk")
+metadata/_custom_type_script = "uid://dnodsacrptssb"

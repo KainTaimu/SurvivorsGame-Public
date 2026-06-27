@@ -3,50 +3,158 @@ namespace Game.Items.Offensive;
 [GlobalClass]
 public partial class FirearmStats : BaseOffensiveStats
 {
-	[ExportGroup("Firearm")]
+	[ExportGroup("AbstractFirearm")]
 	[Export]
-	public float ReloadTime = 1.5f;
+	public float ReloadTime
+	{
+		get;
+		set
+		{
+			field = value;
+			EmitChanged();
+		}
+	} = 1.5f;
 
 	[Export]
-	public float BloomCoefficientDeg = 0.03f;
+	public float BloomCoefficientDeg
+	{
+		get;
+		set
+		{
+			field = value;
+			EmitChanged();
+		}
+	}
 
 	[Export]
-	public int MagazineCapacity = 30;
+	public int MagazineCapacity
+	{
+		get;
+		set
+		{
+			field = value;
+			EmitChanged();
+		}
+	} = 30;
 
 	[Export]
-	public float HorizontalRecoilMin = 1f;
+	public float HorizontalRecoilMin
+	{
+		get;
+		set
+		{
+			field = value;
+			EmitChanged();
+		}
+	} = 1f;
 
 	[Export]
-	public float HorizontalBaseRecoil = 3f;
+	public float HorizontalBaseRecoil
+	{
+		get;
+		set
+		{
+			field = value;
+			EmitChanged();
+		}
+	} = 3f;
 
 	[Export]
-	public float HorizontalRecoilRandom = 1f;
+	public float HorizontalRecoilRandom
+	{
+		get;
+		set
+		{
+			field = value;
+			EmitChanged();
+		}
+	} = 1f;
 
 	[Export]
-	public float VerticalRecoilMin = 2f;
+	public float VerticalRecoilMin
+	{
+		get;
+		set
+		{
+			field = value;
+			EmitChanged();
+		}
+	} = 2f;
 
 	[Export]
-	public float VerticalBaseRecoil = 3f;
+	public float VerticalBaseRecoil
+	{
+		get;
+		set
+		{
+			field = value;
+			EmitChanged();
+		}
+	} = 3f;
 
 	[Export]
-	public float VerticalRecoilRandom = 0.1f;
+	public float VerticalRecoilRandom
+	{
+		get;
+		set
+		{
+			field = value;
+			EmitChanged();
+		}
+	} = 0.1f;
 
 	[Export]
-	public float RecoilScale = 1f;
+	public float RecoilScale
+	{
+		get;
+		set
+		{
+			field = value;
+			EmitChanged();
+		}
+	} = 1f;
 
 	[Export]
-	public float RecoilAccumilationScale = 1f;
+	public float RecoilAccumilationScale
+	{
+		get;
+		set
+		{
+			field = value;
+			EmitChanged();
+		}
+	} = 1f;
 
 	[Export]
-	public float CameraRecoilScale = 1f;
+	public bool HorizontalRecoilPunish
+	{
+		get;
+		set
+		{
+			field = value;
+			EmitChanged();
+		}
+	} = true;
 
 	[Export]
-	public FireGroup FireGroup = FireGroup.Auto;
-}
+	public float CameraRecoilScale
+	{
+		get;
+		set
+		{
+			field = value;
+			EmitChanged();
+		}
+	} = 1f;
 
-public enum FireGroup
-{
-	Single,
-	Burst,
-	Auto,
+	[Export]
+	public bool ChamberLoaded
+	{
+		get;
+		set
+		{
+			field = value;
+			EmitChanged();
+		}
+	} = true;
 }

@@ -2,12 +2,22 @@
 
 [ext_resource type="Script" uid="uid://d4hn7uwvshdju" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_34bgn"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_34bgn"]
+[ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FullAutoFireGroup.cs" id="3_8f87a"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_jpa4p"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_hsj8o"]
+[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="4_omjm3"]
 [ext_resource type="AudioStream" uid="uid://bk4ur13n1hsy2" path="res://assets/SFX/Shoot/Snake's SECOND Authentic Gun Sounds/Full Sounds/9mm/WAV/9mm Single.wav" id="5_2lvmq"]
 [ext_resource type="AudioStream" uid="uid://bmkybqxa3cdlq" path="res://assets/SFX/mag_almost_empty.wav" id="6_snjij"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ld3kt"]
+[sub_resource type="Resource" id="Resource_g0kem"]
+script = ExtResource("3_8f87a")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_c62cd"]
+script = ExtResource("4_omjm3")
+metadata/_custom_type_script = "uid://dpq42sefws67v"
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_jjaxe"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_dkd5d"]
@@ -41,11 +51,11 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[node name="TP9" type="Node" unique_id=1472391115 node_paths=PackedStringArray("ShootAudioPlayer", "AlmostEmptyAudioPlayer")]
+[node name="TP9" type="Node" unique_id=1472391115]
 script = ExtResource("1_34bgn")
 _projectileScene = ExtResource("2_34bgn")
-ShootAudioPlayer = NodePath("Shoot")
-AlmostEmptyAudioPlayer = NodePath("MagAlmostEmpty")
+_fireGroup = SubResource("Resource_g0kem")
+_projectileAttack = SubResource("Resource_c62cd")
 Properties = SubResource("Resource_dkd5d")
 Stats = SubResource("Resource_34bgn")
 
@@ -59,3 +69,6 @@ process_mode = 3
 stream = ExtResource("6_snjij")
 volume_db = 16.0
 max_polyphony = 30
+
+[connection signal="AlmostEmpty" from="." to="MagAlmostEmpty" method="play"]
+[connection signal="OnAttack" from="." to="Shoot" method="play"]

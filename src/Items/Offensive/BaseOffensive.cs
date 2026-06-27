@@ -23,8 +23,6 @@ public abstract partial class BaseOffensive : BaseItem
 
 	protected EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
 
-	public abstract void Attack();
-
 	protected virtual void PostUpgrade(int newLevel) { }
 
 	public void HandleHit(Entity entity)
@@ -63,27 +61,26 @@ public abstract partial class BaseOffensive : BaseItem
 
 	/// <summary> Handle additional effects to the enemy like knockback </summary>
 	// ReSharper disable once InconsistentNaming
-	protected virtual void HandleHitECS(Entity entity) { }
+	protected abstract void HandleHitECS(Entity entity);
 
-	// protected abstract void HandleHitNode(Node node);
+	public bool TryUpgrade()
+	{
+		Logger.LogWarning("Attempted to upgrade past max level");
+		var incrementLevel = Properties.CurrentLevel + 1;
+		if (incrementLevel > Upgrades.Count)
+			return false;
 
-	protected void Upgrade(int newLevel)
+		Upgrade(Properties.CurrentLevel);
+		return true;
+	}
+
+	private void Upgrade(int newLevel)
 	{
 		var upgrade = Upgrades[newLevel];
 		Properties.CurrentLevel++;
 		Logger.LogDebug($"Upgraded {Properties.Name} to {Properties.CurrentLevel + 1}");
 		Stats = upgrade;
 		PostUpgrade(newLevel);
-	}
-
-	public void TryUpgrade()
-	{
-		Logger.LogWarning("Attempted to upgrade past max level");
-		var incrementLevel = Properties.CurrentLevel + 1;
-		if (incrementLevel > Upgrades.Count)
-			return;
-
-		Upgrade(Properties.CurrentLevel);
 	}
 
 	protected int CalculateCrit()

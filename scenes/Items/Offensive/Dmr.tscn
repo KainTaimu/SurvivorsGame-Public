@@ -3,11 +3,21 @@
 [ext_resource type="Script" uid="uid://brww1ycug2hf2" path="res://src/Items/Offensive/MarksmanRifle.cs" id="1_lnmnp"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_nt1f2"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_0f2tb"]
+[ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/SemiAutoFireGroup.cs" id="3_f5pnb"]
+[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="4_db67r"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_f5pnb"]
 [ext_resource type="AudioStream" uid="uid://csidm3n6qam6n" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Full Sound/5.56/WAV/556 Single WAV.wav" id="5_db67r"]
 [ext_resource type="AudioStream" uid="uid://bmkybqxa3cdlq" path="res://assets/SFX/mag_almost_empty.wav" id="6_icohf"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_lnmnp"]
+[sub_resource type="Resource" id="Resource_62a23"]
+script = ExtResource("3_f5pnb")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
+
+[sub_resource type="Resource" id="Resource_d1d18"]
+script = ExtResource("4_db67r")
+metadata/_custom_type_script = "uid://dpq42sefws67v"
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_jjaxe"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_o65qt"]
@@ -29,7 +39,6 @@ VerticalBaseRecoil = 10.0
 VerticalRecoilRandom = 10.0
 RecoilScale = 1.5
 CameraRecoilScale = 0.55
-FireGroup = 0
 BaseDamage = -1
 BaseCritDamageMultiplier = 1.1
 BaseCritChanceProportion = 0.2
@@ -51,11 +60,11 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[node name="DMR" type="Node" unique_id=901001043 node_paths=PackedStringArray("ShootAudioPlayer", "AlmostEmptyAudioPlayer")]
+[node name="DMR" type="Node" unique_id=901001043]
 script = ExtResource("1_lnmnp")
 _projectileScene = ExtResource("2_nt1f2")
-ShootAudioPlayer = NodePath("Shoot")
-AlmostEmptyAudioPlayer = NodePath("MagAlmostEmpty")
+_fireGroup = SubResource("Resource_62a23")
+_projectileAttack = SubResource("Resource_d1d18")
 Properties = SubResource("Resource_o65qt")
 Stats = SubResource("Resource_lnmnp")
 
@@ -71,3 +80,6 @@ process_mode = 3
 stream = ExtResource("6_icohf")
 volume_db = 16.0
 max_polyphony = 30
+
+[connection signal="AlmostEmpty" from="." to="MagAlmostEmpty" method="play"]
+[connection signal="OnAttack" from="." to="Shoot" method="play"]

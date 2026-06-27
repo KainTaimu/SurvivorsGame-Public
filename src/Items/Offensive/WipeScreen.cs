@@ -1,3 +1,4 @@
+using Arch.Core;
 using Game.UI;
 
 namespace Game.Items.Offensive;
@@ -20,7 +21,7 @@ public partial class WipeScreen : BaseOffensive, IManualAttack
 			Attack();
 	}
 
-	public override void Attack()
+	public void Attack()
 	{
 		if (_fireCooldown > 0)
 			return;
@@ -28,5 +29,16 @@ public partial class WipeScreen : BaseOffensive, IManualAttack
 
 		foreach (var entity in TargetQuery.GetTargetsInScreen())
 			HandleHit(entity);
+	}
+
+	protected override void HandleHitECS(Entity entity)
+	{
+		OffensiveEffects.ApplyDamage(
+			entity,
+			OffensiveStats.Damage,
+			CalculateCrit(),
+			0,
+			PlayerStats.OutgoingDamageMultiplier
+		);
 	}
 }

@@ -1,14 +1,23 @@
 using System.Collections.Generic;
+using Arch.Core;
 using Game.Items.Projectiles;
 
 namespace Game.Levels.Controllers;
 
 public partial class ProjectilePool : Node
 {
-	public int PoolCount;
+	[Signal]
+	public delegate void OnNewProjectileCreatedEventHandler(BaseProjectile projectile);
 
-	[Export]
-	public PackedScene ProjectileScene = null!;
+	public PackedScene ProjectileScene
+	{
+		get;
+		set
+		{
+			field = value;
+			ResetPool();
+		}
+	} = null!;
 
 	private readonly List<BaseProjectile> _activePool = [];
 	private readonly Queue<BaseProjectile> _inactivePool = [];
@@ -16,6 +25,13 @@ public partial class ProjectilePool : Node
 	public override void _Ready()
 	{
 		Name = "ProjectilePool";
+	}
+
+	public void Initialize(Node owner, PackedScene projectileScene, Action<BaseProjectile> onProjectileCreated)
+	{
+		ProjectileScene = projectileScene;
+		owner.AddChild(this);
+		OnNewProjectileCreated += e => onProjectileCreated(e);
 	}
 
 	public void ReturnProjectile(BaseProjectile projectile)
@@ -51,7 +67,18 @@ public partial class ProjectilePool : Node
 
 		projectile.ProcessMode = ProcessModeEnum.Disabled;
 		projectile.Name = $"{projectile.GetType().Name}_{_activePool.Count}";
+		EmitSignalOnNewProjectileCreated(projectile);
 		return projectile;
+	}
+
+	private void ResetPool()
+	{
+		foreach (var projectile in _activePool)
+			projectile.QueueFree();
+		foreach (var projectile in _inactivePool)
+			projectile.QueueFree();
+		_activePool.Clear();
+		_inactivePool.Clear();
 	}
 
 	public override string ToString()

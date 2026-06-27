@@ -7,7 +7,6 @@ namespace Game.Items;
 public enum ItemType
 {
 	Offensive,
-
 	Passive,
 }
 
@@ -20,8 +19,8 @@ public partial class BaseItemStats : Resource
 		get;
 		set
 		{
+
 			field = value;
-			EmitChanged();
 		}
 	} = [];
 
