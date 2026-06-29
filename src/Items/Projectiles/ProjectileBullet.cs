@@ -52,7 +52,7 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 			_hits.Remove(hit);
 		}
 
-		if (_pierceCount != 0 && _hits.Count == 0)
+		if (_hitsHandled.Count == PierceLimit)
 			ReturnToPool();
 	}
 

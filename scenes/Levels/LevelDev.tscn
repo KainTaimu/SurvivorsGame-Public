@@ -86,9 +86,6 @@ Waves = Array[Object]([SubResource("Resource_pgumh"), SubResource("Resource_4v0e
 [node name="EnemyMover" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="4" unique_id=348078406]
 VelocityRecoveryFactor = 2.0
 
-[node name="PickupUi" parent="UI/CanvasLayer" parent_id_path=PackedInt32Array(253133387) index="0" unique_id=1639386775 node_paths=PackedStringArray("_showcases")]
-_showcases = []
-
 [node name="PerformanceMonitor" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="4" unique_id=1872396024 node_paths=PackedStringArray("CollisionSolver", "EnemyRenderer") instance=ExtResource("13_dxfda")]
 CollisionSolver = NodePath("../../Systems/EnemySystems/EnemyCollisionSolver")
 EnemyRenderer = NodePath("../../Systems/EnemySystems/EnemyRenderer")
