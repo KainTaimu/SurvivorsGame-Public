@@ -56,6 +56,7 @@ public partial class Minigun : AbstractFirearm, IReloadable
 		OnAttack += () =>
 		{
 			if (Crosshair is not null)
+			{
 				OffensiveEffects.ApplyCrosshairRecoil(
 					Crosshair,
 					HorizontalBaseRecoil,
@@ -67,6 +68,7 @@ public partial class Minigun : AbstractFirearm, IReloadable
 					RecoilScale,
 					RecoilAccumilationScale
 				);
+			}
 		};
 
 		OnEquipped += () =>

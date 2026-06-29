@@ -58,6 +58,7 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable
 		OnAttack += () =>
 		{
 			if (Crosshair is not null)
+			{
 				OffensiveEffects.ApplyCrosshairRecoil(
 					Crosshair,
 					HorizontalBaseRecoil,
@@ -70,6 +71,7 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable
 					RecoilAccumilationScale,
 					HorizontalRecoilPunish
 				);
+			}
 		};
 	}
 

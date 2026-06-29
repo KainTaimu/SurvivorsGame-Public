@@ -46,6 +46,7 @@ public partial class Shotgun : AbstractFirearm, IReloadable
 		OnAttack += () =>
 		{
 			if (Crosshair is not null)
+			{
 				OffensiveEffects.ApplyCrosshairRecoil(
 					Crosshair,
 					HorizontalBaseRecoil,
@@ -57,6 +58,7 @@ public partial class Shotgun : AbstractFirearm, IReloadable
 					RecoilScale,
 					RecoilAccumilationScale
 				);
+			}
 		};
 	}
 
@@ -99,6 +101,7 @@ public partial class Shotgun : AbstractFirearm, IReloadable
 			Reload();
 			return;
 		}
+
 		MagazineCount--;
 
 		if (_cockingAudioPlayer is not null)

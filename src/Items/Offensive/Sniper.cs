@@ -73,6 +73,7 @@ public partial class Sniper : AbstractFirearm, IReloadable
 		OnAttack += () =>
 		{
 			if (Crosshair is not null)
+			{
 				OffensiveEffects.ApplyCrosshairRecoil(
 					Crosshair,
 					HorizontalBaseRecoil,
@@ -84,6 +85,7 @@ public partial class Sniper : AbstractFirearm, IReloadable
 					RecoilScale,
 					RecoilAccumilationScale
 				);
+			}
 		};
 
 		if (OffensiveStats.Damage > 0)

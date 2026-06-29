@@ -28,6 +28,7 @@ public partial class PerformanceMonitor : CanvasLayer
 					? $"Collisions: {CollisionSolver.ProcessTime}ms"
 					: $"[color=orange]Collisions: {CollisionSolver.ProcessTime}ms[/color]";
 		}
+
 		if (EnemyRenderer is not null)
 		{
 			_rendererlabel.Text =

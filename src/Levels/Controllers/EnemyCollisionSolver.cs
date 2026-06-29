@@ -90,6 +90,7 @@ public partial class EnemyCollisionSolver : Node
 			if (i > 1 && Time.GetTicksMsec() - start > 9)
 				break;
 		}
+
 		ApplyCollisionsQuery(GameWorld.World, _writeBuffer);
 		ProcessTime = Time.GetTicksMsec() - start;
 	}

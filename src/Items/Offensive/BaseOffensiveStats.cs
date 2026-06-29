@@ -21,11 +21,7 @@ public partial class BaseOffensiveStats : BaseItemStats
 	public float BaseDamageVarianceMultiplier
 	{
 		get;
-		set
-		{
-
-			field = value;
-		}
+		set => field = value;
 	} = 0.15f;
 
 	/// <summary>

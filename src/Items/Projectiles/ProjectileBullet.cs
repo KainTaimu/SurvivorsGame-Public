@@ -48,9 +48,7 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 		}
 
 		foreach (var hit in _hitsHandled)
-		{
 			_hits.Remove(hit);
-		}
 
 		if (_hitsHandled.Count == PierceLimit)
 			ReturnToPool();
@@ -80,7 +78,7 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 		foreach (var entity in hits)
 		{
 			// NOTE: Not sure if GetTargetsRayCast returns duplicates
-			if (_hits.Any((data => data.Target == entity)))
+			if (_hits.Any(data => data.Target == entity))
 				return;
 
 			var entityPos = GameWorld.World.Get<PositionComponent>(entity);

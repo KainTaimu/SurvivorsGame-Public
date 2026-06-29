@@ -83,11 +83,7 @@ public static class OffensiveEffects
 		recoilY = Math.Clamp(recoilY, verticalRecoilMin, float.MaxValue);
 
 		var recoil = new Vector2(recoilX, -recoilY) * recoilScale;
-		crosshair.Recoil.ApplyImpulse(
-			recoil,
-			accumilatedImpuseFactor: recoilAccumilationScale,
-			applyHorizontalRecoil: applyHorizontalPunish
-		);
+		crosshair.Recoil.ApplyImpulse(recoil, recoilAccumilationScale, applyHorizontalPunish);
 	}
 
 	public static void ApplyKnockback(in Entity entity, in Vector2 awayFrom, float knockback)

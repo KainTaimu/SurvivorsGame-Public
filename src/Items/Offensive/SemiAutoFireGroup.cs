@@ -22,6 +22,7 @@ public partial class SemiAutoFireGroup : AbstractFireGroup, ICooldown, IFireQueu
 			ResetOnFire();
 			return true;
 		}
+
 		if (!Input.IsActionJustPressed(InputMapNames.PrimaryAttack))
 			return false;
 

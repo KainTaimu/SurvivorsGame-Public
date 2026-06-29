@@ -17,11 +17,7 @@ public partial class BaseItemStats : Resource
 	public Dictionary<string, Variant> Additional
 	{
 		get;
-		set
-		{
-
-			field = value;
-		}
+		set => field = value;
 	} = [];
 
 	// TODO: Make proper way of getting formatted string without using reflection

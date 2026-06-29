@@ -21,9 +21,7 @@ public class UniformGridCell<T>
 	public void Add(T obj)
 	{
 		if (Count >= MAX_SIZE)
-		{
 			return;
-		}
 
 		Array[Count] = obj;
 		Count++;
