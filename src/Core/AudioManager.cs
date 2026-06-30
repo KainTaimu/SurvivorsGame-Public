@@ -29,7 +29,7 @@ public partial class AudioManager : Node
 	{
 		var masterBusIndex = AudioServer.GetBusIndex("Master");
 
-		AudioServer.SetBusVolumeDb(masterBusIndex, MasterVolume);
+		AudioServer.SetBusVolumeLinear(masterBusIndex, MasterVolume);
 		Logger.LogDebug($"Updated master bus volume to {AudioServer.GetBusVolumeDb(masterBusIndex)} dB");
 		Logger.LogDebug($"Master volume: {MasterVolume}");
 	}

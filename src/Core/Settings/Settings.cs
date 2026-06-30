@@ -52,7 +52,7 @@ public partial class Settings : Control
 		MouseSensitivity.Value = GameSettings.Instance.MouseSensitivity;
 		MouseSensitivitySideLabel.Text = GameSettings.Instance.MouseSensitivity.ToString();
 		MasterVolume.Value = GameSettings.Instance.MasterVolume;
-		MasterVolumeSideLabel.Text = $"{GameSettings.Instance.MasterVolume}dB";
+		MasterVolumeSideLabel.Text = $"{GameSettings.Instance.MasterVolume}";
 		switch (GameSettings.Instance.GoreEffects)
 		{
 			case GoreEffectsEnum.Disabled:
@@ -90,7 +90,7 @@ public partial class Settings : Control
 		MasterVolume.ValueChanged += value =>
 		{
 			GameSettings.Instance.MasterVolume = (float)value;
-			MasterVolumeSideLabel.Text = $"{GameSettings.Instance.MasterVolume}dB";
+			MasterVolumeSideLabel.Text = $"{GameSettings.Instance.MasterVolume}";
 		};
 		GoreSelection.ItemSelected += idx =>
 		{

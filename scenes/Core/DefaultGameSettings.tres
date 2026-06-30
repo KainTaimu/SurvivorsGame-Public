@@ -4,5 +4,6 @@
 
 [resource]
 script = ExtResource("1_ymg3i")
+MasterVolume = 1.0
 CrosshairScale = 2.0
 metadata/_custom_type_script = "uid://ccsjx0puny2kx"

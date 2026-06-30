@@ -48,7 +48,7 @@ region = Rect2(62, 0, 31, 31)
 atlas = ExtResource("6_y52bq")
 region = Rect2(93, 0, 31, 31)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_y52bq"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_klnc8"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -99,7 +99,7 @@ metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 Character = ExtResource("2_klnc8")
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=881638213]
-sprite_frames = SubResource("SpriteFrames_y52bq")
+sprite_frames = SubResource("SpriteFrames_klnc8")
 animation = &"idle"
 
 [node name="PlayerStatusEffectController" parent="." index="5" unique_id=1019311816]
@@ -124,3 +124,5 @@ _testEffect = Array[ExtResource("7_qh10d")]([SubResource("Resource_agk5e")])
 [node name="Minigun" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="8" unique_id=636864915 instance=ExtResource("14_agk5e")]
 
 [node name="GrenadeThrower" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="9" unique_id=1000269585 instance=ExtResource("15_vsrt8")]
+
+[node name="GrenadeThrower2" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="10" unique_id=1544025392 instance=ExtResource("15_vsrt8")]
