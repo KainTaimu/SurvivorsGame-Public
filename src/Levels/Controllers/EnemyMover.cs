@@ -7,15 +7,12 @@ namespace Game.Levels.Controllers;
 
 public partial class EnemyMover : Node
 {
-	[Export]
-	public float VelocityRecoveryFactor = 5f;
-
 	public override void _Process(double delta)
 	{
 		var player = GameWorld.Instance.MainPlayer;
 		var playerPos = player.GlobalPosition;
 
-		MoveQuery(GameWorld.World, playerPos, VelocityRecoveryFactor, (float)delta);
+		MoveQuery(GameWorld.World, playerPos, (float)delta);
 	}
 
 	[Query(Parallel = true)]
@@ -24,7 +21,6 @@ public partial class EnemyMover : Node
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static void Move(
 		[Data] in Vector2 moveToTarget,
-		[Data] in float recoveryRate,
 		[Data] in float delta,
 		ref PositionComponent pos,
 		ref VelocityComponent velocity,
@@ -33,7 +29,7 @@ public partial class EnemyMover : Node
 	{
 		velocity.Velocity = velocity.Velocity.Lerp(
 			pos.Position.DirectionTo(moveToTarget) * moveSpeed.MoveSpeed,
-			recoveryRate * delta
+			moveSpeed.TurnSpeed * delta
 		);
 		pos.Position += velocity.Velocity * delta;
 	}

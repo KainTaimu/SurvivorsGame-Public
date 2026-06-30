@@ -37,7 +37,6 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 		_distanceTravelled += ProjectileSpeed * (float)delta;
 		Position = from + moveVector;
 
-		_hitsHandled.Clear();
 		foreach (var hit in _hits)
 		{
 			if (_distanceTravelled < hit.DistanceToHitPosition)
@@ -50,7 +49,7 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 		foreach (var hit in _hitsHandled)
 			_hits.Remove(hit);
 
-		if (_hitsHandled.Count == PierceLimit)
+		if (_hitsHandled.Count >= PierceLimit)
 			ReturnToPool();
 	}
 

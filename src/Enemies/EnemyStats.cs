@@ -13,6 +13,9 @@ public partial class EnemyStats : Resource
 	public float MoveSpeed = 180;
 
 	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
+	public float TurnSpeed = 5;
+
+	[Export(PropertyHint.Range, "0,0,or_greater,hide_slider")]
 	public int Defense;
 
 	[Export(PropertyHint.Range, "0.5,5,or_greater,hide_slider")]

@@ -21,7 +21,7 @@ metadata/_custom_type_script = "uid://dh3r0hk3vhhsg"
 [sub_resource type="Resource" id="Resource_pgumh"]
 script = ExtResource("10_2cd5g")
 Duration = 99999.0
-MaxMobs = 5
+MaxMobs = 200
 EnemyBlueprints = SubResource("Resource_dxfda")
 SpawnMinTime = 0.1
 SpawnMaxTime = 0.1
@@ -82,9 +82,6 @@ MainPlayer = NodePath("../../Player")
 
 [node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=247564660]
 Waves = Array[Object]([SubResource("Resource_pgumh"), SubResource("Resource_4v0et"), SubResource("Resource_g22vo"), SubResource("Resource_qx3kv")])
-
-[node name="EnemyMover" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="4" unique_id=348078406]
-VelocityRecoveryFactor = 2.0
 
 [node name="PerformanceMonitor" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="4" unique_id=1872396024 node_paths=PackedStringArray("CollisionSolver", "EnemyRenderer") instance=ExtResource("13_dxfda")]
 CollisionSolver = NodePath("../../Systems/EnemySystems/EnemyCollisionSolver")

@@ -4,6 +4,5 @@ public enum EnemyType
 {
 	None,
 	Fodder,
-	Smart,
-	Boss,
+	Lunger,
 }

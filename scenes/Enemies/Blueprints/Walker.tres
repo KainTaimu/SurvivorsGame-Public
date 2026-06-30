@@ -8,6 +8,7 @@ script = ExtResource("1_jmr7q")
 DamageOnContact = 4
 MaxHealth = 15
 MoveSpeed = 240.0
+TurnSpeed = 4.0
 metadata/_custom_type_script = "uid://y77qtp32wo00"
 
 [resource]

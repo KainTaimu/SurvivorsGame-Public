@@ -28,7 +28,8 @@ public partial class EnemySpawner : Node
 		var stats = bp.Stats;
 		var spriteInfo = ss.GetSpriteInfo(bp.SpriteName);
 
-		var entity = GameWorld.World.Create(
+		return GameWorld.World.Create(
+			new EnemyTypeComponent(bp.Type),
 			new HealthComponent(stats.MaxHealth),
 			new PositionComponent { Position = pos },
 			new AnimatedSpriteComponent
@@ -44,23 +45,13 @@ public partial class EnemySpawner : Node
 				Scale = bp.Stats.SpriteScaleMultiplier,
 			},
 			new CircleHitboxComponent(bp.Stats.SpriteScaleMultiplier * 16f),
-			new MoveSpeedComponent(Mathf.CeilToInt(stats.MoveSpeed * stats.MoveSpeedMultiplier)),
+			new MoveSpeedComponent(Mathf.CeilToInt(stats.MoveSpeed * stats.MoveSpeedMultiplier), stats.TurnSpeed),
 			VelocityComponent.Zero,
 			new EnemyContactDamageComponent(Mathf.CeilToInt(stats.DamageOnContact * stats.ContactDamageMultiplier)),
 			new DeathRewardComponent(Mathf.CeilToInt(stats.MoneyDrop * stats.MoneyDropMultiplier)),
 			new HitFeedbackComponent { HitTime = 0 },
 			new CollidableComponent()
 		);
-		switch (bp.Type)
-		{
-			case EnemyType.Fodder:
-				GameWorld.World.Add(entity, new FodderMarkerComponent());
-				break;
-			default:
-				throw new ArgumentOutOfRangeException();
-		}
-
-		return entity;
 	}
 
 	private Vector2 GetPositionOutsideViewport()
