@@ -54,11 +54,11 @@ public partial class EnemyTargetQuery : Node
 	// causes a build warning if you change this method's signature
 	// ReSharper disable once MemberCanBeMadeStatic.Local
 #pragma warning disable CA1822
-	[Query]
-	[All(typeof(PositionComponent), typeof(CircleHitboxComponent))]
+	[Query(Parallel = true)]
+	[All<PositionComponent, CircleHitboxComponent>]
 	[None<DyingMarkerComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private void AddObjectsToGrid(
+	private static void AddObjectsToGrid(
 #pragma warning restore CA1822
 		[Data] in CenteredMovingUniformGrid<Entity> grid,
 		in Entity entity,

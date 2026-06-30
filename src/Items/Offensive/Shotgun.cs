@@ -42,6 +42,15 @@ public partial class Shotgun : AbstractFirearm, IReloadable
 			}
 		);
 
+		if (_fireGroup is ICooldown c)
+			c.CooldownDuration = FirearmStats.AttackSpeed;
+
+		FirearmStats.Changed += () =>
+		{
+			if (_fireGroup is ICooldown cooldown)
+				cooldown.CooldownDuration = FirearmStats.AttackSpeed;
+		};
+
 		OnAttack += () => OffensiveEffects.ApplyCameraShake(FirearmStats.CameraRecoilScale, GetViewport, CreateTween);
 		OnAttack += () =>
 		{
@@ -96,13 +105,9 @@ public partial class Shotgun : AbstractFirearm, IReloadable
 
 	public void Attack()
 	{
-		if (MagazineCount <= 0)
-		{
-			Reload();
-			return;
-		}
-
 		MagazineCount--;
+		if (MagazineCount <= 0)
+			Reload();
 
 		if (_cockingAudioPlayer is not null)
 			GetTree().CreateTimer(OffensiveStats.AttackSpeed / 2).Timeout += () => _cockingAudioPlayer.Play();

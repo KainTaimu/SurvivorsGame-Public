@@ -150,6 +150,8 @@ public partial class Minigun : AbstractFirearm, IReloadable
 			scale
 		);
 
+		PushPlayer(rotation, bloom);
+
 		_fireCooldown = WindupAttackSpeed;
 		EmitSignalOnAttack();
 	}
@@ -157,6 +159,12 @@ public partial class Minigun : AbstractFirearm, IReloadable
 	public void Reload()
 	{
 		QueueFree();
+	}
+
+	private void PushPlayer(float rotation, float bloom)
+	{
+		Player.GlobalPosition +=
+			Vector2.Right.Rotated(rotation - Mathf.Pi + bloom) * PlayerPushPerShot * (float)GetProcessDeltaTime();
 	}
 
 	protected override void HandleHitECS(Entity entity)
