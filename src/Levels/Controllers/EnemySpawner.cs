@@ -1,5 +1,4 @@
 using Arch.Core;
-using Game.Core;
 using Game.Core.ECS;
 using Game.Core.Services;
 
@@ -50,7 +49,7 @@ public partial class EnemySpawner : Node
 			new EnemyContactDamageComponent(Mathf.CeilToInt(stats.DamageOnContact * stats.ContactDamageMultiplier)),
 			new DeathRewardComponent(Mathf.CeilToInt(stats.MoneyDrop * stats.MoneyDropMultiplier)),
 			new HitFeedbackComponent { HitTime = 0 },
-			new CollidableComponent()
+			new CollisionLodComponent(CollisionLodLevel.Far)
 		);
 	}
 

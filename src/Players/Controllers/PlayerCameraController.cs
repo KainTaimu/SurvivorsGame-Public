@@ -17,9 +17,9 @@ public partial class PlayerCameraController : Camera2D
 
 		var zoom = Zoom;
 		if (mouse.ButtonIndex == MouseButton.WheelUp)
-			zoom += Vector2.One * 0.1f;
+			zoom += Vector2.One * 0.05f;
 		else if (mouse.ButtonIndex == MouseButton.WheelDown)
-			zoom -= Vector2.One * 0.1f;
+			zoom -= Vector2.One * 0.05f;
 
 		Zoom = zoom.Clamp(Vector2.One * MinZoom, Vector2.One * MaxZoom);
 	}

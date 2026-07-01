@@ -91,12 +91,13 @@ public partial class EnemyCollisionSolver : Node
 				break;
 		}
 
-		ApplyCollisionsQuery(GameWorld.World, _writeBuffer);
+		ApplyCollisionsQuery(GameWorld.World, _writeBuffer, NavMap.Instance.GridVisibilityRect);
+		// ApplyCollisionss();
 		ProcessTime = Time.GetTicksMsec() - start;
 	}
 
 	[Query(Parallel = true)]
-	[All<PositionComponent, CollidableComponent, CircleHitboxComponent>]
+	[All<PositionComponent, CollisionLodComponent, CircleHitboxComponent>]
 	[None<DyingMarkerComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static void AddObjectsToGrid(
@@ -129,17 +130,34 @@ public partial class EnemyCollisionSolver : Node
 		}
 	}
 
+	private void ApplyCollisionss()
+	{
+		foreach (var (entity, newPos) in _writeBuffer)
+		{
+			ref var pos = ref GameWorld.World.Get<PositionComponent>(entity);
+			if (NavMap.Instance.GridVisibilityRect.HasPoint(pos.Position))
+				pos.Position = NavigationServer2D.MapGetClosestPoint(NavMap.Map, newPos);
+			else
+				pos.Position = newPos;
+		}
+	}
+
 	[Query(Parallel = true)]
 	[All<PositionComponent, CircleHitboxComponent>]
 	[None<DyingMarkerComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static void ApplyCollisions(
 		[Data] in ConcurrentDictionary<Entity, Vector2> writeBuffer,
+		[Data] in Rect2 navMeshVisibilityGrid,
 		in Entity entity,
 		ref PositionComponent pos
 	)
 	{
-		if (writeBuffer.TryGetValue(entity, out var newPos))
+		if (!writeBuffer.TryGetValue(entity, out var newPos))
+			return;
+		if (navMeshVisibilityGrid.HasPoint(pos.Position))
+			pos.Position = NavigationServer2D.MapGetClosestPoint(NavMap.Map, newPos);
+		else
 			pos.Position = newPos;
 	}
 

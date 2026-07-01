@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Arch.Core;
 using Arch.System;
 using Arch.System.SourceGenerator;
 using Game.Core.ECS;
@@ -74,8 +75,9 @@ public partial class EnemyRenderer : Node
 
 	[Query]
 	[All<PositionComponent, AnimatedSpriteComponent>]
+	[Any<VelocityComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private void UpdateEnemySprites(ref PositionComponent pos, ref AnimatedSpriteComponent sprite)
+	private void UpdateEnemySprites(in Entity entity, ref PositionComponent pos, ref AnimatedSpriteComponent sprite)
 	{
 		if (!_visibilityRect.HasPoint(pos.Position))
 			return;
@@ -87,17 +89,24 @@ public partial class EnemyRenderer : Node
 		if (count >= mmi.InstanceCount)
 			mmi.InstanceCount = (int)(mmi.InstanceCount * INSTANCE_GROWTH_MULTIPLIER);
 
-		UpdateEnemyInstance(mmi, count, pos.Position, ref sprite);
+		if (GameWorld.World.Has<VelocityComponent>(entity))
+		{
+			var vel = GameWorld.World.Get<VelocityComponent>(entity);
+			UpdateEnemyInstance(mmi, count, pos.Position, ref sprite, vel.Velocity.X < 0);
+		}
+		else
+			UpdateEnemyInstance(mmi, count, pos.Position, ref sprite);
 	}
 
 	private void UpdateEnemyInstance(
 		MultiMesh multiMesh,
 		int instanceIdx,
 		Vector2 pos,
-		ref AnimatedSpriteComponent sprite
+		ref AnimatedSpriteComponent sprite,
+		bool? flip = null
 	)
 	{
-		var flip = PlayerPosition < pos;
+		flip ??= PlayerPosition < pos;
 
 		if (sprite.AnimationTime <= 0)
 		{
@@ -119,7 +128,7 @@ public partial class EnemyRenderer : Node
 			sprite.FrameSizePxX,
 			sprite.FrameSizePxY,
 			sprite.FrameIdxX,
-			flip: flip,
+			flip: flip.Value,
 			opacity: sprite.Opacity,
 			flash: sprite.Flash,
 			scale: (byte)Mathf.Clamp((sprite.Scale - 0.5f) / 4.5f * 255f, 0, 255)

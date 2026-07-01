@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://d3su0ak3dnifl" path="res://scenes/Levels/Level.tscn" id="1_m1pph"]
 [ext_resource type="PackedScene" uid="uid://ecfjaeglvrkf" path="res://scenes/Players/DevPlayer.tscn" id="2_4pxeb"]
+[ext_resource type="Script" uid="uid://ufpoicgrn6de" path="res://src/Levels/NavMap.cs" id="2_twx3g"]
 [ext_resource type="Resource" uid="uid://d3sq28pskbjjy" path="res://scenes/Enemies/Blueprints/Walker.tres" id="3_5f0vo"]
 [ext_resource type="Resource" uid="uid://nvj82uku7ht1" path="res://scenes/Enemies/Blueprints/Sprinter.tres" id="3_he88e"]
 [ext_resource type="Script" uid="uid://dau6m811dtep8" path="res://src/Levels/Controllers/BlueprintWeight.cs" id="4_p53ds"]
@@ -12,6 +13,13 @@
 [ext_resource type="Script" uid="uid://d2tvxgxbv87i2" path="res://src/Levels/Controllers/WeightedWaveBlueprintCollection.cs" id="9_2csoy"]
 [ext_resource type="Script" uid="uid://b7ol6jtjagoe" path="res://src/Levels/Controllers/WaveDuration.cs" id="10_2cd5g"]
 [ext_resource type="PackedScene" uid="uid://cb6opjo4xaaio" path="res://scenes/UI/PerformanceMonitor.tscn" id="13_dxfda"]
+[ext_resource type="Script" uid="uid://bjis25rd0y3uy" path="res://src/Levels/Controllers/EnemyNavMeshMover.cs" id="13_ww382"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_do71q"]
+vertices = PackedVector2Array(2527, -329, 10964.008, -10609.0625, 15493.211, 9265.078, 2495, 495, 2495, 369, 2527, -455, -14354.398, -10752.922, 15, -1271, 64, 1117.1563, 15, 1133.4922, 15, 494.2422, 293.6172, 1193.6875, 446.3125, 1346.3828, -2512.3438, -330.52344, 15, 369, 15, -454.22656, -207, -1271, 15, 369.7422, -207, 369, -207, -454.15625, -2512.3438, -453.47656, -16327.453, 9408.922, -2544.3438, 370.52344, -2544.3438, 493.47656, -207, 494.17188, -207, 1235.0703, -318.3125, 1346.3828, -207, 369.8125, -394.84375, 1576, 522.84375, 1576, 446.3125, 1805.6172, 293.6172, 1958.3125, 64, 2034.8438, -165.61719, 1958.3125, -318.3125, 1805.6172)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(1, 0, 5), PackedInt32Array(6, 1, 5, 7), PackedInt32Array(8, 9, 10), PackedInt32Array(8, 10, 3, 11), PackedInt32Array(12, 11, 3), PackedInt32Array(13, 0, 4, 14), PackedInt32Array(5, 15, 7), PackedInt32Array(6, 7, 16), PackedInt32Array(4, 17, 14), PackedInt32Array(13, 14, 18), PackedInt32Array(16, 19, 20, 6), PackedInt32Array(21, 6, 20, 13, 22), PackedInt32Array(23, 24, 25, 26), PackedInt32Array(18, 27, 22, 13), PackedInt32Array(21, 22, 23), PackedInt32Array(23, 26, 28), PackedInt32Array(29, 12, 3, 2), PackedInt32Array(30, 29, 2), PackedInt32Array(31, 30, 2), PackedInt32Array(31, 2, 21, 32), PackedInt32Array(33, 32, 21), PackedInt32Array(33, 21, 23, 34), PackedInt32Array(34, 23, 28)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-14368, -10768, 10976, -10624, 15512, 9280, -16344, 9424)])
+agent_radius = 15.0
 
 [sub_resource type="Resource" id="Resource_dxfda"]
 script = ExtResource("4_qx3kv")
@@ -21,7 +29,7 @@ metadata/_custom_type_script = "uid://dh3r0hk3vhhsg"
 [sub_resource type="Resource" id="Resource_pgumh"]
 script = ExtResource("10_2cd5g")
 Duration = 99999.0
-MaxMobs = 200
+MaxMobs = 3000
 EnemyBlueprints = SubResource("Resource_dxfda")
 SpawnMinTime = 0.1
 SpawnMaxTime = 0.1
@@ -75,7 +83,53 @@ metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 
 [node name="Level" unique_id=2141389114 instance=ExtResource("1_m1pph")]
 
+[node name="CanvasModulate" parent="." index="0" unique_id=1594940435]
+metadata/_edit_lock_ = true
+
 [node name="Player" parent="." index="2" unique_id=1386970244 instance=ExtResource("2_4pxeb")]
+metadata/_edit_lock_ = true
+
+[node name="NavMap" type="NavigationRegion2D" parent="." index="3" unique_id=1393272538]
+process_priority = -3
+navigation_polygon = SubResource("NavigationPolygon_do71q")
+script = ExtResource("2_twx3g")
+_gridSize = 255
+RangeFactor = 10.0
+
+[node name="Polygon2D2" type="Polygon2D" parent="NavMap" index="0" unique_id=597077197]
+position = Vector2(-2520, 400)
+polygon = PackedVector2Array(-9.340012, -14.480003, 5000, -16, 5000, 80, -9.340012, 78.48)
+uv = PackedVector2Array(16, 0, 128.00003, 0, 128.00003, 63.999996, 16, 64)
+
+[node name="Polygon2D3" type="Polygon2D" parent="NavMap" index="1" unique_id=1714751998]
+position = Vector2(-2488, -424)
+polygon = PackedVector2Array(-9.340012, -14.480003, 5000, -16, 5000, 80, -9.340012, 78.48)
+uv = PackedVector2Array(16, 0, 128.00003, 0, 128.00003, 63.999996, 16, 64)
+
+[node name="Polygon2D" type="Polygon2D" parent="NavMap" index="2" unique_id=992886357]
+position = Vector2(80, 1608)
+polygon = PackedVector2Array(-16.000063, -475.03473, 205.51733, -401.1957, 353.19574, -253.51738, 427.03473, -32.000004, 353.19574, 189.51741, 205.51733, 337.1957, -16.000063, 411.03482, -237.5173, 337.1957, -385.19562, 189.51741, -459.03473, -32.000004, -385.19562, -253.51738, -237.5173, -401.1957)
+uv = PackedVector2Array(-16, -79.99999, 0, -72, 16, -56, 24, -31.999996, 16, -8, 0, 7.9999924, -16, 16, -32.000015, 8, -48.000015, -8, -56, -32, -48.000015, -56, -32, -72)
+
+[node name="Polygon2D4" type="Polygon2D" parent="NavMap" index="3" unique_id=1435313805]
+polygon = PackedVector2Array(-192, 384, -192, 1264, 0, 1264, 0, 384)
+
+[node name="Polygon2D5" type="Polygon2D" parent="NavMap" index="4" unique_id=2011772834]
+position = Vector2(0, -1640)
+polygon = PackedVector2Array(-192, 384, -192, 1264, 0, 1264, 0, 384)
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="NavMap" index="5" unique_id=1398678503]
+vertices = PackedVector2Array(-192, 384, 0, 384, 0, 1264, -192, 1280)
+affect_navigation_mesh = true
+carve_navigation_mesh = true
+avoidance_enabled = false
+
+[node name="NavigationObstacle2D2" type="NavigationObstacle2D" parent="NavMap" index="6" unique_id=1339558004]
+position = Vector2(0, -1632)
+vertices = PackedVector2Array(-192, 384, 0, 384, 0, 1264, -192, 1280)
+affect_navigation_mesh = true
+carve_navigation_mesh = true
+avoidance_enabled = false
 
 [node name="GameWorld" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="0" unique_id=562045734 node_paths=PackedStringArray("MainPlayer")]
 MainPlayer = NodePath("../../Player")
@@ -83,6 +137,16 @@ MainPlayer = NodePath("../../Player")
 [node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=247564660]
 Waves = Array[Object]([SubResource("Resource_pgumh"), SubResource("Resource_4v0et"), SubResource("Resource_g22vo"), SubResource("Resource_qx3kv")])
 
-[node name="PerformanceMonitor" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="4" unique_id=1872396024 node_paths=PackedStringArray("CollisionSolver", "EnemyRenderer") instance=ExtResource("13_dxfda")]
+[node name="EnemyMover" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="4" unique_id=348078406]
+process_mode = 4
+
+[node name="EnemyNavMeshMover" type="Node2D" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="5" unique_id=1850408600]
+script = ExtResource("13_ww382")
+
+[node name="EnemyRenderer" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="7" unique_id=1054443393]
+RenderDistanceFactor = 99.0
+
+[node name="PerformanceMonitor" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="4" unique_id=1872396024 node_paths=PackedStringArray("CollisionSolver", "EnemyRenderer", "NavGrid") instance=ExtResource("13_dxfda")]
 CollisionSolver = NodePath("../../Systems/EnemySystems/EnemyCollisionSolver")
 EnemyRenderer = NodePath("../../Systems/EnemySystems/EnemyRenderer")
+NavGrid = NodePath("../../NavMap")

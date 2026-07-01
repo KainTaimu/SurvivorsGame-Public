@@ -9,7 +9,6 @@
 [ext_resource type="Script" uid="uid://cuxklvvvd40t4" path="res://scenes/Levels/EnemySystems.cs" id="8_t3a6r"]
 [ext_resource type="PackedScene" uid="uid://umbqj1xym7lp" path="res://scenes/Core/FodderMultiMeshInstance2D.tscn" id="9_ror81"]
 [ext_resource type="Script" uid="uid://cwkq6cfxp7jub" path="res://src/Levels/Controllers/EnemyCollisionSolver.cs" id="10_ajdj3"]
-[ext_resource type="Script" uid="uid://bct2mtni7a82f" path="res://src/Levels/Controllers/EnemyMover.cs" id="10_sh7eq"]
 [ext_resource type="Script" uid="uid://citywxiolgxtm" path="res://src/Levels/Controllers/EnemyWaveController.cs" id="11_aredf"]
 [ext_resource type="Script" uid="uid://cuxwdf1ugwtxm" path="res://src/Levels/Controllers/EnemySpawner.cs" id="12_qsiuk"]
 [ext_resource type="PackedScene" uid="uid://bpgtq48wt7r32" path="res://scenes/Levels/EnemyHitFeedbackController.tscn" id="13_vg5sh"]
@@ -105,9 +104,6 @@ _goreManager = NodePath("../GoreManager")
 
 [node name="EnemyDeathManager" parent="Systems/EnemySystems" unique_id=821545961 node_paths=PackedStringArray("GoreManager") instance=ExtResource("14_aig1n")]
 GoreManager = NodePath("../GoreManager")
-
-[node name="EnemyMover" type="Node" parent="Systems/EnemySystems" unique_id=348078406]
-script = ExtResource("10_sh7eq")
 
 [node name="EnemyCollisionSolver" type="Node" parent="Systems/EnemySystems" unique_id=2115688042]
 script = ExtResource("10_ajdj3")

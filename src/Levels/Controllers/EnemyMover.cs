@@ -16,7 +16,7 @@ public partial class EnemyMover : Node
 	}
 
 	[Query(Parallel = true)]
-	[All<PositionComponent, VelocityComponent, MoveSpeedComponent>]
+	[All<PositionComponent, VelocityComponent, MoveSpeedComponent, CollisionLodComponent>]
 	[None<DyingMarkerComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static void Move(
@@ -24,9 +24,12 @@ public partial class EnemyMover : Node
 		[Data] in float delta,
 		ref PositionComponent pos,
 		ref VelocityComponent velocity,
-		ref MoveSpeedComponent moveSpeed
+		ref MoveSpeedComponent moveSpeed,
+		ref CollisionLodComponent lodLevel
 	)
 	{
+		if (lodLevel.LodLevel < CollisionLodLevel.Far)
+			return;
 		velocity.Velocity = velocity.Velocity.Lerp(
 			pos.Position.DirectionTo(moveToTarget) * moveSpeed.MoveSpeed,
 			moveSpeed.TurnSpeed * delta

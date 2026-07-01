@@ -1,3 +1,4 @@
+using Game.Levels;
 using Game.Levels.Controllers;
 
 namespace Game.UI;
@@ -11,6 +12,9 @@ public partial class PerformanceMonitor : CanvasLayer
 	public EnemyRenderer? EnemyRenderer;
 
 	[Export]
+	public NavMap? NavGrid;
+
+	[Export]
 	private BoxContainer _boxContainer = null!;
 
 	[Export]
@@ -18,6 +22,9 @@ public partial class PerformanceMonitor : CanvasLayer
 
 	[Export]
 	private RichTextLabel _rendererlabel = null!;
+
+	[Export]
+	private RichTextLabel _navLabel = null!;
 
 	public override void _Process(double delta)
 	{
@@ -35,6 +42,14 @@ public partial class PerformanceMonitor : CanvasLayer
 				EnemyRenderer.ProcessTime < 5
 					? $"Rendering: {EnemyRenderer.ProcessTime}ms"
 					: $"[color=orange]Rendering: {EnemyRenderer.ProcessTime}ms[/color]";
+		}
+
+		if (NavGrid is not null)
+		{
+			_navLabel.Text =
+				NavGrid.ProcessTime < 7
+					? $"NavGrid: {NavGrid.ProcessTime}ms"
+					: $"[color=orange]NavGrid: {NavGrid.ProcessTime}ms[/color]";
 		}
 	}
 }
