@@ -18,6 +18,7 @@ func set_occluder_polygon():
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ps52f"]
 resource_local_to_scene = true
+polygon = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0)
 
 [node name="PolygonLightOccluder" type="Polygon2D" unique_id=1199949879]
 z_index = 1394
