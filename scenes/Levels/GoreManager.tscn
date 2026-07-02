@@ -3,8 +3,34 @@
 [ext_resource type="Script" uid="uid://btsjfyj4mvtfa" path="res://src/Levels/Controllers/GoreManager.cs" id="1_2mqri"]
 [ext_resource type="PackedScene" uid="uid://bqy6yv5uhrqp0" path="res://scenes/VFX/BloodKillParticles.tscn" id="2_pkkq0"]
 [ext_resource type="PackedScene" uid="uid://dxxi85vpicqhd" path="res://scenes/VFX/BloodSpurtParticles.tscn" id="3_0ylxp"]
+[ext_resource type="Script" uid="uid://ddigkg5ndk0da" path="res://src/Levels/Controllers/HitParticlesInfo.cs" id="4_y53ej"]
+[ext_resource type="Material" uid="uid://dvi7xyjhs2chr" path="res://scenes/VFX/NormalDeathParticlesProcessMaterial.tres" id="5_v26op"]
+[ext_resource type="Material" uid="uid://cholhn1qxqaej" path="res://scenes/VFX/ExplosionDeathParticlesProcessMaterial.tres" id="6_rwkqp"]
 
-[node name="GoreManager" type="Node" unique_id=623372769]
+[sub_resource type="Resource" id="Resource_a3qk2"]
+script = ExtResource("4_y53ej")
+Amount = 200
+ProcessMaterial = ExtResource("5_v26op")
+metadata/_custom_type_script = "uid://ddigkg5ndk0da"
+
+[sub_resource type="Resource" id="Resource_r732t"]
+script = ExtResource("4_y53ej")
+Amount = 75
+ProcessMaterial = ExtResource("6_rwkqp")
+metadata/_custom_type_script = "uid://ddigkg5ndk0da"
+
+[sub_resource type="Resource" id="Resource_ce6r5"]
+script = ExtResource("4_y53ej")
+Amount = 190
+ProcessMaterial = ExtResource("6_rwkqp")
+metadata/_custom_type_script = "uid://ddigkg5ndk0da"
+
+[node name="GoreManager" type="Node2D" unique_id=1386313910]
 script = ExtResource("1_2mqri")
 _enemyDeathParticlesScene = ExtResource("2_pkkq0")
 _spurtParticlesScene = ExtResource("3_0ylxp")
+_deathParticleProcessMaterialsByCause = Dictionary[int, ExtResource("4_y53ej")]({
+0: SubResource("Resource_a3qk2"),
+1: SubResource("Resource_r732t"),
+2: SubResource("Resource_ce6r5")
+})

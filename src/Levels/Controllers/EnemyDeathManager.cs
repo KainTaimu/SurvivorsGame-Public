@@ -35,7 +35,7 @@ public partial class EnemyDeathManager : Node
 						{
 							GameWorld.World.Destroy(entity);
 						})
-						.CallDeferred();
+						.Call();
 					return;
 				}
 

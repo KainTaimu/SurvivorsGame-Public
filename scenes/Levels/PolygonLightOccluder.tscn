@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://wos5frj6p77e"]
+
+[sub_resource type="GDScript" id="GDScript_ps52f"]
+script/source = "extends Polygon2D
+
+@onready var occluder : LightOccluder2D = $LightOccluder2D
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	call_deferred(\"set_occluder_polygon\")
+
+func set_occluder_polygon():
+	if (len(polygon) < 2):
+		printerr($\"cannot set LightOccluder Polygon because len(polygon) < 2\")
+		return
+	occluder.occluder.polygon = polygon
+"
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ps52f"]
+resource_local_to_scene = true
+
+[node name="PolygonLightOccluder" type="Polygon2D" unique_id=1199949879]
+z_index = 1394
+z_as_relative = false
+script = SubResource("GDScript_ps52f")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="." unique_id=859601626]
+occluder = SubResource("OccluderPolygon2D_ps52f")

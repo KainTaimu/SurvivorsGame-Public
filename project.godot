@@ -137,3 +137,9 @@ afk/afk_timer=180
 
 textures/canvas_textures/default_texture_filter=0
 lights_and_shadows/use_physical_light_units=true
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality=3
+lights_and_shadows/directional_shadow/16_bits=false
+lights_and_shadows/positional_shadow/soft_shadow_filter_quality=3
+2d/shadow_atlas/size=4096
+anti_aliasing/quality/msaa_2d=1
+anti_aliasing/quality/use_debanding=true

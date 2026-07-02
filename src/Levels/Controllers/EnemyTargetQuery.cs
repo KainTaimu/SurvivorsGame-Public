@@ -15,9 +15,6 @@ namespace Game.Levels.Controllers;
 
 public partial class EnemyTargetQuery : Node
 {
-	[Export]
-	private EnemyRenderer _renderer = null!;
-
 	// BREAKING: Changing this value breaks Projectile radius of weapons
 	private const int GRID_SIZE = 16;
 

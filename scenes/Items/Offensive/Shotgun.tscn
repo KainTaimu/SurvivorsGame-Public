@@ -31,7 +31,7 @@ metadata/_custom_type_script = "uid://8rt54h4imtxv"
 script = ExtResource("4_60s7d")
 ReloadTime = 2.0
 BloomCoefficientDeg = 25.0
-MagazineCapacity = 7
+MagazineCapacity = 8
 HorizontalRecoilMin = 20.0
 HorizontalBaseRecoil = 20.0
 HorizontalRecoilRandom = 20.0
@@ -45,7 +45,7 @@ BaseCritChanceProportion = 0.3
 BaseProjectileSpeed = 2700
 BaseProjectileScaleMultiplier = 0.8
 BaseAttackSpeed = 0.8
-BasePierceLimit = 2
+BasePierceLimit = 3
 Additional = Dictionary[String, Variant]({
 "PelletCount": 16
 })

@@ -9,7 +9,7 @@ public static class GoreEffectsConfigs
 		{ GoreEffectsEnum.Disabled, 0 },
 		{ GoreEffectsEnum.Low, 200 },
 		{ GoreEffectsEnum.Medium, 800 },
-		{ GoreEffectsEnum.High, 1200 },
+		{ GoreEffectsEnum.High, 2000 },
 	};
 }
 

@@ -149,7 +149,6 @@ public partial class GoreManager : Node
 		particles.ProcessMode = _particlesOriginalProcessMode ?? ProcessModeEnum.Inherit;
 		var info = _deathParticleProcessMaterialsByCause[cause];
 		particles.ProcessMaterial = info.ProcessMaterial;
-		particles.Amount = info.Amount;
 	}
 
 	private void DisableParticles(GpuParticles2D particles)

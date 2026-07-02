@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://c24ayslleke42"]
+
+[ext_resource type="Script" uid="uid://d4hn7uwvshdju" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_18mki"]
+[ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_p0oyq"]
+[ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FullAutoFireGroup.cs" id="3_ssx3n"]
+[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="4_c20as"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="5_o7a18"]
+[ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_ucf10"]
+[ext_resource type="AudioStream" uid="uid://d3yyntc5ktx40" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Full Sound/7.62x39/WAV/762x39 Single WAV.wav" id="7_mmla7"]
+[ext_resource type="AudioStream" uid="uid://bmkybqxa3cdlq" path="res://assets/SFX/mag_almost_empty.wav" id="8_a2vqj"]
+
+[sub_resource type="Resource" id="Resource_vujg4"]
+script = ExtResource("3_ssx3n")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_t84yk"]
+script = ExtResource("4_c20as")
+metadata/_custom_type_script = "uid://dpq42sefws67v"
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_18mki"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_iu54j"]
+script = ExtResource("5_o7a18")
+Name = "M249"
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
+[sub_resource type="Resource" id="Resource_bpnxk"]
+script = ExtResource("6_ucf10")
+ReloadTime = 4.0
+BloomCoefficientDeg = 18.0
+MagazineCapacity = 200
+CameraRecoilScale = 0.8
+ChamberLoaded = false
+BaseDamage = 12
+BaseDamageVarianceMultiplier = 0.22
+BaseCritDamageMultiplier = 1.4
+BaseCritChanceProportion = 0.0
+BaseProjectileScaleMultiplier = 0.95
+BaseAttackSpeed = 0.071
+BasePierceLimit = 4
+Additional = Dictionary[String, Variant]({
+"Knockback": 5.0,
+"SlowMultiplier": 0.5
+})
+metadata/_custom_type_script = "uid://di81uufgmcsog"
+
+[node name="M249" type="Node" unique_id=873525008]
+script = ExtResource("1_18mki")
+_projectileScene = ExtResource("2_p0oyq")
+_fireGroup = SubResource("Resource_vujg4")
+_projectileAttack = SubResource("Resource_t84yk")
+Properties = SubResource("Resource_iu54j")
+Stats = SubResource("Resource_bpnxk")
+
+[node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=1953856797]
+process_mode = 3
+stream = ExtResource("7_mmla7")
+volume_db = 1.0
+pitch_scale = 1.2
+bus = &"ShootSfx"
+
+[node name="MagAlmostEmpty" type="AudioStreamPlayer" parent="." unique_id=662241062]
+process_mode = 3
+stream = ExtResource("8_a2vqj")
+volume_db = 16.0
+max_polyphony = 30
+
+[connection signal="AlmostEmpty" from="." to="MagAlmostEmpty" method="play"]
+[connection signal="OnAttack" from="." to="Shoot" method="play"]

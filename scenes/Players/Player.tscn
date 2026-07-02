@@ -126,9 +126,11 @@ metadata/_edit_lock_ = true
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1140483799]
 visible = false
-energy = 0.31
+energy = 0.39
+shadow_enabled = true
 shadow_color = Color(0, 0, 0, 1)
 texture = SubResource("GradientTexture2D_ragxt")
+texture_scale = 4.1
 metadata/_edit_lock_ = true
 
 [node name="LookLight" type="PointLight2D" parent="." unique_id=1398023543]

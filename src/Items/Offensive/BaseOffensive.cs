@@ -27,6 +27,9 @@ public abstract partial class BaseOffensive : BaseItem
 
 	public void HandleHit(Entity entity)
 	{
+		if (!GameWorld.World.IsAlive(entity))
+			return;
+
 		HandleDamageECS(entity);
 		HandleHitECS(entity);
 	}
@@ -35,8 +38,6 @@ public abstract partial class BaseOffensive : BaseItem
 	// ReSharper disable once InconsistentNaming
 	protected void HandleDamageECS(Entity entity)
 	{
-		if (!GameWorld.World.IsAlive(entity))
-			return;
 		if (!GameWorld.World.Has<HealthComponent>(entity))
 			return;
 
@@ -44,7 +45,12 @@ public abstract partial class BaseOffensive : BaseItem
 
 		var crit = CalculateCrit();
 		var randomDamage =
-			OffensiveStats.Damage > 1 ? Mathf.CeilToInt(GD.RandRange(-0.15, 0.15) * OffensiveStats.Damage) : 0;
+			OffensiveStats.Damage > 1
+				? Mathf.CeilToInt(
+					GD.RandRange(-OffensiveStats.DamageVarianceMultiplier, OffensiveStats.DamageVarianceMultiplier)
+						* OffensiveStats.Damage
+				)
+				: 0;
 		var damage = Mathf.CeilToInt(
 			(OffensiveStats.Damage + crit + randomDamage) * PlayerStats.OutgoingDamageMultiplier
 		);

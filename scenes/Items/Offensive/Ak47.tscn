@@ -17,7 +17,7 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 script = ExtResource("3_tg8rs")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nihe0"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_62a23"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_eai52"]

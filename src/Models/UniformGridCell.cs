@@ -2,7 +2,7 @@ namespace Game.Models;
 
 public class UniformGridCell<T>
 {
-	private const int MAX_SIZE = 2048;
+	private const int MAX_SIZE = 256;
 
 	public required Vector2I Index;
 	public required Vector2I Position;

@@ -10,7 +10,7 @@ texture_mode = 1
 curve = SubResource("Curve_icyyh")
 
 [sub_resource type="Curve" id="Curve_iae7x"]
-_data = [Vector2(0.58549327, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0.28091612, 1), 0.0, -2.4116068, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_2o2jl"]
@@ -25,7 +25,7 @@ emission_sphere_radius = 1.0
 angle_min = -1352.8
 angle_max = 1352.8
 spread = 180.0
-initial_velocity_max = 500.0
+initial_velocity_max = 600.0
 gravity = Vector3(0, 0, 0)
 damping_min = 100.00001
 damping_max = 100.00001

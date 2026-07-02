@@ -50,7 +50,10 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 			_hits.Remove(hit);
 
 		if (_hitsHandled.Count >= PierceLimit)
+		{
+			Position = _hitsHandled.Last().Position;
 			ReturnToPool();
+		}
 	}
 
 	public void ReturnToPool()
@@ -76,9 +79,12 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 
 		foreach (var entity in hits)
 		{
-			// NOTE: Not sure if GetTargetsRayCast returns duplicates
+			if (!GameWorld.World.IsAlive(entity))
+				continue;
+			if (!GameWorld.World.Has<PositionComponent>(entity))
+				continue;
 			if (_hits.Any(data => data.Target == entity))
-				return;
+				continue;
 
 			var entityPos = GameWorld.World.Get<PositionComponent>(entity);
 			var distance = GlobalPosition.DistanceTo(entityPos.Position);

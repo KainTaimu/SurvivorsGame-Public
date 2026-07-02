@@ -42,25 +42,26 @@ alignment = 1
 
 [node name="Label" type="Label" parent="Control" unique_id=1833705021]
 layout_mode = 1
-anchors_preset = 2
+anchors_preset = 3
+anchor_left = 1.0
 anchor_top = 1.0
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -19.0
-offset_right = 40.0
+offset_left = -54.0
+offset_top = -28.0
+grow_horizontal = 0
 grow_vertical = 0
 text = "WEAP1"
 label_settings = ExtResource("3_r6iw8")
 
 [node name="Label2" type="Label" parent="Control" unique_id=13376476]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
+anchors_preset = 2
 anchor_top = 1.0
-anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -40.0
-offset_top = -19.0
-grow_horizontal = 0
+offset_top = -29.0
+offset_right = 56.0
+offset_bottom = -1.0
 grow_vertical = 0
 text = "WEAP2"
 label_settings = ExtResource("3_r6iw8")
