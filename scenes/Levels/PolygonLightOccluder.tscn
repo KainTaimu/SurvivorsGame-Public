@@ -20,9 +20,10 @@ func set_occluder_polygon():
 resource_local_to_scene = true
 polygon = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0)
 
-[node name="PolygonLightOccluder" type="Polygon2D" unique_id=1199949879]
+[node name="PolygonLightOccluder" type="Polygon2D" unique_id=1199949879 groups=["NavPolygons"]]
 z_index = 1394
 z_as_relative = false
+polygon = PackedVector2Array(-32, 32, -32, -32, 32, -32, 32, 32)
 script = SubResource("GDScript_ps52f")
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="." unique_id=859601626]

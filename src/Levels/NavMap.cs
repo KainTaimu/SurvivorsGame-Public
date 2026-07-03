@@ -51,6 +51,7 @@ public partial class NavMap : NavigationRegion2D
 	public override void _Ready()
 	{
 		Map = GetNavigationMap();
+
 		UpdateGrid();
 
 		Instance = this;
@@ -63,12 +64,19 @@ public partial class NavMap : NavigationRegion2D
 		_grid.ClearGrid();
 		_grid.Recenter(CachedPlayerPosition);
 
-		var start = Time.GetTicksMsec();
-		// UpdateNavGrid();
-		ProcessTime = Time.GetTicksMsec() - start;
-
 		if (DrawPaths)
 			QueueRedraw();
+	}
+
+	public override void _PhysicsProcess(double delta)
+	{
+		if (Engine.GetPhysicsFrames() % 4 != 0)
+			return;
+		if (IsBaking())
+			return;
+		var start = Time.GetTicksMsec();
+		BakeNavigationPolygon(true);
+		ProcessTime = Time.GetTicksMsec() - start;
 	}
 
 	public Span<Vector2> GetNavLine(Vector2 pos)
@@ -78,7 +86,15 @@ public partial class NavMap : NavigationRegion2D
 			return [];
 		if (cell.Count == 0)
 			UpdateNavCell(pos);
-		return cell.Array[0].AsSpan();
+		var paths = cell.Array[0];
+
+		for (var i = 1; i < paths.Length; i++)
+		{
+			var jitter = Vector2.One * GD.RandRange(-30, 30);
+			paths[i] += jitter;
+		}
+
+		return paths.AsSpan();
 	}
 
 	private void UpdateNavGrid()
@@ -116,14 +132,15 @@ public partial class NavMap : NavigationRegion2D
 
 	private void ClearDrawnPaths()
 	{
-		_grid.ClearGrid();
 		QueueRedraw();
 	}
 
 	public override void _Draw()
 	{
-		if (DrawPaths)
-			DrawRect(GridVisibilityRect, Colors.Red, false, 2, antialiased: true);
+		if (!DrawPaths)
+			return;
+		DrawRect(GridVisibilityRect, Colors.Red, false, 2, antialiased: true);
+
 		for (var x = 0; x < _grid.Dimensions.X; x++)
 		for (var y = 0; y < _grid.Dimensions.Y; y++)
 		{

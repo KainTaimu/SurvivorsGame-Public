@@ -6,6 +6,8 @@ public partial class LevelData : Node
 	public delegate void OnMoneyChangedEventHandler(int delta);
 
 	[Export]
+	public bool IsNightMode;
+
 	public int Money
 	{
 		get;

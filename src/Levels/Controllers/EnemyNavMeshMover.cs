@@ -14,19 +14,14 @@ public partial class EnemyNavMeshMover : Node2D
 
 	public readonly ConcurrentQueue<Vector2[]> _lines = [];
 
+	private static Vector2 _playerPosition;
+
 	public override void _Process(double delta)
 	{
 		var player = GameWorld.Instance.MainPlayer;
-		var playerPos = player.GlobalPosition;
+		_playerPosition = player.GlobalPosition;
 
-		UpdateMoversQuery(
-			GameWorld.World,
-			NavMap.Instance.GridVisibilityRect,
-			playerPos,
-			(float)delta,
-			DrawNavPaths,
-			_lines
-		);
+		UpdateMoversQuery(GameWorld.World, NavMap.Instance.GridVisibilityRect, (float)delta, DrawNavPaths, _lines);
 
 #if DEBUG
 		if (DrawNavPaths && Engine.GetProcessFrames() % 20 == 0)
@@ -49,7 +44,6 @@ public partial class EnemyNavMeshMover : Node2D
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static void UpdateMovers(
 		[Data] in Rect2 visRec,
-		[Data] in Vector2 moveToTarget,
 		[Data] in float delta,
 		[Data] in bool drawNavPaths,
 		[Data] in ConcurrentQueue<Vector2[]> navLines,
@@ -65,7 +59,7 @@ public partial class EnemyNavMeshMover : Node2D
 		}
 		else
 		{
-			MoveStraightMover(moveToTarget, delta, ref pos, ref velocity, ref moveSpeed);
+			MoveStraightMover(_playerPosition, delta, ref pos, ref velocity, ref moveSpeed);
 		}
 	}
 
@@ -77,11 +71,27 @@ public partial class EnemyNavMeshMover : Node2D
 		ref MoveSpeedComponent moveSpeed
 	)
 	{
-		velocity.Velocity = velocity.Velocity.Lerp(
-			pos.Position.DirectionTo(moveToTarget) * moveSpeed.MoveSpeed,
-			moveSpeed.TurnSpeed * delta
+		MoveEnemy(
+			ref pos.Position,
+			ref velocity.Velocity,
+			moveToTarget,
+			delta,
+			moveSpeed.MoveSpeed,
+			moveSpeed.TurnSpeed
 		);
-		pos.Position += velocity.Velocity * delta;
+	}
+
+	private static void MoveEnemy(
+		ref Vector2 pos,
+		ref Vector2 velocity,
+		Vector2 target,
+		float delta,
+		float moveSpeed,
+		float turnSpeed
+	)
+	{
+		velocity = velocity.Lerp(pos.DirectionTo(target) * moveSpeed, turnSpeed * delta);
+		pos += velocity * delta;
 	}
 
 	private static void MoveNavMover(
@@ -100,7 +110,7 @@ public partial class EnemyNavMeshMover : Node2D
 		var targetPos = paths[1];
 		foreach (var p in paths[2..])
 		{
-			if (pos.Position.DistanceTo(p) > 5)
+			if (pos.Position.DistanceTo(p) > 10)
 			{
 				targetPos = p;
 				break;

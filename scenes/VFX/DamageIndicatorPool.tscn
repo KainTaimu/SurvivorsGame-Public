@@ -3,6 +3,10 @@
 [ext_resource type="Script" uid="uid://cxtguf0ld1b2l" path="res://src/VFX/DamageIndicatorPool.cs" id="1_hd6eq"]
 [ext_resource type="PackedScene" uid="uid://r2x7fiwrol4h" path="res://scenes/VFX/DamageIndicator.tscn" id="2_k6xtc"]
 
-[node name="DamageIndicatorPool" type="Node2D" unique_id=1041537640]
+[node name="DamageIndicatorPool" type="Node2D" unique_id=1041537640 node_paths=PackedStringArray("_indicatorsLayer")]
 script = ExtResource("1_hd6eq")
 _indicatorScene = ExtResource("2_k6xtc")
+_indicatorsLayer = NodePath("CanvasLayer")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=648989603]
+follow_viewport_enabled = true

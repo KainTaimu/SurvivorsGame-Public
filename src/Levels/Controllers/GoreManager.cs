@@ -7,6 +7,9 @@ namespace Game.Levels.Controllers;
 public partial class GoreManager : Node
 {
 	[Export]
+	private EnemyDeathManager? _deathManager;
+
+	[Export]
 	private PackedScene _enemyDeathParticlesScene = null!;
 
 	[Export]
@@ -46,6 +49,20 @@ public partial class GoreManager : Node
 		{
 			UpdateParticles(_activeParticles, _inactiveParticles, MaxActiveParticles, false);
 			UpdateParticles(_activeSpurtParticles, _inactiveSpurtParticles, MaxActiveSpurtParticles, true);
+		};
+
+		_deathManager?.OnEnemyDeath += e =>
+		{
+			if (!GameWorld.World.Has<PositionComponent>(e.Entity))
+				return;
+			var pos = GameWorld.World.Get<PositionComponent>(e.Entity);
+			if (GameWorld.World.Has<DeathCauseComponent>(e.Entity))
+			{
+				var cause = GameWorld.World.Get<DeathCauseComponent>(e.Entity);
+				SpawnDeathParticles(pos.Position, cause.CauseEnum);
+			}
+			else
+				SpawnDeathParticles(pos.Position);
 		};
 	}
 

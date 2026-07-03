@@ -33,6 +33,7 @@ ServiceLocator="*res://scenes/Core/ServiceLocator.tscn"
 [debug]
 
 file_logging/enable_file_logging=true
+shapes/navigation/2d/geometry_face_color=Color(0.49995556, 1, 1, 0.048)
 
 [display]
 
@@ -65,6 +66,10 @@ folder_colors={
 "res://exports/": "gray",
 "res://roslyn-source-generated:/": "gray"
 }
+
+[global_group]
+
+NavPolygons=""
 
 [gui]
 

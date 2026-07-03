@@ -92,7 +92,6 @@ public partial class EnemyCollisionSolver : Node
 		}
 
 		ApplyCollisionsQuery(GameWorld.World, _writeBuffer, NavMap.Instance.GridVisibilityRect);
-		// ApplyCollisionss();
 		ProcessTime = Time.GetTicksMsec() - start;
 	}
 
@@ -127,18 +126,6 @@ public partial class EnemyCollisionSolver : Node
 
 			var cell = _grid.GetCellWorld(pos);
 			cell?.Add((pos, id));
-		}
-	}
-
-	private void ApplyCollisionss()
-	{
-		foreach (var (entity, newPos) in _writeBuffer)
-		{
-			ref var pos = ref GameWorld.World.Get<PositionComponent>(entity);
-			if (NavMap.Instance.GridVisibilityRect.HasPoint(pos.Position))
-				pos.Position = NavigationServer2D.MapGetClosestPoint(NavMap.Map, newPos);
-			else
-				pos.Position = newPos;
 		}
 	}
 

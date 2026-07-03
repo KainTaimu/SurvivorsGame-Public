@@ -1,66 +1,74 @@
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Arch.Core;
+using Arch.System;
+using Arch.System.SourceGenerator;
 using Game.Core.ECS;
+using Game.Items.Projectiles;
 
 namespace Game.Levels.Controllers;
 
 public partial class EnemyDeathManager : Node
 {
-	[Export]
-	public GoreManager? GoreManager;
+	[Signal]
+	public delegate void OnEnemyDeathEventHandler(EntityObject entity);
+
+	private readonly Queue<Entity> _dyingToRemove = [];
 
 	public override void _Process(double delta)
 	{
-		GameWorld.World.Query<HealthComponent, PositionComponent>(
-			in new QueryDescription().WithAll<HealthComponent, PositionComponent>().WithNone<DyingMarkerComponent>(),
-			(entity, ref health, ref position) =>
-			{
-				if (health.Health <= 0)
-					HandleDeath(entity, ref position);
-			}
-		);
+		UpdateNewDeathsQuery(GameWorld.World);
+		UpdateDyingQuery(GameWorld.World, (float)delta);
 
-		GameWorld.World.Query<DyingMarkerComponent, PositionComponent, VelocityComponent, AnimatedSpriteComponent>(
-			in new QueryDescription().WithAll<
-				DyingMarkerComponent,
-				PositionComponent,
-				VelocityComponent,
-				AnimatedSpriteComponent
-			>(),
-			(entity, ref dying, ref pos, ref vel, ref spr) =>
-			{
-				if (dying.TimeLeftUntilDestroy <= 0)
-				{
-					Callable
-						.From(() =>
-						{
-							GameWorld.World.Destroy(entity);
-						})
-						.Call();
-					return;
-				}
-
-				dying.TimeLeftUntilDestroy -= (float)delta;
-				pos.Position += vel.Velocity * (float)delta;
-				spr.Flash = 255;
-				spr.Opacity = (byte)(
-					dying.TimeLeftUntilDestroy / DyingMarkerComponent.Default.TimeLeftUntilDestroy * 255
-				);
-			}
-		);
+		CallDeferred(MethodName.DestroyDeadEnemies);
 	}
 
-	private void HandleDeath(Entity entity, ref PositionComponent pos)
+	private void DestroyDeadEnemies()
 	{
-		var deathPos = pos.Position;
+		while (_dyingToRemove.TryDequeue(out var entity))
+			GameWorld.World.Destroy(entity);
+	}
 
+	[Query]
+	[All<HealthComponent, PositionComponent>]
+	[None<DyingMarkerComponent>]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private void UpdateNewDeaths(in Entity entity, ref HealthComponent health)
+	{
+		if (health.Health <= 0)
+			HandleDeath(entity);
+	}
+
+	[Query]
+	[All<DyingMarkerComponent, PositionComponent, VelocityComponent, AnimatedSpriteComponent>]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	private void UpdateDying(
+		[Data] in float delta,
+		in Entity entity,
+		ref DyingMarkerComponent dying,
+		ref PositionComponent pos,
+		ref VelocityComponent vel,
+		ref AnimatedSpriteComponent spr
+	)
+	{
+		if (dying.TimeLeftUntilDestroy <= 0)
+		{
+			_dyingToRemove.Enqueue(entity);
+			return;
+		}
+
+		dying.TimeLeftUntilDestroy -= delta;
+		pos.Position += vel.Velocity * delta;
+		spr.Flash = 255;
+		spr.Opacity = (byte)(dying.TimeLeftUntilDestroy / DyingMarkerComponent.Default.TimeLeftUntilDestroy * 255);
+	}
+
+	private void HandleDeath(Entity entity)
+	{
 		GameWorld.World.Add(entity, DyingMarkerComponent.Default);
-
-		if (GameWorld.World.TryGet<DeathCauseComponent>(entity, out var cause))
-			GoreManager?.SpawnDeathParticles(deathPos, cause.CauseEnum);
-		else
-			GoreManager?.SpawnDeathParticles(deathPos);
 
 		if (GameWorld.World.TryGet<DeathRewardComponent>(entity, out var reward))
 			LevelData.Instance?.Money += reward.Money;
+		EmitSignalOnEnemyDeath(new EntityObject(entity));
 	}
 }

@@ -10,10 +10,10 @@ font_size = 64
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 stacked_shadow_count = 1
-stacked_shadow_0/offset = Vector2(1, 1)
 stacked_shadow_0/outline_size = 8
 
 [node name="DamageIndicator" type="Node2D" unique_id=80517012 node_paths=PackedStringArray("_label")]
+light_mask = 0
 z_index = 4095
 z_as_relative = false
 script = ExtResource("1_jxdlq")

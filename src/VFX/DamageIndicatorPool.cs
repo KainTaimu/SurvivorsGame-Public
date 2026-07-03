@@ -11,6 +11,9 @@ public partial class DamageIndicatorPool : Node2D
 	[Export]
 	private PackedScene _indicatorScene = null!;
 
+	[Export]
+	private CanvasLayer _indicatorsLayer = null!;
+
 	private readonly Queue<DamageIndicator> _activePool = [];
 	private readonly Queue<DamageIndicator> _inactivePool = [];
 
@@ -46,7 +49,7 @@ public partial class DamageIndicatorPool : Node2D
 			var indicator = _indicatorScene.Instantiate<DamageIndicator>();
 			indicator.OnFinished += ReturnIndicator;
 			_inactivePool.Enqueue(indicator);
-			AddChild(indicator);
+			_indicatorsLayer.AddChild(indicator);
 			indicator.Hide();
 		}
 	}
