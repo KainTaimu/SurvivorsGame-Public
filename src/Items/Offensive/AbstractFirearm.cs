@@ -1,5 +1,4 @@
 using Game.Core.Settings;
-using Game.UI;
 
 namespace Game.Items.Offensive;
 

@@ -1,6 +1,5 @@
 using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
-using Arch.Core;
 using Arch.System;
 using Arch.System.SourceGenerator;
 using Game.Core.ECS;
@@ -12,7 +11,7 @@ public partial class EnemyNavMeshMover : Node2D
 	[Export]
 	public bool DrawNavPaths;
 
-	public readonly ConcurrentQueue<Vector2[]> _lines = [];
+	private readonly ConcurrentQueue<Vector2[]> _lines = [];
 
 	private static Vector2 _playerPosition;
 
@@ -32,9 +31,7 @@ public partial class EnemyNavMeshMover : Node2D
 	public override void _Draw()
 	{
 		while (_lines.TryDequeue(out var line))
-		{
 			DrawPolyline(line, Colors.Red, 1);
-		}
 		_lines.Clear();
 	}
 
@@ -54,13 +51,9 @@ public partial class EnemyNavMeshMover : Node2D
 	{
 		var isNear = visRec.HasPoint(pos.Position);
 		if (isNear)
-		{
-			MoveNavMover(drawNavPaths, navLines, delta, ref pos, ref moveSpeed, ref velocity);
-		}
+			MoveNavMover(delta, ref pos, ref moveSpeed, ref velocity, drawNavPaths, navLines);
 		else
-		{
 			MoveStraightMover(_playerPosition, delta, ref pos, ref velocity, ref moveSpeed);
-		}
 	}
 
 	private static void MoveStraightMover(
@@ -95,12 +88,12 @@ public partial class EnemyNavMeshMover : Node2D
 	}
 
 	private static void MoveNavMover(
-		bool drawNavPaths,
-		ConcurrentQueue<Vector2[]> navLines,
 		float delta,
 		ref PositionComponent pos,
 		ref MoveSpeedComponent moveSpeed,
-		ref VelocityComponent velocity
+		ref VelocityComponent velocity,
+		bool drawNavPaths = false,
+		ConcurrentQueue<Vector2[]>? navLines = null
 	)
 	{
 		var paths = NavMap.Instance.GetNavLine(pos.Position);

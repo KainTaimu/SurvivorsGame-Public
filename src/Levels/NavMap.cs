@@ -6,7 +6,7 @@ namespace Game.Levels;
 public partial class NavMap : NavigationRegion2D
 {
 	[Export]
-	private byte _gridSize
+	private byte GridSize
 	{
 		get;
 		set
@@ -46,7 +46,7 @@ public partial class NavMap : NavigationRegion2D
 
 	public double ProcessTime { get; private set; }
 
-	private Vector2 CachedPlayerPosition;
+	private Vector2 _cachedPlayerPosition;
 
 	public override void _Ready()
 	{
@@ -59,10 +59,10 @@ public partial class NavMap : NavigationRegion2D
 
 	public override void _Process(double delta)
 	{
-		CachedPlayerPosition = GameWorld.Instance.MainPlayer.GlobalPosition;
+		_cachedPlayerPosition = GameWorld.Instance.MainPlayer.GlobalPosition;
 
 		_grid.ClearGrid();
-		_grid.Recenter(CachedPlayerPosition);
+		_grid.Recenter(_cachedPlayerPosition);
 
 		if (DrawPaths)
 			QueueRedraw();
@@ -75,7 +75,7 @@ public partial class NavMap : NavigationRegion2D
 		if (IsBaking())
 			return;
 		var start = Time.GetTicksMsec();
-		BakeNavigationPolygon(true);
+		BakeNavigationPolygon();
 		ProcessTime = Time.GetTicksMsec() - start;
 	}
 
@@ -101,19 +101,17 @@ public partial class NavMap : NavigationRegion2D
 	{
 		for (var x = 0; x < _grid.Dimensions.X; x++)
 		for (var y = 0; y < _grid.Dimensions.Y; y++)
-		{
 			UpdateNavCell(new Vector2(x, y));
-		}
 	}
 
 	private void UpdateNavCell(Vector2 position)
 	{
-		var playerPos = CachedPlayerPosition;
+		var playerPos = _cachedPlayerPosition;
 
 		var cell = _grid.GetCellWorld(position);
 		if (cell is null)
 			return;
-		var origin = _grid.TopLeft + (Vector2)cell.Position + Vector2.One * (_grid.CellSize * 0.5f);
+		var origin = _grid.TopLeft + cell.Position + Vector2.One * (_grid.CellSize * 0.5f);
 		var points = NavigationServer2D.MapGetPath(Map, origin, playerPos, true);
 		if (points.Length < 2)
 			return;
@@ -125,7 +123,7 @@ public partial class NavMap : NavigationRegion2D
 		var viewport = GetViewport();
 		var windowSize = viewport.GetVisibleRect().Size;
 		_grid = new CenteredMovingUniformGrid<Vector2[]>(
-			_gridSize,
+			GridSize,
 			new Vector2(windowSize.X, windowSize.X) * RangeFactor
 		);
 	}
@@ -139,7 +137,7 @@ public partial class NavMap : NavigationRegion2D
 	{
 		if (!DrawPaths)
 			return;
-		DrawRect(GridVisibilityRect, Colors.Red, false, 2, antialiased: true);
+		DrawRect(GridVisibilityRect, Colors.Red, false, 2, true);
 
 		for (var x = 0; x < _grid.Dimensions.X; x++)
 		for (var y = 0; y < _grid.Dimensions.Y; y++)
@@ -149,7 +147,7 @@ public partial class NavMap : NavigationRegion2D
 				continue;
 			if (cell.Count == 0)
 				continue;
-			DrawPolyline(cell.Array[0], Colors.Red, 2, antialiased: true);
+			DrawPolyline(cell.Array[0], Colors.Red, 2, true);
 		}
 	}
 }
