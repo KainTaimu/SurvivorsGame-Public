@@ -10,6 +10,9 @@ namespace Game.Levels.Controllers;
 
 public partial class EnemyCollisionSolver : Node
 {
+	[Export]
+	private NavMap? _navMap;
+
 	[ExportCategory("Configuration")]
 	[Export]
 	private byte _gridSize = 64;
@@ -91,7 +94,7 @@ public partial class EnemyCollisionSolver : Node
 				break;
 		}
 
-		ApplyCollisionsQuery(GameWorld.World, _writeBuffer, NavMap.Instance.GridVisibilityRect);
+		ApplyCollisionsQuery(GameWorld.World, _writeBuffer, _navMap!);
 		ProcessTime = Time.GetTicksMsec() - start;
 	}
 
@@ -135,14 +138,16 @@ public partial class EnemyCollisionSolver : Node
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static void ApplyCollisions(
 		[Data] in ConcurrentDictionary<Entity, Vector2> writeBuffer,
-		[Data] in Rect2 navMeshVisibilityGrid,
+		[Data] in NavMap navMap,
 		in Entity entity,
 		ref PositionComponent pos
 	)
 	{
 		if (!writeBuffer.TryGetValue(entity, out var newPos))
 			return;
-		if (navMeshVisibilityGrid.HasPoint(pos.Position))
+		// Arch does not support nullable operator in parameters
+		// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+		if (navMap is not null && navMap.GridVisibilityRect.HasPoint(pos.Position))
 			pos.Position = NavigationServer2D.MapGetClosestPoint(NavMap.Map, newPos);
 		else
 			pos.Position = newPos;

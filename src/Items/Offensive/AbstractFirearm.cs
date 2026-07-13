@@ -54,6 +54,4 @@ public abstract partial class AbstractFirearm : BaseOffensive, IManualAttack
 
 	protected float CameraRecoilScale =>
 		FirearmStats.CameraRecoilScale * PlayerStats.RecoilMultiplier * GameSettings.Instance.CameraShakeScale;
-
-	protected bool ChamberLoaded => FirearmStats.ChamberLoaded;
 }

@@ -146,15 +146,4 @@ public partial class FirearmStats : BaseOffensiveStats
 			EmitChanged();
 		}
 	} = 1f;
-
-	[Export]
-	public bool ChamberLoaded
-	{
-		get;
-		set
-		{
-			field = value;
-			EmitChanged();
-		}
-	} = true;
 }

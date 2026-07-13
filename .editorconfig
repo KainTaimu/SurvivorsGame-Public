@@ -107,8 +107,5 @@ insert_final_newline = false
 indent_style = tab
 tab_width = 4
 
-[**/.godot/mono/temp/obj/**.cs]
-generated_code = true
-
-[*.generated/*.cs]
+[*.g.cs]
 generated_code = true

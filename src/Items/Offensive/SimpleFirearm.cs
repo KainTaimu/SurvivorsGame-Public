@@ -147,18 +147,8 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable
 			return;
 		GetTree().CreateTimer(FirearmStats.ReloadTime, false).Timeout += () =>
 		{
-			if (!ChamberLoaded)
-			{
-				MagazineCount = MagazineCapacity;
-				IsReloading = false;
-				EmitSignalOnReloadEnd();
-				return;
-			}
-
 			if (MagazineCount == 0)
 				MagazineCount = MagazineCapacity;
-			else
-				MagazineCount = MagazineCapacity + 1; // Round in chamber
 			IsReloading = false;
 			EmitSignalOnReloadEnd();
 		};

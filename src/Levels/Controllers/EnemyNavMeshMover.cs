@@ -116,9 +116,7 @@ public partial class EnemyNavMeshMover : Node2D
 		);
 		pos.Position += velocity.Velocity * delta;
 
-#if DEBUG
 		if (drawNavPaths)
-			navLines.Enqueue(paths.ToArray());
-#endif
+			navLines?.Enqueue(paths.ToArray());
 	}
 }
