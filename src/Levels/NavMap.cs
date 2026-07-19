@@ -38,7 +38,7 @@ public partial class NavMap : NavigationRegion2D
 		}
 	}
 
-	private CenteredMovingUniformGrid<Vector2[]> _grid = null!;
+	private UniformGridWorld<Vector2[]> _grid = null!;
 	public Rect2 GridVisibilityRect => _grid.WorldBounds;
 
 	public static Rid Map { get; private set; }
@@ -61,7 +61,7 @@ public partial class NavMap : NavigationRegion2D
 	{
 		_cachedPlayerPosition = GameWorld.Instance.MainPlayer.GlobalPosition;
 
-		_grid.ClearGrid();
+		_grid.ClearAll();
 		_grid.Recenter(_cachedPlayerPosition);
 
 		if (DrawPaths)
@@ -81,12 +81,12 @@ public partial class NavMap : NavigationRegion2D
 
 	public Span<Vector2> GetNavLine(Vector2 pos)
 	{
-		var cell = _grid.GetCellWorld(pos);
-		if (cell is null)
-			return [];
-		if (cell.Count == 0)
+		if (!_grid.TryGetWorld(pos, out var paths, out _))
+		{
 			UpdateNavCell(pos);
-		var paths = cell.Array[0];
+			if (!_grid.TryGetWorld(pos, out paths, out _))
+				return [];
+		}
 
 		for (var i = 1; i < paths.Length; i++)
 		{
@@ -108,24 +108,21 @@ public partial class NavMap : NavigationRegion2D
 	{
 		var playerPos = _cachedPlayerPosition;
 
-		var cell = _grid.GetCellWorld(position);
-		if (cell is null)
+		var cell = _grid.WorldToCell(position);
+		if (!_grid.IsValidCell(cell.X, cell.Y))
 			return;
-		var origin = _grid.TopLeft + cell.Position + Vector2.One * (_grid.CellSize * 0.5f);
+		var origin = _grid.CellCenterWorld(cell.X, cell.Y);
 		var points = NavigationServer2D.MapGetPath(Map, origin, playerPos, true);
 		if (points.Length < 2)
 			return;
-		cell.Add(points);
+		_grid.Add(cell.X, cell.Y, points);
 	}
 
 	private void UpdateGrid()
 	{
 		var viewport = GetViewport();
 		var windowSize = viewport.GetVisibleRect().Size;
-		_grid = new CenteredMovingUniformGrid<Vector2[]>(
-			GridSize,
-			new Vector2(windowSize.X, windowSize.X) * RangeFactor
-		);
+		_grid = new UniformGridWorld<Vector2[]>(GridSize, new Vector2(windowSize.X, windowSize.X) * RangeFactor);
 	}
 
 	private void ClearDrawnPaths()
@@ -142,12 +139,9 @@ public partial class NavMap : NavigationRegion2D
 		for (var x = 0; x < _grid.Dimensions.X; x++)
 		for (var y = 0; y < _grid.Dimensions.Y; y++)
 		{
-			var cell = _grid.GetCell(x, y);
-			if (cell is null)
+			if (!_grid.TryGet(x, y, out var paths, out _))
 				continue;
-			if (cell.Count == 0)
-				continue;
-			DrawPolyline(cell.Array[0], Colors.Red, 2, true);
+			DrawPolyline(paths, Colors.Red, 2, true);
 		}
 	}
 }

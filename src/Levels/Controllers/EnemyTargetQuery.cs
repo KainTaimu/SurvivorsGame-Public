@@ -2,6 +2,7 @@
  * Commented methods are written by AI slop machine
  */
 
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -18,9 +19,11 @@ public partial class EnemyTargetQuery : Node
 	// BREAKING: Changing this value breaks Projectile radius of weapons
 	private const int GRID_SIZE = 16;
 
-	public CenteredMovingUniformGrid<Entity> Grid => _grid;
+	public UniformGridWorld<Entity> Grid => _grid;
 
-	private CenteredMovingUniformGrid<Entity> _grid = null!;
+	private UniformGridWorld<Entity> _grid = null!;
+
+	private readonly ConcurrentDictionary<Entity, Vector2> _addBuffer = [];
 
 	public static EnemyTargetQuery Instance { get; private set; } = null!;
 
@@ -35,7 +38,7 @@ public partial class EnemyTargetQuery : Node
 		}
 
 		var windowSize = viewport.GetVisibleRect().Size * 1.3f;
-		_grid = new CenteredMovingUniformGrid<Entity>(GRID_SIZE, windowSize);
+		_grid = new UniformGridWorld<Entity>(GRID_SIZE, windowSize);
 	}
 
 	public override void _Process(double delta)
@@ -43,9 +46,13 @@ public partial class EnemyTargetQuery : Node
 		var player = GameWorld.Instance.MainPlayer;
 		var playerPos = player.GlobalPosition;
 
-		_grid.ClearGrid();
+		_grid.ClearAll();
 		_grid.Recenter(playerPos);
-		AddObjectsToGridQuery(GameWorld.World, _grid);
+		_addBuffer.Clear();
+		AddObjectsToGridQuery(GameWorld.World, _grid, _addBuffer);
+
+		foreach (var (entity, pos) in _addBuffer)
+			_grid.AddWorld(pos, entity);
 	}
 
 	// causes a build warning if you change this method's signature
@@ -57,7 +64,8 @@ public partial class EnemyTargetQuery : Node
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static void AddObjectsToGrid(
 #pragma warning restore CA1822
-		[Data] in CenteredMovingUniformGrid<Entity> grid,
+		[Data] in UniformGridWorld<Entity> grid,
+		[Data] in ConcurrentDictionary<Entity, Vector2> addBuffer,
 		in Entity entity,
 		ref PositionComponent pos
 	)
@@ -65,8 +73,7 @@ public partial class EnemyTargetQuery : Node
 		if (!grid.ContainsWorld(pos.Position))
 			return;
 
-		var cell = grid.GetCellWorld(pos.Position);
-		cell?.Add(entity);
+		addBuffer[entity] = pos.Position;
 	}
 
 	private bool CircleHitTest(Vector2 projPos, float projRadius, Entity entity)
@@ -95,13 +102,12 @@ public partial class EnemyTargetQuery : Node
 			var right = Math.Floor(areaCenter.X + dx);
 			for (var x = left; x <= right; x++)
 			{
-				var cell = _grid.GetCellWorld(new Vector2((float)x, (float)y));
-				if (cell is null)
+				var cell = _grid.WorldToCell(new Vector2((float)x, (float)y));
+				if (!_grid.IsValidCell(cell.X, cell.Y))
 					continue;
 
-				for (var i = 0; i < cell.Count; i++)
+				foreach (var entity in _grid.GetEnumerator(cell.X, cell.Y))
 				{
-					var entity = cell.Array[i];
 					if (targets.Contains(entity))
 						continue;
 					if (CircleHitTest(areaCenter, areaRadius, entity))
@@ -120,11 +126,8 @@ public partial class EnemyTargetQuery : Node
 		{
 			for (var y = 0; y < _grid.Dimensions.Y; y++)
 			{
-				var cell = _grid.GetCell(x, y);
-				if (cell is null)
-					continue;
-				for (var i = 0; i < cell.Count; i++)
-					yield return cell.Array[i];
+				foreach (var entity in _grid.GetEnumerator(x, y))
+					yield return entity;
 			}
 		}
 	}
@@ -166,7 +169,7 @@ public partial class EnemyTargetQuery : Node
 			for (var dy = -3; dy <= 3; dy++)
 			{
 				var checkCell = new Vector2I(cellIdx.X + dx, cellIdx.Y + dy);
-				if (_grid.GetCell(checkCell.X, checkCell.Y) is not null)
+				if (_grid.IsValidCell(checkCell.X, checkCell.Y))
 					surrounding.Add(checkCell);
 			}
 
@@ -190,13 +193,8 @@ public partial class EnemyTargetQuery : Node
 
 		foreach (var cellIndex in allCells)
 		{
-			var cell = _grid.GetCell(cellIndex.X, cellIndex.Y);
-			if (cell is null)
-				continue;
-
-			for (var i = 0; i < cell.Count; i++)
+			foreach (var entity in _grid.GetEnumerator(cellIndex.X, cellIndex.Y))
 			{
-				var entity = cell.Array[i];
 				if (!GameWorld.World.IsAlive(entity))
 					continue;
 				if (!seenIds.Add(entity))
@@ -226,13 +224,13 @@ public partial class EnemyTargetQuery : Node
 
 	private void GetCellsAlongLine(Vector2 start, Vector2 end, HashSet<Vector2I> cells)
 	{
-		var startCell = _grid.GetCellWorld(start);
-		if (startCell is null)
+		var startCell = _grid.WorldToCell(start);
+		if (!_grid.IsValidCell(startCell.X, startCell.Y))
 			return;
 
 		var direction = (end - start).Normalized();
 		var maxDist = (end - start).Length();
-		var current = startCell.Index;
+		var current = startCell;
 		var dx = Mathf.Abs(Mathf.RoundToInt(direction.X * maxDist));
 		var dy = Mathf.Abs(Mathf.RoundToInt(direction.Y * maxDist));
 		var sx = direction.X > 0 ? 1 : -1;
@@ -256,7 +254,7 @@ public partial class EnemyTargetQuery : Node
 				current.Y += sy;
 			}
 
-			if (_grid.GetCell(current.X, current.Y) is null)
+			if (!_grid.IsValidCell(current.X, current.Y))
 				break;
 
 			cells.Add(current);
