@@ -1,39 +1,75 @@
-using System.Runtime.CompilerServices;
-using Arch.System;
-using Arch.System.SourceGenerator;
+using System.Numerics;
+using System.Runtime.InteropServices;
+using Arch.Core;
 using Game.Core.ECS;
+using GodotVector2 = Godot.Vector2;
 
 namespace Game.Levels.Controllers;
 
 public partial class EnemyMover : Node
 {
+	private static double _processDelta;
+	private static GodotVector2 _playerPosition;
+
 	public override void _Process(double delta)
 	{
-		var player = GameWorld.Instance.MainPlayer;
-		var playerPos = player.GlobalPosition;
+		_processDelta = GetProcessDeltaTime();
 
-		MoveQuery(GameWorld.World, playerPos, (float)delta);
+		var player = GameWorld.Instance.MainPlayer;
+		_playerPosition = player.GlobalPosition;
+
+		MoveSimd();
 	}
 
-	[Query(Parallel = true)]
-	[All<PositionComponent, VelocityComponent, MoveSpeedComponent, CollisionLodComponent>]
-	[None<DyingMarkerComponent>]
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static void Move(
-		[Data] in Vector2 moveToTarget,
-		[Data] in float delta,
-		ref PositionComponent pos,
-		ref VelocityComponent velocity,
-		ref MoveSpeedComponent moveSpeed,
-		ref CollisionLodComponent lodLevel
-	)
+	private static readonly QueryDescription _targetQuery = new QueryDescription()
+		.WithAll<PositionComponent, VelocityComponent, MoveSpeedComponent, CollisionLodComponent>()
+		.WithNone<DyingMarkerComponent>();
+
+	private static void MoveSimd()
 	{
-		if (lodLevel.LodLevel < CollisionLodLevel.Far)
-			return;
-		velocity.Velocity = velocity.Velocity.Lerp(
-			pos.Position.DirectionTo(moveToTarget) * moveSpeed.MoveSpeed,
-			moveSpeed.TurnSpeed * delta
-		);
-		pos.Position += velocity.Velocity * delta;
+		var world = GameWorld.World;
+
+		world.InlineParallelChunkQuery(in _targetQuery, new MoveUpdate());
+	}
+
+	public struct MoveUpdate : IChunkJob
+	{
+		public void Execute(ref Chunk chunk)
+		{
+			var positions = chunk.GetSpan<PositionComponent>();
+
+			var moveSpeeds = chunk.GetSpan<MoveSpeedComponent>();
+			var velocities = chunk.GetSpan<VelocityComponent>();
+
+			foreach (var entityIndex in chunk)
+			{
+				ref var pos = ref positions[entityIndex];
+				ref var moveSpeed = ref moveSpeeds[entityIndex];
+				ref var velocity = ref velocities[entityIndex];
+
+				velocity.Velocity = velocity.Velocity.Lerp(
+					pos.Position.DirectionTo(_playerPosition) * moveSpeed.MoveSpeed,
+					(float)(moveSpeed.TurnSpeed * _processDelta)
+				);
+			}
+
+			var posF = MemoryMarshal.Cast<PositionComponent, float>(positions);
+			var velF = MemoryMarshal.Cast<VelocityComponent, float>(velocities);
+
+			var dt = (float)_processDelta;
+			var dtVec = new Vector<float>(dt);
+			var count = Vector<float>.Count;
+			var i = 0;
+			for (; i <= posF.Length - count; i += count)
+			{
+				var v1 = new Vector<float>(posF.Slice(i, count));
+				var v2 = new Vector<float>(velF.Slice(i, count));
+				(v1 + v2 * dtVec).CopyTo(posF.Slice(i, count));
+			}
+			for (; i < posF.Length; i++)
+			{
+				posF[i] += velF[i] * dt;
+			}
+		}
 	}
 }

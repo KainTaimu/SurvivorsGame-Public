@@ -49,7 +49,7 @@ metadata/_custom_type_script = "uid://d2tvxgxbv87i2"
 
 [sub_resource type="Resource" id="Resource_g22vo"]
 script = ExtResource("8_p53ds")
-SpawnCountTarget = 2000
+SpawnCountTarget = 5000
 EnemyBlueprints = SubResource("Resource_d0wh2")
 SpawnMinTime = 0.1
 SpawnMaxTime = 0.1
@@ -103,7 +103,7 @@ MainPlayer = NodePath("../../Player")
 [node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=247564660]
 Waves = Array[Object]([SubResource("Resource_g22vo"), SubResource("Resource_4v0et"), SubResource("Resource_qx3kv"), SubResource("Resource_pgumh")])
 
-[node name="EnemyMover" type="Node" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="5" unique_id=1691633280]
+[node name="EnemyMover" type="Node" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="4" unique_id=1691633280]
 script = ExtResource("14_2csoy")
 
 [node name="EnemyRenderer" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="6" unique_id=1054443393]

@@ -23,8 +23,6 @@ public partial class EnemyTargetQuery : Node
 
 	private UniformGridWorld<Entity> _grid = null!;
 
-	private readonly ConcurrentDictionary<Entity, Vector2> _addBuffer = [];
-
 	public static EnemyTargetQuery Instance { get; private set; } = null!;
 
 	public override void _Ready()
@@ -48,32 +46,19 @@ public partial class EnemyTargetQuery : Node
 
 		_grid.ClearAll();
 		_grid.Recenter(playerPos);
-		_addBuffer.Clear();
-		AddObjectsToGridQuery(GameWorld.World, _grid, _addBuffer);
-
-		foreach (var (entity, pos) in _addBuffer)
-			_grid.AddWorld(pos, entity);
+		AddObjectsToGridQuery(GameWorld.World, _grid);
 	}
 
-	// causes a build warning if you change this method's signature
-	// ReSharper disable once MemberCanBeMadeStatic.Local
-#pragma warning disable CA1822
-	[Query(Parallel = true)]
+	[Query]
 	[All<PositionComponent, CircleHitboxComponent>]
 	[None<DyingMarkerComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static void AddObjectsToGrid(
-#pragma warning restore CA1822
-		[Data] in UniformGridWorld<Entity> grid,
-		[Data] in ConcurrentDictionary<Entity, Vector2> addBuffer,
-		in Entity entity,
-		ref PositionComponent pos
-	)
+	private void AddObjectsToGrid([Data] in UniformGridWorld<Entity> grid, in Entity entity, ref PositionComponent pos)
 	{
 		if (!grid.ContainsWorld(pos.Position))
 			return;
 
-		addBuffer[entity] = pos.Position;
+		grid.AddWorld(pos.Position, entity);
 	}
 
 	private bool CircleHitTest(Vector2 projPos, float projRadius, Entity entity)

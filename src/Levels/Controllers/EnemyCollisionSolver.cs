@@ -1,4 +1,3 @@
-using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
 using Arch.Core;
 using Arch.System;
@@ -39,12 +38,14 @@ public partial class EnemyCollisionSolver : Node
 	[Export]
 	public byte SubSteps = 6;
 
-	[ExportCategory("Components")]
-	private UniformGridWorld<(Vector2, Entity)> _grid = null!;
+	private UniformGridWorld<(Vector2 pos, Entity entity, float radius)> _grid = null!;
 
-	private readonly ConcurrentDictionary<Entity, float> _entityCollisionRadius = [];
+	// Dense write buffers indexed by Entity.Id. Entries are valid for the
+	// current frame when _stamps[id] == _writeFrame, avoiding a full clear.
+	private (Vector2 pos, Entity entity, float radius)[] _entries = [];
 
-	private readonly ConcurrentDictionary<Entity, Vector2> _writeBuffer = [];
+	private int[] _stamps = [];
+	private int _writeFrame;
 
 	public double ProcessTime { get; private set; }
 
@@ -66,7 +67,7 @@ public partial class EnemyCollisionSolver : Node
 		// suddenly affected by it, causing a large amount of enemies
 		// to be shoved towards player. The smaller height of 16:9 display
 		// makes it harder for player to avoid the spilled enemies.
-		_grid = new UniformGridWorld<(Vector2, Entity)>(_gridSize, new Vector2(windowSize.X, windowSize.X));
+		_grid = new UniformGridWorld<(Vector2, Entity, float)>(_gridSize, new Vector2(windowSize.X, windowSize.X));
 
 		Logger.LogDebug("in", _grid.Dimensions, _grid.CellSize);
 	}
@@ -80,22 +81,36 @@ public partial class EnemyCollisionSolver : Node
 		_grid.Recenter(player.GlobalPosition);
 		_playerPosition = player.GlobalPosition;
 
-		_writeBuffer.Clear();
-		_entityCollisionRadius.Clear();
+		_writeFrame++;
+		if (_writeFrame == int.MaxValue)
+		{
+			_writeFrame = 1;
+			Array.Clear(_stamps);
+		}
+
+		EnsureBufferCapacity(GameWorld.World.Capacity);
 
 		var start = Time.GetTicksMsec();
-		AddObjectsToGridQuery(GameWorld.World, _grid, _writeBuffer, _entityCollisionRadius);
+		AddObjectsToGridQuery(GameWorld.World, _grid, _entries, _stamps, _writeFrame);
 		for (var i = 0; i < SubSteps; i++)
 		{
 			_grid.ClearAll();
 			AddObjectsToGridFromBuffer();
 			SolveCollisions();
-			if (i > 1 && Time.GetTicksMsec() - start > 9)
-				break;
 		}
 
-		ApplyCollisionsQuery(GameWorld.World, _writeBuffer, _navMap!);
+		ApplyCollisionsQuery(GameWorld.World, _entries, _stamps, _writeFrame, _navMap!);
 		ProcessTime = Time.GetTicksMsec() - start;
+	}
+
+	private void EnsureBufferCapacity(int capacity)
+	{
+		if (_entries.Length >= capacity)
+			return;
+
+		var newSize = Math.Max(capacity, _entries.Length * 2);
+		Array.Resize(ref _entries, newSize);
+		Array.Resize(ref _stamps, newSize);
 	}
 
 	[Query(Parallel = true)]
@@ -103,9 +118,10 @@ public partial class EnemyCollisionSolver : Node
 	[None<DyingMarkerComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static void AddObjectsToGrid(
-		[Data] in UniformGridWorld<(Vector2, Entity)> grid,
-		[Data] in ConcurrentDictionary<Entity, Vector2> writeBuffer,
-		[Data] in ConcurrentDictionary<Entity, float> entityCollisionRadius,
+		[Data] in UniformGridWorld<(Vector2 pos, Entity entity, float radius)> grid,
+		[Data] in (Vector2 pos, Entity entity, float radius)[] entries,
+		[Data] in int[] stamps,
+		[Data] in int writeFrame,
 		in Entity entity,
 		ref PositionComponent pos,
 		ref CircleHitboxComponent circle
@@ -114,36 +130,45 @@ public partial class EnemyCollisionSolver : Node
 		if (!grid.ContainsWorld(pos.Position))
 			return;
 
-		writeBuffer[entity] = pos.Position;
-		entityCollisionRadius.TryAdd(entity, circle.Radius);
+		var id = entity.Id;
+		if ((uint)id >= (uint)entries.Length)
+			return;
+
+		entries[id] = (pos.Position, entity, circle.Radius);
+		stamps[id] = writeFrame;
 	}
 
 	private void AddObjectsToGridFromBuffer()
 	{
-		foreach (var (id, pos) in _writeBuffer)
+		for (var i = 0; i < _entries.Length; i++)
 		{
-			if (!_grid.ContainsWorld(pos))
+			if (_stamps[i] != _writeFrame)
 				continue;
 
-			_grid.AddWorld(pos, (pos, id));
+			var entry = _entries[i];
+
+			_grid.AddWorld(entry.pos, entry);
 		}
 	}
-
-	private static readonly ConcurrentDictionary<Vector2, Vector2> _nearest = [];
 
 	[Query(Parallel = true)]
 	[All<PositionComponent, CircleHitboxComponent>]
 	[None<DyingMarkerComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static void ApplyCollisions(
-		[Data] in ConcurrentDictionary<Entity, Vector2> writeBuffer,
+		[Data] in (Vector2 pos, Entity entity, float radius)[] entries,
+		[Data] in int[] stamps,
+		[Data] in int writeFrame,
 		[Data] in NavMap navMap,
 		in Entity entity,
 		ref PositionComponent pos
 	)
 	{
-		if (!writeBuffer.TryGetValue(entity, out var newPos))
+		var id = entity.Id;
+		if ((uint)id >= (uint)stamps.Length || stamps[id] != writeFrame)
 			return;
+
+		var newPos = entries[id].pos;
 		// Arch does not support nullable operator in parameters
 		// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
 		if (navMap is not null && navMap.GridVisibilityRect.HasPoint(pos.Position))
@@ -154,11 +179,23 @@ public partial class EnemyCollisionSolver : Node
 			pos.Position = newPos;
 	}
 
+	// Columns are solved in two phases (even, then odd). A column only
+	// interacts with itself and its eastern neighbor, so columns two apart
+	// never touch the same entities. This keeps the dense buffer writes in
+	// SolveCollisionInPlace race-free without any locking.
 	private void SolveCollisions()
 	{
+		SolveColumnPhase(0);
+		SolveColumnPhase(1);
+	}
+
+	private void SolveColumnPhase(int phase)
+	{
+		var columns = (_grid.Dimensions.X + 1 - phase) / 2;
 		var id = WorkerThreadPool.AddGroupTask(
-			Callable.From<int>(x =>
+			Callable.From<int>(i =>
 			{
+				var x = i * 2 + phase;
 				for (var y = 0; y < _grid.Dimensions.Y; y++)
 				{
 					var count = _grid.GetCellCount(x, y);
@@ -173,7 +210,7 @@ public partial class EnemyCollisionSolver : Node
 					SolveCellPairCollisions(x, y, x + 1, y - 1); // NE
 				}
 			}),
-			_grid.Dimensions.X
+			columns
 		);
 		WorkerThreadPool.WaitForGroupTaskCompletion(id);
 	}
@@ -209,8 +246,8 @@ public partial class EnemyCollisionSolver : Node
 	}
 
 	private void SolveCollisionInPlace(
-		ref (Vector2 pos, Entity entity) a,
-		ref (Vector2 pos, Entity entity) b,
+		ref (Vector2 pos, Entity entity, float radius) a,
+		ref (Vector2 pos, Entity entity, float radius) b,
 		int countA,
 		int countB
 	)
@@ -218,13 +255,7 @@ public partial class EnemyCollisionSolver : Node
 		if (a.entity == b.entity)
 			return;
 
-		if (
-			!_entityCollisionRadius.TryGetValue(a.entity, out var radiusA)
-			|| !_entityCollisionRadius.TryGetValue(b.entity, out var radiusB)
-		)
-			return;
-
-		var largest = Math.Max(radiusA, radiusB) * 3;
+		var largest = Math.Max(a.radius, b.radius) * 3;
 		if (a.pos.DistanceSquaredTo(b.pos) >= largest * largest)
 			return;
 
@@ -235,7 +266,6 @@ public partial class EnemyCollisionSolver : Node
 		if (direction == Vector2.Zero)
 			direction = Vector2.Right;
 
-		// NOTE: Delta is accounted for in the Timer that calls Process.
 		var push = _distBeforeShove * 0.5f * _pushAmount;
 
 		if (countA >= _cramLimitBeforeExtraPush || countB >= _cramLimitBeforeExtraPush)
@@ -248,7 +278,7 @@ public partial class EnemyCollisionSolver : Node
 		a.pos += direction * push;
 		b.pos -= direction * push;
 
-		_writeBuffer[a.entity] = a.pos;
-		_writeBuffer[b.entity] = b.pos;
+		_entries[a.entity.Id].pos = a.pos;
+		_entries[b.entity.Id].pos = b.pos;
 	}
 }
