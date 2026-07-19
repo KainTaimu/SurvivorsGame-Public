@@ -4,16 +4,31 @@
 script/source = "extends Polygon2D
 
 @onready var occluder : LightOccluder2D = $LightOccluder2D
+@onready var collider : CollisionPolygon2D = $StaticBody2D/CollisionPolygon2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	set_child_polygons()
+	
+func _input(_event: InputEvent) -> void:
+	if Input.is_action_just_pressed(\"REGENERATE_NAVIGATION\"):
+		set_child_polygons()
+
+func set_child_polygons():
 	call_deferred(\"set_occluder_polygon\")
+	call_deferred(\"set_collision_polygon\")
 
 func set_occluder_polygon():
 	if (len(polygon) < 2):
 		printerr($\"cannot set LightOccluder Polygon because len(polygon) < 2\")
 		return
 	occluder.occluder.polygon = polygon
+
+func set_collision_polygon():
+	if (len(polygon) < 2):
+		printerr($\"cannot set LightOccluder Polygon because len(polygon) < 2\")
+		return
+	collider.polygon = polygon	
 "
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ps52f"]
@@ -28,3 +43,8 @@ script = SubResource("GDScript_ps52f")
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="." unique_id=859601626]
 occluder = SubResource("OccluderPolygon2D_ps52f")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1472749218]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" unique_id=1309322091]
+polygon = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0)
