@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://tw6dfgyd6h7y"]
+
+[ext_resource type="Script" uid="uid://bjis25rd0y3uy" path="res://src/Levels/Controllers/EnemyNavPathController.cs" id="1_aeca8"]
+
+[node name="EnemyNavMeshController" type="Node2D" unique_id=7126221]
+script = ExtResource("1_aeca8")
+CorneringSmoothingThreshold = 0.7
+MaxCornerDistance = 200.0

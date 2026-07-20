@@ -6,22 +6,49 @@ using Game.Core.ECS;
 
 namespace Game.Levels.Controllers;
 
-public partial class EnemyNavMeshMover : Node2D
+public partial class EnemyNavPathController : Node2D
 {
 	[Export]
 	public bool DrawNavPaths;
 
+	[Export(PropertyHint.Range, "0,1,0.05")]
+	private float CorneringSmoothingThreshold
+	{
+		get;
+		set
+		{
+			field = value;
+			_corneringSmoothingThresholdValue = value;
+		}
+	} = 0.8f;
+
+	[Export(PropertyHint.Range, "5,200,5")]
+	private float MaxCornerDistance
+	{
+		get;
+		set
+		{
+			field = value;
+			_maxCornerDistanceValue = value;
+		}
+	} = 120f;
+
 	private readonly ConcurrentQueue<(Vector2[] points, Color color)> _lines = [];
 
 	private static Vector2 _playerPosition;
-	private static PhysicsDirectSpaceState2D _space = null!;
+	private static float _maxCornerDistanceValue;
+	private static float _corneringSmoothingThresholdValue;
 
 	public double ProcessTime { get; private set; }
 
+	public override void _Ready()
+	{
+		_maxCornerDistanceValue = MaxCornerDistance;
+		_corneringSmoothingThresholdValue = CorneringSmoothingThreshold;
+	}
+
 	public override void _PhysicsProcess(double delta)
 	{
-		_space = GetWorld2D().GetDirectSpaceState();
-
 		var player = GameWorld.Instance.MainPlayer;
 		_playerPosition = player.GlobalPosition;
 
@@ -111,6 +138,7 @@ public partial class EnemyNavMeshMover : Node2D
 		if (paths.Length < 3)
 			return;
 
+		// ALGORITHM CREDIT: https://www.gamedeveloper.com/programming/group-pathfinding-movement-in-rts-style-games
 		var pA = paths[0];
 		var pB = paths[1];
 		var pC = paths[2];
@@ -118,13 +146,12 @@ public partial class EnemyNavMeshMover : Node2D
 		var vC = pA - pB;
 		var vHalfC = vC * 0.5f;
 
-		var vCorrection = (pA - vHalfC).LimitLength(120);
+		var vCorrection = (pA - vHalfC).Clamp(20f, _maxCornerDistanceValue);
 
 		// 0 is perpendicular, 1 is parallel
-		const float threshold = 0.8f;
 
 		var vCosine = vCorrection.Dot(vHalfC) / (vCorrection.Length() * vHalfC.Length());
-		if (vCosine > threshold)
+		if (vCosine > _corneringSmoothingThresholdValue)
 			vCorrection *= -1;
 
 		var vFinal = pB + vCorrection;

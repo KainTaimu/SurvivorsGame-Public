@@ -56,51 +56,31 @@ public partial class EnemySpawner : Node
 	private Vector2 GetPositionOutsideViewport()
 	{
 		var viewport = GameWorld.Instance.GetViewport().GetCamera2D();
-		var screenCenterPosition = viewport.GetScreenCenterPosition();
-		var viewportRectEnd = viewport.GetViewportRect().Size;
+		var center = viewport.GetScreenCenterPosition();
+		var zoom = viewport.Zoom;
+		var halfSize = viewport.GetViewportRect().Size / zoom;
+		const float margin = 0;
 
-		const float margin = 200;
-		var spawnVector = new Vector2();
-
-		switch (GD.RandRange(0, 3))
+		var edge = GD.RandRange(0, 3);
+		return edge switch
 		{
-			case 0: // TOP
-				spawnVector.X = (float)
-					GD.RandRange(
-						screenCenterPosition.X - viewportRectEnd.X / 2 - margin,
-						screenCenterPosition.X + viewportRectEnd.X / 2 + margin
-					);
-				spawnVector.Y = screenCenterPosition.Y - viewportRectEnd.Y / 2 - margin;
-				break;
-
-			case 1: // BOTTOM
-				spawnVector.X = (float)
-					GD.RandRange(
-						screenCenterPosition.X - viewportRectEnd.X / 2 - margin,
-						screenCenterPosition.X + viewportRectEnd.X / 2 + margin
-					);
-				spawnVector.Y = screenCenterPosition.Y + viewportRectEnd.Y / 2 + margin;
-				break;
-
-			case 2: // LEFT
-				spawnVector.X = screenCenterPosition.X - viewportRectEnd.X / 2 - margin;
-				spawnVector.Y = (float)
-					GD.RandRange(
-						screenCenterPosition.Y - viewportRectEnd.Y / 2 - margin,
-						screenCenterPosition.Y + viewportRectEnd.Y / 2 + margin
-					);
-				break;
-
-			case 3: // RIGHT
-				spawnVector.X = screenCenterPosition.X + viewportRectEnd.X / 2 + margin;
-				spawnVector.Y = (float)
-					GD.RandRange(
-						screenCenterPosition.Y - viewportRectEnd.Y / 2 - margin,
-						screenCenterPosition.Y + viewportRectEnd.Y / 2 + margin
-					);
-				break;
-		}
-
-		return spawnVector;
+			0 => new Vector2(
+				(float)GD.RandRange(center.X - halfSize.X - margin, center.X + halfSize.X + margin),
+				center.Y - halfSize.Y - margin
+			),
+			1 => new Vector2(
+				(float)GD.RandRange(center.X - halfSize.X - margin, center.X + halfSize.X + margin),
+				center.Y + halfSize.Y + margin
+			),
+			2 => new Vector2(
+				center.X - halfSize.X - margin,
+				(float)GD.RandRange(center.Y - halfSize.Y - margin, center.Y + halfSize.Y + margin)
+			),
+			3 => new Vector2(
+				center.X + halfSize.X + margin,
+				(float)GD.RandRange(center.Y - halfSize.Y - margin, center.Y + halfSize.Y + margin)
+			),
+			_ => Vector2.Zero,
+		};
 	}
 }

@@ -5,19 +5,17 @@
 [ext_resource type="Script" uid="uid://y77qtp32wo00" path="res://src/Enemies/EnemyStats.cs" id="2_gm6l2"]
 [ext_resource type="Script" uid="uid://ufpoicgrn6de" path="res://src/Levels/NavMap.cs" id="2_sx6oq"]
 [ext_resource type="PackedScene" uid="uid://ecfjaeglvrkf" path="res://scenes/Players/DevPlayer.tscn" id="3_5s0iy"]
-[ext_resource type="PackedScene" uid="uid://wos5frj6p77e" path="res://scenes/Levels/PolygonLightOccluder.tscn" id="3_7b5vb"]
 [ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="3_sx6oq"]
 [ext_resource type="Script" uid="uid://dau6m811dtep8" path="res://src/Levels/Controllers/BlueprintWeight.cs" id="4_7b5vb"]
 [ext_resource type="Script" uid="uid://d2tvxgxbv87i2" path="res://src/Levels/Controllers/WeightedWaveBlueprintCollection.cs" id="5_lkbse"]
+[ext_resource type="PackedScene" uid="uid://tw6dfgyd6h7y" path="res://scenes/Levels/EnemyNavMeshController.tscn" id="8_7b5vb"]
 [ext_resource type="Script" uid="uid://b7ol6jtjagoe" path="res://src/Levels/Controllers/WaveDuration.cs" id="8_lkbse"]
-[ext_resource type="Script" uid="uid://bjis25rd0y3uy" path="res://src/Levels/Controllers/EnemyNavMeshMover.cs" id="9_lkbse"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_sx6oq"]
-vertices = PackedVector2Array(12506.211, 761.9922, 12343.922, 1094.5391, 2779, 888, 2779, 788, 1272.2188, 516.8125, 1538, -441, 1538, 578.6328, 1272, 577, 1267.9063, -444, 12425.039, 278.92188, 2774, 578.6328, 2774, 478.6328, 1272, 516.7969, 840.7031, -7131.8203, 1250.8516, -7584.172, 1671.6797, -7172.1484, 1638, -441, 1133.5938, 8299.9375, -11350.594, 8427.781, -11203.828, 1031.8438, 8, 888, 1126.8984, 1630.3125, 1662.2891, 1629.9688, 1651.3672, 888, 1543, 788, 36, 477, -11220.047, 349.39063, -11153.172, -7371.5938, 1155.8672, -444, 1161.8828, 477, 12467.648, 8258.141, 1673.1328, 8335.0625, 1543, 1631.9688, 1543.1172, 888, 1244.1328, 1630.3125, 1543, 888, 1244.1328, 845.6875, 12242.492, -6975.3516, 1638, 478.6328, 1244, 845.6875, 1244, 788, 36, 577, 8, 788, 1126.8984, 888, 1416.6172, 8474.883, -11463.023, 774.59375)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(5, 4, 8), PackedInt32Array(9, 0, 3, 10, 11), PackedInt32Array(7, 12, 4), PackedInt32Array(13, 14, 15, 16, 5, 8), PackedInt32Array(17, 18, 19, 20, 21), PackedInt32Array(22, 23, 2), PackedInt32Array(10, 3, 24, 6), PackedInt32Array(25, 26, 27, 13, 28, 29), PackedInt32Array(2, 1, 30, 31, 22), PackedInt32Array(32, 22, 31), PackedInt32Array(33, 32, 34, 35), PackedInt32Array(35, 34, 36, 24), PackedInt32Array(15, 37, 9, 11, 38, 16), PackedInt32Array(13, 8, 28), PackedInt32Array(6, 24, 36, 39, 40, 7), PackedInt32Array(41, 7, 40, 42), PackedInt32Array(20, 43, 21), PackedInt32Array(26, 25, 41, 42), PackedInt32Array(17, 21, 34, 32, 31, 44), PackedInt32Array(26, 42, 20, 19, 45)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-11173, -7392, -11240, 344, -11488, 778, -11224, 1040, -11371, 8448, 1128, 8320, 1416, 8498, 1678.2861, 8355.023, 12488, 8278, 12364, 1099, 12527, 765, 12445, 277, 12262, -6995, 1680, -7192, 1250, -7613, 832, -7152)])
-border_size = 10.0
-agent_radius = 20.0
+vertices = PackedVector2Array(12237.352, -6970.4063, 12462.617, 8253.172, -11345.68, 8422.8125, -11148.3125, -7366.5703)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-11173, -7392, -11371, 8448, 12488, 8278, 12262, -6995)])
+agent_radius = 25.0
 
 [sub_resource type="Resource" id="Resource_2ki1j"]
 script = ExtResource("2_gm6l2")
@@ -88,7 +86,7 @@ metadata/_custom_type_script = "uid://d2tvxgxbv87i2"
 [sub_resource type="Resource" id="Resource_lkbse"]
 script = ExtResource("8_lkbse")
 Duration = 999999999.0
-MaxMobs = 5000
+MaxMobs = 1500
 EnemyBlueprints = SubResource("Resource_i1qcg")
 SpawnMinTime = 0.1
 SpawnMaxTime = 0.1
@@ -102,47 +100,12 @@ metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 position = Vector2(-1400, -760)
 navigation_polygon = SubResource("NavigationPolygon_sx6oq")
 script = ExtResource("2_sx6oq")
-GridSize = 84
+GridSize = 74
 RangeFactor = 10.0
+metadata/_edit_lock_ = true
 
-[node name="PolygonLightOccluder2" parent="World/NavMap" index="0" unique_id=1736789750 instance=ExtResource("3_7b5vb")]
-position = Vector2(344, 888)
-polygon = PackedVector2Array(-316.00006, -20, -316, -80, 880, -80, 880, -20)
-
-[node name="PolygonLightOccluder3" parent="World/NavMap" index="1" unique_id=1199949879 instance=ExtResource("3_7b5vb")]
-position = Vector2(1879, 888)
-polygon = PackedVector2Array(-316.00006, -20, -316, -80, 880, -80, 880, -20)
-
-[node name="PolygonLightOccluder4" parent="World/NavMap" index="2" unique_id=1621231870 instance=ExtResource("3_7b5vb")]
-position = Vector2(1203, 1238)
-scale = Vector2(-0.6600584, 11.634843)
-polygon = PackedVector2Array(-32, 32, -32, -32, 85, -32, 85, 32)
-
-[node name="PolygonLightOccluder5" parent="World/NavMap" index="3" unique_id=1824882293 instance=ExtResource("3_7b5vb")]
-position = Vector2(1584.1218, 1239.315)
-scale = Vector2(-0.6600584, 11.634843)
-polygon = PackedVector2Array(-87.68646, 31.886978, -71.02127, -32.316723, 31.815369, -32.316723, 32, 32)
-
-[node name="PolygonLightOccluder6" parent="World/NavMap" index="4" unique_id=1161260099 instance=ExtResource("3_7b5vb")]
-position = Vector2(936, 477)
-rotation = -3.1415927
-polygon = PackedVector2Array(-316.00006, -20, -316, -80, 880, -80, 880, -20)
-
-[node name="PolygonLightOccluder7" parent="World/NavMap" index="5" unique_id=1398145816 instance=ExtResource("3_7b5vb")]
-position = Vector2(2438, 478.62994)
-rotation = -3.1415927
-polygon = PackedVector2Array(-316.00006, -20, -316, -80, 880, -80, 880, -20)
-
-[node name="PolygonLightOccluder8" parent="World/NavMap" index="6" unique_id=641954649 instance=ExtResource("3_7b5vb")]
-position = Vector2(1231, 124.31499)
-rotation = -3.1415927
-scale = Vector2(-0.6600584, 11.634843)
-polygon = PackedVector2Array(-83.3259, 47.126972, -74.23593, -31.945848, 32, -32, 25.755356, 47.126972)
-
-[node name="PolygonLightOccluder9" parent="World/NavMap" index="7" unique_id=113482177 instance=ExtResource("3_7b5vb")]
-position = Vector2(1538, -371)
-rotation = 1.5707964
-polygon = PackedVector2Array(-50, -20, -50, -80, 880, -80, 880, -20)
+[node name="Node2D" type="Node2D" parent="World/NavMap" index="0" unique_id=642938051]
+position = Vector2(0, 64)
 
 [node name="GameWorld" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="0" unique_id=562045734 node_paths=PackedStringArray("MainPlayer")]
 MainPlayer = NodePath("../Player")
@@ -150,8 +113,7 @@ MainPlayer = NodePath("../Player")
 [node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=247564660]
 Waves = Array[Object]([SubResource("Resource_lkbse")])
 
-[node name="EnemyNavMeshDirector" type="Node2D" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="4" unique_id=2135986575]
-script = ExtResource("9_lkbse")
+[node name="EnemyNavMeshController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="4" unique_id=7126221 instance=ExtResource("8_7b5vb")]
 
 [node name="EnemyMover" type="Node" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="5" unique_id=819641661]
 script = ExtResource("2_8dkqd")
@@ -165,6 +127,7 @@ RenderDistanceFactor = 10.0
 
 [node name="Player" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="6" unique_id=1386970244 instance=ExtResource("3_5s0iy")]
 position = Vector2(0, 8)
+metadata/_edit_lock_ = true
 
 [node name="PerformanceMonitor" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="4" unique_id=1872396024 node_paths=PackedStringArray("Nav")]
-Nav = NodePath("../../Systems/EnemySystems/EnemyNavMeshDirector")
+Nav = NodePath("../../Systems/EnemySystems/EnemyNavMeshController")

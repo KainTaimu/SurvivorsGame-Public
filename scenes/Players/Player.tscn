@@ -120,8 +120,9 @@ autoplay = "idle"
 metadata/_edit_lock_ = true
 
 [node name="PlayerCameraController" type="Camera2D" parent="." unique_id=68646763]
-zoom = Vector2(0.9, 0.9)
+zoom = Vector2(0.7, 0.7)
 script = ExtResource("6_kfojw")
+MaxZoom = 0.7
 metadata/_edit_lock_ = true
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1140483799]

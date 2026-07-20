@@ -4,7 +4,7 @@
 [ext_resource type="Material" uid="uid://bx7wcv06ytdaa" path="res://scenes/VFX/SpurtHitParticlesProcessMaterial.tres" id="2_v4csj"]
 
 [node name="BloodSpurtParticles" type="GPUParticles2D" unique_id=1449878972]
-modulate = Color(1, 0, 0, 1)
+modulate = Color(0.7819659, 0, 0, 1)
 z_as_relative = false
 emitting = false
 amount = 50

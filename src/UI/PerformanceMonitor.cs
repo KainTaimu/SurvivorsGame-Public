@@ -12,7 +12,7 @@ public partial class PerformanceMonitor : CanvasLayer
 	public EnemyRenderer? EnemyRenderer;
 
 	[Export]
-	public EnemyNavMeshMover? Nav;
+	public EnemyNavPathController? Nav;
 
 	[Export]
 	private BoxContainer _boxContainer = null!;

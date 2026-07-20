@@ -3,7 +3,7 @@ namespace Game.Players.Controllers;
 public partial class PlayerCameraController : Camera2D
 {
 	[Export]
-	public float MinZoom = 0.1f;
+	public float MinZoom = 0.15f;
 
 	[Export]
 	public float MaxZoom = 0.9f;

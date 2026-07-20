@@ -60,6 +60,10 @@ script = ExtResource("2_c6sut")
 _value = 420.0
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
+[sub_resource type="Resource" id="Resource_6wc5x"]
+script = ExtResource("2_c6sut")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
 [sub_resource type="Resource" id="Resource_pje1o"]
 script = ExtResource("2_c6sut")
 metadata/_custom_type_script = "uid://wsto3khl70md"
@@ -87,6 +91,7 @@ _pickupRangeRadius = SubResource("Resource_l5xc2")
 _healthRegenPerSecond = SubResource("Resource_7r3om")
 _invincibilityTime = SubResource("Resource_lkiwy")
 _hitboxRadius = SubResource("Resource_ay1ar")
+_moveSpeedMultiplier = SubResource("Resource_6wc5x")
 _incomingDamageMultiplier = SubResource("Resource_4giq6")
 _outgoingDamageMultiplier = SubResource("Resource_pje1o")
 _criticalChanceMultiplier = SubResource("Resource_mokft")
@@ -125,7 +130,7 @@ region = Rect2(62, 0, 31, 31)
 atlas = ExtResource("2_xcl4g")
 region = Rect2(93, 0, 31, 31)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_tvywd"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_mxkc7"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -164,11 +169,10 @@ animations = [{
 }]
 
 [node name="Player" unique_id=1386970244 instance=ExtResource("1_y2s7r")]
-position = Vector2(0, -1)
 Character = SubResource("Resource_h2f2d")
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=881638213]
 material = SubResource("ShaderMaterial_mxkc7")
-sprite_frames = SubResource("SpriteFrames_tvywd")
+sprite_frames = SubResource("SpriteFrames_mxkc7")
 
 [node name="Blick" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="0" unique_id=1989500741 instance=ExtResource("7_8uris")]
