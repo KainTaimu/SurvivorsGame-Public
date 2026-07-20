@@ -10,15 +10,11 @@ public partial class PlayerCameraController : Camera2D
 
 	public override void _Input(InputEvent @event)
 	{
-		if (@event is not InputEventMouseButton mouse)
-			return;
-		if (!Input.IsPhysicalKeyPressed(Key.Ctrl))
-			return;
-
 		var zoom = Zoom;
-		if (mouse.ButtonIndex == MouseButton.WheelUp)
+
+		if (@event.IsActionPressed("ZOOM_IN"))
 			zoom += Vector2.One * 0.05f;
-		else if (mouse.ButtonIndex == MouseButton.WheelDown)
+		else if (@event.IsActionPressed("ZOOM_OUT"))
 			zoom -= Vector2.One * 0.05f;
 
 		Zoom = zoom.Clamp(Vector2.One * MinZoom, Vector2.One * MaxZoom);

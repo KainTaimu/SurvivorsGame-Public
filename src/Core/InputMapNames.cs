@@ -10,4 +10,6 @@ public static class InputMapNames
 	public static StringName SecondaryAttack { get; } = "secondary_attack";
 	public static StringName WeaponReload { get; } = "weapon_reload";
 	public static StringName Interact { get; } = "interact";
+	public static StringName NextWeapon { get; } = "next_weapon";
+	public static StringName PreviousWeapon { get; } = "previous_weapon";
 }

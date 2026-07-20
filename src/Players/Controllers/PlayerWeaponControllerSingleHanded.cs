@@ -59,19 +59,18 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 
 	public override void _Input(InputEvent @event)
 	{
-		if (@event is not InputEventMouseButton motion)
+#if DEBUG
+		if (Input.IsPhysicalKeyPressed(Key.Ctrl))
 			return;
-		if (@event.IsReleased())
-			return;
-
-		switch (motion.ButtonIndex)
+#endif
+		if (@event.IsActionPressed(InputMapNames.NextWeapon))
 		{
-			case MouseButton.WheelUp:
-				NextManualAttack();
-				break;
-			case MouseButton.WheelDown:
-				PreviousManualAttack();
-				break;
+			NextManualAttack();
+			return;
+		}
+		if (@event.IsActionPressed(InputMapNames.PreviousWeapon))
+		{
+			PreviousManualAttack();
 		}
 	}
 
