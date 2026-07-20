@@ -6,13 +6,14 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_73e60"]
 shader = ExtResource("2_avwb0")
-shader_parameter/saturation = 0.0
+shader_parameter/saturation = 1.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4r2wj"]
 bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="SystemFont" id="SystemFont_4r2wj"]
 font_names = PackedStringArray("Monospace")
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_avwb0"]
 font = SubResource("SystemFont_4r2wj")

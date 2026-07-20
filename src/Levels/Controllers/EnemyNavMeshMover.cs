@@ -11,19 +11,26 @@ public partial class EnemyNavMeshMover : Node2D
 	[Export]
 	public bool DrawNavPaths;
 
-	private readonly ConcurrentQueue<Vector2[]> _lines = [];
+	private readonly ConcurrentQueue<(Vector2[] points, Color color)> _lines = [];
 
 	private static Vector2 _playerPosition;
+	private static PhysicsDirectSpaceState2D _space = null!;
 
-	public override void _Process(double delta)
+	public double ProcessTime { get; private set; }
+
+	public override void _PhysicsProcess(double delta)
 	{
+		_space = GetWorld2D().GetDirectSpaceState();
+
 		var player = GameWorld.Instance.MainPlayer;
 		_playerPosition = player.GlobalPosition;
 
+		var start = Time.GetTicksMsec();
 		UpdateMoversQuery(GameWorld.World, NavMap.Instance.GridVisibilityRect, (float)delta, DrawNavPaths, _lines);
+		ProcessTime = Time.GetTicksMsec() - start;
 
 #if DEBUG
-		if (DrawNavPaths && Engine.GetProcessFrames() % 20 == 0)
+		if (DrawNavPaths && Engine.GetProcessFrames() % 1 == 0)
 			QueueRedraw();
 #endif
 	}
@@ -31,7 +38,7 @@ public partial class EnemyNavMeshMover : Node2D
 	public override void _Draw()
 	{
 		while (_lines.TryDequeue(out var line))
-			DrawPolyline(line, Colors.Red, 1);
+			DrawPolyline(line.points, line.color, 1);
 		_lines.Clear();
 	}
 
@@ -43,7 +50,7 @@ public partial class EnemyNavMeshMover : Node2D
 		[Data] in Rect2 visRec,
 		[Data] in float delta,
 		[Data] in bool drawNavPaths,
-		[Data] in ConcurrentQueue<Vector2[]> navLines,
+		[Data] in ConcurrentQueue<(Vector2[] points, Color color)> navLines,
 		ref PositionComponent pos,
 		ref VelocityComponent velocity,
 		ref MoveSpeedComponent moveSpeed
@@ -84,7 +91,6 @@ public partial class EnemyNavMeshMover : Node2D
 	)
 	{
 		velocity = velocity.Lerp(pos.DirectionTo(target) * moveSpeed, turnSpeed * delta);
-		pos += velocity * delta;
 	}
 
 	private static void MoveNavMover(
@@ -93,30 +99,46 @@ public partial class EnemyNavMeshMover : Node2D
 		ref MoveSpeedComponent moveSpeed,
 		ref VelocityComponent velocity,
 		bool drawNavPaths = false,
-		ConcurrentQueue<Vector2[]>? navLines = null
+		ConcurrentQueue<(Vector2[] points, Color color)>? navLines = null
 	)
 	{
 		var paths = NavMap.Instance.GetNavLine(pos.Position);
-		if (paths.Length < 2)
+		if (paths.Length == 2)
+		{
+			MoveStraightMover(_playerPosition, delta, ref pos, ref velocity, ref moveSpeed);
+			return;
+		}
+		if (paths.Length < 3)
 			return;
 
-		var targetPos = paths[1];
-		foreach (var p in paths[2..])
-		{
-			if (pos.Position.DistanceTo(p) > 10)
-			{
-				targetPos = p;
-				break;
-			}
-		}
+		var pA = paths[0];
+		var pB = paths[1];
+		var pC = paths[2];
+
+		var vC = pA - pB;
+		var vHalfC = vC * 0.5f;
+
+		var vCorrection = (pA - vHalfC).LimitLength(120);
+
+		// 0 is perpendicular, 1 is parallel
+		const float threshold = 0.8f;
+
+		var vCosine = vCorrection.Dot(vHalfC) / (vCorrection.Length() * vHalfC.Length());
+		if (vCosine > threshold)
+			vCorrection *= -1;
+
+		var vFinal = pB + vCorrection;
 
 		velocity.Velocity = velocity.Velocity.Lerp(
-			pos.Position.DirectionTo(targetPos) * moveSpeed.MoveSpeed,
+			pos.Position.DirectionTo(vFinal) * moveSpeed.MoveSpeed,
 			moveSpeed.TurnSpeed * delta
 		);
-		pos.Position += velocity.Velocity * delta;
 
 		if (drawNavPaths)
-			navLines?.Enqueue(paths.ToArray());
+		{
+			// navLines?.Enqueue((paths.ToArray(), Colors.White));
+			navLines?.Enqueue(([pB, vFinal], Colors.Red));
+			navLines?.Enqueue(([pA, vFinal, pC], Colors.Green));
+		}
 	}
 }

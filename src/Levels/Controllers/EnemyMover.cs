@@ -2,21 +2,28 @@ using System.Numerics;
 using System.Runtime.InteropServices;
 using Arch.Core;
 using Game.Core.ECS;
-using GodotVector2 = Godot.Vector2;
 
 namespace Game.Levels.Controllers;
 
 public partial class EnemyMover : Node
 {
+	[Export]
+	public bool Enabled = true;
+
 	private static double _processDelta;
-	private static GodotVector2 _playerPosition;
+
+	public override void _UnhandledKeyInput(InputEvent @event)
+	{
+		if (Input.IsActionJustPressed("DISABLE_ENEMY_MOVEMENT"))
+			Enabled = !Enabled;
+	}
 
 	public override void _Process(double delta)
 	{
-		_processDelta = GetProcessDeltaTime();
+		if (!Enabled)
+			return;
 
-		var player = GameWorld.Instance.MainPlayer;
-		_playerPosition = player.GlobalPosition;
+		_processDelta = GetProcessDeltaTime();
 
 		MoveSimd();
 	}
@@ -37,22 +44,7 @@ public partial class EnemyMover : Node
 		public void Execute(ref Chunk chunk)
 		{
 			var positions = chunk.GetSpan<PositionComponent>();
-
-			var moveSpeeds = chunk.GetSpan<MoveSpeedComponent>();
 			var velocities = chunk.GetSpan<VelocityComponent>();
-
-			foreach (var entityIndex in chunk)
-			{
-				ref var pos = ref positions[entityIndex];
-				ref var moveSpeed = ref moveSpeeds[entityIndex];
-				ref var velocity = ref velocities[entityIndex];
-
-				velocity.Velocity = velocity.Velocity.Lerp(
-					pos.Position.DirectionTo(_playerPosition) * moveSpeed.MoveSpeed,
-					(float)(moveSpeed.TurnSpeed * _processDelta)
-				);
-			}
-
 			var posF = MemoryMarshal.Cast<PositionComponent, float>(positions);
 			var velF = MemoryMarshal.Cast<VelocityComponent, float>(velocities);
 

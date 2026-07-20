@@ -67,12 +67,16 @@ public partial class EnemyCollisionSolver : Node
 		// suddenly affected by it, causing a large amount of enemies
 		// to be shoved towards player. The smaller height of 16:9 display
 		// makes it harder for player to avoid the spilled enemies.
-		_grid = new UniformGridWorld<(Vector2, Entity, float)>(_gridSize, new Vector2(windowSize.X, windowSize.X));
+		_grid = new UniformGridWorld<(Vector2, Entity, float)>(
+			_gridSize,
+			new Vector2(windowSize.X, windowSize.X),
+			initialCapacity: 128
+		);
 
 		Logger.LogDebug("in", _grid.Dimensions, _grid.CellSize);
 	}
 
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		if (!Enabled)
 			return;

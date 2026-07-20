@@ -12,7 +12,7 @@ public partial class PerformanceMonitor : CanvasLayer
 	public EnemyRenderer? EnemyRenderer;
 
 	[Export]
-	public NavMap? NavGrid;
+	public EnemyNavMeshMover? Nav;
 
 	[Export]
 	private BoxContainer _boxContainer = null!;
@@ -44,12 +44,10 @@ public partial class PerformanceMonitor : CanvasLayer
 					: $"[color=orange]Rendering: {EnemyRenderer.ProcessTime}ms[/color]";
 		}
 
-		if (NavGrid is not null)
+		if (Nav is not null)
 		{
 			_navLabel.Text =
-				NavGrid.ProcessTime < 7
-					? $"NavGrid: {NavGrid.ProcessTime}ms"
-					: $"[color=orange]NavGrid: {NavGrid.ProcessTime}ms[/color]";
+				Nav.ProcessTime < 10 ? $"Nav: {Nav.ProcessTime}ms" : $"[color=orange]Nav: {Nav.ProcessTime}ms[/color]";
 		}
 	}
 }

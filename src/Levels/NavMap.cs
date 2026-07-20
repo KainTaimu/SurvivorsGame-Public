@@ -47,6 +47,7 @@ public partial class NavMap : NavigationRegion2D
 	public double ProcessTime { get; private set; }
 
 	private Vector2 _cachedPlayerPosition;
+	private static PhysicsDirectSpaceState2D _cachedSpace = null!;
 
 	public override void _Ready()
 	{
@@ -57,43 +58,37 @@ public partial class NavMap : NavigationRegion2D
 		Instance = this;
 	}
 
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		_cachedPlayerPosition = GameWorld.Instance.MainPlayer.GlobalPosition;
+		_cachedSpace = GetWorld2D().DirectSpaceState;
 
-		_grid.ClearAll();
+		if (Engine.GetPhysicsFrames() % 4 == 0)
+			_grid.ClearAll();
+
 		_grid.Recenter(_cachedPlayerPosition);
 
 		if (DrawPaths)
 			QueueRedraw();
 	}
 
-	public override void _PhysicsProcess(double delta)
-	{
-		if (Engine.GetPhysicsFrames() % 4 != 0)
-			return;
-		if (IsBaking())
-			return;
-		var start = Time.GetTicksMsec();
-		BakeNavigationPolygon();
-		ProcessTime = Time.GetTicksMsec() - start;
-	}
-
 	public Span<Vector2> GetNavLine(Vector2 pos)
 	{
-		if (!_grid.TryGetWorld(pos, out var paths, out _))
+		var cellIndex = _grid.WorldToCell(pos);
+		Vector2[] paths;
+
+		// if stale cell
+		if (_grid.GetCellCount(cellIndex.X, cellIndex.Y) > 0)
 		{
-			UpdateNavCell(pos);
-			if (!_grid.TryGetWorld(pos, out paths, out _))
-				return [];
+			_grid.TryGetWorld(pos, out paths, out _);
+			return paths.AsSpan();
 		}
 
-		for (var i = 1; i < paths.Length; i++)
-		{
-			var jitter = Vector2.One * GD.RandRange(-30, 30);
-			paths[i] += jitter;
-		}
+		var handle = UpdateNavCell(pos);
+		if (handle is null)
+			return [];
 
+		_grid.TryGet(handle!.Value, out paths);
 		return paths.AsSpan();
 	}
 
@@ -104,25 +99,59 @@ public partial class NavMap : NavigationRegion2D
 			UpdateNavCell(new Vector2(x, y));
 	}
 
-	private void UpdateNavCell(Vector2 position)
+	private GridCellHandle? UpdateNavCell(Vector2 position)
 	{
-		var playerPos = _cachedPlayerPosition;
-
 		var cell = _grid.WorldToCell(position);
 		if (!_grid.IsValidCell(cell.X, cell.Y))
-			return;
+			return null;
+
+		var playerPos = _cachedPlayerPosition;
+
+		// if clear path to player
+		var query = new PhysicsRayQueryParameters2D() { From = position, To = playerPos };
+		if (_cachedSpace.IntersectRay(query).Count == 0)
+			return _grid.Add(cell.X, cell.Y, [position, playerPos]);
+
 		var origin = _grid.CellCenterWorld(cell.X, cell.Y);
-		var points = NavigationServer2D.MapGetPath(Map, origin, playerPos, true);
+
+		var points = GetPathsFromServer(origin, playerPos);
+		// var points = GetPathsFromQuery(origin, playerPos);
+
 		if (points.Length < 2)
-			return;
-		_grid.Add(cell.X, cell.Y, points);
+			return null;
+		return _grid.Add(cell.X, cell.Y, points);
+	}
+
+	private Vector2[] GetPathsFromServer(Vector2 origin, Vector2 playerPos)
+	{
+		return NavigationServer2D.MapGetPath(Map, origin, playerPos, true);
+	}
+
+	private Vector2[] GetPathsFromQuery(Vector2 origin, Vector2 playerPos)
+	{
+		var result = new NavigationPathQueryResult2D();
+		NavigationServer2D.QueryPath(
+			new NavigationPathQueryParameters2D()
+			{
+				Map = GetWorld2D().NavigationMap,
+				SimplifyPath = true,
+				StartPosition = origin,
+				TargetPosition = playerPos,
+			},
+			result
+		);
+		return result.Path;
 	}
 
 	private void UpdateGrid()
 	{
 		var viewport = GetViewport();
 		var windowSize = viewport.GetVisibleRect().Size;
-		_grid = new UniformGridWorld<Vector2[]>(GridSize, new Vector2(windowSize.X, windowSize.X) * RangeFactor);
+		_grid = new UniformGridWorld<Vector2[]>(
+			GridSize,
+			new Vector2(windowSize.X, windowSize.X) * RangeFactor,
+			initialCapacity: 1
+		);
 	}
 
 	private void ClearDrawnPaths()
@@ -134,14 +163,14 @@ public partial class NavMap : NavigationRegion2D
 	{
 		if (!DrawPaths)
 			return;
-		DrawRect(GridVisibilityRect, Colors.Red, false, 2, true);
+		DrawRect(GridVisibilityRect, Colors.Red, false, 3, true);
 
 		for (var x = 0; x < _grid.Dimensions.X; x++)
 		for (var y = 0; y < _grid.Dimensions.Y; y++)
 		{
 			if (!_grid.TryGet(x, y, out var paths, out _))
 				continue;
-			DrawPolyline(paths, Colors.Red, 2, true);
+			DrawPolyline(paths, Colors.Red, 3, true);
 		}
 	}
 }
