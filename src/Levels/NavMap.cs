@@ -107,6 +107,11 @@ public partial class NavMap : NavigationRegion2D
 
 		var playerPos = _cachedPlayerPosition;
 
+		// if outside navmap
+		const float threshold = 5f;
+		if (position.DistanceSquaredTo(NavigationServer2D.MapGetClosestPoint(Map, position)) > threshold * threshold)
+			return _grid.Add(cell.X, cell.Y, [position, playerPos]);
+
 		// if clear path to player
 		var query = new PhysicsRayQueryParameters2D() { From = position, To = playerPos };
 		if (_cachedSpace.IntersectRay(query).Count == 0)

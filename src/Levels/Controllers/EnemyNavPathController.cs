@@ -3,10 +3,11 @@ using System.Runtime.CompilerServices;
 using Arch.System;
 using Arch.System.SourceGenerator;
 using Game.Core.ECS;
+using Game.UI;
 
 namespace Game.Levels.Controllers;
 
-public partial class EnemyNavPathController : Node2D
+public partial class EnemyNavPathController : Node2D, IFrameTimeTrackable
 {
 	[Export]
 	public bool DrawNavPaths;
@@ -55,6 +56,9 @@ public partial class EnemyNavPathController : Node2D
 		}
 	} = 30f;
 
+	[Export]
+	public FrameTime FrameTime { get; private set; } = null!;
+
 	private readonly ConcurrentQueue<(Vector2[] points, Color color)> _lines = [];
 
 	private static Vector2 _playerPosition;
@@ -62,8 +66,6 @@ public partial class EnemyNavPathController : Node2D
 	private static float _maxCornerDistanceValue;
 	private static float _corneringSmoothingThresholdValue;
 	private static float _minPathPointSeparationValue;
-
-	public double ProcessTime { get; private set; }
 
 	public override void _Ready()
 	{
@@ -78,9 +80,10 @@ public partial class EnemyNavPathController : Node2D
 		var player = GameWorld.Instance.MainPlayer;
 		_playerPosition = player.GlobalPosition;
 
-		var start = Time.GetTicksMsec();
-		UpdateMoversQuery(GameWorld.World, NavMap.Instance.GridVisibilityRect, (float)delta, DrawNavPaths, _lines);
-		ProcessTime = Time.GetTicksMsec() - start;
+		using (FrameTime.Record())
+		{
+			UpdateMoversQuery(GameWorld.World, NavMap.Instance.GridVisibilityRect, (float)delta, DrawNavPaths, _lines);
+		}
 
 #if DEBUG
 		if (DrawNavPaths && Engine.GetProcessFrames() % 1 == 0)

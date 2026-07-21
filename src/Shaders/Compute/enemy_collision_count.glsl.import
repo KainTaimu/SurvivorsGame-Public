@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://dkcpoylnt3iff"
+path="res://.godot/imported/enemy_collision_count.glsl-7695f2ba4aed22992ce11ac30c6bcb2d.res"
+
+[deps]
+
+source_file="res://src/Shaders/Compute/enemy_collision_count.glsl"
+dest_files=["res://.godot/imported/enemy_collision_count.glsl-7695f2ba4aed22992ce11ac30c6bcb2d.res"]
+
+[params]
+

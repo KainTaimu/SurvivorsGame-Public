@@ -6,10 +6,11 @@ using Arch.System.SourceGenerator;
 using Game.Core.ECS;
 using Game.Core.Extensions;
 using Game.Core.Services;
+using Game.UI;
 
 namespace Game.Levels.Controllers;
 
-public partial class EnemyRenderer : Node
+public partial class EnemyRenderer : Node, IFrameTimeTrackable
 {
 	[Export]
 	private PackedScene _multiMesh = null!;
@@ -25,6 +26,9 @@ public partial class EnemyRenderer : Node
 		}
 	} = 1.2f;
 
+	[Export]
+	public FrameTime FrameTime { get; private set; } = null!;
+
 	private Rect2 _visibilityRect;
 	private readonly Dictionary<MultiMesh, int> _mmiVisibilityCount = [];
 
@@ -34,8 +38,6 @@ public partial class EnemyRenderer : Node
 	private const float INSTANCE_GROWTH_MULTIPLIER = 1.5f;
 
 	private Vector2 PlayerPosition => GameWorld.Instance.MainPlayer.GlobalPosition;
-
-	public double ProcessTime { get; private set; }
 
 	private Viewport? _cachedViewport;
 
@@ -62,18 +64,19 @@ public partial class EnemyRenderer : Node
 	public override void _Process(double delta)
 	{
 		CenterVisibilityGrid();
-		var start = Time.GetTicksMsec();
-		foreach (var mmi in _mmiVisibilityCount.Keys)
+		using (FrameTime.Record())
 		{
-			_mmiVisibilityCount[mmi] = 0;
-			mmi.VisibleInstanceCount = 0;
+			foreach (var mmi in _mmiVisibilityCount.Keys)
+			{
+				_mmiVisibilityCount[mmi] = 0;
+				mmi.VisibleInstanceCount = 0;
+			}
+
+			UpdateEnemySpritesQuery(GameWorld.World);
+
+			foreach (var (mmi, visibleCount) in _mmiVisibilityCount)
+				mmi.VisibleInstanceCount = visibleCount;
 		}
-
-		UpdateEnemySpritesQuery(GameWorld.World);
-
-		foreach (var (mmi, visibleCount) in _mmiVisibilityCount)
-			mmi.VisibleInstanceCount = visibleCount;
-		ProcessTime = Time.GetTicksMsec() - start;
 	}
 
 	[Query]

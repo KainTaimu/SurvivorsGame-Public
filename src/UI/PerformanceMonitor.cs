@@ -1,53 +1,68 @@
-using Game.Levels;
-using Game.Levels.Controllers;
+using Godot.Collections;
 
 namespace Game.UI;
 
 public partial class PerformanceMonitor : CanvasLayer
 {
 	[Export]
-	public EnemyCollisionSolver? CollisionSolver;
+	public Array<Node?>? Targets;
 
 	[Export]
-	public EnemyRenderer? EnemyRenderer;
+	public uint RefreshRate = 10;
+
+	[ExportGroup("Internal")]
+	[Export]
+	private VBoxContainer _vBoxContainer = null!;
 
 	[Export]
-	public EnemyNavPathController? Nav;
+	private PackedScene _labelScene = null!;
 
-	[Export]
-	private BoxContainer _boxContainer = null!;
+	private readonly System.Collections.Generic.Dictionary<IFrameTimeTrackable, RichTextLabel> _labels = [];
 
-	[Export]
-	private RichTextLabel _collisionSolverlabel = null!;
+	public override void _Ready()
+	{
+		if (Targets is null)
+			return;
 
-	[Export]
-	private RichTextLabel _rendererlabel = null!;
+		foreach (var node in Targets)
+		{
+			if (node is null)
+			{
+				Logger.LogWarning("Null reference in Targets");
+				continue;
+			}
+			if (node is not IFrameTimeTrackable trackable)
+			{
+				Logger.LogError($"{node.Name} is not IFrameTimeTrackable");
+				continue;
+			}
+			var label = _labelScene.Instantiate<RichTextLabel>();
 
-	[Export]
-	private RichTextLabel _navLabel = null!;
+			_labels.Add(trackable, label);
+
+			_vBoxContainer.AddChild(label);
+		}
+	}
 
 	public override void _Process(double delta)
 	{
-		if (CollisionSolver is not null)
+		if (Engine.GetProcessFrames() % 30 != 0)
+			return;
+		foreach (var (node, label) in _labels)
 		{
-			_collisionSolverlabel.Text =
-				CollisionSolver.ProcessTime < 10
-					? $"Collisions: {CollisionSolver.ProcessTime}ms"
-					: $"[color=orange]Collisions: {CollisionSolver.ProcessTime}ms[/color]";
-		}
-
-		if (EnemyRenderer is not null)
-		{
-			_rendererlabel.Text =
-				EnemyRenderer.ProcessTime < 5
-					? $"Rendering: {EnemyRenderer.ProcessTime}ms"
-					: $"[color=orange]Rendering: {EnemyRenderer.ProcessTime}ms[/color]";
-		}
-
-		if (Nav is not null)
-		{
-			_navLabel.Text =
-				Nav.ProcessTime < 10 ? $"Nav: {Nav.ProcessTime}ms" : $"[color=orange]Nav: {Nav.ProcessTime}ms[/color]";
+			var unit = node.FrameTime.TimeUnit switch
+			{
+				FrameTimeUnitEnum.Ms => "ms",
+				FrameTimeUnitEnum.Us => "µs",
+				_ => throw new ArgumentOutOfRangeException(),
+			};
+			var time = node.FrameTime.TimeUnit switch
+			{
+				FrameTimeUnitEnum.Ms => node.FrameTime.ProcessTime * 1e-3,
+				FrameTimeUnitEnum.Us => node.FrameTime.ProcessTime,
+				_ => throw new ArgumentOutOfRangeException(),
+			};
+			label.Text = $"{node.FrameTime.FrameName}: {time:0.##}{unit}";
 		}
 	}
 }

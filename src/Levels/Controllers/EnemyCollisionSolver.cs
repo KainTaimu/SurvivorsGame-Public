@@ -4,10 +4,11 @@ using Arch.System;
 using Arch.System.SourceGenerator;
 using Game.Core.ECS;
 using Game.Models;
+using Game.UI;
 
 namespace Game.Levels.Controllers;
 
-public partial class EnemyCollisionSolver : Node
+public partial class EnemyCollisionSolver : Node, IFrameTimeTrackable
 {
 	[Export]
 	private NavMap? _navMap;
@@ -38,6 +39,9 @@ public partial class EnemyCollisionSolver : Node
 	[Export]
 	public byte SubSteps = 6;
 
+	[Export]
+	public FrameTime FrameTime { get; private set; } = null!;
+
 	private UniformGridWorld<(Vector2 pos, Entity entity, float radius)> _grid = null!;
 
 	// Dense write buffers indexed by Entity.Id. Entries are valid for the
@@ -46,8 +50,6 @@ public partial class EnemyCollisionSolver : Node
 
 	private int[] _stamps = [];
 	private int _writeFrame;
-
-	public double ProcessTime { get; private set; }
 
 	private Vector2 _playerPosition;
 
@@ -94,17 +96,18 @@ public partial class EnemyCollisionSolver : Node
 
 		EnsureBufferCapacity(GameWorld.World.Capacity);
 
-		var start = Time.GetTicksMsec();
-		AddObjectsToGridQuery(GameWorld.World, _grid, _entries, _stamps, _writeFrame);
-		for (var i = 0; i < SubSteps; i++)
+		using (FrameTime.Record())
 		{
-			_grid.ClearAll();
-			AddObjectsToGridFromBuffer();
-			SolveCollisions();
-		}
+			AddObjectsToGridQuery(GameWorld.World, _grid, _entries, _stamps, _writeFrame);
+			for (var i = 0; i < SubSteps; i++)
+			{
+				_grid.ClearAll();
+				AddObjectsToGridFromBuffer();
+				SolveCollisions();
+			}
 
-		ApplyCollisionsQuery(GameWorld.World, _entries, _stamps, _writeFrame, _navMap!);
-		ProcessTime = Time.GetTicksMsec() - start;
+			ApplyCollisionsQuery(GameWorld.World, _entries, _stamps, _writeFrame, _navMap!);
+		}
 	}
 
 	private void EnsureBufferCapacity(int capacity)

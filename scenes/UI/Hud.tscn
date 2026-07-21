@@ -1,15 +1,7 @@
 [gd_scene format=3 uid="uid://do6p1pg4x0vkf"]
 
 [ext_resource type="Script" uid="uid://bgqngsa7la7p1" path="res://src/UI/Hud.cs" id="1_47idg"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_47idg"]
-font_size = 24
-
-[sub_resource type="LabelSettings" id="LabelSettings_bplp6"]
-font_size = 24
-
-[sub_resource type="LabelSettings" id="LabelSettings_bg4j7"]
-font_size = 24
+[ext_resource type="LabelSettings" uid="uid://cu65p2lbgxmhg" path="res://scenes/UI/WeaponCarouselLabelSettings.tres" id="2_bplp6"]
 
 [node name="HUD" type="CanvasLayer" unique_id=1626912566 node_paths=PackedStringArray("_playerHealthLabel", "_enemyCountLabel", "_moneyLabel")]
 script = ExtResource("1_47idg")
@@ -27,13 +19,14 @@ mouse_filter = 2
 
 [node name="Label" type="Label" parent="VBoxContainer" unique_id=37998141]
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 text = "Health"
-label_settings = SubResource("LabelSettings_47idg")
+label_settings = ExtResource("2_bplp6")
 
 [node name="Label2" type="Label" parent="VBoxContainer" unique_id=432544888]
 layout_mode = 2
 text = "Enemies"
-label_settings = SubResource("LabelSettings_bplp6")
+label_settings = ExtResource("2_bplp6")
 
 [node name="Label" type="Label" parent="." unique_id=1360731784]
 anchors_preset = 5
@@ -44,4 +37,4 @@ offset_right = 20.0
 offset_bottom = 19.0
 grow_horizontal = 2
 text = "$null"
-label_settings = SubResource("LabelSettings_bg4j7")
+label_settings = ExtResource("2_bplp6")

@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://cb6opjo4xaaio"]
 
 [ext_resource type="Script" uid="uid://dytrhrfc64qrs" path="res://src/UI/PerformanceMonitor.cs" id="1_l031m"]
+[ext_resource type="PackedScene" uid="uid://c0bbuesyh0ls7" path="res://scenes/UI/PerformanceMonitorLabel.tscn" id="2_cdxyh"]
 
-[node name="PerformanceMonitor" type="CanvasLayer" unique_id=1872396024 node_paths=PackedStringArray("_boxContainer", "_collisionSolverlabel", "_rendererlabel", "_navLabel")]
+[node name="PerformanceMonitor" type="CanvasLayer" unique_id=1872396024 node_paths=PackedStringArray("Targets", "_vBoxContainer")]
 script = ExtResource("1_l031m")
-_boxContainer = NodePath("MarginContainer/VBoxContainer")
-_collisionSolverlabel = NodePath("MarginContainer/VBoxContainer/Label")
-_rendererlabel = NodePath("MarginContainer/VBoxContainer/Label2")
-_navLabel = NodePath("MarginContainer/VBoxContainer/Label3")
+Targets = []
+_vBoxContainer = NodePath("MarginContainer/VBoxContainer")
+_labelScene = ExtResource("2_cdxyh")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=302088556]
 anchors_preset = 6
@@ -24,33 +24,3 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=197958763]
 layout_mode = 2
 alignment = 1
-
-[node name="Label" type="RichTextLabel" parent="MarginContainer/VBoxContainer" unique_id=2106043832]
-layout_mode = 2
-mouse_filter = 2
-bbcode_enabled = true
-fit_content = true
-scroll_active = false
-autowrap_mode = 0
-shortcut_keys_enabled = false
-vertical_alignment = 1
-
-[node name="Label2" type="RichTextLabel" parent="MarginContainer/VBoxContainer" unique_id=775893729]
-layout_mode = 2
-mouse_filter = 2
-bbcode_enabled = true
-fit_content = true
-scroll_active = false
-autowrap_mode = 0
-shortcut_keys_enabled = false
-vertical_alignment = 1
-
-[node name="Label3" type="RichTextLabel" parent="MarginContainer/VBoxContainer" unique_id=2074081002]
-layout_mode = 2
-mouse_filter = 2
-bbcode_enabled = true
-fit_content = true
-scroll_active = false
-autowrap_mode = 0
-shortcut_keys_enabled = false
-vertical_alignment = 1

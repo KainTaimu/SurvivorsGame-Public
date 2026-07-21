@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://b2lg0yxxvpq56"
+path="res://.godot/imported/enemy_collision_scan.glsl-6c0cc0473f851fe075aa6f2851dbffdc.res"
+
+[deps]
+
+source_file="res://src/Shaders/Compute/enemy_collision_scan.glsl"
+dest_files=["res://.godot/imported/enemy_collision_scan.glsl-6c0cc0473f851fe075aa6f2851dbffdc.res"]
+
+[params]
+

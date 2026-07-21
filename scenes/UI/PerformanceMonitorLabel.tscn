@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://c0bbuesyh0ls7"]
+
+[node name="Label" type="RichTextLabel" unique_id=781281036]
+offset_left = -1.0
+offset_right = 21.0
+offset_bottom = 19.0
+mouse_filter = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+bbcode_enabled = true
+text = "BLA"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+vertical_alignment = 1
