@@ -37,7 +37,7 @@ public partial class EnemyRenderer : Node
 
 	public double ProcessTime { get; private set; }
 
-	private Viewport _cachedViewport = null!;
+	private Viewport? _cachedViewport;
 
 	public override void _Ready()
 	{
@@ -49,6 +49,10 @@ public partial class EnemyRenderer : Node
 
 	private void CenterVisibilityGrid()
 	{
+		_cachedViewport ??= GetViewport();
+		if (_cachedViewport is null)
+			return;
+
 		var scale = 1f / _cachedViewport.GetCamera2D().Zoom.GetLargestComponent();
 		_visibilityRect = _cachedViewport
 			.GetVisibleRect()

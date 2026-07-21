@@ -112,7 +112,6 @@ public partial class CharacterStats : Resource
 		var clampedDamage = Math.Clamp(scaledDamage, 1, float.PositiveInfinity);
 		var totalDamage = Mathf.CeilToInt(clampedDamage);
 
-		Logger.LogDebug($"Player damaged {totalDamage}. Health: {Health - totalDamage}");
 		_health -= totalDamage;
 	}
 }

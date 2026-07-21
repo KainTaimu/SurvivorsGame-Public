@@ -69,7 +69,7 @@ public partial class EnemyNavPathController : Node2D
 		_lines.Clear();
 	}
 
-	[Query(Parallel = true)]
+	[Query]
 	[All<PositionComponent, VelocityComponent, MoveSpeedComponent>]
 	[None<DyingMarkerComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]

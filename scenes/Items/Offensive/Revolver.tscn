@@ -13,7 +13,7 @@
 script = ExtResource("4_fgf34")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_2l6dk"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vujg4"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_y3hip"]
@@ -61,6 +61,7 @@ Stats = SubResource("Resource_n3sky")
 process_mode = 3
 stream = ExtResource("6_fgf34")
 volume_db = -10.0
+pitch_scale = 1.2
 max_polyphony = 2
 bus = &"ShootSfx"
 
