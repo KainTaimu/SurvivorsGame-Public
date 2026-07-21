@@ -93,24 +93,53 @@ public class UniformGridWorld<T> : IUniformGridWorld<T>
 			ClearCell(cell.X, cell.Y);
 	}
 
-	public void EnsureCapacity(int newCapacity) => _grid.EnsureCapacity(newCapacity);
+	public void EnsureCapacity(int newCapacity)
+	{
+		_grid.EnsureCapacity(newCapacity);
+	}
 
-	public bool TryGet(int x, int y, out T result, out GridCellHandle handle) =>
-		_grid.TryGet(x, y, out result, out handle);
+	public bool TryGet(int x, int y, out T result, out GridCellHandle handle)
+	{
+		return _grid.TryGet(x, y, out result, out handle);
+	}
 
-	public bool TryGet(GridCellHandle handle, out T result) => _grid.TryGet(handle, out result);
+	public bool TryGet(GridCellHandle handle, out T result)
+	{
+		return _grid.TryGet(handle, out result);
+	}
 
-	public GridCellHandle Add(int x, int y, T obj) => _grid.Add(x, y, obj);
+	public GridCellHandle Add(int x, int y, T obj)
+	{
+		return _grid.Add(x, y, obj);
+	}
 
-	public void Remove(GridCellHandle targetHandle) => _grid.Remove(targetHandle);
+	public void Remove(GridCellHandle targetHandle)
+	{
+		_grid.Remove(targetHandle);
+	}
 
-	public void ClearAll() => _grid.ClearAll();
+	public void ClearAll()
+	{
+		_grid.ClearAll();
+	}
 
-	public void ClearCell(int x, int y) => _grid.ClearCell(x, y);
+	public void ClearCell(int x, int y)
+	{
+		_grid.ClearCell(x, y);
+	}
 
-	public int GetCellCount(int x, int y) => _grid.GetCellCount(x, y);
+	public int GetCellCount(int x, int y)
+	{
+		return _grid.GetCellCount(x, y);
+	}
 
-	public bool IsValidCell(int x, int y) => _grid.IsValidCell(x, y);
+	public bool IsValidCell(int x, int y)
+	{
+		return _grid.IsValidCell(x, y);
+	}
 
-	public CellEnumerator<T> GetEnumerator(int x, int y) => _grid.GetEnumerator(x, y);
+	public CellEnumerator<T> GetEnumerator(int x, int y)
+	{
+		return _grid.GetEnumerator(x, y);
+	}
 }

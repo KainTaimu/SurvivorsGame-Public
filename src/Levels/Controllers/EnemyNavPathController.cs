@@ -166,6 +166,7 @@ public partial class EnemyNavPathController : Node2D, IFrameTimeTrackable
 			MoveStraightMover(_playerPosition, delta, ref pos, ref velocity, ref moveSpeed);
 			return;
 		}
+
 		if (paths.Length < 3)
 			return;
 

@@ -31,11 +31,13 @@ public partial class PerformanceMonitor : CanvasLayer
 				Logger.LogWarning("Null reference in Targets");
 				continue;
 			}
+
 			if (node is not IFrameTimeTrackable trackable)
 			{
 				Logger.LogError($"{node.Name} is not IFrameTimeTrackable");
 				continue;
 			}
+
 			var label = _labelScene.Instantiate<RichTextLabel>();
 
 			_labels.Add(trackable, label);

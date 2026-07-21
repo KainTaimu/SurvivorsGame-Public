@@ -90,10 +90,16 @@ public struct CellEnumerator<T>
 	/// after the current one. Enables j = i + 1 style pair iteration.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public readonly CellEnumerator<T> CloneRest() => this;
+	public readonly CellEnumerator<T> CloneRest()
+	{
+		return this;
+	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public readonly CellEnumerator<T> GetEnumerator() => this;
+	public readonly CellEnumerator<T> GetEnumerator()
+	{
+		return this;
+	}
 }
 
 public class UniformGrid<T> : IUniformGrid<T, GridCellHandle>
@@ -262,7 +268,10 @@ public class UniformGrid<T> : IUniformGrid<T, GridCellHandle>
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private int CellIndex(int x, int y) => y * Width + x;
+	private int CellIndex(int x, int y)
+	{
+		return y * Width + x;
+	}
 
 	private void ResetCells()
 	{

@@ -30,9 +30,7 @@ public partial class EnemyTargetQuery : Node
 		var viewport = GetViewport();
 
 		if (viewport.GetCamera2D() is SignalCamera2D cam)
-		{
 			cam.OnCurrentZoomChanged += (_, _) => CreateGrid(GetViewport().GetCamera2D().Zoom.GetLargestComponent());
-		}
 		CreateGrid(GetViewport().GetCamera2D().Zoom.GetLargestComponent());
 	}
 

@@ -4,7 +4,6 @@ using Arch.Core;
 using Arch.System;
 using Arch.System.SourceGenerator;
 using Game.Core.ECS;
-using Game.UI;
 
 namespace Game.Levels.Controllers;
 
@@ -284,6 +283,7 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 				(4, _entityIndices)
 			);
 		}
+
 		_scanSet = CreateSet(_scanShader, (2, _cellCount), (3, _cellStart));
 	}
 
@@ -312,6 +312,7 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 			Logger.LogError("EnemyCollisionSolverGpu: shader create failed ", path);
 			Enabled = false;
 		}
+
 		return shader;
 	}
 
@@ -324,6 +325,7 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 			uniform.AddId(buffer);
 			uniforms.Add(uniform);
 		}
+
 		return _rd!.UniformSetCreate(uniforms, shader, 0);
 	}
 
@@ -414,9 +416,7 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 		// Arch does not support nullable operator in parameters
 		// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
 		if (navMap is not null && navMap.GridVisibilityRect.HasPoint(pos.Position))
-		{
 			pos.Position = NavigationServer2D.MapGetClosestPoint(NavMap.Map, newPos);
-		}
 		else
 			pos.Position = newPos;
 	}

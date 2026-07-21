@@ -113,7 +113,7 @@ public partial class NavMap : NavigationRegion2D
 			return _grid.Add(cell.X, cell.Y, [position, playerPos]);
 
 		// if clear path to player
-		var query = new PhysicsRayQueryParameters2D() { From = position, To = playerPos };
+		var query = new PhysicsRayQueryParameters2D { From = position, To = playerPos };
 		if (_cachedSpace.IntersectRay(query).Count == 0)
 			return _grid.Add(cell.X, cell.Y, [position, playerPos]);
 
@@ -136,7 +136,7 @@ public partial class NavMap : NavigationRegion2D
 	{
 		var result = new NavigationPathQueryResult2D();
 		NavigationServer2D.QueryPath(
-			new NavigationPathQueryParameters2D()
+			new NavigationPathQueryParameters2D
 			{
 				Map = GetWorld2D().NavigationMap,
 				SimplifyPath = true,
@@ -153,11 +153,7 @@ public partial class NavMap : NavigationRegion2D
 	{
 		var viewport = GetViewport();
 		var windowSize = viewport.GetVisibleRect().Size;
-		_grid = new UniformGridWorld<Vector2[]>(
-			GridSize,
-			new Vector2(windowSize.X, windowSize.X) * RangeFactor,
-			initialCapacity: 1
-		);
+		_grid = new UniformGridWorld<Vector2[]>(GridSize, new Vector2(windowSize.X, windowSize.X) * RangeFactor, 1);
 	}
 
 	private void ClearDrawnPaths()

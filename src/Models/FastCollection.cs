@@ -82,5 +82,5 @@ public struct Token(int id, int version)
 {
 	internal int Id = id;
 	internal int Version = id;
-	public static readonly Token Default = new Token(-1, -1);
+	public static readonly Token Default = new(-1, -1);
 }

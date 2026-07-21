@@ -68,10 +68,9 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 			NextManualAttack();
 			return;
 		}
+
 		if (@event.IsActionPressed(InputMapNames.PreviousWeapon))
-		{
 			PreviousManualAttack();
-		}
 	}
 
 	private void NextManualAttack()

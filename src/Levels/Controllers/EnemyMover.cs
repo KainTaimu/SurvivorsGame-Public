@@ -58,10 +58,9 @@ public partial class EnemyMover : Node
 				var v2 = new Vector<float>(velF.Slice(i, count));
 				(v1 + v2 * dtVec).CopyTo(posF.Slice(i, count));
 			}
+
 			for (; i < posF.Length; i++)
-			{
 				posF[i] += velF[i] * dt;
-			}
 		}
 	}
 }

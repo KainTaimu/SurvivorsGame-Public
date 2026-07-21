@@ -13,7 +13,7 @@ public static class Rect2Extensions
 		{
 			var size = rect.Size * scale;
 
-			var centeredPos = p - (size * 0.5f);
+			var centeredPos = p - size * 0.5f;
 
 			return new Rect2(centeredPos, size);
 		}
