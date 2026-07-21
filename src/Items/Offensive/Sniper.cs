@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using Arch.Core;
+using Game.Core.ECS;
 using Game.Levels.Controllers;
 using Game.Players.Controllers;
 using Game.UI;
 
 namespace Game.Items.Offensive;
-
-public interface IBloomable { }
 
 public partial class Sniper : AbstractFirearm, IReloadable
 {
@@ -27,6 +26,9 @@ public partial class Sniper : AbstractFirearm, IReloadable
 
 	[Export]
 	private AbstractProjectileAttack _projectileAttack = null!;
+
+	[Export]
+	private AudioStreamPlayer? _boltCyclingPlayer;
 
 	private double MoveTime
 	{
@@ -69,9 +71,14 @@ public partial class Sniper : AbstractFirearm, IReloadable
 			}
 		);
 
+		if (_fireGroup is ICooldown c)
+			c.CooldownDuration = FirearmStats.AttackSpeed;
+
 		OnAttack += () => OffensiveEffects.ApplyCameraShake(FirearmStats.CameraRecoilScale, GetViewport, CreateTween);
 		OnAttack += () =>
 		{
+			GetTree().CreateTimer(OffensiveStats.AttackSpeed / 2).Timeout += () => _boltCyclingPlayer?.Play();
+
 			if (Crosshair is not null)
 			{
 				OffensiveEffects.ApplyCrosshairRecoil(
@@ -179,13 +186,12 @@ public partial class Sniper : AbstractFirearm, IReloadable
 			return;
 		GetTree().CreateTimer(FirearmStats.ReloadTime, false).Timeout += () =>
 		{
-			if (MagazineCount == 0)
-				MagazineCount = MagazineCapacity;
-			else
-				MagazineCount = MagazineCapacity + 1; // Round in chamber
+			MagazineCount = MagazineCapacity;
 			IsReloading = false;
+			EmitSignalOnReloadEnd();
 		};
 		IsReloading = true;
+		EmitSignalOnReloadStart();
 	}
 
 	private void UpdateMoveTimeBloom(double delta)
@@ -221,5 +227,6 @@ public partial class Sniper : AbstractFirearm, IReloadable
 			Player.GlobalPosition,
 			OffensiveStats.Additional.GetValueOrDefault("Knockback", 0f).AsSingle()
 		);
+		GameWorld.World.Add(entity, new DeathCauseComponent(DeathCauseEnum.Explosion));
 	}
 }

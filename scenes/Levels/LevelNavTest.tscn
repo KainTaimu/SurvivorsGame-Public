@@ -86,7 +86,7 @@ metadata/_custom_type_script = "uid://d2tvxgxbv87i2"
 [sub_resource type="Resource" id="Resource_lkbse"]
 script = ExtResource("8_lkbse")
 Duration = 999999999.0
-MaxMobs = 1500
+MaxMobs = 5
 EnemyBlueprints = SubResource("Resource_i1qcg")
 SpawnMinTime = 0.1
 SpawnMaxTime = 0.1
@@ -113,6 +113,9 @@ MainPlayer = NodePath("../Player")
 [node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=247564660]
 Waves = Array[Object]([SubResource("Resource_lkbse")])
 
+[node name="EnemyHitFeedbackController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="2" unique_id=1105191984]
+physics_interpolation_mode = 1
+
 [node name="EnemyNavMeshController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="4" unique_id=7126221 instance=ExtResource("8_7b5vb")]
 
 [node name="EnemyMover" type="Node" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="5" unique_id=819641661]
@@ -123,6 +126,7 @@ _navMap = NodePath("../../../World/NavMap")
 _solverRangeFactor = 5.0
 
 [node name="EnemyRenderer" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="7" unique_id=1054443393]
+physics_interpolation_mode = 1
 RenderDistanceFactor = 10.0
 
 [node name="Player" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="6" unique_id=1386970244 instance=ExtResource("3_5s0iy")]

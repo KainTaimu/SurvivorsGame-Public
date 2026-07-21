@@ -2,7 +2,6 @@
  * Commented methods are written by AI slop machine
  */
 
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -10,7 +9,9 @@ using Arch.Core;
 using Arch.System;
 using Arch.System.SourceGenerator;
 using Game.Core.ECS;
+using Game.Core.Extensions;
 using Game.Models;
+using Game.Players.Controllers;
 
 namespace Game.Levels.Controllers;
 
@@ -18,8 +19,6 @@ public partial class EnemyTargetQuery : Node
 {
 	// BREAKING: Changing this value breaks Projectile radius of weapons
 	private const int GRID_SIZE = 16;
-
-	public UniformGridWorld<Entity> Grid => _grid;
 
 	private UniformGridWorld<Entity> _grid = null!;
 
@@ -29,13 +28,25 @@ public partial class EnemyTargetQuery : Node
 	{
 		Instance = this;
 		var viewport = GetViewport();
+
+		if (viewport.GetCamera2D() is SignalCamera2D cam)
+		{
+			cam.OnCurrentZoomChanged += (_, _) => CreateGrid(GetViewport().GetCamera2D().Zoom.GetLargestComponent());
+		}
+		CreateGrid(GetViewport().GetCamera2D().Zoom.GetLargestComponent());
+	}
+
+	private void CreateGrid(float scale)
+	{
+		var viewport = GetViewport();
 		if (viewport is null)
 		{
 			Logger.LogError("missing viewport.");
 			return;
 		}
 
-		var windowSize = viewport.GetVisibleRect().Size * 1.3f;
+		var visRect = viewport.GetVisibleRect();
+		var windowSize = visRect.Size * (1f / scale);
 		_grid = new UniformGridWorld<Entity>(GRID_SIZE, windowSize);
 	}
 

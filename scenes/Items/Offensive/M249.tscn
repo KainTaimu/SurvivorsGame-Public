@@ -28,10 +28,9 @@ metadata/_custom_type_script = "uid://8rt54h4imtxv"
 [sub_resource type="Resource" id="Resource_bpnxk"]
 script = ExtResource("6_ucf10")
 ReloadTime = 4.0
-BloomCoefficientDeg = 18.0
+BloomCoefficientDeg = 16.0
 MagazineCapacity = 200
 CameraRecoilScale = 0.8
-ChamberLoaded = false
 BaseDamage = 12
 BaseDamageVarianceMultiplier = 0.22
 BaseCritDamageMultiplier = 1.4

@@ -1,6 +1,6 @@
 namespace Game.Players.Controllers;
 
-public partial class PlayerCameraController : Camera2D
+public partial class PlayerCameraController : SignalCamera2D
 {
 	[Export]
 	public float MinZoom = 0.15f;
@@ -10,13 +10,13 @@ public partial class PlayerCameraController : Camera2D
 
 	public override void _Input(InputEvent @event)
 	{
-		var zoom = Zoom;
+		var zoom = CurrentZoom;
 
 		if (@event.IsActionPressed("ZOOM_IN"))
-			zoom += Vector2.One * 0.05f;
+			zoom += 0.05f;
 		else if (@event.IsActionPressed("ZOOM_OUT"))
-			zoom -= Vector2.One * 0.05f;
+			zoom -= 0.05f;
 
-		Zoom = zoom.Clamp(Vector2.One * MinZoom, Vector2.One * MaxZoom);
+		CurrentZoom = float.Clamp(zoom, MinZoom, MaxZoom);
 	}
 }

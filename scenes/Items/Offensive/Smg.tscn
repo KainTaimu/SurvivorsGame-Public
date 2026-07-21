@@ -17,7 +17,7 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 script = ExtResource("4_omjm3")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_jjaxe"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8f87a"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_dkd5d"]
@@ -62,7 +62,9 @@ Stats = SubResource("Resource_34bgn")
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=1380114539]
 process_mode = 3
 stream = ExtResource("5_2lvmq")
+volume_db = -8.0
 pitch_scale = 1.33
+bus = &"ShootSfx"
 
 [node name="MagAlmostEmpty" type="AudioStreamPlayer" parent="." unique_id=262175840]
 process_mode = 3

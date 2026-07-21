@@ -17,7 +17,7 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 script = ExtResource("3_tg8rs")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_62a23"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8f87a"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_eai52"]
@@ -37,7 +37,7 @@ BaseDamage = 14
 BaseCritDamageMultiplier = 0.9
 BaseCritChanceProportion = 0.2
 BaseProjectileSpeed = 2800
-BaseProjectileScaleMultiplier = 0.8
+BaseProjectileScaleMultiplier = 0.85
 BaseAttackSpeed = 0.1
 Additional = Dictionary[String, Variant]({
 "Knockback": 30.0

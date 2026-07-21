@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Arch.Core;
 using Game.Core.ECS;
+using Game.Core.Extensions;
 using Game.Levels.Controllers;
 
 namespace Game.Items.Projectiles;
@@ -20,9 +21,22 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 
 	public ProjectilePool ProjectilePool { get; set; } = null!;
 
-	public override void _Process(double delta)
+	private Viewport? _cachedViewport;
+	private Camera2D? _cachedCamera;
+
+	public override void _PhysicsProcess(double delta)
 	{
-		if (!TargetQuery.Grid.ContainsWorld(Position))
+		_cachedViewport ??= GetViewport();
+		_cachedCamera ??= _cachedViewport.GetCamera2D();
+		if (
+			!_cachedViewport
+				.GetVisibleRect()
+				.GetCenteredToPoint(
+					GameWorld.Instance.MainPlayer.GlobalPosition,
+					1 / _cachedCamera.Zoom.GetLargestComponent()
+				)
+				.HasPoint(GlobalPosition)
+		)
 		{
 			ReturnToPool();
 			return;

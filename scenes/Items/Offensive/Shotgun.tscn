@@ -18,7 +18,7 @@ metadata/_custom_type_script = "uid://dnodsacrptssb"
 script = ExtResource("4_d1d18")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_62a23"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8f87a"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_fvcvv"]
@@ -64,7 +64,8 @@ Stats = SubResource("Resource_mvme6")
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=1307650162]
 process_mode = 3
 stream = ExtResource("5_g0kem")
-volume_db = 15.0
+volume_db = 6.0
+pitch_scale = 0.85
 bus = &"ShootSfx"
 
 [node name="ShellReload" type="AudioStreamPlayer" parent="." unique_id=2020652289]

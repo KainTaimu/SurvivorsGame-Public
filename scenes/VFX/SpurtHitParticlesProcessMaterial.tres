@@ -33,5 +33,5 @@ damping_curve = SubResource("CurveTexture_w5u0a")
 scale_min = 0.099999994
 scale_max = 2.5
 scale_curve = SubResource("CurveTexture_2o2jl")
-hue_variation_min = -0.13000003
-hue_variation_max = -0.030000022
+hue_variation_min = -0.12000002
+hue_variation_max = -0.050000023

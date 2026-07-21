@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bmu6li33qhxl7" path="res://assets/Projectiles/bullet.png" id="2_o556r"]
 
 [node name="ProjectileBullet" type="Node2D" unique_id=2072266607 node_paths=PackedStringArray("Sprite")]
+physics_interpolation_mode = 1
 script = ExtResource("1_4ylwr")
 Sprite = NodePath("Sprite2D")
 

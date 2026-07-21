@@ -13,7 +13,7 @@
 script = ExtResource("4_fgf34")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0u5yb"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_2l6dk"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_y3hip"]
@@ -35,7 +35,6 @@ VerticalRecoilRandom = 40.0
 RecoilScale = 0.6
 HorizontalRecoilPunish = false
 CameraRecoilScale = 1.8
-ChamberLoaded = false
 BaseDamage = 30
 BaseCritDamageMultiplier = 1.0
 BaseCritChanceProportion = 0.5
@@ -61,8 +60,9 @@ Stats = SubResource("Resource_n3sky")
 [node name="ShootAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1706054987]
 process_mode = 3
 stream = ExtResource("6_fgf34")
-volume_db = -7.0
+volume_db = -10.0
 max_polyphony = 2
+bus = &"ShootSfx"
 
 [node name="CockAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1261930206]
 process_mode = 3
