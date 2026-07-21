@@ -80,7 +80,7 @@ public partial class GameSingleton : Node
 		GameSettings = newSettings;
 	}
 
-	public override void _Process(double delta)
+	public override void _Input(InputEvent @event)
 	{
 		if (Input.IsPhysicalKeyPressed(Key.Quoteleft))
 		{

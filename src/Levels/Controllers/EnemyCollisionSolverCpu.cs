@@ -4,11 +4,10 @@ using Arch.System;
 using Arch.System.SourceGenerator;
 using Game.Core.ECS;
 using Game.Models;
-using Game.UI;
 
 namespace Game.Levels.Controllers;
 
-public partial class EnemyCollisionSolver : Node, IFrameTimeTrackable
+public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 {
 	[Export]
 	private NavMap? _navMap;
@@ -39,9 +38,6 @@ public partial class EnemyCollisionSolver : Node, IFrameTimeTrackable
 	[Export]
 	public byte SubSteps = 6;
 
-	[Export]
-	public FrameTime FrameTime { get; private set; } = null!;
-
 	private UniformGridWorld<(Vector2 pos, Entity entity, float radius)> _grid = null!;
 
 	// Dense write buffers indexed by Entity.Id. Entries are valid for the
@@ -58,7 +54,7 @@ public partial class EnemyCollisionSolver : Node, IFrameTimeTrackable
 		var viewport = GetViewport();
 		if (viewport is null)
 		{
-			Logger.LogError("EnemyCollisionSolver: missing viewport.");
+			Logger.LogError("missing viewport.");
 			return;
 		}
 

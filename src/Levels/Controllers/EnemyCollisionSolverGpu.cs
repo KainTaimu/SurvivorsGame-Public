@@ -9,13 +9,13 @@ using Game.UI;
 namespace Game.Levels.Controllers;
 
 /// <summary>
-/// Compute-shader port of <see cref="EnemyCollisionSolver"/>. Each
+/// Compute-shader port of <see cref="EnemyCollisionSolverCpu"/>. Each
 /// substep rebuilds the uniform grid on the GPU (count -> scan ->
 /// scatter) and solves pushes gather-style. All substeps run
 /// inside one compute list; the CPU syncs once per physics frame and
 /// applies the results (including the NavMap clamp) as usual.
 /// </summary>
-public partial class EnemyCollisionSolverGpu : Node, IFrameTimeTrackable
+public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 {
 	private const int MAX_ENTITIES = 16384;
 	private const int ENTITY_STRIDE = 16;
@@ -50,9 +50,6 @@ public partial class EnemyCollisionSolverGpu : Node, IFrameTimeTrackable
 
 	[Export]
 	public byte SubSteps = 6;
-
-	[Export]
-	public FrameTime FrameTime { get; private set; } = null!;
 
 	private RenderingDevice? _rd;
 

@@ -142,6 +142,7 @@ public partial class NavMap : NavigationRegion2D
 				SimplifyPath = true,
 				StartPosition = origin,
 				TargetPosition = playerPos,
+				PathPostprocessing = NavigationPathQueryParameters2D.PathPostProcessing.Edgecentered,
 			},
 			result
 		);
