@@ -32,6 +32,6 @@ metadata/_custom_type_script = "uid://os8ycjo6m7r0"
 [node name="GrenadeThrower" type="Node2D" unique_id=1000269585]
 script = ExtResource("1_oiqqx")
 GrenadeScene = ExtResource("2_18auf")
-ThrowForce = 1000.0
+ThrowForce = 1250.0
 Properties = SubResource("Resource_r85fg")
 Stats = SubResource("Resource_jlsja")

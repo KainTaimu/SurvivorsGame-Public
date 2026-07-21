@@ -4,6 +4,7 @@ using Arch.Core;
 using Arch.System;
 using Arch.System.SourceGenerator;
 using Game.Core.ECS;
+using Game.Core.Extensions;
 using Game.Core.Services;
 
 namespace Game.Levels.Controllers;
@@ -36,8 +37,11 @@ public partial class EnemyRenderer : Node
 
 	public double ProcessTime { get; private set; }
 
+	private Viewport _cachedViewport = null!;
+
 	public override void _Ready()
 	{
+		_cachedViewport = GetViewport();
 		CenterVisibilityGrid();
 		// Render last to allow other systems to do their work first
 		ProcessPriority = 16;
@@ -45,15 +49,10 @@ public partial class EnemyRenderer : Node
 
 	private void CenterVisibilityGrid()
 	{
-		var viewport = GetViewport();
-		if (viewport is null)
-			return;
-		var windowSize = viewport.GetVisibleRect().Size * RenderDistanceFactor;
-		_visibilityRect = new Rect2(
-			PlayerPosition.X - windowSize.X / 2,
-			PlayerPosition.Y - windowSize.Y / 2,
-			windowSize
-		);
+		var scale = 1f / _cachedViewport.GetCamera2D().Zoom.GetLargestComponent();
+		_visibilityRect = _cachedViewport
+			.GetVisibleRect()
+			.GetCenteredToPoint(PlayerPosition, scale * RenderDistanceFactor);
 	}
 
 	public override void _Process(double delta)
@@ -79,6 +78,8 @@ public partial class EnemyRenderer : Node
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private void UpdateEnemySprites(in Entity entity, ref PositionComponent pos, ref AnimatedSpriteComponent sprite)
 	{
+		if (!GameWorld.World.IsAlive(entity))
+			return;
 		if (!_visibilityRect.HasPoint(pos.Position))
 			return;
 

@@ -56,7 +56,9 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 		nade.OffensiveOrigin = this;
 		nade.GlobalPosition = Player.GlobalPosition;
 		var force =
-			new Vector2(Mathf.Cos(Crosshair.AngleFromPlayer), Mathf.Sin(Crosshair.AngleFromPlayer)) * ThrowForce
+			Vector2.Right.Rotated(
+				GetViewport().GetCamera2D().GetScreenCenterPosition().AngleToPoint(Crosshair.GlobalSpacePosition)
+			) * ThrowForce
 			+ Player.MovementController.Velocity;
 		nade.ApplyImpulse(force);
 		GetTree().Root.CallDeferred(Window.MethodName.AddChild, nade);

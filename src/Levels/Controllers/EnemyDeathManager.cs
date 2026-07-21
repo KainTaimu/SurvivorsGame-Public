@@ -26,7 +26,10 @@ public partial class EnemyDeathManager : Node
 	private void DestroyDeadEnemies()
 	{
 		while (_dyingToRemove.TryDequeue(out var entity))
-			GameWorld.World.Destroy(entity);
+		{
+			if (GameWorld.World.IsAlive(entity))
+				GameWorld.World.Destroy(entity);
+		}
 	}
 
 	[Query]
@@ -65,6 +68,8 @@ public partial class EnemyDeathManager : Node
 
 	private void HandleDeath(Entity entity)
 	{
+		if (!GameWorld.World.IsAlive(entity))
+			return;
 		GameWorld.World.Add(entity, DyingMarkerComponent.Default);
 
 		if (GameWorld.World.TryGet<DeathRewardComponent>(entity, out var reward))
