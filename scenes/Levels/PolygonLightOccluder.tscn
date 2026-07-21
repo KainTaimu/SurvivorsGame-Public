@@ -35,6 +35,8 @@ func set_collision_polygon():
 resource_local_to_scene = true
 polygon = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0)
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_d4clb"]
+
 [node name="PolygonLightOccluder" type="Polygon2D" unique_id=1199949879 groups=["NavPolygons"]]
 z_index = 1394
 z_as_relative = false
@@ -45,6 +47,9 @@ script = SubResource("GDScript_ps52f")
 occluder = SubResource("OccluderPolygon2D_ps52f")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1472749218]
+disable_mode = 2
+collision_layer = 9
+physics_material_override = SubResource("PhysicsMaterial_d4clb")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" unique_id=1309322091]
 polygon = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0)

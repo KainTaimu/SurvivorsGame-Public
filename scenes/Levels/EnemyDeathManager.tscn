@@ -1,6 +1,17 @@
 [gd_scene format=3 uid="uid://c8d8andvaknho"]
 
 [ext_resource type="Script" uid="uid://cv0uegm46tv7j" path="res://src/Levels/Controllers/EnemyDeathManager.cs" id="1_xyvax"]
+[ext_resource type="AudioStream" uid="uid://dv0765jyieab8" path="res://assets/SFX/Gore/Splatter.mp3" id="2_xyvax"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xyvax"]
+playback_mode = 1
+random_pitch = 1.1837928
+streams_count = 1
+stream_0/stream = ExtResource("2_xyvax")
 
 [node name="EnemyDeathManager" type="Node" unique_id=821545961]
 script = ExtResource("1_xyvax")
+
+[node name="DeathSplatter" type="AudioStreamPlayer" parent="." unique_id=2018758855]
+stream = SubResource("AudioStreamRandomizer_xyvax")
+volume_db = -10.0

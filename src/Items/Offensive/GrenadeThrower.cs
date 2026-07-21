@@ -12,6 +12,9 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 	public PackedScene GrenadeScene = null!;
 
 	[Export]
+	private AudioStreamPlayer? _explosionPlayer;
+
+	[Export]
 	public float ThrowForce = 100;
 
 	public string? AttackActionString { get; set; }
@@ -51,7 +54,13 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 		_fireCooldown = OffensiveStats.AttackSpeed;
 
 		var nade = GrenadeScene.Instantiate<Grenade>();
-		nade.OnExploded += (pos) => _blastPosition = pos;
+		nade.OnExploded += (pos) =>
+		{
+			_blastPosition = pos;
+			_explosionPlayer?.Reparent(GetTree().Root);
+			_explosionPlayer?.Play();
+			Callable.From(QueueFree).CallDeferred();
+		};
 
 		nade.OffensiveOrigin = this;
 		nade.GlobalPosition = Player.GlobalPosition;
@@ -62,7 +71,6 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 			+ Player.MovementController.Velocity;
 		nade.ApplyImpulse(force);
 		GetTree().Root.CallDeferred(Window.MethodName.AddChild, nade);
-		GetTree().CreateTimer(OffensiveStats.AttackSpeed * 0.5).Timeout += QueueFree;
 	}
 
 	protected override void HandleHitECS(Entity entity)

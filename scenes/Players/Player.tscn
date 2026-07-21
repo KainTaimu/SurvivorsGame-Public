@@ -155,10 +155,11 @@ script = ExtResource("10_k7ubp")
 script = ExtResource("11_f1vlf")
 Player = NodePath("..")
 
-[node name="PlayerMovementController" type="Node" parent="." unique_id=1602338086 node_paths=PackedStringArray("_player", "_sprite")]
+[node name="PlayerMovementController" type="Node2D" parent="." unique_id=1230632424 node_paths=PackedStringArray("_player", "_sprite")]
 script = ExtResource("4_kfojw")
 _player = NodePath("..")
 _sprite = NodePath("../AnimatedSprite2D")
+metadata/_edit_lock_ = true
 
 [node name="PlayerWeaponController" type="Node" parent="." unique_id=752109662]
 script = ExtResource("12_k8uaa")

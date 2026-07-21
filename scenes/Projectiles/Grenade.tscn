@@ -5,10 +5,19 @@
 [ext_resource type="PackedScene" uid="uid://pihky31jidp2" path="res://scenes/VFX/ExplosionParticles.tscn" id="2_delvo"]
 [ext_resource type="PackedScene" uid="uid://bxoaaswv72j6m" path="res://scenes/VFX/ExplosionFireParticles.tscn" id="3_oct76"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_oct76"]
+friction = 0.0
+bounce = 0.87
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_tmchr"]
+radius = 22.022715
 
 [node name="Grenade" type="RigidBody2D" unique_id=1135986602]
+collision_mask = 8
 mass = 0.001
+physics_material_override = SubResource("PhysicsMaterial_oct76")
+contact_monitor = true
+max_contacts_reported = 1
 angular_velocity = 17.435839
 constant_torque = 720.0
 script = ExtResource("1_0cjwe")
@@ -17,7 +26,6 @@ _postExplosionFireScene = ExtResource("3_oct76")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1936193029]
 shape = SubResource("CircleShape2D_tmchr")
-disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1743088039]
 position = Vector2(1, -3)

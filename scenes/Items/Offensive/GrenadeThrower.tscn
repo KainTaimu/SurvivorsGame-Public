@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_5d54y"]
 [ext_resource type="Texture2D" uid="uid://86rk4yr07033" path="res://assets/Sprites/grenade.png" id="4_5d54y"]
 [ext_resource type="Script" uid="uid://os8ycjo6m7r0" path="res://src/Items/Offensive/BaseOffensiveStats.cs" id="4_gjjd4"]
+[ext_resource type="AudioStream" uid="uid://dlewyy172dhok" path="res://assets/SFX/freesound_community-hq-explosion-6288.mp3" id="6_gjjd4"]
 
 [sub_resource type="Resource" id="Resource_r85fg"]
 script = ExtResource("3_5d54y")
@@ -29,9 +30,15 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://os8ycjo6m7r0"
 
-[node name="GrenadeThrower" type="Node2D" unique_id=1000269585]
+[node name="GrenadeThrower" type="Node2D" unique_id=1000269585 node_paths=PackedStringArray("_explosionPlayer")]
 script = ExtResource("1_oiqqx")
 GrenadeScene = ExtResource("2_18auf")
+_explosionPlayer = NodePath("AudioStreamPlayer")
 ThrowForce = 1250.0
 Properties = SubResource("Resource_r85fg")
 Stats = SubResource("Resource_jlsja")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1456739657]
+stream = ExtResource("6_gjjd4")
+volume_db = -5.0
+pitch_scale = 1.5

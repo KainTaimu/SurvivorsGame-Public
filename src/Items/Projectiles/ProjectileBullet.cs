@@ -42,6 +42,16 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 			return;
 		}
 
+		const float dist = 5;
+		if (
+			Position.DistanceSquaredTo(NavigationServer2D.MapGetClosestPoint(GetWorld2D().NavigationMap, Position))
+			> dist * dist
+		)
+		{
+			ReturnToPool();
+			return;
+		}
+
 		if (!IsInitialized)
 			Logger.LogWarning($"Projectile {GetType().Name} is processing but is not initialized");
 

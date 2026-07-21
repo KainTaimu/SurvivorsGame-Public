@@ -23,6 +23,17 @@ public partial class EnemyNavPathController : Node2D
 	} = 0.8f;
 
 	[Export(PropertyHint.Range, "5,200,5")]
+	private float MinCornerDistance
+	{
+		get;
+		set
+		{
+			field = value;
+			_minCornerDistanceValue = value;
+		}
+	} = 20;
+
+	[Export(PropertyHint.Range, "5,400,5")]
 	private float MaxCornerDistance
 	{
 		get;
@@ -33,18 +44,33 @@ public partial class EnemyNavPathController : Node2D
 		}
 	} = 120f;
 
+	[Export(PropertyHint.Range, "0,100,5")]
+	private float MinPathPointSeparation
+	{
+		get;
+		set
+		{
+			field = value;
+			_minPathPointSeparationValue = value;
+		}
+	} = 30f;
+
 	private readonly ConcurrentQueue<(Vector2[] points, Color color)> _lines = [];
 
 	private static Vector2 _playerPosition;
+	private static float _minCornerDistanceValue;
 	private static float _maxCornerDistanceValue;
 	private static float _corneringSmoothingThresholdValue;
+	private static float _minPathPointSeparationValue;
 
 	public double ProcessTime { get; private set; }
 
 	public override void _Ready()
 	{
+		_minCornerDistanceValue = MinCornerDistance;
 		_maxCornerDistanceValue = MaxCornerDistance;
 		_corneringSmoothingThresholdValue = CorneringSmoothingThreshold;
+		_minPathPointSeparationValue = MinPathPointSeparation;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -58,14 +84,16 @@ public partial class EnemyNavPathController : Node2D
 
 #if DEBUG
 		if (DrawNavPaths && Engine.GetProcessFrames() % 1 == 0)
+		{
 			QueueRedraw();
+		}
 #endif
 	}
 
 	public override void _Draw()
 	{
 		while (_lines.TryDequeue(out var line))
-			DrawPolyline(line.points, line.color, 1);
+			DrawPolyline(line.points, line.color, 2, true);
 		_lines.Clear();
 	}
 
@@ -140,16 +168,27 @@ public partial class EnemyNavPathController : Node2D
 
 		// ALGORITHM CREDIT: https://www.gamedeveloper.com/programming/group-pathfinding-movement-in-rts-style-games
 		var pA = paths[0];
-		var pB = paths[1];
-		var pC = paths[2];
+
+		var minSepSq = _minPathPointSeparationValue * _minPathPointSeparationValue;
+		var i = 1;
+		while (i < paths.Length - 1 && pos.Position.DistanceSquaredTo(paths[i]) < minSepSq)
+			i++;
+
+		if (pos.Position.DistanceSquaredTo(paths[i]) < minSepSq)
+		{
+			MoveStraightMover(paths[^1], delta, ref pos, ref velocity, ref moveSpeed);
+			return;
+		}
+
+		var pB = paths[i];
+		var pC = i + 1 < paths.Length ? paths[i + 1] : paths[^1];
 
 		var vC = pA - pB;
 		var vHalfC = vC * 0.5f;
 
-		var vCorrection = (pA - vHalfC).Clamp(20f, _maxCornerDistanceValue);
+		var vCorrection = (pA - vHalfC).Clamp(_minCornerDistanceValue, _maxCornerDistanceValue);
 
 		// 0 is perpendicular, 1 is parallel
-
 		var vCosine = vCorrection.Dot(vHalfC) / (vCorrection.Length() * vHalfC.Length());
 		if (vCosine > _corneringSmoothingThresholdValue)
 			vCorrection *= -1;

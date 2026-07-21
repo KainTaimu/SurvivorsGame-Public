@@ -2,8 +2,11 @@ using Game.UI;
 
 namespace Game.Players.Controllers;
 
-public partial class PlayerMovementController : Node
+public partial class PlayerMovementController : Node2D
 {
+	[Export]
+	public bool NoClip;
+
 	[Export]
 	private Player _player = null!;
 
@@ -21,7 +24,7 @@ public partial class PlayerMovementController : Node
 		Callable.From(() => Crosshair?.OnCrosshairMoved += FlipSprite).CallDeferred();
 	}
 
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		Velocity = Vector2.Zero;
 		PlayerMovement(delta);
@@ -59,7 +62,13 @@ public partial class PlayerMovementController : Node
 		var originalPos = _player.GetPosition();
 
 		var newPos = originalPos + move;
-		_player.SetPosition(newPos);
+
+		const float dist = 5;
+		var closest = NavigationServer2D.MapGetClosestPoint(GetWorld2D().NavigationMap, newPos);
+		if (Position.DistanceSquaredTo(closest) > dist * dist && !NoClip)
+			_player.GlobalPosition = closest;
+		else
+			_player.GlobalPosition = newPos;
 	}
 
 	private void FlipSprite()

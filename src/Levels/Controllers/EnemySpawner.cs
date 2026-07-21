@@ -44,7 +44,10 @@ public partial class EnemySpawner : Node
 				Scale = bp.Stats.SpriteScaleMultiplier,
 			},
 			new CircleHitboxComponent(bp.Stats.SpriteScaleMultiplier * 16f),
-			new MoveSpeedComponent(Mathf.CeilToInt(stats.MoveSpeed * stats.MoveSpeedMultiplier), stats.TurnSpeed),
+			new MoveSpeedComponent(
+				Mathf.CeilToInt(stats.MoveSpeed * stats.MoveSpeedMultiplier * GD.RandRange(0.9f, 1.1f)),
+				stats.TurnSpeed
+			),
 			VelocityComponent.Zero,
 			new EnemyContactDamageComponent(Mathf.CeilToInt(stats.DamageOnContact * stats.ContactDamageMultiplier)),
 			new DeathRewardComponent(Mathf.CeilToInt(stats.MoneyDrop * stats.MoneyDropMultiplier)),

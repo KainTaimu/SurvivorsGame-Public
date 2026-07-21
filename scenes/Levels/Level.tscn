@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://bh4q5xe8eps71" path="res://scenes/Levels/AirdropManager.tscn" id="20_qsiuk"]
 [ext_resource type="PackedScene" uid="uid://do6p1pg4x0vkf" path="res://scenes/UI/Hud.tscn" id="20_vg5sh"]
 [ext_resource type="PackedScene" uid="uid://cb6opjo4xaaio" path="res://scenes/UI/PerformanceMonitor.tscn" id="24_qsiuk"]
+[ext_resource type="Script" uid="uid://cj0nr8h53xux4" path="res://src/Utils/Spectrum.gd" id="25_27qwr"]
 [ext_resource type="PackedScene" uid="uid://cbpyycvkwcedb" path="res://scenes/UI/PickupUi.tscn" id="26_faxpm"]
 [ext_resource type="PackedScene" uid="uid://1hchpk0m1v70" path="res://scenes/Levels/GoreManager.tscn" id="27_3nhtq"]
 [ext_resource type="Material" uid="uid://dvi7xyjhs2chr" path="res://scenes/VFX/NormalDeathParticlesProcessMaterial.tres" id="28_g1w0t"]
@@ -52,6 +53,8 @@ var buf: Array[float] = []
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	if not visible:
+		return
 	var peakLeft = AudioServer.get_bus_peak_volume_left_db(0, 0)
 	var peakRight= AudioServer.get_bus_peak_volume_right_db(0, 0)
 	var maxPeak = maxf(peakLeft, peakRight)
@@ -174,6 +177,7 @@ CollisionSolver = NodePath("../../Systems/EnemySystems/EnemyCollisionSolver")
 EnemyRenderer = NodePath("../../Systems/EnemySystems/EnemyRenderer")
 
 [node name="AudioMonitor" type="CanvasLayer" parent="UI" unique_id=345253744]
+visible = false
 script = SubResource("GDScript_do71q")
 
 [node name="Label" type="Label" parent="UI/AudioMonitor" unique_id=1220053749]
@@ -184,3 +188,9 @@ offset_top = -9.5
 offset_right = 40.0
 offset_bottom = 9.5
 grow_vertical = 2
+
+[node name="Spectrum" type="Node2D" parent="UI/AudioMonitor" unique_id=1159760589]
+script = ExtResource("25_27qwr")
+VU_COUNT = 64
+FREQ_MAX = 15000.0
+HEIGHT_SCALE = 5.6
