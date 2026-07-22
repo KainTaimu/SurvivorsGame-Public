@@ -69,6 +69,7 @@ folder_colors={
 
 [global_group]
 
+NavPolygons=""
 navigation_polygon_source_geometry_group=""
 
 [gui]
@@ -162,6 +163,10 @@ previous_weapon={
 [navigation]
 
 pathfinding/max_threads=-1
+
+[physics]
+
+2d/run_on_separate_thread=true
 
 [project_time_traker]
 

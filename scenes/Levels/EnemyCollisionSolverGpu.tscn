@@ -13,5 +13,5 @@ script = ExtResource("1_oincy")
 _solverRangeFactor = 10.0
 _distBeforeShove = 45
 _pushAmount = 0.3
-SubSteps = 20
+SubSteps = 8
 FrameTime = SubResource("Resource_hxi0g")

@@ -6,7 +6,7 @@
 // pass of the previous substep, and by zero-initialized buffers on the
 // very first frame).
 
-layout(local_size_x = 64, local_size_y = 1, local_size_z = 1) in;
+layout(local_size_x = 512, local_size_y = 1, local_size_z = 1) in;
 
 struct GpuEntity {
     vec2 pos;

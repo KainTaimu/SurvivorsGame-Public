@@ -7,7 +7,7 @@
 // to all zero for the next substep's count pass. Entities land in
 // reverse order within their cell, which is irrelevant to the solver.
 
-layout(local_size_x = 64, local_size_y = 1, local_size_z = 1) in;
+layout(local_size_x = 512, local_size_y = 1, local_size_z = 1) in;
 
 struct GpuEntity {
     vec2 pos;

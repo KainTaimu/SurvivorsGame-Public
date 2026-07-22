@@ -19,7 +19,7 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 {
 	private const int MAX_ENTITIES = 16384;
 	private const int ENTITY_STRIDE = 16;
-	private const int WORKGROUP_SIZE = 64;
+	private const int WORKGROUP_SIZE = 512;
 	private const int PUSH_CONSTANT_SIZE = 48;
 
 	[ExportCategory("Configuration")]
