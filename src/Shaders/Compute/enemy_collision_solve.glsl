@@ -103,7 +103,7 @@ void main() {
             // header comment) has 1 < count <= 10.
             bool sourceIsMine = ox > 0 || (ox == 0 && oy >= 0);
             int sourceCount = sourceIsMine ? countA : countB;
-            if (sourceCount <= 1 || sourceCount > 10) {
+            if (sourceCount <= 1) {
                 continue;
             }
 

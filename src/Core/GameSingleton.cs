@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 namespace Game.Core;
 
+[GlobalClass]
 public partial class GameSingleton : Node
 {
 	[Export]

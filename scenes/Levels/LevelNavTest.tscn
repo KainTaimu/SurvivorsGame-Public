@@ -98,7 +98,7 @@ metadata/_custom_type_script = "uid://d2tvxgxbv87i2"
 [sub_resource type="Resource" id="Resource_lkbse"]
 script = ExtResource("8_lkbse")
 Duration = 999999999.0
-MaxMobs = 10000
+MaxMobs = 5000
 EnemyBlueprints = SubResource("Resource_i1qcg")
 SpawnMinTime = 0.1
 SpawnMaxTime = 0.1

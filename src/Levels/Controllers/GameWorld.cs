@@ -4,6 +4,7 @@ using Schedulers;
 
 namespace Game.Levels.Controllers;
 
+[GlobalClass]
 public partial class GameWorld : Node
 {
 	[Export]

@@ -72,4 +72,16 @@ public partial class PerformanceMonitor : CanvasLayer
 		_labels.Add(trackable, label);
 		_vBoxContainer.AddChild(label);
 	}
+
+	public void RemoveTarget(Node node)
+	{
+		if (node is not IFrameTimeTrackable trackable)
+			return;
+
+		if (!_labels.Remove(trackable, out var value))
+			return;
+
+		value.QueueFree();
+		node.QueueFree();
+	}
 }
