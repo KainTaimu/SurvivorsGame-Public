@@ -10,4 +10,8 @@ metadata/_custom_type_script = "uid://daw8gyvo0xom3"
 
 [node name="EnemyCollisionSolverCpu" type="Node" unique_id=1385837718]
 script = ExtResource("1_ej8rl")
+_solverRangeFactor = 10.0
+_distBeforeShove = 45
+_pushAmount = 0.3
+SubSteps = 20
 FrameTime = SubResource("Resource_crawl")

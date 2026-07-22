@@ -69,7 +69,7 @@ folder_colors={
 
 [global_group]
 
-NavPolygons=""
+navigation_polygon_source_geometry_group=""
 
 [gui]
 

@@ -37,7 +37,7 @@ polygon = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_d4clb"]
 
-[node name="PolygonLightOccluder" type="Polygon2D" unique_id=1199949879 groups=["NavPolygons"]]
+[node name="PolygonLightOccluder" type="Polygon2D" unique_id=1199949879 groups=["navigation_polygon_source_geometry_group"]]
 z_index = 1394
 z_as_relative = false
 polygon = PackedVector2Array(-32, 32, -32, -32, 32, -32, 32, 32)

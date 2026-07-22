@@ -1,8 +1,17 @@
 [gd_scene format=3 uid="uid://tw6dfgyd6h7y"]
 
 [ext_resource type="Script" uid="uid://bjis25rd0y3uy" path="res://src/Levels/Controllers/EnemyNavPathController.cs" id="1_aeca8"]
+[ext_resource type="Script" uid="uid://daw8gyvo0xom3" path="res://src/UI/FrameTime.cs" id="2_kukbm"]
+
+[sub_resource type="Resource" id="Resource_0833k"]
+script = ExtResource("2_kukbm")
+FrameName = &"Nav"
+metadata/_custom_type_script = "uid://daw8gyvo0xom3"
 
 [node name="EnemyNavMeshController" type="Node2D" unique_id=7126221]
 script = ExtResource("1_aeca8")
-CorneringSmoothingThreshold = 0.7
-MaxCornerDistance = 200.0
+CorneringSmoothingThreshold = 0.65
+MaxCornerDistance = 80.0
+MinPathPointSeparation = 10.0
+PointCompletionDistance = 60.0
+FrameTime = SubResource("Resource_0833k")
