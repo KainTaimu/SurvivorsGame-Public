@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://umbqj1xym7lp" path="res://scenes/Core/FodderMultiMeshInstance2D.tscn" id="9_ror81"]
 [ext_resource type="Script" uid="uid://citywxiolgxtm" path="res://src/Levels/Controllers/EnemyWaveController.cs" id="11_aredf"]
 [ext_resource type="Script" uid="uid://cuxwdf1ugwtxm" path="res://src/Levels/Controllers/EnemySpawner.cs" id="12_qsiuk"]
-[ext_resource type="Script" uid="uid://bcsci8l25wq85" path="res://src/Levels/Controllers/EnemyCollisionSolverGpu.cs" id="13_faxpm"]
+[ext_resource type="PackedScene" uid="uid://dh3cfccrh31b0" path="res://scenes/Levels/EnemyCollisionSolverManager.tscn" id="13_faxpm"]
 [ext_resource type="PackedScene" uid="uid://bpgtq48wt7r32" path="res://scenes/Levels/EnemyHitFeedbackController.tscn" id="13_vg5sh"]
 [ext_resource type="PackedScene" uid="uid://c8d8andvaknho" path="res://scenes/Levels/EnemyDeathManager.tscn" id="14_aig1n"]
 [ext_resource type="Script" uid="uid://daw8gyvo0xom3" path="res://src/UI/FrameTime.cs" id="14_faxpm"]
@@ -26,11 +26,6 @@
 [ext_resource type="Material" uid="uid://dvi7xyjhs2chr" path="res://scenes/VFX/NormalDeathParticlesProcessMaterial.tres" id="28_g1w0t"]
 [ext_resource type="Material" uid="uid://cholhn1qxqaej" path="res://scenes/VFX/ExplosionDeathParticlesProcessMaterial.tres" id="29_cccga"]
 [ext_resource type="Script" uid="uid://ddigkg5ndk0da" path="res://src/Levels/Controllers/HitParticlesInfo.cs" id="29_mybqu"]
-
-[sub_resource type="Resource" id="Resource_hxi0g"]
-script = ExtResource("14_faxpm")
-FrameName = &"CollisionGpu"
-metadata/_custom_type_script = "uid://daw8gyvo0xom3"
 
 [sub_resource type="Resource" id="Resource_faxpm"]
 script = ExtResource("14_faxpm")
@@ -144,13 +139,7 @@ _goreManager = NodePath("../GoreManager")
 
 [node name="EnemyDeathManager" parent="Systems/EnemySystems" unique_id=821545961 instance=ExtResource("14_aig1n")]
 
-[node name="EnemyCollisionSolverGpu" type="Node" parent="Systems/EnemySystems" unique_id=1227279599]
-script = ExtResource("13_faxpm")
-_solverRangeFactor = 10.0
-_distBeforeShove = 45
-_pushAmount = 0.3
-SubSteps = 16
-FrameTime = SubResource("Resource_hxi0g")
+[node name="EnemyCollisionSolverManager" parent="Systems/EnemySystems" unique_id=1705317581 instance=ExtResource("13_faxpm")]
 
 [node name="EnemyRenderer" type="Node" parent="Systems/EnemySystems" unique_id=1054443393]
 process_priority = 16
@@ -187,7 +176,7 @@ visible = false
 ShowOnStart = false
 
 [node name="PerformanceMonitor" parent="UI" unique_id=1872396024 node_paths=PackedStringArray("Targets") instance=ExtResource("24_qsiuk")]
-Targets = [NodePath("../../Systems/EnemySystems/EnemyCollisionSolverGpu"), NodePath("../../Systems/EnemySystems/EnemyRenderer")]
+Targets = [null, NodePath("../../Systems/EnemySystems/EnemyRenderer")]
 RefreshRate = 5
 
 [node name="AudioMonitor" type="CanvasLayer" parent="UI" unique_id=345253744]

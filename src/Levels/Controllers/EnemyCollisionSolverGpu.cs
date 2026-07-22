@@ -14,15 +14,13 @@ namespace Game.Levels.Controllers;
 /// inside one compute list; the CPU syncs once per physics frame and
 /// applies the results (including the NavMap clamp) as usual.
 /// </summary>
+[GlobalClass]
 public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 {
 	private const int MAX_ENTITIES = 16384;
 	private const int ENTITY_STRIDE = 16;
 	private const int WORKGROUP_SIZE = 64;
 	private const int PUSH_CONSTANT_SIZE = 48;
-
-	[Export]
-	private NavMap? _navMap;
 
 	[ExportCategory("Configuration")]
 	[Export]
@@ -183,7 +181,7 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 			var finalBuffer = SubSteps % 2 == 0 ? _entitiesA : _entitiesB;
 			var results = _rd.BufferGetData(finalBuffer, 0, byteCount);
 
-			ApplyCollisionsQuery(GameWorld.World, results, _writeFrame, _navMap!);
+			ApplyCollisionsQuery(GameWorld.World, results, _writeFrame, NavMap!);
 		}
 	}
 

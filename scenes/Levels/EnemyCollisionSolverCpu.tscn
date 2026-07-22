@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dw312waw5r7eg"]
+
+[ext_resource type="Script" uid="uid://cwkq6cfxp7jub" path="res://src/Levels/Controllers/EnemyCollisionSolverCpu.cs" id="1_ej8rl"]
+[ext_resource type="Script" uid="uid://daw8gyvo0xom3" path="res://src/UI/FrameTime.cs" id="2_oj7ws"]
+
+[sub_resource type="Resource" id="Resource_crawl"]
+script = ExtResource("2_oj7ws")
+FrameName = &"CollisionCpu"
+metadata/_custom_type_script = "uid://daw8gyvo0xom3"
+
+[node name="EnemyCollisionSolverCpu" type="Node" unique_id=1385837718]
+script = ExtResource("1_ej8rl")
+FrameTime = SubResource("Resource_crawl")

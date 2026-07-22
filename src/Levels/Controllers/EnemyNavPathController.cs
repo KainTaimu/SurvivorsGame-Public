@@ -10,7 +10,16 @@ namespace Game.Levels.Controllers;
 public partial class EnemyNavPathController : Node2D, IFrameTimeTrackable
 {
 	[Export]
-	public bool DrawNavPaths;
+	public bool DrawNavPaths
+	{
+		get;
+		set
+		{
+			field = value;
+			_lines.Clear();
+			QueueRedraw();
+		}
+	}
 
 	[Export(PropertyHint.Range, "0,1,0.05")]
 	private float CorneringSmoothingThreshold
@@ -56,6 +65,17 @@ public partial class EnemyNavPathController : Node2D, IFrameTimeTrackable
 		}
 	} = 30f;
 
+	[Export(PropertyHint.Range, "0,100,5")]
+	private float PointCompletionDistance
+	{
+		get;
+		set
+		{
+			field = value;
+			_pointCompletionDistanceValue = value;
+		}
+	} = 30f;
+
 	[Export]
 	public FrameTime FrameTime { get; private set; } = null!;
 
@@ -66,6 +86,7 @@ public partial class EnemyNavPathController : Node2D, IFrameTimeTrackable
 	private static float _maxCornerDistanceValue;
 	private static float _corneringSmoothingThresholdValue;
 	private static float _minPathPointSeparationValue;
+	private static float _pointCompletionDistanceValue;
 
 	public override void _Ready()
 	{
@@ -73,6 +94,7 @@ public partial class EnemyNavPathController : Node2D, IFrameTimeTrackable
 		_maxCornerDistanceValue = MaxCornerDistance;
 		_corneringSmoothingThresholdValue = CorneringSmoothingThreshold;
 		_minPathPointSeparationValue = MinPathPointSeparation;
+		_pointCompletionDistanceValue = PointCompletionDistance;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -184,20 +206,25 @@ public partial class EnemyNavPathController : Node2D, IFrameTimeTrackable
 			return;
 		}
 
+		var completionSq = _pointCompletionDistanceValue * _pointCompletionDistanceValue;
 		var pB = paths[i];
+		var vFinal = GetCornerTarget(pA, pB);
+
+		// Overshoot guard: close enough to the steering target = point completed
+		while (i < paths.Length - 1 && pos.Position.DistanceSquaredTo(vFinal) < completionSq)
+		{
+			i++;
+			pB = paths[i];
+			vFinal = GetCornerTarget(pA, pB);
+		}
+
+		if (pos.Position.DistanceSquaredTo(vFinal) < completionSq)
+		{
+			MoveStraightMover(paths[^1], delta, ref pos, ref velocity, ref moveSpeed);
+			return;
+		}
+
 		var pC = i + 1 < paths.Length ? paths[i + 1] : paths[^1];
-
-		var vC = pA - pB;
-		var vHalfC = vC * 0.5f;
-
-		var vCorrection = (pA - vHalfC).Clamp(_minCornerDistanceValue, _maxCornerDistanceValue);
-
-		// 0 is perpendicular, 1 is parallel
-		var vCosine = vCorrection.Dot(vHalfC) / (vCorrection.Length() * vHalfC.Length());
-		if (vCosine > _corneringSmoothingThresholdValue)
-			vCorrection *= -1;
-
-		var vFinal = pB + vCorrection;
 
 		velocity.Velocity = velocity.Velocity.Lerp(
 			pos.Position.DirectionTo(vFinal) * moveSpeed.MoveSpeed,
@@ -210,5 +237,20 @@ public partial class EnemyNavPathController : Node2D, IFrameTimeTrackable
 			navLines?.Enqueue(([pB, vFinal], Colors.Red));
 			navLines?.Enqueue(([pA, vFinal, pC], Colors.Green));
 		}
+	}
+
+	private static Vector2 GetCornerTarget(Vector2 pA, Vector2 pB)
+	{
+		var vC = pA - pB;
+		var vHalfC = vC * 0.5f;
+
+		var vCorrection = (pA - vHalfC).Clamp(_minCornerDistanceValue, _maxCornerDistanceValue);
+
+		// 0 is perpendicular, 1 is parallel
+		var vCosine = vCorrection.Dot(vHalfC) / (vCorrection.Length() * vHalfC.Length());
+		if (vCosine > _corneringSmoothingThresholdValue)
+			vCorrection *= -1;
+
+		return pB + vCorrection;
 	}
 }

@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://dh3cfccrh31b0"]
+
+[ext_resource type="PackedScene" uid="uid://dw312waw5r7eg" path="res://scenes/Levels/EnemyCollisionSolverCpu.tscn" id="1_4xdwv"]
+[ext_resource type="PackedScene" uid="uid://bun1hjjn25472" path="res://scenes/Levels/EnemyCollisionSolverGpu.tscn" id="2_tybaq"]
+
+[sub_resource type="GDScript" id="GDScript_ogoab"]
+script/source = "extends Node
+
+@export var solver_type: SolverTypeEnum = SolverTypeEnum.NONE
+var current_solver: AbstractEnemyCollisionSolver = null
+
+@export var nav_map: NavMap = null
+	
+enum SolverTypeEnum { NONE, CPU, GPU }
+
+@export_group(\"Internal\")
+@export var cpu_solver: PackedScene
+@export var gpu_solver: PackedScene
+@export var monitor: PerformanceMonitor
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	match solver_type:
+		SolverTypeEnum.CPU:
+			set_solver(cpu_solver)
+		SolverTypeEnum.GPU:
+			set_solver(gpu_solver)
+
+func set_solver(type: PackedScene):
+	var node = type.instantiate() as AbstractEnemyCollisionSolver
+	node.NavMap = nav_map
+	add_child(node)
+	current_solver = node
+	if monitor != null:
+		monitor.call_deferred(\"AddTarget\", node)
+"
+
+[node name="EnemyCollisionSolverManager" type="Node" unique_id=1705317581]
+script = SubResource("GDScript_ogoab")
+cpu_solver = ExtResource("1_4xdwv")
+gpu_solver = ExtResource("2_tybaq")

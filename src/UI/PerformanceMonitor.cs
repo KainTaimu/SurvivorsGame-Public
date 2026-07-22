@@ -2,6 +2,7 @@ using Godot.Collections;
 
 namespace Game.UI;
 
+[GlobalClass]
 public partial class PerformanceMonitor : CanvasLayer
 {
 	[Export]
@@ -21,8 +22,7 @@ public partial class PerformanceMonitor : CanvasLayer
 
 	public override void _Ready()
 	{
-		if (Targets is null)
-			return;
+		Targets ??= [];
 
 		foreach (var node in Targets)
 		{
@@ -32,17 +32,13 @@ public partial class PerformanceMonitor : CanvasLayer
 				continue;
 			}
 
-			if (node is not IFrameTimeTrackable trackable)
+			if (node is not IFrameTimeTrackable)
 			{
 				Logger.LogError($"{node.Name} is not IFrameTimeTrackable");
 				continue;
 			}
 
-			var label = _labelScene.Instantiate<RichTextLabel>();
-
-			_labels.Add(trackable, label);
-
-			_vBoxContainer.AddChild(label);
+			AddTarget(node);
 		}
 	}
 
@@ -66,5 +62,14 @@ public partial class PerformanceMonitor : CanvasLayer
 			};
 			label.Text = $"{node.FrameTime.FrameName}: {time:0.##}{unit}";
 		}
+	}
+
+	public void AddTarget(Node node)
+	{
+		if (node is not IFrameTimeTrackable trackable)
+			return;
+		var label = _labelScene.Instantiate<RichTextLabel>();
+		_labels.Add(trackable, label);
+		_vBoxContainer.AddChild(label);
 	}
 }

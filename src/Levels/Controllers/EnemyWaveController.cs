@@ -5,6 +5,7 @@ using Godot.Collections;
 
 namespace Game.Levels.Controllers;
 
+[GlobalClass]
 public partial class EnemyWaveController : Node
 {
 	[Export]

@@ -15,6 +15,7 @@ using Game.Players.Controllers;
 
 namespace Game.Levels.Controllers;
 
+[GlobalClass]
 public partial class EnemyTargetQuery : Node
 {
 	// BREAKING: Changing this value breaks Projectile radius of weapons

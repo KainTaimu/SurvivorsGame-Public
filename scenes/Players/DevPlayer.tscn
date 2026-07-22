@@ -89,7 +89,7 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vsrt8"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_qh10d"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_agk5e"]
@@ -132,7 +132,7 @@ Icon = SubResource("PlaceholderTexture2D_agk5e")
 Modifiers = Array[ExtResource("8_agk5e")]([SubResource("Resource_vujg4")])
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vujg4"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vsrt8"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_mre4m"]
@@ -191,3 +191,5 @@ _crackEffect = SubResource("Resource_y52bq")
 _permanentCrackEffect = SubResource("Resource_t84yk")
 Properties = SubResource("Resource_mre4m")
 Stats = SubResource("Resource_vsrt8")
+
+[node name="Node" type="Node" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(752109662) index="12" unique_id=1495547414]

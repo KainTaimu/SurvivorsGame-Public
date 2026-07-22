@@ -3,6 +3,7 @@ using Game.Models;
 
 namespace Game.Levels;
 
+[GlobalClass]
 public partial class NavMap : NavigationRegion2D
 {
 	[Export]
@@ -88,7 +89,7 @@ public partial class NavMap : NavigationRegion2D
 		if (handle is null)
 			return [];
 
-		_grid.TryGet(handle!.Value, out paths);
+		_grid.TryGet(handle.Value, out paths);
 		return paths.AsSpan();
 	}
 
@@ -152,6 +153,8 @@ public partial class NavMap : NavigationRegion2D
 	private void UpdateGrid()
 	{
 		var viewport = GetViewport();
+		if (viewport is null)
+			return;
 		var windowSize = viewport.GetVisibleRect().Size;
 		_grid = new UniformGridWorld<Vector2[]>(GridSize, new Vector2(windowSize.X, windowSize.X) * RangeFactor, 1);
 	}

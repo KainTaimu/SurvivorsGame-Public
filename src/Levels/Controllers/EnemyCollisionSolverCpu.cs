@@ -7,11 +7,9 @@ using Game.Models;
 
 namespace Game.Levels.Controllers;
 
+[GlobalClass]
 public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 {
-	[Export]
-	private NavMap? _navMap;
-
 	[ExportCategory("Configuration")]
 	[Export]
 	private byte _gridSize = 64;
@@ -65,11 +63,7 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 		// suddenly affected by it, causing a large amount of enemies
 		// to be shoved towards player. The smaller height of 16:9 display
 		// makes it harder for player to avoid the spilled enemies.
-		_grid = new UniformGridWorld<(Vector2, Entity, float)>(
-			_gridSize,
-			new Vector2(windowSize.X, windowSize.X),
-			initialCapacity: 128
-		);
+		_grid = new UniformGridWorld<(Vector2, Entity, float)>(_gridSize, new Vector2(windowSize.X, windowSize.X), 128);
 
 		Logger.LogDebug("in", _grid.Dimensions, _grid.CellSize);
 	}
@@ -102,7 +96,7 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 				SolveCollisions();
 			}
 
-			ApplyCollisionsQuery(GameWorld.World, _entries, _stamps, _writeFrame, _navMap!);
+			ApplyCollisionsQuery(GameWorld.World, _entries, _stamps, _writeFrame, NavMap!);
 		}
 	}
 
@@ -175,9 +169,7 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 		// Arch does not support nullable operator in parameters
 		// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
 		if (navMap is not null && navMap.GridVisibilityRect.HasPoint(pos.Position))
-		{
 			pos.Position = NavigationServer2D.MapGetClosestPoint(NavMap.Map, newPos);
-		}
 		else
 			pos.Position = newPos;
 	}

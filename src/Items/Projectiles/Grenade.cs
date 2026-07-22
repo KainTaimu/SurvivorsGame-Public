@@ -74,11 +74,6 @@ public partial class Grenade : RigidBody2D
 		QueueFree();
 	}
 
-	private void HandleBodyCollision(Rid bodyRid, Node body, int bodyShapeIndex, int localShapeIndex)
-	{
-		Logger.LogDebug();
-	}
-
 	private void ApplyCameraRecoil()
 	{
 		if (!GameSettings.Instance.EnableCameraShake)

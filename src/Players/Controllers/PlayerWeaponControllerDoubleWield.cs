@@ -3,8 +3,7 @@ using Game.Items.Offensive;
 
 namespace Game.Players.Controllers;
 
-// TODO: How to handle weapons that may need to use both mouse buttons like
-// zooming in with snipers or locking on target with missile?
+[Obsolete("Outdated to PlayerWeaponControllerSingleHanded")]
 public partial class PlayerWeaponControllerDoubleWield : AbstractPlayerWeaponController
 {
 	public override void _Ready()

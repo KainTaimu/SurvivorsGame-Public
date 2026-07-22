@@ -5,6 +5,7 @@ using Game.VFX;
 
 namespace Game.Levels.Controllers;
 
+[GlobalClass]
 public partial class EnemyHitFeedbackController : Node
 {
 	[Export]

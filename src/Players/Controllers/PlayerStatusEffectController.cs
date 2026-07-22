@@ -76,7 +76,6 @@ public partial class PlayerStatusEffectController : Node
 		}
 
 		_activeEffects.Remove(statusEffect);
-		Logger.LogDebug($"Player status effect removed: {statusEffect}");
 		EmitSignalOnStatusEffectRemoved(statusEffect);
 	}
 
@@ -108,7 +107,6 @@ public partial class PlayerStatusEffectController : Node
 
 		_activeEffects.Add(statusEffect);
 		EmitSignalOnStatusEffectApplied(statusEffect);
-		Logger.LogDebug($"New status effect applied to Player: {statusEffect}");
 	}
 
 	private void InitializeStatStacks()

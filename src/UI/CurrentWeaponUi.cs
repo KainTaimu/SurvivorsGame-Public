@@ -22,17 +22,17 @@ public partial class CurrentWeaponUi : CanvasLayer
 
 	public override void _Ready()
 	{
-		_weaponController.OnPrimaryAttackReassigned += () => Callable.From(UpdateCarousel).CallDeferred();
-		_weaponController.OnSecondaryAttackReassigned += () => Callable.From(UpdateCarousel).CallDeferred();
-		_weaponController.OnOffensiveListChanged += _ => Callable.From(UpdateCarousel).CallDeferred();
-		_weaponController.ChildOrderChanged += () => Callable.From(UpdateCarousel).CallDeferred();
+		_weaponController.OnPrimaryAttackReassigned += UpdateCarousel;
+		_weaponController.OnSecondaryAttackReassigned += UpdateCarousel;
+		_weaponController.OnOffensiveListChanged += _ => UpdateCarousel();
+		_weaponController.ChildOrderChanged += UpdateCarousel;
 		Callable.From(UpdateCarousel).CallDeferred();
 	}
 
 	public override void _Process(double delta)
 	{
 		// PERF: Use signals
-		Callable.From(UpdateAmmoCount).CallDeferred();
+		UpdateAmmoCount();
 	}
 
 	public void UpdateAmmoCount()
@@ -82,49 +82,61 @@ public partial class CurrentWeaponUi : CanvasLayer
 
 	public void UpdateCarousel()
 	{
-		var diff = _weaponController.Offensives.Count - _weaponCarousel.GetChildCount();
-		while (diff > 0)
+		// HACK:
+		// throws a ObjectDisposedException when reloading due to AbstractPlayerWeaponController implementations
+		// using ChildOrderChanged as a signal to emit changes to Nodes. Because it can't differentiate between a
+		// weapon node exiting normally and it being freed due to Root reloading
+		try
 		{
-			var weaponItem = _weaponCarouselItemScene.Instantiate<WeaponItem>();
-			_weaponCarousel.AddChild(weaponItem);
-			diff--;
+			var diff = _weaponController.Offensives.Count - _weaponCarousel.GetChildCount();
+			while (diff > 0)
+			{
+				var weaponItem = _weaponCarouselItemScene.Instantiate<WeaponItem>();
+				_weaponCarousel.AddChild(weaponItem);
+				diff--;
+			}
+
+			while (diff < 0)
+			{
+				var lastChildIndex = _weaponCarousel.GetChildCount() - 1;
+				var child = _weaponCarousel.GetChild(lastChildIndex);
+				_weaponCarousel.RemoveChild(child);
+				child.QueueFree();
+				diff++;
+			}
+
+			var i = 0;
+			foreach (var weapon in _weaponController.Offensives)
+			{
+				if (_weaponCarousel.GetChild(i) is not WeaponItem weaponItem)
+					continue;
+				weaponItem.WeaponName.Text = weapon.Properties.Name;
+
+				if (_weaponController.PrimaryAttack == weapon)
+				{
+					weaponItem.SelectedCaret.VisibleRatio = 1;
+					weaponItem.SelectedCaret.Text = "1";
+					weaponItem.WeaponName.LabelSettings.FontColor = Colors.White;
+				}
+				else if (_weaponController.SecondaryAttack == weapon)
+				{
+					weaponItem.SelectedCaret.VisibleRatio = 1;
+					weaponItem.SelectedCaret.Text = "2";
+					weaponItem.WeaponName.LabelSettings.FontColor = Colors.White;
+				}
+				else
+				{
+					weaponItem.SelectedCaret.VisibleRatio = 0;
+					weaponItem.WeaponName.LabelSettings.FontColor = Colors.DarkGray;
+				}
+
+				weaponItem.Name = i++.ToString();
+			}
 		}
-
-		while (diff < 0)
+		catch (ObjectDisposedException ex)
 		{
-			var lastChildIndex = _weaponCarousel.GetChildCount() - 1;
-			var child = _weaponCarousel.GetChild(lastChildIndex);
-			_weaponCarousel.RemoveChild(child);
-			child.QueueFree();
-			diff++;
-		}
-
-		var i = 0;
-		foreach (var weapon in _weaponController.Offensives)
-		{
-			if (_weaponCarousel.GetChild(i) is not WeaponItem weaponItem)
-				continue;
-			weaponItem.WeaponName.Text = weapon.Properties.Name;
-
-			if (_weaponController.PrimaryAttack == weapon)
-			{
-				weaponItem.SelectedCaret.VisibleRatio = 1;
-				weaponItem.SelectedCaret.Text = "1";
-				weaponItem.WeaponName.LabelSettings.FontColor = Colors.White;
-			}
-			else if (_weaponController.SecondaryAttack == weapon)
-			{
-				weaponItem.SelectedCaret.VisibleRatio = 1;
-				weaponItem.SelectedCaret.Text = "2";
-				weaponItem.WeaponName.LabelSettings.FontColor = Colors.White;
-			}
-			else
-			{
-				weaponItem.SelectedCaret.VisibleRatio = 0;
-				weaponItem.WeaponName.LabelSettings.FontColor = Colors.DarkGray;
-			}
-
-			weaponItem.Name = i++.ToString();
+			if (ex.ObjectName != "Godot.HBoxContainer")
+				throw;
 		}
 	}
 }

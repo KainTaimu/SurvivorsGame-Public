@@ -2,8 +2,12 @@ using Game.UI;
 
 namespace Game.Levels.Controllers;
 
-public partial class AbstractEnemyCollisionSolver : Node, IFrameTimeTrackable
+[GlobalClass]
+public abstract partial class AbstractEnemyCollisionSolver : Node, IFrameTimeTrackable
 {
+	[Export]
+	public NavMap? NavMap { get; private set; }
+
 	[Export]
 	public FrameTime FrameTime { get; private set; } = null!;
 }
