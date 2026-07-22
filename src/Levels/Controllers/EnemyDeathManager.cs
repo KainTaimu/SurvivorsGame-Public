@@ -36,7 +36,7 @@ public partial class EnemyDeathManager : Node
 	[All<HealthComponent, PositionComponent>]
 	[None<DyingMarkerComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private void UpdateNewDeaths(in Entity entity, ref HealthComponent health)
+	private void UpdateNewDeaths(Entity entity, ref HealthComponent health)
 	{
 		if (health.Health <= 0)
 			HandleDeath(entity);
@@ -47,7 +47,7 @@ public partial class EnemyDeathManager : Node
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private void UpdateDying(
 		[Data] in float delta,
-		in Entity entity,
+		Entity entity,
 		ref DyingMarkerComponent dying,
 		ref PositionComponent pos,
 		ref VelocityComponent vel,

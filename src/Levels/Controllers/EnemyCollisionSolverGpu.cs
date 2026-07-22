@@ -360,7 +360,7 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 		[Data] in int[] uploadState,
 		[Data] in int writeFrame,
 		[Data] in Rect2 bounds,
-		in Entity entity,
+		Entity entity,
 		ref PositionComponent pos,
 		ref CircleHitboxComponent circle
 	)
@@ -393,7 +393,7 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 		[Data] in byte[] results,
 		[Data] in int writeFrame,
 		[Data] in NavMap navMap,
-		in Entity entity,
+		Entity entity,
 		ref PositionComponent pos
 	)
 	{

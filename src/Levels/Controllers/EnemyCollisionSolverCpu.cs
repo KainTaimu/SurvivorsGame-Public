@@ -119,7 +119,7 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 		[Data] in (Vector2 pos, Entity entity, float radius)[] entries,
 		[Data] in int[] stamps,
 		[Data] in int writeFrame,
-		in Entity entity,
+		Entity entity,
 		ref PositionComponent pos,
 		ref CircleHitboxComponent circle
 	)
@@ -157,7 +157,7 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 		[Data] in int[] stamps,
 		[Data] in int writeFrame,
 		[Data] in NavMap navMap,
-		in Entity entity,
+		Entity entity,
 		ref PositionComponent pos
 	)
 	{

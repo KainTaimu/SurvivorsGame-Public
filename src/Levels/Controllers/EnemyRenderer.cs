@@ -83,7 +83,7 @@ public partial class EnemyRenderer : Node, IFrameTimeTrackable
 	[All<PositionComponent, AnimatedSpriteComponent>]
 	[Any<VelocityComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private void UpdateEnemySprites(in Entity entity, ref PositionComponent pos, ref AnimatedSpriteComponent sprite)
+	private void UpdateEnemySprites(Entity entity, ref PositionComponent pos, ref AnimatedSpriteComponent sprite)
 	{
 		if (!GameWorld.World.IsAlive(entity))
 			return;

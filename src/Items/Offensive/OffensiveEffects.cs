@@ -86,7 +86,7 @@ public static class OffensiveEffects
 		crosshair.Recoil.ApplyImpulse(recoil, recoilAccumilationScale, applyHorizontalPunish);
 	}
 
-	public static void ApplyKnockback(in Entity entity, in Vector2 awayFrom, float knockback)
+	public static void ApplyKnockback(Entity entity, in Vector2 awayFrom, float knockback)
 	{
 		if (!GameWorld.World.Has<PositionComponent>(entity))
 			return;
@@ -98,7 +98,7 @@ public static class OffensiveEffects
 		pos.Position += knockbackVector;
 	}
 
-	public static void ApplyVelocityMultiplier(in Entity entity, float slowMultiplier = 1f)
+	public static void ApplyVelocityMultiplier(Entity entity, float slowMultiplier = 1f)
 	{
 		if (!GameWorld.World.Has<VelocityComponent>(entity))
 			return;

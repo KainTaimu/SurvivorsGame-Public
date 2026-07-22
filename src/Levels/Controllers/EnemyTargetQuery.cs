@@ -63,7 +63,7 @@ public partial class EnemyTargetQuery : Node
 	[All<PositionComponent, CircleHitboxComponent>]
 	[None<DyingMarkerComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private void AddObjectsToGrid([Data] in UniformGridWorld<Entity> grid, in Entity entity, ref PositionComponent pos)
+	private void AddObjectsToGrid([Data] in UniformGridWorld<Entity> grid, Entity entity, ref PositionComponent pos)
 	{
 		if (!grid.ContainsWorld(pos.Position))
 			return;

@@ -126,7 +126,7 @@ public partial class EnemyNavPathController : Node2D, IFrameTimeTrackable
 	[All<PositionComponent, VelocityComponent, MoveSpeedComponent>]
 	[None<DyingMarkerComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static void UpdateMovers(
+	private void UpdateMovers(
 		[Data] in Rect2 visRec,
 		[Data] in float delta,
 		[Data] in bool drawNavPaths,
