@@ -40,6 +40,7 @@ polygon = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0)
 [node name="PolygonLightOccluder" type="Polygon2D" unique_id=1199949879 groups=["navigation_polygon_source_geometry_group"]]
 z_index = 1394
 z_as_relative = false
+color = Color(0.8480926, 0.8480926, 0.8480926, 1)
 polygon = PackedVector2Array(-32, 32, -32, -32, 32, -32, 32, 32)
 script = SubResource("GDScript_ps52f")
 

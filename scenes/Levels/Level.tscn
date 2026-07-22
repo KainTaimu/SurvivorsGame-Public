@@ -6,10 +6,9 @@
 [ext_resource type="Script" uid="uid://cyldy6fxdbadt" path="res://src/Levels/Controllers/LevelData.cs" id="4_qsiuk"]
 [ext_resource type="Script" uid="uid://conjw4f6t4f3m" path="res://src/UI/PauseMenu/PauseController.cs" id="5_ajbtw"]
 [ext_resource type="Script" uid="uid://bkpyb01olop50" path="res://src/Levels/Controllers/EnemyRenderer.cs" id="7_ajdj3"]
+[ext_resource type="PackedScene" uid="uid://cynlbeb3umvcr" path="res://scenes/Levels/EnemyWaveController.tscn" id="8_27qwr"]
 [ext_resource type="Script" uid="uid://cuxklvvvd40t4" path="res://scenes/Levels/EnemySystems.cs" id="8_t3a6r"]
 [ext_resource type="PackedScene" uid="uid://umbqj1xym7lp" path="res://scenes/Core/FodderMultiMeshInstance2D.tscn" id="9_ror81"]
-[ext_resource type="Script" uid="uid://citywxiolgxtm" path="res://src/Levels/Controllers/EnemyWaveController.cs" id="11_aredf"]
-[ext_resource type="Script" uid="uid://cuxwdf1ugwtxm" path="res://src/Levels/Controllers/EnemySpawner.cs" id="12_qsiuk"]
 [ext_resource type="PackedScene" uid="uid://dh3cfccrh31b0" path="res://scenes/Levels/EnemyCollisionSolverManager.tscn" id="13_faxpm"]
 [ext_resource type="PackedScene" uid="uid://bpgtq48wt7r32" path="res://scenes/Levels/EnemyHitFeedbackController.tscn" id="13_vg5sh"]
 [ext_resource type="PackedScene" uid="uid://c8d8andvaknho" path="res://scenes/Levels/EnemyDeathManager.tscn" id="14_aig1n"]
@@ -125,11 +124,7 @@ script = ExtResource("19_aig1n")
 [node name="EnemySystems" type="Node" parent="Systems" unique_id=1808118587]
 script = ExtResource("8_t3a6r")
 
-[node name="EnemyWaveController" type="Node" parent="Systems/EnemySystems" unique_id=247564660]
-script = ExtResource("11_aredf")
-
-[node name="EnemySpawner" type="Node" parent="Systems/EnemySystems/EnemyWaveController" unique_id=836765334]
-script = ExtResource("12_qsiuk")
+[node name="EnemyWaveController" parent="Systems/EnemySystems" unique_id=2001503768 instance=ExtResource("8_27qwr")]
 
 [node name="EnemyTargetQuery" type="Node" parent="Systems/EnemySystems" unique_id=991938994]
 script = ExtResource("16_x7tv3")

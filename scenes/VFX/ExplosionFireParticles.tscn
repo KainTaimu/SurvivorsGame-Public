@@ -42,7 +42,6 @@ anim_speed_min = 52.36
 anim_speed_max = 67.64
 
 [node name="Fire" type="GPUParticles2D" unique_id=834632335]
-z_index = -1
 material = SubResource("CanvasItemMaterial_o5tdg")
 emitting = false
 amount = 12

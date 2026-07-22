@@ -15,7 +15,7 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 	private AudioStreamPlayer? _explosionPlayer;
 
 	[Export]
-	public float ThrowForce = 100;
+	public float ThrowForce = 1250;
 
 	public string? AttackActionString { get; set; }
 

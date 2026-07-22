@@ -12,12 +12,16 @@ using Game.Core.ECS;
 using Game.Core.Extensions;
 using Game.Models;
 using Game.Players.Controllers;
+using Game.UI;
 
 namespace Game.Levels.Controllers;
 
 [GlobalClass]
-public partial class EnemyTargetQuery : Node
+public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
 {
+	[Export]
+	public FrameTime FrameTime { get; private set; } = null!;
+
 	// BREAKING: Changing this value breaks Projectile radius of weapons
 	private const int GRID_SIZE = 16;
 
@@ -54,16 +58,23 @@ public partial class EnemyTargetQuery : Node
 		var player = GameWorld.Instance.MainPlayer;
 		var playerPos = player.GlobalPosition;
 
-		_grid.ClearAll();
-		_grid.Recenter(playerPos);
-		AddObjectsToGridQuery(GameWorld.World, _grid);
+		using (FrameTime.Record())
+		{
+			_grid.ClearAll();
+			_grid.Recenter(playerPos);
+			AddObjectsToGridQuery(GameWorld.World, _grid);
+		}
 	}
 
 	[Query]
 	[All<PositionComponent, CircleHitboxComponent>]
 	[None<DyingMarkerComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private void AddObjectsToGrid([Data] in UniformGridWorld<Entity> grid, Entity entity, ref PositionComponent pos)
+	private static void AddObjectsToGrid(
+		[Data] in UniformGridWorld<Entity> grid,
+		Entity entity,
+		ref PositionComponent pos
+	)
 	{
 		if (!grid.ContainsWorld(pos.Position))
 			return;

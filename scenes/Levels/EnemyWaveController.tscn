@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cynlbeb3umvcr"]
+
+[ext_resource type="Script" uid="uid://citywxiolgxtm" path="res://src/Levels/Controllers/EnemyWaveController.cs" id="1_5bvdh"]
+[ext_resource type="Script" uid="uid://cuxwdf1ugwtxm" path="res://src/Levels/Controllers/EnemySpawner.cs" id="2_el7fo"]
+
+[node name="EnemyWaveController" type="Node" unique_id=2001503768]
+script = ExtResource("1_5bvdh")
+Waves = Array[Object]([])
+
+[node name="EnemySpawner" type="Node" parent="." unique_id=1455964209]
+script = ExtResource("2_el7fo")

@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://bv8olcpvea07v"]
+
+[ext_resource type="Script" uid="uid://c2mnwvkxk52yx" path="res://src/Items/Offensive/GrenadeLauncher.cs" id="1_hamct"]
+[ext_resource type="PackedScene" uid="uid://dl1vjoimv4sq7" path="res://scenes/Projectiles/HvGrenade.tscn" id="2_hamct"]
+[ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/SemiAutoFireGroup.cs" id="3_ysrq1"]
+[ext_resource type="Texture2D" uid="uid://86rk4yr07033" path="res://assets/Sprites/grenade.png" id="4_k0hvc"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="5_mkjub"]
+[ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_3bjou"]
+[ext_resource type="AudioStream" uid="uid://dlewyy172dhok" path="res://assets/SFX/freesound_community-hq-explosion-6288.mp3" id="7_6gb1p"]
+
+[sub_resource type="Resource" id="Resource_a0fn7"]
+script = ExtResource("3_ysrq1")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
+
+[sub_resource type="Resource" id="Resource_7i0hn"]
+script = ExtResource("5_mkjub")
+Name = "MGL-67"
+Description = ""
+ItemIcon = ExtResource("4_k0hvc")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
+[sub_resource type="Resource" id="Resource_bpnxk"]
+script = ExtResource("6_3bjou")
+ReloadTime = 2.0
+MagazineCapacity = 6
+HorizontalRecoilMin = 40.0
+HorizontalBaseRecoil = 40.0
+HorizontalRecoilRandom = 20.0
+VerticalRecoilMin = 80.0
+VerticalBaseRecoil = 80.0
+VerticalRecoilRandom = 40.0
+HorizontalRecoilPunish = false
+CameraRecoilScale = 2.0
+BaseDamage = 67
+BaseProjectileRadius = 200
+BaseAttackSpeed = 0.3
+BasePierceLimit = 9999
+Additional = Dictionary[String, Variant]({
+"ArmingDistance": 300.0,
+"CameraRecoilScale": 4.2,
+"EnemiesInAreaUntilExplode": 0,
+"Knockback": 150.0,
+"SlowMultiplier": 0.0,
+"TimeToExplode": 0.4
+})
+metadata/_custom_type_script = "uid://di81uufgmcsog"
+
+[node name="GrenadeLauncher" type="Node" unique_id=1535579917 node_paths=PackedStringArray("_explosionPlayer")]
+script = ExtResource("1_hamct")
+_throwForce = 1500.0
+GrenadeScene = ExtResource("2_hamct")
+_fireGroup = SubResource("Resource_a0fn7")
+_explosionPlayer = NodePath("AudioStreamPlayer")
+Properties = SubResource("Resource_7i0hn")
+Stats = SubResource("Resource_bpnxk")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1114139561]
+stream = ExtResource("7_6gb1p")
+volume_db = -5.0
+pitch_scale = 1.5

@@ -21,8 +21,13 @@ public partial class Grenade : RigidBody2D
 	private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
 
 	private double _t;
+	private double _distanceTraveled;
 
 	private float TimeToExplode => OffensiveOrigin.Stats.Additional.GetValueOrDefault("TimeToExplode").AsSingle();
+	private int EnemiesInAreaUntilExplode =>
+		OffensiveOrigin.Stats.Additional.GetValueOrDefault("EnemiesInAreaUntilExplode", 6).AsInt32();
+	private float ArmingDistance =>
+		OffensiveOrigin.Stats.Additional.GetValueOrDefault("ArmingDistance", 200f).AsSingle();
 
 	private float CameraRecoilScale =>
 		OffensiveOrigin.Stats.Additional.GetValueOrDefault("CameraRecoilScale").AsSingle();
@@ -45,16 +50,19 @@ public partial class Grenade : RigidBody2D
 		GetTree().Root.CallDeferred(Window.MethodName.AddChild, fire);
 	}
 
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		_t -= delta;
+		_distanceTraveled += LinearVelocity.Length() * delta;
 
-		if (Engine.GetProcessFrames() % 10 != 0)
+		Rotation = LinearVelocity.Angle();
+
+		if (Engine.GetPhysicsFrames() % 5 != 0)
 			return;
 
 		TargetQuery.TryGetTargetsInArea(Position, OffensiveOrigin.OffensiveStats.ProjectileRadius, out var entities);
 
-		if (entities.Length > 6 && _t < 0.1f)
+		if (entities.Length > EnemiesInAreaUntilExplode && _distanceTraveled > ArmingDistance)
 		{
 			Explode(entities);
 			return;

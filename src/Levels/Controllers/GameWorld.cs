@@ -16,7 +16,7 @@ public partial class GameWorld : Node
 
 	public override void _EnterTree()
 	{
-		World = World.Create(entityCapacity: 20_000);
+		World = World.Create(entityCapacity: 16_384);
 		World.SharedJobScheduler = new JobScheduler(new JobScheduler.Config { ThreadPrefixName = "GameWorld" });
 		Instance = this;
 	}

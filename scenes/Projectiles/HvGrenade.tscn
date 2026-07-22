@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://dl1vjoimv4sq7"]
+
+[ext_resource type="PackedScene" uid="uid://d1nqrtaecqgq7" path="res://scenes/Projectiles/Grenade.tscn" id="1_mh1rp"]
+[ext_resource type="Texture2D" uid="uid://rw7hin0xiok8" path="res://assets/Projectiles/40x53mm_HE.png" id="2_1fjog"]
+[ext_resource type="PackedScene" uid="uid://dyh06qakgf4q2" path="res://scenes/Players/DebugClassInspector.tscn" id="3_1fjog"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mh1rp"]
+friction = 0.0
+bounce = 0.87
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mh1rp"]
+radius = 22.0
+
+[node name="HVGrenade" unique_id=1135986602 instance=ExtResource("1_mh1rp")]
+mass = 1.0
+physics_material_override = SubResource("PhysicsMaterial_mh1rp")
+lock_rotation = true
+continuous_cd = 2
+angular_velocity = 0.0
+constant_torque = 0.0
+
+[node name="CollisionShape2D" parent="." index="0" unique_id=1936193029]
+shape = SubResource("CircleShape2D_mh1rp")
+
+[node name="Sprite2D" parent="." index="1" unique_id=1743088039]
+position = Vector2(0, 0)
+texture = ExtResource("2_1fjog")
+
+[node name="DebugClassInspector" parent="." index="2" unique_id=1989388267 instance=ExtResource("3_1fjog")]
+BindingFlags = 54

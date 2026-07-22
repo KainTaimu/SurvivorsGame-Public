@@ -1,3 +1,4 @@
+using Game.Core.Extensions;
 using Game.Levels.Controllers;
 using Game.Models;
 
@@ -28,24 +29,11 @@ public partial class NavMap : NavigationRegion2D
 		}
 	} = 1f;
 
-	[Export]
-	private bool DrawPaths
-	{
-		get;
-		set
-		{
-			field = value;
-			CallDeferred(MethodName.ClearDrawnPaths);
-		}
-	}
-
 	private UniformGridWorld<Vector2[]> _grid = null!;
 	public Rect2 GridVisibilityRect => _grid.WorldBounds;
 
 	public static Rid Map { get; private set; }
 	public static NavMap Instance { get; private set; } = null!;
-
-	public double ProcessTime { get; private set; }
 
 	private Vector2 _cachedPlayerPosition;
 	private static PhysicsDirectSpaceState2D _cachedSpace = null!;
@@ -64,13 +52,9 @@ public partial class NavMap : NavigationRegion2D
 		_cachedPlayerPosition = GameWorld.Instance.MainPlayer.GlobalPosition;
 		_cachedSpace = GetWorld2D().DirectSpaceState;
 
-		if (Engine.GetPhysicsFrames() % 4 == 0)
-			_grid.ClearAll();
+		_grid.ClearAll();
 
 		_grid.Recenter(_cachedPlayerPosition);
-
-		if (DrawPaths)
-			QueueRedraw();
 	}
 
 	public Span<Vector2> GetNavLine(Vector2 pos)
@@ -155,27 +139,10 @@ public partial class NavMap : NavigationRegion2D
 		var viewport = GetViewport();
 		if (viewport is null)
 			return;
-		var windowSize = viewport.GetVisibleRect().Size;
-		_grid = new UniformGridWorld<Vector2[]>(GridSize, new Vector2(windowSize.X, windowSize.X) * RangeFactor, 1);
-	}
-
-	private void ClearDrawnPaths()
-	{
-		QueueRedraw();
-	}
-
-	public override void _Draw()
-	{
-		if (!DrawPaths)
+		var cam = viewport.GetCamera2D();
+		if (cam is null)
 			return;
-		DrawRect(GridVisibilityRect, Colors.Red, false, 3, true);
-
-		for (var x = 0; x < _grid.Dimensions.X; x++)
-		for (var y = 0; y < _grid.Dimensions.Y; y++)
-		{
-			if (!_grid.TryGet(x, y, out var paths, out _))
-				continue;
-			DrawPolyline(paths, Colors.Red, 3, true);
-		}
+		var windowSize = viewport.GetVisibleRect().Size * (1 / cam.Zoom.GetLargestComponent());
+		_grid = new UniformGridWorld<Vector2[]>(GridSize, windowSize * RangeFactor, 1);
 	}
 }

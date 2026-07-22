@@ -19,14 +19,16 @@ script = ExtResource("4_gjjd4")
 BaseDamage = 67
 BaseCritDamageMultiplier = 0.1
 BaseCritChanceProportion = 1.0
-BaseProjectileRadius = 200
+BaseProjectileRadius = 250
 BaseAttackSpeed = 1.0
 BasePierceLimit = 999
 Additional = Dictionary[String, Variant]({
+"ArmingDistance": 400.0,
 "CameraRecoilScale": 4.2,
+"EnemiesInAreaUntilExplode": 6,
 "Knockback": 150.0,
 "SlowMultiplier": 0.0,
-"TimeToExplode": 0.5
+"TimeToExplode": 1.0
 })
 metadata/_custom_type_script = "uid://os8ycjo6m7r0"
 
@@ -34,7 +36,6 @@ metadata/_custom_type_script = "uid://os8ycjo6m7r0"
 script = ExtResource("1_oiqqx")
 GrenadeScene = ExtResource("2_18auf")
 _explosionPlayer = NodePath("AudioStreamPlayer")
-ThrowForce = 1250.0
 Properties = SubResource("Resource_r85fg")
 Stats = SubResource("Resource_jlsja")
 
