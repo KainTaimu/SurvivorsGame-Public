@@ -141,8 +141,8 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 		var bloom = (float)GD.RandRange(-bloomRad / 2, bloomRad / 2);
 
 		var force = Vector2.Right.Rotated(nade.GlobalPosition.AngleToPoint(mouseVector) + bloom) * _throwForce;
-		nade.ApplyImpulse(force);
-		GetTree().Root.CallDeferred(Window.MethodName.AddChild, nade);
+		nade.LinearVelocity = force;
+		GetTree().Root.Call(Window.MethodName.AddChild, nade);
 		EmitSignalOnAttack();
 	}
 
