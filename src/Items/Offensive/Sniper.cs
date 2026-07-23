@@ -193,10 +193,7 @@ public partial class Sniper : AbstractFirearm, IReloadable
 			return;
 		GetTree().CreateTimer(FirearmStats.ReloadTime, false).Timeout += () =>
 		{
-			if (MagazineCount == 0)
-				MagazineCount = MagazineCapacity;
-			else
-				MagazineCount = MagazineCapacity + 1;
+			MagazineCount = MagazineCapacity;
 			IsReloading = false;
 			EmitSignalOnReloadEnd();
 		};
