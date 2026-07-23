@@ -3,10 +3,12 @@ using Arch.Core;
 namespace Game.Levels.Controllers;
 
 [GlobalClass]
-public partial class WaveSpawnCount : AbstractWave, IEnemyWave
+public partial class WaveSpawnCount : AbstractWave, IEnemyWave, IWaveProgress
 {
 	[Export]
 	public int SpawnCountTarget = 30;
+
+	public float Progress => (float)SpawnedEntities.Count / SpawnCountTarget;
 
 	public override void Process(double delta)
 	{

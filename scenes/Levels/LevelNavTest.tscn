@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ecfjaeglvrkf" path="res://scenes/Players/DevPlayer.tscn" id="3_5s0iy"]
 [ext_resource type="PackedScene" uid="uid://wos5frj6p77e" path="res://scenes/Levels/PolygonLightOccluder.tscn" id="3_lkbse"]
 [ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="3_sx6oq"]
+[ext_resource type="PackedScene" uid="uid://u3wmb7l8pjye" path="res://scenes/Levels/NightModule.tscn" id="4_2ki1j"]
 [ext_resource type="Script" uid="uid://dau6m811dtep8" path="res://src/Levels/Controllers/BlueprintWeight.cs" id="4_7b5vb"]
 [ext_resource type="Script" uid="uid://d2tvxgxbv87i2" path="res://src/Levels/Controllers/WeightedWaveBlueprintCollection.cs" id="5_lkbse"]
 [ext_resource type="PackedScene" uid="uid://tw6dfgyd6h7y" path="res://scenes/Levels/EnemyNavMeshController.tscn" id="8_7b5vb"]
@@ -125,6 +126,7 @@ metadata/_custom_type_script = "uid://daw8gyvo0xom3"
 
 [node name="Parallax2D" parent="World" parent_id_path=PackedInt32Array(197767375) index="0" unique_id=951832910]
 visible = true
+z_as_relative = false
 
 [node name="NavMap" type="NavigationRegion2D" parent="World" parent_id_path=PackedInt32Array(197767375) index="1" unique_id=1090201737]
 navigation_polygon = SubResource("NavigationPolygon_sx6oq")
@@ -284,6 +286,8 @@ polygon = PackedVector2Array(448, 384, -576, -576, -256.00012, -576, 704, 384)
 position = Vector2(5566, 1080)
 polygon = PackedVector2Array(-576, 512, 448, -447.99994, 704, -447.99997, -320, 511.99994)
 
+[node name="NightModule" parent="World" parent_id_path=PackedInt32Array(197767375) index="3" unique_id=24799609 instance=ExtResource("4_2ki1j")]
+
 [node name="GameWorld" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="0" unique_id=562045734 node_paths=PackedStringArray("MainPlayer")]
 MainPlayer = NodePath("../Player")
 
@@ -302,9 +306,8 @@ FrameTime = SubResource("Resource_0833k")
 [node name="EnemyMover" type="Node" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="5" unique_id=819641661]
 script = ExtResource("2_8dkqd")
 
-[node name="EnemyCollisionSolverManager" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="6" unique_id=1705317581 node_paths=PackedStringArray("nav_map", "monitor")]
+[node name="EnemyCollisionSolverManager" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="6" unique_id=1705317581 node_paths=PackedStringArray("nav_map")]
 nav_map = NodePath("../../../World/NavMap")
-monitor = NodePath("../../../UI/PerformanceMonitor")
 
 [node name="EnemyRenderer" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="7" unique_id=1054443393]
 physics_interpolation_mode = 1

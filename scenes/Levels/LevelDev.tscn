@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://d3su0ak3dnifl" path="res://scenes/Levels/Level.tscn" id="1_m1pph"]
 [ext_resource type="PackedScene" uid="uid://ecfjaeglvrkf" path="res://scenes/Players/DevPlayer.tscn" id="2_4pxeb"]
+[ext_resource type="PackedScene" uid="uid://u3wmb7l8pjye" path="res://scenes/Levels/NightModule.tscn" id="2_dxfda"]
 [ext_resource type="Resource" uid="uid://d3sq28pskbjjy" path="res://scenes/Enemies/Blueprints/Walker.tres" id="3_5f0vo"]
 [ext_resource type="Resource" uid="uid://nvj82uku7ht1" path="res://scenes/Enemies/Blueprints/Sprinter.tres" id="3_he88e"]
 [ext_resource type="Script" uid="uid://dau6m811dtep8" path="res://src/Levels/Controllers/BlueprintWeight.cs" id="4_p53ds"]
@@ -12,17 +13,6 @@
 [ext_resource type="Script" uid="uid://d2tvxgxbv87i2" path="res://src/Levels/Controllers/WeightedWaveBlueprintCollection.cs" id="9_2csoy"]
 [ext_resource type="Script" uid="uid://b7ol6jtjagoe" path="res://src/Levels/Controllers/WaveDuration.cs" id="10_2cd5g"]
 [ext_resource type="Script" uid="uid://bct2mtni7a82f" path="res://src/Levels/Controllers/EnemyMover.cs" id="14_2csoy"]
-
-[sub_resource type="GDScript" id="GDScript_ww382"]
-script/source = "extends CanvasModulate
-
-@onready var night_module_parent: Node2D = $\"..\"
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	visible = night_module_parent.visible
-	pass # Replace with function body.
-"
 
 [sub_resource type="Resource" id="Resource_he88e"]
 script = ExtResource("4_p53ds")
@@ -89,24 +79,16 @@ metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 [node name="Parallax2D" parent="World" parent_id_path=PackedInt32Array(197767375) index="0" unique_id=951832910]
 z_as_relative = false
 
-[node name="NightModule" type="Node2D" parent="World" parent_id_path=PackedInt32Array(197767375) index="1" unique_id=1944487449]
-visible = false
-
-[node name="CanvasModulate" type="CanvasModulate" parent="World/NightModule" index="0" unique_id=495030589]
-color = Color(0, 0, 0, 1)
-script = SubResource("GDScript_ww382")
+[node name="NightModule" parent="World" parent_id_path=PackedInt32Array(197767375) index="1" unique_id=24799609 instance=ExtResource("2_dxfda")]
 
 [node name="GameWorld" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="0" unique_id=562045734 node_paths=PackedStringArray("MainPlayer")]
 MainPlayer = NodePath("../../Player")
 
-[node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=247564660]
+[node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=2001503768]
 Waves = Array[Object]([SubResource("Resource_g22vo"), SubResource("Resource_4v0et"), SubResource("Resource_qx3kv"), SubResource("Resource_pgumh")])
 
 [node name="EnemyMover" type="Node" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="4" unique_id=1691633280]
 script = ExtResource("14_2csoy")
-
-[node name="EnemyCollisionSolver" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="5" unique_id=2115688042]
-SubSteps = 6
 
 [node name="EnemyRenderer" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="6" unique_id=1054443393]
 RenderDistanceFactor = 50.0

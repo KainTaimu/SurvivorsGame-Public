@@ -3,13 +3,15 @@ using Arch.Core;
 namespace Game.Levels.Controllers;
 
 [GlobalClass]
-public partial class WaveDuration : AbstractWave
+public partial class WaveDuration : AbstractWave, IWaveProgress
 {
 	[Export]
 	public double Duration = 30;
 
 	[Export]
 	public uint MaxMobs = 50;
+
+	public float Progress => (float)(_waveTimeLeft / Duration);
 
 	private double _waveTimeLeft;
 

@@ -19,7 +19,9 @@ public partial class EnemyWaveController : Node
 		set => field = value;
 	} = true;
 
-	public int TotalSpawned { get; set; }
+	public int TotalSpawned { get; private set; }
+
+	public float CurrentWaveProgress => GetWaveProgress();
 
 	public int Alive => SpawnedEntities.Count;
 
@@ -78,5 +80,12 @@ public partial class EnemyWaveController : Node
 		_currentWave = Waves[_currentWaveIndex];
 		_currentWave.OnWaveEnd += NextWave;
 		_currentWave.StartWave(_currentWaveIndex);
+	}
+
+	private float GetWaveProgress()
+	{
+		if (_currentWave is not IWaveProgress progress)
+			return -1;
+		return progress.Progress;
 	}
 }

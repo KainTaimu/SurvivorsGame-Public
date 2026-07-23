@@ -3,19 +3,32 @@
 [ext_resource type="PackedScene" uid="uid://d3su0ak3dnifl" path="res://scenes/Levels/Level.tscn" id="1_h2u8a"]
 [ext_resource type="PackedScene" uid="uid://7kxy1v1ggvi8" path="res://scenes/Players/PlayerRookie.tscn" id="2_jkyfg"]
 [ext_resource type="Script" uid="uid://ufpoicgrn6de" path="res://src/Levels/NavMap.cs" id="2_o8yur"]
-[ext_resource type="Script" uid="uid://bjis25rd0y3uy" path="res://src/Levels/Controllers/EnemyNavPathController.cs" id="7_8nqap"]
+[ext_resource type="PackedScene" uid="uid://wos5frj6p77e" path="res://scenes/Levels/PolygonLightOccluder.tscn" id="3_o8yur"]
 [ext_resource type="Script" uid="uid://bct2mtni7a82f" path="res://src/Levels/Controllers/EnemyMover.cs" id="8_u4ox6"]
+[ext_resource type="PackedScene" uid="uid://dyh06qakgf4q2" path="res://scenes/Players/DebugClassInspector.tscn" id="9_5mhgh"]
+[ext_resource type="PackedScene" uid="uid://tw6dfgyd6h7y" path="res://scenes/Levels/EnemyNavMeshController.tscn" id="9_nu2g1"]
+[ext_resource type="Script" uid="uid://daw8gyvo0xom3" path="res://src/UI/FrameTime.cs" id="10_5mhgh"]
 [ext_resource type="Script" uid="uid://dau6m811dtep8" path="res://src/Levels/Controllers/BlueprintWeight.cs" id="13_yq63u"]
 [ext_resource type="Script" uid="uid://y77qtp32wo00" path="res://src/Enemies/EnemyStats.cs" id="16_6ykrs"]
 [ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="17_k3qtc"]
 [ext_resource type="Script" uid="uid://d2tvxgxbv87i2" path="res://src/Levels/Controllers/WeightedWaveBlueprintCollection.cs" id="18_aw5j3"]
 [ext_resource type="Script" uid="uid://b7ol6jtjagoe" path="res://src/Levels/Controllers/WaveDuration.cs" id="19_rdjc1"]
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_nu2g1"]
+vertices = PackedVector2Array(5998.1797, 134, -511.84375, -30.34375, 5998.1797, -44, 6296.7266, -44, 6297.203, 134, 6317.1797, -93.390625, 6732.8906, -2116.3984, 6317.203, 184.57813, 5103.6875, 2105.4922, 1532.5938, 1372.5313, 4962.797, 1174, 5261.8203, 1174, 5645.4766, 2105.4922, 1532.5938, -277.45313, 375.04688, -277.45313, 7703.758, -10455.852, 7576.2266, 11160.281, 6703.4297, -6044.7266, 6261.2188, 3263.0234, 6261.2188, 2875.1563, 3346.0625, -2116.3984, 4942.797, -1033.4219, 1532.5938, -1127.1094, 2804.5703, -2116.3984, 6107.2813, 2762.1094, 5326.5703, -1084, 6161.9297, -2116.3984, 4942.797, 1123.4219, 1532.5938, 484.3828, 375.04688, -1127.1094, -511.84375, -1341.7969, -348.34375, -2116.3984, -40.46875, -2578.2031, -9752.57, -10392.141, 6161.9297, -6044.7266, -40.46875, -5275.0625, 2775.1016, -6044.7266, 375.04688, 522.8672, 375.04688, 1026.1797, -819.71094, 646.7031, -819.71094, 99.546875, -357.90625, 2762.7422, -357.90625, 1451.2734, 832.03906, 2687.5469, 832.03906, 3691.1484, -819.71094, 1257.0781, 1106.2266, 1122.3906, 1125.4766, 1122.3906, 1125.4766, 1372.5313, -736.0781, 1451.2734, -819.71094, 869.21094, 1527.7734, 3691.1484, 3872.2188, 2259.4219, 3872.2188, 3765.711, -10071.391, 11287.703, 1527.7734, 2687.5469, 817.6094, 484.3828, 6107.2813, 2875.1563, 5645.4766, 2762.1094, 5103.6875, 2259.4219, -973.6406, 3686.3438, -973.6406, 2762.7422, 6107.2813, 3765.711, 6107.2813, 3263.0234, -1823.2969, 3686.3438, -1823.2969, 1759.1406, 6161.9297, -5736.867, 6088, -5736.867, 6088, -5886.1094, 4819.0234, -6044.7266, 4660.1094, -6044.7266, 3391.1328, -5886.1094, 3391.1328, -5736.867, 3317.2031, -5736.867, 3317.2031, -6044.7266, -348.34375, -5275.0625, -348.34375, -5736.867, -810.1328, -5736.867, -810.1328, -6044.7266, -1967.6563, -6044.7266, -1967.6563, -5429, -3045.2031, -5429, -3045.2031, -2424.2734, -1967.6563, -2424.2734, -1967.6563, -2116.3984, -348.34375, -2578.2031, 3346.0625, -2424.2734, 3391.1328, -2424.2734, 3391.1328, -2275.0313, 6088, -2275.0313, 6088, -2424.2734, 6161.9297, -2424.2734, 817.6094, 522.8672, -1823.2969, -30.34375, -1834, 99.546875, 817.6094, 1026.1797, 817.6094, 1045.4219, 1106.2266, 1045.4219, 4660.1094, -2116.3984, 4962.797, -1084, 4819.0234, -2116.3984, -1823.2969, -1341.7969, -1823.2969, 1257.0781, -801.9375, 1685.8125, -1152.4688, 1759.1406, -1823.2969, 869.21094, -1834, 646.7031)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 7, 4), PackedInt32Array(8, 9, 10, 11, 12), PackedInt32Array(13, 2, 1, 14), PackedInt32Array(15, 16, 6, 17), PackedInt32Array(6, 16, 18, 19, 7), PackedInt32Array(3, 5, 4), PackedInt32Array(20, 21, 2, 13, 22, 23), PackedInt32Array(11, 7, 19, 24, 12), PackedInt32Array(6, 5, 25, 26), PackedInt32Array(27, 10, 9, 28), PackedInt32Array(29, 14, 1, 30, 31, 32), PackedInt32Array(33, 15, 17, 34), PackedInt32Array(32, 35, 36, 23, 22, 29), PackedInt32Array(37, 38, 39, 40, 1), PackedInt32Array(41, 42, 43, 44), PackedInt32Array(45, 46, 47, 48, 42, 49), PackedInt32Array(46, 45, 50, 38), PackedInt32Array(51, 52, 53, 54), PackedInt32Array(52, 51, 55, 9), PackedInt32Array(1, 0, 27, 28), PackedInt32Array(1, 28, 56), PackedInt32Array(19, 57, 24), PackedInt32Array(24, 58, 12), PackedInt32Array(8, 59, 52, 9), PackedInt32Array(48, 9, 55, 43, 42), PackedInt32Array(60, 61, 41, 44), PackedInt32Array(62, 63, 18, 16), PackedInt32Array(62, 16, 54, 53), PackedInt32Array(44, 51, 54), PackedInt32Array(60, 44, 54, 64), PackedInt32Array(64, 54, 33, 65), PackedInt32Array(34, 66, 67, 68), PackedInt32Array(33, 34, 68, 69), PackedInt32Array(33, 69, 70), PackedInt32Array(71, 72, 73, 74), PackedInt32Array(35, 75, 76, 36), PackedInt32Array(76, 77, 78, 36), PackedInt32Array(79, 80, 81, 33), PackedInt32Array(82, 83, 84), PackedInt32Array(31, 85, 32), PackedInt32Array(20, 86, 87, 88), PackedInt32Array(89, 90, 91, 26), PackedInt32Array(56, 92, 37, 1), PackedInt32Array(93, 1, 40, 94), PackedInt32Array(38, 95, 96), PackedInt32Array(96, 97, 46), PackedInt32Array(20, 88, 98, 99, 21), PackedInt32Array(100, 89, 26, 25, 99), PackedInt32Array(98, 100, 99), PackedInt32Array(84, 31, 30, 101), PackedInt32Array(70, 71, 74), PackedInt32Array(33, 70, 74), PackedInt32Array(33, 74, 36), PackedInt32Array(102, 45, 49, 103, 104, 65), PackedInt32Array(102, 65, 33), PackedInt32Array(105, 102, 33, 82, 106), PackedInt32Array(82, 84, 101, 93, 94), PackedInt32Array(33, 36, 78), PackedInt32Array(33, 78, 79), PackedInt32Array(33, 81, 82), PackedInt32Array(82, 94, 106), PackedInt32Array(105, 106, 39, 50), PackedInt32Array(50, 39, 38), PackedInt32Array(46, 38, 96)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-9792, -10432, -10112, 11328, 7616, 11200, 7744, -10496)])
+cell_size = 50.0
+border_size = 100.0
+agent_radius = 40.0
+
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_5mhgh"]
-vertices = PackedVector2Array(12972.508, 8456.961, -11345.68, 8423.031, -11148.297, -7367.1484, 12671.461, -7521.828)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-11173, -7392, -11371, 8448, 12998, 8482, 12696, -7547)])
-agent_radius = 25.0
+vertices = PackedVector2Array(5998.1797, 134, -511.84375, -30.34375, 5998.1797, -44, 6296.7266, -44, 6297.203, 134, 6317.203, 184.57813, 6317.1797, -93.390625, 6732.8906, -2116.3984, 8855.758, -10648, 8728.227, 11096.383, 5103.6875, 2105.4922, 1532.5938, 1372.5313, 4962.797, 1174, 5261.8203, 1174, 5645.4766, 2105.4922, 1532.5938, -277.45313, 375.04688, -277.45313, 6261.2188, 3263.0234, 6261.2188, 2875.1563, 6703.4297, -6044.7266, 3346.0625, -2116.3984, 4942.797, -1033.4219, 1532.5938, -1127.1094, 2804.5703, -2116.3984, 6107.2813, 2762.1094, 5326.5703, -1084, 6161.9297, -2116.3984, -4183.883, -10648, 6161.9297, -6044.7266, 4942.797, 1123.4219, 1532.5938, 484.3828, 375.04688, -1127.1094, -511.84375, -1341.7969, -348.34375, -2116.3984, -40.46875, -2578.2031, -40.46875, -5275.0625, 2775.1016, -6044.7266, 375.04688, 522.8672, 375.04688, 1026.1797, -819.71094, 646.7031, -819.71094, 99.546875, -357.90625, 2762.7422, -357.90625, 1451.2734, 832.03906, 2687.5469, 832.03906, 3691.1484, -819.71094, 1257.0781, 1106.2266, 1122.3906, 1125.4766, 1122.3906, 1125.4766, 1372.5313, -736.0781, 1451.2734, -819.71094, 869.21094, 1527.7734, 3691.1484, 3872.2188, 2259.4219, 3872.2188, 3765.711, -4120.1094, 11223.602, 1527.7734, 2687.5469, 817.6094, 484.3828, 6107.2813, 2875.1563, 5645.4766, 2762.1094, 5103.6875, 2259.4219, -973.6406, 3686.3438, -973.6406, 2762.7422, 6107.2813, 3765.711, 6107.2813, 3263.0234, -1823.3125, 3686.3438, 6161.9297, -5736.867, 6088, -5736.867, 6088, -5886.1094, 4819.0234, -6044.7266, 4660.1094, -6044.7266, 3391.1328, -5886.1094, 3391.1328, -5736.867, 3317.2031, -5736.867, 3317.2031, -6044.7266, -348.34375, -5275.0625, -348.34375, -5736.867, -810.1328, -5736.867, -810.1328, -6044.7266, -1967.6563, -6044.7266, -1967.6563, -5429, -3045.2031, -5429, -3045.2031, -2424.2734, -1967.6563, -2424.2734, -1967.6563, -2116.3984, -348.34375, -2578.2031, 3346.0625, -2424.2734, 3391.1328, -2424.2734, 3391.1328, -2275.0313, 6088, -2275.0313, 6088, -2424.2734, 6161.9297, -2424.2734, 817.6094, 522.8672, -1823.2969, -30.34375, -1834, 99.546875, 817.6094, 1026.1797, 817.6094, 1045.4219, 1106.2266, 1045.4219, 4660.1094, -2116.3984, 4962.797, -1084, 4819.0234, -2116.3984, -1823.2969, -1341.7969, -1823.3125, 1759.1406, -1823.2969, 1257.0781, -801.9375, 1685.8125, -1152.4688, 1759.1406, -1823.2969, 869.21094, -1834, 646.7031)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 7, 8, 9), PackedInt32Array(10, 11, 12, 13, 14), PackedInt32Array(15, 2, 1, 16), PackedInt32Array(5, 9, 17, 18), PackedInt32Array(8, 7, 19), PackedInt32Array(6, 5, 4, 3), PackedInt32Array(20, 21, 2, 15, 22, 23), PackedInt32Array(13, 5, 18, 24, 14), PackedInt32Array(7, 6, 25, 26), PackedInt32Array(27, 8, 19, 28), PackedInt32Array(29, 12, 11, 30), PackedInt32Array(31, 16, 1, 32, 33, 34), PackedInt32Array(34, 35, 36, 23, 22, 31), PackedInt32Array(37, 38, 39, 40, 1), PackedInt32Array(41, 42, 43, 44), PackedInt32Array(45, 46, 47, 48, 42, 49), PackedInt32Array(46, 45, 50, 38), PackedInt32Array(51, 52, 53, 54), PackedInt32Array(52, 51, 55, 11), PackedInt32Array(1, 0, 29, 30), PackedInt32Array(1, 30, 56), PackedInt32Array(18, 57, 24), PackedInt32Array(24, 58, 14), PackedInt32Array(10, 59, 52, 11), PackedInt32Array(48, 11, 55, 43, 42), PackedInt32Array(60, 61, 41, 44), PackedInt32Array(62, 63, 17, 9), PackedInt32Array(62, 9, 54, 53), PackedInt32Array(44, 51, 54), PackedInt32Array(60, 44, 54, 64), PackedInt32Array(28, 65, 66, 67), PackedInt32Array(27, 28, 67, 68), PackedInt32Array(27, 68, 69), PackedInt32Array(70, 71, 72, 73), PackedInt32Array(35, 74, 75, 36), PackedInt32Array(75, 76, 77), PackedInt32Array(78, 79, 80, 27), PackedInt32Array(81, 82, 83), PackedInt32Array(33, 84, 34), PackedInt32Array(20, 85, 86, 87), PackedInt32Array(88, 89, 90, 26), PackedInt32Array(56, 91, 37, 1), PackedInt32Array(92, 1, 40, 93), PackedInt32Array(38, 94, 95), PackedInt32Array(95, 96, 46), PackedInt32Array(20, 87, 97, 98, 21), PackedInt32Array(99, 88, 26, 25, 98), PackedInt32Array(97, 99, 98), PackedInt32Array(83, 33, 32, 100), PackedInt32Array(69, 70, 73), PackedInt32Array(27, 69, 73), PackedInt32Array(27, 73, 36), PackedInt32Array(27, 36, 75, 77), PackedInt32Array(27, 77, 78), PackedInt32Array(54, 27, 80, 81), PackedInt32Array(101, 64, 54, 81, 83), PackedInt32Array(102, 45, 49, 103, 104, 101), PackedInt32Array(105, 102, 101, 83, 106), PackedInt32Array(106, 39, 38, 50), PackedInt32Array(38, 95, 46), PackedInt32Array(106, 50, 105), PackedInt32Array(93, 106, 83), PackedInt32Array(93, 83, 100, 92)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-4224, -10688, -4160, 11264, 8768, 11136, 8896, -10688)])
+cell_size = 50.0
+border_size = 100.0
+agent_radius = 40.0
 
 [sub_resource type="Resource" id="Resource_o8yur"]
 script = ExtResource("16_6ykrs")
@@ -93,37 +106,190 @@ SpawnMaxTime = 1.2
 SpawnBatchMax = 2
 metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 
+[sub_resource type="Resource" id="Resource_7886b"]
+script = ExtResource("10_5mhgh")
+FrameName = &"Nav"
+metadata/_custom_type_script = "uid://daw8gyvo0xom3"
+
 [node name="Level1" unique_id=2141389114 instance=ExtResource("1_h2u8a")]
 
-[node name="NavMap" type="NavigationRegion2D" parent="World" parent_id_path=PackedInt32Array(197767375) index="1" unique_id=1044262957]
-position = Vector2(-1400, -760)
-navigation_polygon = SubResource("NavigationPolygon_5mhgh")
+[node name="NavMap" type="NavigationRegion2D" parent="World" parent_id_path=PackedInt32Array(197767375) index="1" unique_id=2024384218]
+navigation_polygon = SubResource("NavigationPolygon_nu2g1")
 script = ExtResource("2_o8yur")
-GridSize = 74
-RangeFactor = 10.0
+GridSize = 128
+RangeFactor = 2.0
 metadata/_edit_lock_ = true
 
-[node name="Node2D" type="Node2D" parent="World/NavMap" index="0" unique_id=185745157]
+[node name="Node2D3" type="Node2D" parent="World/NavMap" index="0" unique_id=272796107]
+position = Vector2(-1918, -760)
+scale = Vector2(2.405206, 2.405206)
+
+[node name="Node2D" type="Node2D" parent="World/NavMap/Node2D3" index="0" unique_id=1318181587]
 position = Vector2(0, 64)
+
+[node name="PolygonLightOccluder" parent="World/NavMap/Node2D3/Node2D" index="0" unique_id=1199949879 instance=ExtResource("3_o8yur")]
+position = Vector2(-8, -97.26119)
+polygon = PackedVector2Array(64, -192, 576, -192, 576, 320.00006, 64.00012, 320)
+uv = PackedVector2Array(48, -47.999992, 408, -95.99999, 552, 168.00002, 168, 192.00002)
+
+[node name="PolygonLightOccluder3" parent="World/NavMap/Node2D3/Node2D" index="1" unique_id=288250803 instance=ExtResource("3_o8yur")]
+position = Vector2(-8, 502)
+polygon = PackedVector2Array(64, 128, 448, 128, 448, 256.00006, 64, 256.00006)
+uv = PackedVector2Array(48, -47.999992, 408, -95.99999, 552, 168.00002, 168, 192.00002)
+
+[node name="PolygonLightOccluder6" parent="World/NavMap/Node2D3/Node2D" index="2" unique_id=244570289 instance=ExtResource("3_o8yur")]
+position = Vector2(-13.186058, 504.2226)
+scale = Vector2(1.011576, 1.011576)
+polygon = PackedVector2Array(64.00012, -192, 448, -192, 448, 0, 64, 0)
+uv = PackedVector2Array(48, -47.999992, 408, -95.99999, 552, 168.00002, 168, 192.00002)
+
+[node name="PolygonLightOccluder4" parent="World/NavMap/Node2D3/Node2D" index="3" unique_id=1877595616 instance=ExtResource("3_o8yur")]
+position = Vector2(906, -8)
+polygon = PackedVector2Array(64.00012, -192, 512.0001, -192, 512, 127.99997, 64, 127.99997)
+uv = PackedVector2Array(48, -47.999992, 408, -95.99999, 552, 168.00002, 168, 192.00002)
+
+[node name="PolygonLightOccluder5" parent="World/NavMap/Node2D3/Node2D" index="4" unique_id=532208307 instance=ExtResource("3_o8yur")]
+position = Vector2(906, 678)
+polygon = PackedVector2Array(64.00012, -192, 248, -192, 248, -208, 512, -208, 512, 127.99997, 376, 128, 376, 24, 368, 24, 368, -8, 248, -8, 248, -16, 64, -16)
+uv = PackedVector2Array(48, -47.999992, 408, -95.99999, 552, 168.00002, 168, 192.00002)
+
+[node name="Node2D2" type="Node2D" parent="World/NavMap/Node2D3" index="1" unique_id=969241596]
+
+[node name="PolygonLightOccluder" parent="World/NavMap/Node2D3/Node2D2" index="0" unique_id=1787887424 instance=ExtResource("3_o8yur")]
+position = Vector2(56, 1128)
+polygon = PackedVector2Array(0, 704, 0, -64, 96, -64, 264, -64, 421.2981, -96.90326, 448, -192, 576, -192, 576, 320, 320, 320, 320.00012, 704)
+
+[node name="PolygonLightOccluder2" parent="World/NavMap/Node2D3/Node2D2" index="1" unique_id=1505372451 instance=ExtResource("3_o8yur")]
+position = Vector2(1224, 1514)
+polygon = PackedVector2Array(-64.00006, 320, -64, -64, 191.99994, -64, 191.99994, 320)
+
+[node name="Node2D" type="Node2D" parent="World/NavMap" index="1" unique_id=1523872103]
+position = Vector2(-1158, -3080)
+scale = Vector2(2.405206, 2.405206)
+
+[node name="PolygonLightOccluder" parent="World/NavMap/Node2D" index="0" unique_id=783463941 instance=ExtResource("3_o8yur")]
+polygon = PackedVector2Array(-768, 256, -768, -960, -320, -960, -320, -1216, 128, -1216, 128, -1088, 320, -1088, 320, -896, 448, -896, 448, 192, 320, 192, 320, 384, -320, 384, -320, 256)
+
+[node name="PolygonLightOccluder2" parent="World/NavMap/Node2D" index="1" unique_id=220603293 instance=ExtResource("3_o8yur")]
+position = Vector2(1856, 0)
+polygon = PackedVector2Array(-192, 384, -204, -1216, -12, -1216, -12, -1088, 52, -1088, 52, -1152, 564, -1216, 628, -1216, 1140, -1152, 1140, -1088, 1204, -1088, 1204, -1216, 1396, -1216, 1407.9999, 384.00003, 1204, 384, 1204, 256, 1140, 256, 1140, 320, 628, 384, 564, 384, 52, 320, 52, 256, 0, 256, 0, 384)
+
+[node name="Node2D2" type="Node2D" parent="World/NavMap" index="2" unique_id=1032370663]
+position = Vector2(-1918, -760)
+scale = Vector2(2.405206, 2.405206)
+
+[node name="PolygonLightOccluder" parent="World/NavMap/Node2D2" index="0" unique_id=1826364779 instance=ExtResource("3_o8yur")]
+position = Vector2(2488, 1801)
+polygon = PackedVector2Array(-64, 64.000015, -64, -529, 448, -529, 448, -593, 640, -593, 640, -320, 832.0001, -320.00003, 832, -273, 896, -273, 896, -145, 832, -145, 832.0001, 64)
+
+[node name="Node2D4" type="Node2D" parent="World/NavMap" index="3" unique_id=948289698]
+position = Vector2(0, -458)
+
+[node name="PolygonLightOccluder" parent="World/NavMap/Node2D4" index="0" unique_id=896580727 instance=ExtResource("3_o8yur")]
+position = Vector2(5566, -10)
+polygon = PackedVector2Array(448, 384, -576, -576, -256.00012, -576, 704, 384)
+
+[node name="PolygonLightOccluder2" parent="World/NavMap/Node2D4" index="1" unique_id=1221650860 instance=ExtResource("3_o8yur")]
+position = Vector2(5566, 1080)
+polygon = PackedVector2Array(-576, 512, 448, -447.99994, 704, -447.99997, -320, 511.99994)
+
+[node name="NavMap2" type="NavigationRegion2D" parent="World" parent_id_path=PackedInt32Array(197767375) index="2" unique_id=1593201494]
+position = Vector2(11776, 0)
+navigation_polygon = SubResource("NavigationPolygon_5mhgh")
+metadata/_edit_lock_ = true
+
+[node name="Node2D3" type="Node2D" parent="World/NavMap2" index="0" unique_id=1323613786]
+position = Vector2(-1918, -760)
+scale = Vector2(2.405206, 2.405206)
+
+[node name="Node2D" type="Node2D" parent="World/NavMap2/Node2D3" index="0" unique_id=1925731035]
+position = Vector2(0, 64)
+
+[node name="PolygonLightOccluder" parent="World/NavMap2/Node2D3/Node2D" index="0" unique_id=1435460785 instance=ExtResource("3_o8yur")]
+position = Vector2(-8, -97.26119)
+polygon = PackedVector2Array(64, -192, 576, -192, 576, 320.00006, 64.00012, 320)
+uv = PackedVector2Array(48, -47.999992, 408, -95.99999, 552, 168.00002, 168, 192.00002)
+
+[node name="PolygonLightOccluder3" parent="World/NavMap2/Node2D3/Node2D" index="1" unique_id=1883069459 instance=ExtResource("3_o8yur")]
+position = Vector2(-8, 502)
+polygon = PackedVector2Array(64, 128, 448, 128, 448, 256.00006, 64, 256.00006)
+uv = PackedVector2Array(48, -47.999992, 408, -95.99999, 552, 168.00002, 168, 192.00002)
+
+[node name="PolygonLightOccluder6" parent="World/NavMap2/Node2D3/Node2D" index="2" unique_id=2085079395 instance=ExtResource("3_o8yur")]
+position = Vector2(-13.186058, 504.2226)
+scale = Vector2(1.011576, 1.011576)
+polygon = PackedVector2Array(64.00012, -192, 448, -192, 448, 0, 64, 0)
+uv = PackedVector2Array(48, -47.999992, 408, -95.99999, 552, 168.00002, 168, 192.00002)
+
+[node name="PolygonLightOccluder4" parent="World/NavMap2/Node2D3/Node2D" index="3" unique_id=810669195 instance=ExtResource("3_o8yur")]
+position = Vector2(906, -8)
+polygon = PackedVector2Array(64.00012, -192, 512.0001, -192, 512, 127.99997, 64, 127.99997)
+uv = PackedVector2Array(48, -47.999992, 408, -95.99999, 552, 168.00002, 168, 192.00002)
+
+[node name="PolygonLightOccluder5" parent="World/NavMap2/Node2D3/Node2D" index="4" unique_id=1907018158 instance=ExtResource("3_o8yur")]
+position = Vector2(906, 678)
+polygon = PackedVector2Array(64.00012, -192, 248, -192, 248, -208, 512, -208, 512, 127.99997, 376, 128, 376, 24, 368, 24, 368, -8, 248, -8, 248, -16, 64, -16)
+uv = PackedVector2Array(48, -47.999992, 408, -95.99999, 552, 168.00002, 168, 192.00002)
+
+[node name="Node2D2" type="Node2D" parent="World/NavMap2/Node2D3" index="1" unique_id=1290008760]
+
+[node name="PolygonLightOccluder" parent="World/NavMap2/Node2D3/Node2D2" index="0" unique_id=566410854 instance=ExtResource("3_o8yur")]
+position = Vector2(56, 1128)
+polygon = PackedVector2Array(0, 704, 0, -64, 96, -64, 264, -64, 421.2981, -96.90326, 448, -192, 576, -192, 576, 320, 320, 320, 320.00012, 704)
+
+[node name="PolygonLightOccluder2" parent="World/NavMap2/Node2D3/Node2D2" index="1" unique_id=1039591650 instance=ExtResource("3_o8yur")]
+position = Vector2(1224, 1514)
+polygon = PackedVector2Array(-64.00006, 320, -64, -64, 191.99994, -64, 191.99994, 320)
+
+[node name="Node2D" type="Node2D" parent="World/NavMap2" index="1" unique_id=191570689]
+position = Vector2(-1158, -3080)
+scale = Vector2(2.405206, 2.405206)
+
+[node name="PolygonLightOccluder" parent="World/NavMap2/Node2D" index="0" unique_id=1224158831 instance=ExtResource("3_o8yur")]
+polygon = PackedVector2Array(-768, 256, -768, -960, -320, -960, -320, -1216, 128, -1216, 128, -1088, 320, -1088, 320, -896, 448, -896, 448, 192, 320, 192, 320, 384, -320, 384, -320, 256)
+
+[node name="PolygonLightOccluder2" parent="World/NavMap2/Node2D" index="1" unique_id=1704445062 instance=ExtResource("3_o8yur")]
+position = Vector2(1856, 0)
+polygon = PackedVector2Array(-192, 384, -204, -1216, -12, -1216, -12, -1088, 52, -1088, 52, -1152, 564, -1216, 628, -1216, 1140, -1152, 1140, -1088, 1204, -1088, 1204, -1216, 1396, -1216, 1407.9999, 384.00003, 1204, 384, 1204, 256, 1140, 256, 1140, 320, 628, 384, 564, 384, 52, 320, 52, 256, 0, 256, 0, 384)
+
+[node name="Node2D2" type="Node2D" parent="World/NavMap2" index="2" unique_id=1796126038]
+position = Vector2(-1918, -760)
+scale = Vector2(2.405206, 2.405206)
+
+[node name="PolygonLightOccluder" parent="World/NavMap2/Node2D2" index="0" unique_id=965429198 instance=ExtResource("3_o8yur")]
+position = Vector2(2488, 1801)
+polygon = PackedVector2Array(-64, 64.000015, -64, -529, 448, -529, 448, -593, 640, -593, 640, -320, 832.0001, -320.00003, 832, -273, 896, -273, 896, -145, 832, -145, 832.0001, 64)
+
+[node name="Node2D4" type="Node2D" parent="World/NavMap2" index="3" unique_id=1104542513]
+position = Vector2(0, -458)
+
+[node name="PolygonLightOccluder" parent="World/NavMap2/Node2D4" index="0" unique_id=664953475 instance=ExtResource("3_o8yur")]
+position = Vector2(5566, -10)
+polygon = PackedVector2Array(448, 384, -576, -576, -256.00012, -576, 704, 384)
+
+[node name="PolygonLightOccluder2" parent="World/NavMap2/Node2D4" index="1" unique_id=35132413 instance=ExtResource("3_o8yur")]
+position = Vector2(5566, 1080)
+polygon = PackedVector2Array(-576, 512, 448, -447.99994, 704, -447.99997, -320, 511.99994)
 
 [node name="GameWorld" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="0" unique_id=562045734 node_paths=PackedStringArray("MainPlayer")]
 MainPlayer = NodePath("../../Player")
 
-[node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=247564660]
+[node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=2001503768]
 Waves = Array[Object]([SubResource("Resource_coqn3")])
 
-[node name="EnemyNavMeshDirector" type="Node2D" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="4" unique_id=571532821]
-script = ExtResource("7_8nqap")
-CorneringSmoothingThreshold = 0.7
-MaxCornerDistance = 200.0
+[node name="DebugClassInspector" parent="Systems/EnemySystems/EnemyWaveController" index="1" unique_id=1989388267 instance=ExtResource("9_5mhgh")]
+BindingFlags = 54
+
+[node name="EnemyNavMeshController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="4" unique_id=7126221 instance=ExtResource("9_nu2g1")]
+FrameTime = SubResource("Resource_7886b")
 
 [node name="EnemyMover" type="Node" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="5" unique_id=1005457254]
 script = ExtResource("8_u4ox6")
 
-[node name="EnemyCollisionSolver" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="6" unique_id=2115688042 node_paths=PackedStringArray("_navMap")]
-_navMap = NodePath("../../../World/NavMap")
+[node name="EnemyCollisionSolverManager" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="6" unique_id=1705317581 node_paths=PackedStringArray("nav_map")]
+nav_map = NodePath("../../../World/NavMap")
 
 [node name="Player" parent="." index="2" unique_id=1386970244 instance=ExtResource("2_jkyfg")]
 
-[node name="PerformanceMonitor" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="4" unique_id=1872396024 node_paths=PackedStringArray("Nav")]
-Nav = NodePath("../../Systems/EnemySystems/EnemyNavMeshDirector")
+[node name="PerformanceMonitor" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="4" unique_id=1872396024 node_paths=PackedStringArray("Targets")]
+Targets = [NodePath("../../Systems/EnemySystems/EnemyRenderer"), NodePath("../../Systems/EnemySystems/EnemyNavMeshController"), NodePath("../../Systems/EnemySystems/EnemyTargetQuery")]

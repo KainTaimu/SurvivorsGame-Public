@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://c5chlqja2k2k0"]
+
+[ext_resource type="Script" uid="uid://d16s2voefyry4" path="res://src/Items/Offensive/Shotgun.cs" id="1_vf4av"]
+[ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_qwex2"]
+[ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FullAutoFireGroup.cs" id="3_8vupm"]
+[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="4_2ovbf"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="5_2akch"]
+[ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_i7f5u"]
+[ext_resource type="AudioStream" uid="uid://yg5u0mjrrl4h" path="res://assets/SFX/Shoot/freesound_community-submachine-gun-79846.mp3" id="7_qwex2"]
+
+[sub_resource type="Resource" id="Resource_vf4av"]
+script = ExtResource("3_8vupm")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_qswie"]
+script = ExtResource("4_2ovbf")
+metadata/_custom_type_script = "uid://dpq42sefws67v"
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_18mki"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_j05a4"]
+script = ExtResource("5_2akch")
+Name = "AA-12"
+Description = ""
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
+[sub_resource type="Resource" id="Resource_0tk84"]
+script = ExtResource("6_i7f5u")
+ReloadTime = 3.0
+BloomCoefficientDeg = 25.0
+MagazineCapacity = 20
+HorizontalRecoilMin = 20.0
+HorizontalBaseRecoil = 20.0
+HorizontalRecoilRandom = 20.0
+VerticalRecoilMin = 80.0
+VerticalBaseRecoil = 80.0
+VerticalRecoilRandom = 40.0
+RecoilScale = 0.5
+CameraRecoilScale = 2.0
+BaseDamage = 8
+BaseCritDamageMultiplier = 1.0
+BaseCritChanceProportion = 0.3
+BaseProjectileSpeed = 2200
+BaseProjectileScaleMultiplier = 0.8
+BaseAttackSpeed = 0.3
+BasePierceLimit = 4
+Additional = Dictionary[String, Variant]({
+"PelletCount": 16
+})
+metadata/_custom_type_script = "uid://di81uufgmcsog"
+
+[node name="AA-12" type="Node" unique_id=764147352 node_paths=PackedStringArray("_shellReloadAudioPlayer")]
+script = ExtResource("1_vf4av")
+_projectileScene = ExtResource("2_qwex2")
+_fireGroup = SubResource("Resource_vf4av")
+_projectileAttack = SubResource("Resource_qswie")
+_shellReloadAudioPlayer = NodePath("Shoot")
+Properties = SubResource("Resource_j05a4")
+Stats = SubResource("Resource_0tk84")
+
+[node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=1956405043]
+process_mode = 3
+stream = ExtResource("7_qwex2")
+max_polyphony = 2
+bus = &"ShootSfx"
+
+[connection signal="OnAttack" from="." to="Shoot" method="play"]

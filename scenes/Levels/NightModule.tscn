@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://u3wmb7l8pjye"]
+
+[sub_resource type="GDScript" id="GDScript_ww382"]
+script/source = "extends CanvasModulate
+
+@onready var night_module_parent: Node2D = $\"..\"
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	visible = night_module_parent.visible
+	pass # Replace with function body.
+"
+
+[node name="NightModule" type="Node2D" unique_id=24799609]
+visible = false
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1727882061]
+color = Color(0, 0, 0, 1)
+script = SubResource("GDScript_ww382")

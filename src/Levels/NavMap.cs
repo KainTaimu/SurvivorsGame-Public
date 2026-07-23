@@ -60,12 +60,15 @@ public partial class NavMap : NavigationRegion2D
 	public Span<Vector2> GetNavLine(Vector2 pos)
 	{
 		var cellIndex = _grid.WorldToCell(pos);
+		if (!_grid.IsValidCell(cellIndex.X, cellIndex.Y))
+			return [];
 		Vector2[] paths;
 
 		// if stale cell
 		if (_grid.GetCellCount(cellIndex.X, cellIndex.Y) > 0)
 		{
-			_grid.TryGetWorld(pos, out paths, out _);
+			if (!_grid.TryGetWorld(pos, out paths, out _))
+				return [];
 			return paths.AsSpan();
 		}
 
