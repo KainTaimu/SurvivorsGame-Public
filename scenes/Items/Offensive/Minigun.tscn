@@ -4,25 +4,15 @@
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_6kirf"]
 [ext_resource type="Texture2D" uid="uid://bce8puoo5xtcr" path="res://assets/UI/keyboard_arrow_down.png" id="2_hoxu3"]
 [ext_resource type="Script" uid="uid://d31d8uns5faa5" path="res://src/Players/Controllers/StatusEffectModifier.cs" id="2_oxxwr"]
-[ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FullAutoFireGroup.cs" id="3_6etis"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="3_hfpx8"]
 [ext_resource type="Script" uid="uid://bdk4fdcqvypav" path="res://src/Players/Controllers/StatusEffect.cs" id="3_hoxu3"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="4_m53d4"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="4_qugsk"]
 [ext_resource type="AudioStream" uid="uid://cfq4doprbtei8" path="res://assets/SFX/Shoot/762x54r Single Isolated MP3.mp3" id="5_wkwsw"]
 
-[sub_resource type="Resource" id="Resource_hoxu3"]
-script = ExtResource("3_6etis")
-metadata/_custom_type_script = "uid://bt8inkwpypk5b"
-
 [sub_resource type="Resource" id="Resource_m53d4"]
 script = ExtResource("4_m53d4")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
-
-[sub_resource type="Curve" id="Curve_e6too"]
-_limits = [0.0, 0.5, 0.0, 3.0]
-_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(3, 0), 0.0, 0.0, 0, 0]
-point_count = 2
 
 [sub_resource type="Resource" id="Resource_1j5om"]
 script = ExtResource("2_oxxwr")
@@ -41,7 +31,12 @@ Tags = Array[int]([2])
 Modifiers = Array[ExtResource("2_oxxwr")]([SubResource("Resource_1j5om")])
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_6nomv"]
+[sub_resource type="Curve" id="Curve_e6too"]
+_limits = [0.0, 0.5, 0.0, 3.0]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(3, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_1j5om"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_y2vvo"]
@@ -79,10 +74,9 @@ metadata/_custom_type_script = "uid://di81uufgmcsog"
 [node name="Minigun" type="Node" unique_id=636864915]
 script = ExtResource("1_6kirf")
 _projectileScene = ExtResource("2_6kirf")
-_fireGroup = SubResource("Resource_hoxu3")
 _projectileAttack = SubResource("Resource_m53d4")
-_windupCurve = SubResource("Curve_e6too")
 _movementPenaltyStatusEffect = SubResource("Resource_6etis")
+_windupCurve = SubResource("Curve_e6too")
 Properties = SubResource("Resource_y2vvo")
 Stats = SubResource("Resource_6kirf")
 

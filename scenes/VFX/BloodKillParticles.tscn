@@ -6,6 +6,7 @@
 [node name="BloodKillParticles" type="GPUParticles2D" unique_id=893552966]
 modulate = Color(0.7819659, 0, 0, 1)
 z_as_relative = false
+emitting = false
 amount = 120
 texture = ExtResource("1_j17l3")
 lifetime = 120.0

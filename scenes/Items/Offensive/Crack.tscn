@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="4_scyru"]
 [ext_resource type="Script" uid="uid://os8ycjo6m7r0" path="res://src/Items/Offensive/BaseOffensiveStats.cs" id="5_3hjt2"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_y52bq"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_43i55"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_qh10d"]
@@ -43,7 +43,7 @@ Icon = SubResource("PlaceholderTexture2D_agk5e")
 Modifiers = Array[ExtResource("2_u1i3f")]([SubResource("Resource_vujg4")])
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_qh10d"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_u1i3f"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_mre4m"]

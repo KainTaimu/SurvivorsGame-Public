@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="2_bjb6l"]
 [ext_resource type="Script" uid="uid://os8ycjo6m7r0" path="res://src/Items/Offensive/BaseOffensiveStats.cs" id="3_diq1s"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_qh10d"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xwcv4"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_do71q"]

@@ -8,4 +8,3 @@
 script = ExtResource("1_h0uvq")
 _airdropPlaneScene = ExtResource("2_5uhfe")
 _itemDropScene = ExtResource("3_b4nno")
-Velocity = 5000.0

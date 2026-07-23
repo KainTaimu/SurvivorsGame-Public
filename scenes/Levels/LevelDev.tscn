@@ -90,7 +90,7 @@ Waves = Array[Object]([SubResource("Resource_g22vo"), SubResource("Resource_4v0e
 [node name="EnemyMover" type="Node" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="4" unique_id=1691633280]
 script = ExtResource("14_2csoy")
 
-[node name="EnemyRenderer" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="6" unique_id=1054443393]
+[node name="EnemyRenderer" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="7" unique_id=1054443393]
 RenderDistanceFactor = 50.0
 
 [node name="Player" parent="." index="2" unique_id=1386970244 instance=ExtResource("2_4pxeb")]

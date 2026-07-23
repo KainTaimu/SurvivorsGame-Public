@@ -286,7 +286,7 @@ FrameTime = SubResource("Resource_7886b")
 [node name="EnemyMover" type="Node" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="5" unique_id=1005457254]
 script = ExtResource("8_u4ox6")
 
-[node name="EnemyCollisionSolverManager" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="6" unique_id=1705317581 node_paths=PackedStringArray("nav_map")]
+[node name="EnemyCollisionSolverManager" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="7" unique_id=1705317581 node_paths=PackedStringArray("nav_map")]
 nav_map = NodePath("../../../World/NavMap")
 
 [node name="Player" parent="." index="2" unique_id=1386970244 instance=ExtResource("2_jkyfg")]
