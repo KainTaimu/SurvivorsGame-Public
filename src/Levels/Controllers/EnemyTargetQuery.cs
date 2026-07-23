@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using Arch.Core;
 using Arch.System;
 using Arch.System.SourceGenerator;
+using CommunityToolkit.HighPerformance;
 using Game.Core.ECS;
 using Game.Core.Extensions;
 using Game.Models;
@@ -152,7 +153,13 @@ public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
 	/// <returns>
 	/// <c>true</c> when at least one target lies within raycast corridor.
 	/// </returns>
-	public bool GetTargetsRayCast(Vector2 from, float angle, float width, out Entity[] entities, int hitLimit = -1)
+	public bool GetTargetsRayCast(
+		Vector2 from,
+		float angle,
+		float width,
+		out ReadOnlySpan<Entity> entities,
+		int hitLimit = -1
+	)
 	{
 		var direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 		var rayLength = _grid.WindowSize.Length();
@@ -162,34 +169,19 @@ public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
 		GetCellsAlongLine(from, rayEnd, cellsOnRay);
 
 		var cellsOnRayList = cellsOnRay.ToList();
-		cellsOnRayList.Sort(
-			(a, b) =>
-				(new Vector2(a.X, a.Y) * GRID_SIZE + _grid.TopLeft - from)
-					.LengthSquared()
-					.CompareTo((new Vector2(b.X, b.Y) * GRID_SIZE + _grid.TopLeft - from).LengthSquared())
-		);
 
 		var allCells = new List<Vector2I>();
+		var cellWidth = Mathf.Clamp(Mathf.FloorToInt(width / _grid.CellSize), 0, int.MaxValue);
 		foreach (var cellIdx in cellsOnRayList)
 		{
 			var surrounding = new List<Vector2I>();
-			for (var dx = -3; dx <= 3; dx++)
-			for (var dy = -3; dy <= 3; dy++)
+			for (var dx = -cellWidth; dx <= cellWidth; dx++)
+			for (var dy = -cellWidth; dy <= cellWidth; dy++)
 			{
 				var checkCell = new Vector2I(cellIdx.X + dx, cellIdx.Y + dy);
 				if (_grid.IsValidCell(checkCell.X, checkCell.Y))
 					surrounding.Add(checkCell);
 			}
-
-			surrounding.Sort(
-				(a, b) =>
-				{
-					var cellWorldA = new Vector2(a.X * GRID_SIZE, a.Y * GRID_SIZE) + _grid.TopLeft;
-					var cellWorldB = new Vector2(b.X * GRID_SIZE, b.Y * GRID_SIZE) + _grid.TopLeft;
-					return DistanceSquaredPointToRay(cellWorldA, from, direction, rayLength)
-						.CompareTo(DistanceSquaredPointToRay(cellWorldB, from, direction, rayLength));
-				}
-			);
 
 			allCells.AddRange(surrounding);
 		}
@@ -226,7 +218,7 @@ public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
 		}
 
 		Exit:
-		entities = [.. targets];
+		entities = targets.AsSpan();
 		return targets.Count > 0;
 	}
 
