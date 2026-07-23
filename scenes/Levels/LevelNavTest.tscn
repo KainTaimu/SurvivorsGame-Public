@@ -11,7 +11,8 @@
 [ext_resource type="Script" uid="uid://dau6m811dtep8" path="res://src/Levels/Controllers/BlueprintWeight.cs" id="4_7b5vb"]
 [ext_resource type="Script" uid="uid://d2tvxgxbv87i2" path="res://src/Levels/Controllers/WeightedWaveBlueprintCollection.cs" id="5_lkbse"]
 [ext_resource type="PackedScene" uid="uid://tw6dfgyd6h7y" path="res://scenes/Levels/EnemyNavMeshController.tscn" id="8_7b5vb"]
-[ext_resource type="Script" uid="uid://b7ol6jtjagoe" path="res://src/Levels/Controllers/WaveDuration.cs" id="8_lkbse"]
+[ext_resource type="Script" uid="uid://cksmwvaxx1m18" path="res://src/Levels/Controllers/WaveSpawnCount.cs" id="9_4ljo6"]
+[ext_resource type="Script" uid="uid://bhhh8235y54bg" path="res://src/Levels/Controllers/WaveDebugStopper.cs" id="10_chdw3"]
 [ext_resource type="Script" uid="uid://daw8gyvo0xom3" path="res://src/UI/FrameTime.cs" id="12_2ki1j"]
 [ext_resource type="LabelSettings" uid="uid://cu65p2lbgxmhg" path="res://scenes/UI/WeaponCarouselLabelSettings.tres" id="14_3bukj"]
 
@@ -31,7 +32,7 @@ cell_size = 50.0
 border_size = 100.0
 agent_radius = 40.0
 
-[sub_resource type="Resource" id="Resource_2ki1j"]
+[sub_resource type="Resource" id="Resource_h7ouo"]
 script = ExtResource("2_gm6l2")
 DamageOnContact = 4
 MaxHealth = 15
@@ -39,39 +40,39 @@ MoveSpeed = 240.0
 TurnSpeed = 4.0
 metadata/_custom_type_script = "uid://y77qtp32wo00"
 
-[sub_resource type="Resource" id="Resource_3bukj"]
+[sub_resource type="Resource" id="Resource_j7ywk"]
 script = ExtResource("3_sx6oq")
 Name = "Walker"
 SpriteName = "placeholder"
 Type = 1
-Stats = SubResource("Resource_2ki1j")
+Stats = SubResource("Resource_h7ouo")
 
-[sub_resource type="Resource" id="Resource_4ljo6"]
+[sub_resource type="Resource" id="Resource_l75en"]
 script = ExtResource("4_7b5vb")
-Blueprint = SubResource("Resource_3bukj")
+Blueprint = SubResource("Resource_j7ywk")
 metadata/_custom_type_script = "uid://dau6m811dtep8"
 
-[sub_resource type="Resource" id="Resource_chdw3"]
+[sub_resource type="Resource" id="Resource_f1jhi"]
 script = ExtResource("2_gm6l2")
 MaxHealth = 2
 MoveSpeed = 300.0
 SpriteScaleMultiplier = 0.85
 metadata/_custom_type_script = "uid://y77qtp32wo00"
 
-[sub_resource type="Resource" id="Resource_h7ouo"]
+[sub_resource type="Resource" id="Resource_vwdg1"]
 script = ExtResource("3_sx6oq")
 Name = "Sprinter"
 SpriteName = "placeholder"
 Type = 1
-Stats = SubResource("Resource_chdw3")
+Stats = SubResource("Resource_f1jhi")
 
-[sub_resource type="Resource" id="Resource_j7ywk"]
+[sub_resource type="Resource" id="Resource_i1qcg"]
 script = ExtResource("4_7b5vb")
-Blueprint = SubResource("Resource_h7ouo")
+Blueprint = SubResource("Resource_vwdg1")
 Weight = 0.25
 metadata/_custom_type_script = "uid://dau6m811dtep8"
 
-[sub_resource type="Resource" id="Resource_l75en"]
+[sub_resource type="Resource" id="Resource_ms68o"]
 script = ExtResource("2_gm6l2")
 DamageOnContact = 10
 MaxHealth = 50
@@ -79,34 +80,37 @@ MoveSpeed = 200.0
 SpriteScaleMultiplier = 1.3
 metadata/_custom_type_script = "uid://y77qtp32wo00"
 
-[sub_resource type="Resource" id="Resource_f1jhi"]
+[sub_resource type="Resource" id="Resource_ovhvh"]
 script = ExtResource("3_sx6oq")
 Name = "Big"
 SpriteName = "placeholder"
 Type = 1
-Stats = SubResource("Resource_l75en")
+Stats = SubResource("Resource_ms68o")
 
-[sub_resource type="Resource" id="Resource_vwdg1"]
+[sub_resource type="Resource" id="Resource_hjcv3"]
 script = ExtResource("4_7b5vb")
-Blueprint = SubResource("Resource_f1jhi")
+Blueprint = SubResource("Resource_ovhvh")
 Weight = 0.05
 metadata/_custom_type_script = "uid://dau6m811dtep8"
 
-[sub_resource type="Resource" id="Resource_i1qcg"]
+[sub_resource type="Resource" id="Resource_uo14t"]
 script = ExtResource("5_lkbse")
-Weights = Array[Object]([SubResource("Resource_4ljo6"), SubResource("Resource_j7ywk"), SubResource("Resource_vwdg1")])
+Weights = Array[Object]([SubResource("Resource_l75en"), SubResource("Resource_i1qcg"), SubResource("Resource_hjcv3")])
 metadata/_custom_type_script = "uid://d2tvxgxbv87i2"
 
-[sub_resource type="Resource" id="Resource_lkbse"]
-script = ExtResource("8_lkbse")
-Duration = 999999999.0
-MaxMobs = 1000
-EnemyBlueprints = SubResource("Resource_i1qcg")
+[sub_resource type="Resource" id="Resource_wbp0e"]
+script = ExtResource("9_4ljo6")
+SpawnCountTarget = 1000
+EnemyBlueprints = SubResource("Resource_uo14t")
 SpawnMinTime = 0.1
 SpawnMaxTime = 0.1
 SpawnBatchMin = 100
 SpawnBatchMax = 100
-metadata/_custom_type_script = "uid://b7ol6jtjagoe"
+metadata/_custom_type_script = "uid://cksmwvaxx1m18"
+
+[sub_resource type="Resource" id="Resource_uj3cf"]
+script = ExtResource("10_chdw3")
+metadata/_custom_type_script = "uid://bhhh8235y54bg"
 
 [sub_resource type="Resource" id="Resource_e1pfk"]
 script = ExtResource("12_2ki1j")
@@ -310,7 +314,7 @@ polygon = PackedVector2Array(-576, 512, 448, -447.99994, 704, -447.99997, -320, 
 MainPlayer = NodePath("../Player")
 
 [node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=2001503768]
-Waves = Array[Object]([SubResource("Resource_lkbse")])
+Waves = Array[Object]([SubResource("Resource_wbp0e"), SubResource("Resource_uj3cf")])
 
 [node name="EnemyTargetQuery" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="1" unique_id=991938994]
 _rangeFactor = 1.2

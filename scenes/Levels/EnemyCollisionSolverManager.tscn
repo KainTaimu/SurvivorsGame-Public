@@ -17,7 +17,7 @@ var selection_cause: String = \"\"
 
 @export var nav_map: NavMap = null
 
-enum SolverTypeEnum { AUTO, CPU, GPU }
+enum SolverTypeEnum { AUTO, NONE, CPU, GPU }
 
 @export_group(\"Internal\")
 @export var cpu_solver: PackedScene
@@ -28,6 +28,8 @@ func _ready() -> void:
 	change_solver()
 
 func change_solver() -> void:
+	if solver_type == SolverTypeEnum.NONE:
+		return
 	if solver_type != SolverTypeEnum.AUTO:
 		set_solver(get_solver(solver_type))
 		selection_cause = \"forced\"

@@ -17,7 +17,7 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 script = ExtResource("4_c20as")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_18mki"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ia1h2"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_iu54j"]
@@ -31,10 +31,10 @@ ReloadTime = 4.0
 BloomCoefficientDeg = 16.0
 MagazineCapacity = 200
 CameraRecoilScale = 0.8
-BaseDamage = 12
+BaseDamage = 16
 BaseDamageVarianceMultiplier = 0.22
 BaseCritDamageMultiplier = 1.4
-BaseCritChanceProportion = 0.1
+BaseCritChanceProportion = 0.25
 BaseProjectileSpeed = 4600
 BaseProjectileScaleMultiplier = 0.95
 BaseAttackSpeed = 0.071

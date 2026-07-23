@@ -79,7 +79,6 @@ pitch_scale = 0.8
 bus = &"ShootSfx"
 
 [node name="BoltCycle" type="AudioStreamPlayer" parent="." unique_id=1900327009]
-process_mode = 3
 stream = ExtResource("8_0ap61")
 volume_db = 5.0
 
@@ -89,6 +88,7 @@ stream = ExtResource("9_11blq")
 volume_db = 5.0
 
 [node name="SpentCasingEmitter" parent="." unique_id=1298992116 instance=ExtResource("10_bfcl0")]
+process_mode = 3
 
 [node name="308BoltCycleOpen" type="AudioStreamPlayer" parent="." unique_id=1403999457]
 stream = ExtResource("12_hagd0")
