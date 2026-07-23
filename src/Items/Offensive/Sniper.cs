@@ -18,6 +18,9 @@ public partial class Sniper : AbstractFirearm, IReloadable
 	[Signal]
 	public delegate void AlmostEmptyEventHandler();
 
+	[Signal]
+	public delegate void BoltOpenedEventHandler();
+
 	[Export]
 	private PackedScene _projectileScene = null!;
 
@@ -77,7 +80,12 @@ public partial class Sniper : AbstractFirearm, IReloadable
 		OnAttack += () => OffensiveEffects.ApplyCameraShake(FirearmStats.CameraRecoilScale, GetViewport, CreateTween);
 		OnAttack += () =>
 		{
-			GetTree().CreateTimer(OffensiveStats.AttackSpeed / 2).Timeout += () => _boltCyclingPlayer?.Play();
+			if (MagazineCount != 0)
+				GetTree().CreateTimer(OffensiveStats.AttackSpeed / 2).Timeout += () =>
+				{
+					EmitSignalBoltOpened();
+					_boltCyclingPlayer?.Play();
+				};
 
 			if (Crosshair is not null)
 			{
@@ -148,9 +156,6 @@ public partial class Sniper : AbstractFirearm, IReloadable
 
 	public void Attack()
 	{
-		if (MagazineCount <= 6)
-			EmitSignalAlmostEmpty();
-
 		MagazineCount--;
 		if (MagazineCount == 0)
 			Reload();
@@ -186,12 +191,16 @@ public partial class Sniper : AbstractFirearm, IReloadable
 			return;
 		GetTree().CreateTimer(FirearmStats.ReloadTime, false).Timeout += () =>
 		{
-			MagazineCount = MagazineCapacity;
+			if (MagazineCount == 0)
+				MagazineCount = MagazineCapacity;
+			else
+				MagazineCount = MagazineCapacity + 1;
 			IsReloading = false;
 			EmitSignalOnReloadEnd();
 		};
 		IsReloading = true;
 		EmitSignalOnReloadStart();
+		EmitSignalBoltOpened();
 	}
 
 	private void UpdateMoveTimeBloom(double delta)

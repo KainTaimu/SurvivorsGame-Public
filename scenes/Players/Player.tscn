@@ -161,11 +161,11 @@ _player = NodePath("..")
 _sprite = NodePath("../AnimatedSprite2D")
 metadata/_edit_lock_ = true
 
-[node name="PlayerWeaponController" type="Node" parent="." unique_id=752109662]
+[node name="PlayerWeaponController" type="Node2D" parent="." unique_id=1559593246]
 script = ExtResource("12_k8uaa")
 
 [node name="CurrentWeaponUI" parent="." unique_id=2135368036 node_paths=PackedStringArray("_weaponController") instance=ExtResource("14_8rask")]
-_weaponController = NodePath("../PlayerWeaponController")
+_weaponController = NodePath("")
 
 [node name="CurrentStatusEffectsUI" parent="." unique_id=1231089179 node_paths=PackedStringArray("_statusEffectController") instance=ExtResource("26_xsyvw")]
 _statusEffectController = NodePath("../PlayerStatusEffectController")

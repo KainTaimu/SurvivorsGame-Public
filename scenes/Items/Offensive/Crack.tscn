@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://cr8xg1q8q5j48"]
+
+[ext_resource type="Script" uid="uid://cu113f7251ldq" path="res://src/Items/Offensive/Crack.cs" id="1_43i55"]
+[ext_resource type="Script" uid="uid://d31d8uns5faa5" path="res://src/Players/Controllers/StatusEffectModifier.cs" id="2_u1i3f"]
+[ext_resource type="Script" uid="uid://bdk4fdcqvypav" path="res://src/Players/Controllers/StatusEffect.cs" id="3_mdhkm"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="4_scyru"]
+[ext_resource type="Script" uid="uid://os8ycjo6m7r0" path="res://src/Items/Offensive/BaseOffensiveStats.cs" id="5_3hjt2"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_y52bq"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_qh10d"]
+script = ExtResource("2_u1i3f")
+StatName = 9
+Operation = 1
+Value = 3.0
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_y52bq"]
+script = ExtResource("3_mdhkm")
+Name = "Tweaking"
+Cause = 2
+InitialDuration = 5.0
+Modifiers = Array[ExtResource("2_u1i3f")]([SubResource("Resource_qh10d")])
+metadata/_custom_type_script = "uid://bdk4fdcqvypav"
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_agk5e"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_vujg4"]
+script = ExtResource("2_u1i3f")
+StatName = 9
+Operation = 1
+Value = 3.0
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_t84yk"]
+script = ExtResource("3_mdhkm")
+Name = "Tweaking"
+Cause = 2
+Permanent = true
+Icon = SubResource("PlaceholderTexture2D_agk5e")
+Modifiers = Array[ExtResource("2_u1i3f")]([SubResource("Resource_vujg4")])
+metadata/_custom_type_script = "uid://bdk4fdcqvypav"
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_qh10d"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_mre4m"]
+script = ExtResource("4_scyru")
+Name = "CRACK"
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
+[sub_resource type="Resource" id="Resource_vsrt8"]
+script = ExtResource("5_3hjt2")
+metadata/_custom_type_script = "uid://os8ycjo6m7r0"
+
+[node name="Crack" type="Node" unique_id=1963515329]
+script = ExtResource("1_43i55")
+_crackEffect = SubResource("Resource_y52bq")
+_permanentCrackEffect = SubResource("Resource_t84yk")
+Properties = SubResource("Resource_mre4m")
+Stats = SubResource("Resource_vsrt8")

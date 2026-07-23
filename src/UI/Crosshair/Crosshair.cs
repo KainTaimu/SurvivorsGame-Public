@@ -5,6 +5,7 @@ using Game.UI.Menus;
 
 namespace Game.UI;
 
+[GlobalClass]
 public partial class Crosshair : Node2D
 {
 	[Signal]

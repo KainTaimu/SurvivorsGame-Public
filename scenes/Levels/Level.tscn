@@ -129,12 +129,12 @@ script = ExtResource("19_aig1n")
 [node name="EnemySystems" type="Node" parent="Systems" unique_id=1808118587]
 script = ExtResource("8_t3a6r")
 
+[node name="EnemyWaveController" parent="Systems/EnemySystems" unique_id=2001503768 instance=ExtResource("8_27qwr")]
+
 [node name="EnemyTargetQuery" type="Node" parent="Systems/EnemySystems" unique_id=991938994]
 script = ExtResource("16_x7tv3")
 _rangeFactor = 1.0
 FrameTime = SubResource("Resource_27qwr")
-
-[node name="EnemyWaveController" parent="Systems/EnemySystems" unique_id=2001503768 instance=ExtResource("8_27qwr")]
 
 [node name="EnemyHitFeedbackController" parent="Systems/EnemySystems" unique_id=1105191984 node_paths=PackedStringArray("_goreManager") instance=ExtResource("13_vg5sh")]
 _goreManager = NodePath("../GoreManager")

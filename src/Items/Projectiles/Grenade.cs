@@ -68,12 +68,25 @@ public partial class Grenade : RigidBody2D
 
 		if (entities.Length > EnemiesInAreaUntilExplode && _distanceTraveled > ArmingDistance)
 		{
-			Explode(entities);
+			ExplodeWithDelay();
 			return;
 		}
 
 		if (_t <= 0)
 			Explode(entities);
+	}
+
+	private void ExplodeWithDelay()
+	{
+		GetTree().CreateTimer(0.1f, false).Timeout += () =>
+		{
+			TargetQuery.TryGetTargetsInArea(
+				GlobalPosition,
+				OffensiveOrigin.OffensiveStats.ProjectileRadius,
+				out var entities
+			);
+			Explode(entities);
+		};
 	}
 
 	private void Explode(Entity[] entitiesHit)

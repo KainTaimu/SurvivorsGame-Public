@@ -11,6 +11,9 @@ public partial class SignalCamera2D : Camera2D
 		get;
 		set
 		{
+			if (Mathf.IsEqualApprox(value, field))
+				return;
+
 			var old = field;
 			field = value;
 			Zoom = Vector2.One * field;

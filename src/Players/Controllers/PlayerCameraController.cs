@@ -10,6 +10,9 @@ public partial class PlayerCameraController : SignalCamera2D
 
 	public override void _Input(InputEvent @event)
 	{
+		if (!@event.IsActionPressed("ZOOM_IN") && !@event.IsActionPressed("ZOOM_OUT"))
+			return;
+
 		var zoom = CurrentZoom;
 
 		if (@event.IsActionPressed("ZOOM_IN"))

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bv8olcpvea07v"]
 
-[ext_resource type="Script" uid="uid://c2mnwvkxk52yx" path="res://src/Items/Offensive/GrenadeLauncher.cs" id="1_hamct"]
+[ext_resource type="Script" uid="uid://btykxyy3du0px" path="res://src/Items/Offensive/GrenadeLauncher.cs" id="1_hamct"]
 [ext_resource type="PackedScene" uid="uid://dl1vjoimv4sq7" path="res://scenes/Projectiles/HvGrenade.tscn" id="2_hamct"]
 [ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/SemiAutoFireGroup.cs" id="3_ysrq1"]
 [ext_resource type="Texture2D" uid="uid://86rk4yr07033" path="res://assets/Sprites/grenade.png" id="4_k0hvc"]
@@ -30,19 +30,19 @@ HorizontalRecoilRandom = 20.0
 VerticalRecoilMin = 80.0
 VerticalBaseRecoil = 80.0
 VerticalRecoilRandom = 40.0
+RecoilScale = 0.5
 HorizontalRecoilPunish = false
-CameraRecoilScale = 2.0
 BaseDamage = 67
-BaseProjectileRadius = 300
+BaseProjectileRadius = 200
 BaseAttackSpeed = 0.3
 BasePierceLimit = 9999
 Additional = Dictionary[String, Variant]({
 "ArmingDistance": 300.0,
 "CameraRecoilScale": 4.2,
-"EnemiesInAreaUntilExplode": 999999,
+"EnemiesInAreaUntilExplode": 0,
 "Knockback": 150.0,
 "SlowMultiplier": 0.0,
-"TimeToExplode": 0.4
+"TimeToExplode": 0.6
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 

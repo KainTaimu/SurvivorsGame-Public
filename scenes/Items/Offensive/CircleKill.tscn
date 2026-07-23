@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dggcl8l5je8pv"]
+
+[ext_resource type="Script" uid="uid://cbfjls4e6upqh" path="res://src/Items/Offensive/Airstrike.cs" id="1_xwcv4"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="2_bjb6l"]
+[ext_resource type="Script" uid="uid://os8ycjo6m7r0" path="res://src/Items/Offensive/BaseOffensiveStats.cs" id="3_diq1s"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_qh10d"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_do71q"]
+script = ExtResource("2_bjb6l")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
+[sub_resource type="Resource" id="Resource_ahqxl"]
+script = ExtResource("3_diq1s")
+BaseDamage = 99999
+BaseCritDamageMultiplier = 1.0
+BaseCritChanceProportion = 1.0
+metadata/_custom_type_script = "uid://os8ycjo6m7r0"
+
+[node name="CircleKill" type="Node" unique_id=486593528]
+script = ExtResource("1_xwcv4")
+Properties = SubResource("Resource_do71q")
+Stats = SubResource("Resource_ahqxl")

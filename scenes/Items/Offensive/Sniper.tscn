@@ -9,6 +9,9 @@
 [ext_resource type="AudioStream" uid="uid://brpgaue5ixgat" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Full Sound/7.62x54R/WAV/762x54r Single WAV.wav" id="5_f52b2"]
 [ext_resource type="AudioStream" uid="uid://vrb4o786alti" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Reloads, Cycling & More/WAV/308 Bolt Cycle WAV.wav" id="8_0ap61"]
 [ext_resource type="AudioStream" uid="uid://or7lt77qeiaj" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Reloads, Cycling & More/WAV/308 Magazine Full WAV.wav" id="9_11blq"]
+[ext_resource type="PackedScene" uid="uid://dve8bx2iv87ya" path="res://scenes/VFX/SpentCasingEmitter.tscn" id="10_bfcl0"]
+[ext_resource type="AudioStream" uid="uid://cfl3jt5q0dghl" path="res://assets/SFX/Shoot/308 Bolt Cycle Close.wav" id="11_ia1h2"]
+[ext_resource type="AudioStream" uid="uid://77dvcqaetjul" path="res://assets/SFX/Shoot/308 Bolt Cycle Open.wav" id="12_hagd0"]
 
 [sub_resource type="Resource" id="Resource_11blq"]
 script = ExtResource("3_0ap61")
@@ -19,7 +22,7 @@ metadata/_custom_type_script = "uid://dnodsacrptssb"
 script = ExtResource("4_11blq")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_18mki"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ia1h2"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_iky5m"]
@@ -59,12 +62,12 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[node name="Sniper" type="Node" unique_id=753371605 node_paths=PackedStringArray("_boltCyclingPlayer")]
+[node name="Sniper" type="Node2D" unique_id=399121865 node_paths=PackedStringArray("_boltCyclingPlayer")]
 script = ExtResource("1_jg7ce")
 _projectileScene = ExtResource("2_u7hyr")
 _fireGroup = SubResource("Resource_11blq")
 _projectileAttack = SubResource("Resource_c52kb")
-_boltCyclingPlayer = NodePath("ShootReady")
+_boltCyclingPlayer = NodePath("BoltCycle")
 Properties = SubResource("Resource_iky5m")
 Stats = SubResource("Resource_f52b2")
 
@@ -75,7 +78,7 @@ volume_db = 10.0
 pitch_scale = 0.8
 bus = &"ShootSfx"
 
-[node name="ShootReady" type="AudioStreamPlayer" parent="." unique_id=1900327009]
+[node name="BoltCycle" type="AudioStreamPlayer" parent="." unique_id=1900327009]
 process_mode = 3
 stream = ExtResource("8_0ap61")
 volume_db = 5.0
@@ -85,5 +88,17 @@ process_mode = 3
 stream = ExtResource("9_11blq")
 volume_db = 5.0
 
+[node name="SpentCasingEmitter" parent="." unique_id=1298992116 instance=ExtResource("10_bfcl0")]
+
+[node name="308BoltCycleOpen" type="AudioStreamPlayer" parent="." unique_id=1403999457]
+stream = ExtResource("12_hagd0")
+volume_db = 5.0
+
+[node name="308BoltCycleClose" type="AudioStreamPlayer" parent="." unique_id=508340117]
+stream = ExtResource("11_ia1h2")
+volume_db = 5.0
+
+[connection signal="BoltOpened" from="." to="SpentCasingEmitter" method="spawn_casing"]
 [connection signal="OnAttack" from="." to="Shoot" method="play"]
-[connection signal="OnReloadEnd" from="." to="ShootReady" method="play"]
+[connection signal="OnReloadEnd" from="." to="308BoltCycleClose" method="play"]
+[connection signal="OnReloadStart" from="." to="308BoltCycleOpen" method="play"]
