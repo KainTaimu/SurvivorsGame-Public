@@ -20,6 +20,9 @@ namespace Game.Levels.Controllers;
 public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
 {
 	[Export]
+	private float _rangeFactor = 1.5f;
+
+	[Export]
 	public FrameTime FrameTime { get; private set; } = null!;
 
 	// BREAKING: Changing this value breaks Projectile radius of weapons
@@ -35,11 +38,11 @@ public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
 		var viewport = GetViewport();
 
 		if (viewport.GetCamera2D() is SignalCamera2D cam)
-			cam.OnCurrentZoomChanged += (_, _) => CreateGrid(GetViewport().GetCamera2D().Zoom.GetLargestComponent());
-		CreateGrid(GetViewport().GetCamera2D().Zoom.GetLargestComponent());
+			cam.OnCurrentZoomChanged += (_, _) => CreateGrid();
+		CreateGrid();
 	}
 
-	private void CreateGrid(float scale)
+	private void CreateGrid()
 	{
 		var viewport = GetViewport();
 		if (viewport is null)
@@ -47,9 +50,10 @@ public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
 			Logger.LogError("missing viewport.");
 			return;
 		}
+		var zoom = viewport.GetCamera2D().Zoom.GetLargestComponent();
 
 		var visRect = viewport.GetVisibleRect();
-		var windowSize = visRect.Size * (1f / scale);
+		var windowSize = visRect.Size * (1f / zoom) * _rangeFactor;
 		_grid = new UniformGridWorld<Entity>(GRID_SIZE, windowSize);
 	}
 
@@ -96,7 +100,7 @@ public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
 	public bool TryGetTargetsInArea(Vector2 areaCenter, float areaRadius, out Entity[] targetIds)
 	{
 		// credit: https://www.redblobgames.com/grids/circle-drawing/
-		var targets = new List<Entity>();
+		var targets = new HashSet<Entity>();
 
 		var top = Math.Ceiling(areaCenter.Y - areaRadius);
 		var bottom = Math.Floor(areaCenter.Y + areaRadius);
@@ -114,8 +118,6 @@ public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
 
 				foreach (var entity in _grid.GetEnumerator(cell.X, cell.Y))
 				{
-					if (targets.Contains(entity))
-						continue;
 					if (CircleHitTest(areaCenter, areaRadius, entity))
 						targets.Add(entity);
 				}

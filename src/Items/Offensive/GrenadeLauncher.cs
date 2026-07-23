@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Arch.Core;
 using Game.Core.ECS;
 using Game.Levels.Controllers;
@@ -126,9 +127,8 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 			Reload();
 
 		var nade = GrenadeScene.Instantiate<Grenade>();
-		nade.OnExploded += (pos) =>
+		nade.OnExploded += (_) =>
 		{
-			// _blastPosition = pos;
 			_explosionPlayer?.Reparent(GetTree().Root);
 			_explosionPlayer?.Play();
 		};
@@ -170,11 +170,7 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 			OffensiveStats.DamageVarianceMultiplier,
 			PlayerStats.OutgoingDamageMultiplier
 		);
-		// OffensiveEffects.ApplyKnockback(
-		// 	entity,
-		// 	_blastPosition,
-		// 	OffensiveStats.Additional.GetValueOrDefault("Knockback", 0f).AsSingle()
-		// );
+
 		OffensiveEffects.ApplyVelocityMultiplier(entity, 0f);
 
 		if (!GameWorld.World.TryGet<HealthComponent>(entity, out var health))

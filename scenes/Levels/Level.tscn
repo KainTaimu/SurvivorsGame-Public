@@ -31,11 +31,6 @@ script = ExtResource("14_faxpm")
 FrameName = &"TargetQuery"
 metadata/_custom_type_script = "uid://daw8gyvo0xom3"
 
-[sub_resource type="Resource" id="Resource_faxpm"]
-script = ExtResource("14_faxpm")
-FrameName = &"Render"
-metadata/_custom_type_script = "uid://daw8gyvo0xom3"
-
 [sub_resource type="Resource" id="Resource_a3qk2"]
 script = ExtResource("29_mybqu")
 Amount = 40
@@ -53,6 +48,11 @@ script = ExtResource("29_mybqu")
 Amount = 190
 ProcessMaterial = ExtResource("29_cccga")
 metadata/_custom_type_script = "uid://ddigkg5ndk0da"
+
+[sub_resource type="Resource" id="Resource_faxpm"]
+script = ExtResource("14_faxpm")
+FrameName = &"Render"
+metadata/_custom_type_script = "uid://daw8gyvo0xom3"
 
 [sub_resource type="GDScript" id="GDScript_do71q"]
 script/source = "extends CanvasLayer
@@ -129,16 +129,25 @@ script = ExtResource("19_aig1n")
 [node name="EnemySystems" type="Node" parent="Systems" unique_id=1808118587]
 script = ExtResource("8_t3a6r")
 
-[node name="EnemyWaveController" parent="Systems/EnemySystems" unique_id=2001503768 instance=ExtResource("8_27qwr")]
-
 [node name="EnemyTargetQuery" type="Node" parent="Systems/EnemySystems" unique_id=991938994]
 script = ExtResource("16_x7tv3")
+_rangeFactor = 1.0
 FrameTime = SubResource("Resource_27qwr")
+
+[node name="EnemyWaveController" parent="Systems/EnemySystems" unique_id=2001503768 instance=ExtResource("8_27qwr")]
 
 [node name="EnemyHitFeedbackController" parent="Systems/EnemySystems" unique_id=1105191984 node_paths=PackedStringArray("_goreManager") instance=ExtResource("13_vg5sh")]
 _goreManager = NodePath("../GoreManager")
 
 [node name="EnemyDeathManager" parent="Systems/EnemySystems" unique_id=821545961 instance=ExtResource("14_aig1n")]
+
+[node name="GoreManager" parent="Systems/EnemySystems" unique_id=623372769 node_paths=PackedStringArray("_deathManager") instance=ExtResource("27_3nhtq")]
+_deathManager = NodePath("../EnemyDeathManager")
+_deathParticleProcessMaterialsByCause = Dictionary[int, ExtResource("29_mybqu")]({
+0: SubResource("Resource_a3qk2"),
+1: SubResource("Resource_r732t"),
+2: SubResource("Resource_ce6r5")
+})
 
 [node name="EnemyCollisionSolverManager" parent="Systems/EnemySystems" unique_id=1705317581 node_paths=PackedStringArray("monitor") instance=ExtResource("13_faxpm")]
 monitor = NodePath("../../../UI/PerformanceMonitor")
@@ -149,14 +158,6 @@ physics_interpolation_mode = 2
 script = ExtResource("7_ajdj3")
 _multiMesh = ExtResource("9_ror81")
 FrameTime = SubResource("Resource_faxpm")
-
-[node name="GoreManager" parent="Systems/EnemySystems" unique_id=623372769 node_paths=PackedStringArray("_deathManager") instance=ExtResource("27_3nhtq")]
-_deathManager = NodePath("../EnemyDeathManager")
-_deathParticleProcessMaterialsByCause = Dictionary[int, ExtResource("29_mybqu")]({
-0: SubResource("Resource_a3qk2"),
-1: SubResource("Resource_r732t"),
-2: SubResource("Resource_ce6r5")
-})
 
 [node name="UI" type="Node" parent="." unique_id=1918867052]
 

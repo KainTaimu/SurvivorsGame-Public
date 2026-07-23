@@ -60,7 +60,11 @@ public partial class Grenade : RigidBody2D
 		if (Engine.GetPhysicsFrames() % 5 != 0)
 			return;
 
-		TargetQuery.TryGetTargetsInArea(Position, OffensiveOrigin.OffensiveStats.ProjectileRadius, out var entities);
+		TargetQuery.TryGetTargetsInArea(
+			GlobalPosition,
+			OffensiveOrigin.OffensiveStats.ProjectileRadius,
+			out var entities
+		);
 
 		if (entities.Length > EnemiesInAreaUntilExplode && _distanceTraveled > ArmingDistance)
 		{
@@ -77,7 +81,19 @@ public partial class Grenade : RigidBody2D
 		EmitSignalOnExploded(GlobalPosition);
 
 		foreach (var entity in entitiesHit)
+		{
+			if (!GameWorld.World.IsAlive(entity))
+				return;
+
 			OffensiveOrigin.HandleHit(entity);
+
+			OffensiveEffects.ApplyKnockback(
+				entity,
+				GlobalPosition,
+				OffensiveOrigin.OffensiveStats.Additional.GetValueOrDefault("Knockback", 0f).AsSingle()
+			);
+		}
+
 		ApplyCameraRecoil();
 		QueueFree();
 	}

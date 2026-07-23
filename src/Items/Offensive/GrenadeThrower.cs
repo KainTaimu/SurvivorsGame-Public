@@ -22,15 +22,7 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 	private Crosshair? Crosshair => Crosshair.Instance;
 	private double _fireCooldown;
 
-	private ProjectilePool _projectilePool = null!;
-
 	private Vector2 _blastPosition;
-
-	public override void _Ready()
-	{
-		_projectilePool = new ProjectilePool { ProjectileScene = GrenadeScene };
-		AddChild(_projectilePool);
-	}
 
 	public override void _Process(double delta)
 	{
@@ -82,11 +74,7 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 			OffensiveStats.DamageVarianceMultiplier,
 			PlayerStats.OutgoingDamageMultiplier
 		);
-		OffensiveEffects.ApplyKnockback(
-			entity,
-			_blastPosition,
-			OffensiveStats.Additional.GetValueOrDefault("Knockback", 0f).AsSingle()
-		);
+
 		OffensiveEffects.ApplyVelocityMultiplier(entity, 0f);
 
 		if (!GameWorld.World.TryGet<HealthComponent>(entity, out var health))

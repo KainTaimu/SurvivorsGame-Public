@@ -33,13 +33,13 @@ VerticalRecoilRandom = 40.0
 HorizontalRecoilPunish = false
 CameraRecoilScale = 2.0
 BaseDamage = 67
-BaseProjectileRadius = 200
+BaseProjectileRadius = 300
 BaseAttackSpeed = 0.3
 BasePierceLimit = 9999
 Additional = Dictionary[String, Variant]({
 "ArmingDistance": 300.0,
 "CameraRecoilScale": 4.2,
-"EnemiesInAreaUntilExplode": 0,
+"EnemiesInAreaUntilExplode": 999999,
 "Knockback": 150.0,
 "SlowMultiplier": 0.0,
 "TimeToExplode": 0.4
