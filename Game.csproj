@@ -1,55 +1,26 @@
 <Project Sdk="Godot.NET.Sdk/4.7.1">
-  <!-- Base Configuration -->
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
-    <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net8.0</TargetFramework>
+    <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net9.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+
     <Nullable>enable</Nullable>
     <LangVersion>preview</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-
-    <!-- Code Quality: Enforce Warnings as Errors -->
-    <WarningLevel>9999</WarningLevel>
-    <!-- <TreatWarningsAsErrors>true</TreatWarningsAsErrors> -->
-    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
-  <!-- Debug Configuration: Development with Hot-Reload -->
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <EnableDynamicLoading>true</EnableDynamicLoading>
-
-    <!-- Full optimizations even in Debug -->
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'ExportDebug' ">
     <Optimize>true</Optimize>
-    <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <Debuggable>false</Debuggable>
+    <DebugType>full</DebugType>
   </PropertyGroup>
-
-  <!-- ExportDebug Configuration: Testing Exports with Debug Info -->
-  <PropertyGroup Condition="'$(Configuration)' == 'ExportDebug'">
-    <EnableDynamicLoading>false</EnableDynamicLoading>
-    <Optimize>true</Optimize>
-    <DebugType>portable</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-
-  <!-- ExportRelease Configuration: Maximum Performance -->
-  <PropertyGroup Condition="'$(Configuration)' == 'ExportRelease'">
-    <EnableDynamicLoading>false</EnableDynamicLoading>
-    <Optimize>true</Optimize>
+  <PropertyGroup Condition=" '$(Configuration)' == 'ExportRelease' ">
     <DebugType>none</DebugType>
-    <DebugSymbols>false</DebugSymbols>
-
-    <!-- Performance: ReadyToRun for Faster Startup -->
-    <PublishReadyToRun>true</PublishReadyToRun>
-
-    <!-- Performance: Aggressive Optimization Preference -->
-    <IlcOptimizationPreference>Speed</IlcOptimizationPreference>
-    <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
-
-    <!-- Optional: Trim Unused Code (use cautiously with Godot) -->
-    <!-- <PublishTrimmed>false</PublishTrimmed> -->
-    <!-- <TrimMode>link</TrimMode> -->
   </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Arch-Events" Version="2.1.0" />
     <PackageReference Include="Arch-PureECS" Version="2.1.0" />
