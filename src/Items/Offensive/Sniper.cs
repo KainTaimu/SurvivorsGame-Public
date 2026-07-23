@@ -81,11 +81,13 @@ public partial class Sniper : AbstractFirearm, IReloadable
 		OnAttack += () =>
 		{
 			if (MagazineCount != 0)
+			{
 				GetTree().CreateTimer(OffensiveStats.AttackSpeed / 2, false).Timeout += () =>
 				{
 					EmitSignalBoltOpened();
 					_boltCyclingPlayer?.Play();
 				};
+			}
 
 			if (Crosshair is not null)
 			{

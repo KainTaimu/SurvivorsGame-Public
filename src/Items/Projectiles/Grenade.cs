@@ -24,8 +24,10 @@ public partial class Grenade : RigidBody2D
 	private double _distanceTraveled;
 
 	private float TimeToExplode => OffensiveOrigin.Stats.Additional.GetValueOrDefault("TimeToExplode").AsSingle();
+
 	private int EnemiesInAreaUntilExplode =>
 		OffensiveOrigin.Stats.Additional.GetValueOrDefault("EnemiesInAreaUntilExplode", 6).AsInt32();
+
 	private float ArmingDistance =>
 		OffensiveOrigin.Stats.Additional.GetValueOrDefault("ArmingDistance", 200f).AsSingle();
 

@@ -51,6 +51,7 @@ public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
 			Logger.LogError("missing viewport.");
 			return;
 		}
+
 		var zoom = viewport.GetCamera2D().Zoom.GetLargestComponent();
 
 		var visRect = viewport.GetVisibleRect();

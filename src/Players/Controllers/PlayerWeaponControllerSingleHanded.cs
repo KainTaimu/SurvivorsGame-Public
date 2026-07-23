@@ -38,6 +38,7 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 					throw new NotImplementedException();
 			}
 		}
+
 		if (_lastSelectedAttack is not null)
 			SelectManualOffensive(_lastSelectedAttack);
 	}
