@@ -5,6 +5,8 @@ namespace Game.Players.Controllers;
 
 public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponController
 {
+	private IManualAttack? _lastSelectedAttack;
+
 	public override void _Ready()
 	{
 		ChildOrderChanged += InitializeWeaponNodes;
@@ -36,6 +38,36 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 					throw new NotImplementedException();
 			}
 		}
+		if (_lastSelectedAttack is not null)
+			SelectManualOffensive(_lastSelectedAttack);
+	}
+
+	private void SelectManualOffensive(IManualAttack? offensive)
+	{
+		if (offensive is null)
+			return;
+		if (PrimaryAttack is null)
+			return;
+		if (ManualOffensives.Count <= 1)
+			return;
+
+		var newPrimary = offensive;
+		var newPrimaryIndex = ManualOffensives.FindIndex(x => x == offensive);
+		if (newPrimaryIndex < 0 || newPrimaryIndex >= ManualOffensives.Count)
+			return;
+
+		var oldPrimary = PrimaryAttack;
+		oldPrimary.AttackActionString = null;
+		DisableManualOffensive(oldPrimary);
+
+		ManualOffensives.RemoveAt(newPrimaryIndex);
+		ManualOffensives.Add(oldPrimary);
+
+		PrimaryAttack = newPrimary;
+		PrimaryAttack.AttackActionString = InputMapNames.PrimaryAttack;
+
+		EnableManualOffensive(newPrimary);
+		_lastSelectedAttack = newPrimary;
 	}
 
 	private void AddManualOffensive(BaseOffensive offensive)
@@ -92,6 +124,7 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 		PrimaryAttack.AttackActionString = InputMapNames.PrimaryAttack;
 
 		EnableManualOffensive(newPrimary);
+		_lastSelectedAttack = oldPrimary;
 	}
 
 	private void PreviousManualAttack()
@@ -113,5 +146,6 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 		PrimaryAttack.AttackActionString = InputMapNames.PrimaryAttack;
 
 		EnableManualOffensive(newPrimary);
+		_lastSelectedAttack = oldPrimary;
 	}
 }

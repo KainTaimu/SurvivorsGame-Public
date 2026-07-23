@@ -85,7 +85,7 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_klnc8"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_23k0g"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_agk5e"]
@@ -122,11 +122,11 @@ _testEffect = Array[ExtResource("7_qh10d")]([SubResource("Resource_agk5e")])
 
 [node name="Sniper" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1559593246) index="5" unique_id=753371605 instance=ExtResource("13_qh10d")]
 
-[node name="GrenadeThrower" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1559593246) index="6" unique_id=1000269585 instance=ExtResource("15_vsrt8")]
+[node name="GrenadeLauncher" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1559593246) index="6" unique_id=1535579917 instance=ExtResource("19_agk5e")]
 
-[node name="GrenadeThrower2" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1559593246) index="7" unique_id=1544025392 instance=ExtResource("15_vsrt8")]
+[node name="GrenadeThrower" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1559593246) index="7" unique_id=1000269585 instance=ExtResource("15_vsrt8")]
 
-[node name="GrenadeLauncher" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1559593246) index="8" unique_id=1535579917 instance=ExtResource("19_agk5e")]
+[node name="GrenadeThrower2" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1559593246) index="8" unique_id=1544025392 instance=ExtResource("15_vsrt8")]
 
 [node name="Crack" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1559593246) index="9" unique_id=1963515329 instance=ExtResource("14_y52bq")]
 
