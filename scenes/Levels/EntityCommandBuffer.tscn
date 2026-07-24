@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://cbbc1wvqeplx"]
+
+[ext_resource type="Script" uid="uid://c87tdjcatwlfx" path="res://src/Core/EntityCommandBuffer.cs" id="1_rib8a"]
+
+[node name="EntityCommandBuffer" type="Node" unique_id=1054883400]
+process_mode = 3
+process_priority = 276447231
+process_thread_group = 1
+process_thread_group_order = 0
+process_thread_messages = 1
+script = ExtResource("1_rib8a")
+metadata/_custom_type_script = "uid://c87tdjcatwlfx"

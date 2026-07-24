@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://d3su0ak3dnifl"]
 
 [ext_resource type="Texture2D" uid="uid://dp7ojvtgxb02l" path="res://assets/Levels/grid_dark.png" id="2_qgy1a"]
+[ext_resource type="PackedScene" uid="uid://cbbc1wvqeplx" path="res://scenes/Levels/EntityCommandBuffer.tscn" id="3_faxpm"]
 [ext_resource type="Script" uid="uid://jbowd6556xtq" path="res://src/Levels/Controllers/GameWorld.cs" id="3_pi0ox"]
 [ext_resource type="PackedScene" uid="uid://b802cb5a7o5fr" path="res://scenes/UI/PauseMenu.tscn" id="4_pi0ox"]
 [ext_resource type="Script" uid="uid://cyldy6fxdbadt" path="res://src/Levels/Controllers/LevelData.cs" id="4_qsiuk"]
@@ -110,6 +111,8 @@ metadata/_edit_lock_ = true
 
 [node name="GameWorld" type="Node" parent="Systems" unique_id=562045734]
 script = ExtResource("3_pi0ox")
+
+[node name="EntityCommandBuffer" parent="Systems/GameWorld" unique_id=1054883400 instance=ExtResource("3_faxpm")]
 
 [node name="LevelData" type="Node" parent="Systems" unique_id=1461409732]
 script = ExtResource("4_qsiuk")

@@ -145,7 +145,8 @@ public partial class NavMap : NavigationRegion2D
 		var cam = viewport.GetCamera2D();
 		if (cam is null)
 			return;
-		var windowSize = viewport.GetVisibleRect().Size * (1 / cam.Zoom.GetLargestComponent());
+		var windowLength = viewport.GetVisibleRect().Size.X * (1 / cam.Zoom.GetLargestComponent());
+		var windowSize = Vector2.One * windowLength;
 		_grid = new UniformGridWorld<Vector2[]>(GridSize, windowSize * RangeFactor, 1);
 	}
 }

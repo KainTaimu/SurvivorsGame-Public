@@ -1,8 +1,10 @@
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
+using Arch.Buffer;
 using Arch.Core;
 using Arch.System;
 using Arch.System.SourceGenerator;
+using Game.Core;
 using Game.Core.ECS;
 using Game.Items.Projectiles;
 
@@ -13,39 +15,47 @@ public partial class EnemyDeathManager : Node
 	[Signal]
 	public delegate void OnEnemyDeathEventHandler(EntityObject entity);
 
-	private readonly Queue<Entity> _dyingToRemove = [];
+	private readonly ConcurrentQueue<Entity> _pendingDeaths = [];
 
 	public override void _Process(double delta)
 	{
-		UpdateNewDeathsQuery(GameWorld.World);
-		UpdateDyingQuery(GameWorld.World, (float)delta);
+		var commands = new CommandBuffer();
+		UpdateNewDeathsQuery(GameWorld.World, commands);
+		UpdateDyingQuery(GameWorld.World, _pendingDeaths, (float)delta);
 
-		CallDeferred(MethodName.DestroyDeadEnemies);
-	}
-
-	private void DestroyDeadEnemies()
-	{
-		while (_dyingToRemove.TryDequeue(out var entity))
+		while (_pendingDeaths.TryDequeue(out var entity))
 		{
-			if (GameWorld.World.IsAlive(entity))
-				GameWorld.World.Destroy(entity);
+			commands.Destroy(entity);
 		}
+
+		if (commands.Size == 0)
+			return;
+		EntityCommandBuffer.Instance.PushCommand(commands);
 	}
 
 	[Query]
 	[All<HealthComponent, PositionComponent>]
 	[None<DyingMarkerComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private void UpdateNewDeaths(Entity entity, ref HealthComponent health)
+	private void UpdateNewDeaths([Data] in CommandBuffer commandBuffer, Entity entity, ref HealthComponent health)
 	{
-		if (health.Health <= 0)
-			HandleDeath(entity);
+		if (health.Health > 0)
+			return;
+		if (!GameWorld.World.IsAlive(entity))
+			return;
+
+		commandBuffer.Add(entity, DyingMarkerComponent.Default);
+
+		if (GameWorld.World.TryGet<DeathRewardComponent>(entity, out var reward))
+			LevelData.Instance?.Money += reward.Money;
+		EmitSignalOnEnemyDeath(new EntityObject(entity));
 	}
 
-	[Query]
+	[Query(Parallel = true)]
 	[All<DyingMarkerComponent, PositionComponent, VelocityComponent, AnimatedSpriteComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private void UpdateDying(
+	private static void UpdateDying(
+		[Data] in ConcurrentQueue<Entity> pendingDeaths,
 		[Data] in float delta,
 		Entity entity,
 		ref DyingMarkerComponent dying,
@@ -56,7 +66,7 @@ public partial class EnemyDeathManager : Node
 	{
 		if (dying.TimeLeftUntilDestroy <= 0)
 		{
-			_dyingToRemove.Enqueue(entity);
+			pendingDeaths.Enqueue(entity);
 			return;
 		}
 
@@ -64,16 +74,5 @@ public partial class EnemyDeathManager : Node
 		pos.Position += vel.Velocity * delta;
 		spr.Flash = 255;
 		spr.Opacity = (byte)(dying.TimeLeftUntilDestroy / DyingMarkerComponent.Default.TimeLeftUntilDestroy * 255);
-	}
-
-	private void HandleDeath(Entity entity)
-	{
-		if (!GameWorld.World.IsAlive(entity))
-			return;
-		GameWorld.World.Add(entity, DyingMarkerComponent.Default);
-
-		if (GameWorld.World.TryGet<DeathRewardComponent>(entity, out var reward))
-			LevelData.Instance?.Money += reward.Money;
-		EmitSignalOnEnemyDeath(new EntityObject(entity));
 	}
 }

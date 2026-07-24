@@ -47,7 +47,7 @@ region = Rect2(62, 0, 31, 31)
 atlas = ExtResource("6_y52bq")
 region = Rect2(93, 0, 31, 31)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_23k0g"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_mre4m"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -85,7 +85,7 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_klnc8"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_23k0g"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_agk5e"]
@@ -98,7 +98,7 @@ metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 Character = ExtResource("2_klnc8")
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=881638213]
-sprite_frames = SubResource("SpriteFrames_23k0g")
+sprite_frames = SubResource("SpriteFrames_mre4m")
 animation = &"idle"
 
 [node name="PlayerCameraController" parent="." index="1" unique_id=68646763]
