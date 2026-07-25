@@ -248,6 +248,7 @@ process_priority = 2147483647
 
 [node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=2001503768]
 Waves = Array[Object]([SubResource("Resource_wbp0e"), SubResource("Resource_uj3cf")])
+Enabled = false
 
 [node name="EnemyTargetQuery" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="1" unique_id=991938994]
 _rangeFactor = 1.2

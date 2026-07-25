@@ -11,8 +11,9 @@ public class UniformGridWorld<T> : IUniformGridWorld<T>
 {
 	private readonly UniformGrid<T> _grid;
 
-	public readonly int CellSize;
-	public readonly Vector2I Dimensions;
+	public int CellSize { get; init; }
+
+	public Vector2I Dimensions { get; init; }
 	public Vector2 WindowSize { get; }
 
 	public Vector2 Center { get; private set; }

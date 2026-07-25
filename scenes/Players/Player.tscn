@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://c7kegqurrrx0w" path="res://assets/VFX/small_chevron.png" id="9_c66x0"]
 [ext_resource type="Script" uid="uid://d2moqmcv2k22p" path="res://src/Players/Controllers/LookHeader.cs" id="10_k7ubp"]
 [ext_resource type="Script" uid="uid://cp1kck1yb1g48" path="res://src/Players/Controllers/PlayerStatusEffectController.cs" id="11_f1vlf"]
-[ext_resource type="Script" uid="uid://x6msxk7k3d2h" path="res://src/Players/Controllers/PlayerWeaponControllerSingleHanded.cs" id="12_k8uaa"]
+[ext_resource type="PackedScene" uid="uid://b7tvc0jib1mqf" path="res://scenes/Players/PlayerWeaponController.tscn" id="12_oypsu"]
 [ext_resource type="PackedScene" uid="uid://c5q166p2d4241" path="res://scenes/UI/CurrentWeaponUi.tscn" id="14_8rask"]
 [ext_resource type="PackedScene" uid="uid://jqf8r7a2ybte" path="res://scenes/UI/CurrentStatusEffectsUi.tscn" id="26_xsyvw"]
 
@@ -108,7 +108,7 @@ z_as_relative = false
 script = ExtResource("1_f0mf6")
 Character = ExtResource("2_oypsu")
 MovementController = NodePath("PlayerMovementController")
-WeaponController = NodePath("PlayerWeaponController")
+WeaponController = NodePath("")
 StatusEffectController = NodePath("PlayerStatusEffectController")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=881638213]
@@ -161,8 +161,7 @@ _player = NodePath("..")
 _sprite = NodePath("../AnimatedSprite2D")
 metadata/_edit_lock_ = true
 
-[node name="PlayerWeaponController" type="Node2D" parent="." unique_id=1559593246]
-script = ExtResource("12_k8uaa")
+[node name="PlayerWeaponController" parent="." unique_id=1687061162 instance=ExtResource("12_oypsu")]
 
 [node name="CurrentWeaponUI" parent="." unique_id=2135368036 instance=ExtResource("14_8rask")]
 

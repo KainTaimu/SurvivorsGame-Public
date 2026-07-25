@@ -36,7 +36,7 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 	[Export]
 	public byte SubSteps = 6;
 
-	private UniformGridWorld<(Vector2 pos, Entity entity, float radius)> _grid = null!;
+	private IUniformGridWorld<(Vector2 pos, Entity entity, float radius)> _grid = null!;
 
 	// Dense write buffers indexed by Entity.Id. Entries are valid for the
 	// current frame when _stamps[id] == _writeFrame, avoiding a full clear.
@@ -115,7 +115,7 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 	[None<DyingMarkerComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static void AddObjectsToGrid(
-		[Data] in UniformGridWorld<(Vector2 pos, Entity entity, float radius)> grid,
+		[Data] in IUniformGridWorld<(Vector2 pos, Entity entity, float radius)> grid,
 		[Data] in (Vector2 pos, Entity entity, float radius)[] entries,
 		[Data] in int[] stamps,
 		[Data] in int writeFrame,

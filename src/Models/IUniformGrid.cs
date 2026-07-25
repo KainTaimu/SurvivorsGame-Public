@@ -27,12 +27,15 @@ public readonly struct GridCellHandle : IItemHandle
 public interface IUniformGridWorld<T> : IUniformGrid<T, GridCellHandle>
 {
 	Vector2 Center { get; }
+	Vector2I Dimensions { get; }
+	int CellSize { get; }
 
 	void Recenter(Vector2 position);
 
 	bool TryGetWorld(Vector2 position, out T result, out GridCellHandle handle);
 	GridCellHandle AddWorld(Vector2 position, T obj);
 	void ClearCellWorld(Vector2 position);
+	bool ContainsWorld(Vector2 position);
 }
 
 public interface IUniformGrid<T, THandle>

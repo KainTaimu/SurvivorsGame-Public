@@ -5,148 +5,145 @@ namespace Game.Players.Controllers;
 
 public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponController
 {
-	private IManualAttack? _lastSelectedAttack;
-
 	public override void _Ready()
 	{
-		ChildOrderChanged += InitializeWeaponNodes;
 		InitializeWeaponNodes();
+		ChildOrderChanged += ReorderWeapons;
+		ChildEnteredTree += node =>
+		{
+			if (node is not BaseOffensive o)
+				return;
+			AddWeapon(o);
+		};
+		ChildExitingTree += node =>
+		{
+			if (node is not BaseOffensive o)
+				return;
+			if (o is not IManualAttack m)
+			{
+				RemoveWeapon(o);
+				return;
+			}
+
+			var current = _manualOffensives.Find(m);
+			var previous = current?.Previous ?? _manualOffensives.Last;
+			if (previous is null)
+			{
+				RemoveWeapon(o);
+				return;
+			}
+
+			ref var prev = ref previous.ValueRef;
+			PrimaryAttack = prev;
+			EnableManualOffensive(prev);
+			RemoveWeapon(o);
+		};
+		ChildOrderChanged += ReorderWeapons;
 	}
 
-	private void InitializeWeaponNodes()
+	private void ReorderWeapons()
 	{
-		if (PrimaryAttack is not null)
-			DisableManualOffensive(PrimaryAttack);
-		PrimaryAttack = null;
-		SecondaryAttack = null;
+		_offensives.Clear();
+		_manualOffensives.Clear();
 
-		Offensives.Clear();
-		AutomaticOffensives.Clear();
-		ManualOffensives.Clear();
-		foreach (var node in GetChildren())
+		foreach (var child in GetChildren())
 		{
-			if (node is not BaseOffensive offensive)
+			if (child is not BaseOffensive offensive)
 				continue;
 
-			switch (offensive)
+			_offensives.Add(offensive);
+			if (offensive is IManualAttack m)
+				_manualOffensives.AddLast(m);
+		}
+	}
+
+	private void AddWeapon(BaseOffensive offensive)
+	{
+		if (offensive is IManualAttack m)
+		{
+			_manualOffensives.AddLast(m);
+			if (PrimaryAttack is null)
 			{
-				case IManualAttack:
-					AddManualOffensive(offensive);
-					break;
-				// ReSharper disable once SuspiciousTypeConversion.Global
-				case IAutomaticAttack:
-					throw new NotImplementedException();
+				PrimaryAttack = m;
+				EnableManualOffensive(m);
 			}
 		}
-
-		if (_lastSelectedAttack is not null)
-			SelectManualOffensive(_lastSelectedAttack);
+		_offensives.Add(offensive);
 	}
 
-	private void SelectManualOffensive(IManualAttack? offensive)
+	private void RemoveWeapon(BaseOffensive offensive)
 	{
-		if (offensive is null)
-			return;
-		if (PrimaryAttack is null)
-			return;
-		if (ManualOffensives.Count <= 1)
-			return;
-
-		var newPrimary = offensive;
-		var newPrimaryIndex = ManualOffensives.FindIndex(x => x == offensive);
-		if (newPrimaryIndex < 0 || newPrimaryIndex >= ManualOffensives.Count)
-			return;
-
-		var oldPrimary = PrimaryAttack;
-		oldPrimary.AttackActionString = null;
-		DisableManualOffensive(oldPrimary);
-
-		ManualOffensives.RemoveAt(newPrimaryIndex);
-		ManualOffensives.Add(oldPrimary);
-
-		PrimaryAttack = newPrimary;
-		PrimaryAttack.AttackActionString = InputMapNames.PrimaryAttack;
-
-		EnableManualOffensive(newPrimary);
-		_lastSelectedAttack = newPrimary;
-	}
-
-	private void AddManualOffensive(BaseOffensive offensive)
-	{
-		if (offensive is not IManualAttack manualAttack)
-			return;
-
-		if (PrimaryAttack is null)
+		if (offensive is IManualAttack m)
 		{
-			manualAttack.AttackActionString = InputMapNames.PrimaryAttack;
-			offensive.ProcessMode = ProcessModeEnum.Inherit;
-			PrimaryAttack = manualAttack;
+			if (PrimaryAttack == m)
+			{
+				DisableManualOffensive(m);
+				PrimaryAttack = null;
+			}
+			_manualOffensives.Remove(m);
 		}
-		else
-			offensive.ProcessMode = ProcessModeEnum.Disabled;
-
-		ManualOffensives.Add(manualAttack);
-		Offensives.Add(offensive);
-		EmitSignalOnOffensiveListChanged(offensive);
+		_offensives.Remove(offensive);
 	}
 
 	public override void _Input(InputEvent @event)
 	{
-#if DEBUG
-		if (Input.IsPhysicalKeyPressed(Key.Ctrl))
+		if (Input.IsActionPressed(InputMapNames.NextWeapon))
+			NextWeapon();
+		else if (Input.IsActionPressed(InputMapNames.PreviousWeapon))
+			PreviousWeapon();
+	}
+
+	private void NextWeapon()
+	{
+		if (PrimaryAttack is null)
 			return;
-#endif
-		if (@event.IsActionPressed(InputMapNames.NextWeapon))
+		if (ManualOffensives.Count <= 1)
+			return;
+
+		DisableManualOffensive(PrimaryAttack);
+		var node = _manualOffensives.Find(PrimaryAttack);
+		var next = node?.Next ?? _manualOffensives.First;
+
+		var nextAttack = next.Value;
+		PrimaryAttack = nextAttack;
+		EnableManualOffensive(PrimaryAttack);
+	}
+
+	private void PreviousWeapon()
+	{
+		if (PrimaryAttack is null)
+			return;
+		if (ManualOffensives.Count <= 1)
+			return;
+
+		DisableManualOffensive(PrimaryAttack);
+		var node = _manualOffensives.Find(PrimaryAttack);
+		var previous = node?.Previous ?? _manualOffensives.Last;
+
+		var nextAttack = previous.Value;
+		PrimaryAttack = nextAttack;
+		EnableManualOffensive(PrimaryAttack);
+	}
+
+	private void InitializeWeaponNodes()
+	{
+		foreach (var child in GetChildren())
 		{
-			NextManualAttack();
-			return;
+			if (child is not BaseOffensive offensive)
+				continue;
+			_offensives.Add(offensive);
+			switch (offensive)
+			{
+				case IManualAttack m:
+					_manualOffensives.AddLast(m);
+					DisableManualOffensive(m);
+					break;
+				default:
+					throw new NotImplementedException();
+			}
 		}
 
-		if (@event.IsActionPressed(InputMapNames.PreviousWeapon))
-			PreviousManualAttack();
-	}
-
-	private void NextManualAttack()
-	{
-		if (PrimaryAttack is null)
-			return;
-		if (ManualOffensives.Count <= 1)
-			return;
-
-		var oldPrimary = PrimaryAttack;
-		oldPrimary.AttackActionString = null;
-		DisableManualOffensive(oldPrimary);
-
-		var newPrimary = ManualOffensives[1];
-		ManualOffensives.RemoveAt(0);
-		ManualOffensives.Add(oldPrimary);
-
-		PrimaryAttack = newPrimary;
-		PrimaryAttack.AttackActionString = InputMapNames.PrimaryAttack;
-
-		EnableManualOffensive(newPrimary);
-		_lastSelectedAttack = oldPrimary;
-	}
-
-	private void PreviousManualAttack()
-	{
-		if (PrimaryAttack is null)
-			return;
-		if (ManualOffensives.Count <= 1)
-			return;
-
-		var oldPrimary = PrimaryAttack;
-		oldPrimary.AttackActionString = null;
-		DisableManualOffensive(oldPrimary);
-
-		var newPrimary = ManualOffensives.Last();
-		ManualOffensives.RemoveAt(ManualOffensives.Count - 1);
-		ManualOffensives.Insert(0, newPrimary);
-
-		PrimaryAttack = newPrimary;
-		PrimaryAttack.AttackActionString = InputMapNames.PrimaryAttack;
-
-		EnableManualOffensive(newPrimary);
-		_lastSelectedAttack = oldPrimary;
+		PrimaryAttack = _manualOffensives.First();
+		EnableManualOffensive(PrimaryAttack);
 	}
 }

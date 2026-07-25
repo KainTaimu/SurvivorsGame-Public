@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Game.Items.Offensive;
 
 namespace Game.Players.Controllers;
@@ -17,7 +18,7 @@ public abstract partial class AbstractPlayerWeaponController : Node
 	public IManualAttack? PrimaryAttack
 	{
 		get;
-		set
+		protected set
 		{
 			field = value;
 			EmitSignalOnPrimaryAttackReassigned();
@@ -27,7 +28,7 @@ public abstract partial class AbstractPlayerWeaponController : Node
 	public IManualAttack? SecondaryAttack
 	{
 		get;
-		set
+		protected set
 		{
 			field = value;
 			if (field is not null)
@@ -35,16 +36,21 @@ public abstract partial class AbstractPlayerWeaponController : Node
 		}
 	}
 
-	public readonly List<BaseOffensive> Offensives = [];
-	public readonly List<BaseOffensive> AutomaticOffensives = [];
-	public readonly List<IManualAttack> ManualOffensives = [];
+	public IReadOnlyList<BaseOffensive> Offensives => _offensives;
+	public IReadOnlyList<IManualAttack> ManualOffensives => [.. _manualOffensives];
+
+	protected readonly List<BaseOffensive> _offensives = [];
+	protected readonly LinkedList<IManualAttack> _manualOffensives = [];
 
 	// NOTE:
 	// May break if the nodes ProcessMode is was not originally
 	// Inherit
-	protected void EnableManualOffensive(IManualAttack manual)
+	protected void EnableManualOffensive(IManualAttack? manual)
 	{
-		var node = (manual as Node)!;
+		if (manual is null)
+			return;
+		var node = (Node)manual;
+		manual.AttackActionString = InputMapNames.PrimaryAttack;
 		node.ProcessMode = ProcessModeEnum.Inherit;
 		if (node is Node2D node2D)
 			node2D.Show();
@@ -52,9 +58,11 @@ public abstract partial class AbstractPlayerWeaponController : Node
 		offensive.EmitSignal(BaseOffensive.SignalName.OnEquipped);
 	}
 
-	protected void DisableManualOffensive(IManualAttack manual)
+	protected void DisableManualOffensive(IManualAttack? manual)
 	{
-		var node = (manual as Node)!;
+		if (manual is null)
+			return;
+		var node = (Node)manual;
 		manual.AttackActionString = null;
 		node.ProcessMode = ProcessModeEnum.Disabled;
 		if (node is Node2D node2D)
