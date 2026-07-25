@@ -87,6 +87,8 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 
 	public override void _Input(InputEvent @event)
 	{
+		if (Input.IsPhysicalKeyPressed(Key.Ctrl))
+			return;
 		if (Input.IsActionPressed(InputMapNames.NextWeapon))
 			NextWeapon();
 		else if (Input.IsActionPressed(InputMapNames.PreviousWeapon))
