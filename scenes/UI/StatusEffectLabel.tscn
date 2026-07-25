@@ -1,5 +1,8 @@
 [gd_scene format=3 uid="uid://bctgteedlbfmj"]
 
+[ext_resource type="LabelSettings" uid="uid://cu65p2lbgxmhg" path="res://scenes/UI/WeaponCarouselLabelSettings.tres" id="1_w0k0c"]
+
 [node name="StatusEffectLabel" type="Label" unique_id=1615123072]
 text = "Slow"
+label_settings = ExtResource("1_w0k0c")
 horizontal_alignment = 1

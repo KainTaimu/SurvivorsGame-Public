@@ -7,19 +7,24 @@
 [node name="CurrentWeaponUI" type="CanvasLayer" unique_id=2135368036 node_paths=PackedStringArray("_weaponCarousel", "_primaryWeaponAmmo", "_secondaryWeaponAmmo")]
 script = ExtResource("1_tlm74")
 _weaponCarouselItemScene = ExtResource("2_8t4bl")
-_weaponCarousel = NodePath("Control/VBoxContainer/WeaponCarousel")
-_primaryWeaponAmmo = NodePath("Control/Label")
-_secondaryWeaponAmmo = NodePath("Control/Label2")
+_weaponCarousel = NodePath("MarginContainer/Control/VBoxContainer/WeaponCarousel")
+_primaryWeaponAmmo = NodePath("MarginContainer/Control/Label")
+_secondaryWeaponAmmo = NodePath("MarginContainer/Control/Label2")
 
-[node name="Control" type="Control" parent="." unique_id=2001976314]
-layout_mode = 3
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1249640109]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=734686485]
+[node name="Control" type="Control" parent="MarginContainer" unique_id=2001976314]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control" unique_id=734686485]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -32,12 +37,12 @@ offset_right = 33.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="WeaponCarousel" type="HBoxContainer" parent="Control/VBoxContainer" unique_id=1139512538]
+[node name="WeaponCarousel" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer" unique_id=1139512538]
 layout_mode = 2
 theme_override_constants/separation = 24
 alignment = 1
 
-[node name="Label" type="Label" parent="Control" unique_id=1833705021]
+[node name="Label" type="Label" parent="MarginContainer/Control" unique_id=1833705021]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -51,7 +56,7 @@ grow_vertical = 0
 text = "WEAP1"
 label_settings = ExtResource("3_r6iw8")
 
-[node name="Label2" type="Label" parent="Control" unique_id=13376476]
+[node name="Label2" type="Label" parent="MarginContainer/Control" unique_id=13376476]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
