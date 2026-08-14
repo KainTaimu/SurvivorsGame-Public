@@ -166,7 +166,7 @@ modulate = Color(0.852862, 0.852862, 0.852862, 1)
 position = Vector2(-7031, 0)
 navigation_polygon = SubResource("NavigationPolygon_sx6oq")
 script = ExtResource("2_sx6oq")
-GridSize = 128
+GridSize = 200
 RangeFactor = 4.0
 
 [node name="Node2D3" type="Node2D" parent="World/NavMap" index="0" unique_id=407369146]

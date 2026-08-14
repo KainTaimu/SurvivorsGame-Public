@@ -15,6 +15,8 @@ public partial class PlayerMovementController : Node2D
 
 	public Vector2 Velocity;
 
+	private Rid _navigationMap;
+
 	private Viewport? Viewport => GetViewport();
 	private Crosshair? Crosshair => Crosshair.Instance;
 	private CharacterStats CharacterStats => _player.Character.CharacterStats;
@@ -22,6 +24,7 @@ public partial class PlayerMovementController : Node2D
 	public override void _Ready()
 	{
 		Callable.From(() => Crosshair?.OnCrosshairMoved += FlipSprite).CallDeferred();
+		_navigationMap = GetWorld2D().NavigationMap;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -64,7 +67,7 @@ public partial class PlayerMovementController : Node2D
 		var newPos = originalPos + move;
 
 		const float dist = 5;
-		var closest = NavigationServer2D.MapGetClosestPoint(GetWorld2D().NavigationMap, newPos);
+		var closest = NavigationServer2D.MapGetClosestPoint(_navigationMap, newPos);
 		if (Position.DistanceSquaredTo(closest) > dist * dist && !NoClip)
 			_player.GlobalPosition = closest;
 		else
