@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://bm8s3nhidl6ca"]
+
+[ext_resource type="Texture2D" uid="uid://c84lasqonrsjk" path="res://assets/Lighting/window_h_noise.png" id="1_4er5a"]
+
+[sub_resource type="Curve" id="Curve_63fni"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -0.27034697, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ogoab"]
+curve = SubResource("Curve_63fni")
+
+[sub_resource type="Curve" id="Curve_4er5a"]
+_limits = [0.0, 100.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.69090813, 0), 0.0, 0.0, 0, 0, Vector2(1, 38.0029), 154.5169, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_xat7b"]
+curve = SubResource("Curve_4er5a")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_do71q"]
+lifetime_randomness = 0.89
+particle_flag_disable_z = true
+direction = Vector3(5, 0, 0)
+spread = 35.0
+flatness = 0.655
+initial_velocity_min = 1000.0
+initial_velocity_max = 8000.0
+gravity = Vector3(0, 0, 0)
+damping_max = 24.115002
+damping_curve = SubResource("CurveTexture_xat7b")
+scale_min = 0.01
+scale_max = 0.02
+alpha_curve = SubResource("CurveTexture_ogoab")
+turbulence_enabled = true
+turbulence_noise_strength = 20.0
+turbulence_noise_speed = Vector3(1, 1, 1)
+turbulence_noise_speed_random = 4.0
+turbulence_influence_max = 0.117000006
+
+[node name="SmokePuff" type="GPUParticles2D" unique_id=1697052434]
+scale = Vector2(0.05, 0.05)
+emitting = false
+amount = 64
+texture = ExtResource("1_4er5a")
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 16
+process_material = SubResource("ParticleProcessMaterial_do71q")
+
+[connection signal="finished" from="." to="." method="queue_free"]

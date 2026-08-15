@@ -43,14 +43,14 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 		}
 
 		const float dist = 5;
-		if (
-			Position.DistanceSquaredTo(NavigationServer2D.MapGetClosestPoint(GetWorld2D().NavigationMap, Position))
-			> dist * dist
-		)
-		{
-			ReturnToPool();
-			return;
-		}
+		// if (
+		// 	Position.DistanceSquaredTo(NavigationServer2D.MapGetClosestPoint(GetWorld2D().NavigationMap, Position))
+		// 	> dist * dist
+		// )
+		// {
+		// 	ReturnToPool();
+		// 	return;
+		// }
 
 		if (!IsInitialized)
 			Logger.LogWarning($"Projectile {GetType().Name} is processing but is not initialized");
@@ -59,6 +59,22 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 
 		var moveVector = Vector2.Right.Rotated(Rotation) * ProjectileSpeed * (float)delta;
 		_distanceTravelled += ProjectileSpeed * (float)delta;
+
+		var ray = new PhysicsRayQueryParameters2D()
+		{
+			CollideWithAreas = false,
+			CollisionMask = 8u,
+			From = GlobalPosition,
+			To = from + moveVector,
+		};
+		var result = GetWorld2D().DirectSpaceState.IntersectRay(ray);
+		if (result.Count != 0)
+		{
+			SpawnContactEffects((Vector2)result["position"], (Vector2)result["normal"]);
+			ReturnToPool();
+			return;
+		}
+
 		Position = from + moveVector;
 
 		foreach (var hit in _hits)
@@ -88,6 +104,20 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 		_pierceCount = 0;
 		ProjectilePool.ReturnProjectile(this);
 		IsInitialized = false;
+	}
+
+	private void SpawnContactEffects(Vector2 pos, Vector2 normal)
+	{
+		// TODO: Make VFX Manager
+		const string smokeScene = "uid://bm8s3nhidl6ca";
+		var smokePack = GD.Load<PackedScene>(smokeScene);
+		var smoke = smokePack.Instantiate<GpuParticles2D>();
+		smoke.Rotation = normal.Angle();
+		// TODO: Reflect from normal
+		smoke.Position = pos;
+
+		GetTree().Root.AddChild(smoke);
+		smoke.Emitting = true;
 	}
 
 	protected override void PostInitialization()

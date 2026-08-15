@@ -67,6 +67,8 @@ public partial class PlayerMovementController : Node2D
 		var newPos = originalPos + move;
 
 		const float dist = 5;
+		// NOTE: Could shape cast with World2D.DirectSpaceState, but using navigation map
+		// also prevents the player from cheesing by hiding in a place the navmesh doesnt cover
 		var closest = NavigationServer2D.MapGetClosestPoint(_navigationMap, newPos);
 		if (Position.DistanceSquaredTo(closest) > dist * dist && !NoClip)
 			_player.GlobalPosition = closest;
