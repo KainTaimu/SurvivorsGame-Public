@@ -1,3 +1,5 @@
+// Written by AI :(
+
 using System.Buffers.Binary;
 using System.Threading;
 using Arch.Core;

@@ -1,6 +1,6 @@
 namespace Game.Levels.Controllers;
 
-public class EnemyShaderCustomData(
+public readonly struct EnemyShaderCustomData(
 	byte frameX,
 	byte frameY,
 	byte frameSizePxX,
@@ -20,9 +20,9 @@ public class EnemyShaderCustomData(
 
 	// float has 32 bits
 	// Channel R | 17 bits
-	public bool Flip = flip; // 1 bit
-	public byte Opacity = opacity; // 1 byte 8 bits
-	public byte Flash = flash; // 1 byte 8 bits
+	public readonly bool Flip = flip; // 1 bit
+	public readonly byte Opacity = opacity; // 1 byte 8 bits
+	public readonly byte Flash = flash; // 1 byte 8 bits
 	private const int FLIP_POSITION = 0;
 	private const int OPACITY_POSITION = 1;
 	private const int FLASH_POSITION = 9;

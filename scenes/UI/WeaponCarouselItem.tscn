@@ -11,6 +11,7 @@ WeaponName = NodePath("WeaponName")
 [node name="SelectedCaret" type="Label" parent="." unique_id=363378440]
 layout_mode = 2
 text = "⌄"
+label_settings = ExtResource("2_1c2hh")
 horizontal_alignment = 1
 
 [node name="WeaponName" type="Label" parent="." unique_id=393295308]

@@ -57,7 +57,7 @@ public partial class NavMap : NavigationRegion2D
 		_grid.Recenter(_cachedPlayerPosition);
 	}
 
-	public Span<Vector2> GetNavLine(Vector2 pos)
+	public ReadOnlySpan<Vector2> GetNavLine(Vector2 pos)
 	{
 		var cellIndex = _grid.WorldToCell(pos);
 		if (!_grid.IsValidCell(cellIndex.X, cellIndex.Y))
@@ -96,8 +96,10 @@ public partial class NavMap : NavigationRegion2D
 		var playerPos = _cachedPlayerPosition;
 
 		// if outside navmap
-		const float threshold = 5f;
-		if (position.DistanceSquaredTo(NavigationServer2D.MapGetClosestPoint(Map, position)) > threshold * threshold)
+		// const float threshold = 5f;
+		// if (position.DistanceSquaredTo(NavigationServer2D.MapGetClosestPoint(Map, position)) > threshold * threshold)
+		// 	return _grid.Add(cell.X, cell.Y, [position, playerPos]);
+		if (!GridVisibilityRect.HasPoint(position))
 			return _grid.Add(cell.X, cell.Y, [position, playerPos]);
 
 		// if clear path to player

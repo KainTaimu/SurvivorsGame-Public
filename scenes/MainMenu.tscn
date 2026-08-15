@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://blmwtvwus1k82"]
+
+[ext_resource type="PackedScene" uid="uid://68cq6qirfliu" path="res://scenes/Levels/LevelNavTest.tscn" id="1_yqorp"]
+
+[sub_resource type="GDScript" id="GDScript_ukcvp"]
+script/source = "extends Control
+
+@export var start_scene: PackedScene
+
+func start_game():
+	get_tree().change_scene_to_packed(start_scene)
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ogoab"]
+bg_color = Color(0.06543859, 0.065438606, 0.06543855, 1)
+
+[sub_resource type="Theme" id="Theme_do71q"]
+default_font_size = 32
+
+[sub_resource type="GDScript" id="GDScript_yqorp"]
+script/source = "extends Button
+
+func quit_game():
+	get_tree().quit()
+"
+
+[node name="Control" type="Control" unique_id=225735962]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_ukcvp")
+start_scene = ExtResource("1_yqorp")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=743827211]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 1920.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ogoab")
+
+[node name="CenterContainer" type="CenterContainer" parent="PanelContainer" unique_id=1263415870]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/CenterContainer" unique_id=860906722]
+layout_mode = 2
+theme = SubResource("Theme_do71q")
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Start" type="Button" parent="PanelContainer/CenterContainer/VBoxContainer" unique_id=2003105836]
+layout_mode = 2
+text = "START"
+
+[node name="Settings" type="Button" parent="PanelContainer/CenterContainer/VBoxContainer" unique_id=518659007]
+layout_mode = 2
+text = "SETTINGS"
+
+[node name="Quit" type="Button" parent="PanelContainer/CenterContainer/VBoxContainer" unique_id=2091305392]
+layout_mode = 2
+text = "QUIT"
+script = SubResource("GDScript_yqorp")
+
+[connection signal="button_up" from="PanelContainer/CenterContainer/VBoxContainer/Start" to="." method="start_game"]
+[connection signal="button_up" from="PanelContainer/CenterContainer/VBoxContainer/Quit" to="PanelContainer/CenterContainer/VBoxContainer/Quit" method="quit_game"]

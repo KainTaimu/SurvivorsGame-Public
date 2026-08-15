@@ -57,6 +57,7 @@ public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
 		var visRect = viewport.GetVisibleRect();
 		var windowSize = visRect.Size * (1f / zoom) * _rangeFactor;
 		_grid = new UniformGridWorld<Entity>(GRID_SIZE, windowSize);
+		_grid.EnsureCapacity(16_384);
 	}
 
 	public override void _Process(double delta)

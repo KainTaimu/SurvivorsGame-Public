@@ -38,7 +38,6 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 			EnableManualOffensive(prev);
 			RemoveWeapon(o);
 		};
-		ChildOrderChanged += ReorderWeapons;
 	}
 
 	private void ReorderWeapons()

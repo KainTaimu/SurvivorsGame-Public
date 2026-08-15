@@ -3,11 +3,12 @@
 [ext_resource type="Script" uid="uid://dytrhrfc64qrs" path="res://src/UI/PerformanceMonitor.cs" id="1_l031m"]
 [ext_resource type="PackedScene" uid="uid://c0bbuesyh0ls7" path="res://scenes/UI/PerformanceMonitorLabel.tscn" id="2_cdxyh"]
 
-[node name="PerformanceMonitor" type="CanvasLayer" unique_id=1872396024 node_paths=PackedStringArray("Targets", "_vBoxContainer")]
+[node name="PerformanceMonitor" type="CanvasLayer" unique_id=1872396024 node_paths=PackedStringArray("Targets", "_vBoxContainer", "_gcLabel")]
 script = ExtResource("1_l031m")
 Targets = []
 _vBoxContainer = NodePath("MarginContainer/VBoxContainer")
 _labelScene = ExtResource("2_cdxyh")
+_gcLabel = NodePath("MarginContainer/VBoxContainer/VBoxContainer2/Label2")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=302088556]
 anchors_preset = 6
@@ -24,3 +25,10 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=197958763]
 layout_mode = 2
 alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=843883306]
+layout_mode = 2
+alignment = 1
+
+[node name="Label2" parent="MarginContainer/VBoxContainer/VBoxContainer2" unique_id=781281036 instance=ExtResource("2_cdxyh")]
+layout_mode = 2

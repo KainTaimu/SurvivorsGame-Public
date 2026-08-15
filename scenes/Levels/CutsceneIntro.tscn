@@ -1,0 +1,83 @@
+[gd_scene format=3 uid="uid://dfgm4oxvq2chy"]
+
+[ext_resource type="Shader" uid="uid://bdro8be0jajun" path="res://src/Shaders/blur.gdshader" id="1_me45h"]
+[ext_resource type="Texture2D" uid="uid://dc37vhok0owhk" path="res://assets/Lighting/window_h_blur.png" id="2_3uh6g"]
+[ext_resource type="PackedScene" uid="uid://crsuio45ekejf" path="res://scenes/Levels/LoadingTimer.tscn" id="3_w5l2u"]
+
+[sub_resource type="GDScript" id="GDScript_w5l2u"]
+script/source = "extends Node
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	Engine.max_fps = 60
+
+func _exit_tree() -> void:
+	Engine.max_fps = 0
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_do71q"]
+shader = ExtResource("1_me45h")
+shader_parameter/amount = 5.0
+
+[node name="CutsceneIntro" type="Node" unique_id=304783516]
+script = SubResource("GDScript_w5l2u")
+
+[node name="Control2" type="Control" parent="." unique_id=174528086]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control2" unique_id=1865148605]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Blur" type="ColorRect" parent="Control2" unique_id=534306899]
+z_index = 1
+material = SubResource("ShaderMaterial_do71q")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Control" type="Control" parent="Control2" unique_id=1431029265]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="Control2/Control" unique_id=617435492]
+modulate = Color(1, 0, 0, 0.6039216)
+layout_mode = 0
+offset_left = 443.0
+offset_top = 228.0
+offset_right = 955.0
+offset_bottom = 740.0
+texture = ExtResource("2_3uh6g")
+
+[node name="CenterContainer" type="CenterContainer" parent="Control2" unique_id=1025889495]
+z_index = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LoadingTimer" parent="Control2/CenterContainer" unique_id=2063753231 instance=ExtResource("3_w5l2u")]
+layout_mode = 2

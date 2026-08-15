@@ -206,7 +206,7 @@ public partial class Crosshair : Node2D
 					impulse.Y
 						* crosshair.GetViewport().GetVisibleRect().Size.X
 						* 0.001111111f // Arbitrary scaling factor for X
-						* (GD.Randf() < 0.5 ? (float)GD.RandRange(-1, -0.5) : (float)GD.RandRange(0.5, 1)),
+						* (GD.Randf() < 0.5 ? (float)GD.RandRange(-0.8, -0.5) : (float)GD.RandRange(0.5, 0.8)),
 					impulse.X * 0.8f
 				);
 			}
