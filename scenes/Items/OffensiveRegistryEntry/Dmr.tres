@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://d37pj80g4j5cy"]
+
+[ext_resource type="PackedScene" uid="uid://qxx1q01ys1cd" path="res://scenes/Items/Offensive/Dmr.tscn" id="1_dnd1o"]
+[ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_q4oun"]
+
+[resource]
+script = ExtResource("2_q4oun")
+scene = ExtResource("1_dnd1o")
+metadata/_custom_type_script = "uid://brmkfowmxbv52"

@@ -3,6 +3,7 @@ using Game.Players;
 
 namespace Game.Items;
 
+[GlobalClass]
 public abstract partial class BaseItem : Node
 {
 	[Signal]

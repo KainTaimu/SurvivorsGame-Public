@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://bnxfab4uqs6n2"]
+
+[ext_resource type="PackedScene" uid="uid://2gxjr5yjrfut" path="res://scenes/Items/Offensive/Minigun.tscn" id="1_2dev3"]
+[ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_pp84c"]
+
+[resource]
+script = ExtResource("2_pp84c")
+scene = ExtResource("1_2dev3")
+metadata/_custom_type_script = "uid://brmkfowmxbv52"

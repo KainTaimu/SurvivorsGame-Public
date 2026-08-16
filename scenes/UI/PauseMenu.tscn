@@ -19,6 +19,45 @@ subpixel_positioning = 0
 font = SubResource("SystemFont_4r2wj")
 font_size = 20
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_do71q"]
+
+[sub_resource type="GDScript" id="GDScript_ogoab"]
+script/source = "extends Button
+
+@export var timeout_seconds = 2.0
+
+var click_count: int:
+	get:
+		return click_count
+	set(value):
+		click_count = value
+		match click_count:
+			0:
+				text = \"Quit\"
+			1:
+				text = \"Confirm quit\"
+var last_click: float
+var secs_until_timeout: float
+
+
+func _process(delta: float) -> void:
+	if secs_until_timeout <= 0:
+		click_count = 0
+		return
+	secs_until_timeout -= delta
+
+
+func on_click() -> void:
+	click_count += 1
+	secs_until_timeout = timeout_seconds
+	if click_count == 2:
+		quit_game()
+
+
+func quit_game() -> void:
+	get_tree().quit()
+"
+
 [node name="PauseMenu" type="CanvasLayer" unique_id=1796089998 node_paths=PackedStringArray("_playerStats")]
 process_mode = 3
 layer = 2
@@ -78,10 +117,41 @@ grow_horizontal = 0
 grow_vertical = 2
 color = Color(0.011764706, 0.011764706, 0.011764706, 1)
 
-[node name="Settings" parent="RightPanel" unique_id=83201529 instance=ExtResource("5_73e60")]
+[node name="PanelContainer" type="PanelContainer" parent="RightPanel" unique_id=868205619]
 layout_mode = 1
-anchors_preset = 6
+anchors_preset = 14
 anchor_top = 0.5
+anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -106.0
-offset_bottom = 106.0
+offset_top = -124.0
+offset_bottom = 124.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_do71q")
+
+[node name="MarginContainer" type="MarginContainer" parent="RightPanel/PanelContainer" unique_id=1336887995]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RightPanel/PanelContainer/MarginContainer" unique_id=1858358881]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Settings" parent="RightPanel/PanelContainer/MarginContainer/VBoxContainer" unique_id=83201529 instance=ExtResource("5_73e60")]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="RightPanel/PanelContainer/MarginContainer/VBoxContainer" unique_id=123070187]
+layout_mode = 2
+alignment = 1
+
+[node name="Button" type="Button" parent="RightPanel/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=955886127]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "QUIT"
+script = SubResource("GDScript_ogoab")
+timeout_seconds = 3.0
+
+[connection signal="button_down" from="RightPanel/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Button" to="RightPanel/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Button" method="on_click"]

@@ -5,7 +5,6 @@
 [ext_resource type="Script" uid="uid://jbowd6556xtq" path="res://src/Levels/Controllers/GameWorld.cs" id="3_pi0ox"]
 [ext_resource type="PackedScene" uid="uid://b802cb5a7o5fr" path="res://scenes/UI/PauseMenu.tscn" id="4_pi0ox"]
 [ext_resource type="Script" uid="uid://cyldy6fxdbadt" path="res://src/Levels/Controllers/LevelData.cs" id="4_qsiuk"]
-[ext_resource type="Script" uid="uid://conjw4f6t4f3m" path="res://src/UI/PauseMenu/PauseController.cs" id="5_ajbtw"]
 [ext_resource type="Script" uid="uid://bkpyb01olop50" path="res://src/Levels/Controllers/EnemyRenderer.cs" id="7_ajdj3"]
 [ext_resource type="PackedScene" uid="uid://cynlbeb3umvcr" path="res://scenes/Levels/EnemyWaveController.tscn" id="8_27qwr"]
 [ext_resource type="Script" uid="uid://cuxklvvvd40t4" path="res://scenes/Levels/EnemySystems.cs" id="8_t3a6r"]
@@ -21,7 +20,6 @@
 [ext_resource type="PackedScene" uid="uid://do6p1pg4x0vkf" path="res://scenes/UI/Hud.tscn" id="20_vg5sh"]
 [ext_resource type="PackedScene" uid="uid://cb6opjo4xaaio" path="res://scenes/UI/PerformanceMonitor.tscn" id="24_qsiuk"]
 [ext_resource type="Script" uid="uid://cj0nr8h53xux4" path="res://src/Utils/Spectrum.gd" id="25_27qwr"]
-[ext_resource type="PackedScene" uid="uid://cbpyycvkwcedb" path="res://scenes/UI/PickupUi.tscn" id="26_faxpm"]
 [ext_resource type="PackedScene" uid="uid://1hchpk0m1v70" path="res://scenes/Levels/GoreManager.tscn" id="27_3nhtq"]
 [ext_resource type="Material" uid="uid://dvi7xyjhs2chr" path="res://scenes/VFX/NormalDeathParticlesProcessMaterial.tres" id="28_g1w0t"]
 [ext_resource type="Material" uid="uid://cholhn1qxqaej" path="res://scenes/VFX/ExplosionDeathParticlesProcessMaterial.tres" id="29_cccga"]
@@ -112,13 +110,10 @@ metadata/_edit_lock_ = true
 [node name="GameWorld" type="Node" parent="Systems" unique_id=562045734]
 script = ExtResource("3_pi0ox")
 
-[node name="EntityCommandBuffer" parent="Systems/GameWorld" unique_id=1054883400 instance=ExtResource("3_faxpm")]
+[node name="EntityCommandBuffer" parent="Systems" unique_id=1054883400 instance=ExtResource("3_faxpm")]
 
 [node name="LevelData" type="Node" parent="Systems" unique_id=1461409732]
 script = ExtResource("4_qsiuk")
-
-[node name="PauseController" type="Node" parent="Systems" unique_id=867414551]
-script = ExtResource("5_ajbtw")
 
 [node name="PlayerSystems" type="Node" parent="Systems" unique_id=1262578567]
 
@@ -164,22 +159,14 @@ FrameTime = SubResource("Resource_faxpm")
 
 [node name="UI" type="Node" parent="." unique_id=1918867052]
 
-[node name="PauseMenu" parent="UI" unique_id=1937596238 node_paths=PackedStringArray("_pauseController") instance=ExtResource("4_pi0ox")]
+[node name="PauseMenu" parent="UI" unique_id=1937596238 instance=ExtResource("4_pi0ox")]
 visible = false
-_pauseController = NodePath("../../Systems/PauseController")
 
 [node name="Crosshair" type="CanvasLayer" parent="UI" unique_id=1911762679]
 
-[node name="Crosshair" parent="UI/Crosshair" unique_id=587001361 node_paths=PackedStringArray("PauseController") instance=ExtResource("15_aredf")]
-PauseController = NodePath("../../../Systems/PauseController")
+[node name="Crosshair" parent="UI/Crosshair" unique_id=587001361 instance=ExtResource("15_aredf")]
 
 [node name="HUD" parent="UI" unique_id=1626912566 instance=ExtResource("20_vg5sh")]
-
-[node name="CanvasLayer" type="CanvasLayer" parent="UI" unique_id=253133387]
-
-[node name="PickupUi" parent="UI/CanvasLayer" unique_id=1639386775 instance=ExtResource("26_faxpm")]
-visible = false
-ShowOnStart = false
 
 [node name="PerformanceMonitor" parent="UI" unique_id=1872396024 node_paths=PackedStringArray("Targets") instance=ExtResource("24_qsiuk")]
 Targets = [NodePath("../../Systems/EnemySystems/EnemyRenderer"), NodePath("../../Systems/EnemySystems/EnemyTargetQuery")]

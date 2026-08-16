@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://bjo1aoxs8w1yw"]
+
+[ext_resource type="PackedScene" uid="uid://cuerorgcryk5k" path="res://scenes/Items/Offensive/Sniper.tscn" id="1_4hc4g"]
+[ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_bpepo"]
+
+[resource]
+script = ExtResource("2_bpepo")
+scene = ExtResource("1_4hc4g")
+metadata/_custom_type_script = "uid://brmkfowmxbv52"

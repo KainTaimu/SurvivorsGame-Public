@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://dd7q76kfjdvxq"]
+
+[ext_resource type="PackedScene" uid="uid://lvm5jo1ua73i" path="res://scenes/Items/Offensive/Shotgun.tscn" id="1_wmvsk"]
+[ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_2u22i"]
+
+[resource]
+script = ExtResource("2_2u22i")
+scene = ExtResource("1_wmvsk")
+metadata/_custom_type_script = "uid://brmkfowmxbv52"

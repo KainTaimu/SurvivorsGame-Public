@@ -1,7 +1,7 @@
+using Game.Core;
 using Game.Core.Settings;
 using Game.Levels.Controllers;
 using Game.Players;
-using Game.UI.Menus;
 
 namespace Game.UI;
 
@@ -18,9 +18,6 @@ public partial class Crosshair : Node2D
 
 	[Export]
 	public AnimatedSprite2D SecondaryCrosshairSprite { get; private set; } = null!;
-
-	[Export]
-	public PauseController PauseController { get; private set; } = null!;
 
 	private float CrosshairSize
 	{
@@ -60,6 +57,7 @@ public partial class Crosshair : Node2D
 	private Input.MouseModeEnum _visibleMouseMode = Input.MouseModeEnum.Captured;
 
 	private Viewport Viewport => GetViewport();
+	public static PauseController PauseController = PauseController.Instance;
 
 	public override void _Ready()
 	{

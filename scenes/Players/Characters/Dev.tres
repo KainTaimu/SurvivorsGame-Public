@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Character" format=3 uid="uid://b36ulgh0dx3ar"]
 
-[ext_resource type="Script" uid="uid://wsto3khl70md" path="res://src/Players/FloatStat.cs" id="1_kooli"]
-[ext_resource type="Script" uid="uid://tfaqh3bcxdha" path="res://src/Players/IntStat.cs" id="2_utsua"]
+[ext_resource type="Script" uid="uid://wsto3khl70md" path="res://src/Models/FloatStat.cs" id="1_kooli"]
+[ext_resource type="Script" uid="uid://tfaqh3bcxdha" path="res://src/Models/IntStat.cs" id="2_utsua"]
 [ext_resource type="Script" uid="uid://rykv3f6ereih" path="res://src/Players/CharacterStats.cs" id="3_8kvl7"]
 [ext_resource type="Script" uid="uid://ud6xfov0txuh" path="res://src/Players/Character.cs" id="4_exd0i"]
 

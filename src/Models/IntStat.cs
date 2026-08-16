@@ -1,4 +1,4 @@
-namespace Game.Players;
+namespace Game.Models;
 
 [GlobalClass]
 public partial class IntStat : AbstractStat

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Reflection;
+using Game.Models;
 using Godot.Collections;
 
 namespace Game.Players.Controllers;

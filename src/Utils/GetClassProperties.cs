@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Game.Utils;
 
@@ -47,8 +48,15 @@ public static class ClassInspector
 		var fields = pType.GetFields(flags);
 		foreach (var field in fields)
 		{
-			if (field.Name == "NativePtr")
+			var fieldName = field.Name;
+			if (fieldName is "NativePtr")
 				continue;
+			if (fieldName.StartsWith('<') && fieldName.Contains('>'))
+			{
+				var closingArrowIdx = fieldName.IndexOf('>');
+				fieldName = fieldName[1..closingArrowIdx];
+			}
+
 			var value = field.GetValue(obj);
 			switch (value)
 			{
@@ -62,7 +70,7 @@ public static class ClassInspector
 					break;
 			}
 
-			s.AppendLine($"{field.Name}: {value}");
+			s.AppendLine($"{ConvertPascalToTitleCase(fieldName)}: {value}");
 		}
 
 		return s.ToString();
@@ -71,7 +79,7 @@ public static class ClassInspector
 	private static string GetCollectionPrettyString(ICollection enumerable)
 	{
 		var b = new StringBuilder();
-		b.Append("[");
+		b.Append('[');
 
 		var count = 0;
 		const int maxItemsToShow = 5;
@@ -84,13 +92,18 @@ public static class ClassInspector
 			}
 
 			if (item is Node node)
-				b.AppendFormat(", {0}", node.Name);
+				b.Append($", {node.Name}");
 			else
-				b.AppendFormat(", {0}", item);
+				b.Append($", {item}");
 			count++;
 		}
 
-		b.Append("]");
+		b.Append(']');
 		return b.ToString();
+	}
+
+	private static string ConvertPascalToTitleCase(string input)
+	{
+		return string.IsNullOrEmpty(input) ? input : Regex.Replace(input, @"(?<!^)\p{Lu}", " $&");
 	}
 }

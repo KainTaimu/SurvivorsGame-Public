@@ -2,6 +2,7 @@ using Game.Players.Controllers;
 
 namespace Game.Players;
 
+[GlobalClass]
 public partial class Player : Node2D
 {
 	[Export]

@@ -27,4 +27,9 @@ public partial class GameWorld : Node
 		World.Dispose();
 		World = null!;
 	}
+
+	public override void _Ready()
+	{
+		GameWorldInstance.Instance.MainPlayer = MainPlayer;
+	}
 }

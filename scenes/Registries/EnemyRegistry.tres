@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="Registry" format=3 uid="uid://b7hwtmolb4m8j"]
+
+[ext_resource type="Script" uid="uid://dqtv77mng5dyh" path="res://addons/yard/registry.gd" id="1_kfybf"]
+
+[resource]
+script = ExtResource("1_kfybf")
+_version = 2
+_scan_rulesets = Array[Dictionary]([{
+&"allowed_file_extensions": Array[String]([]),
+&"class_restrictions": Array[StringName]([&"\"res://src/Levels/Controllers/EnemyBlueprint.cs\""]),
+&"recursive_scan": false,
+&"scan_directories": Array[String](["res://scenes/Enemies/Blueprints/"]),
+&"scan_regex_exclude": "EnemyBlueprint.tres",
+&"scan_regex_include": ""
+}])
+_uids_to_string_ids = Dictionary[StringName, StringName]({
+&"uid://bo0ohu302yg51": &"Big",
+&"uid://d3sq28pskbjjy": &"Walker",
+&"uid://nvj82uku7ht1": &"Sprinter"
+})
+_string_ids_to_uids = Dictionary[StringName, StringName]({
+&"Big": &"uid://bo0ohu302yg51",
+&"Sprinter": &"uid://nvj82uku7ht1",
+&"Walker": &"uid://d3sq28pskbjjy"
+})

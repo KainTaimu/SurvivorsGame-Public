@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Text;
+using Game.Core;
 using Game.Levels.Controllers;
 using Game.Players;
 
@@ -8,9 +9,6 @@ namespace Game.UI.Menus;
 public partial class PauseMenu : CanvasLayer
 {
 	private Player Player => GameWorld.Instance.MainPlayer;
-
-	[Export]
-	private PauseController _pauseController = null!;
 
 	[Export]
 	private Label _playerStats = null!;
@@ -30,24 +28,24 @@ public partial class PauseMenu : CanvasLayer
 
 	private void ToggleShow()
 	{
-		var isPaused = _pauseController.IsPaused;
+		var isPaused = PauseController.Instance.IsPaused;
 
-		_pauseController.Lock(this);
+		PauseController.Instance.Lock(this);
 		switch (!isPaused)
 		{
 			case true:
 				UpdatePlayerStats();
 				Show();
-				_pauseController.Pause(this);
+				PauseController.Instance.Pause(this);
 				break;
 
 			case false:
 				Hide();
-				_pauseController.Unpause(this);
+				PauseController.Instance.Unpause(this);
 				break;
 		}
 
-		_pauseController.Unlock(this);
+		PauseController.Instance.Unlock(this);
 	}
 
 	private void UpdatePlayerStats()

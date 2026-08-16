@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dhous8k4t2iwo"]
+
+[ext_resource type="Script" uid="uid://conjw4f6t4f3m" path="res://src/Core/PauseController.cs" id="1_2vs2l"]
+
+[node name="PauseController" type="Node" unique_id=1728048226]
+script = ExtResource("1_2vs2l")
+ThrottledFpsTarget = 80

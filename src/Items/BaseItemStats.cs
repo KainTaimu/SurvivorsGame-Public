@@ -20,7 +20,6 @@ public partial class BaseItemStats : Resource
 		set => field = value;
 	} = [];
 
-	// TODO: Make proper way of getting formatted string without using reflection
 	public string ToFormattedString()
 	{
 		var fields = ClassInspector.GetClassFieldsString(this);

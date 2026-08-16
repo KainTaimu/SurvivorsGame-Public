@@ -41,6 +41,7 @@ BaseCritChanceProportion = 0.2
 BaseProjectileSpeed = 2800
 BaseProjectileScaleMultiplier = 0.85
 BaseAttackSpeed = 0.1
+BasePierceLimit = 2
 Additional = Dictionary[String, Variant]({
 "Knockback": 30.0
 })

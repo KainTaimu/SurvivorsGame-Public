@@ -278,7 +278,7 @@ polygon = PackedVector2Array(9797, -3367, 9925, 473, 6341, 537, 6144, 512, 6144,
 [node name="GameWorld" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="0" unique_id=562045734 node_paths=PackedStringArray("MainPlayer")]
 MainPlayer = NodePath("../Player")
 
-[node name="EntityCommandBuffer" parent="Systems/GameWorld" index="0" unique_id=1054883400]
+[node name="EntityCommandBuffer" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="1" unique_id=1054883400]
 process_priority = 2147483647
 
 [node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=2001503768]

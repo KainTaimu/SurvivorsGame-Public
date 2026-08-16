@@ -1,12 +1,13 @@
 using System.Collections.Generic;
+using Game.Core;
 using Game.Items;
 using Game.Levels.Controllers;
 using Game.Players.Controllers;
-using Game.UI.Menus;
 using Godot.Collections;
 
 namespace Game.UI;
 
+[Obsolete]
 public partial class PickupUi : Control
 {
 	[Export]

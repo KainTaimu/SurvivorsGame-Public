@@ -2,7 +2,6 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_f6ug3"]
 resource_local_to_scene = true
-font_size = 12
 shadow_color = Color(0, 0, 0, 1)
 
 [node name="StatusEffectLabel" type="Label" unique_id=1615123072]

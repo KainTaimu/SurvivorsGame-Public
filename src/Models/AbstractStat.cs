@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Game.Players;
+namespace Game.Models;
 
 [GlobalClass]
 public abstract partial class AbstractStat : Resource
