@@ -36,7 +36,7 @@ _limits = [0.0, 0.5, 0.0, 3.0]
 _data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(3, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_1j5om"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nihe0"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_y2vvo"]

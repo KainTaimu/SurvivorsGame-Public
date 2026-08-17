@@ -101,14 +101,13 @@ height = 1024
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="Player" type="Node2D" unique_id=1386970244 node_paths=PackedStringArray("MovementController", "WeaponController", "StatusEffectController")]
+[node name="Player" type="Node2D" unique_id=1386970244 node_paths=PackedStringArray("MovementController", "StatusEffectController")]
 top_level = true
 z_index = 32
 z_as_relative = false
 script = ExtResource("1_f0mf6")
 Character = ExtResource("2_oypsu")
 MovementController = NodePath("PlayerMovementController")
-WeaponController = NodePath("")
 StatusEffectController = NodePath("PlayerStatusEffectController")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=881638213]

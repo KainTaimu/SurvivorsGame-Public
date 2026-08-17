@@ -291,5 +291,5 @@ nav_map = NodePath("../../../World/NavMap")
 
 [node name="Player" parent="." index="2" unique_id=1386970244 instance=ExtResource("2_jkyfg")]
 
-[node name="PerformanceMonitor" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="4" unique_id=1872396024 node_paths=PackedStringArray("Targets")]
+[node name="PerformanceMonitor" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="3" unique_id=1872396024 node_paths=PackedStringArray("Targets")]
 Targets = [NodePath("../../Systems/EnemySystems/EnemyRenderer"), NodePath("../../Systems/EnemySystems/EnemyNavMeshController"), NodePath("../../Systems/EnemySystems/EnemyTargetQuery")]
