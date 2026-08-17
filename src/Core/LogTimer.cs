@@ -5,43 +5,47 @@ public static class LogTimer
 {
 	public static IDisposable LogTimeMsec(string name)
 	{
-		var start = Time.GetTicksMsec();
+		var stopwatch = Stopwatch.StartNew();
 		return new DelegateDisposable(() =>
 		{
-			var elapsedMsec = Time.GetTicksMsec() - start;
-			Logger.LogDebug($"{name} took {elapsedMsec:0.###} ms");
+			stopwatch.Stop();
+			var elapsed = stopwatch.Elapsed.TotalMilliseconds;
+			Logger.LogDebug($"{name} took {elapsed:0.###} ms");
 		});
 	}
 
 	public static IDisposable LogTimeMsec()
 	{
 		var name = GetCallerName();
-		var start = Time.GetTicksMsec();
+		var stopwatch = Stopwatch.StartNew();
 		return new DelegateDisposable(() =>
 		{
-			var elapsedMsec = Time.GetTicksMsec() - start;
-			Logger.LogDebug($"{name} took {elapsedMsec:0.###} ms");
+			stopwatch.Stop();
+			var elapsed = stopwatch.Elapsed.TotalMilliseconds;
+			Logger.LogDebug($"{name} took {elapsed:0.###} ms");
 		});
 	}
 
 	public static IDisposable LogTimeUsec(string name)
 	{
-		var start = Time.GetTicksUsec();
+		var stopwatch = Stopwatch.StartNew();
 		return new DelegateDisposable(() =>
 		{
-			var elapsedMsec = Time.GetTicksUsec() - start;
-			Logger.LogDebug($"{name} took {elapsedMsec:0.###} us");
+			stopwatch.Stop();
+			var elapsed = stopwatch.Elapsed.TotalMicroseconds;
+			Logger.LogDebug($"{name} took {elapsed:0.###} us");
 		});
 	}
 
 	public static IDisposable LogTimeUsec()
 	{
 		var name = GetCallerName();
-		var start = Time.GetTicksUsec();
+		var stopwatch = Stopwatch.StartNew();
 		return new DelegateDisposable(() =>
 		{
-			var elapsedMsec = Time.GetTicksUsec() - start;
-			Logger.LogDebug($"{name} took {elapsedMsec:0.###} us");
+			stopwatch.Stop();
+			var elapsed = stopwatch.Elapsed.TotalMicroseconds;
+			Logger.LogDebug($"{name} took {elapsed:0.###} us");
 		});
 	}
 
