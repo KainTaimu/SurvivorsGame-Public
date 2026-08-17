@@ -13,6 +13,7 @@ public partial class GoreParticleBuffer : Node2D
 	private ShaderMaterial _goreShaderMaterial = null!;
 
 	[ExportGroup("Internal")]
+	// How much time to spend spawning particles
 	[Export]
 	public ulong RenderBudgetUs = 500;
 

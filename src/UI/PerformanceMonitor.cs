@@ -59,8 +59,8 @@ public partial class PerformanceMonitor : CanvasLayer
 			};
 			var time = node.FrameTime.TimeUnit switch
 			{
-				FrameTimeUnitEnum.Ms => node.FrameTime.ProcessTime * 1e-3,
-				FrameTimeUnitEnum.Us => node.FrameTime.ProcessTime,
+				FrameTimeUnitEnum.Ms => node.FrameTime.ProcessTimeMicroSeconds * 1e-3,
+				FrameTimeUnitEnum.Us => node.FrameTime.ProcessTimeMicroSeconds,
 				_ => throw new ArgumentOutOfRangeException(),
 			};
 			label.Text = $"{node.FrameTime.FrameName}: {time:0.##}{unit}";

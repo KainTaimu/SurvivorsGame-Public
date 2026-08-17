@@ -146,7 +146,7 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 			var maxId = _uploadState[0];
 			if (maxId < 0)
 			{
-				FrameTime.ProcessTime = Time.GetTicksUsec() - start;
+				FrameTime.ProcessTimeMicroSeconds = Time.GetTicksUsec() - start;
 				return;
 			}
 

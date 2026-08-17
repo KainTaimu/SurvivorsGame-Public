@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace Game.UI;
 
 [GlobalClass]
@@ -9,14 +11,14 @@ public partial class FrameTime : Resource
 	[Export]
 	public FrameTimeUnitEnum TimeUnit;
 
-	public double ProcessTime;
+	public double ProcessTimeMicroSeconds;
 
 	public IDisposable Record()
 	{
-		var start = Time.GetTicksUsec();
+		var stopwatch = Stopwatch.StartNew();
 		return new DelegateDisposable(() =>
 		{
-			ProcessTime = Time.GetTicksUsec() - start;
+			ProcessTimeMicroSeconds = stopwatch.Elapsed.TotalMicroseconds;
 		});
 	}
 
