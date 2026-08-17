@@ -4,6 +4,7 @@
 [ext_resource type="Resource" uid="uid://b36ulgh0dx3ar" path="res://scenes/Players/Characters/Dev.tres" id="2_klnc8"]
 [ext_resource type="PackedScene" uid="uid://b6pcia1iql0ct" path="res://scenes/Items/Offensive/Ak47.tscn" id="5_klnc8"]
 [ext_resource type="PackedScene" uid="uid://okgy2hpbgy53" path="res://scenes/Items/Offensive/Blick.tscn" id="6_comn3"]
+[ext_resource type="Script" uid="uid://bpqjji00j8p6x" path="res://src/Levels/Controllers/PlayerHitController.cs" id="6_klnc8"]
 [ext_resource type="PackedScene" uid="uid://c24ayslleke42" path="res://scenes/Items/Offensive/M249.tscn" id="6_mre4m"]
 [ext_resource type="Texture2D" uid="uid://c0d0pkcn6hw68" path="res://assets/Players/player.png" id="6_y52bq"]
 [ext_resource type="Script" uid="uid://bdk4fdcqvypav" path="res://src/Players/Controllers/StatusEffect.cs" id="7_qh10d"]
@@ -111,6 +112,11 @@ shadow_enabled = true
 [node name="PlayerStatusEffectController" parent="." index="5" unique_id=1019311816]
 _testEffect = Array[ExtResource("7_qh10d")]([SubResource("Resource_agk5e")])
 
+[node name="PlayerHitController" type="Node" parent="." index="6" unique_id=1180614331 node_paths=PackedStringArray("_player", "_playerSprite")]
+script = ExtResource("6_klnc8")
+_player = NodePath("..")
+_playerSprite = NodePath("../AnimatedSprite2D")
+
 [node name="M249" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="0" unique_id=873525008 instance=ExtResource("6_mre4m")]
 
 [node name="AA-12" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="1" unique_id=725692294 instance=ExtResource("13_vsrt8")]
@@ -131,5 +137,5 @@ _testEffect = Array[ExtResource("7_qh10d")]([SubResource("Resource_agk5e")])
 
 [node name="Crack" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="9" unique_id=1963515329 instance=ExtResource("14_y52bq")]
 
-[node name="CurrentWeaponUI" parent="." index="8" unique_id=2135368036 node_paths=PackedStringArray("_weaponController")]
+[node name="CurrentWeaponUI" parent="." index="9" unique_id=2135368036 node_paths=PackedStringArray("_weaponController")]
 _weaponController = NodePath("../PlayerWeaponController")

@@ -6,60 +6,60 @@ namespace Game.Levels.Controllers;
 
 public partial class PlayerHitController : Node
 {
-	private EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
+	[Export]
+	private Player _player = null!;
 
-	private Player Player => GameWorld.Instance.MainPlayer;
+	[Export]
+	private AnimatedSprite2D _playerSprite = null!;
 
-	private float PlayerHitboxRadius => Player.Character.CharacterStats.HitboxRadius;
+	// ReSharper disable once ReturnTypeCanBeNotNullable
+	private EnemyTargetQuery? TargetQuery => EnemyTargetQuery.Instance;
 
-	private CharacterStats PlayerStats => GameWorld.Instance.MainPlayer.Character.CharacterStats;
+	private float PlayerHitboxRadius => _player.Character.CharacterStats.HitboxRadius;
+
+	private CharacterStats PlayerStats => _player.Character.CharacterStats;
 
 	private float _invisibilityTime;
 
 	public override void _Process(double delta)
 	{
 		_invisibilityTime -= (float)delta;
+
 		ProcessContacts();
 	}
 
 	private void ProcessContacts()
 	{
+		if (TargetQuery is null)
+			return;
+
 		if (_invisibilityTime > 0)
 			return;
 
-		if (!TargetQuery.TryGetTargetsInArea(Player.GlobalPosition, PlayerHitboxRadius, out var entities))
+		if (!TargetQuery.TryGetTargetsInArea(_player.GlobalPosition, PlayerHitboxRadius, out var entities))
 			return;
 
-		var largestDamage = 0;
-		var largestDamageId = Entity.Null;
+		var damageSum = 0;
 
 		foreach (var entity in entities)
 		{
 			if (!GameWorld.World.TryGet<EnemyContactDamageComponent>(entity, out var damage))
 				continue;
-			if (damage.Damage > largestDamage)
-			{
-				largestDamage = damage.Damage;
-				largestDamageId = entity;
-			}
+			damageSum += damage.Damage;
 		}
 
-		if (largestDamageId == Entity.Null)
+		if (damageSum <= 0)
 			return;
 
 		_invisibilityTime = PlayerStats.InvincibilityTime;
-		PlayerStats.Damage(largestDamage);
+		PlayerStats.Damage(damageSum);
 
 		DamageFeedback();
 	}
 
 	private void DamageFeedback()
 	{
-		var sprite = Player.GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
-		if (sprite is null)
-			return;
-
-		if (sprite.Material is not ShaderMaterial spriteShaderMaterial)
+		if (_playerSprite.Material is not ShaderMaterial spriteShaderMaterial)
 			return;
 
 		var tween = CreateTween();
