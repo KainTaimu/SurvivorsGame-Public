@@ -35,11 +35,9 @@ public partial class EnemyHitFeedbackController : Node
 					return;
 
 				DamageIndicatorPool.Instance?.GetIndicator(pos.Position, hit.Damage, hit.IsCrit);
-				if (GameSettings.Instance.GoreEffects >= GoreEffectsEnum.Medium)
-				{
-					var spurtDirection = GameWorld.Instance.MainPlayer.GlobalPosition.AngleToPoint(pos.Position);
-					_goreManager?.SpawnHitSpurtPaticles(pos.Position, spurtDirection);
-				}
+
+				var spurtDirection = GameWorld.Instance.MainPlayer.GlobalPosition.AngleToPoint(pos.Position);
+				_goreManager?.SpawnHitSpurtPaticles(pos.Position, spurtDirection);
 
 				hit.Damage = -1;
 				_hitmarkerStreamPlayer?.Play();

@@ -92,6 +92,8 @@ public partial class GoreParticleBuffer : Node2D
 
 	private void SpawnBurst(Vector2 position, float? baseAngle, GoreBurstParams p)
 	{
+		if (_maxParticleCount <= 0)
+			return;
 		var spreadRadians = Mathf.DegToRad(p.SpreadDegrees);
 		for (var i = 0; i < p.Count; i++)
 		{
@@ -175,7 +177,7 @@ public partial class GoreParticleBuffer : Node2D
 
 	private int ToParticleCapacity(int maxBursts)
 	{
-		return Math.Max(1, maxBursts * Math.Max(1, _maxBurstCount));
+		return Math.Max(0, maxBursts * Math.Max(1, _maxBurstCount));
 	}
 
 	private static Vector2 RandomPointInCircle(float radius)

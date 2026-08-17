@@ -45,8 +45,6 @@ public partial class GoreManager : Node2D
 
 	public void SpawnHitSpurtPaticles(Vector2 pos, float direction)
 	{
-		if (GameSettings.Instance.GoreEffects < GoreEffectsEnum.Medium)
-			return;
 		_particleBuffer.SpawnSpurtBurst(pos, direction);
 	}
 
