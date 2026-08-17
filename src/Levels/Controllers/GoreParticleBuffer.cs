@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Game.Core.ECS;
-using Game.Models;
 
 namespace Game.Levels.Controllers;
 
@@ -31,7 +30,6 @@ public partial class GoreParticleBuffer : Node2D
 	private GoreBurstParams _deathExplosion = null!;
 	private GoreBurstParams _spurt = null!;
 
-	private CircularBuffer<GoreParticle> _particles = null!;
 	private readonly Queue<GoreParticle> _burstQueue = [];
 	private MultiMesh _multiMesh = null!;
 
@@ -39,8 +37,9 @@ public partial class GoreParticleBuffer : Node2D
 
 	// burst means a collection of particles. a particle is an individual sprite/droplet
 	private int _maxBurstCount;
-
-	private int ParticleCount => _particles.Size;
+	private int _maxParticleCount;
+	private int _activeParticles;
+	private int _nextParticleIdx;
 
 	public void Initialize(
 		int maxBurstCount,
@@ -54,9 +53,9 @@ public partial class GoreParticleBuffer : Node2D
 		_spurt = spurt ?? new GoreBurstParams();
 
 		_maxBurstCount = Math.Max(Math.Max(_deathNormal.Count, _deathExplosion.Count), _spurt.Count);
+		_maxParticleCount = ToParticleCapacity(maxBurstCount);
 
-		_particles = new CircularBuffer<GoreParticle>(Mathf.Max(1, ToParticleCapacity(maxBurstCount)));
-		_multiMesh = CreateMultiMesh(_particles.Capacity);
+		_multiMesh = CreateMultiMesh(Mathf.Max(1, _maxParticleCount));
 		_mmiNode = new MultiMeshInstance2D
 		{
 			Name = "GoreParticleMultiMeshInstance2D",
@@ -106,7 +105,6 @@ public partial class GoreParticleBuffer : Node2D
 				velocity,
 				_gameTime,
 				(float)GD.RandRange(p.ScaleMin, p.ScaleMax),
-				(float)GD.RandRange(0f, Mathf.Tau),
 				(float)GD.RandRange(p.SettleMin, p.SettleMax),
 				RandomTint(p)
 			);
@@ -119,54 +117,22 @@ public partial class GoreParticleBuffer : Node2D
 
 	public void SetCapacity(int targetCapacity)
 	{
-		var newCapacity = ToParticleCapacity(targetCapacity);
+		_maxParticleCount = ToParticleCapacity(targetCapacity);
 
-		if (newCapacity == _particles.Capacity)
-			return;
+		_multiMesh.VisibleInstanceCount = 0;
+		_multiMesh.InstanceCount = _maxParticleCount;
 
-		if (newCapacity <= 0)
-		{
-			_particles = new CircularBuffer<GoreParticle>(newCapacity);
-			_multiMesh.InstanceCount = 0;
-			return;
-		}
-
-		CircularBuffer<GoreParticle> newParticles;
-		if (newCapacity < _particles.Capacity)
-		{
-			// this is so particles are kept when decreasing the max gore particles.
-			// its also slow as balls when compared to passing in a slice of an array
-			newParticles = new CircularBuffer<GoreParticle>(newCapacity);
-			for (var i = 0; i < newCapacity; i++)
-			{
-				if (_particles.IsEmpty)
-					break;
-				newParticles.PushBack(_particles.Back());
-				_particles.PopBack();
-			}
-		}
-		else
-			newParticles = new CircularBuffer<GoreParticle>(newCapacity, [.. _particles]);
-
-		_particles = newParticles;
-
-		// Reallocates the buffer, so everything must be re-uploaded.
-		_multiMesh.InstanceCount = newCapacity;
-		for (var i = 0; i < _particles.Size; i++)
-		{
-			var goreParticle = _particles[i];
-			Upload(i, in goreParticle);
-		}
-
-		_multiMesh.VisibleInstanceCount = _particles.Size;
+		_activeParticles = 0;
+		_nextParticleIdx = 0;
+		_burstQueue.Clear();
 	}
 
 	private void Write(in GoreParticle particle)
 	{
-		_particles.PushBack(particle);
-
-		Upload(_particles.End, in particle);
-		_multiMesh.VisibleInstanceCount = _particles.Size;
+		_activeParticles = Mathf.Clamp(_activeParticles + 1, 0, _maxParticleCount - 1);
+		_nextParticleIdx = Mathf.Wrap(_nextParticleIdx + 1, 0, _maxParticleCount - 1);
+		Upload(_nextParticleIdx, in particle);
+		_multiMesh.VisibleInstanceCount = _activeParticles;
 	}
 
 	private void Upload(int idx, in GoreParticle particle)
@@ -181,10 +147,9 @@ public partial class GoreParticleBuffer : Node2D
 	private static Color PackCustomData(in GoreParticle particle)
 	{
 		var scale = PackByte(particle.Scale, PACKED_SCALE_MIN, PACKED_SCALE_RANGE);
-		var rotation = PackByte(particle.Rotation, 0f, Mathf.Tau);
 		var settle = PackByte(particle.SettleTime, PACKED_SETTLE_MIN, PACKED_SETTLE_RANGE);
 
-		var bits = scale | (rotation << 8) | (settle << 16);
+		var bits = scale | (settle << 8);
 		var packed = BitConverter.UInt32BitsToSingle(bits);
 		return new Color(particle.Velocity.X, particle.Velocity.Y, particle.SpawnTime, packed);
 	}
@@ -230,7 +195,6 @@ public partial class GoreParticleBuffer : Node2D
 		Vector2 velocity,
 		float spawnTime,
 		float scale,
-		float rotation,
 		float settleTime,
 		Color tint
 	)
@@ -239,7 +203,6 @@ public partial class GoreParticleBuffer : Node2D
 		public readonly Vector2 Velocity = velocity;
 		public readonly float SpawnTime = spawnTime;
 		public readonly float Scale = scale;
-		public readonly float Rotation = rotation;
 		public readonly float SettleTime = settleTime;
 		public readonly Color Tint = tint;
 	}

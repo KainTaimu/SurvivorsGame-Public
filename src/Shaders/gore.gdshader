@@ -10,20 +10,23 @@ const uint BYTE_MASK = 0xFFu;
 const float EASE_K = 4.0;
 const float EASE_NORM = 0.9816844; // 1.0 - exp(-EASE_K)
 
+// https://godotshaders.com/snippet/random-value/
+float random(vec2 uv) {
+    return fract(sin(dot(uv.xy,
+        vec2(12.9898,78.233))) * 43758.5453123);
+}
+
 void unpack_w(
 	float packed,
 	out float scale,
-	out float rotation,
 	out float settle_time
 ) {
 	uint bits = floatBitsToUint(packed);
 	uint sscale = (bits >> 0u) & BYTE_MASK;
-	uint rot = (bits >> 8u) & BYTE_MASK;
-	uint settle = (bits >> 16u) & BYTE_MASK;
+	uint settle = (bits >> 8u) & BYTE_MASK;
 
 	// Map bytes back to the ranges packed in GoreParticleBuffer.cs
 	scale = float(sscale) / 255.0 * 3.9 + 0.1; // 0.1 - 4.0
-	rotation = float(rot) / 255.0 * TAU;
 	settle_time = float(settle) / 255.0 * 1.73 + 0.02; // 0.02 - 1.75s
 }
 
@@ -32,9 +35,9 @@ void vertex() {
 	float spawn_time = INSTANCE_CUSTOM.z;
 
 	float scale;
-	float rotation;
+    float rotation = TAU * random(velocity);
 	float settle_time;
-	unpack_w(INSTANCE_CUSTOM.w, scale, rotation, settle_time);
+	unpack_w(INSTANCE_CUSTOM.w, scale, settle_time);
 
 	float t = clamp((game_time - spawn_time) / settle_time, 0.0, 1.0);
 	float travel = (1.0 - exp(-EASE_K * t)) / EASE_NORM;

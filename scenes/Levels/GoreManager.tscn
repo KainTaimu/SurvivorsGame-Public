@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://qs0cp17nnu37" path="res://src/Levels/Controllers/GoreParticleBuffer.cs" id="3_rxqt6"]
 [ext_resource type="Texture2D" uid="uid://c7kegqurrrx0w" path="res://assets/VFX/small_chevron.png" id="4_y53ej"]
 [ext_resource type="Shader" uid="uid://q0v4lo1dgueb" path="res://src/Shaders/gore.gdshader" id="5_v26op"]
+[ext_resource type="PackedScene" uid="uid://dyh06qakgf4q2" path="res://scenes/Players/DebugClassInspector.tscn" id="6_y53ej"]
 
 [sub_resource type="Resource" id="Resource_pkkq0"]
 script = ExtResource("2_pkkq0")
@@ -57,3 +58,5 @@ _particleBuffer = NodePath("GoreParticleBuffer")
 script = ExtResource("3_rxqt6")
 _particleSprite = ExtResource("4_y53ej")
 _goreShaderMaterial = SubResource("ShaderMaterial_do71q")
+
+[node name="DebugClassInspector" parent="GoreParticleBuffer" unique_id=1989388267 instance=ExtResource("6_y53ej")]

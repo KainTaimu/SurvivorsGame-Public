@@ -12,7 +12,9 @@
 [ext_resource type="PackedScene" uid="uid://cuerorgcryk5k" path="res://scenes/Items/Offensive/Sniper.tscn" id="13_qh10d"]
 [ext_resource type="PackedScene" uid="uid://c5chlqja2k2k0" path="res://scenes/Items/Offensive/AutoShotgun.tscn" id="13_vsrt8"]
 [ext_resource type="PackedScene" uid="uid://cr8xg1q8q5j48" path="res://scenes/Items/Offensive/Crack.tscn" id="14_y52bq"]
+[ext_resource type="PackedScene" uid="uid://c18mvu8kqrmng" path="res://scenes/Items/Offensive/DebugCircleKill.tscn" id="15_mre4m"]
 [ext_resource type="PackedScene" uid="uid://ceimmtu3q4x6n" path="res://scenes/Items/Offensive/GrenadeThrower.tscn" id="15_vsrt8"]
+[ext_resource type="PackedScene" uid="uid://dkhkglqxq0j2p" path="res://scenes/Items/Offensive/WipeScreen.tscn" id="16_y52bq"]
 [ext_resource type="PackedScene" uid="uid://bv8olcpvea07v" path="res://scenes/Items/Offensive/GrenadeLauncher.tscn" id="19_agk5e"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2g2d6"]
@@ -47,7 +49,7 @@ region = Rect2(62, 0, 31, 31)
 atlas = ExtResource("6_y52bq")
 region = Rect2(93, 0, 31, 31)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_mre4m"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_qh10d"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -99,7 +101,7 @@ Character = ExtResource("2_klnc8")
 WeaponController = NodePath("PlayerWeaponController")
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=881638213]
-sprite_frames = SubResource("SpriteFrames_mre4m")
+sprite_frames = SubResource("SpriteFrames_qh10d")
 animation = &"idle"
 
 [node name="PlayerCameraController" parent="." index="1" unique_id=68646763]
@@ -130,6 +132,10 @@ _testEffect = Array[ExtResource("7_qh10d")]([SubResource("Resource_agk5e")])
 [node name="GrenadeThrower2" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="8" unique_id=1544025392 instance=ExtResource("15_vsrt8")]
 
 [node name="Crack" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="9" unique_id=1963515329 instance=ExtResource("14_y52bq")]
+
+[node name="DebugCircleKill" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="10" unique_id=94679970 instance=ExtResource("15_mre4m")]
+
+[node name="WipeScreen" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="11" unique_id=462338799 instance=ExtResource("16_y52bq")]
 
 [node name="CurrentWeaponUI" parent="." index="8" unique_id=2135368036 node_paths=PackedStringArray("_weaponController")]
 _weaponController = NodePath("../PlayerWeaponController")
