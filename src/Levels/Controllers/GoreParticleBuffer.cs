@@ -41,6 +41,8 @@ public partial class GoreParticleBuffer : Node2D
 	private int _maxParticleCount;
 	private int _activeParticles;
 
+	private int _immediateParticlesSpawnedThisFrame;
+
 	// the oldest particle gets reused when exceeding _maxParticleCount
 	private int _nextParticleIdx;
 
@@ -71,9 +73,16 @@ public partial class GoreParticleBuffer : Node2D
 
 	public override void _PhysicsProcess(double delta)
 	{
+		_immediateParticlesSpawnedThisFrame = 0;
 		_gameTime += (float)delta;
 		_goreShaderMaterial.SetShaderParameter(_gameTimeParam, _gameTime);
 
+		SpawnQueuedParticles();
+	}
+
+	// spread out particle spawning across multiple frames to limit stuttering on large kills in a single frame
+	private void SpawnQueuedParticles()
+	{
 		var start = Time.GetTicksUsec();
 		while (_burstQueue.TryDequeue(out var particle))
 		{
@@ -113,10 +122,21 @@ public partial class GoreParticleBuffer : Node2D
 				(float)GD.RandRange(p.SettleMin, p.SettleMax),
 				RandomTint(p)
 			);
-			if (i < 50)
+			// Spawn some particles immediately for immediate visual feedback. Queue the rest
+			if (_immediateParticlesSpawnedThisFrame < 1_000)
+			{
 				Write(in particles);
+				_immediateParticlesSpawnedThisFrame++;
+			}
 			else
+			{
+				if (_burstQueue.Count > _maxParticleCount * 0.3f)
+				{
+					Logger.LogWarning("Gore burst queue overloaded");
+					continue;
+				}
 				_burstQueue.Enqueue(particles);
+			}
 		}
 	}
 
