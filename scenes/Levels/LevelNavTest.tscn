@@ -108,7 +108,7 @@ metadata/_custom_type_script = "uid://d2tvxgxbv87i2"
 
 [sub_resource type="Resource" id="Resource_wbp0e"]
 script = ExtResource("9_4ljo6")
-SpawnCountTarget = 3000
+SpawnCountTarget = 12000
 EnemyBlueprints = SubResource("Resource_uo14t")
 SpawnMinTime = 0.04
 SpawnMaxTime = 0.1
