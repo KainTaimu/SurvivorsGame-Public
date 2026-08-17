@@ -62,7 +62,7 @@ public partial class Crosshair : Node2D
 	public override void _Ready()
 	{
 		Instance = this;
-		GameSettings.Instance.OnCrosshairScaleChanged += () => CrosshairSize = GameSettings.Instance.CrosshairScale;
+		GameSettings.Instance.OnCrosshairScaleChanged += OnInstanceOnOnCrosshairScaleChanged;
 
 		Recoil = new CrossHairRecoil(this);
 
@@ -84,7 +84,12 @@ public partial class Crosshair : Node2D
 
 	public override void _ExitTree()
 	{
+		Instance = null;
 		Input.SetMouseMode(_hiddenMouseMode);
+
+		GameSettings.Instance.OnCrosshairScaleChanged -= OnInstanceOnOnCrosshairScaleChanged;
+		PauseController.OnPause -= HideCrosshair;
+		PauseController.OnUnpause -= ShowCrosshair;
 	}
 
 	public override void _Input(InputEvent @event)
@@ -147,6 +152,11 @@ public partial class Crosshair : Node2D
 		var min = Vector2.One * -marginPx;
 		var max = new Vector2(viewportSize.X + marginPx, viewportSize.Y + marginPx);
 		PrimaryCrosshairSprite.GlobalPosition = PrimaryCrosshairSprite.GlobalPosition.Clamp(min, max);
+	}
+
+	private void OnInstanceOnOnCrosshairScaleChanged()
+	{
+		CrosshairSize = GameSettings.Instance.CrosshairScale;
 	}
 
 	public partial class CrossHairRecoil(Crosshair crosshair) : Node

@@ -1,6 +1,7 @@
-extends PanelContainer
+extends Node
 
 @export var limit: int = 3
+@export var grid_container: Control
 @export var weapon_registry: Registry = preload("uid://cafl4rhi4lyju")
 
 var showcases: Array[ItemShowcase] = []
@@ -30,7 +31,7 @@ func _ready() -> void:
 func _exit_tree() -> void:
 	PauseController.Unlock(self)
 	PauseController.Unpause(self)
-	
+
 
 func exit() -> void:
 	queue_free()
@@ -38,7 +39,6 @@ func exit() -> void:
 
 func _initialize_showcases() -> int:
 	var count := 0
-	var grid_container: Control = $CenterContainer/GridContainer
 	for child in grid_container.get_children():
 		var showcase := child as ItemShowcase
 		if showcase == null:

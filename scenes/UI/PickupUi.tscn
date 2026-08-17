@@ -3,8 +3,10 @@
 [ext_resource type="Script" uid="uid://cfprl4wo8svao" path="res://src/UI/pickup_ui.gd" id="1_5cant"]
 [ext_resource type="PackedScene" uid="uid://c0svlhjww3qot" path="res://scenes/UI/ItemShowcase.tscn" id="2_5cant"]
 
-[node name="PickupUi" type="CanvasLayer" unique_id=720680017]
+[node name="PickupUi" type="CanvasLayer" unique_id=720680017 node_paths=PackedStringArray("grid_container")]
 process_mode = 3
+script = ExtResource("1_5cant")
+grid_container = NodePath("Control/HBoxContainer/CenterContainer/GridContainer")
 
 [node name="Control" type="PanelContainer" parent="." unique_id=1639386775]
 process_mode = 3
@@ -20,32 +22,43 @@ offset_bottom = 292.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("1_5cant")
 metadata/_edit_lock_ = true
 
-[node name="CenterContainer" type="CenterContainer" parent="Control" unique_id=328059922]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control" unique_id=730578786]
+layout_mode = 2
+alignment = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="Control/HBoxContainer" unique_id=328059922]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="GridContainer" type="GridContainer" parent="Control/CenterContainer" unique_id=323042347]
+[node name="GridContainer" type="GridContainer" parent="Control/HBoxContainer/CenterContainer" unique_id=323042347]
 layout_mode = 2
 mouse_filter = 2
 columns = 3
 
-[node name="ItemShowcase" parent="Control/CenterContainer/GridContainer" unique_id=1482916139 instance=ExtResource("2_5cant")]
+[node name="ItemShowcase" parent="Control/HBoxContainer/CenterContainer/GridContainer" unique_id=1482916139 instance=ExtResource("2_5cant")]
 layout_mode = 2
 
-[node name="ItemShowcase2" parent="Control/CenterContainer/GridContainer" unique_id=771367867 instance=ExtResource("2_5cant")]
+[node name="ItemShowcase2" parent="Control/HBoxContainer/CenterContainer/GridContainer" unique_id=771367867 instance=ExtResource("2_5cant")]
 layout_mode = 2
 
-[node name="ItemShowcase3" parent="Control/CenterContainer/GridContainer" unique_id=2021797756 instance=ExtResource("2_5cant")]
+[node name="ItemShowcase3" parent="Control/HBoxContainer/CenterContainer/GridContainer" unique_id=2021797756 instance=ExtResource("2_5cant")]
 layout_mode = 2
 
-[node name="ItemShowcase4" parent="Control/CenterContainer/GridContainer" unique_id=1255880091 instance=ExtResource("2_5cant")]
+[node name="ItemShowcase4" parent="Control/HBoxContainer/CenterContainer/GridContainer" unique_id=1255880091 instance=ExtResource("2_5cant")]
 layout_mode = 2
 
-[node name="ItemShowcase5" parent="Control/CenterContainer/GridContainer" unique_id=2145547556 instance=ExtResource("2_5cant")]
+[node name="ItemShowcase5" parent="Control/HBoxContainer/CenterContainer/GridContainer" unique_id=2145547556 instance=ExtResource("2_5cant")]
 layout_mode = 2
 
-[node name="ItemShowcase6" parent="Control/CenterContainer/GridContainer" unique_id=628245680 instance=ExtResource("2_5cant")]
+[node name="ItemShowcase6" parent="Control/HBoxContainer/CenterContainer/GridContainer" unique_id=628245680 instance=ExtResource("2_5cant")]
 layout_mode = 2
+
+[node name="Button" type="Button" parent="Control/HBoxContainer" unique_id=512666500]
+custom_minimum_size = Vector2(15.81, 0)
+layout_mode = 2
+text = "CLOSE"
+autowrap_mode = 3
+
+[connection signal="button_up" from="Control/HBoxContainer/Button" to="." method="queue_free"]
