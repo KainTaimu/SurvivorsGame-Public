@@ -19,7 +19,7 @@ public partial class PerformanceMonitor : CanvasLayer
 	private PackedScene _labelScene = null!;
 
 	[Export]
-	private RichTextLabel _gcLabel = null!;
+	private RichTextLabel? _gcLabel;
 
 	private readonly System.Collections.Generic.Dictionary<IFrameTimeTrackable, RichTextLabel> _labels = [];
 
@@ -43,6 +43,10 @@ public partial class PerformanceMonitor : CanvasLayer
 
 			AddTarget(node);
 		}
+
+#if OS_WINDOWS
+		_gcLabel?.QueueFree();
+#endif
 	}
 
 	public override void _Process(double delta)
@@ -66,10 +70,15 @@ public partial class PerformanceMonitor : CanvasLayer
 			label.Text = $"{node.FrameTime.FrameName}: {time:0.##}{unit}";
 		}
 
-		var gcInfo = GC.GetGCMemoryInfo();
-		_gcLabel.Text =
-			$"GC Pause: {gcInfo.PauseTimePercentage:F1}%\nGC CommBytes: {gcInfo
-				.TotalCommittedBytes * 1e-6:F2}MB";
+#if !OS_WINDOWS
+		if (_gcLabel is not null)
+		{
+			var gcInfo = GC.GetGCMemoryInfo();
+			_gcLabel.Text =
+				$"GC Pause: {gcInfo.PauseTimePercentage:F1}%\nGC CommBytes: {gcInfo
+					.TotalCommittedBytes * 1e-6:F2}MB";
+		}
+#endif
 	}
 
 	public void AddTarget(Node node)

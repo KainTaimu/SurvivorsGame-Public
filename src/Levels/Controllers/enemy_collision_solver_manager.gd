@@ -12,15 +12,22 @@ var selection_cause: String = ""
 
 @export var nav_map: NavMap = null
 
-enum SolverTypeEnum { AUTO, NONE, CPU, GPU }
+enum SolverTypeEnum {
+	AUTO,
+	NONE,
+	CPU,
+	GPU,
+}
 
 @export_group("Internal")
 @export var cpu_solver: PackedScene
 @export var gpu_solver: PackedScene
 @export var monitor: PerformanceMonitor
 
+
 func _ready() -> void:
 	change_solver()
+
 
 func change_solver() -> void:
 	if solver_type == SolverTypeEnum.NONE:
@@ -36,6 +43,9 @@ func change_solver() -> void:
 	match adapter:
 		RenderingDevice.DeviceType.DEVICE_TYPE_DISCRETE_GPU:
 			selected_solver = SolverTypeEnum.GPU
+		RenderingDevice.DeviceType.DEVICE_TYPE_INTEGRATED_GPU:
+			selected_solver = SolverTypeEnum.GPU
+			selection_cause = "using %s. expect low performance" % adapter
 		_:
 			selected_solver = SolverTypeEnum.CPU
 			selection_cause = "unsupported video adapter: %s" % adapter
@@ -47,6 +57,7 @@ func change_solver() -> void:
 
 	set_solver(get_solver(selected_solver))
 
+
 func get_solver(type: SolverTypeEnum) -> PackedScene:
 	match type:
 		SolverTypeEnum.CPU:
@@ -55,6 +66,7 @@ func get_solver(type: SolverTypeEnum) -> PackedScene:
 			return gpu_solver
 		_:
 			return cpu_solver
+
 
 func set_solver(type: PackedScene):
 	if current_solver != null:
