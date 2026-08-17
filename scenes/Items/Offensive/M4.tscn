@@ -18,7 +18,7 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 script = ExtResource("4_g7fad")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nihe0"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_g7fad"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_40q5n"]
@@ -29,7 +29,9 @@ metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_2fu6x"]
 script = ExtResource("3_jvsi7")
+ReloadTime = 1.2
 BloomCoefficientDeg = 6.0
+MagazineCapacity = 40
 HorizontalBaseRecoil = 6.0
 VerticalRecoilMin = 5.0
 VerticalBaseRecoil = 5.0
@@ -43,7 +45,7 @@ BaseCritChanceProportion = 0.2
 BaseProjectileSpeed = 4200
 BaseProjectileScaleMultiplier = 0.7
 BaseAttackSpeed = 0.067
-BasePierceLimit = 2
+BasePierceLimit = 3
 Additional = Dictionary[String, Variant]({
 "Knockback": 10.0
 })
