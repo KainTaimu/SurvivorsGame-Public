@@ -1,176 +1,68 @@
-using System.Collections.Generic;
 using Game.Core.ECS;
 using Game.Core.Settings;
+using Game.Items.Projectiles;
 
 namespace Game.Levels.Controllers;
 
-public partial class GoreManager : Node
+public partial class GoreManager : Node2D
 {
 	[Export]
 	private EnemyDeathManager? _deathManager;
 
+	[ExportGroup("Particles")]
 	[Export]
-	private PackedScene _enemyDeathParticlesScene = null!;
-
-	[Export]
-	private PackedScene _spurtParticlesScene = null!;
+	private GoreBurstParams _deathNormalParams = null!;
 
 	[Export]
-	private Godot.Collections.Dictionary<DeathCauseEnum, HitParticlesInfo> _deathParticleProcessMaterialsByCause = [];
+	private GoreBurstParams _deathExplosionParams = null!;
 
-	private int MaxActiveParticles
-	{
-		get => GameSettings.Instance.GoreEffectsValue;
-		set => UpdateParticles(_activeParticles, _inactiveParticles, value, false);
-	}
+	[Export]
+	private GoreBurstParams _spurtParams = null!;
 
-	private int MaxActiveSpurtParticles
-	{
-		get =>
-			GameSettings.Instance.GoreEffects >= GoreEffectsEnum.Medium
-				? Mathf.CeilToInt(MaxActiveParticles * 0.2f)
-				: 0;
-		set => UpdateParticles(_activeSpurtParticles, _inactiveSpurtParticles, value, true);
-	}
+	[ExportGroup("Internal")]
+	[Export]
+	private GoreParticleBuffer _particleBuffer = null!;
 
-	private readonly Queue<GpuParticles2D> _activeParticles = [];
-	private readonly Queue<GpuParticles2D> _inactiveParticles = [];
-
-	private readonly Queue<GpuParticles2D> _activeSpurtParticles = [];
-	private readonly Queue<GpuParticles2D> _inactiveSpurtParticles = [];
-
-	private ProcessModeEnum? _particlesOriginalProcessMode;
+	private static int MaxParticleCount => GameSettings.Instance.GoreEffectsValue;
 
 	public override void _Ready()
 	{
-		UpdateParticles(_activeParticles, _inactiveParticles, MaxActiveParticles, false);
-		UpdateParticles(_activeSpurtParticles, _inactiveSpurtParticles, MaxActiveSpurtParticles, true);
-		GameSettings.Instance.OnGoreEffectsChanged += () =>
-		{
-			UpdateParticles(_activeParticles, _inactiveParticles, MaxActiveParticles, false);
-			UpdateParticles(_activeSpurtParticles, _inactiveSpurtParticles, MaxActiveSpurtParticles, true);
-		};
+		_particleBuffer.Initialize(MaxParticleCount, _deathNormalParams, _deathExplosionParams, _spurtParams);
+		GameSettings.Instance.OnGoreEffectsChanged += OnGoreSettingsChanged;
 
-		_deathManager?.OnEnemyDeath += e =>
-		{
-			if (!GameWorld.World.Has<PositionComponent>(e.Entity))
-				return;
-			var pos = GameWorld.World.Get<PositionComponent>(e.Entity);
-			if (GameWorld.World.Has<DeathCauseComponent>(e.Entity))
-			{
-				var cause = GameWorld.World.Get<DeathCauseComponent>(e.Entity);
-				SpawnDeathParticles(pos.Position, cause.CauseEnum);
-			}
-			else
-				SpawnDeathParticles(pos.Position);
-		};
+		_deathManager?.OnEnemyDeath += OnEnemyDeath;
 	}
 
-	// PERF: Large amount of particles causes a draw call per active particles.
-	// TODO: Find out a way to reduce draw calls
+	public override void _ExitTree()
+	{
+		GameSettings.Instance.OnGoreEffectsChanged -= OnGoreSettingsChanged;
+	}
+
 	public void SpawnDeathParticles(Vector2 pos, DeathCauseEnum cause = DeathCauseEnum.Normal)
 	{
-		if (MaxActiveParticles <= 0)
-			return;
-		if (_activeParticles.Count >= MaxActiveParticles)
-		{
-			var off = _activeParticles.Dequeue();
-			off.Hide();
-			_inactiveParticles.Enqueue(off);
-		}
-
-		var particles = _inactiveParticles.Dequeue();
-		EnableParticles(particles, pos, cause);
-
-		_activeParticles.Enqueue(particles);
+		_particleBuffer.SpawnDeathBurst(pos, cause);
 	}
 
 	public void SpawnHitSpurtPaticles(Vector2 pos, float direction)
 	{
-		if (MaxActiveSpurtParticles <= 0)
+		if (GameSettings.Instance.GoreEffects < GoreEffectsEnum.Medium)
 			return;
-		if (_activeSpurtParticles.Count >= MaxActiveSpurtParticles)
-		{
-			var off = _activeSpurtParticles.Dequeue();
-			off.Hide();
-			_inactiveSpurtParticles.Enqueue(off);
-		}
-
-		var particles = _inactiveSpurtParticles.Dequeue();
-		particles.GlobalPosition = pos;
-		particles.GlobalRotation = (float)(direction + Mathf.DegToRad(GD.RandRange(-9f, 9f)));
-		particles.Show();
-		particles.Restart();
-		particles.ProcessMode = _particlesOriginalProcessMode ?? ProcessModeEnum.Inherit;
-
-		_activeSpurtParticles.Enqueue(particles);
+		_particleBuffer.SpawnSpurtBurst(pos, direction);
 	}
 
-	private void UpdateParticles(
-		Queue<GpuParticles2D> activeQueue,
-		Queue<GpuParticles2D> inactiveQueue,
-		int maxParticles,
-		bool isSpurtParticles
-	)
+	private void OnGoreSettingsChanged()
 	{
-		var particlesLeft = maxParticles - activeQueue.Count - inactiveQueue.Count;
-
-		while (particlesLeft < 0)
-		{
-			if (!inactiveQueue.TryDequeue(out var particles))
-				break;
-			particles.QueueFree();
-			particlesLeft++;
-		}
-
-		while (particlesLeft < 0)
-		{
-			if (!activeQueue.TryDequeue(out var particles))
-				break;
-			particles.QueueFree();
-			particlesLeft++;
-		}
-
-		for (var i = 0; i < particlesLeft; i++)
-		{
-			var particles = isSpurtParticles
-				? _spurtParticlesScene.Instantiate<GpuParticles2D>()
-				: _enemyDeathParticlesScene.Instantiate<GpuParticles2D>();
-			particles.Name = isSpurtParticles ? $"Spurt_{i}" : $"Death_{i}";
-
-			_particlesOriginalProcessMode ??= particles.ProcessMode;
-
-			particles.Finished += () =>
-			{
-				if (!IsInstanceValid(particles))
-					return;
-				particles.Hide();
-				DisableParticles(particles);
-			};
-			DisableParticles(particles);
-			AddChild(particles);
-			inactiveQueue.Enqueue(particles);
-		}
+		_particleBuffer.SetCapacity(MaxParticleCount);
 	}
 
-	private void EnableParticles(
-		GpuParticles2D particles,
-		Vector2 position,
-		DeathCauseEnum cause = DeathCauseEnum.Normal
-	)
+	private void OnEnemyDeath(EntityObject entity)
 	{
-		particles.GlobalPosition = position;
-		particles.GlobalRotation = 0;
-		particles.Show();
-		particles.Restart();
-		particles.ProcessMode = _particlesOriginalProcessMode ?? ProcessModeEnum.Inherit;
-		var info = _deathParticleProcessMaterialsByCause[cause];
-		particles.ProcessMaterial = info.ProcessMaterial;
-	}
-
-	private void DisableParticles(GpuParticles2D particles)
-	{
-		particles.Hide();
-		particles.ProcessMode = ProcessModeEnum.Disabled;
+		if (!GameWorld.World.Has<PositionComponent>(entity.Entity))
+			return;
+		var pos = GameWorld.World.Get<PositionComponent>(entity.Entity);
+		if (GameWorld.World.TryGet<DeathCauseComponent>(entity.Entity, out var cause))
+			SpawnDeathParticles(pos.Position, cause.CauseEnum);
+		else
+			SpawnDeathParticles(pos.Position);
 	}
 }

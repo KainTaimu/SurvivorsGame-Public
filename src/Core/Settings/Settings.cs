@@ -67,6 +67,9 @@ public partial class Settings : Control
 			case GoreEffectsEnum.High:
 				GoreSelection.Selected = 3;
 				break;
+			case GoreEffectsEnum.VeryHigh:
+				GoreSelection.Selected = 4;
+				break;
 			default:
 				Logger.LogError("Invalid GoreEffects toggle enum");
 				break;
@@ -107,6 +110,9 @@ public partial class Settings : Control
 					break;
 				case 3:
 					GameSettings.Instance.GoreEffects = GoreEffectsEnum.High;
+					break;
+				case 4:
+					GameSettings.Instance.GoreEffects = GoreEffectsEnum.VeryHigh;
 					break;
 				default:
 					Logger.LogError("Invalid GoreEffects enum");

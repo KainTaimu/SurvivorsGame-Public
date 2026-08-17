@@ -125,7 +125,7 @@ uppercase = true
 custom_minimum_size = Vector2(0, 32)
 custom_maximum_size = Vector2(-1, 32)
 layout_mode = 2
-item_count = 4
+item_count = 5
 popup/item_0/text = "Disabled"
 popup/item_0/id = 0
 popup/item_1/text = "Low"
@@ -134,6 +134,8 @@ popup/item_2/text = "Medium"
 popup/item_2/id = 2
 popup/item_3/text = "High"
 popup/item_3/id = 3
+popup/item_4/text = "Very high"
+popup/item_4/id = 4
 
 [node name="CameraShake" type="HSplitContainer" parent="VBoxContainer" unique_id=1536564626]
 layout_mode = 2
