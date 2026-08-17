@@ -39,18 +39,20 @@ public partial class GoreParticleBuffer : Node2D
 	private int _maxBurstCount;
 	private int _maxParticleCount;
 	private int _activeParticles;
+
+	// the oldest particle gets reused when exceeding _maxParticleCount
 	private int _nextParticleIdx;
 
 	public void Initialize(
 		int maxBurstCount,
-		GoreBurstParams? deathNormal,
-		GoreBurstParams? deathExplosion,
-		GoreBurstParams? spurt
+		GoreBurstParams deathNormal,
+		GoreBurstParams deathExplosion,
+		GoreBurstParams spurt
 	)
 	{
-		_deathNormal = deathNormal ?? new GoreBurstParams();
-		_deathExplosion = deathExplosion ?? new GoreBurstParams { SpeedMin = 10f, SpeedMax = 1200f };
-		_spurt = spurt ?? new GoreBurstParams();
+		_deathNormal = deathNormal;
+		_deathExplosion = deathExplosion;
+		_spurt = spurt;
 
 		_maxBurstCount = Math.Max(Math.Max(_deathNormal.Count, _deathExplosion.Count), _spurt.Count);
 		_maxParticleCount = ToParticleCapacity(maxBurstCount);
