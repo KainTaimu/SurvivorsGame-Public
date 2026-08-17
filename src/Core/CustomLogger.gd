@@ -35,5 +35,5 @@ static func get_caller_src(src: String) -> String:
 	var comma = src.find(":")
 	if comma == -1:
 		return fn
-	
+
 	return fn.get_slice(":", 0)

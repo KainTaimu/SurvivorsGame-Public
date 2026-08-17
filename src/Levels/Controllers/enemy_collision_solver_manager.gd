@@ -29,9 +29,9 @@ func change_solver() -> void:
 		set_solver(get_solver(solver_type))
 		selection_cause = "forced"
 		return
-		
+
 	var selected_solver = SolverTypeEnum.CPU
-	
+
 	var adapter = RenderingServer.get_video_adapter_type()
 	match adapter:
 		RenderingDevice.DeviceType.DEVICE_TYPE_DISCRETE_GPU:
@@ -39,8 +39,8 @@ func change_solver() -> void:
 		_:
 			selected_solver = SolverTypeEnum.CPU
 			selection_cause = "unsupported video adapter: %s" % adapter
-			
-	var method =  RenderingServer.get_current_rendering_method()
+
+	var method = RenderingServer.get_current_rendering_method()
 	if method == "gl_compatibility":
 		selected_solver = SolverTypeEnum.CPU
 		selection_cause = "incompatible rendering method: %s" % method
@@ -59,7 +59,7 @@ func get_solver(type: SolverTypeEnum) -> PackedScene:
 func set_solver(type: PackedScene):
 	if current_solver != null:
 		monitor.call_deferred("RemoveTarget", current_solver)
-	
+
 	var node = type.instantiate() as AbstractEnemyCollisionSolver
 	node.NavMap = nav_map
 	add_child(node)

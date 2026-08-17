@@ -60,7 +60,7 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 		var moveVector = Vector2.Right.Rotated(Rotation) * ProjectileSpeed * (float)delta;
 		_distanceTravelled += ProjectileSpeed * (float)delta;
 
-		var ray = new PhysicsRayQueryParameters2D()
+		var ray = new PhysicsRayQueryParameters2D
 		{
 			CollideWithAreas = false,
 			CollisionMask = 8u,

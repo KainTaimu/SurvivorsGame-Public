@@ -24,9 +24,7 @@ public partial class EnemyDeathManager : Node
 		UpdateDyingQuery(GameWorld.World, _pendingDeaths, (float)delta);
 
 		while (_pendingDeaths.TryDequeue(out var entity))
-		{
 			commands.Destroy(entity);
-		}
 
 		if (commands.Size == 0)
 			return;

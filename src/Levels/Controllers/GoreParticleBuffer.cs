@@ -135,6 +135,7 @@ public partial class GoreParticleBuffer : Node2D
 					Logger.LogWarning("Gore burst queue overloaded");
 					continue;
 				}
+
 				_burstQueue.Enqueue(particles);
 			}
 		}

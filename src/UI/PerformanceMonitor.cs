@@ -69,7 +69,7 @@ public partial class PerformanceMonitor : CanvasLayer
 		var gcInfo = GC.GetGCMemoryInfo();
 		_gcLabel.Text =
 			$"GC Pause: {gcInfo.PauseTimePercentage:F1}%\nGC CommBytes: {gcInfo
-			.TotalCommittedBytes * 1e-6:F2}MB";
+				.TotalCommittedBytes * 1e-6:F2}MB";
 	}
 
 	public void AddTarget(Node node)

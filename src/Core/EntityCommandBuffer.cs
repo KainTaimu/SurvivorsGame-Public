@@ -14,9 +14,7 @@ public partial class EntityCommandBuffer : Node, IEntityCommandBuffer
 	public override void _Ready()
 	{
 		if (ProcessPriority != int.MaxValue)
-		{
 			Logger.LogWarning($"EntityCommandBuffer node \"{Name}\" should have ProcessPriority = {int.MaxValue}!");
-		}
 		Instance = this;
 	}
 
@@ -35,9 +33,7 @@ public partial class EntityCommandBuffer : Node, IEntityCommandBuffer
 		if (_buffers.IsEmpty)
 			return;
 		while (_buffers.TryDequeue(out var buffer))
-		{
 			buffer.Playback(GameWorld.World);
-		}
 	}
 
 	public void PushCommand(CommandBuffer buffer)

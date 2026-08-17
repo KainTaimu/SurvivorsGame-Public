@@ -67,6 +67,7 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 				EnableManualOffensive(m);
 			}
 		}
+
 		_offensives.Add(offensive);
 	}
 
@@ -79,8 +80,10 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 				DisableManualOffensive(m);
 				PrimaryAttack = null;
 			}
+
 			_manualOffensives.Remove(m);
 		}
+
 		_offensives.Remove(offensive);
 	}
 

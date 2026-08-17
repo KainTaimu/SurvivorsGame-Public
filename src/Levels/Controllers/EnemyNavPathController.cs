@@ -109,9 +109,7 @@ public partial class EnemyNavPathController : Node2D, IFrameTimeTrackable
 
 #if DEBUG
 		if (DrawNavPaths && Engine.GetProcessFrames() % 1 == 0)
-		{
 			QueueRedraw();
-		}
 #endif
 	}
 

@@ -13,41 +13,41 @@ const float EASE_NORM = 0.9816844; // 1.0 - exp(-EASE_K)
 // https://godotshaders.com/snippet/random-value/
 float random(vec2 uv) {
     return fract(sin(dot(uv.xy,
-        vec2(12.9898,78.233))) * 43758.5453123);
+        vec2(12.9898, 78.233))) * 43758.5453123);
 }
 
 void unpack_w(
-	float packed,
-	out float scale,
-	out float settle_time
+    float packed,
+    out float scale,
+    out float settle_time
 ) {
-	uint bits = floatBitsToUint(packed);
-	uint sscale = (bits >> 0u) & BYTE_MASK;
-	uint settle = (bits >> 8u) & BYTE_MASK;
+    uint bits = floatBitsToUint(packed);
+    uint sscale = (bits >> 0u) & BYTE_MASK;
+    uint settle = (bits >> 8u) & BYTE_MASK;
 
-	// Map bytes back to the ranges packed in GoreParticleBuffer.cs
-	scale = float(sscale) / 255.0 * 3.9 + 0.1; // 0.1 - 4.0
-	settle_time = float(settle) / 255.0 * 1.73 + 0.02; // 0.02 - 1.75s
+    // Map bytes back to the ranges packed in GoreParticleBuffer.cs
+    scale = float(sscale) / 255.0 * 3.9 + 0.1; // 0.1 - 4.0
+    settle_time = float(settle) / 255.0 * 1.73 + 0.02; // 0.02 - 1.75s
 }
 
 void vertex() {
-	vec2 velocity = INSTANCE_CUSTOM.xy;
-	float spawn_time = INSTANCE_CUSTOM.z;
+    vec2 velocity = INSTANCE_CUSTOM.xy;
+    float spawn_time = INSTANCE_CUSTOM.z;
 
-	float scale;
+    float scale;
     float rotation = TAU * random(velocity);
-	float settle_time;
-	unpack_w(INSTANCE_CUSTOM.w, scale, settle_time);
+    float settle_time;
+    unpack_w(INSTANCE_CUSTOM.w, scale, settle_time);
 
-	float t = clamp((game_time - spawn_time) / settle_time, 0.0, 1.0);
-	float travel = (1.0 - exp(-EASE_K * t)) / EASE_NORM;
-	vec2 offset = velocity * settle_time * travel;
+    float t = clamp((game_time - spawn_time) / settle_time, 0.0, 1.0);
+    float travel = (1.0 - exp(-EASE_K * t)) / EASE_NORM;
+    vec2 offset = velocity * settle_time * travel;
 
-	float c = cos(rotation);
-	float s = sin(rotation);
-	vec2 corner = vec2(
-		VERTEX.x * c - VERTEX.y * s,
-		VERTEX.x * s + VERTEX.y * c
-	);
-	VERTEX = corner * scale + offset;
+    float c = cos(rotation);
+    float s = sin(rotation);
+    vec2 corner = vec2(
+        VERTEX.x * c - VERTEX.y * s,
+        VERTEX.x * s + VERTEX.y * c
+    );
+    VERTEX = corner * scale + offset;
 }

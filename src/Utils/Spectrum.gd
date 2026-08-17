@@ -23,15 +23,15 @@ func _draw():
 		var height = lerp(min_height, max_height, ANIMATION_SPEED)
 
 		draw_rect(
-				Rect2(w * i, HEIGHT - height, w - 2, height),
-				Color.from_hsv(float(VU_COUNT * 0.6 + i * 0.5) / VU_COUNT, 0.5, 0.6)
+			Rect2(w * i, HEIGHT - height, w - 2, height),
+			Color.from_hsv(float(VU_COUNT * 0.6 + i * 0.5) / VU_COUNT, 0.5, 0.6)
 		)
 		draw_line(
-				Vector2(w * i, HEIGHT - height),
-				Vector2(w * i + w - 2, HEIGHT - height),
-				Color.from_hsv(float(VU_COUNT * 0.6 + i * 0.5) / VU_COUNT, 0.5, 1.0),
-				2.0,
-				true
+			Vector2(w * i, HEIGHT - height),
+			Vector2(w * i + w - 2, HEIGHT - height),
+			Color.from_hsv(float(VU_COUNT * 0.6 + i * 0.5) / VU_COUNT, 0.5, 1.0),
+			2.0,
+			true
 		)
 
 
