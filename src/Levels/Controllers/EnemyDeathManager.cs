@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Arch.Buffer;
 using Arch.Core;
@@ -35,6 +36,7 @@ public partial class EnemyDeathManager : Node
 	[All<HealthComponent, PositionComponent>]
 	[None<DyingMarkerComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[SuppressMessage("ReSharper", "ConditionalAccessQualifierIsNonNullableAccordingToAPIContract")]
 	private void UpdateNewDeaths([Data] in CommandBuffer commandBuffer, Entity entity, ref HealthComponent health)
 	{
 		if (health.Health > 0)

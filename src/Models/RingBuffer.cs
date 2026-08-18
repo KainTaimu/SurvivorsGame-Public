@@ -1,4 +1,5 @@
 // https://github.com/joaoportela/CircularBuffer-CSharp
+
 using System.Collections;
 using System.Collections.Generic;
 
@@ -71,10 +72,12 @@ public class CircularBuffer<T> : IEnumerable<T>
 		{
 			throw new ArgumentException("Circular buffer cannot have negative or zero capacity.", nameof(capacity));
 		}
+
 		if (items == null)
 		{
 			throw new ArgumentNullException(nameof(items));
 		}
+
 		if (items.Length > capacity)
 		{
 			throw new ArgumentException("Too many items to fit circular buffer", nameof(items));
@@ -95,10 +98,12 @@ public class CircularBuffer<T> : IEnumerable<T>
 		{
 			throw new ArgumentException("Circular buffer cannot have negative or zero capacity.", nameof(capacity));
 		}
+
 		if (items == Span<T>.Empty)
 		{
 			throw new ArgumentNullException(nameof(items));
 		}
+
 		if (items.Length > capacity)
 		{
 			throw new ArgumentException("Too many items to fit circular buffer", nameof(items));
@@ -200,12 +205,14 @@ public class CircularBuffer<T> : IEnumerable<T>
 			{
 				throw new IndexOutOfRangeException(string.Format("Cannot access index {0}. Buffer is empty", index));
 			}
+
 			if (index >= _size)
 			{
 				throw new IndexOutOfRangeException(
 					string.Format("Cannot access index {0}. Buffer size is {1}", index, _size)
 				);
 			}
+
 			int actualIndex = InternalIndex(index);
 			return _buffer[actualIndex];
 		}
@@ -215,12 +222,14 @@ public class CircularBuffer<T> : IEnumerable<T>
 			{
 				throw new IndexOutOfRangeException(string.Format("Cannot access index {0}. Buffer is empty", index));
 			}
+
 			if (index >= _size)
 			{
 				throw new IndexOutOfRangeException(
 					string.Format("Cannot access index {0}. Buffer size is {1}", index, _size)
 				);
 			}
+
 			int actualIndex = InternalIndex(index);
 			_buffer[actualIndex] = value;
 		}
@@ -327,6 +336,7 @@ public class CircularBuffer<T> : IEnumerable<T>
 			Array.Copy(segment.Array, segment.Offset, newArray, newArrayOffset, segment.Count);
 			newArrayOffset += segment.Count;
 		}
+
 		return newArray;
 	}
 
@@ -348,6 +358,7 @@ public class CircularBuffer<T> : IEnumerable<T>
 	}
 
 	#region IEnumerable<T> implementation
+
 	/// <summary>
 	/// Returns an enumerator that iterates through this buffer.
 	/// </summary>
@@ -363,12 +374,16 @@ public class CircularBuffer<T> : IEnumerable<T>
 			}
 		}
 	}
+
 	#endregion
+
 	#region IEnumerable implementation
+
 	IEnumerator IEnumerable.GetEnumerator()
 	{
 		return (IEnumerator)GetEnumerator();
 	}
+
 	#endregion
 
 	private void ThrowIfEmpty(string message = "Cannot access an empty buffer.")
@@ -403,6 +418,7 @@ public class CircularBuffer<T> : IEnumerable<T>
 		{
 			index = Capacity;
 		}
+
 		index--;
 	}
 
@@ -426,6 +442,7 @@ public class CircularBuffer<T> : IEnumerable<T>
 	// should help a lot with the code.
 
 	#region Array items easy access.
+
 	// The array is composed by at most two non-contiguous segments,
 	// the next two methods allow easy access to those.
 
@@ -460,5 +477,6 @@ public class CircularBuffer<T> : IEnumerable<T>
 			return new ArraySegment<T>(_buffer, 0, _end);
 		}
 	}
+
 	#endregion
 }

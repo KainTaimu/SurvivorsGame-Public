@@ -1,6 +1,8 @@
-using Arch.Core;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
+using Arch.System;
+using Arch.System.SourceGenerator;
 using Game.Core.ECS;
-using Game.Core.Settings;
 using Game.VFX;
 
 namespace Game.Levels.Controllers;
@@ -9,39 +11,46 @@ namespace Game.Levels.Controllers;
 public partial class EnemyHitFeedbackController : Node
 {
 	[Export]
-	private GoreManager? _goreManager;
+	private GoreManager _goreManager = null!;
 
 	[Export]
-	private AudioStreamPlayer? _hitmarkerStreamPlayer;
+	private AudioStreamPlayer _hitmarkerStreamPlayer = null!;
 
 	public override void _Process(double delta)
 	{
-		GameWorld.World.Query<HitFeedbackComponent, PositionComponent, AnimatedSpriteComponent>(
-			in new QueryDescription()
-				.WithAll<HitFeedbackComponent, PositionComponent, AnimatedSpriteComponent>()
-				.WithNone<DyingMarkerComponent>(),
-			(ref hit, ref pos, ref spr) =>
-			{
-				var newHitTime = hit.HitTimeLeft - delta;
-				hit.HitTimeLeft = newHitTime;
+		ProcessHitsQuery(GameWorld.World, (float)delta);
+	}
 
-				if (hit.HitTimeLeft <= 0)
-					return;
+	[Query]
+	[All<HitFeedbackComponent, PositionComponent, AnimatedSpriteComponent>]
+	[None<DyingMarkerComponent>]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[SuppressMessage("ReSharper", "ConditionalAccessQualifierIsNonNullableAccordingToAPIContract")]
+	private void ProcessHits(
+		[Data] in float delta,
+		ref HitFeedbackComponent hit,
+		ref PositionComponent pos,
+		ref AnimatedSpriteComponent spr
+	)
+	{
+		var newHitTime = hit.HitTimeLeft - delta;
+		hit.HitTimeLeft = newHitTime;
 
-				var flash = 128 * (newHitTime / hit.HitTime);
-				spr.Flash = (byte)flash;
+		if (hit.HitTimeLeft <= 0)
+			return;
 
-				if (hit.Damage <= 0)
-					return;
+		var flash = 128 * (newHitTime / hit.HitTime);
+		spr.Flash = (byte)flash;
 
-				DamageIndicatorPool.Instance?.GetIndicator(pos.Position, hit.Damage, hit.IsCrit);
+		if (hit.Damage <= 0)
+			return;
 
-				var spurtDirection = GameWorld.Instance.MainPlayer.GlobalPosition.AngleToPoint(pos.Position);
-				_goreManager?.SpawnHitSpurtPaticles(pos.Position, spurtDirection);
+		DamageIndicatorPool.Instance?.GetIndicator(pos.Position, hit.Damage, hit.IsCrit);
 
-				hit.Damage = -1;
-				_hitmarkerStreamPlayer?.Play();
-			}
-		);
+		var spurtDirection = GameWorld.Instance.MainPlayer.GlobalPosition.AngleToPoint(pos.Position);
+		_goreManager?.SpawnHitSpurtPaticles(pos.Position, spurtDirection);
+
+		hit.Damage = -1;
+		_hitmarkerStreamPlayer?.Play();
 	}
 }

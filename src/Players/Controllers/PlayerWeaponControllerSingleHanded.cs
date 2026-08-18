@@ -25,8 +25,8 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 				return;
 			}
 
-			var current = _manualOffensives.Find(m);
-			var previous = current?.Previous ?? _manualOffensives.Last;
+			var current = ManualOffensiveList.Find(m);
+			var previous = current?.Previous ?? ManualOffensiveList.Last;
 			if (previous is null)
 			{
 				RemoveWeapon(o);
@@ -42,17 +42,17 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 
 	private void ReorderWeapons()
 	{
-		_offensives.Clear();
-		_manualOffensives.Clear();
+		OffensiveList.Clear();
+		ManualOffensiveList.Clear();
 
 		foreach (var child in GetChildren())
 		{
 			if (child is not BaseOffensive offensive)
 				continue;
 
-			_offensives.Add(offensive);
+			OffensiveList.Add(offensive);
 			if (offensive is IManualAttack m)
-				_manualOffensives.AddLast(m);
+				ManualOffensiveList.AddLast(m);
 		}
 	}
 
@@ -60,7 +60,7 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 	{
 		if (offensive is IManualAttack m)
 		{
-			_manualOffensives.AddLast(m);
+			ManualOffensiveList.AddLast(m);
 			if (PrimaryAttack is null)
 			{
 				PrimaryAttack = m;
@@ -68,7 +68,7 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 			}
 		}
 
-		_offensives.Add(offensive);
+		OffensiveList.Add(offensive);
 	}
 
 	private void RemoveWeapon(BaseOffensive offensive)
@@ -81,10 +81,10 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 				PrimaryAttack = null;
 			}
 
-			_manualOffensives.Remove(m);
+			ManualOffensiveList.Remove(m);
 		}
 
-		_offensives.Remove(offensive);
+		OffensiveList.Remove(offensive);
 	}
 
 	public override void _Input(InputEvent @event)
@@ -105,10 +105,10 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 			return;
 
 		DisableManualOffensive(PrimaryAttack);
-		var node = _manualOffensives.Find(PrimaryAttack);
-		var next = node?.Next ?? _manualOffensives.First;
+		var node = ManualOffensiveList.Find(PrimaryAttack);
+		var next = node?.Next ?? ManualOffensiveList.First;
 
-		var nextAttack = next.Value;
+		var nextAttack = next?.Value;
 		PrimaryAttack = nextAttack;
 		EnableManualOffensive(PrimaryAttack);
 	}
@@ -121,10 +121,10 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 			return;
 
 		DisableManualOffensive(PrimaryAttack);
-		var node = _manualOffensives.Find(PrimaryAttack);
-		var previous = node?.Previous ?? _manualOffensives.Last;
+		var node = ManualOffensiveList.Find(PrimaryAttack);
+		var previous = node?.Previous ?? ManualOffensiveList.Last;
 
-		var nextAttack = previous.Value;
+		var nextAttack = previous?.Value;
 		PrimaryAttack = nextAttack;
 		EnableManualOffensive(PrimaryAttack);
 	}
@@ -135,11 +135,11 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 		{
 			if (child is not BaseOffensive offensive)
 				continue;
-			_offensives.Add(offensive);
+			OffensiveList.Add(offensive);
 			switch (offensive)
 			{
 				case IManualAttack m:
-					_manualOffensives.AddLast(m);
+					ManualOffensiveList.AddLast(m);
 					DisableManualOffensive(m);
 					break;
 				default:
@@ -147,7 +147,7 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 			}
 		}
 
-		PrimaryAttack = _manualOffensives.First();
+		PrimaryAttack = ManualOffensiveList.First();
 		EnableManualOffensive(PrimaryAttack);
 	}
 }

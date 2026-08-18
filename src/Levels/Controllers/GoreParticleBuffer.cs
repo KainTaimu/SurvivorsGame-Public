@@ -138,6 +138,7 @@ public partial class GoreParticleBuffer : Node2D
 					_hasBurstQueueOverloadSentThisFrame = true;
 					continue;
 				}
+
 				_hasBurstQueueOverloadSentThisFrame = false;
 
 				_burstQueue.Enqueue(particles);

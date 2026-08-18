@@ -35,11 +35,11 @@ public abstract partial class AbstractPlayerWeaponController : Node
 		}
 	}
 
-	public IReadOnlyList<BaseOffensive> Offensives => _offensives;
-	public IReadOnlyList<IManualAttack> ManualOffensives => [.. _manualOffensives];
+	public IReadOnlyList<BaseOffensive> Offensives => OffensiveList;
+	public IReadOnlyList<IManualAttack> ManualOffensives => [.. ManualOffensiveList];
 
-	protected readonly List<BaseOffensive> _offensives = [];
-	protected readonly LinkedList<IManualAttack> _manualOffensives = [];
+	protected readonly List<BaseOffensive> OffensiveList = [];
+	protected readonly LinkedList<IManualAttack> ManualOffensiveList = [];
 
 	// NOTE:
 	// May break if the nodes ProcessMode is was not originally

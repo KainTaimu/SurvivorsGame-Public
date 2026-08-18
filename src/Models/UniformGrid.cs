@@ -95,7 +95,7 @@ public class UniformGrid<T> : IUniformGrid<T, GridCellHandle>
 			return;
 
 		ref var entry = ref _entries[targetHandle.Index];
-		;
+
 		_entries[entry.Previous].Next = entry.Next;
 		_entries[entry.Next].Previous = entry.Previous;
 		_entries[entry.Cell].Count--;

@@ -43,6 +43,85 @@ source_geometry_mode = 1
 border_size = 159.0
 agent_radius = 37.08
 
+[sub_resource type="Resource" id="Resource_chdw3"]
+script = ExtResource("2_gm6l2")
+DamageOnContact = 4
+MaxHealth = 15
+MoveSpeed = 240.0
+TurnSpeed = 4.0
+metadata/_custom_type_script = "uid://y77qtp32wo00"
+
+[sub_resource type="Resource" id="Resource_s5ql2"]
+script = ExtResource("3_sx6oq")
+Name = "Walker"
+SpriteName = "placeholder"
+Type = 1
+Stats = SubResource("Resource_chdw3")
+
+[sub_resource type="Resource" id="Resource_trh12"]
+script = ExtResource("4_7b5vb")
+Blueprint = SubResource("Resource_s5ql2")
+metadata/_custom_type_script = "uid://dau6m811dtep8"
+
+[sub_resource type="Resource" id="Resource_nm68w"]
+script = ExtResource("2_gm6l2")
+MaxHealth = 2
+MoveSpeed = 300.0
+SpriteScaleMultiplier = 0.85
+metadata/_custom_type_script = "uid://y77qtp32wo00"
+
+[sub_resource type="Resource" id="Resource_fs3it"]
+script = ExtResource("3_sx6oq")
+Name = "Sprinter"
+SpriteName = "placeholder"
+Type = 1
+Stats = SubResource("Resource_nm68w")
+
+[sub_resource type="Resource" id="Resource_yysbr"]
+script = ExtResource("4_7b5vb")
+Blueprint = SubResource("Resource_fs3it")
+Weight = 0.25
+metadata/_custom_type_script = "uid://dau6m811dtep8"
+
+[sub_resource type="Resource" id="Resource_37ltf"]
+script = ExtResource("2_gm6l2")
+DamageOnContact = 10
+MaxHealth = 50
+MoveSpeed = 200.0
+SpriteScaleMultiplier = 1.3
+metadata/_custom_type_script = "uid://y77qtp32wo00"
+
+[sub_resource type="Resource" id="Resource_n708j"]
+script = ExtResource("3_sx6oq")
+Name = "Big"
+SpriteName = "placeholder"
+Type = 1
+Stats = SubResource("Resource_37ltf")
+
+[sub_resource type="Resource" id="Resource_xnxkf"]
+script = ExtResource("4_7b5vb")
+Blueprint = SubResource("Resource_n708j")
+Weight = 0.05
+metadata/_custom_type_script = "uid://dau6m811dtep8"
+
+[sub_resource type="Resource" id="Resource_fxwke"]
+script = ExtResource("5_lkbse")
+Weights = Array[Object]([SubResource("Resource_trh12"), SubResource("Resource_yysbr"), SubResource("Resource_xnxkf")])
+metadata/_custom_type_script = "uid://d2tvxgxbv87i2"
+
+[sub_resource type="Resource" id="Resource_4ljo6"]
+script = ExtResource("5_chdw3")
+Duration = 999.0
+EnemyBlueprints = SubResource("Resource_fxwke")
+SpawnMinTime = 0.1
+SpawnMaxTime = 0.6
+SpawnBatchMax = 2
+metadata/_custom_type_script = "uid://b7ol6jtjagoe"
+
+[sub_resource type="Resource" id="Resource_uj3cf"]
+script = ExtResource("10_chdw3")
+metadata/_custom_type_script = "uid://bhhh8235y54bg"
+
 [sub_resource type="Resource" id="Resource_h7ouo"]
 script = ExtResource("2_gm6l2")
 DamageOnContact = 4
@@ -118,85 +197,6 @@ SpawnMaxTime = 0.1
 SpawnBatchMin = 100
 SpawnBatchMax = 100
 metadata/_custom_type_script = "uid://cksmwvaxx1m18"
-
-[sub_resource type="Resource" id="Resource_uj3cf"]
-script = ExtResource("10_chdw3")
-metadata/_custom_type_script = "uid://bhhh8235y54bg"
-
-[sub_resource type="Resource" id="Resource_chdw3"]
-script = ExtResource("2_gm6l2")
-DamageOnContact = 4
-MaxHealth = 15
-MoveSpeed = 240.0
-TurnSpeed = 4.0
-metadata/_custom_type_script = "uid://y77qtp32wo00"
-
-[sub_resource type="Resource" id="Resource_s5ql2"]
-script = ExtResource("3_sx6oq")
-Name = "Walker"
-SpriteName = "placeholder"
-Type = 1
-Stats = SubResource("Resource_chdw3")
-
-[sub_resource type="Resource" id="Resource_trh12"]
-script = ExtResource("4_7b5vb")
-Blueprint = SubResource("Resource_s5ql2")
-metadata/_custom_type_script = "uid://dau6m811dtep8"
-
-[sub_resource type="Resource" id="Resource_nm68w"]
-script = ExtResource("2_gm6l2")
-MaxHealth = 2
-MoveSpeed = 300.0
-SpriteScaleMultiplier = 0.85
-metadata/_custom_type_script = "uid://y77qtp32wo00"
-
-[sub_resource type="Resource" id="Resource_fs3it"]
-script = ExtResource("3_sx6oq")
-Name = "Sprinter"
-SpriteName = "placeholder"
-Type = 1
-Stats = SubResource("Resource_nm68w")
-
-[sub_resource type="Resource" id="Resource_yysbr"]
-script = ExtResource("4_7b5vb")
-Blueprint = SubResource("Resource_fs3it")
-Weight = 0.25
-metadata/_custom_type_script = "uid://dau6m811dtep8"
-
-[sub_resource type="Resource" id="Resource_37ltf"]
-script = ExtResource("2_gm6l2")
-DamageOnContact = 10
-MaxHealth = 50
-MoveSpeed = 200.0
-SpriteScaleMultiplier = 1.3
-metadata/_custom_type_script = "uid://y77qtp32wo00"
-
-[sub_resource type="Resource" id="Resource_n708j"]
-script = ExtResource("3_sx6oq")
-Name = "Big"
-SpriteName = "placeholder"
-Type = 1
-Stats = SubResource("Resource_37ltf")
-
-[sub_resource type="Resource" id="Resource_xnxkf"]
-script = ExtResource("4_7b5vb")
-Blueprint = SubResource("Resource_n708j")
-Weight = 0.05
-metadata/_custom_type_script = "uid://dau6m811dtep8"
-
-[sub_resource type="Resource" id="Resource_fxwke"]
-script = ExtResource("5_lkbse")
-Weights = Array[Object]([SubResource("Resource_trh12"), SubResource("Resource_yysbr"), SubResource("Resource_xnxkf")])
-metadata/_custom_type_script = "uid://d2tvxgxbv87i2"
-
-[sub_resource type="Resource" id="Resource_4ljo6"]
-script = ExtResource("5_chdw3")
-Duration = 999.0
-EnemyBlueprints = SubResource("Resource_fxwke")
-SpawnMinTime = 0.1
-SpawnMaxTime = 0.6
-SpawnBatchMax = 4
-metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 
 [sub_resource type="Resource" id="Resource_e1pfk"]
 script = ExtResource("12_2ki1j")
@@ -361,7 +361,7 @@ MainPlayer = NodePath("../Player")
 process_priority = 2147483647
 
 [node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=2001503768]
-Waves = Array[Object]([SubResource("Resource_wbp0e"), SubResource("Resource_uj3cf"), SubResource("Resource_4ljo6")])
+Waves = Array[Object]([SubResource("Resource_4ljo6"), SubResource("Resource_uj3cf"), SubResource("Resource_wbp0e")])
 
 [node name="EnemyTargetQuery" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="1" unique_id=991938994]
 _rangeFactor = 1.2

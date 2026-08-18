@@ -1,6 +1,8 @@
 // Written by AI :(
 
 using System.Buffers.Binary;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using Arch.System;
 using Arch.System.SourceGenerator;
@@ -356,6 +358,8 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 	[Query(Parallel = true)]
 	[All<PositionComponent, CollisionLodComponent, CircleHitboxComponent, CollisionGpuIndexComponent>]
 	[None<DyingMarkerComponent>]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[SuppressMessage("ReSharper", "ConditionalAccessQualifierIsNonNullableAccordingToAPIContract")]
 	private static void AddObjectsToBuffer(
 		[Data] in byte[] buffer,
 		[Data] in int[] gpuCounter,
@@ -385,6 +389,8 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 	[Query(Parallel = true)]
 	[All<PositionComponent, CircleHitboxComponent, CollisionGpuIndexComponent>]
 	[None<DyingMarkerComponent>]
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	[SuppressMessage("ReSharper", "ConditionalAccessQualifierIsNonNullableAccordingToAPIContract")]
 	private static void ApplyCollisions(
 		[Data] in byte[] results,
 		[Data] in int writeFrame,
