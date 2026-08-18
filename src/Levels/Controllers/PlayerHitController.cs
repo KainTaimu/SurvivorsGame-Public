@@ -42,8 +42,10 @@ public partial class PlayerHitController : Node
 
 		foreach (var entity in entities)
 		{
-			if (!GameWorld.World.TryGet<EnemyContactDamageComponent>(entity, out var damage))
+			if (!GameWorld.World.IsAlive(entity))
 				continue;
+
+			ref var damage = ref GameWorld.World.Get<EnemyContactDamageComponent>(entity);
 			damageSum += damage.Damage;
 		}
 

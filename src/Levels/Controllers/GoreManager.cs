@@ -55,9 +55,10 @@ public partial class GoreManager : Node2D
 
 	private void OnEnemyDeath(EntityObject entity)
 	{
-		if (!GameWorld.World.Has<PositionComponent>(entity.Entity))
+		if (!GameWorld.World.IsAlive(entity.Entity))
 			return;
-		var pos = GameWorld.World.Get<PositionComponent>(entity.Entity);
+
+		ref var pos = ref GameWorld.World.Get<PositionComponent>(entity.Entity);
 		if (GameWorld.World.TryGet<DeathCauseComponent>(entity.Entity, out var cause))
 			SpawnDeathParticles(pos.Position, cause.CauseEnum);
 		else

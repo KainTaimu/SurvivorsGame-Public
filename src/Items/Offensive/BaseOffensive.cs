@@ -25,11 +25,17 @@ public abstract partial class BaseOffensive : BaseItem
 
 	protected virtual void PostUpgrade(int newLevel) { }
 
-	public void HandleHit(Entity entity)
+	public bool TryHandleHit(Entity entity)
 	{
 		if (!GameWorld.World.IsAlive(entity))
-			return;
+			return false;
 
+		HandleHit(entity);
+		return true;
+	}
+
+	public void HandleHit(Entity entity)
+	{
 		HandleDamageECS(entity);
 		HandleHitECS(entity);
 	}
@@ -38,31 +44,13 @@ public abstract partial class BaseOffensive : BaseItem
 	// ReSharper disable once InconsistentNaming
 	protected void HandleDamageECS(Entity entity)
 	{
-		if (!GameWorld.World.Has<HealthComponent>(entity))
-			return;
-
-		ref var health = ref GameWorld.World.Get<HealthComponent>(entity);
-
-		var crit = CalculateCrit();
-		var randomDamage =
-			OffensiveStats.Damage > 1
-				? Mathf.CeilToInt(
-					GD.RandRange(-OffensiveStats.DamageVarianceMultiplier, OffensiveStats.DamageVarianceMultiplier)
-						* OffensiveStats.Damage
-				)
-				: 0;
-		var damage = Mathf.CeilToInt(
-			(OffensiveStats.Damage + crit + randomDamage) * PlayerStats.OutgoingDamageMultiplier
+		OffensiveEffects.ApplyDamage(
+			entity,
+			OffensiveStats.Damage,
+			CalculateCrit(),
+			OffensiveStats.DamageVarianceMultiplier,
+			PlayerStats.OutgoingDamageMultiplier
 		);
-		health.Health -= damage;
-
-		var hit = new HitFeedbackComponent
-		{
-			HitTime = 0.5f,
-			Damage = damage,
-			IsCrit = crit > 0,
-		};
-		GameWorld.World.Set(entity, hit);
 	}
 
 	/// <summary> Handle additional effects to the enemy like knockback </summary>

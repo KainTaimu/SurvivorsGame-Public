@@ -41,7 +41,7 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable
 			_projectileScene,
 			p =>
 			{
-				p.OnEntityHit += e => HandleHit(e.Entity);
+				p.OnEntityHit += e => TryHandleHit(e.Entity);
 			}
 		);
 

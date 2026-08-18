@@ -28,17 +28,8 @@ public partial class WipeScreen : BaseOffensive, IManualAttack
 		_fireCooldown = OffensiveStats.AttackSpeed;
 
 		foreach (var entity in TargetQuery.GetTargetsInScreen())
-			HandleHit(entity);
+			TryHandleHit(entity);
 	}
 
-	protected override void HandleHitECS(Entity entity)
-	{
-		OffensiveEffects.ApplyDamage(
-			entity,
-			OffensiveStats.Damage,
-			CalculateCrit(),
-			0,
-			PlayerStats.OutgoingDamageMultiplier
-		);
-	}
+	protected override void HandleHitECS(Entity entity) { }
 }

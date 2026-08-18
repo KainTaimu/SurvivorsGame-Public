@@ -162,18 +162,9 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 
 	protected override void HandleHitECS(Entity entity)
 	{
-		OffensiveEffects.ApplyDamage(
-			entity,
-			OffensiveStats.Damage,
-			CalculateCrit(),
-			OffensiveStats.DamageVarianceMultiplier,
-			PlayerStats.OutgoingDamageMultiplier
-		);
-
 		OffensiveEffects.ApplyVelocityMultiplier(entity, 0f);
 
-		if (!GameWorld.World.TryGet<HealthComponent>(entity, out var health))
-			return;
+		var health = GameWorld.World.Get<HealthComponent>(entity);
 		if (health.Health > 0)
 			return;
 		GameWorld.World.Add(entity, new DeathCauseComponent(DeathCauseEnum.Explosion));

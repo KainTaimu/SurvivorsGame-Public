@@ -22,8 +22,10 @@ public sealed partial class MarksmanRifle : Sniper
 
 		foreach (var id in ids)
 		{
-			if (!GameWorld.World.TryGet<PositionComponent>(id, out var posComponent))
+			if (!GameWorld.World.IsAlive(id))
 				continue;
+
+			ref var posComponent = ref GameWorld.World.Get<PositionComponent>(id);
 
 			var pushForce = playerPos.DirectionTo(posComponent.Position) * NearbyPushAmount;
 			GameWorld.World.Set(id, new PositionComponent(posComponent.Position + pushForce));

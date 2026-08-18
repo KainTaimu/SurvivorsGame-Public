@@ -125,8 +125,6 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 		{
 			if (!GameWorld.World.IsAlive(entity))
 				continue;
-			if (!GameWorld.World.Has<PositionComponent>(entity))
-				continue;
 			if (_hits.Any(data => data.Target == entity))
 				continue;
 

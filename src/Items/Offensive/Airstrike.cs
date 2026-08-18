@@ -32,7 +32,7 @@ public partial class Airstrike : BaseOffensive, IManualAttack
 		if (TargetQuery.TryGetTargetsInArea(mousePos, 256, out var targetIds))
 		{
 			foreach (var entity in targetIds)
-				HandleHit(entity);
+				TryHandleHit(entity);
 		}
 	}
 

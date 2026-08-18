@@ -16,11 +16,6 @@ public static class OffensiveEffects
 		float outgoingDamageMult
 	)
 	{
-		if (!GameWorld.World.IsAlive(entity))
-			return;
-
-		if (!GameWorld.World.Has<HealthComponent>(entity))
-			return;
 		ref var health = ref GameWorld.World.Get<HealthComponent>(entity);
 
 		var randomDamage =
@@ -88,8 +83,6 @@ public static class OffensiveEffects
 
 	public static void ApplyKnockback(Entity entity, in Vector2 awayFrom, float knockback)
 	{
-		if (!GameWorld.World.Has<PositionComponent>(entity))
-			return;
 		ref var pos = ref GameWorld.World.Get<PositionComponent>(entity);
 
 		var knockbackVector = awayFrom.DirectionTo(pos.Position);
@@ -100,8 +93,6 @@ public static class OffensiveEffects
 
 	public static void ApplyVelocityMultiplier(Entity entity, float slowMultiplier = 1f)
 	{
-		if (!GameWorld.World.Has<VelocityComponent>(entity))
-			return;
 		ref var velocity = ref GameWorld.World.Get<VelocityComponent>(entity);
 
 		velocity.Velocity *= slowMultiplier;

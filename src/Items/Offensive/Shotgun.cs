@@ -38,7 +38,7 @@ public partial class Shotgun : AbstractFirearm, IReloadable
 			_projectileScene,
 			p =>
 			{
-				p.OnEntityHit += e => HandleHit(e.Entity);
+				p.OnEntityHit += e => TryHandleHit(e.Entity);
 			}
 		);
 
@@ -158,13 +158,6 @@ public partial class Shotgun : AbstractFirearm, IReloadable
 
 	protected override void HandleHitECS(Entity entity)
 	{
-		OffensiveEffects.ApplyDamage(
-			entity,
-			FirearmStats.Damage,
-			CalculateCrit(),
-			FirearmStats.DamageVarianceMultiplier,
-			PlayerStats.OutgoingDamageMultiplier
-		);
 		OffensiveEffects.ApplyKnockback(
 			entity,
 			Player.GlobalPosition,

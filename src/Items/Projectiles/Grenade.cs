@@ -98,7 +98,7 @@ public partial class Grenade : RigidBody2D
 		foreach (var entity in entitiesHit)
 		{
 			if (!GameWorld.World.IsAlive(entity))
-				return;
+				continue;
 
 			OffensiveOrigin.HandleHit(entity);
 
