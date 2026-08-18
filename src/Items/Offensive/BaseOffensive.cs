@@ -42,7 +42,7 @@ public abstract partial class BaseOffensive : BaseItem
 
 	/// <summary> Handle the damage to the enemy </summary>
 	// ReSharper disable once InconsistentNaming
-	protected void HandleDamageECS(Entity entity)
+	protected virtual void HandleDamageECS(Entity entity)
 	{
 		OffensiveEffects.ApplyDamage(
 			entity,

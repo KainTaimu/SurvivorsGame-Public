@@ -16,6 +16,9 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 	[Export]
 	public float ThrowForce = 1250;
 
+	[Export]
+	private Curve _damageDropoffFromCenter = null!;
+
 	public string? AttackActionString { get; set; }
 
 	private Crosshair? Crosshair => Crosshair.Instance;
@@ -62,6 +65,23 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 			+ Player.MovementController.Velocity;
 		nade.LinearVelocity = force;
 		GetTree().Root.CallDeferred(Window.MethodName.AddChild, nade);
+	}
+
+	protected override void HandleDamageECS(Entity entity)
+	{
+		ref var pos = ref GameWorld.World.Get<PositionComponent>(entity);
+
+		var offset = (_blastPosition.DistanceTo(pos.Position) / OffensiveStats.ProjectileRadius);
+		offset = Mathf.Clamp(offset, 0, 1);
+		var dropoffScale = _damageDropoffFromCenter.Sample(offset);
+
+		OffensiveEffects.ApplyDamage(
+			entity,
+			Mathf.CeilToInt(OffensiveStats.Damage * dropoffScale),
+			CalculateCrit(),
+			OffensiveStats.DamageVarianceMultiplier,
+			PlayerStats.OutgoingDamageMultiplier
+		);
 	}
 
 	protected override void HandleHitECS(Entity entity)

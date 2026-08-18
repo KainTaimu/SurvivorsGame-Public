@@ -13,6 +13,10 @@
 script = ExtResource("3_ysrq1")
 metadata/_custom_type_script = "uid://dnodsacrptssb"
 
+[sub_resource type="Curve" id="Curve_ysrq1"]
+_data = [Vector2(0, 1), 0.0, -0.49786425, 0, 1, Vector2(1, 0.50213575), -0.49786425, 0.0, 1, 0]
+point_count = 2
+
 [sub_resource type="Resource" id="Resource_7i0hn"]
 script = ExtResource("5_mkjub")
 Name = "MGL-67"
@@ -52,6 +56,7 @@ _throwForce = 1500.0
 GrenadeScene = ExtResource("2_hamct")
 _fireGroup = SubResource("Resource_a0fn7")
 _explosionPlayer = NodePath("Explosion")
+_damageDropoffFromCenter = SubResource("Curve_ysrq1")
 Properties = SubResource("Resource_7i0hn")
 Stats = SubResource("Resource_bpnxk")
 

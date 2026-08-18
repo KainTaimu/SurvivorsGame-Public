@@ -20,6 +20,9 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 	private float _throwForce = 1250;
 
 	[Export]
+	private Curve _damageDropoffFromCenter = null!;
+
+	[Export]
 	public PackedScene GrenadeScene = null!;
 
 	[Export]
@@ -48,6 +51,8 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 		}
 		set => field = field == int.MinValue ? MagazineCapacity : value;
 	} = int.MinValue;
+
+	private Vector2 _lastBlastPosition;
 
 	public override void _Ready()
 	{
@@ -126,10 +131,11 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 			Reload();
 
 		var nade = GrenadeScene.Instantiate<Grenade>();
-		nade.OnExploded += (_) =>
+		nade.OnExploded += (blastPos) =>
 		{
 			_explosionPlayer?.Reparent(GetTree().Root);
 			_explosionPlayer?.Play();
+			_lastBlastPosition = blastPos;
 		};
 
 		nade.OffensiveOrigin = this;
@@ -158,6 +164,23 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 			EmitSignalOnReloadEnd();
 		};
 		IsReloading = true;
+	}
+
+	protected override void HandleDamageECS(Entity entity)
+	{
+		ref var pos = ref GameWorld.World.Get<PositionComponent>(entity);
+
+		var offset = (_lastBlastPosition.DistanceTo(pos.Position) / OffensiveStats.ProjectileRadius);
+		offset = Mathf.Clamp(offset, 0, 1);
+		var dropoffScale = _damageDropoffFromCenter.Sample(offset);
+
+		OffensiveEffects.ApplyDamage(
+			entity,
+			Mathf.CeilToInt(OffensiveStats.Damage * dropoffScale),
+			CalculateCrit(),
+			OffensiveStats.DamageVarianceMultiplier,
+			PlayerStats.OutgoingDamageMultiplier
+		);
 	}
 
 	protected override void HandleHitECS(Entity entity)

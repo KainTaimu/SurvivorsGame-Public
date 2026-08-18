@@ -7,6 +7,10 @@
 [ext_resource type="Script" uid="uid://os8ycjo6m7r0" path="res://src/Items/Offensive/BaseOffensiveStats.cs" id="4_gjjd4"]
 [ext_resource type="AudioStream" uid="uid://dlewyy172dhok" path="res://assets/SFX/freesound_community-hq-explosion-6288.mp3" id="6_gjjd4"]
 
+[sub_resource type="Curve" id="Curve_ysrq1"]
+_data = [Vector2(0, 1), 0.0, -0.49786425, 0, 1, Vector2(1, 0.50213575), -0.49786425, 0.0, 1, 0]
+point_count = 2
+
 [sub_resource type="Resource" id="Resource_r85fg"]
 script = ExtResource("3_5d54y")
 Name = "Grenade"
@@ -36,6 +40,7 @@ metadata/_custom_type_script = "uid://os8ycjo6m7r0"
 script = ExtResource("1_oiqqx")
 GrenadeScene = ExtResource("2_18auf")
 _explosionPlayer = NodePath("AudioStreamPlayer")
+_damageDropoffFromCenter = SubResource("Curve_ysrq1")
 Properties = SubResource("Resource_r85fg")
 Stats = SubResource("Resource_jlsja")
 
