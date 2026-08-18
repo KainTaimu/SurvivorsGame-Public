@@ -2,7 +2,6 @@
 
 using System.Buffers.Binary;
 using System.Threading;
-using Arch.Core;
 using Arch.System;
 using Arch.System.SourceGenerator;
 using Game.Core.ECS;
@@ -80,13 +79,16 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 	private Vector2I _gridDims;
 	private int _cellTotal;
 
-	// Dense upload buffer indexed by Entity.Id. Layout matches the GLSL
+	// Dense upload buffer indexed by per-frame gpuIndex (0..N-1), which
+	// replaces the sparse Entity.Id indexing. Layout matches the GLSL
 	// GpuEntity struct: vec2 pos, float radius, uint frameStamp. Slots
 	// are valid for the current frame when their stamp == _writeFrame.
 	private readonly byte[] _entityBuffer = new byte[MAX_ENTITIES * ENTITY_STRIDE];
 
-	// [0] = max written Entity.Id this frame, [1] = overflow flag.
-	private readonly int[] _uploadState = new int[2];
+	// Number of entities written this frame. Stored in a single-element
+	// array so the parallel upload query can atomically increment it via
+	// [Data] in int[].
+	private readonly int[] _gpuCounter = new int[1];
 
 	private readonly byte[] _pushConstants = new byte[PUSH_CONSTANT_SIZE];
 	private int _writeFrame;
@@ -126,31 +128,29 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 			Array.Clear(_entityBuffer);
 		}
 
-		_uploadState[0] = -1;
-		_uploadState[1] = 0;
+		_gpuCounter[0] = 0;
 
 		var start = Time.GetTicksUsec();
 		using (FrameTime.Record())
 		{
-			AddObjectsToBufferQuery(GameWorld.World, _entityBuffer, _uploadState, _writeFrame, bounds);
+			AddObjectsToBufferQuery(GameWorld.World, _entityBuffer, _gpuCounter, _writeFrame, bounds);
 
-			if (_uploadState[1] != 0 && !_overflowWarned)
+			var entityCount = Math.Min(_gpuCounter[0], MAX_ENTITIES);
+			if (_gpuCounter[0] > MAX_ENTITIES && !_overflowWarned)
 			{
 				_overflowWarned = true;
 				Logger.LogError(
-					"EnemyCollisionSolverGpu: Entity.Id exceeded " + MAX_ENTITIES,
+					"EnemyCollisionSolverGpu: entity count exceeded " + MAX_ENTITIES,
 					"; entities beyond the cap are not collision-solved."
 				);
 			}
 
-			var maxId = _uploadState[0];
-			if (maxId < 0)
+			if (entityCount == 0)
 			{
 				FrameTime.ProcessTimeMicroSeconds = Time.GetTicksUsec() - start;
 				return;
 			}
 
-			var entityCount = maxId + 1;
 			var byteCount = (uint)(entityCount * ENTITY_STRIDE);
 			_rd.BufferUpdate(_entitiesA, 0, byteCount, _entityBuffer);
 
@@ -173,7 +173,6 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 			}
 
 			_rd.ComputeListEnd();
-
 			_rd.Submit();
 			// Results are needed by ApplyCollisions this same physics frame.
 			_rd.Sync();
@@ -355,53 +354,48 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 	}
 
 	[Query(Parallel = true)]
-	[All<PositionComponent, CollisionLodComponent, CircleHitboxComponent>]
+	[All<PositionComponent, CollisionLodComponent, CircleHitboxComponent, CollisionGpuIndexComponent>]
 	[None<DyingMarkerComponent>]
 	private static void AddObjectsToBuffer(
 		[Data] in byte[] buffer,
-		[Data] in int[] uploadState,
+		[Data] in int[] gpuCounter,
 		[Data] in int writeFrame,
 		[Data] in Rect2 bounds,
-		Entity entity,
 		ref PositionComponent pos,
-		ref CircleHitboxComponent circle
+		ref CircleHitboxComponent circle,
+		ref CollisionGpuIndexComponent gpuIndex
 	)
 	{
 		if (!bounds.HasPoint(pos.Position))
 			return;
 
-		var id = entity.Id;
-		if ((uint)id >= MAX_ENTITIES)
-		{
-			Interlocked.Exchange(ref uploadState[1], 1);
+		var slot = Interlocked.Increment(ref gpuCounter[0]) - 1;
+		if (slot >= MAX_ENTITIES)
 			return;
-		}
 
-		var span = buffer.AsSpan(id * ENTITY_STRIDE, ENTITY_STRIDE);
+		var span = buffer.AsSpan(slot * ENTITY_STRIDE, ENTITY_STRIDE);
 		BinaryPrimitives.WriteSingleLittleEndian(span, pos.Position.X);
 		BinaryPrimitives.WriteSingleLittleEndian(span[4..], pos.Position.Y);
 		BinaryPrimitives.WriteSingleLittleEndian(span[8..], circle.Radius);
 		BinaryPrimitives.WriteInt32LittleEndian(span[12..], writeFrame);
 
-		int currentMax;
-		while ((currentMax = Volatile.Read(ref uploadState[0])) < id)
-			Interlocked.CompareExchange(ref uploadState[0], id, currentMax);
+		gpuIndex.Index = slot;
 	}
 
 	[Query(Parallel = true)]
-	[All<PositionComponent, CircleHitboxComponent>]
+	[All<PositionComponent, CircleHitboxComponent, CollisionGpuIndexComponent>]
 	[None<DyingMarkerComponent>]
 	private static void ApplyCollisions(
 		[Data] in byte[] results,
 		[Data] in int writeFrame,
 		[Data] in NavMap navMap,
-		Entity entity,
-		ref PositionComponent pos
+		ref PositionComponent pos,
+		ref CollisionGpuIndexComponent gpuIndex
 	)
 	{
-		var id = entity.Id;
-		var offset = id * ENTITY_STRIDE;
-		if ((uint)id >= MAX_ENTITIES || (uint)(offset + ENTITY_STRIDE) > (uint)results.Length)
+		var slot = gpuIndex.Index;
+		var offset = slot * ENTITY_STRIDE;
+		if (slot < 0 || (uint)(offset + ENTITY_STRIDE) > (uint)results.Length)
 			return;
 
 		var span = results.AsSpan(offset, ENTITY_STRIDE);

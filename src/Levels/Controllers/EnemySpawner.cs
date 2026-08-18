@@ -52,7 +52,8 @@ public partial class EnemySpawner : Node
 			new EnemyContactDamageComponent(Mathf.CeilToInt(stats.DamageOnContact * stats.ContactDamageMultiplier)),
 			new DeathRewardComponent(Mathf.CeilToInt(stats.MoneyDrop * stats.MoneyDropMultiplier)),
 			new HitFeedbackComponent { HitTime = 0 },
-			new CollisionLodComponent(CollisionLodLevel.Far)
+			new CollisionLodComponent(CollisionLodLevel.Far),
+			CollisionGpuIndexComponent.NotParticipating
 		);
 	}
 
