@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://bix8bkfo5pwko"]
 
 [ext_resource type="Script" uid="uid://cb48sxavv5g3k" path="res://src/Players/Player.cs" id="1_f0mf6"]
-[ext_resource type="Resource" uid="uid://dphs5xxc31rsm" path="res://scenes/Players/Characters/Rookie.tres" id="2_oypsu"]
 [ext_resource type="Texture2D" uid="uid://d20hfinyt8lgx" path="res://assets/Lighting/cone_e_blur_noise.png" id="4_eai52"]
 [ext_resource type="Script" uid="uid://cn5rlmdgj2uue" path="res://src/Players/Controllers/PlayerMovementController.cs" id="4_kfojw"]
 [ext_resource type="Script" uid="uid://jk25jpibrbm3" path="res://src/Players/Controllers/LookLight.cs" id="5_oypsu"]
@@ -106,7 +105,6 @@ top_level = true
 z_index = 32
 z_as_relative = false
 script = ExtResource("1_f0mf6")
-Character = ExtResource("2_oypsu")
 MovementController = NodePath("PlayerMovementController")
 StatusEffectController = NodePath("PlayerStatusEffectController")
 

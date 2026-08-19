@@ -87,6 +87,8 @@ public partial class NavMap : NavigationRegion2D
 			UpdateNavCell(new Vector2(x, y));
 	}
 
+	private readonly PhysicsRayQueryParameters2D _cachedRayQuery = new();
+
 	private GridCellHandle? UpdateNavCell(Vector2 position)
 	{
 		var cell = _grid.WorldToCell(position);
@@ -103,8 +105,10 @@ public partial class NavMap : NavigationRegion2D
 			return _grid.Add(cell.X, cell.Y, [position, playerPos]);
 
 		// if clear path to player
-		var query = new PhysicsRayQueryParameters2D { From = position, To = playerPos };
-		if (_cachedSpace.IntersectRay(query).Count == 0)
+		_cachedRayQuery.From = position;
+		_cachedRayQuery.To = playerPos;
+
+		if (_cachedSpace.IntersectRay(_cachedRayQuery).Count == 0)
 			return _grid.Add(cell.X, cell.Y, [position, playerPos]);
 
 		var origin = _grid.CellCenterWorld(cell.X, cell.Y);
