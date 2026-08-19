@@ -3,12 +3,14 @@
 [ext_resource type="Script" uid="uid://dytrhrfc64qrs" path="res://src/UI/PerformanceMonitor.cs" id="1_l031m"]
 [ext_resource type="PackedScene" uid="uid://c0bbuesyh0ls7" path="res://scenes/UI/PerformanceMonitorLabel.tscn" id="2_cdxyh"]
 
-[node name="PerformanceMonitor" type="CanvasLayer" unique_id=1872396024 node_paths=PackedStringArray("Targets", "_vBoxContainer", "_gcLabel")]
+[node name="PerformanceMonitor" type="CanvasLayer" unique_id=1872396024 node_paths=PackedStringArray("Targets", "_vBoxContainer", "_staticMemLabel", "_vidMemLabel", "_gcLabel")]
 script = ExtResource("1_l031m")
 Targets = []
 _vBoxContainer = NodePath("MarginContainer/VBoxContainer")
 _labelScene = ExtResource("2_cdxyh")
-_gcLabel = NodePath("MarginContainer/VBoxContainer/VBoxContainer2/Label2")
+_staticMemLabel = NodePath("MarginContainer/VBoxContainer/VBoxContainer2/StaticMem")
+_vidMemLabel = NodePath("MarginContainer/VBoxContainer/VBoxContainer2/VidMem")
+_gcLabel = NodePath("MarginContainer/VBoxContainer/VBoxContainer2/GC")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=302088556]
 anchors_preset = 6
@@ -28,7 +30,17 @@ alignment = 1
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=843883306]
 layout_mode = 2
+theme_override_constants/separation = 1
 alignment = 1
 
-[node name="Label2" parent="MarginContainer/VBoxContainer/VBoxContainer2" unique_id=781281036 instance=ExtResource("2_cdxyh")]
+[node name="StaticMem" parent="MarginContainer/VBoxContainer/VBoxContainer2" unique_id=781281036 instance=ExtResource("2_cdxyh")]
 layout_mode = 2
+text = "Static Mem"
+
+[node name="VidMem" parent="MarginContainer/VBoxContainer/VBoxContainer2" unique_id=222252264 instance=ExtResource("2_cdxyh")]
+layout_mode = 2
+text = "Vid Mem"
+
+[node name="GC" parent="MarginContainer/VBoxContainer/VBoxContainer2" unique_id=1987350733 instance=ExtResource("2_cdxyh")]
+layout_mode = 2
+text = "GC"

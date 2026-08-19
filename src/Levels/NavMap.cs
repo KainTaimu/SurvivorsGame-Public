@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Game.Core.Extensions;
 using Game.Levels.Controllers;
 using Game.Models;
@@ -29,8 +30,18 @@ public partial class NavMap : NavigationRegion2D
 		}
 	} = 1f;
 
+	// World-space band around walls in which enemies still get the
+	// MapGetClosestPoint clamp. Must exceed the maximum distance an
+	// enemy can move (speed * dt) plus be pushed by the collision
+	// solver in a single physics frame.
+	[Export]
+	private float _clampMargin = 128f;
+
 	private UniformGridWorld<Vector2[]> _grid = null!;
 	public Rect2 GridVisibilityRect => _grid.WorldBounds;
+
+	// Null until the async build runs; treat null as "always clamp".
+	public NavWallProximity? WallProximity { get; private set; }
 
 	public static Rid Map { get; private set; }
 	public static NavMap Instance { get; private set; } = null!;
@@ -45,6 +56,26 @@ public partial class NavMap : NavigationRegion2D
 		UpdateGrid();
 
 		Instance = this;
+
+		WallProximity = new NavWallProximity();
+		WallProximity.Build(CollectRegions(), _clampMargin);
+	}
+
+	private List<NavigationRegion2D> CollectRegions()
+	{
+		var regions = new List<NavigationRegion2D>();
+		var found = GetTree().Root.FindChildren("*", nameof(NavigationRegion2D), true, false);
+		foreach (var node in found)
+		{
+			if (
+				node is NavigationRegion2D { Enabled: true } region
+				&& region.GetNavigationMap() == Map
+				&& region.NavigationPolygon is not null
+			)
+				regions.Add(region);
+		}
+
+		return regions;
 	}
 
 	public override void _PhysicsProcess(double delta)

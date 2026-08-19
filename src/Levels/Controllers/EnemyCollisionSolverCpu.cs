@@ -168,7 +168,9 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 		var newPos = entries[id].pos;
 		// Arch does not support nullable operator in parameters
 		// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-		if (navMap is not null && navMap.GridVisibilityRect.HasPoint(pos.Position))
+		if (navMap is not null
+			&& navMap.GridVisibilityRect.HasPoint(pos.Position)
+			&& (navMap.WallProximity is null || navMap.WallProximity.NeedsClamp(newPos)))
 			pos.Position = NavigationServer2D.MapGetClosestPoint(NavMap.Map, newPos);
 		else
 			pos.Position = newPos;

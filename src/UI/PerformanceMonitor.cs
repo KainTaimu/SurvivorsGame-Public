@@ -19,6 +19,12 @@ public partial class PerformanceMonitor : CanvasLayer
 	private PackedScene _labelScene = null!;
 
 	[Export]
+	private RichTextLabel? _staticMemLabel;
+
+	[Export]
+	private RichTextLabel? _vidMemLabel;
+
+	[Export]
 	private RichTextLabel? _gcLabel;
 
 	private readonly System.Collections.Generic.Dictionary<IFrameTimeTrackable, RichTextLabel> _labels = [];
@@ -43,6 +49,11 @@ public partial class PerformanceMonitor : CanvasLayer
 
 			AddTarget(node);
 		}
+
+#if !DEBUG
+		_staticMemLabel?.QueueFree();
+		_vidMemLabel?.QueueFree();
+#endif
 
 #if OS_WINDOWS
 		_gcLabel?.QueueFree();
@@ -69,6 +80,13 @@ public partial class PerformanceMonitor : CanvasLayer
 			};
 			label.Text = $"{node.FrameTime.FrameName}: {time:0.##}{unit}";
 		}
+
+#if DEBUG
+		var staticMem = Performance.GetMonitor(Performance.Monitor.MemoryStatic);
+		_staticMemLabel?.Text = $"Static Mem: {staticMem * 1e-6:F2}MB";
+		var videoMem = Performance.GetMonitor(Performance.Monitor.RenderVideoMemUsed);
+		_vidMemLabel?.Text = $"Video Mem: {videoMem * 1e-6:F2}MB";
+#endif
 
 #if !OS_WINDOWS
 		if (_gcLabel is not null)
