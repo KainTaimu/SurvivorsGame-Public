@@ -6,10 +6,11 @@ namespace Game.Players;
 /// Removing or adding fields requires changing CharacterStatType, and the switch inside
 /// PlayerStatusEffectController.InitializeStatStacks
 /// </summary>
-[GlobalClass]
-public partial class CharacterStats : Resource
+[Tool]
+public partial class CharacterStats : Node
 {
-	private int _health = int.MinValue;
+	[Export]
+	private IntStat _health = null!;
 
 	[Export]
 	private IntStat _maxHealth = null!;
@@ -63,17 +64,39 @@ public partial class CharacterStats : Resource
 	[Export]
 	private FloatStat _xpMultiplier = null!;
 
-	public int Health
+	[ExportGroup("Internal")]
+	[Export]
+	private bool PopulateStats
 	{
-		get
+		get;
+		set
 		{
-			// health may be uninitialized on first access.
-			if (_health == int.MinValue)
-				_health = _maxHealth.Value;
-
-			return _health;
+			if (!value)
+				return;
+			field = value;
+			field = false;
+			_health = new() { BaseValue = 100 };
+			_maxHealth = new() { BaseValue = 100 };
+			_moveSpeed = new() { BaseValue = 600 };
+			_defense = new();
+			_criticalChance = new();
+			_pickupRangeRadius = new();
+			_healthRegenPerSecond = new();
+			_invincibilityTime = new() { BaseValue = 0.5f };
+			_hitboxRadius = new() { BaseValue = 42f };
+			_moveSpeedMultiplier = new();
+			_incomingDamageMultiplier = new();
+			_outgoingDamageMultiplier = new();
+			_criticalChanceMultiplier = new();
+			_criticalDamageMultiplier = new();
+			_attackSpeedMultiplier = new();
+			_bloomMultiplier = new();
+			_recoilMultiplier = new();
+			_xpMultiplier = new();
 		}
 	}
+
+	public int Health => _health.Value;
 
 	public int MaxHealth => _maxHealth.Value;
 
@@ -114,6 +137,6 @@ public partial class CharacterStats : Resource
 		var clampedDamage = Math.Clamp(scaledDamage, 1, float.PositiveInfinity);
 		var totalDamage = Mathf.CeilToInt(clampedDamage);
 
-		_health -= totalDamage;
+		_health.BaseValue -= totalDamage;
 	}
 }

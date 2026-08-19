@@ -1,7 +1,7 @@
 namespace Game.Players;
 
 [GlobalClass]
-public partial class Character : Resource
+public partial class Character : Node
 {
 	[Export]
 	public string CharacterName = "";

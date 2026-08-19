@@ -106,6 +106,7 @@ vertical_alignment = 1
 
 [node name="Gore" type="HSplitContainer" parent="VBoxContainer" unique_id=151415757]
 layout_mode = 2
+tooltip_text = "Determines how many gore particles may exist on-screen."
 split_offsets = PackedInt32Array(160)
 dragging_enabled = false
 dragger_visibility = 1

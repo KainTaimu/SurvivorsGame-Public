@@ -143,8 +143,10 @@ public partial class PlayerStatusEffectController : Node
 				"_xpMultiplier" => CharacterStatType.XpMultiplier,
 				"_bloomMultiplier" => CharacterStatType.BloomMultiplier,
 				"_recoilMultiplier" => CharacterStatType.RecoilMultiplier,
-				_ => throw new ArgumentOutOfRangeException(),
+				_ => CharacterStatType.None,
 			};
+			if (statEnum == CharacterStatType.None)
+				continue;
 
 			try
 			{

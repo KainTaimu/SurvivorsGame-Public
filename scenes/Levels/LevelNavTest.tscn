@@ -16,10 +16,6 @@
 [ext_resource type="Script" uid="uid://bhhh8235y54bg" path="res://src/Levels/Controllers/WaveDebugStopper.cs" id="10_chdw3"]
 [ext_resource type="Script" uid="uid://daw8gyvo0xom3" path="res://src/UI/FrameTime.cs" id="12_2ki1j"]
 [ext_resource type="LabelSettings" uid="uid://cu65p2lbgxmhg" path="res://scenes/UI/WeaponCarouselLabelSettings.tres" id="14_3bukj"]
-[ext_resource type="Script" uid="uid://wsto3khl70md" path="res://src/Models/FloatStat.cs" id="16_f1jhi"]
-[ext_resource type="Script" uid="uid://tfaqh3bcxdha" path="res://src/Models/IntStat.cs" id="17_vwdg1"]
-[ext_resource type="Script" uid="uid://rykv3f6ereih" path="res://src/Players/CharacterStats.cs" id="18_i1qcg"]
-[ext_resource type="Script" uid="uid://ud6xfov0txuh" path="res://src/Players/Character.cs" id="19_e1pfk"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_sx6oq"]
 vertices = PackedVector2Array(5998.1797, 134, -511.84375, -30.34375, 5998.1797, -44, 6296.7266, -44, 6297.203, 134, 7458.758, 3280.3672, 6317.203, 184.57813, 6317.1797, -93.390625, 6732.8906, -2116.3984, 5103.6875, 2105.4922, 1532.5938, 1372.5313, 4962.797, 1174, 5261.8203, 1174, 5645.4766, 2105.4922, 1532.5938, -277.45313, 375.04688, -277.45313, 7133.1563, -7594.5938, 6703.4297, -6044.7266, 3346.0625, -2116.3984, 4942.797, -1033.4219, 1532.5938, -1127.1094, 2804.5703, -2116.3984, 5326.5703, -1084, 6161.9297, -2116.3984, 6261.2188, 2875.1563, 6107.2813, 2762.1094, 4942.797, 1123.4219, 1532.5938, 484.3828, 375.04688, -1127.1094, -511.84375, -1341.7969, -348.34375, -2116.3984, -40.46875, -2578.2031, 5255.2734, -7623.9688, 6161.9297, -6044.7266, -40.46875, -5275.0625, 2775.1016, -6044.7266, 375.04688, 522.8672, 375.04688, 1026.1797, -819.71094, 646.7031, -819.71094, 99.546875, -357.90625, 2762.7422, -357.90625, 1451.2734, 832.03906, 2687.5469, 832.03906, 3691.1484, -819.71094, 1257.0781, 1106.2266, 1122.3906, 1125.4766, 1122.3906, 1125.4766, 1372.5313, -736.0781, 1451.2734, -819.71094, 869.21094, 3872.2188, 2259.4219, 3872.2188, 3765.711, 3826.9297, 4146.3906, 1527.7734, 3691.1484, 1527.7734, 2687.5469, 817.6094, 484.3828, 6161.9297, -5736.867, 6088, -5736.867, 6088, -5886.1094, 3391.1328, -5886.1094, 3391.1328, -5736.867, 3317.2031, -5736.867, 3317.2031, -6044.7266, -348.34375, -5275.0625, -348.34375, -5736.867, -810.1328, -5736.867, -810.1328, -6044.7266, -1967.6563, -6044.7266, -1967.6563, -5429, -3045.2031, -5429, -3615.6328, -7576, -3045.2031, -2424.2734, -1967.6563, -2424.2734, -1967.6563, -2116.3984, -348.34375, -2578.2031, 3346.0625, -2424.2734, 3391.1328, -2424.2734, 3391.1328, -2275.0313, 6088, -2275.0313, 6088, -2424.2734, 6161.9297, -2424.2734, 817.6094, 522.8672, -1823.2969, -30.34375, -1834, 99.546875, 817.6094, 1026.1797, 817.6094, 1045.4219, 1106.2266, 1045.4219, 6107.2813, 2875.1563, 5645.4766, 2762.1094, 5103.6875, 2259.4219, -973.6406, 3686.3438, -973.6406, 2762.7422, 6107.2813, 3765.711, 6107.2813, 3263.0234, 6261.2188, 3263.0234, 7448.453, 4187.539, 6100.328, 4172.2266, 1135.8516, 4115.797, -1823.3125, 3686.3438, -1685.6563, 4083.7422, -3383.1484, 4064.4375, -3391.9219, 1863.6406, -1823.3125, 1759.1406, -1823.2969, 1257.0781, -3394.539, 1208.1406, -3397.8438, 377.65625, -1823.2969, 869.21094, 4660.1094, -2116.3984, 4962.797, -1084, 4819.0234, -2116.3984, -1823.2969, -1341.7969, 4819.0234, -6044.7266, 4664.617, -7576, 4660.1094, -6044.7266, -801.9375, 1685.8125, -1152.4688, 1759.1406, -3404.5938, -1317.0313, -1834, 646.7031)
@@ -217,109 +213,6 @@ script = ExtResource("12_2ki1j")
 FrameName = &"Render"
 metadata/_custom_type_script = "uid://daw8gyvo0xom3"
 
-[sub_resource type="Resource" id="Resource_t84yk"]
-script = ExtResource("16_f1jhi")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_bpnxk"]
-script = ExtResource("16_f1jhi")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_7i0hn"]
-script = ExtResource("16_f1jhi")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_iu54j"]
-script = ExtResource("16_f1jhi")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_nd3y7"]
-script = ExtResource("16_f1jhi")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_1d8ks"]
-script = ExtResource("17_vwdg1")
-metadata/_custom_type_script = "uid://tfaqh3bcxdha"
-
-[sub_resource type="Resource" id="Resource_a0fn7"]
-script = ExtResource("17_vwdg1")
-metadata/_custom_type_script = "uid://tfaqh3bcxdha"
-
-[sub_resource type="Resource" id="Resource_j1i1x"]
-script = ExtResource("16_f1jhi")
-_value = 42.0
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_ofy2w"]
-script = ExtResource("16_f1jhi")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_yvf4j"]
-script = ExtResource("16_f1jhi")
-_value = 0.5
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_8vig4"]
-script = ExtResource("17_vwdg1")
-_value = 999999999
-metadata/_custom_type_script = "uid://tfaqh3bcxdha"
-
-[sub_resource type="Resource" id="Resource_cv8r4"]
-script = ExtResource("16_f1jhi")
-_value = 310.0
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_uawkc"]
-script = ExtResource("16_f1jhi")
-_value = 2.0
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_l68un"]
-script = ExtResource("16_f1jhi")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_ya27f"]
-script = ExtResource("16_f1jhi")
-_value = 100.0
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_qoswm"]
-script = ExtResource("16_f1jhi")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_ygwx1"]
-script = ExtResource("16_f1jhi")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_jodo0"]
-resource_local_to_scene = true
-script = ExtResource("18_i1qcg")
-_maxHealth = SubResource("Resource_8vig4")
-_moveSpeed = SubResource("Resource_cv8r4")
-_defense = SubResource("Resource_1d8ks")
-_criticalChance = SubResource("Resource_7i0hn")
-_pickupRangeRadius = SubResource("Resource_ya27f")
-_healthRegenPerSecond = SubResource("Resource_a0fn7")
-_invincibilityTime = SubResource("Resource_yvf4j")
-_hitboxRadius = SubResource("Resource_j1i1x")
-_moveSpeedMultiplier = SubResource("Resource_uawkc")
-_incomingDamageMultiplier = SubResource("Resource_ofy2w")
-_outgoingDamageMultiplier = SubResource("Resource_l68un")
-_criticalChanceMultiplier = SubResource("Resource_iu54j")
-_criticalDamageMultiplier = SubResource("Resource_nd3y7")
-_attackSpeedMultiplier = SubResource("Resource_t84yk")
-_bloomMultiplier = SubResource("Resource_bpnxk")
-_recoilMultiplier = SubResource("Resource_qoswm")
-_xpMultiplier = SubResource("Resource_ygwx1")
-metadata/_custom_type_script = "uid://rykv3f6ereih"
-
-[sub_resource type="Resource" id="Resource_r2c2u"]
-resource_local_to_scene = true
-script = ExtResource("19_e1pfk")
-CharacterName = "DEV"
-CharacterStats = SubResource("Resource_jodo0")
-metadata/_custom_type_script = "uid://ud6xfov0txuh"
-
 [sub_resource type="GDScript" id="GDScript_3bukj"]
 script/source = "extends Node2D
 
@@ -489,7 +382,6 @@ FrameTime = SubResource("Resource_wavsu")
 
 [node name="Player" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="4" unique_id=1386970244 instance=ExtResource("3_5s0iy")]
 position = Vector2(0, 8)
-Character = SubResource("Resource_r2c2u")
 metadata/_edit_lock_ = true
 
 [node name="PerformanceMonitor" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="3" unique_id=1872396024 node_paths=PackedStringArray("Targets")]

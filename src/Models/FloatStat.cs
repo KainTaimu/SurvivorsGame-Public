@@ -4,12 +4,12 @@ namespace Game.Models;
 public partial class FloatStat : AbstractStat
 {
 	[Export]
-	private float _value = 1f;
+	public float BaseValue = 1f;
 
-	public float Value => (_value + GetFlatSum()) * GetMultipliersSum();
+	public float Value => (BaseValue + GetFlatSum()) * GetMultipliersSum();
 
 	public override string ToString()
 	{
-		return $"{Value} ({_value} + {GetFlatSum():F2} * {GetMultipliersSum():F2})";
+		return $"{Value} ({BaseValue} + {GetFlatSum():F2} * {GetMultipliersSum():F2})";
 	}
 }

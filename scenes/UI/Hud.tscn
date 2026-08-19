@@ -1,32 +1,41 @@
 [gd_scene format=3 uid="uid://do6p1pg4x0vkf"]
 
-[ext_resource type="Script" uid="uid://bgqngsa7la7p1" path="res://src/UI/Hud.cs" id="1_47idg"]
 [ext_resource type="LabelSettings" uid="uid://cu65p2lbgxmhg" path="res://scenes/UI/WeaponCarouselLabelSettings.tres" id="2_bplp6"]
 
-[node name="HUD" type="CanvasLayer" unique_id=1626912566 node_paths=PackedStringArray("_playerHealthLabel", "_enemyCountLabel", "_moneyLabel")]
-script = ExtResource("1_47idg")
-_playerHealthLabel = NodePath("VBoxContainer/Label")
-_enemyCountLabel = NodePath("VBoxContainer/Label2")
-_moneyLabel = NodePath("Label")
+[sub_resource type="GDScript" id="GDScript_bplp6"]
+script/source = "extends CanvasLayer
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1180246057]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+@onready var playerStats: CharacterStatsAccessor = CharacterStatsAccessor.new()
+
+@export var healthBar: ProgressBar
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta: float) -> void:
+	healthBar.value = playerStats.Health / float(playerStats.MaxHealth)
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bplp6"]
+bg_color = Color(0, 1, 0, 1)
+
+[node name="HUD" type="CanvasLayer" unique_id=1626912566 node_paths=PackedStringArray("healthBar")]
+script = SubResource("GDScript_bplp6")
+healthBar = NodePath("PanelContainer/VBoxContainer/ProgressBar")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=966337729]
+offset_right = 576.0
+offset_bottom = 4.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1180246057]
+layout_mode = 2
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="VBoxContainer" unique_id=37998141]
+[node name="ProgressBar" type="ProgressBar" parent="PanelContainer/VBoxContainer" unique_id=464323161]
 layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-text = "Health"
-label_settings = ExtResource("2_bplp6")
-
-[node name="Label2" type="Label" parent="VBoxContainer" unique_id=432544888]
-layout_mode = 2
-text = "Enemies"
-label_settings = ExtResource("2_bplp6")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bplp6")
+max_value = 1.0
+value = 1.0
+show_percentage = false
 
 [node name="Label" type="Label" parent="." unique_id=1360731784]
 anchors_preset = 5

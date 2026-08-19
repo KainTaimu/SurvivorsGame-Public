@@ -3,12 +3,18 @@ using System.Linq;
 
 namespace Game.Models;
 
+[Tool]
 [GlobalClass]
 public abstract partial class AbstractStat : Resource
 {
 	public readonly List<float> Multipliers = [];
 
 	public readonly List<float> Flat = [];
+
+	protected AbstractStat()
+	{
+		ResourceLocalToScene = true;
+	}
 
 	public float GetMultipliersSum()
 	{

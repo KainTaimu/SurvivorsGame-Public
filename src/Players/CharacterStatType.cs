@@ -2,6 +2,7 @@ namespace Game.Players;
 
 public enum CharacterStatType
 {
+	None,
 	Health,
 	MaxHealth,
 	MoveSpeed,

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bix8bkfo5pwko"]
 
 [ext_resource type="Script" uid="uid://cb48sxavv5g3k" path="res://src/Players/Player.cs" id="1_f0mf6"]
+[ext_resource type="PackedScene" uid="uid://cw0jthbyjhm45" path="res://scenes/Players/Character.tscn" id="2_ragxt"]
 [ext_resource type="Texture2D" uid="uid://d20hfinyt8lgx" path="res://assets/Lighting/cone_e_blur_noise.png" id="4_eai52"]
 [ext_resource type="Script" uid="uid://cn5rlmdgj2uue" path="res://src/Players/Controllers/PlayerMovementController.cs" id="4_kfojw"]
 [ext_resource type="Script" uid="uid://jk25jpibrbm3" path="res://src/Players/Controllers/LookLight.cs" id="5_oypsu"]
@@ -100,13 +101,17 @@ height = 1024
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="Player" type="Node2D" unique_id=1386970244 node_paths=PackedStringArray("MovementController", "StatusEffectController")]
+[node name="Player" type="Node2D" unique_id=1386970244 node_paths=PackedStringArray("Character", "MovementController", "StatusEffectController")]
 top_level = true
 z_index = 32
 z_as_relative = false
 script = ExtResource("1_f0mf6")
+Character = NodePath("Character")
 MovementController = NodePath("PlayerMovementController")
 StatusEffectController = NodePath("PlayerStatusEffectController")
+
+[node name="Character" parent="." unique_id=527218927 node_paths=PackedStringArray("CharacterStats") instance=ExtResource("2_ragxt")]
+CharacterStats = NodePath("")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=881638213]
 material = SubResource("ShaderMaterial_5pqvm")
