@@ -16,7 +16,7 @@ metadata/_custom_type_script = "uid://dpq42sefws67v"
 
 [sub_resource type="Resource" id="Resource_1j5om"]
 script = ExtResource("2_oxxwr")
-StatName = 2
+StatName = 3
 Operation = 1
 Value = 0.5
 metadata/_custom_type_script = "uid://d31d8uns5faa5"
@@ -36,7 +36,7 @@ _limits = [0.0, 0.5, 0.0, 3.0]
 _data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(3, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nihe0"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_43i55"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_y2vvo"]

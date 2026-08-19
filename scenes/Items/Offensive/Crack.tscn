@@ -6,12 +6,12 @@
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="4_scyru"]
 [ext_resource type="Script" uid="uid://os8ycjo6m7r0" path="res://src/Items/Offensive/BaseOffensiveStats.cs" id="5_3hjt2"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_43i55"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_y52bq"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_qh10d"]
 script = ExtResource("2_u1i3f")
-StatName = 9
+StatName = 3
 Operation = 1
 Value = 3.0
 metadata/_custom_type_script = "uid://d31d8uns5faa5"
@@ -29,7 +29,7 @@ size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_vujg4"]
 script = ExtResource("2_u1i3f")
-StatName = 9
+StatName = 3
 Operation = 1
 Value = 3.0
 metadata/_custom_type_script = "uid://d31d8uns5faa5"
@@ -43,7 +43,7 @@ Icon = SubResource("PlaceholderTexture2D_agk5e")
 Modifiers = Array[ExtResource("2_u1i3f")]([SubResource("Resource_vujg4")])
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nihe0"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_43i55"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_mre4m"]

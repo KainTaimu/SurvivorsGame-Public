@@ -6,44 +6,58 @@
 script/source = "extends CanvasLayer
 
 @onready var playerStats: CharacterStatsAccessor = CharacterStatsAccessor.new()
+@onready var wave_controller: EnemyWaveControllerAccessor = EnemyWaveControllerAccessor.new()
 
 @export var healthBar: ProgressBar
-
+@export var moneyLabel: Label
+@export var enemies_alive_label: Label
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	healthBar.value = playerStats.Health / float(playerStats.MaxHealth)
+	moneyLabel.text = \"$%s\" % str(GameWorldInstance.LevelData.Money)
+	enemies_alive_label.text = \"Enemies: %s\" % wave_controller.AliveEnemies
 "
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y52bq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bplp6"]
 bg_color = Color(0, 1, 0, 1)
 
-[node name="HUD" type="CanvasLayer" unique_id=1626912566 node_paths=PackedStringArray("healthBar")]
+[node name="HUD" type="CanvasLayer" unique_id=1626912566 node_paths=PackedStringArray("healthBar", "moneyLabel", "enemies_alive_label")]
 script = SubResource("GDScript_bplp6")
-healthBar = NodePath("PanelContainer/VBoxContainer/ProgressBar")
+healthBar = NodePath("MarginContainer/PanelContainer/VBoxContainer/ProgressBar")
+moneyLabel = NodePath("MarginContainer/PanelContainer/VBoxContainer/Label")
+enemies_alive_label = NodePath("MarginContainer/PanelContainer/VBoxContainer/Label2")
 
-[node name="PanelContainer" type="PanelContainer" parent="." unique_id=966337729]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=116692494]
 offset_right = 576.0
-offset_bottom = 4.0
+offset_bottom = 216.0
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1180246057]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=966337729]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_y52bq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer" unique_id=1180246057]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="ProgressBar" type="ProgressBar" parent="PanelContainer/VBoxContainer" unique_id=464323161]
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=464323161]
+custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_bplp6")
 max_value = 1.0
 value = 1.0
 show_percentage = false
 
-[node name="Label" type="Label" parent="." unique_id=1360731784]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 19.0
-grow_horizontal = 2
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1360731784]
+layout_mode = 2
 text = "$null"
+label_settings = ExtResource("2_bplp6")
+
+[node name="Label2" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=649557123]
+layout_mode = 2
+text = "Enemies"
 label_settings = ExtResource("2_bplp6")

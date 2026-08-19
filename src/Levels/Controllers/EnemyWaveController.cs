@@ -6,12 +6,6 @@ using Godot.Collections;
 namespace Game.Levels.Controllers;
 
 [GlobalClass]
-public partial class EnemyWaveControllerAccessor : RefCounted
-{
-	private static EnemyWaveController? WaveController => EnemyWaveController.Instance;
-}
-
-[GlobalClass]
 public partial class EnemyWaveController : Node
 {
 	[Export]

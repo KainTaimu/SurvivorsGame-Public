@@ -1,12 +1,10 @@
 namespace Game.Levels.Controllers;
 
+[GlobalClass]
 public partial class LevelData : Node
 {
 	[Signal]
 	public delegate void OnMoneyChangedEventHandler(int delta);
-
-	[Export]
-	public bool IsNightMode;
 
 	public int Money
 	{
@@ -24,5 +22,6 @@ public partial class LevelData : Node
 	public override void _Ready()
 	{
 		Instance = this;
+		GameWorldInstance.Instance.LevelData = this;
 	}
 }

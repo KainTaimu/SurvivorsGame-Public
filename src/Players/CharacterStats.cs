@@ -6,7 +6,6 @@ namespace Game.Players;
 /// Removing or adding fields requires changing CharacterStatType, and the switch inside
 /// PlayerStatusEffectController.InitializeStatStacks
 /// </summary>
-[Tool]
 public partial class CharacterStats : Node
 {
 	[Export]
@@ -63,38 +62,6 @@ public partial class CharacterStats : Node
 
 	[Export]
 	private FloatStat _xpMultiplier = null!;
-
-	[ExportGroup("Internal")]
-	[Export]
-	private bool PopulateStats
-	{
-		get;
-		set
-		{
-			if (!value)
-				return;
-			field = value;
-			field = false;
-			_health = new() { BaseValue = 100 };
-			_maxHealth = new() { BaseValue = 100 };
-			_moveSpeed = new() { BaseValue = 600 };
-			_defense = new();
-			_criticalChance = new();
-			_pickupRangeRadius = new();
-			_healthRegenPerSecond = new();
-			_invincibilityTime = new() { BaseValue = 0.5f };
-			_hitboxRadius = new() { BaseValue = 42f };
-			_moveSpeedMultiplier = new();
-			_incomingDamageMultiplier = new();
-			_outgoingDamageMultiplier = new();
-			_criticalChanceMultiplier = new();
-			_criticalDamageMultiplier = new();
-			_attackSpeedMultiplier = new();
-			_bloomMultiplier = new();
-			_recoilMultiplier = new();
-			_xpMultiplier = new();
-		}
-	}
 
 	public int Health => _health.Value;
 
