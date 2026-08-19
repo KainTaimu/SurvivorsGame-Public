@@ -115,7 +115,7 @@ metadata/_custom_type_script = "uid://d2tvxgxbv87i2"
 
 [sub_resource type="Resource" id="Resource_wbp0e"]
 script = ExtResource("9_4ljo6")
-SpawnCountTarget = 3000
+SpawnCountTarget = 1000
 EnemyBlueprints = SubResource("Resource_uo14t")
 SpawnMinTime = 0.04
 SpawnMaxTime = 0.1
@@ -353,7 +353,7 @@ position = Vector2(-7031, 0)
 navigation_polygon = SubResource("NavigationPolygon_sx6oq")
 script = ExtResource("2_sx6oq")
 GridSize = 200
-RangeFactor = 4.0
+RangeFactor = 6.0
 
 [node name="Node2D3" type="Node2D" parent="World/NavMap" index="0" unique_id=407369146]
 position = Vector2(-1918, -760)
@@ -464,9 +464,6 @@ polygon = PackedVector2Array(9797, -3367, 9925, 473, 6341, 537, 6144, 512, 6144,
 [node name="GameWorld" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="0" unique_id=562045734 node_paths=PackedStringArray("MainPlayer")]
 MainPlayer = NodePath("../Player")
 
-[node name="EntityCommandBuffer" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="1" unique_id=1054883400]
-process_priority = 2147483647
-
 [node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=2001503768]
 Waves = Array[Object]([SubResource("Resource_wbp0e"), SubResource("Resource_4ljo6"), SubResource("Resource_uj3cf")])
 
@@ -490,7 +487,7 @@ nav_map = NodePath("../../../World/NavMap")
 physics_interpolation_mode = 1
 FrameTime = SubResource("Resource_wavsu")
 
-[node name="Player" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="5" unique_id=1386970244 instance=ExtResource("3_5s0iy")]
+[node name="Player" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="4" unique_id=1386970244 instance=ExtResource("3_5s0iy")]
 position = Vector2(0, 8)
 Character = SubResource("Resource_r2c2u")
 metadata/_edit_lock_ = true

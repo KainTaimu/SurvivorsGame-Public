@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Arch.Core;
+using Arch.Core.Events;
 using Arch.System;
 using Arch.System.SourceGenerator;
 using CommunityToolkit.HighPerformance;
@@ -121,6 +122,8 @@ public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
 
 				foreach (var entity in _grid.GetEnumerator(cell.X, cell.Y))
 				{
+					if (!GameWorld.World.IsAlive(entity))
+						continue;
 					if (CircleHitTest(areaCenter, areaRadius, entity))
 						targets.Add(entity);
 				}
@@ -138,7 +141,12 @@ public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
 			for (var y = 0; y < _grid.Dimensions.Y; y++)
 			{
 				foreach (var entity in _grid.GetEnumerator(x, y))
+				{
+					if (!GameWorld.World.IsAlive(entity))
+						continue;
+
 					yield return entity;
+				}
 			}
 		}
 	}

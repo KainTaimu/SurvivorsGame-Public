@@ -13,8 +13,8 @@ build_linux() {
 
 build_windows() {
     godot-mono --path ${SCRIPT_DIR}/ --export-release Windows ${SCRIPT_DIR}/exports/windows/windows.exe --headless
-    (cd ${SCRIPT_DIR}/exports/ && 7z a -mx9 windows.zip windows/)
-    ARTIFACTS+=(${SCRIPT_DIR}/exports/windows.zip)
+    (cd ${SCRIPT_DIR}/exports/ && 7z a -mx9 windows.7z windows/)
+    ARTIFACTS+=(${SCRIPT_DIR}/exports/windows.7z)
 }
 
 ARTIFACTS=()

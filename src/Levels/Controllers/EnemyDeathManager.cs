@@ -18,18 +18,19 @@ public partial class EnemyDeathManager : Node
 
 	private readonly ConcurrentQueue<Entity> _pendingDeaths = [];
 
+	private readonly EntityDeletionBuffer _deletionBuffer = new();
+
 	public override void _Process(double delta)
 	{
-		var commands = new CommandBuffer();
-		UpdateNewDeathsQuery(GameWorld.World, commands);
-		UpdateDyingQuery(GameWorld.World, _pendingDeaths, (float)delta);
+		UpdateNewDeathsQuery(GameWorld.World);
+		UpdateDyingQuery(GameWorld.World, (float)delta);
 
 		while (_pendingDeaths.TryDequeue(out var entity))
-			commands.Destroy(entity);
-
-		if (commands.Size == 0)
-			return;
-		EntityCommandBuffer.Instance.PushCommand(commands);
+		{
+			if (!GameWorld.World.IsAlive(entity))
+				continue;
+			GameWorld.World.Destroy(entity);
+		}
 	}
 
 	[Query]
@@ -37,25 +38,25 @@ public partial class EnemyDeathManager : Node
 	[None<DyingMarkerComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	[SuppressMessage("ReSharper", "ConditionalAccessQualifierIsNonNullableAccordingToAPIContract")]
-	private void UpdateNewDeaths([Data] in CommandBuffer commandBuffer, Entity entity, ref HealthComponent health)
+	private void UpdateNewDeaths(Entity entity, ref HealthComponent health)
 	{
 		if (health.Health > 0)
 			return;
 		if (!GameWorld.World.IsAlive(entity))
 			return;
 
-		commandBuffer.Add(entity, DyingMarkerComponent.Default);
+		GameWorld.World.Add(entity, DyingMarkerComponent.Default);
 
 		if (GameWorld.World.TryGet<DeathRewardComponent>(entity, out var reward))
 			LevelData.Instance?.Money += reward.Money;
+
 		EmitSignalOnEnemyDeath(new EntityObject(entity));
 	}
 
-	[Query(Parallel = true)]
+	[Query]
 	[All<DyingMarkerComponent, PositionComponent, VelocityComponent, AnimatedSpriteComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private static void UpdateDying(
-		[Data] in ConcurrentQueue<Entity> pendingDeaths,
+	private void UpdateDying(
 		[Data] in float delta,
 		Entity entity,
 		ref DyingMarkerComponent dying,
@@ -66,7 +67,7 @@ public partial class EnemyDeathManager : Node
 	{
 		if (dying.TimeLeftUntilDestroy <= 0)
 		{
-			pendingDeaths.Enqueue(entity);
+			_pendingDeaths.Enqueue(entity);
 			return;
 		}
 

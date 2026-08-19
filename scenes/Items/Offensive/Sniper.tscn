@@ -22,7 +22,7 @@ metadata/_custom_type_script = "uid://dnodsacrptssb"
 script = ExtResource("4_11blq")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nihe0"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ia1h2"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_iky5m"]
@@ -33,7 +33,7 @@ metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_f52b2"]
 script = ExtResource("4_u7hyr")
-ReloadTime = 4.0
+ReloadTime = 2.5
 MagazineCapacity = 5
 HorizontalRecoilMin = 20.0
 HorizontalBaseRecoil = 20.0
@@ -49,7 +49,7 @@ BaseCritChanceProportion = 1.0
 BaseProjectileSpeed = 10000
 BaseProjectileScaleMultiplier = 1.5
 BaseProjectileRadius = 64
-BaseAttackSpeed = 2.2
+BaseAttackSpeed = 1.0
 BasePierceLimit = 9999
 Additional = Dictionary[String, Variant]({
 "MoveBloomMaxDeg": 50.0,
@@ -98,7 +98,6 @@ volume_db = 5.0
 stream = ExtResource("11_ia1h2")
 volume_db = 5.0
 
-[connection signal="BoltOpened" from="." to="SpentCasingEmitter" method="spawn_casing"]
 [connection signal="OnAttack" from="." to="Shoot" method="play"]
 [connection signal="OnReloadEnd" from="." to="308BoltCycleClose" method="play"]
 [connection signal="OnReloadStart" from="." to="308BoltCycleOpen" method="play"]
