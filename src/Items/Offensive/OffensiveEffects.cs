@@ -49,7 +49,8 @@ public static class OffensiveEffects
 				return GD.RandRange(-1, 1);
 			}
 
-			var shake = new Vector2(Rand(), Rand()) * GD.RandRange(4, 9) * shakeAmount;
+			var shake =
+				new Vector2(Rand(), Rand()) * GD.RandRange(4, 9) * shakeAmount * GameSettings.Instance.CameraShakeScale;
 
 			tween.TweenProperty(camera, "offset", camera.Position + shake, 1 / 30f);
 		}
