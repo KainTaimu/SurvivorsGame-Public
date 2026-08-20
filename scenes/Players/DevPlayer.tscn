@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://tfaqh3bcxdha" path="res://src/Models/IntStat.cs" id="3_y52bq"]
 [ext_resource type="Script" uid="uid://wsto3khl70md" path="res://src/Models/FloatStat.cs" id="4_qh10d"]
 [ext_resource type="PackedScene" uid="uid://b6pcia1iql0ct" path="res://scenes/Items/Offensive/Ak47.tscn" id="5_klnc8"]
+[ext_resource type="Shader" uid="uid://bgl0yr4nfmpqx" path="res://src/Shaders/flash.gdshader" id="5_t84yk"]
 [ext_resource type="PackedScene" uid="uid://okgy2hpbgy53" path="res://scenes/Items/Offensive/Blick.tscn" id="6_comn3"]
 [ext_resource type="Script" uid="uid://bpqjji00j8p6x" path="res://src/Levels/Controllers/PlayerHitController.cs" id="6_klnc8"]
 [ext_resource type="PackedScene" uid="uid://c24ayslleke42" path="res://scenes/Items/Offensive/M249.tscn" id="6_mre4m"]
@@ -20,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://cr8xg1q8q5j48" path="res://scenes/Items/Offensive/Crack.tscn" id="14_y52bq"]
 [ext_resource type="PackedScene" uid="uid://ceimmtu3q4x6n" path="res://scenes/Items/Offensive/GrenadeThrower.tscn" id="15_vsrt8"]
 [ext_resource type="PackedScene" uid="uid://bv8olcpvea07v" path="res://scenes/Items/Offensive/GrenadeLauncher.tscn" id="19_agk5e"]
+[ext_resource type="Shader" uid="uid://bg3me0bhc4em2" path="res://src/Shaders/vignette.gdshader" id="21_vujg4"]
 
 [sub_resource type="Resource" id="Resource_klnc8"]
 resource_local_to_scene = true
@@ -118,6 +120,12 @@ metadata/_custom_type_script = "uid://wsto3khl70md"
 resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bpnxk"]
+resource_local_to_scene = true
+shader = ExtResource("5_t84yk")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/flash_state = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2g2d6"]
 atlas = ExtResource("6_y52bq")
@@ -219,7 +227,7 @@ func _process(_delta: float) -> void:
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahqxl"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vsrt8"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_7i0hn"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_agk5e"]
@@ -236,13 +244,45 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 script = ExtResource("12_a0fn7")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
+[sub_resource type="GDScript" id="GDScript_t84yk"]
+script/source = "extends CanvasLayer
+
+@export var max_alpha: float = 0.12
+@export var flash_duration: float = 0.4
+
+var tween: Tween
+
+@onready var vignette_rect: ColorRect = $ColorRect
+
+
+func on_player_on_damaged() -> void:
+	if tween != null:
+		tween.kill()
+
+	tween = create_tween()
+	tween.tween_method(_set_vignette_alpha, max_alpha, 0, flash_duration)
+
+
+func _set_vignette_alpha(value: float):
+	var shader := vignette_rect.material as ShaderMaterial
+	shader.set_shader_parameter(\"alpha\", value)
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_do71q"]
+resource_local_to_scene = true
+shader = ExtResource("21_vujg4")
+shader_parameter/tint = Color(0.33618236, 2.6171097e-07, 1.2032687e-07, 1)
+shader_parameter/alpha = 0.0
+shader_parameter/inner_radius = 0.0
+shader_parameter/outer_radius = 1.0
+
 [node name="Player" unique_id=1386970244 node_paths=PackedStringArray("WeaponController") instance=ExtResource("1_rmun4")]
 WeaponController = NodePath("PlayerWeaponController")
 
 [node name="Character" parent="." index="0" unique_id=527218927 node_paths=PackedStringArray("CharacterStats")]
 CharacterStats = NodePath("CharacterStats")
 
-[node name="CharacterStats" type="Node" parent="Character" index="0" unique_id=822145143]
+[node name="CharacterStats" type="Node" parent="Character" index="0" unique_id=822145143 node_paths=PackedStringArray("_player")]
 script = ExtResource("2_qh10d")
 _health = SubResource("Resource_klnc8")
 _maxHealth = SubResource("Resource_mre4m")
@@ -262,8 +302,10 @@ _bloomScale = SubResource("Resource_bloom")
 _recoilScale = SubResource("Resource_recoil")
 _incomingDamage = SubResource("Resource_incomingDamage")
 _outgoingDamage = SubResource("Resource_outgoingDamage")
+_player = NodePath("../..")
 
 [node name="AnimatedSprite2D" parent="." index="1" unique_id=881638213]
+material = SubResource("ShaderMaterial_bpnxk")
 sprite_frames = SubResource("SpriteFrames_vujg4")
 animation = &"idle"
 
@@ -352,3 +394,16 @@ _projectileAttack = SubResource("Resource_7i0hn")
 
 [node name="CurrentWeaponUI" parent="." index="10" unique_id=2135368036 node_paths=PackedStringArray("_weaponController")]
 _weaponController = NodePath("../PlayerWeaponController")
+
+[node name="DamageVignette" type="CanvasLayer" parent="." index="12" unique_id=1915785476]
+script = SubResource("GDScript_t84yk")
+
+[node name="ColorRect" type="ColorRect" parent="DamageVignette" index="0" unique_id=1585437845]
+material = SubResource("ShaderMaterial_do71q")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="OnDamaged" from="." to="DamageVignette" method="on_player_on_damaged" unbinds=1]

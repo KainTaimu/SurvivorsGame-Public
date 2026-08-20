@@ -14,6 +14,9 @@ public partial class PlayerMovementController : Node2D
 	private Player _player = null!;
 
 	[Export]
+	private GpuParticles2D? _sprintParticles;
+
+	[Export]
 	private AnimatedSprite2D _sprite = null!;
 
 	public Vector2 Velocity;
@@ -37,7 +40,7 @@ public partial class PlayerMovementController : Node2D
 	{
 		Velocity = Vector2.Zero;
 		PlayerMovement(delta);
-		if (!_isSprinting)
+		if (!Input.IsActionPressed(InputMapNames.Sprint) || Velocity.LengthSquared() <= 0)
 		{
 			if (_exhaustion > 0)
 			{
@@ -74,14 +77,15 @@ public partial class PlayerMovementController : Node2D
 
 		var move = new Vector2(inputX * CharacterStats.MoveSpeed, inputY * CharacterStats.MoveSpeed);
 
-		_isSprinting = Input.IsActionPressed(InputMapNames.Sprint);
+		_isSprinting = Input.IsActionPressed(InputMapNames.Sprint) && CharacterStats.Stamina > 0;
 
-		if (_isSprinting && CharacterStats.Stamina > 0)
+		if (_isSprinting)
 		{
 			move *= Mathf.Max(1, CharacterStats.RunSpeed);
 			CharacterStats.Stamina -= (float)delta;
 			_exhaustion = ExhaustionTime;
 		}
+		_sprintParticles?.Emitting = _isSprinting;
 
 		Velocity = move;
 		move *= (float)delta;

@@ -62,6 +62,9 @@ public abstract partial class AbstractWave : Resource, IEnemyWave
 	[Export]
 	public int SpawnBatchMax = 1;
 
+	[Export]
+	public Curve? SpawnBatchCurveOverMaxTime;
+
 	public HashSet<Entity> SpawnedEntities => WaveController.SpawnedEntities;
 
 	public double LastSpawnTime;

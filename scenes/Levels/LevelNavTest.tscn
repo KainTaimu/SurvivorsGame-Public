@@ -15,7 +15,6 @@
 [ext_resource type="Script" uid="uid://cksmwvaxx1m18" path="res://src/Levels/Controllers/WaveSpawnCount.cs" id="9_4ljo6"]
 [ext_resource type="Script" uid="uid://bhhh8235y54bg" path="res://src/Levels/Controllers/WaveDebugStopper.cs" id="10_chdw3"]
 [ext_resource type="Script" uid="uid://daw8gyvo0xom3" path="res://src/UI/FrameTime.cs" id="12_2ki1j"]
-[ext_resource type="PackedScene" uid="uid://dyh06qakgf4q2" path="res://scenes/Players/DebugClassInspector.tscn" id="12_h7ouo"]
 [ext_resource type="LabelSettings" uid="uid://cu65p2lbgxmhg" path="res://scenes/UI/WeaponCarouselLabelSettings.tres" id="14_3bukj"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_sx6oq"]
@@ -89,19 +88,24 @@ script = ExtResource("5_lkbse")
 Weights = Array[Object]([SubResource("Resource_trh12"), SubResource("Resource_yysbr")])
 metadata/_custom_type_script = "uid://d2tvxgxbv87i2"
 
-[sub_resource type="Curve" id="Curve_chdw3"]
-_data = [Vector2(0, 1), 0.0, -0.90422714, 0, 1, Vector2(1, 0.09577286), -0.90422714, 0.0, 1, 0]
+[sub_resource type="Curve" id="Curve_h7ouo"]
+_data = [Vector2(0.74734634, 0), 0.0, 99864.38, 0, 1, Vector2(0.74735636, 1), 99864.38, 0.0, 1, 0]
 point_count = 2
+
+[sub_resource type="Curve" id="Curve_chdw3"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 1, Vector2(0.7484743, 1), 0.0, -3.9757369, 1, 1, Vector2(1, 0), -3.9757369, 0.0, 1, 0]
+point_count = 3
 
 [sub_resource type="Resource" id="Resource_4ljo6"]
 script = ExtResource("5_chdw3")
-Duration = 75.0
+Duration = 120.0
 MaxMobs = 16384
 EnemyBlueprints = SubResource("Resource_fxwke")
 SpawnMinTime = 0.1
 SpawnMaxTime = 0.6
 SpawnTimeCurveOverMaxTime = SubResource("Curve_chdw3")
-SpawnBatchMax = 2
+SpawnBatchMax = 4
+SpawnBatchCurveOverMaxTime = SubResource("Curve_h7ouo")
 metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 
 [sub_resource type="Resource" id="Resource_uj3cf"]
@@ -345,9 +349,6 @@ MainPlayer = NodePath("../Player")
 
 [node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=2001503768]
 Waves = Array[Object]([SubResource("Resource_4ljo6"), SubResource("Resource_uj3cf"), SubResource("Resource_wbp0e")])
-
-[node name="DebugClassInspector" parent="Systems/EnemySystems/EnemyWaveController" index="1" unique_id=1989388267 instance=ExtResource("12_h7ouo")]
-BindingFlags = 22
 
 [node name="EnemyTargetQuery" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="1" unique_id=991938994]
 _rangeFactor = 1.2

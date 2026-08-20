@@ -28,7 +28,7 @@ public partial class WaveDuration : AbstractWave, IWaveProgress
 
 		if (SpawnTimeLeft <= 0)
 		{
-			for (var i = 0; i < GD.RandRange(SpawnBatchMin, SpawnBatchMax); i++)
+			for (var i = 0; i < GetRandomSpawnBatchCount(); i++)
 			{
 				SpawnTimeLeft = GetRandomSpawnTime();
 				LastSpawnTime = SpawnTimeLeft;
@@ -82,6 +82,17 @@ public partial class WaveDuration : AbstractWave, IWaveProgress
 				GD.RandRange(SpawnMinTime, SpawnMaxTime * (SpawnTimeCurveOverMaxTime?.Sample(1 - Progress) ?? 1f)),
 				SpawnMinTime,
 				SpawnMaxTime
+			)
+		);
+	}
+
+	private int GetRandomSpawnBatchCount()
+	{
+		return Mathf.CeilToInt(
+			Mathf.Clamp(
+				GD.RandRange(SpawnBatchMin, SpawnBatchMax * (SpawnBatchCurveOverMaxTime?.Sample(1 - Progress) ?? 1f)),
+				SpawnBatchMin,
+				SpawnBatchMax
 			)
 		);
 	}

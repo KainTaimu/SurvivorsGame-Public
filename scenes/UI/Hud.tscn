@@ -9,24 +9,57 @@ script/source = "extends CanvasLayer
 @onready var wave_controller: EnemyWaveControllerAccessor = EnemyWaveControllerAccessor.new()
 
 @export var healthBar: ProgressBar
+@export var healthDamageBar: ProgressBar
 @export var moneyLabel: Label
 @export var enemies_alive_label: Label
+
+var damage_bar_tween: Tween
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	healthBar.value = playerStats.Health / float(playerStats.MaxHealth)
+
+	if damage_bar_tween == null:
+		damage_bar_tween = create_tween()
+		damage_bar_tween.tween_property(healthDamageBar, \"value\", healthBar.value, 0.1).set_ease(
+			Tween.EASE_OUT
+		)
+		damage_bar_tween.tween_callback(_kill_damage_bar_tween)
+
 	moneyLabel.text = \"$%s\" % str(GameWorldInstance.LevelData.Money)
 	enemies_alive_label.text = \"Enemies: %s\" % wave_controller.AliveEnemies
+
+
+func _kill_damage_bar_tween():
+	if damage_bar_tween == null:
+		return
+	damage_bar_tween.kill()
+	damage_bar_tween = null
 "
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y52bq"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_47idg"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.1, 0.1, 0.1, 0.3)
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg4j7"]
+bg_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bplp6"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bplp6"]
 bg_color = Color(0, 1, 0, 1)
 
-[node name="HUD" type="CanvasLayer" unique_id=1626912566 node_paths=PackedStringArray("healthBar", "moneyLabel", "enemies_alive_label")]
+[node name="HUD" type="CanvasLayer" unique_id=1626912566 node_paths=PackedStringArray("healthBar", "healthDamageBar", "moneyLabel", "enemies_alive_label")]
 script = SubResource("GDScript_bplp6")
-healthBar = NodePath("MarginContainer/PanelContainer/VBoxContainer/ProgressBar")
+healthBar = NodePath("MarginContainer/PanelContainer/VBoxContainer/HealthBar")
+healthDamageBar = NodePath("MarginContainer/PanelContainer/VBoxContainer/HealthDamageBar")
 moneyLabel = NodePath("MarginContainer/PanelContainer/VBoxContainer/Label")
 enemies_alive_label = NodePath("MarginContainer/PanelContainer/VBoxContainer/Label2")
 
@@ -44,11 +77,25 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_y52bq")
 layout_mode = 2
 mouse_filter = 2
 
-[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=464323161]
-custom_minimum_size = Vector2(0, 6)
+[node name="HealthDamageBar" type="ProgressBar" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1409059223]
+custom_minimum_size = Vector2(0, 8)
 layout_mode = 2
+offset_transform_enabled = true
+theme_override_styles/background = SubResource("StyleBoxFlat_47idg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bg4j7")
+max_value = 1.0
+value = 1.0
+show_percentage = false
+
+[node name="HealthBar" type="ProgressBar" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=464323161]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, -12)
+theme_override_styles/background = SubResource("StyleBoxEmpty_bplp6")
 theme_override_styles/fill = SubResource("StyleBoxFlat_bplp6")
 max_value = 1.0
+step = 0.001
 value = 1.0
 show_percentage = false
 

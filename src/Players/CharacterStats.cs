@@ -103,6 +103,10 @@ public partial class CharacterStats : Node
 
 	public float OutgoingDamage => _outgoingDamage.Value;
 
+	[ExportCategory("Internal")]
+	[Export]
+	private Player _player = null!;
+
 	public void Damage(int damage)
 	{
 		var damageAfterDefense = damage - Defense;
@@ -111,5 +115,6 @@ public partial class CharacterStats : Node
 		var totalDamage = Mathf.CeilToInt(clampedDamage);
 
 		_health.BaseValue -= totalDamage;
+		_player.EmitSignal(Player.SignalName.OnDamaged, totalDamage);
 	}
 }

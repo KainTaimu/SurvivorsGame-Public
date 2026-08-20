@@ -5,6 +5,9 @@ namespace Game.Players;
 [GlobalClass]
 public partial class Player : Node2D
 {
+	[Signal]
+	public delegate void OnDamagedEventHandler(int damage);
+
 	[Export]
 	public Character Character { get; private set; } = null!;
 

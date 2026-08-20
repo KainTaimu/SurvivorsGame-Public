@@ -101,6 +101,21 @@ height = 1024
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_oypsu"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(8.724, 1, 1)
+angle_min = -179.99998
+angle_max = 180.00002
+inherit_velocity_ratio = 0.35
+angular_velocity_min = -1.6093254e-05
+angular_velocity_max = 593.50995
+gravity = Vector3(0, 0, 0)
+scale_min = 0.19999999
+scale_max = 8.0
+turbulence_enabled = true
+
 [node name="Player" type="Node2D" unique_id=1386970244 node_paths=PackedStringArray("Character", "MovementController", "StatusEffectController")]
 top_level = true
 z_index = 32
@@ -110,8 +125,7 @@ Character = NodePath("Character")
 MovementController = NodePath("PlayerMovementController")
 StatusEffectController = NodePath("PlayerStatusEffectController")
 
-[node name="Character" parent="." unique_id=527218927 node_paths=PackedStringArray("CharacterStats") instance=ExtResource("2_ragxt")]
-CharacterStats = NodePath("")
+[node name="Character" parent="." unique_id=527218927 instance=ExtResource("2_ragxt")]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=881638213]
 material = SubResource("ShaderMaterial_5pqvm")
@@ -157,11 +171,21 @@ script = ExtResource("10_k7ubp")
 script = ExtResource("11_f1vlf")
 Player = NodePath("..")
 
-[node name="PlayerMovementController" type="Node2D" parent="." unique_id=1230632424 node_paths=PackedStringArray("_player", "_sprite")]
+[node name="PlayerMovementController" type="Node2D" parent="." unique_id=1230632424 node_paths=PackedStringArray("_player", "_sprintParticles", "_sprite")]
 script = ExtResource("4_kfojw")
 _player = NodePath("..")
+_sprintParticles = NodePath("GPUParticles2D")
 _sprite = NodePath("../AnimatedSprite2D")
 metadata/_edit_lock_ = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="PlayerMovementController" unique_id=1335985305]
+modulate = Color(0.5982725, 0.5982723, 0.5982725, 1)
+position = Vector2(0, 29)
+emitting = false
+amount = 32
+randomness = 1.0
+fixed_fps = 16
+process_material = SubResource("ParticleProcessMaterial_oypsu")
 
 [node name="PlayerWeaponController" parent="." unique_id=1687061162 instance=ExtResource("12_oypsu")]
 

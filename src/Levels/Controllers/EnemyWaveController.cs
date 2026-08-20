@@ -25,8 +25,6 @@ public partial class EnemyWaveController : Node
 
 	public int Alive => SpawnedEntities.Count;
 
-	public double SpawnTimeLeft => _currentWave?.LastSpawnTime ?? -1;
-
 	private AbstractWave? _currentWave;
 	private int _currentWaveIndex;
 
