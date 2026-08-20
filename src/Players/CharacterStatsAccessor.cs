@@ -32,27 +32,17 @@ public partial class CharacterStatsAccessor : RefCounted
 
 	public float HitboxRadius => Stats.HitboxRadius;
 
-	public float MoveSpeedMultiplier => Stats.MoveSpeedMultiplier;
+	public float CriticalChance => Stats.CriticalChance;
 
-	public float RunSpeedMultiplier => Stats.RunSpeedMultiplier;
+	public float CriticalDamage => Stats.CriticalDamage;
 
-	public float StaminaMultiplier => Stats.StaminaMultiplier;
+	public float AttackSpeed => Stats.AttackSpeed;
 
-	public float MaxStaminaMultiplier => Stats.MaxStaminaMultiplier;
+	public float BloomScale => Stats.BloomScale;
 
-	public float IncomingDamageMultiplier => Stats.IncomingDamageMultiplier;
+	public float RecoilScale => Stats.RecoilScale;
 
-	public float OutgoingDamageMultiplier => Stats.OutgoingDamageMultiplier;
+	public float IncomingDamage => Stats.IncomingDamage;
 
-	public float CriticalChanceMultiplier => Stats.CriticalChanceMultiplier;
-
-	public float CriticalDamageMultiplier => Stats.CriticalDamageMultiplier;
-
-	public float AttackSpeedMultiplier => Stats.AttackSpeedMultiplier;
-
-	public float BloomMultiplier => Stats.BloomMultiplier;
-
-	public float RecoilMultiplier => Stats.RecoilMultiplier;
-
-	public float XpMultiplier => Stats.XpMultiplier;
+	public float OutgoingDamage => Stats.OutgoingDamage;
 }

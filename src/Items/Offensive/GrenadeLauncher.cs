@@ -179,7 +179,7 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 			Mathf.CeilToInt(OffensiveStats.Damage * dropoffScale),
 			CalculateCrit(),
 			OffensiveStats.DamageVarianceMultiplier,
-			PlayerStats.OutgoingDamageMultiplier
+			PlayerStats.OutgoingDamage
 		);
 	}
 

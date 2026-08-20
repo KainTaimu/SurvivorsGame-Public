@@ -80,7 +80,7 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 			Mathf.CeilToInt(OffensiveStats.Damage * dropoffScale),
 			CalculateCrit(),
 			OffensiveStats.DamageVarianceMultiplier,
-			PlayerStats.OutgoingDamageMultiplier
+			PlayerStats.OutgoingDamage
 		);
 	}
 

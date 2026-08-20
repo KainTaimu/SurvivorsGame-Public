@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Godot.Collections;
 
 namespace Game.Models;
 
@@ -7,9 +8,11 @@ namespace Game.Models;
 [GlobalClass]
 public abstract partial class AbstractStat : Resource
 {
-	public readonly List<float> Multipliers = [];
+	[Export]
+	public Array<float> Multipliers = [];
 
-	public readonly List<float> Flat = [];
+	[Export]
+	public Array<float> Flat = [];
 
 	protected AbstractStat()
 	{

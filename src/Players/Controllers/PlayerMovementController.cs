@@ -73,14 +73,13 @@ public partial class PlayerMovementController : Node2D
 			_sprite.Animation = "idle";
 
 		var move =
-			new Vector2(inputX * CharacterStats.MoveSpeed, inputY * CharacterStats.MoveSpeed)
-			* CharacterStats.MoveSpeedMultiplier;
+			new Vector2(inputX * CharacterStats.MoveSpeed, inputY * CharacterStats.MoveSpeed);
 
 		_isSprinting = Input.IsKeyLabelPressed(Key.Shift);
 
 		if (_isSprinting && CharacterStats.Stamina > 0)
 		{
-			move *= Mathf.Max(1, CharacterStats.RunSpeed * CharacterStats.RunSpeedMultiplier);
+			move *= Mathf.Max(1, CharacterStats.RunSpeed);
 			CharacterStats.Stamina -= (float)delta;
 			_exhaustion = ExhaustionTime;
 		}

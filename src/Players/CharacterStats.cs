@@ -45,42 +45,23 @@ public partial class CharacterStats : Node
 	[Export]
 	private FloatStat _hitboxRadius = null!;
 
-	[ExportCategory("Multiplier attributes")]
 	[Export]
-	private FloatStat _moveSpeedMultiplier = null!;
+	private FloatStat _criticalDamage = null!;
 
 	[Export]
-	private FloatStat _runSpeedMultiplier = null!;
+	private FloatStat _attackSpeed = null!;
 
 	[Export]
-	private FloatStat _staminaMultiplier = null!;
+	private FloatStat _bloomScale = null!;
 
 	[Export]
-	private FloatStat _maxStaminaMultiplier = null!;
+	private FloatStat _recoilScale = null!;
 
 	[Export]
-	private FloatStat _incomingDamageMultiplier = null!;
+	private FloatStat _incomingDamage = null!;
 
 	[Export]
-	private FloatStat _outgoingDamageMultiplier = null!;
-
-	[Export]
-	private FloatStat _criticalChanceMultiplier = null!;
-
-	[Export]
-	private FloatStat _criticalDamageMultiplier = null!;
-
-	[Export]
-	private FloatStat _attackSpeedMultiplier = null!;
-
-	[Export]
-	private FloatStat _bloomMultiplier = null!;
-
-	[Export]
-	private FloatStat _recoilMultiplier = null!;
-
-	[Export]
-	private FloatStat _xpMultiplier = null!;
+	private FloatStat _outgoingDamage = null!;
 
 	public int Health => _health.Value;
 
@@ -100,6 +81,8 @@ public partial class CharacterStats : Node
 
 	public int Defense => _defense.Value;
 
+	public float CriticalChance => _criticalChance.Value;
+
 	public float PickupRangeRadius => _pickupRangeRadius.Value;
 
 	public int HealthRegenPerSecond => _healthRegenPerSecond.Value;
@@ -108,34 +91,22 @@ public partial class CharacterStats : Node
 
 	public float HitboxRadius => _hitboxRadius.Value;
 
-	public float MoveSpeedMultiplier => _moveSpeedMultiplier.Value;
+	public float CriticalDamage => _criticalDamage.Value;
 
-	public float RunSpeedMultiplier => _runSpeedMultiplier.Value;
+	public float AttackSpeed => _attackSpeed.Value;
 
-	public float StaminaMultiplier => _staminaMultiplier.Value;
+	public float BloomScale => _bloomScale.Value;
 
-	public float MaxStaminaMultiplier => _maxStaminaMultiplier.Value;
+	public float RecoilScale => _recoilScale.Value;
 
-	public float IncomingDamageMultiplier => _incomingDamageMultiplier.Value;
+	public float IncomingDamage => _incomingDamage.Value;
 
-	public float OutgoingDamageMultiplier => _outgoingDamageMultiplier.Value;
-
-	public float CriticalChanceMultiplier => _criticalChanceMultiplier.Value;
-
-	public float CriticalDamageMultiplier => _criticalDamageMultiplier.Value;
-
-	public float AttackSpeedMultiplier => _attackSpeedMultiplier.Value;
-
-	public float BloomMultiplier => _bloomMultiplier.Value;
-
-	public float RecoilMultiplier => _recoilMultiplier.Value;
-
-	public float XpMultiplier => _xpMultiplier.Value;
+	public float OutgoingDamage => _outgoingDamage.Value;
 
 	public void Damage(int damage)
 	{
 		var damageAfterDefense = damage - Defense;
-		var scaledDamage = damageAfterDefense * IncomingDamageMultiplier;
+		var scaledDamage = damageAfterDefense * IncomingDamage;
 		var clampedDamage = Math.Clamp(scaledDamage, 1, float.PositiveInfinity);
 		var totalDamage = Mathf.CeilToInt(clampedDamage);
 

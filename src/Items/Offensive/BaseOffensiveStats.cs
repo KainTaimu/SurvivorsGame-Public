@@ -109,11 +109,11 @@ public partial class BaseOffensiveStats : BaseItemStats
 	public int Damage => BaseDamage;
 	public float DamageVarianceMultiplier => BaseDamageVarianceMultiplier;
 
-	public float CritDamageMultiplier => BaseCritDamageMultiplier * PlayerStats.CriticalDamageMultiplier;
-	public float CritChanceProportion => BaseCritChanceProportion * PlayerStats.CriticalChanceMultiplier;
+	public float CritDamageMultiplier => BaseCritDamageMultiplier * PlayerStats.CriticalDamage;
+	public float CritChanceProportion => BaseCritChanceProportion * PlayerStats.CriticalChance;
 	public int ProjectileSpeed => BaseProjectileSpeed;
 	public float ProjectileScaleMultiplier => BaseProjectileScaleMultiplier;
 	public int ProjectileRadius => BaseProjectileRadius;
-	public float AttackSpeed => BaseAttackSpeed * PlayerStats.AttackSpeedMultiplier;
+	public float AttackSpeed => BaseAttackSpeed * PlayerStats.AttackSpeed;
 	public int PierceLimit => BasePierceLimit;
 }

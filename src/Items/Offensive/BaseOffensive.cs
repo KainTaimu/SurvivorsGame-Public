@@ -49,7 +49,7 @@ public abstract partial class BaseOffensive : BaseItem
 			OffensiveStats.Damage,
 			CalculateCrit(),
 			OffensiveStats.DamageVarianceMultiplier,
-			PlayerStats.OutgoingDamageMultiplier
+			PlayerStats.OutgoingDamage
 		);
 	}
 

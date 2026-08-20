@@ -32,7 +32,7 @@ public abstract partial class AbstractFirearm : BaseOffensive, IManualAttack
 
 	public string? AttackActionString { get; set; }
 
-	protected float BloomCoefficientDeg => FirearmStats.BloomCoefficientDeg * PlayerStats.BloomMultiplier;
+	protected float BloomCoefficientDeg => FirearmStats.BloomCoefficientDeg * PlayerStats.BloomScale;
 
 	protected float HorizontalRecoilMin => FirearmStats.HorizontalRecoilMin;
 
@@ -46,12 +46,12 @@ public abstract partial class AbstractFirearm : BaseOffensive, IManualAttack
 
 	protected float VerticalRecoilRandom => FirearmStats.VerticalRecoilRandom;
 
-	protected float RecoilScale => FirearmStats.RecoilScale * PlayerStats.RecoilMultiplier;
+	protected float RecoilScale => FirearmStats.RecoilScale * PlayerStats.RecoilScale;
 
 	protected float RecoilAccumilationScale => FirearmStats.RecoilAccumilationScale;
 
 	protected bool HorizontalRecoilPunish => FirearmStats.HorizontalRecoilPunish;
 
 	protected float CameraRecoilScale =>
-		FirearmStats.CameraRecoilScale * PlayerStats.RecoilMultiplier * GameSettings.Instance.CameraShakeScale;
+		FirearmStats.CameraRecoilScale * PlayerStats.RecoilScale * GameSettings.Instance.CameraShakeScale;
 }

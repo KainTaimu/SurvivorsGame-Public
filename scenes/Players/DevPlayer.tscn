@@ -5,7 +5,6 @@
 [ext_resource type="Script" uid="uid://tfaqh3bcxdha" path="res://src/Models/IntStat.cs" id="3_y52bq"]
 [ext_resource type="Script" uid="uid://wsto3khl70md" path="res://src/Models/FloatStat.cs" id="4_qh10d"]
 [ext_resource type="PackedScene" uid="uid://b6pcia1iql0ct" path="res://scenes/Items/Offensive/Ak47.tscn" id="5_klnc8"]
-[ext_resource type="PackedScene" uid="uid://dyh06qakgf4q2" path="res://scenes/Players/DebugClassInspector.tscn" id="5_qh10d"]
 [ext_resource type="PackedScene" uid="uid://okgy2hpbgy53" path="res://scenes/Items/Offensive/Blick.tscn" id="6_comn3"]
 [ext_resource type="Script" uid="uid://bpqjji00j8p6x" path="res://src/Levels/Controllers/PlayerHitController.cs" id="6_klnc8"]
 [ext_resource type="PackedScene" uid="uid://c24ayslleke42" path="res://scenes/Items/Offensive/M249.tscn" id="6_mre4m"]
@@ -90,62 +89,32 @@ script = ExtResource("4_qh10d")
 BaseValue = 42.0
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="Resource" id="Resource_pwwtk"]
+[sub_resource type="Resource" id="Resource_criticalDamage"]
 resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="Resource" id="Resource_1tuq8"]
+[sub_resource type="Resource" id="Resource_attackSpeed"]
 resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="Resource" id="Resource_aida4"]
+[sub_resource type="Resource" id="Resource_bloom"]
 resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="Resource" id="Resource_vujg4"]
+[sub_resource type="Resource" id="Resource_recoil"]
 resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="Resource" id="Resource_3logm"]
+[sub_resource type="Resource" id="Resource_incomingDamage"]
 resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="Resource" id="Resource_lk35y"]
-resource_local_to_scene = true
-script = ExtResource("4_qh10d")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_0t3tl"]
-resource_local_to_scene = true
-script = ExtResource("4_qh10d")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_y0rwl"]
-resource_local_to_scene = true
-script = ExtResource("4_qh10d")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_h7b02"]
-resource_local_to_scene = true
-script = ExtResource("4_qh10d")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_xw6rq"]
-resource_local_to_scene = true
-script = ExtResource("4_qh10d")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_mvllv"]
-resource_local_to_scene = true
-script = ExtResource("4_qh10d")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_jlyqp"]
+[sub_resource type="Resource" id="Resource_outgoingDamage"]
 resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
@@ -182,7 +151,7 @@ region = Rect2(62, 0, 31, 31)
 atlas = ExtResource("6_y52bq")
 region = Rect2(93, 0, 31, 31)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_vsrt8"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_vujg4"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -287,23 +256,15 @@ _pickupRangeRadius = SubResource("Resource_epxog")
 _healthRegenPerSecond = SubResource("Resource_p0vfj")
 _invincibilityTime = SubResource("Resource_w107a")
 _hitboxRadius = SubResource("Resource_pdi6p")
-_moveSpeedMultiplier = SubResource("Resource_pwwtk")
-_runSpeedMultiplier = SubResource("Resource_1tuq8")
-_staminaMultiplier = SubResource("Resource_aida4")
-_maxStaminaMultiplier = SubResource("Resource_vujg4")
-_incomingDamageMultiplier = SubResource("Resource_3logm")
-_outgoingDamageMultiplier = SubResource("Resource_lk35y")
-_criticalChanceMultiplier = SubResource("Resource_0t3tl")
-_criticalDamageMultiplier = SubResource("Resource_y0rwl")
-_attackSpeedMultiplier = SubResource("Resource_h7b02")
-_bloomMultiplier = SubResource("Resource_xw6rq")
-_recoilMultiplier = SubResource("Resource_mvllv")
-_xpMultiplier = SubResource("Resource_jlyqp")
-
-[node name="DebugClassInspector" parent="Character/CharacterStats" index="0" unique_id=1989388267 instance=ExtResource("5_qh10d")]
+_criticalDamage = SubResource("Resource_criticalDamage")
+_attackSpeed = SubResource("Resource_attackSpeed")
+_bloomScale = SubResource("Resource_bloom")
+_recoilScale = SubResource("Resource_recoil")
+_incomingDamage = SubResource("Resource_incomingDamage")
+_outgoingDamage = SubResource("Resource_outgoingDamage")
 
 [node name="AnimatedSprite2D" parent="." index="1" unique_id=881638213]
-sprite_frames = SubResource("SpriteFrames_vsrt8")
+sprite_frames = SubResource("SpriteFrames_vujg4")
 animation = &"idle"
 
 [node name="StaminaBar" type="PanelContainer" parent="AnimatedSprite2D" index="0" unique_id=1291782904 node_paths=PackedStringArray("bar_left", "bar_right")]
