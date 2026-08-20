@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://tfaqh3bcxdha" path="res://src/Models/IntStat.cs" id="3_y52bq"]
 [ext_resource type="Script" uid="uid://wsto3khl70md" path="res://src/Models/FloatStat.cs" id="4_qh10d"]
 [ext_resource type="PackedScene" uid="uid://b6pcia1iql0ct" path="res://scenes/Items/Offensive/Ak47.tscn" id="5_klnc8"]
+[ext_resource type="PackedScene" uid="uid://dyh06qakgf4q2" path="res://scenes/Players/DebugClassInspector.tscn" id="5_qh10d"]
 [ext_resource type="PackedScene" uid="uid://okgy2hpbgy53" path="res://scenes/Items/Offensive/Blick.tscn" id="6_comn3"]
 [ext_resource type="Script" uid="uid://bpqjji00j8p6x" path="res://src/Levels/Controllers/PlayerHitController.cs" id="6_klnc8"]
 [ext_resource type="PackedScene" uid="uid://c24ayslleke42" path="res://scenes/Items/Offensive/M249.tscn" id="6_mre4m"]
@@ -12,6 +13,9 @@
 [ext_resource type="Script" uid="uid://bdk4fdcqvypav" path="res://src/Players/Controllers/StatusEffect.cs" id="7_qh10d"]
 [ext_resource type="Script" uid="uid://d31d8uns5faa5" path="res://src/Players/Controllers/StatusEffectModifier.cs" id="8_agk5e"]
 [ext_resource type="PackedScene" uid="uid://chrgb8gqwh4s0" path="res://scenes/Items/Offensive/M4.tscn" id="9_q2wbp"]
+[ext_resource type="PackedScene" uid="uid://c8noyno0ootql" path="res://scenes/Items/Offensive/M249S.tscn" id="9_qh10d"]
+[ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FullAutoFireGroup.cs" id="11_1d8ks"]
+[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="12_a0fn7"]
 [ext_resource type="PackedScene" uid="uid://cuerorgcryk5k" path="res://scenes/Items/Offensive/Sniper.tscn" id="13_qh10d"]
 [ext_resource type="PackedScene" uid="uid://c5chlqja2k2k0" path="res://scenes/Items/Offensive/AutoShotgun.tscn" id="13_vsrt8"]
 [ext_resource type="PackedScene" uid="uid://cr8xg1q8q5j48" path="res://scenes/Items/Offensive/Crack.tscn" id="14_y52bq"]
@@ -19,79 +23,130 @@
 [ext_resource type="PackedScene" uid="uid://bv8olcpvea07v" path="res://scenes/Items/Offensive/GrenadeLauncher.tscn" id="19_agk5e"]
 
 [sub_resource type="Resource" id="Resource_klnc8"]
+resource_local_to_scene = true
 script = ExtResource("3_y52bq")
 BaseValue = 100
 metadata/_custom_type_script = "uid://tfaqh3bcxdha"
 
 [sub_resource type="Resource" id="Resource_mre4m"]
+resource_local_to_scene = true
 script = ExtResource("3_y52bq")
 BaseValue = 100
 metadata/_custom_type_script = "uid://tfaqh3bcxdha"
 
 [sub_resource type="Resource" id="Resource_ygwx1"]
+resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 BaseValue = 600.0
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
+[sub_resource type="Resource" id="Resource_1uj6g"]
+resource_local_to_scene = true
+script = ExtResource("4_qh10d")
+BaseValue = 1.5
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_snw84"]
+resource_local_to_scene = true
+script = ExtResource("4_qh10d")
+BaseValue = 1.5
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_vsrt8"]
+resource_local_to_scene = true
+script = ExtResource("4_qh10d")
+BaseValue = 1.5
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
 [sub_resource type="Resource" id="Resource_rg3gt"]
+resource_local_to_scene = true
 script = ExtResource("3_y52bq")
 metadata/_custom_type_script = "uid://tfaqh3bcxdha"
 
 [sub_resource type="Resource" id="Resource_6a21i"]
+resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_epxog"]
+resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_p0vfj"]
+resource_local_to_scene = true
 script = ExtResource("3_y52bq")
 metadata/_custom_type_script = "uid://tfaqh3bcxdha"
 
 [sub_resource type="Resource" id="Resource_w107a"]
+resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 BaseValue = 0.5
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_pdi6p"]
+resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 BaseValue = 42.0
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_pwwtk"]
+resource_local_to_scene = true
+script = ExtResource("4_qh10d")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_1tuq8"]
+resource_local_to_scene = true
+script = ExtResource("4_qh10d")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_aida4"]
+resource_local_to_scene = true
+script = ExtResource("4_qh10d")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_vujg4"]
+resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_3logm"]
+resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_lk35y"]
+resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_0t3tl"]
+resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_y0rwl"]
+resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_h7b02"]
+resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_xw6rq"]
+resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_mvllv"]
+resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_jlyqp"]
+resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
@@ -127,7 +182,7 @@ region = Rect2(62, 0, 31, 31)
 atlas = ExtResource("6_y52bq")
 region = Rect2(93, 0, 31, 31)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_y52bq"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_vsrt8"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -165,7 +220,37 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_qh10d"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_agk5e"]
+
+[sub_resource type="GDScript" id="GDScript_vsrt8"]
+script/source = "extends PanelContainer
+
+@export var value: float:
+	get:
+		return value
+	set(value):
+		bar_left.visible = value < 1.0
+		bar_right.visible = value < 1.0
+		value = value
+		bar_left.value = value
+		bar_right.value = value
+@export var bar_left: ProgressBar
+@export var bar_right: ProgressBar
+
+@onready var character_stats := CharacterStatsAccessor.new()
+
+
+func _process(_delta: float) -> void:
+	var stamina: float = character_stats.Stamina
+	var max_stamina: float = character_stats.MaxStamina
+	value = clampf(stamina / max_stamina, 0, 1)
+"
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_63fni"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahqxl"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vujg4"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_agk5e"]
@@ -173,6 +258,14 @@ script = ExtResource("7_qh10d")
 Name = "DEV"
 Permanent = true
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
+
+[sub_resource type="Resource" id="Resource_ofy2w"]
+script = ExtResource("11_1d8ks")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_7i0hn"]
+script = ExtResource("12_a0fn7")
+metadata/_custom_type_script = "uid://dpq42sefws67v"
 
 [node name="Player" unique_id=1386970244 node_paths=PackedStringArray("WeaponController") instance=ExtResource("1_rmun4")]
 WeaponController = NodePath("PlayerWeaponController")
@@ -185,6 +278,9 @@ script = ExtResource("2_qh10d")
 _health = SubResource("Resource_klnc8")
 _maxHealth = SubResource("Resource_mre4m")
 _moveSpeed = SubResource("Resource_ygwx1")
+_runSpeed = SubResource("Resource_1uj6g")
+_stamina = SubResource("Resource_snw84")
+_maxStamina = SubResource("Resource_vsrt8")
 _defense = SubResource("Resource_rg3gt")
 _criticalChance = SubResource("Resource_6a21i")
 _pickupRangeRadius = SubResource("Resource_epxog")
@@ -192,6 +288,9 @@ _healthRegenPerSecond = SubResource("Resource_p0vfj")
 _invincibilityTime = SubResource("Resource_w107a")
 _hitboxRadius = SubResource("Resource_pdi6p")
 _moveSpeedMultiplier = SubResource("Resource_pwwtk")
+_runSpeedMultiplier = SubResource("Resource_1tuq8")
+_staminaMultiplier = SubResource("Resource_aida4")
+_maxStaminaMultiplier = SubResource("Resource_vujg4")
 _incomingDamageMultiplier = SubResource("Resource_3logm")
 _outgoingDamageMultiplier = SubResource("Resource_lk35y")
 _criticalChanceMultiplier = SubResource("Resource_0t3tl")
@@ -201,9 +300,53 @@ _bloomMultiplier = SubResource("Resource_xw6rq")
 _recoilMultiplier = SubResource("Resource_mvllv")
 _xpMultiplier = SubResource("Resource_jlyqp")
 
+[node name="DebugClassInspector" parent="Character/CharacterStats" index="0" unique_id=1989388267 instance=ExtResource("5_qh10d")]
+
 [node name="AnimatedSprite2D" parent="." index="1" unique_id=881638213]
-sprite_frames = SubResource("SpriteFrames_y52bq")
+sprite_frames = SubResource("SpriteFrames_vsrt8")
 animation = &"idle"
+
+[node name="StaminaBar" type="PanelContainer" parent="AnimatedSprite2D" index="0" unique_id=1291782904 node_paths=PackedStringArray("bar_left", "bar_right")]
+custom_minimum_size = Vector2(32, 0)
+custom_maximum_size = Vector2(32, 0.935)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -35.5
+offset_top = 15.5
+offset_right = 4.5
+offset_bottom = 21.5
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_agk5e")
+script = SubResource("GDScript_vsrt8")
+bar_left = NodePath("HBoxContainer/ProgressBar")
+bar_right = NodePath("HBoxContainer/ProgressBar2")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="AnimatedSprite2D/StaminaBar" index="0" unique_id=2067236946]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="AnimatedSprite2D/StaminaBar/HBoxContainer" index="0" unique_id=147081680]
+custom_minimum_size = Vector2(20, 0)
+custom_maximum_size = Vector2(-1, 2)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxEmpty_63fni")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ahqxl")
+max_value = 1.0
+value = 0.1
+fill_mode = 1
+show_percentage = false
+
+[node name="ProgressBar2" type="ProgressBar" parent="AnimatedSprite2D/StaminaBar/HBoxContainer" index="1" unique_id=466949702]
+custom_minimum_size = Vector2(20, 0)
+custom_maximum_size = Vector2(-1, 2)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxEmpty_63fni")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ahqxl")
+max_value = 1.0
+value = 0.1
+show_percentage = false
 
 [node name="PlayerCameraController" parent="." index="2" unique_id=68646763]
 editor_draw_limits = true
@@ -219,25 +362,32 @@ _playerSprite = NodePath("../AnimatedSprite2D")
 [node name="PlayerStatusEffectController" parent="." index="7" unique_id=1019311816]
 _testEffect = Array[ExtResource("7_qh10d")]([SubResource("Resource_agk5e")])
 
-[node name="M249" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="0" unique_id=873525008 instance=ExtResource("6_mre4m")]
+[node name="PlayerMovementController" parent="." index="8" unique_id=1230632424]
+ExhaustionTime = 1.0
 
-[node name="AA-12" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="1" unique_id=725692294 instance=ExtResource("13_vsrt8")]
+[node name="M249-S" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="0" unique_id=1854773231 instance=ExtResource("9_qh10d")]
 
-[node name="M4" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="2" unique_id=265287884 instance=ExtResource("9_q2wbp")]
+[node name="M249" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="1" unique_id=1647559807 instance=ExtResource("6_mre4m")]
+_fireGroup = SubResource("Resource_ofy2w")
+_projectileAttack = SubResource("Resource_7i0hn")
 
-[node name="Ak47" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="3" unique_id=915008798 instance=ExtResource("5_klnc8")]
+[node name="AA-12" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="2" unique_id=725692294 instance=ExtResource("13_vsrt8")]
 
-[node name="Blick" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="4" unique_id=1989500741 instance=ExtResource("6_comn3")]
+[node name="M4" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="3" unique_id=265287884 instance=ExtResource("9_q2wbp")]
 
-[node name="Sniper" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="5" unique_id=753371605 instance=ExtResource("13_qh10d")]
+[node name="Ak47" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="4" unique_id=915008798 instance=ExtResource("5_klnc8")]
 
-[node name="GrenadeLauncher" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="6" unique_id=1535579917 instance=ExtResource("19_agk5e")]
+[node name="Blick" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="5" unique_id=1989500741 instance=ExtResource("6_comn3")]
 
-[node name="GrenadeThrower" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="7" unique_id=1046476245 instance=ExtResource("15_vsrt8")]
+[node name="Sniper" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="6" unique_id=753371605 instance=ExtResource("13_qh10d")]
 
-[node name="GrenadeThrower2" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="8" unique_id=1544025392 instance=ExtResource("15_vsrt8")]
+[node name="GrenadeLauncher" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="7" unique_id=1535579917 instance=ExtResource("19_agk5e")]
 
-[node name="Crack" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="9" unique_id=1963515329 instance=ExtResource("14_y52bq")]
+[node name="GrenadeThrower" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="8" unique_id=1046476245 instance=ExtResource("15_vsrt8")]
+
+[node name="GrenadeThrower2" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="9" unique_id=1544025392 instance=ExtResource("15_vsrt8")]
+
+[node name="Crack" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="10" unique_id=1963515329 instance=ExtResource("14_y52bq")]
 
 [node name="CurrentWeaponUI" parent="." index="10" unique_id=2135368036 node_paths=PackedStringArray("_weaponController")]
 _weaponController = NodePath("../PlayerWeaponController")

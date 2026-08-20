@@ -1,5 +1,6 @@
 namespace Game.Models;
 
+[Tool]
 [GlobalClass]
 public partial class FloatStat : AbstractStat
 {

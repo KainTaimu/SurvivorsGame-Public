@@ -5,6 +5,9 @@ namespace Game.Players.Controllers;
 public partial class PlayerMovementController : Node2D
 {
 	[Export]
+	public float ExhaustionTime = 1.5f;
+
+	[Export]
 	public bool NoClip;
 
 	[Export]
@@ -21,6 +24,9 @@ public partial class PlayerMovementController : Node2D
 	private Crosshair? Crosshair => Crosshair.Instance;
 	private CharacterStats CharacterStats => _player.Character.CharacterStats;
 
+	private bool _isSprinting;
+	private float _exhaustion;
+
 	public override void _Ready()
 	{
 		Callable.From(() => Crosshair?.OnCrosshairMoved += FlipSprite).CallDeferred();
@@ -31,6 +37,15 @@ public partial class PlayerMovementController : Node2D
 	{
 		Velocity = Vector2.Zero;
 		PlayerMovement(delta);
+		if (!_isSprinting)
+		{
+			if (_exhaustion > 0)
+			{
+				_exhaustion = Mathf.Max(0, _exhaustion - (float)delta);
+				return;
+			}
+			CharacterStats.Stamina += (float)delta;
+		}
 	}
 
 	private void PlayerMovement(double delta)
@@ -60,6 +75,16 @@ public partial class PlayerMovementController : Node2D
 		var move =
 			new Vector2(inputX * CharacterStats.MoveSpeed, inputY * CharacterStats.MoveSpeed)
 			* CharacterStats.MoveSpeedMultiplier;
+
+		_isSprinting = Input.IsKeyLabelPressed(Key.Shift);
+
+		if (_isSprinting && CharacterStats.Stamina > 0)
+		{
+			move *= Mathf.Max(1, CharacterStats.RunSpeed * CharacterStats.RunSpeedMultiplier);
+			CharacterStats.Stamina -= (float)delta;
+			_exhaustion = ExhaustionTime;
+		}
+
 		Velocity = move;
 		move *= (float)delta;
 		var originalPos = _player.GetPosition();

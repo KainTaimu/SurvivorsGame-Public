@@ -6,6 +6,7 @@ namespace Game.Players;
 /// Removing or adding fields requires changing CharacterStatType, and the switch inside
 /// PlayerStatusEffectController.InitializeStatStacks
 /// </summary>
+[GlobalClass]
 public partial class CharacterStats : Node
 {
 	[Export]
@@ -16,6 +17,15 @@ public partial class CharacterStats : Node
 
 	[Export]
 	private FloatStat _moveSpeed = null!;
+
+	[Export]
+	private FloatStat _runSpeed = null!;
+
+	[Export]
+	private FloatStat _stamina = null!;
+
+	[Export]
+	private FloatStat _maxStamina = null!;
 
 	[Export]
 	private IntStat _defense = null!;
@@ -38,6 +48,15 @@ public partial class CharacterStats : Node
 	[ExportCategory("Multiplier attributes")]
 	[Export]
 	private FloatStat _moveSpeedMultiplier = null!;
+
+	[Export]
+	private FloatStat _runSpeedMultiplier = null!;
+
+	[Export]
+	private FloatStat _staminaMultiplier = null!;
+
+	[Export]
+	private FloatStat _maxStaminaMultiplier = null!;
 
 	[Export]
 	private FloatStat _incomingDamageMultiplier = null!;
@@ -69,6 +88,16 @@ public partial class CharacterStats : Node
 
 	public float MoveSpeed => _moveSpeed.Value;
 
+	public float RunSpeed => _runSpeed.Value;
+
+	public float Stamina
+	{
+		get => _stamina.Value;
+		set => _stamina.BaseValue = Mathf.Clamp(value, 0, MaxStamina);
+	}
+
+	public float MaxStamina => _maxStamina.Value;
+
 	public int Defense => _defense.Value;
 
 	public float PickupRangeRadius => _pickupRangeRadius.Value;
@@ -80,6 +109,12 @@ public partial class CharacterStats : Node
 	public float HitboxRadius => _hitboxRadius.Value;
 
 	public float MoveSpeedMultiplier => _moveSpeedMultiplier.Value;
+
+	public float RunSpeedMultiplier => _runSpeedMultiplier.Value;
+
+	public float StaminaMultiplier => _staminaMultiplier.Value;
+
+	public float MaxStaminaMultiplier => _maxStaminaMultiplier.Value;
 
 	public float IncomingDamageMultiplier => _incomingDamageMultiplier.Value;
 

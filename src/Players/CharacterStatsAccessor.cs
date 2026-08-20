@@ -16,6 +16,12 @@ public partial class CharacterStatsAccessor : RefCounted
 
 	public float MoveSpeed => Stats.MoveSpeed;
 
+	public float RunSpeed => Stats.RunSpeed;
+
+	public float Stamina => Stats.Stamina;
+
+	public float MaxStamina => Stats.MaxStamina;
+
 	public int Defense => Stats.Defense;
 
 	public float PickupRangeRadius => Stats.PickupRangeRadius;
@@ -27,6 +33,12 @@ public partial class CharacterStatsAccessor : RefCounted
 	public float HitboxRadius => Stats.HitboxRadius;
 
 	public float MoveSpeedMultiplier => Stats.MoveSpeedMultiplier;
+
+	public float RunSpeedMultiplier => Stats.RunSpeedMultiplier;
+
+	public float StaminaMultiplier => Stats.StaminaMultiplier;
+
+	public float MaxStaminaMultiplier => Stats.MaxStaminaMultiplier;
 
 	public float IncomingDamageMultiplier => Stats.IncomingDamageMultiplier;
 

@@ -6,6 +6,7 @@
 [node name="PickupUi" type="CanvasLayer" unique_id=720680017 node_paths=PackedStringArray("grid_container")]
 process_mode = 3
 script = ExtResource("1_5cant")
+limit = 6
 grid_container = NodePath("Control/HBoxContainer/CenterContainer/GridContainer")
 
 [node name="Control" type="PanelContainer" parent="." unique_id=1639386775]

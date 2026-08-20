@@ -20,6 +20,8 @@ public partial class CurrentStatusEffectsUi : CanvasLayer
 	{
 		_statusEffectController.OnStatusEffectApplied += effect =>
 		{
+			if (effect.Hidden)
+				return;
 			var label = _labelScene.Instantiate<Label>();
 			label.Text = effect.Permanent ? $"{effect.Name} | Permanent" : $"{effect.Name} | {effect.Duration:F1}";
 			_labelControl.AddChild(label);
@@ -27,6 +29,8 @@ public partial class CurrentStatusEffectsUi : CanvasLayer
 		};
 		_statusEffectController.OnStatusEffectRemoved += effect =>
 		{
+			if (effect.Hidden)
+				return;
 			var label = _labels[effect];
 			_labels.Remove(effect);
 			label.QueueFree();
