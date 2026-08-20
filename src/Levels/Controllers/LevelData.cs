@@ -6,6 +6,9 @@ public partial class LevelData : Node
 	[Signal]
 	public delegate void OnMoneyChangedEventHandler(int delta);
 
+	[Export]
+	public EnemyWaveController? WaveController { get; private set; }
+
 	public int Money
 	{
 		get;

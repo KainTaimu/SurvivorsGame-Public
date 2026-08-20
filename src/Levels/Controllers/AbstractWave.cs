@@ -70,7 +70,7 @@ public abstract partial class AbstractWave : Resource, IEnemyWave
 	public double LastSpawnTime;
 	public double SpawnTimeLeft;
 	protected EnemyWaveController WaveController = null!;
-	public int Index;
+	public int Index { get; set; }
 
 	public EnemySpawner? Spawner => EnemySpawner.Instance;
 

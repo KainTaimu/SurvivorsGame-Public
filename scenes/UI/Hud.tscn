@@ -1,12 +1,10 @@
 [gd_scene format=3 uid="uid://do6p1pg4x0vkf"]
 
+[ext_resource type="Theme" uid="uid://cwyp7j6g53bhf" path="res://resources/UiThemes/NormalUi.tres" id="1_bplp6"]
 [ext_resource type="LabelSettings" uid="uid://cu65p2lbgxmhg" path="res://scenes/UI/WeaponCarouselLabelSettings.tres" id="2_bplp6"]
 
 [sub_resource type="GDScript" id="GDScript_bplp6"]
 script/source = "extends CanvasLayer
-
-@onready var playerStats: CharacterStatsAccessor = CharacterStatsAccessor.new()
-@onready var wave_controller: EnemyWaveControllerAccessor = EnemyWaveControllerAccessor.new()
 
 @export var healthBar: ProgressBar
 @export var healthDamageBar: ProgressBar
@@ -15,20 +13,36 @@ script/source = "extends CanvasLayer
 
 var damage_bar_tween: Tween
 
+@onready var playerStats: CharacterStatsAccessor = CharacterStatsAccessor.new()
+@onready var wave_controller: EnemyWaveControllerAccessor = EnemyWaveControllerAccessor.new()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
+func _ready() -> void:
+	var main_player: Player = GameWorldInstance.MainPlayer
+	if main_player != null:
+		GameWorldInstance.MainPlayer.connect(\"OnDamaged\", on_player_damaged)
+
+
 func _process(_delta: float) -> void:
+	var level_data: LevelData = GameWorldInstance.LevelData
+	if level_data != null:
+		moneyLabel.text = \"$%s\" % str(level_data.Money)
+	var alive_enemies = wave_controller.AliveEnemies
+	if alive_enemies != null:
+		enemies_alive_label.text = \"Enemies: %s\" % wave_controller.AliveEnemies
+
+
+func on_player_damaged(_dmg) -> void:
 	healthBar.value = playerStats.Health / float(playerStats.MaxHealth)
 
-	if damage_bar_tween == null:
-		damage_bar_tween = create_tween()
-		damage_bar_tween.tween_property(healthDamageBar, \"value\", healthBar.value, 0.1).set_ease(
-			Tween.EASE_OUT
-		)
-		damage_bar_tween.tween_callback(_kill_damage_bar_tween)
-
-	moneyLabel.text = \"$%s\" % str(GameWorldInstance.LevelData.Money)
-	enemies_alive_label.text = \"Enemies: %s\" % wave_controller.AliveEnemies
+	_kill_damage_bar_tween()
+	damage_bar_tween = create_tween()
+	damage_bar_tween.tween_interval(0.5)
+	damage_bar_tween \\
+			.tween_property(healthDamageBar, \"value\", healthBar.value, 0.1) \\
+			.set_ease(Tween.EASE_OUT) \\
+			.set_trans(Tween.TRANS_EXPO)
+	damage_bar_tween.tween_callback(_kill_damage_bar_tween)
 
 
 func _kill_damage_bar_tween():
@@ -101,10 +115,12 @@ show_percentage = false
 
 [node name="Label" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1360731784]
 layout_mode = 2
+theme = ExtResource("1_bplp6")
 text = "$null"
 label_settings = ExtResource("2_bplp6")
 
 [node name="Label2" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=649557123]
 layout_mode = 2
+theme = ExtResource("1_bplp6")
 text = "Enemies"
 label_settings = ExtResource("2_bplp6")

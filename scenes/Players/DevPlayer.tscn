@@ -121,7 +121,7 @@ resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bpnxk"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t84yk"]
 resource_local_to_scene = true
 shader = ExtResource("5_t84yk")
 shader_parameter/color = Color(1, 1, 1, 1)
@@ -159,7 +159,7 @@ region = Rect2(62, 0, 31, 31)
 atlas = ExtResource("6_y52bq")
 region = Rect2(93, 0, 31, 31)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_vujg4"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_bpnxk"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -305,8 +305,8 @@ _outgoingDamage = SubResource("Resource_outgoingDamage")
 _player = NodePath("../..")
 
 [node name="AnimatedSprite2D" parent="." index="1" unique_id=881638213]
-material = SubResource("ShaderMaterial_bpnxk")
-sprite_frames = SubResource("SpriteFrames_vujg4")
+material = SubResource("ShaderMaterial_t84yk")
+sprite_frames = SubResource("SpriteFrames_bpnxk")
 animation = &"idle"
 
 [node name="StaminaBar" type="PanelContainer" parent="AnimatedSprite2D" index="0" unique_id=1291782904 node_paths=PackedStringArray("bar_left", "bar_right")]
