@@ -8,7 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_pkkq0"]
 script = ExtResource("2_pkkq0")
-Count = 100
+Count = 200
 SpeedMax = 1000.0
 SettleMin = 0.0
 SettleMax = 0.35
@@ -18,7 +18,7 @@ HueVariationMax = -0.149
 
 [sub_resource type="Resource" id="Resource_0ylxp"]
 script = ExtResource("2_pkkq0")
-Count = 100
+Count = 250
 SpeedMin = 20.0
 SpeedMax = 2000.0
 ScaleMin = 2.0
@@ -31,9 +31,9 @@ HueVariationMax = -0.149
 
 [sub_resource type="Resource" id="Resource_fo3s0"]
 script = ExtResource("2_pkkq0")
-Count = 50
-SpeedMax = 800.0
-ScaleMin = 0.1
+Count = 125
+SpeedMax = 1000.0
+ScaleMin = 0.15
 ScaleMax = 3.0
 EmitRadius = 16.37
 EmitOffset = Vector2(0, 0)

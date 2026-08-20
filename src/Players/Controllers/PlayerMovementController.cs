@@ -72,10 +72,9 @@ public partial class PlayerMovementController : Node2D
 		else
 			_sprite.Animation = "idle";
 
-		var move =
-			new Vector2(inputX * CharacterStats.MoveSpeed, inputY * CharacterStats.MoveSpeed);
+		var move = new Vector2(inputX * CharacterStats.MoveSpeed, inputY * CharacterStats.MoveSpeed);
 
-		_isSprinting = Input.IsKeyLabelPressed(Key.Shift);
+		_isSprinting = Input.IsActionPressed(InputMapNames.Sprint);
 
 		if (_isSprinting && CharacterStats.Stamina > 0)
 		{

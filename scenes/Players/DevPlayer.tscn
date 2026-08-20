@@ -219,7 +219,7 @@ func _process(_delta: float) -> void:
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahqxl"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vujg4"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vsrt8"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_agk5e"]
