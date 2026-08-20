@@ -7,6 +7,8 @@ namespace Game.Utils;
 
 public static class ClassInspector
 {
+	private const int _floatingPointDisplayPrecision = 4;
+
 	public static string GetClassPropertiesString(
 		object obj,
 		BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance
@@ -23,6 +25,12 @@ public static class ClassInspector
 			{
 				case null:
 					continue;
+				case float f:
+					value = f.ToString("F" + _floatingPointDisplayPrecision);
+					break;
+				case double d:
+					value = d.ToString("F" + _floatingPointDisplayPrecision);
+					break;
 				case Node node:
 					value = node.Name;
 					break;
@@ -62,6 +70,12 @@ public static class ClassInspector
 			{
 				case null:
 					continue;
+				case float f:
+					value = f.ToString("F" + _floatingPointDisplayPrecision);
+					break;
+				case double d:
+					value = d.ToString("F" + _floatingPointDisplayPrecision);
+					break;
 				case Node node:
 					value = node.Name;
 					break;

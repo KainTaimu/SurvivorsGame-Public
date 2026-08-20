@@ -22,9 +22,13 @@ public partial class WaveSpawnCount : AbstractWave, IEnemyWave, IWaveProgress
 
 		if (SpawnTimeLeft <= 0)
 		{
-			// csharpier-ignore
 			for (var i = 0; i < GD.RandRange(SpawnBatchMin, SpawnBatchMax); i++)
+			{
+				SpawnTimeLeft = GetRandomSpawnTime();
+				LastSpawnTime = SpawnTimeLeft;
+
 				SpawnEnemy();
+			}
 		}
 	}
 
@@ -53,8 +57,6 @@ public partial class WaveSpawnCount : AbstractWave, IEnemyWave, IWaveProgress
 		if (SpawnedEntities.Count >= SpawnCountTarget)
 			return;
 
-		SpawnTimeLeft = GetRandomSpawnTime();
-
 		var bp = EnemyBlueprints.GetBlueprint();
 		var id = Spawner.SpawnEnemy(bp);
 		if (id is null)
@@ -64,6 +66,17 @@ public partial class WaveSpawnCount : AbstractWave, IEnemyWave, IWaveProgress
 		}
 
 		SpawnedEntities.Add((Entity)id);
+	}
+
+	private float GetRandomSpawnTime()
+	{
+		return (float)(
+			Mathf.Clamp(
+				GD.RandRange(SpawnMinTime, SpawnMaxTime * (SpawnTimeCurveOverMaxTime?.Sample(1 - Progress) ?? 1f)),
+				SpawnMinTime,
+				SpawnMaxTime
+			)
+		);
 	}
 
 	public override string ToString()
