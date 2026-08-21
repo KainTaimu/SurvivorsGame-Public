@@ -1,4 +1,4 @@
-namespace Game.Levels.Controllers;
+namespace Game.Levels.Controllers.Waves;
 
 [GlobalClass]
 public abstract partial class AbstractWaveBlueprintCollection : Resource

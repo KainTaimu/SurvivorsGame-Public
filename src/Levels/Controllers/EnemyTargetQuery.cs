@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Arch.Core;
-using Arch.Core.Events;
 using Arch.System;
 using Arch.System.SourceGenerator;
 using CommunityToolkit.HighPerformance;

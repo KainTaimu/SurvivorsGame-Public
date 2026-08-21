@@ -1,4 +1,5 @@
 using Game.Levels.Controllers;
+using Game.Levels.Controllers.Waves;
 using Game.Players;
 
 namespace Game.UI;

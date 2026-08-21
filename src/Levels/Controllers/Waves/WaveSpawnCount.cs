@@ -1,6 +1,6 @@
 using Arch.Core;
 
-namespace Game.Levels.Controllers;
+namespace Game.Levels.Controllers.Waves;
 
 [GlobalClass]
 public partial class WaveSpawnCount : AbstractWave, IEnemyWave, IWaveProgress

@@ -1,4 +1,4 @@
-using Game.Levels.Controllers;
+using Game.Levels.Controllers.Waves;
 
 namespace Game.UI.Debug;
 

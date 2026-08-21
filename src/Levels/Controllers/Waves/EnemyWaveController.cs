@@ -3,7 +3,7 @@ using System.Linq;
 using Arch.Core;
 using Godot.Collections;
 
-namespace Game.Levels.Controllers;
+namespace Game.Levels.Controllers.Waves;
 
 [GlobalClass]
 public partial class EnemyWaveController : Node

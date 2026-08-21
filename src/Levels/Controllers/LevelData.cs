@@ -1,3 +1,5 @@
+using Game.Levels.Controllers.Waves;
+
 namespace Game.Levels.Controllers;
 
 [GlobalClass]

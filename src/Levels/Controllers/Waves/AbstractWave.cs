@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Arch.Core;
 
-namespace Game.Levels.Controllers;
+namespace Game.Levels.Controllers.Waves;
 
 [GlobalClass]
 public abstract partial class AbstractWave : Resource, IEnemyWave
