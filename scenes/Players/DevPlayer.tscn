@@ -17,7 +17,7 @@
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="12_a0fn7"]
 [ext_resource type="PackedScene" uid="uid://cuerorgcryk5k" path="res://scenes/Items/Offensive/Sniper.tscn" id="13_qh10d"]
 [ext_resource type="PackedScene" uid="uid://c5chlqja2k2k0" path="res://scenes/Items/Offensive/AutoShotgun.tscn" id="13_vsrt8"]
-[ext_resource type="PackedScene" uid="uid://cr8xg1q8q5j48" path="res://scenes/Items/Offensive/Crack.tscn" id="14_y52bq"]
+[ext_resource type="PackedScene" uid="uid://cr8xg1q8q5j48" path="res://scenes/Items/Offensive/Debug/Crack.tscn" id="14_y52bq"]
 [ext_resource type="PackedScene" uid="uid://ceimmtu3q4x6n" path="res://scenes/Items/Offensive/GrenadeThrower.tscn" id="15_vsrt8"]
 [ext_resource type="PackedScene" uid="uid://bv8olcpvea07v" path="res://scenes/Items/Offensive/GrenadeLauncher.tscn" id="19_agk5e"]
 [ext_resource type="Shader" uid="uid://bg3me0bhc4em2" path="res://src/Shaders/vignette.gdshader" id="21_vujg4"]

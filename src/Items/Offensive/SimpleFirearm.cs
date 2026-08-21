@@ -46,14 +46,11 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable
 			}
 		);
 
-		if (_fireGroup is ICooldown c)
-			c.CooldownDuration = FirearmStats.AttackSpeed;
+		InitializeFireGroupSettings();
 
-		FirearmStats.Changed += () =>
-		{
-			if (_fireGroup is ICooldown cooldown)
-				cooldown.CooldownDuration = FirearmStats.AttackSpeed;
-		};
+		_fireGroup.OnFire += Attack;
+
+		FirearmStats.Changed += InitializeFireGroupSettings;
 
 		OnAttack += () => OffensiveEffects.ApplyCameraShake(FirearmStats.CameraRecoilScale, GetViewport, CreateTween);
 		OnAttack += () =>
@@ -76,6 +73,14 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable
 		};
 	}
 
+	private void InitializeFireGroupSettings()
+	{
+		if (_fireGroup is ICooldown c)
+			c.CooldownDuration = FirearmStats.AttackSpeed;
+		if (_fireGroup is BurstFireGroup burst)
+			burst.TimeBetweenBursts = Stats.Additional["TimeBetweenBurst"].AsSingle();
+	}
+
 	public override void _Process(double delta)
 	{
 		if (AttackActionString is null)
@@ -93,19 +98,7 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable
 		if (IsReloading)
 			return;
 
-		if (_fireGroup is IFireQueuable { CanFireQueued: true })
-		{
-			if (!_fireGroup.TryFire())
-				return;
-			Attack();
-			return;
-		}
-
-		if (!Input.IsActionPressed(AttackActionString))
-			return;
-
-		if (_fireGroup.TryFire())
-			Attack();
+		_fireGroup.ProcessInput();
 	}
 
 	public void Attack()

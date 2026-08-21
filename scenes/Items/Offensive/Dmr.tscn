@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="8_0f2tb"]
 
 [sub_resource type="Resource" id="Resource_62a23"]
+resource_local_to_scene = true
 script = ExtResource("3_f5pnb")
 metadata/_custom_type_script = "uid://dnodsacrptssb"
 
@@ -17,7 +18,7 @@ metadata/_custom_type_script = "uid://dnodsacrptssb"
 script = ExtResource("4_db67r")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8f87a"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0f2tb"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_o65qt"]
@@ -42,8 +43,8 @@ CameraRecoilScale = 0.55
 BaseDamage = -1
 BaseCritDamageMultiplier = 1.1
 BaseCritChanceProportion = 0.2
-BaseProjectileSpeed = 8000
-BaseProjectileScaleMultiplier = 0.8
+BaseProjectileSpeed = 7000
+BaseProjectileScaleMultiplier = 1.1
 BaseProjectileRadius = 32
 BaseAttackSpeed = 0.15
 BasePierceLimit = 3

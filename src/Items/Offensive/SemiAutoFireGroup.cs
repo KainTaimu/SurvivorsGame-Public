@@ -1,11 +1,10 @@
 namespace Game.Items.Offensive;
 
+[Tool]
 [GlobalClass]
-public partial class SemiAutoFireGroup : AbstractFireGroup, ICooldown, IFireQueuable
+public partial class SemiAutoFireGroup : AbstractFireGroup, ICooldown
 {
 	public float CooldownDuration { get; set; }
-
-	public bool CanFireQueued { get; private set; }
 
 	private bool _isFireQueued;
 	private ulong _ticksSinceLastFire;
@@ -15,26 +14,21 @@ public partial class SemiAutoFireGroup : AbstractFireGroup, ICooldown, IFireQueu
 	[Export]
 	private float _fireQueueTolerance = 0.5f;
 
-	public override bool TryFire()
+	public override void ProcessInput()
 	{
-		if (CanFireQueued)
+		if (!Input.IsActionJustPressed(InputMapNames.PrimaryAttack))
+			return;
+
+		if (_cooldown <= 0)
 		{
 			ResetOnFire();
-			return true;
+			EmitSignalOnFire();
+			return;
 		}
-
-		if (!Input.IsActionJustPressed(InputMapNames.PrimaryAttack))
-			return false;
 
 		var inQueueWindow = _cooldown <= CooldownDuration * _fireQueueTolerance;
 		if (inQueueWindow && !_isFireQueued)
 			_isFireQueued = true;
-
-		var shouldFire = _cooldown <= 0;
-		if (shouldFire)
-			ResetOnFire();
-
-		return shouldFire;
 	}
 
 	private void ResetOnFire()
@@ -42,13 +36,15 @@ public partial class SemiAutoFireGroup : AbstractFireGroup, ICooldown, IFireQueu
 		_cooldown = CooldownDuration;
 		_isFireQueued = false;
 		_ticksSinceLastFire = Time.GetTicksMsec();
-		CanFireQueued = false;
 	}
 
 	public void Process(float delta)
 	{
 		_cooldown = Mathf.Clamp(_cooldown - delta, 0, CooldownDuration);
 		if (_cooldown <= 0 && _isFireQueued)
-			CanFireQueued = true;
+		{
+			ResetOnFire();
+			EmitSignalOnFire();
+		}
 	}
 }

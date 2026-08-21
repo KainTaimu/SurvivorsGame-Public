@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="8_18mki"]
 
 [sub_resource type="Resource" id="Resource_vujg4"]
+resource_local_to_scene = true
 script = ExtResource("3_ssx3n")
 metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 
@@ -17,7 +18,7 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 script = ExtResource("4_c20as")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_u5o0n"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_18mki"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_iu54j"]

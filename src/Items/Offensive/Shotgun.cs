@@ -47,6 +47,8 @@ public partial class Shotgun : AbstractFirearm, IReloadable
 		if (_fireGroup is ICooldown c)
 			c.CooldownDuration = FirearmStats.AttackSpeed;
 
+		_fireGroup.OnFire += Attack;
+
 		FirearmStats.Changed += () =>
 		{
 			if (_fireGroup is ICooldown cooldown)
@@ -90,19 +92,7 @@ public partial class Shotgun : AbstractFirearm, IReloadable
 		if (IsReloading)
 			return;
 
-		if (_fireGroup is IFireQueuable { CanFireQueued: true })
-		{
-			if (!_fireGroup.TryFire())
-				return;
-			Attack();
-			return;
-		}
-
-		if (!Input.IsActionPressed(AttackActionString))
-			return;
-
-		if (_fireGroup.TryFire())
-			Attack();
+		_fireGroup.ProcessInput();
 	}
 
 	public void Attack()

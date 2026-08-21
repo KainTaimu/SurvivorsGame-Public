@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://yg5u0mjrrl4h" path="res://assets/SFX/Shoot/freesound_community-submachine-gun-79846.mp3" id="7_qwex2"]
 
 [sub_resource type="Resource" id="Resource_vf4av"]
+resource_local_to_scene = true
 script = ExtResource("3_8vupm")
 metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 
@@ -16,7 +17,7 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 script = ExtResource("4_2ovbf")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8f87a"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0f2tb"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_j05a4"]

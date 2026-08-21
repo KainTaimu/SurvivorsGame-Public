@@ -77,6 +77,8 @@ public partial class Sniper : AbstractFirearm, IReloadable
 		if (_fireGroup is ICooldown c)
 			c.CooldownDuration = FirearmStats.AttackSpeed;
 
+		_fireGroup.OnFire += OnFireGroupFire;
+
 		OnAttack += () => OffensiveEffects.ApplyCameraShake(FirearmStats.CameraRecoilScale, GetViewport, CreateTween);
 		OnAttack += () =>
 		{
@@ -131,20 +133,11 @@ public partial class Sniper : AbstractFirearm, IReloadable
 		if (IsReloading)
 			return;
 
-		if (_fireGroup is IFireQueuable { CanFireQueued: true })
-		{
-			if (!_fireGroup.TryFire())
-				return;
-			Attack();
-			return;
-		}
+		_fireGroup.ProcessInput();
+	}
 
-		if (!Input.IsActionPressed(AttackActionString))
-			return;
-
-		if (!_fireGroup.TryFire())
-			return;
-
+	private void OnFireGroupFire()
+	{
 		OffensiveStats.BaseCritChanceProportion = (float)(1 - MoveTimeFactor);
 		OffensiveStats.BaseDamage = (int)Math.Clamp(MoveDamageMax * (1 - MoveTimeFactor), MoveDamageMin, MoveDamageMax);
 

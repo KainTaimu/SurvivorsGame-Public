@@ -5,6 +5,8 @@
 
 [node name="ProjectileBullet" type="Node2D" unique_id=2072266607 node_paths=PackedStringArray("Sprite")]
 physics_interpolation_mode = 1
+z_index = 1
+z_as_relative = false
 script = ExtResource("1_4ylwr")
 Sprite = NodePath("Sprite2D")
 

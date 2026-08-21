@@ -1,26 +1,22 @@
 namespace Game.Items.Offensive;
 
+[Tool]
 [GlobalClass]
 public partial class FullAutoFireGroup : AbstractFireGroup, ICooldown
 {
 	public float CooldownDuration { get; set; }
 	private float _cooldown;
 
-	private float _timeSinceLastFire;
-
-	public override bool TryFire()
+	public override void ProcessInput()
 	{
 		if (_cooldown > 0)
-			return false;
+			return;
 
-		Reset();
-		return true;
-	}
+		if (!Input.IsActionPressed(InputMapNames.PrimaryAttack))
+			return;
 
-	private void Reset()
-	{
 		_cooldown = CooldownDuration;
-		_timeSinceLastFire = Time.GetTicksMsec();
+		EmitSignalOnFire();
 	}
 
 	public void Process(float delta)
