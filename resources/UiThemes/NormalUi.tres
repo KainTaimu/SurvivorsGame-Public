@@ -28,6 +28,71 @@ content_margin_bottom = 2.0
 bg_color = Color(1, 1, 1, 0.4)
 corner_detail = 6
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ksufk"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.4)
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_632ce"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.75)
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rg4vb"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.75, 0.75, 0.75, 0.75)
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kthm1"]
+content_margin_left = 4.0
+content_margin_top = 0.0
+content_margin_right = 4.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mrgj5"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.75)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mm7ja"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.4)
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_scjgo"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_detail = 6
+
 [resource]
 default_font_size = 20
 HSlider/styles/slider = SubResource("StyleBoxFlat_p7ixb")
@@ -35,3 +100,10 @@ Label/colors/font_shadow_color = Color(0, 0, 0, 1)
 ProgressBar/styles/background = SubResource("StyleBoxFlat_hmxwi")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_6bngf")
 RichTextLabel/colors/font_shadow_color = Color(0, 0, 0, 1)
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_ksufk")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_632ce")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_rg4vb")
+VScrollBar/styles/scroll = SubResource("StyleBoxFlat_kthm1")
+VScrollBar/styles/scroll_focus = SubResource("StyleBoxFlat_mrgj5")
+VSlider/styles/grabber_area = SubResource("StyleBoxFlat_mm7ja")
+VSlider/styles/slider = SubResource("StyleBoxFlat_scjgo")

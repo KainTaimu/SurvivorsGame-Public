@@ -17,19 +17,25 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 script = ExtResource("4_2l6dk")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nihe0"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_2l6dk"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_jkkrv"]
 script = ExtResource("3_yc6ub")
-Name = "Blick"
+Name = "M17"
 Description = "Basic-ass pistol"
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_k3dr5"]
 script = ExtResource("4_6nomv")
-BloomCoefficientDeg = 5.0
-MagazineCapacity = 17
+ReloadTime = 1.2
+BloomCoefficientDeg = 2.5
+MagazineCapacity = 21
+HorizontalRecoilMin = 0.5
+HorizontalBaseRecoil = 2.0
+VerticalRecoilMin = 4.0
+VerticalBaseRecoil = 6.0
+VerticalRecoilRandom = 0.25
 HorizontalRecoilPunish = false
 CameraRecoilScale = 0.2
 BaseDamage = 5
@@ -42,7 +48,7 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[node name="Blick" type="Node" unique_id=1989500741]
+[node name="M17" type="Node" unique_id=1989500741]
 script = ExtResource("1_3c71c")
 _projectileScene = ExtResource("2_1j0xa")
 _fireGroup = SubResource("Resource_o8yur")
@@ -59,7 +65,7 @@ bus = &"ShootSfx"
 [node name="MagAlmostEmpty" type="AudioStreamPlayer" parent="." unique_id=110896041]
 process_mode = 3
 stream = ExtResource("8_2l6dk")
-volume_db = 16.0
+volume_db = 8.0
 max_polyphony = 30
 
 [connection signal="AlmostEmpty" from="." to="MagAlmostEmpty" method="play"]

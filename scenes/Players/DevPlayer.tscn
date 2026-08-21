@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://b6pcia1iql0ct" path="res://scenes/Items/Offensive/Ak47.tscn" id="5_klnc8"]
 [ext_resource type="Shader" uid="uid://bgl0yr4nfmpqx" path="res://src/Shaders/flash.gdshader" id="5_t84yk"]
 [ext_resource type="PackedScene" uid="uid://okgy2hpbgy53" path="res://scenes/Items/Offensive/Blick.tscn" id="6_comn3"]
-[ext_resource type="Script" uid="uid://bpqjji00j8p6x" path="res://src/Levels/Controllers/PlayerHitController.cs" id="6_klnc8"]
 [ext_resource type="PackedScene" uid="uid://c24ayslleke42" path="res://scenes/Items/Offensive/M249.tscn" id="6_mre4m"]
 [ext_resource type="Texture2D" uid="uid://c0d0pkcn6hw68" path="res://assets/Players/player.png" id="6_y52bq"]
 [ext_resource type="Script" uid="uid://bdk4fdcqvypav" path="res://src/Players/Controllers/StatusEffect.cs" id="7_qh10d"]
@@ -121,7 +120,7 @@ resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_t84yk"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vujg4"]
 resource_local_to_scene = true
 shader = ExtResource("5_t84yk")
 shader_parameter/color = Color(1, 1, 1, 1)
@@ -159,7 +158,7 @@ region = Rect2(62, 0, 31, 31)
 atlas = ExtResource("6_y52bq")
 region = Rect2(93, 0, 31, 31)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_bpnxk"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_t84yk"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -197,37 +196,7 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_agk5e"]
-
-[sub_resource type="GDScript" id="GDScript_vsrt8"]
-script/source = "extends PanelContainer
-
-@export var value: float:
-	get:
-		return value
-	set(value):
-		bar_left.visible = value < 1.0
-		bar_right.visible = value < 1.0
-		value = value
-		bar_left.value = value
-		bar_right.value = value
-@export var bar_left: ProgressBar
-@export var bar_right: ProgressBar
-
-@onready var character_stats := CharacterStatsAccessor.new()
-
-
-func _process(_delta: float) -> void:
-	var stamina: float = character_stats.Stamina
-	var max_stamina: float = character_stats.MaxStamina
-	value = clampf(stamina / max_stamina, 0, 1)
-"
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_63fni"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahqxl"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_7i0hn"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_bpnxk"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_agk5e"]
@@ -244,31 +213,7 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 script = ExtResource("12_a0fn7")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="GDScript" id="GDScript_t84yk"]
-script/source = "extends CanvasLayer
-
-@export var max_alpha: float = 0.12
-@export var flash_duration: float = 0.4
-
-var tween: Tween
-
-@onready var vignette_rect: ColorRect = $ColorRect
-
-
-func on_player_on_damaged() -> void:
-	if tween != null:
-		tween.kill()
-
-	tween = create_tween()
-	tween.tween_method(_set_vignette_alpha, max_alpha, 0, flash_duration)
-
-
-func _set_vignette_alpha(value: float):
-	var shader := vignette_rect.material as ShaderMaterial
-	shader.set_shader_parameter(\"alpha\", value)
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_do71q"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7i0hn"]
 resource_local_to_scene = true
 shader = ExtResource("21_vujg4")
 shader_parameter/tint = Color(0.33618236, 2.6171097e-07, 1.2032687e-07, 1)
@@ -276,8 +221,7 @@ shader_parameter/alpha = 0.0
 shader_parameter/inner_radius = 0.0
 shader_parameter/outer_radius = 1.0
 
-[node name="Player" unique_id=1386970244 node_paths=PackedStringArray("WeaponController") instance=ExtResource("1_rmun4")]
-WeaponController = NodePath("PlayerWeaponController")
+[node name="Player" unique_id=1386970244 instance=ExtResource("1_rmun4")]
 
 [node name="Character" parent="." index="0" unique_id=527218927 node_paths=PackedStringArray("CharacterStats")]
 CharacterStats = NodePath("CharacterStats")
@@ -305,62 +249,15 @@ _outgoingDamage = SubResource("Resource_outgoingDamage")
 _player = NodePath("../..")
 
 [node name="AnimatedSprite2D" parent="." index="1" unique_id=881638213]
-material = SubResource("ShaderMaterial_t84yk")
-sprite_frames = SubResource("SpriteFrames_bpnxk")
+material = SubResource("ShaderMaterial_vujg4")
+sprite_frames = SubResource("SpriteFrames_t84yk")
 animation = &"idle"
-
-[node name="StaminaBar" type="PanelContainer" parent="AnimatedSprite2D" index="0" unique_id=1291782904 node_paths=PackedStringArray("bar_left", "bar_right")]
-custom_minimum_size = Vector2(32, 0)
-custom_maximum_size = Vector2(32, 0.935)
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -35.5
-offset_top = 15.5
-offset_right = 4.5
-offset_bottom = 21.5
-grow_horizontal = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_agk5e")
-script = SubResource("GDScript_vsrt8")
-bar_left = NodePath("HBoxContainer/ProgressBar")
-bar_right = NodePath("HBoxContainer/ProgressBar2")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="AnimatedSprite2D/StaminaBar" index="0" unique_id=2067236946]
-layout_mode = 2
-theme_override_constants/separation = 0
-alignment = 1
-
-[node name="ProgressBar" type="ProgressBar" parent="AnimatedSprite2D/StaminaBar/HBoxContainer" index="0" unique_id=147081680]
-custom_minimum_size = Vector2(20, 0)
-custom_maximum_size = Vector2(-1, 2)
-layout_mode = 2
-theme_override_styles/background = SubResource("StyleBoxEmpty_63fni")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ahqxl")
-max_value = 1.0
-value = 0.1
-fill_mode = 1
-show_percentage = false
-
-[node name="ProgressBar2" type="ProgressBar" parent="AnimatedSprite2D/StaminaBar/HBoxContainer" index="1" unique_id=466949702]
-custom_minimum_size = Vector2(20, 0)
-custom_maximum_size = Vector2(-1, 2)
-layout_mode = 2
-theme_override_styles/background = SubResource("StyleBoxEmpty_63fni")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ahqxl")
-max_value = 1.0
-value = 0.1
-show_percentage = false
 
 [node name="PlayerCameraController" parent="." index="2" unique_id=68646763]
 editor_draw_limits = true
 
 [node name="LookLight" parent="." index="4" unique_id=1398023543]
 shadow_enabled = true
-
-[node name="PlayerHitController" type="Node" parent="." index="6" unique_id=1180614331 node_paths=PackedStringArray("_player", "_playerSprite")]
-script = ExtResource("6_klnc8")
-_player = NodePath("..")
-_playerSprite = NodePath("../AnimatedSprite2D")
 
 [node name="PlayerStatusEffectController" parent="." index="7" unique_id=1019311816]
 _testEffect = Array[ExtResource("7_qh10d")]([SubResource("Resource_agk5e")])
@@ -395,15 +292,5 @@ _projectileAttack = SubResource("Resource_7i0hn")
 [node name="CurrentWeaponUI" parent="." index="10" unique_id=2135368036 node_paths=PackedStringArray("_weaponController")]
 _weaponController = NodePath("../PlayerWeaponController")
 
-[node name="DamageVignette" type="CanvasLayer" parent="." index="12" unique_id=1915785476]
-script = SubResource("GDScript_t84yk")
-
-[node name="ColorRect" type="ColorRect" parent="DamageVignette" index="0" unique_id=1585437845]
-material = SubResource("ShaderMaterial_do71q")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[connection signal="OnDamaged" from="." to="DamageVignette" method="on_player_on_damaged" unbinds=1]
+[node name="ColorRect" parent="DamageVignette" parent_id_path=PackedInt32Array(758455490) index="0" unique_id=1773597369]
+material = SubResource("ShaderMaterial_7i0hn")

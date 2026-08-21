@@ -5,6 +5,7 @@
 
 [node name="PickupUi" type="CanvasLayer" unique_id=720680017 node_paths=PackedStringArray("grid_container")]
 process_mode = 3
+layer = 2
 script = ExtResource("1_5cant")
 limit = 6
 grid_container = NodePath("Control/HBoxContainer/CenterContainer/GridContainer")
@@ -28,6 +29,16 @@ metadata/_edit_lock_ = true
 [node name="HBoxContainer" type="HBoxContainer" parent="Control" unique_id=730578786]
 layout_mode = 2
 alignment = 1
+
+[node name="CloseLeft" type="Button" parent="Control/HBoxContainer" unique_id=1953490377]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+text = "C
+L
+O
+S
+E"
+autowrap_mode = 3
 
 [node name="CenterContainer" type="CenterContainer" parent="Control/HBoxContainer" unique_id=328059922]
 layout_mode = 2
@@ -56,10 +67,15 @@ layout_mode = 2
 [node name="ItemShowcase6" parent="Control/HBoxContainer/CenterContainer/GridContainer" unique_id=628245680 instance=ExtResource("2_5cant")]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="Control/HBoxContainer" unique_id=512666500]
-custom_minimum_size = Vector2(15.81, 0)
+[node name="CloseRight" type="Button" parent="Control/HBoxContainer" unique_id=1735945372]
+custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
-text = "CLOSE"
+text = "C
+L
+O
+S
+E"
 autowrap_mode = 3
 
-[connection signal="button_up" from="Control/HBoxContainer/Button" to="." method="queue_free"]
+[connection signal="button_up" from="Control/HBoxContainer/CloseLeft" to="." method="queue_free"]
+[connection signal="button_up" from="Control/HBoxContainer/CloseRight" to="." method="queue_free"]

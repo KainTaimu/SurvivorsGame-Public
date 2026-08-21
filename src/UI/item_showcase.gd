@@ -15,6 +15,7 @@ var has_item_been_assigned: bool
 @onready var item_icon_rect: TextureRect = $OuterPanel/InnerPanel/MainBody/MarginContainer/Top/TextureRect
 @onready var unassigned_texture: TextureRect = $OuterPanel/InnerPanel/UnassignedTexture
 @onready var main_body: Control = $OuterPanel/InnerPanel/MainBody
+@onready var highlight_sfx: AudioStreamPlayer = $AudioStreamPlayer
 
 
 func _gui_input(event: InputEvent) -> void:
@@ -27,9 +28,9 @@ func _gui_input(event: InputEvent) -> void:
 
 	if event is InputEventMouseMotion:
 		mouse_default_cursor_shape = (
-			CursorShape.CURSOR_POINTING_HAND
-			if get_viewport_rect().has_point(event.position)
-			else CursorShape.CURSOR_ARROW
+				CursorShape.CURSOR_POINTING_HAND
+				if get_viewport_rect().has_point(event.position)
+				else CursorShape.CURSOR_ARROW
 		)
 
 	var mouse := event as InputEventMouseButton
@@ -68,6 +69,8 @@ func _set_mouse_inside(inside: bool) -> void:
 		return
 	is_mouse_inside = inside
 	highlight(inside)
+	if inside:
+		highlight_sfx.play()
 
 
 func _set_assigned_state(set_as_assigned: bool) -> void:

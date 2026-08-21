@@ -8,6 +8,12 @@ namespace Game.Levels.Controllers;
 [GlobalClass]
 public partial class EnemyWaveController : Node
 {
+	[Signal]
+	public delegate void OnWaveStartEventHandler(AbstractWave wave);
+
+	[Signal]
+	public delegate void OnWaveEndEventHandler();
+
 	[Export]
 	public Array<AbstractWave> Waves = null!;
 
@@ -46,6 +52,18 @@ public partial class EnemyWaveController : Node
 		foreach (var wave in Waves)
 			wave.Initialize(this);
 
+		CallDeferred(MethodName.StartInitialWave);
+	}
+
+	public override void _Process(double delta)
+	{
+		if (!Enabled)
+			return;
+		_currentWave?.Process(delta);
+	}
+
+	private void StartInitialWave()
+	{
 		_currentWave = Waves.FirstOrDefault();
 		if (_currentWave is null)
 		{
@@ -55,13 +73,7 @@ public partial class EnemyWaveController : Node
 
 		_currentWave.OnWaveEnd += NextWave;
 		_currentWave.StartWave(_currentWaveIndex);
-	}
-
-	public override void _Process(double delta)
-	{
-		if (!Enabled)
-			return;
-		_currentWave?.Process(delta);
+		EmitSignalOnWaveStart(_currentWave);
 	}
 
 	public void NextWave()
@@ -80,6 +92,7 @@ public partial class EnemyWaveController : Node
 		_currentWave = Waves[_currentWaveIndex];
 		_currentWave.OnWaveEnd += NextWave;
 		_currentWave.StartWave(_currentWaveIndex);
+		EmitSignalOnWaveStart(_currentWave);
 	}
 
 	private float GetWaveProgress()

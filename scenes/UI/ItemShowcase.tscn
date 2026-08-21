@@ -2,6 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://djm14uecps0mk" path="res://assets/UI/pistol.png" id="1_7b1sg"]
 [ext_resource type="Script" uid="uid://cps5f3nnokc4x" path="res://src/UI/item_showcase.gd" id="1_ci30e"]
+[ext_resource type="AudioStream" uid="uid://b315gjj4kb745" path="res://assets/UI/SFX/click.wav" id="3_cy1ac"]
+[ext_resource type="Theme" uid="uid://cwyp7j6g53bhf" path="res://resources/UiThemes/NormalUi.tres" id="3_qlmw6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cy1ac"]
 bg_color = Color(0.003921569, 0.003921569, 0.003921569, 0.49803922)
@@ -185,6 +187,7 @@ theme_override_constants/margin_bottom = 8
 
 [node name="ScrollContainer" type="ScrollContainer" parent="OuterPanel/InnerPanel/MainBody/Bottom" unique_id=2060723370 node_paths=PackedStringArray("scroll_area")]
 layout_mode = 2
+theme = ExtResource("3_qlmw6")
 draw_focus_border = true
 script = SubResource("GDScript_7b1sg")
 scroll_area = NodePath("..")
@@ -195,6 +198,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 1
+theme_type_variation = &"square_sliders"
 theme_override_fonts/bold_font = SubResource("FontVariation_cy1ac")
 theme_override_font_sizes/normal_font_size = 17
 theme_override_font_sizes/bold_font_size = 17
@@ -213,6 +217,10 @@ scroll_active = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="OuterPanel/InnerPanel/MainBody/Bottom" unique_id=1528417307]
 libraries/ = SubResource("AnimationLibrary_cy1ac")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1038053473]
+stream = ExtResource("3_cy1ac")
+volume_db = 8.0
 
 [connection signal="mouse_entered" from="." to="." method="_set_mouse_inside" binds= [true]]
 [connection signal="mouse_exited" from="." to="." method="_set_mouse_inside" binds= [false]]

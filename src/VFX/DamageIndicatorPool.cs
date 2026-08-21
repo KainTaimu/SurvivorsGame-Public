@@ -42,6 +42,11 @@ public partial class DamageIndicatorPool : Node2D
 			PopulatePool();
 	}
 
+	public override void _ExitTree()
+	{
+		Instance = null;
+	}
+
 	private void PopulatePool()
 	{
 		for (var i = 0; i < PoolCount; i++)

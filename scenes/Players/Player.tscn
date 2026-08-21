@@ -4,15 +4,19 @@
 [ext_resource type="PackedScene" uid="uid://cw0jthbyjhm45" path="res://scenes/Players/Character.tscn" id="2_ragxt"]
 [ext_resource type="Texture2D" uid="uid://d20hfinyt8lgx" path="res://assets/Lighting/cone_e_blur_noise.png" id="4_eai52"]
 [ext_resource type="Script" uid="uid://cn5rlmdgj2uue" path="res://src/Players/Controllers/PlayerMovementController.cs" id="4_kfojw"]
+[ext_resource type="Script" uid="uid://bpdbdnifhxaxh" path="res://src/Players/Controllers/player_stamina_bar.gd" id="5_jgr36"]
 [ext_resource type="Script" uid="uid://jk25jpibrbm3" path="res://src/Players/Controllers/LookLight.cs" id="5_oypsu"]
 [ext_resource type="Texture2D" uid="uid://c0d0pkcn6hw68" path="res://assets/Players/player.png" id="5_ragxt"]
 [ext_resource type="Script" uid="uid://b8nlijamaetyr" path="res://src/Players/Controllers/PlayerCameraController.cs" id="6_kfojw"]
 [ext_resource type="Shader" uid="uid://bgl0yr4nfmpqx" path="res://src/Shaders/flash.gdshader" id="8_wuwji"]
 [ext_resource type="Texture2D" uid="uid://c7kegqurrrx0w" path="res://assets/VFX/small_chevron.png" id="9_c66x0"]
 [ext_resource type="Script" uid="uid://d2moqmcv2k22p" path="res://src/Players/Controllers/LookHeader.cs" id="10_k7ubp"]
+[ext_resource type="Script" uid="uid://bpqjji00j8p6x" path="res://src/Levels/Controllers/PlayerHitController.cs" id="10_ragxt"]
 [ext_resource type="Script" uid="uid://cp1kck1yb1g48" path="res://src/Players/Controllers/PlayerStatusEffectController.cs" id="11_f1vlf"]
 [ext_resource type="PackedScene" uid="uid://b7tvc0jib1mqf" path="res://scenes/Players/PlayerWeaponController.tscn" id="12_oypsu"]
 [ext_resource type="PackedScene" uid="uid://c5q166p2d4241" path="res://scenes/UI/CurrentWeaponUi.tscn" id="14_8rask"]
+[ext_resource type="Shader" uid="uid://bg3me0bhc4em2" path="res://src/Shaders/vignette.gdshader" id="16_2g2d6"]
+[ext_resource type="Script" uid="uid://bve4e6tonid55" path="res://src/Players/Controllers/player_damage_vignette.gd" id="16_8rask"]
 [ext_resource type="PackedScene" uid="uid://jqf8r7a2ybte" path="res://scenes/UI/CurrentStatusEffectsUi.tscn" id="26_xsyvw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5pqvm"]
@@ -90,6 +94,12 @@ animations = [{
 "speed": 7.0
 }]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oypsu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2g2d6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8rask"]
+
 [sub_resource type="Gradient" id="Gradient_oypsu"]
 offsets = PackedFloat32Array(0, 0.67409015)
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
@@ -124,13 +134,22 @@ scale_max = 8.0
 scale_curve = SubResource("CurveTexture_oypsu")
 turbulence_enabled = true
 
-[node name="Player" type="Node2D" unique_id=1386970244 node_paths=PackedStringArray("Character", "MovementController", "StatusEffectController")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jgr36"]
+resource_local_to_scene = true
+shader = ExtResource("16_2g2d6")
+shader_parameter/tint = Color(0.33618236, 2.6171097e-07, 1.2032687e-07, 1)
+shader_parameter/alpha = 0.0
+shader_parameter/inner_radius = 0.0
+shader_parameter/outer_radius = 1.0
+
+[node name="Player" type="Node2D" unique_id=1386970244 node_paths=PackedStringArray("Character", "MovementController", "WeaponController", "StatusEffectController")]
 top_level = true
 z_index = 32
 z_as_relative = false
 script = ExtResource("1_f0mf6")
 Character = NodePath("Character")
 MovementController = NodePath("PlayerMovementController")
+WeaponController = NodePath("PlayerWeaponController")
 StatusEffectController = NodePath("PlayerStatusEffectController")
 
 [node name="Character" parent="." unique_id=527218927 instance=ExtResource("2_ragxt")]
@@ -142,6 +161,48 @@ sprite_frames = SubResource("SpriteFrames_dpv53")
 animation = &"run"
 autoplay = "idle"
 metadata/_edit_lock_ = true
+
+[node name="StaminaBar" type="PanelContainer" parent="AnimatedSprite2D" unique_id=1603668418 node_paths=PackedStringArray("bar_left", "bar_right")]
+custom_minimum_size = Vector2(32, 0)
+custom_maximum_size = Vector2(32, 0.935)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -35.5
+offset_top = 15.5
+offset_right = 4.5
+offset_bottom = 21.5
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_oypsu")
+script = ExtResource("5_jgr36")
+bar_left = NodePath("HBoxContainer/ProgressBar")
+bar_right = NodePath("HBoxContainer/ProgressBar2")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="AnimatedSprite2D/StaminaBar" unique_id=999998940]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="AnimatedSprite2D/StaminaBar/HBoxContainer" unique_id=18844233]
+custom_minimum_size = Vector2(20, 0)
+custom_maximum_size = Vector2(-1, 2)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxEmpty_2g2d6")
+theme_override_styles/fill = SubResource("StyleBoxFlat_8rask")
+max_value = 1.0
+value = 0.1
+fill_mode = 1
+show_percentage = false
+
+[node name="ProgressBar2" type="ProgressBar" parent="AnimatedSprite2D/StaminaBar/HBoxContainer" unique_id=144657136]
+custom_minimum_size = Vector2(20, 0)
+custom_maximum_size = Vector2(-1, 2)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxEmpty_2g2d6")
+theme_override_styles/fill = SubResource("StyleBoxFlat_8rask")
+max_value = 1.0
+value = 0.1
+show_percentage = false
 
 [node name="PlayerCameraController" type="Camera2D" parent="." unique_id=68646763]
 zoom = Vector2(0.7, 0.7)
@@ -175,6 +236,11 @@ texture = ExtResource("9_c66x0")
 offset = Vector2(0, 5)
 script = ExtResource("10_k7ubp")
 
+[node name="PlayerHitController" type="Node" parent="." unique_id=591710493 node_paths=PackedStringArray("_player", "_playerSprite")]
+script = ExtResource("10_ragxt")
+_player = NodePath("..")
+_playerSprite = NodePath("../AnimatedSprite2D")
+
 [node name="PlayerStatusEffectController" type="Node" parent="." unique_id=1019311816 node_paths=PackedStringArray("Player")]
 script = ExtResource("11_f1vlf")
 Player = NodePath("..")
@@ -197,7 +263,21 @@ process_material = SubResource("ParticleProcessMaterial_oypsu")
 
 [node name="PlayerWeaponController" parent="." unique_id=1687061162 instance=ExtResource("12_oypsu")]
 
-[node name="CurrentWeaponUI" parent="." unique_id=2135368036 instance=ExtResource("14_8rask")]
+[node name="CurrentWeaponUI" parent="." unique_id=2135368036 node_paths=PackedStringArray("_weaponController") instance=ExtResource("14_8rask")]
+_weaponController = NodePath("../PlayerWeaponController")
 
 [node name="CurrentStatusEffectsUI" parent="." unique_id=1231089179 node_paths=PackedStringArray("_statusEffectController") instance=ExtResource("26_xsyvw")]
 _statusEffectController = NodePath("../PlayerStatusEffectController")
+
+[node name="DamageVignette" type="CanvasLayer" parent="." unique_id=758455490]
+script = ExtResource("16_8rask")
+
+[node name="ColorRect" type="ColorRect" parent="DamageVignette" unique_id=1773597369]
+material = SubResource("ShaderMaterial_jgr36")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="OnDamaged" from="." to="DamageVignette" method="on_player_damaged" unbinds=1]
