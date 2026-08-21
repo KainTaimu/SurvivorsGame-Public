@@ -33,6 +33,7 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable
 	private readonly ProjectilePool _pool = new();
 
 	private static Crosshair? Crosshair => Crosshair.Instance;
+	private static readonly RandomNumberGenerator _rng = new();
 
 	public override void _Ready()
 	{
@@ -122,8 +123,8 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable
 		var rotation = playerPosition.AngleToPoint(mouseVector);
 
 		var bloomRad = BloomCoefficientDeg * (Math.PI / 180);
-		var bloom = (float)GD.RandRange(-bloomRad / 2, bloomRad / 2);
-		rotation += bloom;
+		var bloom = 0.0 + (bloomRad / 2) * _rng.Randfn();
+		rotation += (float)bloom;
 		var scale = Vector2.One * FirearmStats.ProjectileScaleMultiplier;
 
 		_projectileAttack.Attack(

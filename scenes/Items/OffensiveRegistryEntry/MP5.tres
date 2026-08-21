@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://nsapijc5eire"]
 
-[ext_resource type="PackedScene" uid="uid://dwyqdinyji8tt" path="res://scenes/Items/Offensive/Smg.tscn" id="1_gwgtj"]
+[ext_resource type="PackedScene" uid="uid://dwyqdinyji8tt" path="res://scenes/Items/Offensive/MP5.tscn" id="1_gwgtj"]
 [ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_tnl0r"]
 
 [resource]

@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="5_b063g"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_80yi6"]
 [ext_resource type="AudioStream" uid="uid://dke0024gjr247" path="res://assets/SFX/Shoot/freesound_community-silenced-gunshot-81063.mp3" id="7_4x84d"]
-[ext_resource type="AudioStream" uid="uid://bmkybqxa3cdlq" path="res://assets/SFX/mag_almost_empty.wav" id="8_nlo4n"]
+[ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="8_gq4t1"]
 
 [sub_resource type="Resource" id="Resource_ofy2w"]
 script = ExtResource("3_pm3ln")
@@ -17,7 +17,7 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 script = ExtResource("4_rrw7n")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_t84yk"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8f87a"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_bpnxk"]
@@ -29,7 +29,7 @@ metadata/_custom_type_script = "uid://8rt54h4imtxv"
 [sub_resource type="Resource" id="Resource_7i0hn"]
 script = ExtResource("6_80yi6")
 ReloadTime = 4.0
-BloomCoefficientDeg = 16.0
+BloomCoefficientDeg = 12.0
 MagazineCapacity = 200
 RecoilScale = 1.2
 BaseDamage = 14
@@ -61,11 +61,7 @@ pitch_scale = 1.3
 max_polyphony = 2
 bus = &"ShootSfx"
 
-[node name="MagAlmostEmpty" type="AudioStreamPlayer" parent="." unique_id=425301793]
-process_mode = 3
-stream = ExtResource("8_nlo4n")
-volume_db = 16.0
-max_polyphony = 30
+[node name="MagAlmostEmpty" parent="." unique_id=866300451 instance=ExtResource("8_gq4t1")]
 
 [connection signal="AlmostEmpty" from="." to="MagAlmostEmpty" method="play"]
 [connection signal="OnAttack" from="." to="Shoot" method="play"]

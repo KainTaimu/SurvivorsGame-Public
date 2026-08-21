@@ -20,7 +20,7 @@ metadata/_custom_type_script = "uid://dnodsacrptssb"
 [sub_resource type="Resource" id="Resource_7i0hn"]
 script = ExtResource("5_mkjub")
 Name = "MGL-67"
-Description = ""
+Description = "A 6-cylinder grenade launcher firing high-explosive rounds."
 ItemIcon = ExtResource("4_k0hvc")
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 

@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="4_2l6dk"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_6nomv"]
 [ext_resource type="AudioStream" uid="uid://bk4ur13n1hsy2" path="res://assets/SFX/Shoot/Snake's SECOND Authentic Gun Sounds/Full Sounds/9mm/WAV/9mm Single.wav" id="5_1j0xa"]
-[ext_resource type="AudioStream" uid="uid://bmkybqxa3cdlq" path="res://assets/SFX/mag_almost_empty.wav" id="8_2l6dk"]
+[ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="8_bpjd4"]
 
 [sub_resource type="Resource" id="Resource_o8yur"]
 script = ExtResource("3_2l6dk")
@@ -17,13 +17,13 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 script = ExtResource("4_2l6dk")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_2l6dk"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8f87a"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_jkkrv"]
 script = ExtResource("3_yc6ub")
 Name = "M17"
-Description = "Basic-ass pistol"
+Description = "A rugged 9x19 pistol. Uses 21-round magazines"
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_k3dr5"]
@@ -41,6 +41,7 @@ CameraRecoilScale = 0.2
 BaseDamage = 5
 BaseProjectileSpeed = 3200
 BaseProjectileScaleMultiplier = 0.8
+BaseProjectileRadius = 28
 BaseAttackSpeed = 0.2
 Additional = Dictionary[String, Variant]({
 "Knockback": 5.0,
@@ -62,11 +63,7 @@ stream = ExtResource("5_1j0xa")
 volume_db = -8.0
 bus = &"ShootSfx"
 
-[node name="MagAlmostEmpty" type="AudioStreamPlayer" parent="." unique_id=110896041]
-process_mode = 3
-stream = ExtResource("8_2l6dk")
-volume_db = 8.0
-max_polyphony = 30
+[node name="MagAlmostEmpty" parent="." unique_id=866300451 instance=ExtResource("8_bpjd4")]
 
 [connection signal="AlmostEmpty" from="." to="MagAlmostEmpty" method="play"]
 [connection signal="OnAttack" from="." to="Shoot" method="play"]

@@ -16,19 +16,19 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 script = ExtResource("4_2ovbf")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nihe0"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8f87a"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_j05a4"]
 script = ExtResource("5_2akch")
 Name = "AA-12"
-Description = ""
+Description = "A 12-gauge automatic combat shotgun equipped with a 20-round drum."
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_0tk84"]
 script = ExtResource("6_i7f5u")
 ReloadTime = 3.0
-BloomCoefficientDeg = 25.0
+BloomCoefficientDeg = 13.0
 MagazineCapacity = 20
 HorizontalRecoilMin = 20.0
 HorizontalBaseRecoil = 20.0

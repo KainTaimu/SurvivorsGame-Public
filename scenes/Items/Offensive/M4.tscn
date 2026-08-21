@@ -7,8 +7,8 @@
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="4_ffmje"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="4_g7fad"]
 [ext_resource type="AudioStream" uid="uid://csidm3n6qam6n" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Full Sound/5.56/WAV/556 Single WAV.wav" id="5_ffmje"]
-[ext_resource type="AudioStream" uid="uid://bmkybqxa3cdlq" path="res://assets/SFX/mag_almost_empty.wav" id="6_jvsi7"]
 [ext_resource type="AudioStream" uid="uid://b0bq5864hlorn" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Reloads, Cycling & More/WAV/Angel Mag Reload Full WAV.wav" id="9_g7fad"]
+[ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="9_lxy8y"]
 
 [sub_resource type="Resource" id="Resource_mre4m"]
 script = ExtResource("3_2fu6x")
@@ -18,7 +18,7 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 script = ExtResource("4_g7fad")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nihe0"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8f87a"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_40q5n"]
@@ -31,7 +31,6 @@ metadata/_custom_type_script = "uid://8rt54h4imtxv"
 script = ExtResource("3_jvsi7")
 ReloadTime = 1.2
 BloomCoefficientDeg = 6.0
-MagazineCapacity = 40
 HorizontalBaseRecoil = 6.0
 VerticalRecoilMin = 5.0
 VerticalBaseRecoil = 5.0
@@ -66,14 +65,10 @@ volume_db = -5.0
 max_polyphony = 30
 bus = &"ShootSfx"
 
-[node name="MagAlmostEmpty" type="AudioStreamPlayer" parent="." unique_id=1267577873]
-process_mode = 3
-stream = ExtResource("6_jvsi7")
-volume_db = 16.0
-max_polyphony = 30
-
 [node name="Reload" type="AudioStreamPlayer" parent="." unique_id=1204958426]
 stream = ExtResource("9_g7fad")
+
+[node name="MagAlmostEmpty" parent="." unique_id=866300451 instance=ExtResource("9_lxy8y")]
 
 [connection signal="AlmostEmpty" from="." to="MagAlmostEmpty" method="play"]
 [connection signal="OnAttack" from="." to="Shoot" method="play"]

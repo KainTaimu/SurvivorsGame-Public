@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="3_tg8rs"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_tg8rs"]
 [ext_resource type="AudioStream" uid="uid://d3yyntc5ktx40" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Full Sound/7.62x39/WAV/762x39 Single WAV.wav" id="5_rp6n0"]
-[ext_resource type="AudioStream" uid="uid://bmkybqxa3cdlq" path="res://assets/SFX/mag_almost_empty.wav" id="6_ld3kt"]
+[ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="8_nihe0"]
 
 [sub_resource type="Resource" id="Resource_6nomv"]
 script = ExtResource("3_nihe0")
@@ -17,7 +17,7 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 script = ExtResource("3_tg8rs")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nihe0"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8f87a"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_eai52"]
@@ -29,7 +29,6 @@ Description = "The infamous Soviet rifle chambered in 7.62x39mm. It deals a larg
 script = ExtResource("4_tg8rs")
 ReloadTime = 1.2
 BloomCoefficientDeg = 10.0
-MagazineCapacity = 60
 HorizontalRecoilMin = 5.0
 HorizontalBaseRecoil = 12.0
 VerticalRecoilMin = 8.0
@@ -63,11 +62,7 @@ stream = ExtResource("5_rp6n0")
 volume_db = 2.0
 bus = &"ShootSfx"
 
-[node name="MagAlmostEmpty" type="AudioStreamPlayer" parent="." unique_id=1506708634]
-process_mode = 3
-stream = ExtResource("6_ld3kt")
-volume_db = 16.0
-max_polyphony = 30
+[node name="MagAlmostEmpty" parent="." unique_id=866300451 instance=ExtResource("8_nihe0")]
 
 [connection signal="AlmostEmpty" from="." to="MagAlmostEmpty" method="play"]
 [connection signal="OnAttack" from="." to="Shoot" method="play"]

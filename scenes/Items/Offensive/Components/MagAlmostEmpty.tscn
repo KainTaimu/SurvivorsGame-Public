@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dghvpfmj68ok"]
+
+[ext_resource type="AudioStream" uid="uid://bmkybqxa3cdlq" path="res://assets/SFX/mag_almost_empty.wav" id="1_a0w4w"]
+
+[node name="MagAlmostEmpty" type="AudioStreamPlayer" unique_id=866300451]
+process_mode = 3
+stream = ExtResource("1_a0w4w")
+volume_db = 8.0
+max_polyphony = 30

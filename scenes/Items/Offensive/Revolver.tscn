@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d4hn7uwvshdju" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_o3lg4"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_whe3a"]
-[ext_resource type="Resource" uid="uid://cs331x12hmlod" path="res://scenes/Items/Offensive/SemiAutoFireGroup.tres" id="3_0u5yb"]
+[ext_resource type="Resource" uid="uid://cs331x12hmlod" path="res://resources/FireGroups/SemiAutoFireGroup.tres" id="3_0u5yb"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="4_fgf34"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="5_0u5yb"]
 [ext_resource type="AudioStream" uid="uid://dspbe1b535vno" path="res://assets/SFX/revolver_cocking.mp3" id="6_0u5yb"]
@@ -13,13 +13,13 @@
 script = ExtResource("4_fgf34")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nihe0"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8f87a"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_y3hip"]
 script = ExtResource("5_0u5yb")
-Name = "Revolver"
-Description = ""
+Name = "M1917"
+Description = "A 6-cylinder revolver"
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_n3sky"]

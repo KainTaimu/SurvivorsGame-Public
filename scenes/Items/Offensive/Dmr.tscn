@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="4_db67r"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_f5pnb"]
 [ext_resource type="AudioStream" uid="uid://csidm3n6qam6n" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Full Sound/5.56/WAV/556 Single WAV.wav" id="5_db67r"]
-[ext_resource type="AudioStream" uid="uid://bmkybqxa3cdlq" path="res://assets/SFX/mag_almost_empty.wav" id="6_icohf"]
+[ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="8_0f2tb"]
 
 [sub_resource type="Resource" id="Resource_62a23"]
 script = ExtResource("3_f5pnb")
@@ -17,7 +17,7 @@ metadata/_custom_type_script = "uid://dnodsacrptssb"
 script = ExtResource("4_db67r")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nihe0"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8f87a"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_o65qt"]
@@ -75,11 +75,7 @@ pitch_scale = 0.9
 max_polyphony = 30
 bus = &"ShootSfx"
 
-[node name="MagAlmostEmpty" type="AudioStreamPlayer" parent="." unique_id=1199113509]
-process_mode = 3
-stream = ExtResource("6_icohf")
-volume_db = 16.0
-max_polyphony = 30
+[node name="MagAlmostEmpty" parent="." unique_id=866300451 instance=ExtResource("8_0f2tb")]
 
 [connection signal="AlmostEmpty" from="." to="MagAlmostEmpty" method="play"]
 [connection signal="OnAttack" from="." to="Shoot" method="play"]

@@ -28,6 +28,8 @@ public partial class Shotgun : AbstractFirearm, IReloadable
 
 	private readonly ProjectilePool _pool = new();
 
+	private static readonly RandomNumberGenerator _rng = new();
+
 	private static Crosshair? Crosshair => Crosshair.Instance;
 	public bool IsReloading { get; private set; }
 
@@ -120,7 +122,7 @@ public partial class Shotgun : AbstractFirearm, IReloadable
 		for (var i = 0; i < PelletCount; i++)
 		{
 			var bloomRad = BloomCoefficientDeg * (Math.PI / 180);
-			var bloom = (float)GD.RandRange(-bloomRad / 2, bloomRad / 2);
+			var bloom = 0.0 + (bloomRad / 2) * _rng.Randfn();
 			var rotation = baseRotation + bloom;
 			var scale = Vector2.One * FirearmStats.ProjectileScaleMultiplier;
 			var speed = OffensiveStats.ProjectileSpeed * (float)GD.RandRange(1f, 2f);
@@ -128,7 +130,7 @@ public partial class Shotgun : AbstractFirearm, IReloadable
 			_projectileAttack.Attack(
 				_pool.GetProjectile,
 				Player.GlobalPosition,
-				rotation,
+				(float)rotation,
 				FirearmStats.ProjectileRadius,
 				speed,
 				FirearmStats.PierceLimit,
