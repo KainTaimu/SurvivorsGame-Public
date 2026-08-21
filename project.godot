@@ -31,6 +31,7 @@ PauseController="*uid://dhous8k4t2iwo"
 [debug]
 
 file_logging/enable_file_logging=true
+gdscript/warnings/integer_division=0
 shapes/navigation/2d/geometry_face_color=Color(0.49995556, 1, 1, 0.048)
 
 [display]

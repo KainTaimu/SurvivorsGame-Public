@@ -1,30 +1,42 @@
+class_name PickupUi
 extends Node
 
-@export var limit: int = 3
-@export var grid_container: Control
+@export var show_on_start: bool = false
+@export var show_on_start_item_count: int = 3
+
+@export_group("Internal")
+@export var grid_container: GridContainer
 @export var weapon_registry: Registry = preload("uid://cafl4rhi4lyju")
+@export var showcase_scene: PackedScene = preload("uid://c0svlhjww3qot")
 
 var showcases: Array[ItemShowcase] = []
+var weapons_picked: Array[OffensiveRegistryEntry] = []
 
 
 func _ready() -> void:
+	_initialize_showcases()
+	if show_on_start:
+		show_ui.call_deferred(show_on_start_item_count)
+
+
+func show_ui(item_limit: int) -> void:
+	item_limit = min(item_limit, showcases.size())
+
 	PauseController.Lock(self)
 	PauseController.Pause(self)
-	_initialize_showcases()
 	var all := weapon_registry.load_all_blocking()
 	var weapons := all.values() as Array[Resource]
-	_shuffle_array(weapons)
 
 	for showcase in showcases:
-		var entry := weapons.pop_front() as OffensiveRegistryEntry
+		var entry := _weighted_pick(weapons) as OffensiveRegistryEntry
 		if entry == null:
 			CustomLogger.log_error("expected OffensiveRegistryEntry. got %s" % typeof(entry))
 			continue
 		var stats := _get_property_from_scene(entry.scene, "Stats") as BaseItemStats
 		var props := _get_property_from_scene(entry.scene, "Properties") as BaseItemProperties
 		showcase.assign_item(entry.scene, props, stats)
-		limit -= 1
-		if limit == 0:
+		item_limit -= 1
+		if item_limit == 0:
 			return
 
 
@@ -37,16 +49,13 @@ func exit() -> void:
 	queue_free()
 
 
-func _initialize_showcases() -> int:
-	var count := 0
+func _initialize_showcases():
 	for child in grid_container.get_children():
 		var showcase := child as ItemShowcase
 		if showcase == null:
 			continue
-		count += 1
 		showcases.append(showcase)
 		showcase.on_item_picked.connect(_on_item_picked)
-	return count
 
 
 func _on_item_picked(picked_scene: PackedScene) -> void:
@@ -59,14 +68,38 @@ func _on_item_picked(picked_scene: PackedScene) -> void:
 	queue_free()
 
 
-static func _shuffle_array(arr: Array):
-	var n := len(arr)
-	while n > 1:
-		var k := randi_range(0, n) % n
-		n -= 1
-		var tmp = arr[n]
-		arr[n] = arr[k]
-		arr[k] = tmp
+func _weighted_pick(
+		weapons: Array[Resource],
+) -> OffensiveRegistryEntry:
+	var picked: OffensiveRegistryEntry = null
+
+	var eligible: Array[OffensiveRegistryEntry] = []
+	var total := 0.0
+	for w in weapons:
+		var weapon := w as OffensiveRegistryEntry
+		if weapon == null or w in weapons_picked:
+			continue
+		eligible.append(weapon)
+		total += weapon.spawn_weight
+
+	if total <= 0.0:
+		if eligible.is_empty():
+			return null
+		picked = eligible[randi() % eligible.size()]
+		weapons_picked.append(picked)
+		return picked
+
+	var r := randf() * total
+	var cumulative := 0.0
+	for weapon in eligible:
+		cumulative += weapon.spawn_weight
+		if r < cumulative:
+			weapons_picked.append(weapon)
+			return weapon
+
+	picked = eligible[eligible.size() - 1]
+	weapons_picked.append(picked)
+	return picked
 
 
 static func _get_property_from_scene(scene: PackedScene, property_name: String) -> Variant:

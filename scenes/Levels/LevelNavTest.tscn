@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://d2tvxgxbv87i2" path="res://src/Levels/Controllers/WeightedWaveBlueprintCollection.cs" id="5_lkbse"]
 [ext_resource type="PackedScene" uid="uid://tw6dfgyd6h7y" path="res://scenes/Levels/EnemyNavMeshController.tscn" id="8_7b5vb"]
 [ext_resource type="Script" uid="uid://cksmwvaxx1m18" path="res://src/Levels/Controllers/WaveSpawnCount.cs" id="9_4ljo6"]
+[ext_resource type="Resource" uid="uid://nvj82uku7ht1" path="res://scenes/Enemies/Blueprints/Sprinter.tres" id="9_l75en"]
 [ext_resource type="Script" uid="uid://bhhh8235y54bg" path="res://src/Levels/Controllers/WaveDebugStopper.cs" id="10_chdw3"]
 [ext_resource type="Script" uid="uid://daw8gyvo0xom3" path="res://src/UI/FrameTime.cs" id="12_2ki1j"]
 [ext_resource type="PackedScene" uid="uid://dyh06qakgf4q2" path="res://scenes/Players/DebugClassInspector.tscn" id="13_j7ywk"]
@@ -65,23 +66,9 @@ script = ExtResource("4_7b5vb")
 Blueprint = SubResource("Resource_j7ywk")
 metadata/_custom_type_script = "uid://dau6m811dtep8"
 
-[sub_resource type="Resource" id="Resource_jodo0"]
-script = ExtResource("2_gm6l2")
-MaxHealth = 2
-MoveSpeed = 300.0
-SpriteScaleMultiplier = 0.85
-metadata/_custom_type_script = "uid://y77qtp32wo00"
-
-[sub_resource type="Resource" id="Resource_r2c2u"]
-script = ExtResource("3_sx6oq")
-Name = "Sprinter"
-SpriteName = "placeholder"
-Type = 1
-Stats = SubResource("Resource_jodo0")
-
 [sub_resource type="Resource" id="Resource_ns76g"]
 script = ExtResource("4_7b5vb")
-Blueprint = SubResource("Resource_r2c2u")
+Blueprint = ExtResource("9_l75en")
 Weight = 0.25
 metadata/_custom_type_script = "uid://dau6m811dtep8"
 
@@ -130,23 +117,9 @@ script = ExtResource("4_7b5vb")
 Blueprint = SubResource("Resource_s5ql2")
 metadata/_custom_type_script = "uid://dau6m811dtep8"
 
-[sub_resource type="Resource" id="Resource_nm68w"]
-script = ExtResource("2_gm6l2")
-MaxHealth = 2
-MoveSpeed = 300.0
-SpriteScaleMultiplier = 0.85
-metadata/_custom_type_script = "uid://y77qtp32wo00"
-
-[sub_resource type="Resource" id="Resource_fs3it"]
-script = ExtResource("3_sx6oq")
-Name = "Sprinter"
-SpriteName = "placeholder"
-Type = 1
-Stats = SubResource("Resource_nm68w")
-
 [sub_resource type="Resource" id="Resource_yysbr"]
 script = ExtResource("4_7b5vb")
-Blueprint = SubResource("Resource_fs3it")
+Blueprint = ExtResource("9_l75en")
 Weight = 0.25
 metadata/_custom_type_script = "uid://dau6m811dtep8"
 
@@ -421,6 +394,9 @@ WaveController = NodePath("../EnemySystems/EnemyWaveController")
 script = ExtResource("4_chdw3")
 pickup_scene = ExtResource("5_h7ouo")
 
+[node name="PickupUi" parent="Systems/LevelSystems/LevelUpManager" index="0" unique_id=720680017 instance=ExtResource("5_h7ouo")]
+show_on_start = true
+
 [node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=2001503768]
 Waves = Array[Object]([SubResource("Resource_0qe1x"), SubResource("Resource_4ljo6"), SubResource("Resource_uj3cf"), SubResource("Resource_wbp0e")])
 
@@ -469,4 +445,4 @@ scale = Vector2(1.7116618, 1.7116618)
 text = "POSITION"
 label_settings = ExtResource("14_3bukj")
 
-[connection signal="OnWaveStart" from="Systems/EnemySystems/EnemyWaveController" to="Systems/LevelSystems/LevelUpManager" method="on_enemy_wave_controller_wave_start"]
+[connection signal="OnWaveEnd" from="Systems/EnemySystems/EnemyWaveController" to="Systems/LevelSystems/LevelUpManager" method="on_enemy_wave_controller_wave_end"]

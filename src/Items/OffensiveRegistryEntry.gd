@@ -1,7 +1,6 @@
 class_name OffensiveRegistryEntry
 extends Resource
 
-enum Rarity {None}
-
 @export var scene: PackedScene
-@export var rarity: Rarity = Rarity.None
+## Lower is rarer
+@export_range(0, 1, 0.001) var spawn_weight: float
