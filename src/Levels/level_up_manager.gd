@@ -9,5 +9,5 @@ func on_enemy_wave_controller_wave_end() -> void:
 
 func _create_pickup_ui():
 	var pc: PickupUi = pickup_scene.instantiate()
-	pc.show_ui(9)
+	pc.show_ui(9, Globals.Rarity.COMMON)
 	add_child(pc)

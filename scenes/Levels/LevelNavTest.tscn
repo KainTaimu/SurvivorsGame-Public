@@ -85,7 +85,6 @@ metadata/_custom_type_script = "uid://dau6m811dtep8"
 [sub_resource type="Resource" id="Resource_vwdg1"]
 script = ExtResource("5_lkbse")
 Weights = Array[Object]([SubResource("Resource_h7ouo"), SubResource("Resource_f1jhi")])
-metadata/_custom_type_script = "uid://d2tvxgxbv87i2"
 
 [sub_resource type="Curve" id="Curve_i1qcg"]
 _data = [Vector2(0.5, 0.5), -660.5723, 146.4773, 1, 1, Vector2(0.5034135, 1), 146.4773, 0.0, 1, 1, Vector2(1, 1), 0.0, -1.0, 1, 1]
@@ -150,7 +149,6 @@ metadata/_custom_type_script = "uid://dau6m811dtep8"
 [sub_resource type="Resource" id="Resource_trh12"]
 script = ExtResource("5_lkbse")
 Weights = Array[Object]([SubResource("Resource_uo14t"), SubResource("Resource_s5ql2")])
-metadata/_custom_type_script = "uid://d2tvxgxbv87i2"
 
 [sub_resource type="Curve" id="Curve_nm68w"]
 _data = [Vector2(0.74734634, 0), 0.0, 99864.38, 0, 1, Vector2(0.74735636, 1), 99864.38, 0.0, 1, 0]

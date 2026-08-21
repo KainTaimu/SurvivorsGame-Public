@@ -1,6 +1,16 @@
 [gd_scene format=3 uid="uid://c8vjoa3wtku3l"]
 
 [ext_resource type="Script" uid="uid://cfprl4wo8svao" path="res://src/UI/pickup_ui.gd" id="1_5cant"]
+[ext_resource type="Shader" uid="uid://cjavr4nj3ysk" path="res://src/Shaders/bw.gdshader" id="2_5cant"]
+[ext_resource type="Shader" uid="uid://bdro8be0jajun" path="res://src/Shaders/blur.gdshader" id="3_8b1c8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8b1c8"]
+shader = ExtResource("2_5cant")
+shader_parameter/saturation = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ogoab"]
+shader = ExtResource("3_8b1c8")
+shader_parameter/amount = 1.0000000475
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5cant"]
 content_margin_left = 0.0
@@ -34,6 +44,33 @@ process_mode = 3
 layer = 2
 script = ExtResource("1_5cant")
 grid_container = NodePath("Control/MarginContainer/HBoxContainer/CenterContainer/GridContainer")
+
+[node name="Grayscale" type="ColorRect" parent="." unique_id=711175140]
+material = SubResource("ShaderMaterial_8b1c8")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Dim" type="ColorRect" parent="." unique_id=301653202]
+z_index = -1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.011764706, 0.011764706, 0.011764706, 0.49803922)
+metadata/_edit_lock_ = true
+
+[node name="Blur" type="ColorRect" parent="." unique_id=707983756]
+material = SubResource("ShaderMaterial_ogoab")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Control" type="PanelContainer" parent="." unique_id=1639386775]
 process_mode = 3
@@ -96,3 +133,5 @@ script = SubResource("GDScript_qlmw6")
 [connection signal="mouse_entered" from="Control/MarginContainer/HBoxContainer/CloseLeft" to="Control/MarginContainer/HBoxContainer/CloseLeft" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="Control/MarginContainer/HBoxContainer/CloseLeft" to="Control/MarginContainer/HBoxContainer/CloseLeft" method="_on_mouse_exited"]
 [connection signal="button_up" from="Control/MarginContainer/HBoxContainer/CloseRight" to="." method="queue_free"]
+[connection signal="mouse_entered" from="Control/MarginContainer/HBoxContainer/CloseRight" to="Control/MarginContainer/HBoxContainer/CloseRight" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Control/MarginContainer/HBoxContainer/CloseRight" to="Control/MarginContainer/HBoxContainer/CloseRight" method="_on_mouse_exited"]

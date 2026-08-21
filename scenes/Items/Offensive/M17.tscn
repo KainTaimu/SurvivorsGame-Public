@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="8_bpjd4"]
 
 [sub_resource type="Resource" id="Resource_o8yur"]
+resource_local_to_scene = true
 script = ExtResource("3_2l6dk")
 metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 
@@ -17,18 +18,18 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 script = ExtResource("4_2l6dk")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8f87a"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_bpjd4"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_jkkrv"]
 script = ExtResource("3_yc6ub")
 Name = "M17"
-Description = "A rugged 9x19 pistol. Uses 21-round magazines"
+Description = "A rugged 9x19 pistol. Trades low damage for a large 21-round magazine."
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_k3dr5"]
 script = ExtResource("4_6nomv")
-ReloadTime = 1.2
+ReloadTime = 2.0
 BloomCoefficientDeg = 2.5
 MagazineCapacity = 21
 HorizontalRecoilMin = 0.5
@@ -38,7 +39,8 @@ VerticalBaseRecoil = 6.0
 VerticalRecoilRandom = 0.25
 HorizontalRecoilPunish = false
 CameraRecoilScale = 0.2
-BaseDamage = 5
+BaseDamage = 6
+BaseDamageVarianceMultiplier = 0.2
 BaseProjectileSpeed = 3200
 BaseProjectileScaleMultiplier = 0.8
 BaseProjectileRadius = 28

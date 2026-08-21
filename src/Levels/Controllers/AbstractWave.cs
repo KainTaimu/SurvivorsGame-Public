@@ -12,7 +12,7 @@ public abstract partial class AbstractWave : Resource, IEnemyWave
 	[Signal]
 	public delegate void OnWaveEndEventHandler();
 
-	[ExportGroup("Base")]
+	[ExportGroup("Spawning")]
 	[Export]
 	public AbstractWaveBlueprintCollection EnemyBlueprints = null!;
 
@@ -64,6 +64,10 @@ public abstract partial class AbstractWave : Resource, IEnemyWave
 
 	[Export]
 	public Curve? SpawnBatchCurveOverMaxTime;
+
+	[ExportGroup("Completion Rewards")]
+	[Export]
+	public int Reward;
 
 	public HashSet<Entity> SpawnedEntities => WaveController.SpawnedEntities;
 

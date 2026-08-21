@@ -3,6 +3,7 @@ extends Node
 
 @export var show_on_start: bool = false
 @export var show_on_start_item_count: int = 3
+@export var show_on_start_rarity_gate: Globals.Rarity = Globals.Rarity.COMMON
 
 @export_group("Internal")
 @export var grid_container: GridContainer
@@ -16,17 +17,23 @@ var weapons_picked: Array[OffensiveRegistryEntry] = []
 func _ready() -> void:
 	if show_on_start:
 		_initialize_showcases(show_on_start_item_count)
-		show_ui.call_deferred(show_on_start_item_count)
+		show_ui.call_deferred(show_on_start_item_count, show_on_start_rarity_gate)
 
 
-func show_ui(item_limit: int) -> void:
-	_initialize_showcases(item_limit)
+func show_ui(item_limit: int, rarity_gate: Globals.Rarity) -> void:
 	item_limit = min(item_limit, showcases.size())
 
 	PauseController.Lock(self)
 	PauseController.Pause(self)
 	var all := weapon_registry.load_all_blocking()
 	var weapons := all.values() as Array[Resource]
+
+	var gated: Array[Resource] = []
+	for w in weapons:
+		if w.rarity <= rarity_gate:
+			gated.append(w)
+	weapons = gated
+	_initialize_showcases(len(weapons))
 
 	for showcase in showcases:
 		if len(weapons_picked) == len(weapons):

@@ -9,7 +9,7 @@ namespace Game.Levels.Controllers;
 public partial class EnemyWaveController : Node
 {
 	[Signal]
-	public delegate void OnWaveStartEventHandler();
+	public delegate void OnWaveStartEventHandler(AbstractWave wave);
 
 	[Signal]
 	public delegate void OnWaveEndEventHandler();
@@ -76,10 +76,7 @@ public partial class EnemyWaveController : Node
 			return;
 		}
 
-		_currentWave.OnWaveEnd += NextWave;
-		_currentWave.OnWaveEnd += EmitSignalOnWaveEnd;
-		_currentWave.StartWave(CurrentWaveIndex);
-		EmitSignalOnWaveStart();
+		StartCurrentWave(_currentWave);
 	}
 
 	public void NextWave()
@@ -97,10 +94,15 @@ public partial class EnemyWaveController : Node
 		CurrentWaveIndex++;
 
 		_currentWave = Waves[CurrentWaveIndex];
-		_currentWave.OnWaveEnd += NextWave;
-		_currentWave.OnWaveEnd += EmitSignalOnWaveEnd;
-		_currentWave.StartWave(CurrentWaveIndex);
-		EmitSignalOnWaveStart();
+		StartCurrentWave(_currentWave);
+	}
+
+	private void StartCurrentWave(AbstractWave wave)
+	{
+		wave.OnWaveEnd += NextWave;
+		wave.OnWaveEnd += EmitSignalOnWaveEnd;
+		wave.StartWave(CurrentWaveIndex);
+		EmitSignalOnWaveStart(wave);
 	}
 
 	private float GetWaveProgress()

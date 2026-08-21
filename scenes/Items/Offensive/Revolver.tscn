@@ -13,13 +13,13 @@
 script = ExtResource("4_fgf34")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8f87a"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_bpjd4"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_y3hip"]
 script = ExtResource("5_0u5yb")
 Name = "M1917"
-Description = "A 6-cylinder revolver"
+Description = "A 6-cylinder revolver. Offers high-damage and good penetrability for low bullet count and a lengthy reload time"
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_n3sky"]
@@ -35,14 +35,14 @@ VerticalRecoilRandom = 40.0
 RecoilScale = 0.6
 HorizontalRecoilPunish = false
 CameraRecoilScale = 1.8
-BaseDamage = 30
+BaseDamage = 9
 BaseCritDamageMultiplier = 1.0
 BaseCritChanceProportion = 0.5
-BaseProjectileSpeed = 5000
+BaseProjectileSpeed = 3500
 BaseProjectileScaleMultiplier = 1.2
 BaseProjectileRadius = 42
 BaseAttackSpeed = 0.4
-BasePierceLimit = 8
+BasePierceLimit = 2
 Additional = Dictionary[String, Variant]({
 "Knockback": 5.0,
 "SlowMultiplier": 0.0
@@ -60,8 +60,8 @@ Stats = SubResource("Resource_n3sky")
 [node name="ShootAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1706054987]
 process_mode = 3
 stream = ExtResource("6_fgf34")
-volume_db = -10.0
-pitch_scale = 1.2
+volume_db = -15.0
+pitch_scale = 0.9
 max_polyphony = 2
 bus = &"ShootSfx"
 

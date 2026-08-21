@@ -6,4 +6,5 @@
 [resource]
 script = ExtResource("2_23nrp")
 scene = ExtResource("1_mqtqd")
+rarity = 5
 metadata/_custom_type_script = "uid://brmkfowmxbv52"
