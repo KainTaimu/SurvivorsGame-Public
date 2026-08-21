@@ -147,7 +147,7 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 			}
 		}
 
-		PrimaryAttack = ManualOffensiveList.First();
+		PrimaryAttack = ManualOffensiveList.FirstOrDefault();
 		EnableManualOffensive(PrimaryAttack);
 	}
 }

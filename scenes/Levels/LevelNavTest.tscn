@@ -16,7 +16,6 @@
 [ext_resource type="Resource" uid="uid://nvj82uku7ht1" path="res://scenes/Enemies/Blueprints/Sprinter.tres" id="9_l75en"]
 [ext_resource type="Script" uid="uid://bhhh8235y54bg" path="res://src/Levels/Controllers/WaveDebugStopper.cs" id="10_chdw3"]
 [ext_resource type="Script" uid="uid://daw8gyvo0xom3" path="res://src/UI/FrameTime.cs" id="12_2ki1j"]
-[ext_resource type="PackedScene" uid="uid://dyh06qakgf4q2" path="res://scenes/Players/DebugClassInspector.tscn" id="13_j7ywk"]
 [ext_resource type="LabelSettings" uid="uid://cu65p2lbgxmhg" path="res://scenes/UI/WeaponCarouselLabelSettings.tres" id="14_3bukj"]
 [ext_resource type="PackedScene" uid="uid://7kxy1v1ggvi8" path="res://scenes/Players/PlayerRookie.tscn" id="17_j7ywk"]
 
@@ -395,13 +394,10 @@ script = ExtResource("4_chdw3")
 pickup_scene = ExtResource("5_h7ouo")
 
 [node name="PickupUi" parent="Systems/LevelSystems/LevelUpManager" index="0" unique_id=720680017 instance=ExtResource("5_h7ouo")]
-show_on_start = true
+show_on_start_item_count = 1
 
 [node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=2001503768]
 Waves = Array[Object]([SubResource("Resource_0qe1x"), SubResource("Resource_4ljo6"), SubResource("Resource_uj3cf"), SubResource("Resource_wbp0e")])
-
-[node name="DebugClassInspector" parent="Systems/EnemySystems/EnemyWaveController" index="1" unique_id=1989388267 instance=ExtResource("13_j7ywk")]
-BindingFlags = 54
 
 [node name="EnemyTargetQuery" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="1" unique_id=991938994]
 _rangeFactor = 1.2

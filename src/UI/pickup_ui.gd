@@ -14,12 +14,13 @@ var weapons_picked: Array[OffensiveRegistryEntry] = []
 
 
 func _ready() -> void:
-	_initialize_showcases()
 	if show_on_start:
+		_initialize_showcases(show_on_start_item_count)
 		show_ui.call_deferred(show_on_start_item_count)
 
 
 func show_ui(item_limit: int) -> void:
+	_initialize_showcases(item_limit)
 	item_limit = min(item_limit, showcases.size())
 
 	PauseController.Lock(self)
@@ -28,12 +29,22 @@ func show_ui(item_limit: int) -> void:
 	var weapons := all.values() as Array[Resource]
 
 	for showcase in showcases:
+		if len(weapons_picked) == len(weapons):
+			return
 		var entry := _weighted_pick(weapons) as OffensiveRegistryEntry
 		if entry == null:
 			CustomLogger.log_error("expected OffensiveRegistryEntry. got %s" % typeof(entry))
 			continue
+
 		var stats := _get_property_from_scene(entry.scene, "Stats") as BaseItemStats
+		if stats == null:
+			CustomLogger.log_error("expected BaseItemStats. got %s" % typeof(stats))
+			continue
 		var props := _get_property_from_scene(entry.scene, "Properties") as BaseItemProperties
+		if props == null:
+			CustomLogger.log_error("expected BaseItemProperties. got %s" % typeof(props))
+
+		# BUG: This sometimes causes an invalid property access crash
 		showcase.assign_item(entry.scene, props, stats)
 		item_limit -= 1
 		if item_limit == 0:
@@ -49,11 +60,14 @@ func exit() -> void:
 	queue_free()
 
 
-func _initialize_showcases():
-	for child in grid_container.get_children():
-		var showcase := child as ItemShowcase
-		if showcase == null:
-			continue
+func _initialize_showcases(item_count: int) -> void:
+	var columns := maxi(1, grid_container.columns)
+	var rows := ceili(float(item_count) / columns)
+	var total := rows * columns
+
+	for i in range(showcases.size(), total):
+		var showcase := showcase_scene.instantiate() as ItemShowcase
+		grid_container.add_child(showcase)
 		showcases.append(showcase)
 		showcase.on_item_picked.connect(_on_item_picked)
 
