@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="WaveSpawnCount" format=3 uid="uid://b0ppf3hqm67qh"]
 
-[ext_resource type="Script" uid="uid://cksmwvaxx1m18" path="res://src/Levels/Controllers/WaveSpawnCount.cs" id="1_gpfel"]
+[ext_resource type="Script" uid="uid://cksmwvaxx1m18" path="res://src/Levels/Controllers/Waves/WaveSpawnCount.cs" id="1_gpfel"]
 
 [resource]
 resource_local_to_scene = true
