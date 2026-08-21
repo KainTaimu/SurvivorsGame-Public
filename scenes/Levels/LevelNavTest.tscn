@@ -11,7 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://c8vjoa3wtku3l" path="res://scenes/UI/PickupUi.tscn" id="5_h7ouo"]
 [ext_resource type="Script" uid="uid://ds8lkov4wnj2l" path="res://src/Levels/Controllers/Waves/WeightedWaveBlueprintCollection.cs" id="5_lkbse"]
 [ext_resource type="PackedScene" uid="uid://tw6dfgyd6h7y" path="res://scenes/Levels/EnemyNavMeshController.tscn" id="8_7b5vb"]
-[ext_resource type="Script" uid="uid://b0b1rgkll8se8" path="res://src/Levels/Controllers/Waves/PickupWaveCompletionReward.cs" id="10_chdw3"]
+[ext_resource type="Script" uid="uid://b0b1rgkll8se8" path="res://src/Levels/Controllers/Waves/PickupWaveCompletionReward.cs" id="9_4ljo6"]
+[ext_resource type="Script" uid="uid://d02cy04gxh3di" path="res://src/Levels/Controllers/Waves/AbstractWaveCompletionReward.cs" id="11_chdw3"]
 [ext_resource type="Script" uid="uid://daw8gyvo0xom3" path="res://src/UI/FrameTime.cs" id="12_2ki1j"]
 [ext_resource type="LabelSettings" uid="uid://cu65p2lbgxmhg" path="res://scenes/UI/WeaponCarouselLabelSettings.tres" id="14_3bukj"]
 [ext_resource type="PackedScene" uid="uid://7kxy1v1ggvi8" path="res://scenes/Players/PlayerRookie.tscn" id="17_j7ywk"]
@@ -86,9 +87,10 @@ metadata/_custom_type_script = "uid://dau6m811dtep8"
 script = ExtResource("5_lkbse")
 Weights = Array[Object]([SubResource("Resource_h7ouo"), SubResource("Resource_f1jhi")])
 
-[sub_resource type="Resource" id="Resource_i1qcg"]
-script = ExtResource("10_chdw3")
+[sub_resource type="Resource" id="Resource_do71q"]
+script = ExtResource("9_4ljo6")
 ItemCount = 3
+RarityGate = 1
 metadata/_custom_type_script = "uid://b0b1rgkll8se8"
 
 [sub_resource type="Curve" id="Curve_i1qcg"]
@@ -101,7 +103,7 @@ point_count = 3
 
 [sub_resource type="Resource" id="Resource_ms68o"]
 script = ExtResource("5_chdw3")
-Duration = 2.0
+Duration = 1.0
 MaxMobs = 16384
 EnemyBlueprints = SubResource("Resource_vwdg1")
 SpawnMinTime = 0.6
@@ -109,7 +111,7 @@ SpawnMaxTime = 1.5
 SpawnTimeCurveOverMaxTime = SubResource("Curve_e1pfk")
 SpawnBatchMax = 2
 SpawnBatchCurveOverMaxTime = SubResource("Curve_i1qcg")
-Reward = SubResource("Resource_i1qcg")
+Rewards = Array[Object]([SubResource("Resource_do71q")])
 metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 
 [sub_resource type="Resource" id="Resource_ovhvh"]
@@ -343,7 +345,6 @@ Waves = Array[Object]([SubResource("Resource_ms68o"), SubResource("Resource_yysb
 
 [node name="PickupUi" parent="Systems/EnemySystems/EnemyWaveController" index="1" unique_id=720680017 instance=ExtResource("5_h7ouo")]
 show_on_start = true
-show_on_start_item_count = 2
 
 [node name="EnemyTargetQuery" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="1" unique_id=991938994]
 _rangeFactor = 1.2
@@ -371,7 +372,7 @@ FrameTime = SubResource("Resource_wavsu")
 process_priority = -50
 
 [node name="PerformanceMonitor" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="3" unique_id=1872396024 node_paths=PackedStringArray("Targets")]
-Targets = [NodePath("../../Systems/EnemySystems/EnemyRenderer"), NodePath("../../Systems/EnemySystems/EnemyNavMeshController"), NodePath("../../Systems/EnemySystems/EnemyTargetQuery")]
+Targets = []
 
 [node name="Position" type="Node2D" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="5" unique_id=1420747991 node_paths=PackedStringArray("crosshair")]
 visible = false

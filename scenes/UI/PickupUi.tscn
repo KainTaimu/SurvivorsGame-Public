@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://cfprl4wo8svao" path="res://src/UI/pickup_ui.gd" id="1_5cant"]
 [ext_resource type="Shader" uid="uid://cjavr4nj3ysk" path="res://src/Shaders/bw.gdshader" id="2_5cant"]
 [ext_resource type="Shader" uid="uid://bdro8be0jajun" path="res://src/Shaders/blur.gdshader" id="3_8b1c8"]
+[ext_resource type="Theme" uid="uid://cwyp7j6g53bhf" path="res://resources/UiThemes/NormalUi.tres" id="4_mkqwl"]
+[ext_resource type="PackedScene" uid="uid://fumoyucxxk47" path="res://scenes/UI/UiHighlightClick.tscn" id="5_pnxkk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8b1c8"]
 shader = ExtResource("2_5cant")
@@ -43,7 +45,7 @@ func _on_mouse_exited() -> void:
 process_mode = 3
 layer = 2
 script = ExtResource("1_5cant")
-grid_container = NodePath("Control/MarginContainer/HBoxContainer/CenterContainer/GridContainer")
+grid_container = NodePath("Control/MarginContainer/HBoxContainer/ScrollContainer/CenterContainer/GridContainer")
 
 [node name="Grayscale" type="ColorRect" parent="." unique_id=711175140]
 material = SubResource("ShaderMaterial_8b1c8")
@@ -101,6 +103,7 @@ alignment = 1
 [node name="CloseLeft" type="Button" parent="Control/MarginContainer/HBoxContainer" unique_id=1953490377]
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
+theme = ExtResource("4_mkqwl")
 text = "C
 L
 O
@@ -109,11 +112,16 @@ E"
 autowrap_mode = 3
 script = SubResource("GDScript_qlmw6")
 
-[node name="CenterContainer" type="CenterContainer" parent="Control/MarginContainer/HBoxContainer" unique_id=328059922]
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/MarginContainer/HBoxContainer" unique_id=1428596445]
+custom_minimum_size = Vector2(1840, 536)
+custom_maximum_size = Vector2(-1, 792)
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Control/MarginContainer/HBoxContainer/ScrollContainer" unique_id=328059922]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="GridContainer" type="GridContainer" parent="Control/MarginContainer/HBoxContainer/CenterContainer" unique_id=323042347]
+[node name="GridContainer" type="GridContainer" parent="Control/MarginContainer/HBoxContainer/ScrollContainer/CenterContainer" unique_id=323042347]
 layout_mode = 2
 mouse_filter = 2
 columns = 3
@@ -121,6 +129,7 @@ columns = 3
 [node name="CloseRight" type="Button" parent="Control/MarginContainer/HBoxContainer" unique_id=1735945372]
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
+theme = ExtResource("4_mkqwl")
 text = "C
 L
 O
@@ -129,9 +138,15 @@ E"
 autowrap_mode = 3
 script = SubResource("GDScript_qlmw6")
 
+[node name="UIHighlightClick" parent="." unique_id=893066757 instance=ExtResource("5_pnxkk")]
+
 [connection signal="button_up" from="Control/MarginContainer/HBoxContainer/CloseLeft" to="." method="queue_free"]
 [connection signal="mouse_entered" from="Control/MarginContainer/HBoxContainer/CloseLeft" to="Control/MarginContainer/HBoxContainer/CloseLeft" method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="Control/MarginContainer/HBoxContainer/CloseLeft" to="UIHighlightClick" method="play"]
 [connection signal="mouse_exited" from="Control/MarginContainer/HBoxContainer/CloseLeft" to="Control/MarginContainer/HBoxContainer/CloseLeft" method="_on_mouse_exited"]
+[connection signal="mouse_exited" from="Control/MarginContainer/HBoxContainer/CloseLeft" to="UIHighlightClick" method="play"]
 [connection signal="button_up" from="Control/MarginContainer/HBoxContainer/CloseRight" to="." method="queue_free"]
 [connection signal="mouse_entered" from="Control/MarginContainer/HBoxContainer/CloseRight" to="Control/MarginContainer/HBoxContainer/CloseRight" method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="Control/MarginContainer/HBoxContainer/CloseRight" to="UIHighlightClick" method="play"]
 [connection signal="mouse_exited" from="Control/MarginContainer/HBoxContainer/CloseRight" to="Control/MarginContainer/HBoxContainer/CloseRight" method="_on_mouse_exited"]
+[connection signal="mouse_exited" from="Control/MarginContainer/HBoxContainer/CloseRight" to="UIHighlightClick" method="play"]

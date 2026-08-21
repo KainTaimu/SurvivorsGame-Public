@@ -21,8 +21,6 @@ func _ready() -> void:
 
 
 func show_ui(item_limit: int, rarity_gate: Globals.Rarity) -> void:
-	item_limit = min(item_limit, showcases.size())
-
 	PauseController.Lock(self)
 	PauseController.Pause(self)
 	var all := weapon_registry.load_all_blocking()
@@ -33,7 +31,8 @@ func show_ui(item_limit: int, rarity_gate: Globals.Rarity) -> void:
 		if w.rarity <= rarity_gate:
 			gated.append(w)
 	weapons = gated
-	_initialize_showcases(len(weapons))
+	item_limit = min(item_limit, len(weapons))
+	_initialize_showcases(item_limit)
 
 	for showcase in showcases:
 		if len(weapons_picked) == len(weapons):
@@ -69,8 +68,12 @@ func exit() -> void:
 
 func _initialize_showcases(item_count: int) -> void:
 	var columns := maxi(1, grid_container.columns)
-	var rows := ceili(float(item_count) / columns)
+	var rows := maxi(1, ceili(float(item_count) / columns))
 	var total := rows * columns
+
+	while showcases.size() > total:
+		var extra: ItemShowcase = showcases.pop_back()
+		extra.queue_free()
 
 	for i in range(showcases.size(), total):
 		var showcase := showcase_scene.instantiate() as ItemShowcase

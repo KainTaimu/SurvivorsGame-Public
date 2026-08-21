@@ -26,13 +26,6 @@ func _gui_input(event: InputEvent) -> void:
 	if not is_mouse_inside:
 		return
 
-	if event is InputEventMouseMotion:
-		mouse_default_cursor_shape = (
-				CursorShape.CURSOR_POINTING_HAND
-				if get_viewport_rect().has_point(event.position)
-				else CursorShape.CURSOR_ARROW
-		)
-
 	var mouse := event as InputEventMouseButton
 	if mouse == null:
 		return
@@ -70,6 +63,12 @@ func _set_mouse_inside(inside: bool) -> void:
 	if not has_item_been_assigned:
 		return
 	is_mouse_inside = inside
+	mouse_default_cursor_shape = (
+			CursorShape.CURSOR_POINTING_HAND
+			if is_mouse_inside
+			else CursorShape.CURSOR_ARROW
+	)
+
 	highlight(inside)
 	if inside:
 		highlight_sfx.play()
@@ -83,3 +82,11 @@ func _set_assigned_state(set_as_assigned: bool) -> void:
 	else:
 		main_body.hide()
 		unassigned_texture.show()
+
+
+func _on_mouse_entered() -> void:
+	_set_mouse_inside(true)
+
+
+func _on_mouse_exited() -> void:
+	_set_mouse_inside(false)

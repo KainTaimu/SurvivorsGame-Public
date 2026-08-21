@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Arch.Core;
+using Godot.Collections;
 
 namespace Game.Levels.Controllers.Waves;
 
@@ -67,7 +68,7 @@ public abstract partial class AbstractWave : Resource, IEnemyWave
 
 	[ExportGroup("Completion Rewards")]
 	[Export]
-	public AbstractWaveCompletionReward? Reward;
+	public Array<AbstractWaveCompletionReward>? Rewards = [];
 
 	public HashSet<Entity> SpawnedEntities => WaveController.SpawnedEntities;
 

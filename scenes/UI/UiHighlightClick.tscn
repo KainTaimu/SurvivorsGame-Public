@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://fumoyucxxk47"]
+
+[ext_resource type="AudioStream" uid="uid://b315gjj4kb745" path="res://assets/UI/SFX/click.wav" id="1_tgenn"]
+
+[node name="UIHighlightClick" type="AudioStreamPlayer" unique_id=893066757]
+stream = ExtResource("1_tgenn")
+volume_db = 8.0

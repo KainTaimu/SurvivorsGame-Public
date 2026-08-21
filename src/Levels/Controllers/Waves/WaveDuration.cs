@@ -78,7 +78,10 @@ public partial class WaveDuration : AbstractWave, IWaveProgress
 
 	private protected override void GiveRewards()
 	{
-		Reward?.GiveReward();
+		if (Rewards is null)
+			return;
+		foreach (var reward in Rewards)
+			reward.GiveReward();
 	}
 
 	private float GetRandomSpawnTime()
