@@ -7,18 +7,17 @@
 [ext_resource type="Script" uid="uid://wsto3khl70md" path="res://src/Models/FloatStat.cs" id="4_tvywd"]
 [ext_resource type="Shader" uid="uid://bg3me0bhc4em2" path="res://src/Shaders/vignette.gdshader" id="5_c6sut"]
 [ext_resource type="Shader" uid="uid://bgl0yr4nfmpqx" path="res://src/Shaders/flash.gdshader" id="6_6wc5x"]
-[ext_resource type="PackedScene" uid="uid://dwyqdinyji8tt" path="res://scenes/Items/Offensive/MP5.tscn" id="7_mxkc7"]
 
 [sub_resource type="Resource" id="Resource_mxkc7"]
 resource_local_to_scene = true
 script = ExtResource("3_6wc5x")
-BaseValue = 50
+BaseValue = 25
 metadata/_custom_type_script = "uid://tfaqh3bcxdha"
 
 [sub_resource type="Resource" id="Resource_6wc5x"]
 resource_local_to_scene = true
 script = ExtResource("3_6wc5x")
-BaseValue = 50
+BaseValue = 25
 metadata/_custom_type_script = "uid://tfaqh3bcxdha"
 
 [sub_resource type="Resource" id="Resource_tvywd"]
@@ -144,7 +143,7 @@ region = Rect2(62, 0, 31, 31)
 atlas = ExtResource("3_oxech")
 region = Rect2(93, 0, 31, 31)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_mxkc7"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_8uris"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -219,9 +218,7 @@ _player = NodePath("../..")
 
 [node name="AnimatedSprite2D" parent="." index="1" unique_id=881638213]
 material = SubResource("ShaderMaterial_mxkc7")
-sprite_frames = SubResource("SpriteFrames_mxkc7")
-
-[node name="MP5" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="0" unique_id=1472391115 instance=ExtResource("7_mxkc7")]
+sprite_frames = SubResource("SpriteFrames_8uris")
 
 [node name="ColorRect" parent="DamageVignette" parent_id_path=PackedInt32Array(758455490) index="0" unique_id=1773597369]
 material = SubResource("ShaderMaterial_6wc5x")

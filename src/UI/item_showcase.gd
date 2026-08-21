@@ -28,13 +28,15 @@ func _gui_input(event: InputEvent) -> void:
 
 	if event is InputEventMouseMotion:
 		mouse_default_cursor_shape = (
-				CursorShape.CURSOR_POINTING_HAND
-				if get_viewport_rect().has_point(event.position)
-				else CursorShape.CURSOR_ARROW
+			CursorShape.CURSOR_POINTING_HAND
+			if get_viewport_rect().has_point(event.position)
+			else CursorShape.CURSOR_ARROW
 		)
 
 	var mouse := event as InputEventMouseButton
 	if mouse == null:
+		return
+	if mouse.button_index != MOUSE_BUTTON_LEFT:
 		return
 	if not mouse.is_released():
 		return
@@ -42,9 +44,9 @@ func _gui_input(event: InputEvent) -> void:
 	on_item_picked.emit(assigned_item_scene)
 
 
-func assign_item(scene: PackedScene, properties: BaseItemProperties, stats: BaseItemStats) -> void:
+func assign_item(scene: PackedScene, properties: BaseItemProperties, _stats: BaseItemStats) -> void:
 	item_name_label.text = "[b]%s[/b]" % properties.Name
-	item_description_label.text = properties.Description + "\n\n" + stats.ToFormattedString()
+	item_description_label.text = properties.Description
 	item_icon_rect.texture = properties.ItemIcon
 	assigned_item_scene = scene
 	assigned_item_properties = properties

@@ -13,12 +13,26 @@ border_width_bottom = 2
 border_color = Color(0, 0, 0, 1)
 corner_detail = 5
 
+[sub_resource type="GDScript" id="GDScript_qlmw6"]
+script/source = "extends Button
+
+
+func _exit_tree() -> void:
+	mouse_default_cursor_shape = Control.CURSOR_ARROW
+
+
+func _on_mouse_entered() -> void:
+	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+
+
+func _on_mouse_exited() -> void:
+	mouse_default_cursor_shape = Control.CURSOR_ARROW
+"
+
 [node name="PickupUi" type="CanvasLayer" unique_id=720680017 node_paths=PackedStringArray("grid_container")]
 process_mode = 3
 layer = 2
 script = ExtResource("1_5cant")
-show_on_start = true
-show_on_start_item_count = 6
 grid_container = NodePath("Control/MarginContainer/HBoxContainer/CenterContainer/GridContainer")
 
 [node name="Control" type="PanelContainer" parent="." unique_id=1639386775]
@@ -56,6 +70,7 @@ O
 S
 E"
 autowrap_mode = 3
+script = SubResource("GDScript_qlmw6")
 
 [node name="CenterContainer" type="CenterContainer" parent="Control/MarginContainer/HBoxContainer" unique_id=328059922]
 layout_mode = 2
@@ -75,6 +90,9 @@ O
 S
 E"
 autowrap_mode = 3
+script = SubResource("GDScript_qlmw6")
 
 [connection signal="button_up" from="Control/MarginContainer/HBoxContainer/CloseLeft" to="." method="queue_free"]
+[connection signal="mouse_entered" from="Control/MarginContainer/HBoxContainer/CloseLeft" to="Control/MarginContainer/HBoxContainer/CloseLeft" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Control/MarginContainer/HBoxContainer/CloseLeft" to="Control/MarginContainer/HBoxContainer/CloseLeft" method="_on_mouse_exited"]
 [connection signal="button_up" from="Control/MarginContainer/HBoxContainer/CloseRight" to="." method="queue_free"]

@@ -394,7 +394,8 @@ script = ExtResource("4_chdw3")
 pickup_scene = ExtResource("5_h7ouo")
 
 [node name="PickupUi" parent="Systems/LevelSystems/LevelUpManager" index="0" unique_id=720680017 instance=ExtResource("5_h7ouo")]
-show_on_start_item_count = 1
+show_on_start = true
+show_on_start_item_count = 2
 
 [node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=2001503768]
 Waves = Array[Object]([SubResource("Resource_0qe1x"), SubResource("Resource_4ljo6"), SubResource("Resource_uj3cf"), SubResource("Resource_wbp0e")])

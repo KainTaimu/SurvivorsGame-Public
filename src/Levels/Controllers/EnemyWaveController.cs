@@ -32,7 +32,7 @@ public partial class EnemyWaveController : Node
 	public int Alive => SpawnedEntities.Count;
 
 	private AbstractWave? _currentWave;
-	private int _currentWaveIndex;
+	public int CurrentWaveIndex { get; private set; }
 
 	public readonly HashSet<Entity> SpawnedEntities = [];
 
@@ -55,6 +55,11 @@ public partial class EnemyWaveController : Node
 		CallDeferred(MethodName.StartInitialWave);
 	}
 
+	public override void _ExitTree()
+	{
+		Instance = null;
+	}
+
 	public override void _Process(double delta)
 	{
 		if (!Enabled)
@@ -73,7 +78,7 @@ public partial class EnemyWaveController : Node
 
 		_currentWave.OnWaveEnd += NextWave;
 		_currentWave.OnWaveEnd += EmitSignalOnWaveEnd;
-		_currentWave.StartWave(_currentWaveIndex);
+		_currentWave.StartWave(CurrentWaveIndex);
 		EmitSignalOnWaveStart();
 	}
 
@@ -82,19 +87,19 @@ public partial class EnemyWaveController : Node
 		_currentWave?.OnWaveEnd -= NextWave;
 		_currentWave?.OnWaveEnd -= EmitSignalOnWaveEnd;
 
-		if (_currentWaveIndex + 1 >= Waves.Count)
+		if (CurrentWaveIndex + 1 >= Waves.Count)
 		{
 			_currentWave = null;
 			Logger.LogDebug("Waves finished");
 			return;
 		}
 
-		_currentWaveIndex++;
+		CurrentWaveIndex++;
 
-		_currentWave = Waves[_currentWaveIndex];
+		_currentWave = Waves[CurrentWaveIndex];
 		_currentWave.OnWaveEnd += NextWave;
 		_currentWave.OnWaveEnd += EmitSignalOnWaveEnd;
-		_currentWave.StartWave(_currentWaveIndex);
+		_currentWave.StartWave(CurrentWaveIndex);
 		EmitSignalOnWaveStart();
 	}
 

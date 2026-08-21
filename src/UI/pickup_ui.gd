@@ -45,7 +45,7 @@ func show_ui(item_limit: int) -> void:
 			CustomLogger.log_error("expected BaseItemProperties. got %s" % typeof(props))
 
 		# BUG: This sometimes causes an invalid property access crash
-		showcase.assign_item(entry.scene, props, stats)
+		showcase.assign_item.call_deferred(entry.scene, props, stats)
 		item_limit -= 1
 		if item_limit == 0:
 			return
@@ -82,9 +82,7 @@ func _on_item_picked(picked_scene: PackedScene) -> void:
 	queue_free()
 
 
-func _weighted_pick(
-		weapons: Array[Resource],
-) -> OffensiveRegistryEntry:
+func _weighted_pick(weapons: Array[Resource]) -> OffensiveRegistryEntry:
 	var picked: OffensiveRegistryEntry = null
 
 	var eligible: Array[OffensiveRegistryEntry] = []
