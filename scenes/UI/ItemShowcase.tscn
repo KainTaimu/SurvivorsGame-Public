@@ -118,12 +118,19 @@ _data = {
 &"auto_scroll": SubResource("Animation_ci30e")
 }
 
-[node name="ItemShowcase" type="MarginContainer" unique_id=1482916139]
+[node name="ItemShowcase" type="MarginContainer" unique_id=1482916139 node_paths=PackedStringArray("item_name_label", "item_description_label", "panel", "item_icon_rect", "unassigned_texture", "main_body", "highlight_sfx")]
 custom_minimum_size = Vector2(600, 264)
 offset_right = 608.0
 offset_bottom = 264.0
 mouse_filter = 0
 script = ExtResource("1_ci30e")
+item_name_label = NodePath("OuterPanel/InnerPanel/MainBody/MarginContainer/Top/ItemName")
+item_description_label = NodePath("OuterPanel/InnerPanel/MainBody/Bottom/ScrollContainer/ItemDescription")
+panel = NodePath("OuterPanel")
+item_icon_rect = NodePath("OuterPanel/InnerPanel/MainBody/MarginContainer/Top/TextureRect")
+unassigned_texture = NodePath("OuterPanel/InnerPanel/UnassignedTexture")
+main_body = NodePath("OuterPanel/InnerPanel/MainBody")
+highlight_sfx = NodePath("AudioStreamPlayer")
 
 [node name="OuterPanel" type="PanelContainer" parent="." unique_id=277047719]
 self_modulate = Color(1, 1, 1, 0)

@@ -67,7 +67,7 @@ public abstract partial class AbstractWave : Resource, IEnemyWave
 
 	[ExportGroup("Completion Rewards")]
 	[Export]
-	public int Reward;
+	public AbstractWaveCompletionReward? Reward;
 
 	public HashSet<Entity> SpawnedEntities => WaveController.SpawnedEntities;
 
@@ -87,6 +87,8 @@ public abstract partial class AbstractWave : Resource, IEnemyWave
 	public abstract void EndWave();
 
 	public abstract void SpawnEnemy();
+
+	private protected abstract void GiveRewards();
 
 	public override string ToString()
 	{

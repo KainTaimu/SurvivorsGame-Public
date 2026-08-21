@@ -30,4 +30,6 @@ public partial class WaveDebugStopper : AbstractWave
 	{
 		throw new NotImplementedException();
 	}
+
+	private protected override void GiveRewards() { }
 }

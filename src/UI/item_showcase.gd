@@ -9,13 +9,13 @@ var is_mouse_inside: bool
 var has_item_been_selected: bool
 var has_item_been_assigned: bool
 
-@onready var item_name_label: RichTextLabel = $OuterPanel/InnerPanel/MainBody/MarginContainer/Top/ItemName
-@onready var item_description_label: RichTextLabel = $OuterPanel/InnerPanel/MainBody/Bottom/ScrollContainer/ItemDescription
-@onready var panel: PanelContainer = $OuterPanel
-@onready var item_icon_rect: TextureRect = $OuterPanel/InnerPanel/MainBody/MarginContainer/Top/TextureRect
-@onready var unassigned_texture: TextureRect = $OuterPanel/InnerPanel/UnassignedTexture
-@onready var main_body: Control = $OuterPanel/InnerPanel/MainBody
-@onready var highlight_sfx: AudioStreamPlayer = $AudioStreamPlayer
+@export var item_name_label: RichTextLabel
+@export var item_description_label: RichTextLabel
+@export var panel: PanelContainer
+@export var item_icon_rect: TextureRect
+@export var unassigned_texture: TextureRect
+@export var main_body: Control
+@export var highlight_sfx: AudioStreamPlayer
 
 
 func _gui_input(event: InputEvent) -> void:
@@ -28,9 +28,9 @@ func _gui_input(event: InputEvent) -> void:
 
 	if event is InputEventMouseMotion:
 		mouse_default_cursor_shape = (
-			CursorShape.CURSOR_POINTING_HAND
-			if get_viewport_rect().has_point(event.position)
-			else CursorShape.CURSOR_ARROW
+				CursorShape.CURSOR_POINTING_HAND
+				if get_viewport_rect().has_point(event.position)
+				else CursorShape.CURSOR_ARROW
 		)
 
 	var mouse := event as InputEventMouseButton

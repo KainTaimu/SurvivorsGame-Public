@@ -7,11 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://wos5frj6p77e" path="res://scenes/Levels/PolygonLightOccluder.tscn" id="3_lkbse"]
 [ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="3_sx6oq"]
 [ext_resource type="Script" uid="uid://dau6m811dtep8" path="res://src/Levels/Controllers/Waves/BlueprintWeight.cs" id="4_7b5vb"]
-[ext_resource type="Script" uid="uid://tb76f24wk3eo" path="res://src/Levels/level_up_manager.gd" id="4_chdw3"]
 [ext_resource type="Script" uid="uid://b7ol6jtjagoe" path="res://src/Levels/Controllers/Waves/WaveDuration.cs" id="5_chdw3"]
 [ext_resource type="PackedScene" uid="uid://c8vjoa3wtku3l" path="res://scenes/UI/PickupUi.tscn" id="5_h7ouo"]
 [ext_resource type="Script" uid="uid://ds8lkov4wnj2l" path="res://src/Levels/Controllers/Waves/WeightedWaveBlueprintCollection.cs" id="5_lkbse"]
 [ext_resource type="PackedScene" uid="uid://tw6dfgyd6h7y" path="res://scenes/Levels/EnemyNavMeshController.tscn" id="8_7b5vb"]
+[ext_resource type="Script" uid="uid://b0b1rgkll8se8" path="res://src/Levels/Controllers/Waves/PickupWaveCompletionReward.cs" id="10_chdw3"]
 [ext_resource type="Script" uid="uid://daw8gyvo0xom3" path="res://src/UI/FrameTime.cs" id="12_2ki1j"]
 [ext_resource type="LabelSettings" uid="uid://cu65p2lbgxmhg" path="res://scenes/UI/WeaponCarouselLabelSettings.tres" id="14_3bukj"]
 [ext_resource type="PackedScene" uid="uid://7kxy1v1ggvi8" path="res://scenes/Players/PlayerRookie.tscn" id="17_j7ywk"]
@@ -86,6 +86,11 @@ metadata/_custom_type_script = "uid://dau6m811dtep8"
 script = ExtResource("5_lkbse")
 Weights = Array[Object]([SubResource("Resource_h7ouo"), SubResource("Resource_f1jhi")])
 
+[sub_resource type="Resource" id="Resource_i1qcg"]
+script = ExtResource("10_chdw3")
+ItemCount = 3
+metadata/_custom_type_script = "uid://b0b1rgkll8se8"
+
 [sub_resource type="Curve" id="Curve_i1qcg"]
 _data = [Vector2(0.5, 0.5), -660.5723, 146.4773, 1, 1, Vector2(0.5034135, 1), 146.4773, 0.0, 1, 1, Vector2(1, 1), 0.0, -1.0, 1, 1]
 point_count = 3
@@ -96,7 +101,7 @@ point_count = 3
 
 [sub_resource type="Resource" id="Resource_ms68o"]
 script = ExtResource("5_chdw3")
-Duration = 70.0
+Duration = 2.0
 MaxMobs = 16384
 EnemyBlueprints = SubResource("Resource_vwdg1")
 SpawnMinTime = 0.6
@@ -104,6 +109,7 @@ SpawnMaxTime = 1.5
 SpawnTimeCurveOverMaxTime = SubResource("Curve_e1pfk")
 SpawnBatchMax = 2
 SpawnBatchCurveOverMaxTime = SubResource("Curve_i1qcg")
+Reward = SubResource("Resource_i1qcg")
 metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 
 [sub_resource type="Resource" id="Resource_ovhvh"]
@@ -332,15 +338,12 @@ MainPlayer = NodePath("../Player")
 [node name="LevelData" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="1" unique_id=1461409732 node_paths=PackedStringArray("WaveController")]
 WaveController = NodePath("../EnemySystems/EnemyWaveController")
 
-[node name="LevelUpManager" type="Node" parent="Systems/LevelSystems" parent_id_path=PackedInt32Array(1543900922) index="1" unique_id=489145471]
-script = ExtResource("4_chdw3")
-pickup_scene = ExtResource("5_h7ouo")
-
-[node name="PickupUi" parent="Systems/LevelSystems/LevelUpManager" index="0" unique_id=720680017 instance=ExtResource("5_h7ouo")]
-show_on_start = true
-
 [node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=2001503768]
 Waves = Array[Object]([SubResource("Resource_ms68o"), SubResource("Resource_yysbr")])
+
+[node name="PickupUi" parent="Systems/EnemySystems/EnemyWaveController" index="1" unique_id=720680017 instance=ExtResource("5_h7ouo")]
+show_on_start = true
+show_on_start_item_count = 2
 
 [node name="EnemyTargetQuery" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="1" unique_id=991938994]
 _rangeFactor = 1.2
@@ -383,5 +386,3 @@ offset_bottom = 19.0
 scale = Vector2(1.7116618, 1.7116618)
 text = "POSITION"
 label_settings = ExtResource("14_3bukj")
-
-[connection signal="OnWaveEnd" from="Systems/EnemySystems/EnemyWaveController" to="Systems/LevelSystems/LevelUpManager" method="on_enemy_wave_controller_wave_end"]

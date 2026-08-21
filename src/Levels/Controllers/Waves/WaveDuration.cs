@@ -55,6 +55,7 @@ public partial class WaveDuration : AbstractWave, IWaveProgress
 	public override void EndWave()
 	{
 		EmitSignalOnWaveEnd();
+		GiveRewards();
 	}
 
 	public override void SpawnEnemy()
@@ -73,6 +74,11 @@ public partial class WaveDuration : AbstractWave, IWaveProgress
 		}
 
 		SpawnedEntities.Add((Entity)enemy);
+	}
+
+	private protected override void GiveRewards()
+	{
+		Reward?.GiveReward();
 	}
 
 	private float GetRandomSpawnTime()
