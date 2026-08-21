@@ -61,7 +61,7 @@ public partial class ProjectilePool : Node
 		}
 
 		pooledProjectile.ProjectilePool = this;
-		Callable.From(() => GetTree().Root.AddChild(projectile)).CallDeferred();
+		Callable.From(() => GameWorld.Instance.AddChild(projectile)).CallDeferred();
 		projectile.Hide();
 
 		projectile.ProcessMode = ProcessModeEnum.Disabled;
