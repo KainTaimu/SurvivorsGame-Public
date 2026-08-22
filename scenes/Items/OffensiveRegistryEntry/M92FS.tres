@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://bx3nk3ntkr78k"]
+
+[ext_resource type="PackedScene" uid="uid://j70slgh4j2cl" path="res://scenes/Items/Offensive/M92FS.tscn" id="1_yaslc"]
+[ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_ljaws"]
+
+[resource]
+script = ExtResource("2_ljaws")
+scene = ExtResource("1_yaslc")
+spawn_weight = 0.78
+metadata/_custom_type_script = "uid://brmkfowmxbv52"

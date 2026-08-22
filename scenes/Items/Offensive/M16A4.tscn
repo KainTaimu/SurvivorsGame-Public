@@ -68,7 +68,6 @@ Stats = SubResource("Resource_2fu6x")
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=372155076]
 process_mode = 3
 stream = ExtResource("7_hxa20")
-volume_db = -5.0
 max_polyphony = 30
 bus = &"ShootSfx"
 

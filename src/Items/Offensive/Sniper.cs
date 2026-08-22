@@ -228,6 +228,5 @@ public partial class Sniper : AbstractFirearm, IReloadable
 			Player.GlobalPosition,
 			OffensiveStats.Additional.GetValueOrDefault("Knockback", 0f).AsSingle()
 		);
-		GameWorld.World.Add(entity, new DeathCauseComponent(DeathCauseEnum.Explosion));
 	}
 }

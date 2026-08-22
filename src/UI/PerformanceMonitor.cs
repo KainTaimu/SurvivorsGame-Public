@@ -50,6 +50,9 @@ public partial class PerformanceMonitor : CanvasLayer
 			AddTarget(node);
 		}
 
+		if (OS.HasFeature("prod"))
+			QueueFree();
+
 #if !DEBUG
 		_staticMemLabel?.QueueFree();
 		_vidMemLabel?.QueueFree();

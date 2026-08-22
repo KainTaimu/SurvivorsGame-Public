@@ -103,11 +103,14 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable
 
 	public void Attack()
 	{
+		if (IsReloading || MagazineCount <= 0)
+			return;
+
 		if (MagazineCount <= 6)
 			EmitSignalAlmostEmpty();
 
 		MagazineCount--;
-		if (MagazineCount == 0)
+		if (MagazineCount <= 0)
 			Reload();
 
 		var playerPosition = Player.GetCanvasTransform() * Player.Position;

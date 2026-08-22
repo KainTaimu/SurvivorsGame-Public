@@ -14,7 +14,6 @@
 [ext_resource type="Script" uid="uid://b0b1rgkll8se8" path="res://src/Levels/Controllers/Waves/PickupWaveCompletionReward.cs" id="9_4ljo6"]
 [ext_resource type="Script" uid="uid://d02cy04gxh3di" path="res://src/Levels/Controllers/Waves/AbstractWaveCompletionReward.cs" id="11_chdw3"]
 [ext_resource type="Script" uid="uid://daw8gyvo0xom3" path="res://src/UI/FrameTime.cs" id="12_2ki1j"]
-[ext_resource type="LabelSettings" uid="uid://cu65p2lbgxmhg" path="res://scenes/UI/WeaponCarouselLabelSettings.tres" id="14_3bukj"]
 [ext_resource type="PackedScene" uid="uid://7kxy1v1ggvi8" path="res://scenes/Players/PlayerRookie.tscn" id="17_j7ywk"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_sx6oq"]
@@ -51,7 +50,7 @@ MoveSpeed = 240.0
 TurnSpeed = 4.0
 metadata/_custom_type_script = "uid://y77qtp32wo00"
 
-[sub_resource type="Resource" id="Resource_chdw3"]
+[sub_resource type="Resource" id="Resource_i1qcg"]
 script = ExtResource("3_sx6oq")
 Name = "Walker"
 SpriteName = "placeholder"
@@ -60,7 +59,7 @@ Stats = SubResource("Resource_4ljo6")
 
 [sub_resource type="Resource" id="Resource_h7ouo"]
 script = ExtResource("4_7b5vb")
-Blueprint = SubResource("Resource_chdw3")
+Blueprint = SubResource("Resource_i1qcg")
 metadata/_custom_type_script = "uid://dau6m811dtep8"
 
 [sub_resource type="Resource" id="Resource_j7ywk"]
@@ -89,8 +88,8 @@ Weights = Array[Object]([SubResource("Resource_h7ouo"), SubResource("Resource_f1
 
 [sub_resource type="Resource" id="Resource_do71q"]
 script = ExtResource("9_4ljo6")
-ItemCount = 3
-RarityGate = 1
+ItemCount = 4
+RarityGate = 2
 metadata/_custom_type_script = "uid://b0b1rgkll8se8"
 
 [sub_resource type="Curve" id="Curve_i1qcg"]
@@ -103,7 +102,7 @@ point_count = 3
 
 [sub_resource type="Resource" id="Resource_ms68o"]
 script = ExtResource("5_chdw3")
-Duration = 1.0
+Duration = 70.0
 MaxMobs = 16384
 EnemyBlueprints = SubResource("Resource_vwdg1")
 SpawnMinTime = 0.6
@@ -111,7 +110,7 @@ SpawnMaxTime = 1.5
 SpawnTimeCurveOverMaxTime = SubResource("Curve_e1pfk")
 SpawnBatchMax = 2
 SpawnBatchCurveOverMaxTime = SubResource("Curve_i1qcg")
-Rewards = Array[Object]([SubResource("Resource_do71q")])
+Rewards = Array[ExtResource("11_chdw3")]([SubResource("Resource_do71q")])
 metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 
 [sub_resource type="Resource" id="Resource_ovhvh"]
@@ -192,23 +191,6 @@ metadata/_custom_type_script = "uid://daw8gyvo0xom3"
 script = ExtResource("12_2ki1j")
 FrameName = &"Render"
 metadata/_custom_type_script = "uid://daw8gyvo0xom3"
-
-[sub_resource type="GDScript" id="GDScript_3bukj"]
-script/source = "extends Node2D
-
-@export var crosshair: Crosshair
-@onready var label: Label = $\"Label\"
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	if not visible:
-		return
-
-	var crosshair_pos = crosshair.get(\"GlobalSpacePosition\")
-	position = crosshair_pos
-	label.text = str(crosshair_pos)
-	pass
-"
 
 [node name="Level2" unique_id=2141389114 instance=ExtResource("1_4npl3")]
 
@@ -373,17 +355,3 @@ process_priority = -50
 
 [node name="PerformanceMonitor" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="3" unique_id=1872396024 node_paths=PackedStringArray("Targets")]
 Targets = []
-
-[node name="Position" type="Node2D" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="5" unique_id=1420747991 node_paths=PackedStringArray("crosshair")]
-visible = false
-z_index = 87
-z_as_relative = false
-script = SubResource("GDScript_3bukj")
-crosshair = NodePath("../Crosshair/Crosshair")
-
-[node name="Label" type="Label" parent="UI/Position" index="0" unique_id=281873657]
-offset_right = 40.0
-offset_bottom = 19.0
-scale = Vector2(1.7116618, 1.7116618)
-text = "POSITION"
-label_settings = ExtResource("14_3bukj")

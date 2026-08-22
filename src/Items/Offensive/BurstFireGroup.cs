@@ -8,7 +8,6 @@ public partial class BurstFireGroup : AbstractFireGroup, ICooldown
 	public float CooldownDuration { get; set; }
 
 	private bool _isFireQueued;
-	private ulong _ticksSinceLastFire;
 	private float _cooldown;
 	private int _shotsRemaining;
 
@@ -43,7 +42,6 @@ public partial class BurstFireGroup : AbstractFireGroup, ICooldown
 		_shotsRemaining = _burstCount;
 		_isFireQueued = false;
 		_cooldown = 0;
-		EmitSignalOnFire();
 	}
 
 	public void Process(float delta)
@@ -54,7 +52,6 @@ public partial class BurstFireGroup : AbstractFireGroup, ICooldown
 			if (_cooldown > 0)
 				return;
 
-			_ticksSinceLastFire = Time.GetTicksMsec();
 			_shotsRemaining--;
 			_cooldown = _shotsRemaining > 0 ? CooldownDuration : TimeBetweenBursts;
 			EmitSignalOnFire();

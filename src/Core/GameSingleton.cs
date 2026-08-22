@@ -24,9 +24,14 @@ public partial class GameSingleton : Node
 
 	public override void _EnterTree()
 	{
-		GetNode("/root/DebugMenu").Set("style", 2); // Full with graph
 		Instance = this;
 		ReadUserSettings();
+
+		var debugMenu = GetNode("/root/DebugMenu");
+		if (OS.HasFeature("prod"))
+			debugMenu.Set("style", 1);
+		else
+			debugMenu.Set("style", 2); // Full with graph
 	}
 
 	public override void _ExitTree()

@@ -37,6 +37,11 @@ script/source = "extends CanvasLayer
 @export var buffer_size: int = 200
 var buf: Array[float] = []
 
+func _ready() -> void:
+	if OS.has_feature(\"prod\"):
+		queue_free()
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if not visible:
