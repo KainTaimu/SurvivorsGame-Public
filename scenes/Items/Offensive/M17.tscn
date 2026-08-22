@@ -18,7 +18,7 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 script = ExtResource("4_2l6dk")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w7xe6"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_bpjd4"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_jkkrv"]
@@ -37,6 +37,7 @@ HorizontalBaseRecoil = 2.0
 VerticalRecoilMin = 4.0
 VerticalBaseRecoil = 6.0
 VerticalRecoilRandom = 0.25
+RecoilScale = 0.5
 HorizontalRecoilPunish = false
 CameraRecoilScale = 0.2
 BaseDamage = 6

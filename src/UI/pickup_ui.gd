@@ -20,6 +20,13 @@ func _ready() -> void:
 		show_ui.call_deferred(show_on_start_item_count, show_on_start_rarity_gate)
 
 
+func _input(event: InputEvent) -> void:
+	if OS.has_feature("prod"):
+		return
+	if event.is_action_pressed("ui_cancel"):
+		queue_free()
+
+
 func show_ui(item_limit: int, rarity_gate: Globals.Rarity) -> void:
 	PauseController.Lock(self)
 	PauseController.Pause(self)

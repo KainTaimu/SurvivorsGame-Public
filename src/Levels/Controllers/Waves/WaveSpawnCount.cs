@@ -3,18 +3,20 @@ using Arch.Core;
 namespace Game.Levels.Controllers.Waves;
 
 [GlobalClass]
-public partial class WaveSpawnCount : AbstractWave, IEnemyWave, IWaveProgress
+public partial class WaveSpawnCount : AbstractWave, IWaveProgress
 {
 	[Export]
 	public int SpawnCountTarget = 30;
 
-	public float Progress => (float)SpawnedEntities.Count / SpawnCountTarget;
+	public float Progress => 1 - (float)_spawnedEntitiesCount / SpawnCountTarget;
+
+	private int _spawnedEntitiesCount;
 
 	public override void Process(double delta)
 	{
 		SpawnTimeLeft -= delta;
 
-		if (SpawnedEntities.Count >= SpawnCountTarget)
+		if (_spawnedEntitiesCount >= SpawnCountTarget)
 		{
 			EndWave();
 			return;
@@ -67,6 +69,7 @@ public partial class WaveSpawnCount : AbstractWave, IEnemyWave, IWaveProgress
 		}
 
 		SpawnedEntities.Add((Entity)id);
+		_spawnedEntitiesCount++;
 	}
 
 	private protected override void GiveRewards()
@@ -101,7 +104,7 @@ public partial class WaveSpawnCount : AbstractWave, IEnemyWave, IWaveProgress
 
 	public override string ToString()
 	{
-		return $"Wave {Index} : {SpawnCountTarget} spawn count: " + $"{EnemyBlueprints
+		return $"{base.ToString()} : {SpawnCountTarget} spawn count: " + $"{EnemyBlueprints
 			.Count} types";
 	}
 }

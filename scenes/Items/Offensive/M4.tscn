@@ -19,7 +19,7 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 script = ExtResource("4_g7fad")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w7xe6"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_m67s1"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_40q5n"]
@@ -39,13 +39,13 @@ VerticalRecoilRandom = 1.0
 RecoilScale = 0.75
 RecoilAccumilationScale = 0.0
 CameraRecoilScale = 0.25
-BaseDamage = 5
+BaseDamage = 6
 BaseCritDamageMultiplier = 0.6
 BaseCritChanceProportion = 0.2
 BaseProjectileSpeed = 4200
 BaseProjectileScaleMultiplier = 0.7
 BaseAttackSpeed = 0.067
-BasePierceLimit = 3
+BasePierceLimit = 2
 Additional = Dictionary[String, Variant]({
 "Knockback": 10.0
 })

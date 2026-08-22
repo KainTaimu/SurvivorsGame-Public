@@ -31,7 +31,7 @@ public partial class EnemyWaveController : Node
 
 	public int Alive => SpawnedEntities.Count;
 
-	private AbstractWave? _currentWave;
+	public AbstractWave? CurrentWave { get; private set; }
 	public int CurrentWaveIndex { get; private set; }
 
 	public readonly HashSet<Entity> SpawnedEntities = [];
@@ -64,37 +64,37 @@ public partial class EnemyWaveController : Node
 	{
 		if (!Enabled)
 			return;
-		_currentWave?.Process(delta);
+		CurrentWave?.Process(delta);
 	}
 
 	private void StartInitialWave()
 	{
-		_currentWave = Waves.FirstOrDefault();
-		if (_currentWave is null)
+		CurrentWave = Waves.FirstOrDefault();
+		if (CurrentWave is null)
 		{
 			ProcessMode = ProcessModeEnum.Disabled;
 			return;
 		}
 
-		StartCurrentWave(_currentWave);
+		StartCurrentWave(CurrentWave);
 	}
 
 	public void NextWave()
 	{
-		_currentWave?.OnWaveEnd -= NextWave;
-		_currentWave?.OnWaveEnd -= EmitSignalOnWaveEnd;
+		CurrentWave?.OnWaveEnd -= NextWave;
+		CurrentWave?.OnWaveEnd -= EmitSignalOnWaveEnd;
 
 		if (CurrentWaveIndex + 1 >= Waves.Count)
 		{
-			_currentWave = null;
+			CurrentWave = null;
 			Logger.LogDebug("Waves finished");
 			return;
 		}
 
 		CurrentWaveIndex++;
 
-		_currentWave = Waves[CurrentWaveIndex];
-		StartCurrentWave(_currentWave);
+		CurrentWave = Waves[CurrentWaveIndex];
+		StartCurrentWave(CurrentWave);
 	}
 
 	private void StartCurrentWave(AbstractWave wave)
@@ -107,7 +107,7 @@ public partial class EnemyWaveController : Node
 
 	private float GetWaveProgress()
 	{
-		if (_currentWave is not IWaveProgress progress)
+		if (CurrentWave is not IWaveProgress progress)
 			return -1;
 		return progress.Progress;
 	}

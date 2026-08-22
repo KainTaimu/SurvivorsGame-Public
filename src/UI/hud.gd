@@ -3,7 +3,6 @@ extends CanvasLayer
 @export var health_bar: ProgressBar
 @export var health_damage_bar: ProgressBar
 @export var enemies_alive_label: Label
-@export var wave_progress_label: Label
 
 var damage_bar_tween: Tween
 
@@ -21,12 +20,6 @@ func _process(_delta: float) -> void:
 	var alive_enemies = wave_controller.AliveEnemies
 	if alive_enemies != null:
 		enemies_alive_label.text = "Enemies: %s" % wave_controller.AliveEnemies
-
-	var wc: EnemyWaveController = wave_controller.WaveController
-	if wc != null:
-		var progress: float = wc.CurrentWaveProgress
-		var wave_idx: int = wc.CurrentWaveIndex
-		wave_progress_label.text = "Wave %s: %s%%" % [wave_idx + 1, roundi((1 - progress) * 100)]
 
 
 func on_player_damaged(_dmg) -> void:

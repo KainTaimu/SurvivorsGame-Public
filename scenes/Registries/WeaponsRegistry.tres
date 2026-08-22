@@ -28,6 +28,7 @@ _uids_to_string_ids = Dictionary[StringName, StringName]({
 &"uid://cpvuqkwl3k0g1": &"M249",
 &"uid://d37pj80g4j5cy": &"Dmr",
 &"uid://dd7q76kfjdvxq": &"Shotgun",
+&"uid://dktd8lr0rda13": &"M1911",
 &"uid://nsapijc5eire": &"MP5",
 &"uid://xlyj1jgthiqq": &"GrenadeThrower"
 })
@@ -39,6 +40,7 @@ _string_ids_to_uids = Dictionary[StringName, StringName]({
 &"GrenadeThrower": &"uid://xlyj1jgthiqq",
 &"M16A4": &"uid://bjjvd4bhmqet4",
 &"M17": &"uid://cfauo6em32ia0",
+&"M1911": &"uid://dktd8lr0rda13",
 &"M249": &"uid://cpvuqkwl3k0g1",
 &"M249S": &"uid://bjv5rfumg72tr",
 &"M4": &"uid://cmj08qj3le4ar",

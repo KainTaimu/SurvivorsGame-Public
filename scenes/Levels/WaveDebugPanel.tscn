@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://x42vvsn5hrwx"]
+
+[ext_resource type="Script" uid="uid://bgmolhccvqux6" path="res://src/Levels/Controllers/Waves/WaveDebugPanel.cs" id="1_6r014"]
+[ext_resource type="LabelSettings" uid="uid://c0lq4rqaj62dx" path="res://scenes/UI/SettingsLabelSettings.tres" id="2_ap2sm"]
+[ext_resource type="Theme" uid="uid://cwyp7j6g53bhf" path="res://resources/UiThemes/NormalUi.tres" id="2_i6rcm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ap2sm"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ap2sm"]
+font_size = 14
+
+[node name="WaveDebugPanel" type="CanvasLayer" unique_id=812922554 node_paths=PackedStringArray("_timeLabel", "_waveInfo", "_waveProgress")]
+script = ExtResource("1_6r014")
+_timeLabel = NodePath("Control/MarginContainer/CenterContainer/VBoxContainer/TIME")
+_waveInfo = NodePath("Control/MarginContainer/CenterContainer/VBoxContainer/WAVE")
+_waveProgress = NodePath("Control/MarginContainer/CenterContainer/VBoxContainer/ProgressBar")
+
+[node name="Control" type="PanelContainer" parent="." unique_id=1976089836]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -128.0
+offset_right = 128.0
+offset_bottom = 84.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ap2sm")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=1587461831]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="CenterContainer" type="CenterContainer" parent="Control/MarginContainer" unique_id=2048240526]
+layout_mode = 2
+theme = ExtResource("2_i6rcm")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer/CenterContainer" unique_id=842826694]
+layout_mode = 2
+
+[node name="TIME" type="Label" parent="Control/MarginContainer/CenterContainer/VBoxContainer" unique_id=298995412]
+layout_mode = 2
+text = "TIME"
+label_settings = SubResource("LabelSettings_ap2sm")
+horizontal_alignment = 1
+
+[node name="WAVE" type="Label" parent="Control/MarginContainer/CenterContainer/VBoxContainer" unique_id=1545023085]
+layout_mode = 2
+text = "WAVE"
+label_settings = ExtResource("2_ap2sm")
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="Control/MarginContainer/CenterContainer/VBoxContainer" unique_id=67714310]
+layout_mode = 2
+theme = ExtResource("2_i6rcm")
+theme_override_font_sizes/font_size = 14
+max_value = 1.0
+
+[node name="Timer" type="Timer" parent="." unique_id=1522388757]
+autostart = true
+ignore_time_scale = true
+
+[connection signal="timeout" from="Timer" to="." method="Update"]

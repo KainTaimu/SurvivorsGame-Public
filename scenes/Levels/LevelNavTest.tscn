@@ -13,7 +13,10 @@
 [ext_resource type="PackedScene" uid="uid://tw6dfgyd6h7y" path="res://scenes/Levels/EnemyNavMeshController.tscn" id="8_7b5vb"]
 [ext_resource type="Script" uid="uid://b0b1rgkll8se8" path="res://src/Levels/Controllers/Waves/PickupWaveCompletionReward.cs" id="9_4ljo6"]
 [ext_resource type="Script" uid="uid://d02cy04gxh3di" path="res://src/Levels/Controllers/Waves/AbstractWaveCompletionReward.cs" id="11_chdw3"]
+[ext_resource type="Script" uid="uid://cwbl163hsg1db" path="res://src/Levels/Controllers/Waves/AbstractWave.cs" id="11_h7ouo"]
 [ext_resource type="Script" uid="uid://daw8gyvo0xom3" path="res://src/UI/FrameTime.cs" id="12_2ki1j"]
+[ext_resource type="PackedScene" uid="uid://x42vvsn5hrwx" path="res://scenes/Levels/WaveDebugPanel.tscn" id="12_chdw3"]
+[ext_resource type="Script" uid="uid://cksmwvaxx1m18" path="res://src/Levels/Controllers/Waves/WaveSpawnCount.cs" id="13_j7ywk"]
 [ext_resource type="PackedScene" uid="uid://7kxy1v1ggvi8" path="res://scenes/Players/PlayerRookie.tscn" id="17_j7ywk"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_sx6oq"]
@@ -92,24 +95,19 @@ ItemCount = 4
 RarityGate = 2
 metadata/_custom_type_script = "uid://b0b1rgkll8se8"
 
-[sub_resource type="Curve" id="Curve_i1qcg"]
-_data = [Vector2(0.5, 0.5), -660.5723, 146.4773, 1, 1, Vector2(0.5034135, 1), 146.4773, 0.0, 1, 1, Vector2(1, 1), 0.0, -1.0, 1, 1]
-point_count = 3
-
 [sub_resource type="Curve" id="Curve_e1pfk"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 1, Vector2(0.7484743, 1), 0.0, -3.9757369, 1, 1, Vector2(1, 0), -3.9757369, 0.0, 1, 0]
-point_count = 3
+_data = [Vector2(0, 1), 0.0, -0.89528584, 0, 1, Vector2(1, 0.104714155), -0.89528584, 0.0, 1, 0]
+point_count = 2
 
 [sub_resource type="Resource" id="Resource_ms68o"]
 script = ExtResource("5_chdw3")
-Duration = 70.0
+Duration = 120.0
 MaxMobs = 16384
 EnemyBlueprints = SubResource("Resource_vwdg1")
-SpawnMinTime = 0.6
+SpawnMinTime = 1.0
 SpawnMaxTime = 1.5
 SpawnTimeCurveOverMaxTime = SubResource("Curve_e1pfk")
-SpawnBatchMax = 2
-SpawnBatchCurveOverMaxTime = SubResource("Curve_i1qcg")
+_subWaves = Array[ExtResource("11_h7ouo")]([null])
 Rewards = Array[ExtResource("11_chdw3")]([SubResource("Resource_do71q")])
 metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 
@@ -157,6 +155,12 @@ metadata/_custom_type_script = "uid://dau6m811dtep8"
 script = ExtResource("5_lkbse")
 Weights = Array[Object]([SubResource("Resource_uo14t"), SubResource("Resource_s5ql2")])
 
+[sub_resource type="Resource" id="Resource_r2c2u"]
+script = ExtResource("9_4ljo6")
+ItemCount = 6
+RarityGate = 2
+metadata/_custom_type_script = "uid://b0b1rgkll8se8"
+
 [sub_resource type="Curve" id="Curve_nm68w"]
 _data = [Vector2(0.74734634, 0), 0.0, 99864.38, 0, 1, Vector2(0.74735636, 1), 99864.38, 0.0, 1, 0]
 point_count = 2
@@ -175,7 +179,92 @@ SpawnMaxTime = 0.6
 SpawnTimeCurveOverMaxTime = SubResource("Curve_fs3it")
 SpawnBatchMax = 4
 SpawnBatchCurveOverMaxTime = SubResource("Curve_nm68w")
+Rewards = Array[ExtResource("11_chdw3")]([SubResource("Resource_r2c2u")])
 metadata/_custom_type_script = "uid://b7ol6jtjagoe"
+
+[sub_resource type="Resource" id="Resource_nm68w"]
+script = ExtResource("2_gm6l2")
+DamageOnContact = 4
+MaxHealth = 15
+MoveSpeed = 240.0
+TurnSpeed = 4.0
+metadata/_custom_type_script = "uid://y77qtp32wo00"
+
+[sub_resource type="Resource" id="Resource_fs3it"]
+script = ExtResource("3_sx6oq")
+Name = "Walker"
+SpriteName = "placeholder"
+Type = 1
+Stats = SubResource("Resource_nm68w")
+
+[sub_resource type="Resource" id="Resource_37ltf"]
+script = ExtResource("4_7b5vb")
+Blueprint = SubResource("Resource_fs3it")
+metadata/_custom_type_script = "uid://dau6m811dtep8"
+
+[sub_resource type="Resource" id="Resource_n708j"]
+script = ExtResource("2_gm6l2")
+MaxHealth = 2
+MoveSpeed = 300.0
+SpriteScaleMultiplier = 0.85
+metadata/_custom_type_script = "uid://y77qtp32wo00"
+
+[sub_resource type="Resource" id="Resource_xnxkf"]
+script = ExtResource("3_sx6oq")
+Name = "Sprinter"
+SpriteName = "placeholder"
+Type = 1
+Stats = SubResource("Resource_n708j")
+
+[sub_resource type="Resource" id="Resource_fxwke"]
+script = ExtResource("4_7b5vb")
+Blueprint = SubResource("Resource_xnxkf")
+Weight = 0.25
+metadata/_custom_type_script = "uid://dau6m811dtep8"
+
+[sub_resource type="Resource" id="Resource_jodo0"]
+script = ExtResource("5_lkbse")
+Weights = Array[Object]([SubResource("Resource_37ltf"), SubResource("Resource_fxwke")])
+
+[sub_resource type="Resource" id="Resource_u5o0n"]
+script = ExtResource("9_4ljo6")
+ItemCount = 9
+RarityGate = 4
+metadata/_custom_type_script = "uid://b0b1rgkll8se8"
+
+[sub_resource type="Curve" id="Curve_r2c2u"]
+_data = [Vector2(0.747, 0.5), 0.0, 1403.0118, 0, 1, Vector2(0.74735636, 1), 1403.0118, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_ns76g"]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 1, Vector2(1, 0.5), 0.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="Resource" id="Resource_vm1ut"]
+script = ExtResource("5_chdw3")
+Duration = 70.0
+MaxMobs = 16384
+EnemyBlueprints = SubResource("Resource_jodo0")
+SpawnMinTime = 0.1
+SpawnTimeCurveOverMaxTime = SubResource("Curve_ns76g")
+SpawnBatchMax = 2
+SpawnBatchCurveOverMaxTime = SubResource("Curve_r2c2u")
+Rewards = Array[ExtResource("11_chdw3")]([SubResource("Resource_u5o0n")])
+metadata/_custom_type_script = "uid://b7ol6jtjagoe"
+
+[sub_resource type="Curve" id="Curve_vm1ut"]
+_data = [Vector2(0, 0), 0.0, 1.0, 0, 1, Vector2(1, 1), 1.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="Resource" id="Resource_ns76g"]
+script = ExtResource("13_j7ywk")
+SpawnCountTarget = 500
+EnemyBlueprints = SubResource("Resource_jodo0")
+SpawnMinTime = 0.2
+SpawnMaxTime = 0.2
+SpawnBatchMax = 8
+SpawnBatchCurveOverMaxTime = SubResource("Curve_vm1ut")
+metadata/_custom_type_script = "uid://cksmwvaxx1m18"
 
 [sub_resource type="Resource" id="Resource_e1pfk"]
 script = ExtResource("12_2ki1j")
@@ -323,10 +412,13 @@ MainPlayer = NodePath("../Player")
 WaveController = NodePath("../EnemySystems/EnemyWaveController")
 
 [node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=2001503768]
-Waves = Array[Object]([SubResource("Resource_ms68o"), SubResource("Resource_yysbr")])
+Waves = Array[Object]([SubResource("Resource_ms68o"), SubResource("Resource_yysbr"), SubResource("Resource_vm1ut"), SubResource("Resource_ns76g")])
 
 [node name="PickupUi" parent="Systems/EnemySystems/EnemyWaveController" index="1" unique_id=720680017 instance=ExtResource("5_h7ouo")]
 show_on_start = true
+
+[node name="WaveDebugPanel" parent="Systems/EnemySystems/EnemyWaveController" index="2" unique_id=812922554 node_paths=PackedStringArray("_waveController") instance=ExtResource("12_chdw3")]
+_waveController = NodePath("..")
 
 [node name="EnemyTargetQuery" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="1" unique_id=991938994]
 _rangeFactor = 1.2

@@ -14,6 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://77dvcqaetjul" path="res://assets/SFX/Shoot/308 Bolt Cycle Open.wav" id="12_hagd0"]
 
 [sub_resource type="Resource" id="Resource_11blq"]
+resource_local_to_scene = true
 script = ExtResource("3_0ap61")
 _fireQueueTolerance = 0.0
 metadata/_custom_type_script = "uid://dnodsacrptssb"
@@ -22,13 +23,13 @@ metadata/_custom_type_script = "uid://dnodsacrptssb"
 script = ExtResource("4_11blq")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nihe0"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_g7fad"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_iky5m"]
 script = ExtResource("3_f52b2")
-Name = "BM-50"
-Description = "A .50 caliber, single-shot sniper rifle that fires high-velocity [b][u]penetrating[/u][/b] rounds."
+Name = "AWM50"
+Description = "A sniper rifle that fires high-velocity [b][u]penetrating[/u][/b] rounds."
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_f52b2"]

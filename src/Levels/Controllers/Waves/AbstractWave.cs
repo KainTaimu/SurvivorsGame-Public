@@ -5,7 +5,7 @@ using Godot.Collections;
 namespace Game.Levels.Controllers.Waves;
 
 [GlobalClass]
-public abstract partial class AbstractWave : Resource, IEnemyWave
+public abstract partial class AbstractWave : Resource
 {
 	[Signal]
 	public delegate void OnWaveStartEventHandler();
@@ -66,6 +66,10 @@ public abstract partial class AbstractWave : Resource, IEnemyWave
 	[Export]
 	public Curve? SpawnBatchCurveOverMaxTime;
 
+	[ExportGroup("Sub-waves")]
+	[Export]
+	private Array<AbstractWave> _subWaves = [];
+
 	[ExportGroup("Completion Rewards")]
 	[Export]
 	public Array<AbstractWaveCompletionReward>? Rewards = [];
@@ -93,6 +97,6 @@ public abstract partial class AbstractWave : Resource, IEnemyWave
 
 	public override string ToString()
 	{
-		return $"Wave {Index}";
+		return $"Wave {Index + 1}";
 	}
 }

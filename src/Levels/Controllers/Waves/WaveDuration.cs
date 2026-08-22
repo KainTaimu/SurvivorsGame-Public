@@ -108,6 +108,6 @@ public partial class WaveDuration : AbstractWave, IWaveProgress
 
 	public override string ToString()
 	{
-		return $"Wave {Index} : {Duration}s duration: {EnemyBlueprints.Count}" + $" types";
+		return $"{base.ToString()} : {Duration}s duration: {EnemyBlueprints.Count}" + $" types";
 	}
 }
