@@ -25,6 +25,8 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 	private Viewport? _cachedViewport;
 	private Camera2D? _cachedCamera;
 
+	private static readonly PhysicsRayQueryParameters2D _cachedRayQuery = new();
+
 	public override void _PhysicsProcess(double delta)
 	{
 		_cachedViewport ??= GetViewport();
@@ -51,14 +53,12 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 		var moveVector = Vector2.Right.Rotated(Rotation) * ProjectileSpeed * (float)delta;
 		_distanceTravelled += ProjectileSpeed * (float)delta;
 
-		var ray = new PhysicsRayQueryParameters2D
-		{
-			CollideWithAreas = false,
-			CollisionMask = 8u,
-			From = GlobalPosition,
-			To = from + moveVector,
-		};
-		var result = GetWorld2D().DirectSpaceState.IntersectRay(ray);
+		_cachedRayQuery.From = from;
+		_cachedRayQuery.To = from + moveVector;
+		_cachedRayQuery.CollideWithAreas = false;
+		_cachedRayQuery.CollisionMask = 8u;
+
+		var result = GetWorld2D().DirectSpaceState.IntersectRay(_cachedRayQuery);
 		if (result.Count != 0)
 		{
 			var node = (Node)result["collider"];
@@ -114,7 +114,6 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 			{ "rotation", normal.Angle() },
 		};
 
-		EnvironmentFxManager.PlaySfx("bullet_impact_concrete");
 		EnvironmentFxManager.PlayVfx("bullet_impact_concrete", data);
 	}
 

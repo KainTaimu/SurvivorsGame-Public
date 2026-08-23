@@ -13,7 +13,7 @@
 script = ExtResource("4_fgf34")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_an3hj"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0u5yb"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_y3hip"]
@@ -41,7 +41,7 @@ BaseCritDamageMultiplier = 1.0
 BaseCritChanceProportion = 0.5
 BaseProjectileSpeed = 5000
 BaseProjectileScaleMultiplier = 1.2
-BaseProjectileRadius = 42
+BaseProjectileRadius = 50
 BaseAttackSpeed = 0.2
 BasePierceLimit = 2
 Additional = Dictionary[String, Variant]({

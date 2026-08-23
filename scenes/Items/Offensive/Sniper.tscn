@@ -22,7 +22,7 @@ metadata/_custom_type_script = "uid://dnodsacrptssb"
 script = ExtResource("4_11blq")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ia1h2"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0u5yb"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_iky5m"]
@@ -74,23 +74,23 @@ Stats = SubResource("Resource_f52b2")
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=2103641847]
 process_mode = 3
 stream = ExtResource("7_ia1h2")
-volume_db = 4.0
+volume_db = 7.0
 bus = &"ShootSfxNoDistortion"
 
 [node name="BoltCycle" type="AudioStreamPlayer" parent="." unique_id=1900327009]
 stream = ExtResource("8_ia1h2")
-volume_db = 4.0
+volume_db = 8.0
 
 [node name="SpentCasingEmitter" parent="." unique_id=1298992116 instance=ExtResource("10_bfcl0")]
 process_mode = 3
 
 [node name="308BoltCycleOpen" type="AudioStreamPlayer" parent="." unique_id=1403999457]
 stream = ExtResource("11_ia1h2")
-volume_db = 4.0
+volume_db = 8.0
 
 [node name="308BoltCycleClose" type="AudioStreamPlayer" parent="." unique_id=508340117]
 stream = ExtResource("12_hagd0")
-volume_db = 4.0
+volume_db = 8.0
 
 [connection signal="OnAttack" from="." to="Shoot" method="play"]
 [connection signal="OnReloadEnd" from="." to="308BoltCycleClose" method="play"]
