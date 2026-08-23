@@ -37,6 +37,14 @@ turbulence_noise_speed = Vector3(1, 1, 1)
 turbulence_noise_speed_random = 4.0
 turbulence_influence_max = 0.117000006
 
+[sub_resource type="GDScript" id="GDScript_xr4ol"]
+script/source = "extends GPUParticles2D
+
+
+func _ready() -> void:
+	emitting = true
+"
+
 [node name="SmokePuff" type="GPUParticles2D" unique_id=1697052434]
 scale = Vector2(0.05, 0.05)
 emitting = false
@@ -48,5 +56,6 @@ explosiveness = 1.0
 randomness = 1.0
 fixed_fps = 16
 process_material = SubResource("ParticleProcessMaterial_do71q")
+script = SubResource("GDScript_xr4ol")
 
 [connection signal="finished" from="." to="." method="queue_free"]

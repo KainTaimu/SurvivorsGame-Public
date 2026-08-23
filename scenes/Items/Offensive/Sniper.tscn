@@ -6,12 +6,11 @@
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_f52b2"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="4_11blq"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_u7hyr"]
-[ext_resource type="AudioStream" uid="uid://brpgaue5ixgat" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Full Sound/7.62x54R/WAV/762x54r Single WAV.wav" id="5_f52b2"]
-[ext_resource type="AudioStream" uid="uid://vrb4o786alti" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Reloads, Cycling & More/WAV/308 Bolt Cycle WAV.wav" id="8_0ap61"]
-[ext_resource type="AudioStream" uid="uid://or7lt77qeiaj" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Reloads, Cycling & More/WAV/308 Magazine Full WAV.wav" id="9_11blq"]
+[ext_resource type="AudioStream" uid="uid://bo41pccs1efmv" path="res://assets/SFX/Shoot/awm/awm_r1.wav" id="7_ia1h2"]
+[ext_resource type="AudioStream" uid="uid://b4yx7ckgqe3a4" path="res://assets/SFX/Shoot/awm/awm-bolt-cycle_full.wav" id="8_ia1h2"]
 [ext_resource type="PackedScene" uid="uid://dve8bx2iv87ya" path="res://scenes/VFX/SpentCasingEmitter.tscn" id="10_bfcl0"]
-[ext_resource type="AudioStream" uid="uid://cfl3jt5q0dghl" path="res://assets/SFX/Shoot/308 Bolt Cycle Close.wav" id="11_ia1h2"]
-[ext_resource type="AudioStream" uid="uid://77dvcqaetjul" path="res://assets/SFX/Shoot/308 Bolt Cycle Open.wav" id="12_hagd0"]
+[ext_resource type="AudioStream" uid="uid://bvldjovt60gbf" path="res://assets/SFX/Shoot/awm/awm-bolt-cycle_open.wav" id="11_ia1h2"]
+[ext_resource type="AudioStream" uid="uid://dl5ebmxnq3wsg" path="res://assets/SFX/Shoot/awm/awm-bolt-cycle_close.wav" id="12_hagd0"]
 
 [sub_resource type="Resource" id="Resource_11blq"]
 resource_local_to_scene = true
@@ -23,18 +22,18 @@ metadata/_custom_type_script = "uid://dnodsacrptssb"
 script = ExtResource("4_11blq")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_g7fad"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ia1h2"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_iky5m"]
 script = ExtResource("3_f52b2")
-Name = "AWM50"
+Name = "AWM"
 Description = "A sniper rifle that fires high-velocity [b][u]penetrating[/u][/b] rounds."
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_f52b2"]
 script = ExtResource("4_u7hyr")
-ReloadTime = 2.5
+ReloadTime = 4.0
 MagazineCapacity = 5
 HorizontalRecoilMin = 20.0
 HorizontalBaseRecoil = 20.0
@@ -51,7 +50,7 @@ BaseProjectileSpeed = 10000
 BaseProjectileScaleMultiplier = 1.5
 BaseProjectileRadius = 64
 BaseAttackSpeed = 1.0
-BasePierceLimit = 9999
+BasePierceLimit = 6
 Additional = Dictionary[String, Variant]({
 "MoveBloomMaxDeg": 50.0,
 "MoveBloomMinDeg": 0.0,
@@ -74,30 +73,24 @@ Stats = SubResource("Resource_f52b2")
 
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=2103641847]
 process_mode = 3
-stream = ExtResource("5_f52b2")
-volume_db = 10.0
-pitch_scale = 0.8
-bus = &"ShootSfx"
+stream = ExtResource("7_ia1h2")
+volume_db = 4.0
+bus = &"ShootSfxNoDistortion"
 
 [node name="BoltCycle" type="AudioStreamPlayer" parent="." unique_id=1900327009]
-stream = ExtResource("8_0ap61")
-volume_db = 5.0
-
-[node name="Reload" type="AudioStreamPlayer" parent="." unique_id=1762468800]
-process_mode = 3
-stream = ExtResource("9_11blq")
-volume_db = 5.0
+stream = ExtResource("8_ia1h2")
+volume_db = 4.0
 
 [node name="SpentCasingEmitter" parent="." unique_id=1298992116 instance=ExtResource("10_bfcl0")]
 process_mode = 3
 
 [node name="308BoltCycleOpen" type="AudioStreamPlayer" parent="." unique_id=1403999457]
-stream = ExtResource("12_hagd0")
-volume_db = 5.0
+stream = ExtResource("11_ia1h2")
+volume_db = 4.0
 
 [node name="308BoltCycleClose" type="AudioStreamPlayer" parent="." unique_id=508340117]
-stream = ExtResource("11_ia1h2")
-volume_db = 5.0
+stream = ExtResource("12_hagd0")
+volume_db = 4.0
 
 [connection signal="OnAttack" from="." to="Shoot" method="play"]
 [connection signal="OnReloadEnd" from="." to="308BoltCycleClose" method="play"]

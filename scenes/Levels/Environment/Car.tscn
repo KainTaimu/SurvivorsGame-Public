@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cmbybsnjl0aue"]
+
+[ext_resource type="Script" uid="uid://dya38ae3wnar0" path="res://src/Levels/Environment/Car.cs" id="1_djrxf"]
+[ext_resource type="PackedScene" uid="uid://pihky31jidp2" path="res://scenes/VFX/ExplosionParticles.tscn" id="2_6nkvu"]
+[ext_resource type="Script" uid="uid://bcnx8pu0x3g8u" path="res://src/Levels/Environment/DestructableStaticBody2D.cs" id="3_m6sl4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_do71q"]
+size = Vector2(256, 128)
+
+[node name="Car" type="Node2D" unique_id=437076138]
+script = ExtResource("1_djrxf")
+_explosionScene = ExtResource("2_6nkvu")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=114209457]
+color = Color(0.5597129, 0.23753291, 0, 1)
+polygon = PackedVector2Array(-128, -64, 128, -64, 128, 64, -128, 64)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=624636753 node_paths=PackedStringArray("NodeOwner")]
+collision_layer = 9
+script = ExtResource("3_m6sl4")
+NodeOwner = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1087467742]
+shape = SubResource("RectangleShape2D_do71q")

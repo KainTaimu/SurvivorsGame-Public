@@ -18,7 +18,7 @@ metadata/_custom_type_script = "uid://dnodsacrptssb"
 script = ExtResource("4_846bq")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_jy61x"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_an3hj"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_y3hip"]
@@ -29,7 +29,7 @@ metadata/_custom_type_script = "uid://8rt54h4imtxv"
 [sub_resource type="Resource" id="Resource_n3sky"]
 script = ExtResource("6_83ri7")
 ReloadTime = 3.0
-BloomCoefficientDeg = 2.0
+BloomCoefficientDeg = 4.0
 MagazineCapacity = 10
 HorizontalRecoilMin = 15.0
 HorizontalBaseRecoil = 15.0

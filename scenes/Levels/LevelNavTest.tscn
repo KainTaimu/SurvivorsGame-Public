@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://wos5frj6p77e" path="res://scenes/Levels/PolygonLightOccluder.tscn" id="3_lkbse"]
 [ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="3_sx6oq"]
 [ext_resource type="Script" uid="uid://dau6m811dtep8" path="res://src/Levels/Controllers/Waves/BlueprintWeight.cs" id="4_7b5vb"]
+[ext_resource type="PackedScene" uid="uid://cmbybsnjl0aue" path="res://scenes/Levels/Environment/Car.tscn" id="4_ms68o"]
 [ext_resource type="Script" uid="uid://b7ol6jtjagoe" path="res://src/Levels/Controllers/Waves/WaveDuration.cs" id="5_chdw3"]
 [ext_resource type="PackedScene" uid="uid://c8vjoa3wtku3l" path="res://scenes/UI/PickupUi.tscn" id="5_h7ouo"]
 [ext_resource type="Script" uid="uid://ds8lkov4wnj2l" path="res://src/Levels/Controllers/Waves/WeightedWaveBlueprintCollection.cs" id="5_lkbse"]
@@ -456,17 +457,17 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="Resource" id="Resource_250w8"]
-resource_local_to_scene = true
-script = ExtResource("23_ms68o")
-metadata/_custom_type_script = "uid://bt8inkwpypk5b"
-
 [sub_resource type="Resource" id="Resource_prm17"]
 resource_local_to_scene = true
 script = ExtResource("23_ms68o")
 metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_m1uaf"]
+[sub_resource type="Resource" id="Resource_m1uaf"]
+resource_local_to_scene = true
+script = ExtResource("23_ms68o")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ba6rp"]
 resource_local_to_scene = true
 shader = ExtResource("24_uo14t")
 shader_parameter/tint = Color(0.33618236, 2.6171097e-07, 1.2032687e-07, 1)
@@ -598,6 +599,13 @@ polygon = PackedVector2Array(2629, 6297, 1669, 6425, 1669, 7833, 2757, 7897, 294
 position = Vector2(-1408, -192)
 polygon = PackedVector2Array(9797, -3367, 9925, 473, 6341, 537, 6144, 512, 6144, 704, 6336, 704, 6336, 1472, 6144, 1472, 6144, 1728, 6336, 1728, 6337.9688, 2418.2554, 5952, 2432, 5952, 2816, 6336, 2816, 6341, 3481, 10245, 3417, 10821, 3481, 10693, 345, 14533, 153, 14341, -1447, 13893, -1447, 13829, -2407, 14277, -2471, 14277, -3367)
 
+[node name="Obstacles" type="Node2D" parent="World" parent_id_path=PackedInt32Array(197767375) index="2" unique_id=854350598]
+
+[node name="Car" parent="World/Obstacles" index="0" unique_id=437076138 instance=ExtResource("4_ms68o")]
+z_index = 1
+z_as_relative = false
+position = Vector2(384, -313)
+
 [node name="GameWorld" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="0" unique_id=562045734 node_paths=PackedStringArray("MainPlayer")]
 MainPlayer = NodePath("../Player")
 
@@ -659,13 +667,13 @@ _outgoingDamage = SubResource("Resource_ask6t")
 sprite_frames = SubResource("SpriteFrames_250w8")
 
 [node name="M249" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="0" unique_id=873525008 instance=ExtResource("22_0833k")]
-_fireGroup = SubResource("Resource_250w8")
-
-[node name="M249-S" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="1" unique_id=1854773231 instance=ExtResource("24_ovhvh")]
 _fireGroup = SubResource("Resource_prm17")
 
+[node name="M249-S" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="1" unique_id=1854773231 instance=ExtResource("24_ovhvh")]
+_fireGroup = SubResource("Resource_m1uaf")
+
 [node name="ColorRect" parent="Systems/Player/DamageVignette" parent_id_path=PackedInt32Array(1386970244, 758455490) index="0" unique_id=1773597369]
-material = SubResource("ShaderMaterial_m1uaf")
+material = SubResource("ShaderMaterial_ba6rp")
 
 [node name="HUD" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="2" unique_id=1626912566]
 process_priority = -50

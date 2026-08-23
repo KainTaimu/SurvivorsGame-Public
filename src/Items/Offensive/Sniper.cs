@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Arch.Core;
-using Game.Core.ECS;
 using Game.Levels.Controllers;
 using Game.Players.Controllers;
 using Game.UI;
@@ -17,9 +16,6 @@ public partial class Sniper : AbstractFirearm, IReloadable
 
 	[Signal]
 	public delegate void AlmostEmptyEventHandler();
-
-	[Signal]
-	public delegate void BoltOpenedEventHandler();
 
 	[Export]
 	private PackedScene _projectileScene = null!;
@@ -84,9 +80,8 @@ public partial class Sniper : AbstractFirearm, IReloadable
 		{
 			if (MagazineCount != 0)
 			{
-				GetTree().CreateTimer(OffensiveStats.AttackSpeed / 2, false).Timeout += () =>
+				GetTree().CreateTimer(OffensiveStats.AttackSpeed / 6, false).Timeout += () =>
 				{
-					EmitSignalBoltOpened();
 					_boltCyclingPlayer?.Play();
 				};
 			}
@@ -192,7 +187,6 @@ public partial class Sniper : AbstractFirearm, IReloadable
 		};
 		IsReloading = true;
 		EmitSignalOnReloadStart();
-		EmitSignalBoltOpened();
 	}
 
 	private void UpdateMoveTimeBloom(double delta)

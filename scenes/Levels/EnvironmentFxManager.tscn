@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://b0akxsis11vjv" path="res://src/Levels/Controllers/EnvironmentFxManager.cs" id="1_of2i0"]
 [ext_resource type="AudioStream" uid="uid://bea4oh505csc7" path="res://assets/SFX/environment/Bullet rock Impact 4.wav" id="2_5l02b"]
 [ext_resource type="Script" uid="uid://chidsynybclhy" path="res://src/SFX/environment_sfx_info.gd" id="2_jbikd"]
+[ext_resource type="PackedScene" uid="uid://bm8s3nhidl6ca" path="res://scenes/VFX/SmokePuff.tscn" id="4_4n5px"]
+[ext_resource type="PackedScene" uid="uid://pihky31jidp2" path="res://scenes/VFX/ExplosionParticles.tscn" id="5_xr4ol"]
 
 [sub_resource type="GDScript" id="GDScript_do71q"]
 script/source = "extends Node
@@ -29,7 +31,10 @@ func _initialize_players():
 		_players[entry] = player
 
 
-func on_environment_fx_manager_sfx_played(sfx_name: StringName) -> void:
+func on_environment_fx_manager_sfx_played(
+	sfx_name: StringName,
+	_data: Dictionary[StringName, Variant],
+) -> void:
 	if not sfx_lookup.has(sfx_name):
 		CustomLogger.log_warning(\"attempt to play unknown sfx \\\"%s\\\"\" % sfx_name)
 		return
@@ -42,13 +47,51 @@ stream = ExtResource("2_5l02b")
 volume_db = -8.0
 metadata/_custom_type_script = "uid://chidsynybclhy"
 
+[sub_resource type="Resource" id="Resource_6nkvu"]
+script = ExtResource("2_jbikd")
+stream = ExtResource("2_5l02b")
+volume_db = -4.0
+metadata/_custom_type_script = "uid://chidsynybclhy"
+
+[sub_resource type="GDScript" id="GDScript_ogoab"]
+script/source = "extends Node2D
+
+@export var vfx_lookup: Dictionary[StringName, PackedScene] = { }
+
+
+func on_environment_fx_manager_vfx_played(vfx_name: StringName, _data: Dictionary) -> void:
+	var vfx_scene: PackedScene = vfx_lookup.get(vfx_name, null)
+	if vfx_scene == null:
+		CustomLogger.log_warning(\"attempt to play unknown vfx \\\"%s\\\"\" % vfx_name)
+		return
+	var vfx := vfx_scene.instantiate()
+
+	for key in _data:
+		var value = _data[key]
+		if value is Callable:
+			var callable := value as Callable
+			callable.call()
+		else:
+			vfx.set(key, value)
+	add_child(vfx)
+"
+
 [node name="EnvironmentFxManager" type="Node" unique_id=191797976]
 script = ExtResource("1_of2i0")
 
 [node name="SfxManager" type="Node" parent="." unique_id=367746116]
 script = SubResource("GDScript_do71q")
-sfx_lookup = Dictionary[StringName, Resource]({
-&"bullet_impact_concrete": SubResource("Resource_5l02b")
+sfx_lookup = Dictionary[StringName, ExtResource("2_jbikd")]({
+&"bullet_impact_concrete": SubResource("Resource_5l02b"),
+&"car_hit": SubResource("Resource_6nkvu")
+})
+
+[node name="VfxManager" type="Node2D" parent="." unique_id=240685734]
+script = SubResource("GDScript_ogoab")
+vfx_lookup = Dictionary[StringName, PackedScene]({
+&"bullet_impact_concrete": ExtResource("4_4n5px"),
+&"car_explosion": ExtResource("5_xr4ol")
 })
 
 [connection signal="OnSfxPlayed" from="." to="SfxManager" method="on_environment_fx_manager_sfx_played"]
+[connection signal="OnVfxPlayed" from="." to="VfxManager" method="on_environment_fx_manager_vfx_played"]

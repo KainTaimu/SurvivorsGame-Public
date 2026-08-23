@@ -47,6 +47,9 @@ anim_offset_max = 0.3071
 
 [sub_resource type="GDScript" id="GDScript_351pr"]
 script/source = "extends GPUParticles2D
+
+func _ready() -> void:
+	emitting = true
 "
 
 [node name="ExplosionParticles" type="GPUParticles2D" unique_id=463393442]

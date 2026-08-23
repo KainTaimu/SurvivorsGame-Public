@@ -4,6 +4,7 @@ using Arch.Core;
 using Game.Core.ECS;
 using Game.Core.Extensions;
 using Game.Levels.Controllers;
+using Game.Levels.Environment;
 
 namespace Game.Items.Projectiles;
 
@@ -60,7 +61,16 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 		var result = GetWorld2D().DirectSpaceState.IntersectRay(ray);
 		if (result.Count != 0)
 		{
-			SpawnContactEffects((Vector2)result["position"], (Vector2)result["normal"]);
+			var node = (Node)result["collider"];
+			if (node is DestructableStaticBody2D destructableBody)
+			{
+				var destructable = (IDestructable)destructableBody.NodeOwner;
+				destructable.TakeHit(50);
+			}
+			else
+			{
+				SpawnContactEffects((Vector2)result["position"], (Vector2)result["normal"]);
+			}
 			ReturnToPool();
 			return;
 		}
@@ -98,18 +108,14 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 
 	private void SpawnContactEffects(Vector2 pos, Vector2 normal)
 	{
-		// TODO: Make VFX Manager
-		const string smokeScene = "uid://bm8s3nhidl6ca";
-		var smokePack = GD.Load<PackedScene>(smokeScene);
-		var smoke = smokePack.Instantiate<GpuParticles2D>();
-		smoke.Rotation = normal.Angle();
-		// TODO: Reflect from normal
-		smoke.Position = pos;
-
-		GetTree().Root.AddChild(smoke);
-		smoke.Emitting = true;
+		var data = new Godot.Collections.Dictionary<StringName, Variant>()
+		{
+			{ "position", pos },
+			{ "rotation", normal.Angle() },
+		};
 
 		EnvironmentFxManager.PlaySfx("bullet_impact_concrete");
+		EnvironmentFxManager.PlayVfx("bullet_impact_concrete", data);
 	}
 
 	protected override void PostInitialization()
