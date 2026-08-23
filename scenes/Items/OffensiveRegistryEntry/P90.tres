@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://k1vxoxjbg1ys"]
+
+[ext_resource type="PackedScene" uid="uid://dwyqdinyji8tt" path="res://scenes/Items/Offensive/MP5.tscn" id="1_eg8g2"]
+[ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_igcfg"]
+
+[resource]
+script = ExtResource("2_igcfg")
+scene = ExtResource("1_eg8g2")
+spawn_weight = 0.75
+rarity = 2
+metadata/_custom_type_script = "uid://brmkfowmxbv52"

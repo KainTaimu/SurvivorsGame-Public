@@ -1,0 +1,385 @@
+[gd_scene format=3 uid="uid://drhfq4tsx8eg6"]
+
+[ext_resource type="PackedScene" uid="uid://d3su0ak3dnifl" path="res://scenes/Levels/Level.tscn" id="1_ok1be"]
+[ext_resource type="PackedScene" uid="uid://ecfjaeglvrkf" path="res://scenes/Players/DevPlayer.tscn" id="2_sb208"]
+[ext_resource type="Script" uid="uid://tfaqh3bcxdha" path="res://src/Models/IntStat.cs" id="3_qq1s2"]
+[ext_resource type="Script" uid="uid://wsto3khl70md" path="res://src/Models/FloatStat.cs" id="4_x5as6"]
+[ext_resource type="Shader" uid="uid://bgl0yr4nfmpqx" path="res://src/Shaders/flash.gdshader" id="5_uuyb7"]
+[ext_resource type="Texture2D" uid="uid://c0d0pkcn6hw68" path="res://assets/Players/player.png" id="6_q2jy1"]
+[ext_resource type="PackedScene" uid="uid://b6pcia1iql0ct" path="res://scenes/Items/Offensive/Ak47.tscn" id="7_ebfjh"]
+[ext_resource type="PackedScene" uid="uid://qxx1q01ys1cd" path="res://scenes/Items/Offensive/Dmr.tscn" id="7_o1piw"]
+[ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/SemiAutoFireGroup.cs" id="8_dfrfs"]
+[ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FullAutoFireGroup.cs" id="8_nj7rv"]
+[ext_resource type="Shader" uid="uid://bg3me0bhc4em2" path="res://src/Shaders/vignette.gdshader" id="9_h4ih8"]
+[ext_resource type="PackedScene" uid="uid://c5chlqja2k2k0" path="res://scenes/Items/Offensive/AutoShotgun.tscn" id="9_rvfl2"]
+[ext_resource type="PackedScene" uid="uid://bv8olcpvea07v" path="res://scenes/Items/Offensive/GrenadeLauncher.tscn" id="12_uic4c"]
+[ext_resource type="PackedScene" uid="uid://ceimmtu3q4x6n" path="res://scenes/Items/Offensive/GrenadeThrower.tscn" id="13_jmqlf"]
+[ext_resource type="PackedScene" uid="uid://chrgb8gqwh4s0" path="res://scenes/Items/Offensive/M4.tscn" id="14_e4uyc"]
+[ext_resource type="PackedScene" uid="uid://bm5g2ndiy5ltb" path="res://scenes/Items/Offensive/M16A4.tscn" id="15_vcvhu"]
+[ext_resource type="Script" uid="uid://dxbw6ujou46y4" path="res://src/Items/Offensive/BurstFireGroup.cs" id="16_4y81w"]
+[ext_resource type="PackedScene" uid="uid://okgy2hpbgy53" path="res://scenes/Items/Offensive/M17.tscn" id="17_cwtyr"]
+[ext_resource type="PackedScene" uid="uid://j70slgh4j2cl" path="res://scenes/Items/Offensive/M92FS.tscn" id="18_paacp"]
+[ext_resource type="PackedScene" uid="uid://c24ayslleke42" path="res://scenes/Items/Offensive/M249.tscn" id="19_fd0su"]
+[ext_resource type="PackedScene" uid="uid://c8noyno0ootql" path="res://scenes/Items/Offensive/M249S.tscn" id="20_d38pd"]
+[ext_resource type="PackedScene" uid="uid://cnk5c4yvwhjun" path="res://scenes/Items/Offensive/M1911.tscn" id="21_ndd4e"]
+[ext_resource type="PackedScene" uid="uid://2gxjr5yjrfut" path="res://scenes/Items/Offensive/Minigun.tscn" id="22_1l6d6"]
+[ext_resource type="PackedScene" uid="uid://dwyqdinyji8tt" path="res://scenes/Items/Offensive/MP5.tscn" id="23_5fm22"]
+[ext_resource type="PackedScene" uid="uid://twvhgblbtovy" path="res://scenes/Items/Offensive/Revolver.tscn" id="24_48hhp"]
+[ext_resource type="PackedScene" uid="uid://cmidrkjr0le3o" path="res://scenes/Items/Offensive/P90.tscn" id="24_nj7rv"]
+[ext_resource type="PackedScene" uid="uid://lvm5jo1ua73i" path="res://scenes/Items/Offensive/Shotgun.tscn" id="25_avg7l"]
+[ext_resource type="PackedScene" uid="uid://cuerorgcryk5k" path="res://scenes/Items/Offensive/Sniper.tscn" id="26_lvqjh"]
+
+[sub_resource type="Resource" id="Resource_nj7rv"]
+resource_local_to_scene = true
+script = ExtResource("3_qq1s2")
+BaseValue = 100
+metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+
+[sub_resource type="Resource" id="Resource_rvfl2"]
+resource_local_to_scene = true
+script = ExtResource("3_qq1s2")
+BaseValue = 100
+metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+
+[sub_resource type="Resource" id="Resource_uic4c"]
+resource_local_to_scene = true
+script = ExtResource("4_x5as6")
+BaseValue = 600.0
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_jmqlf"]
+resource_local_to_scene = true
+script = ExtResource("4_x5as6")
+BaseValue = 1.5
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_e4uyc"]
+resource_local_to_scene = true
+script = ExtResource("4_x5as6")
+BaseValue = 1.5
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_vcvhu"]
+resource_local_to_scene = true
+script = ExtResource("4_x5as6")
+BaseValue = 1.5
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_4y81w"]
+resource_local_to_scene = true
+script = ExtResource("3_qq1s2")
+metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+
+[sub_resource type="Resource" id="Resource_cwtyr"]
+resource_local_to_scene = true
+script = ExtResource("4_x5as6")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_paacp"]
+resource_local_to_scene = true
+script = ExtResource("4_x5as6")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_fd0su"]
+resource_local_to_scene = true
+script = ExtResource("3_qq1s2")
+metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+
+[sub_resource type="Resource" id="Resource_d38pd"]
+resource_local_to_scene = true
+script = ExtResource("4_x5as6")
+BaseValue = 0.5
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_ndd4e"]
+resource_local_to_scene = true
+script = ExtResource("4_x5as6")
+BaseValue = 42.0
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_1l6d6"]
+resource_local_to_scene = true
+script = ExtResource("4_x5as6")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_5fm22"]
+resource_local_to_scene = true
+script = ExtResource("4_x5as6")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_48hhp"]
+resource_local_to_scene = true
+script = ExtResource("4_x5as6")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_avg7l"]
+resource_local_to_scene = true
+script = ExtResource("4_x5as6")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_lvqjh"]
+resource_local_to_scene = true
+script = ExtResource("4_x5as6")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_t8yvr"]
+resource_local_to_scene = true
+script = ExtResource("4_x5as6")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iu70g"]
+resource_local_to_scene = true
+shader = ExtResource("5_uuyb7")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/flash_state = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2g2d6"]
+atlas = ExtResource("6_q2jy1")
+region = Rect2(0, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rask"]
+atlas = ExtResource("6_q2jy1")
+region = Rect2(31, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jgr36"]
+atlas = ExtResource("6_q2jy1")
+region = Rect2(62, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_espgp"]
+atlas = ExtResource("6_q2jy1")
+region = Rect2(93, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ragxt"]
+atlas = ExtResource("6_q2jy1")
+region = Rect2(0, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c66x0"]
+atlas = ExtResource("6_q2jy1")
+region = Rect2(31, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k7ubp"]
+atlas = ExtResource("6_q2jy1")
+region = Rect2(62, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k8uaa"]
+atlas = ExtResource("6_q2jy1")
+region = Rect2(93, 0, 31, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j0gpf"]
+resource_local_to_scene = true
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2g2d6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8rask")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jgr36")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_espgp")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ragxt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c66x0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k7ubp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k8uaa")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 7.0
+}]
+
+[sub_resource type="Resource" id="Resource_6cii2"]
+resource_local_to_scene = true
+script = ExtResource("8_nj7rv")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_et08g"]
+resource_local_to_scene = true
+script = ExtResource("16_4y81w")
+_fireQueueTolerance = 1.0
+metadata/_custom_type_script = "uid://dxbw6ujou46y4"
+
+[sub_resource type="Resource" id="Resource_tmjup"]
+resource_local_to_scene = true
+script = ExtResource("8_nj7rv")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_bf7v0"]
+resource_local_to_scene = true
+script = ExtResource("8_nj7rv")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_lwx0q"]
+resource_local_to_scene = true
+script = ExtResource("8_nj7rv")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_a15ue"]
+resource_local_to_scene = true
+script = ExtResource("16_4y81w")
+metadata/_custom_type_script = "uid://dxbw6ujou46y4"
+
+[sub_resource type="Resource" id="Resource_ssf1y"]
+resource_local_to_scene = true
+script = ExtResource("8_nj7rv")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_sprrt"]
+resource_local_to_scene = true
+script = ExtResource("8_dfrfs")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
+
+[sub_resource type="Resource" id="Resource_tcdx5"]
+resource_local_to_scene = true
+script = ExtResource("8_dfrfs")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
+
+[sub_resource type="Resource" id="Resource_4xmj0"]
+resource_local_to_scene = true
+script = ExtResource("8_nj7rv")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_rtolw"]
+resource_local_to_scene = true
+script = ExtResource("8_nj7rv")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_rohuk"]
+resource_local_to_scene = true
+script = ExtResource("8_dfrfs")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
+
+[sub_resource type="Resource" id="Resource_xwucb"]
+resource_local_to_scene = true
+script = ExtResource("8_dfrfs")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
+
+[sub_resource type="Resource" id="Resource_vui8h"]
+resource_local_to_scene = true
+script = ExtResource("8_nj7rv")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_sjffd"]
+resource_local_to_scene = true
+script = ExtResource("8_nj7rv")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_x88ov"]
+resource_local_to_scene = true
+script = ExtResource("8_dfrfs")
+_fireQueueTolerance = 0.0
+metadata/_custom_type_script = "uid://dnodsacrptssb"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jdoa8"]
+resource_local_to_scene = true
+shader = ExtResource("9_h4ih8")
+shader_parameter/tint = Color(0.33618236, 2.6171097e-07, 1.2032687e-07, 1)
+shader_parameter/alpha = 0.0
+shader_parameter/inner_radius = 0.0
+shader_parameter/outer_radius = 1.0
+
+[node name="Level" unique_id=2141389114 instance=ExtResource("1_ok1be")]
+
+[node name="GameWorld" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="0" unique_id=562045734 node_paths=PackedStringArray("MainPlayer")]
+MainPlayer = NodePath("../Player")
+
+[node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=2001503768]
+Enabled = false
+
+[node name="Player" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="4" unique_id=1386970244 instance=ExtResource("2_sb208")]
+
+[node name="CharacterStats" parent="Systems/Player/Character" parent_id_path=PackedInt32Array(1386970244, 527218927) index="0" unique_id=822145143]
+_health = SubResource("Resource_nj7rv")
+_maxHealth = SubResource("Resource_rvfl2")
+_moveSpeed = SubResource("Resource_uic4c")
+_runSpeed = SubResource("Resource_jmqlf")
+_stamina = SubResource("Resource_e4uyc")
+_maxStamina = SubResource("Resource_vcvhu")
+_defense = SubResource("Resource_4y81w")
+_criticalChance = SubResource("Resource_cwtyr")
+_pickupRangeRadius = SubResource("Resource_paacp")
+_healthRegenPerSecond = SubResource("Resource_fd0su")
+_invincibilityTime = SubResource("Resource_d38pd")
+_hitboxRadius = SubResource("Resource_ndd4e")
+_criticalDamage = SubResource("Resource_1l6d6")
+_attackSpeed = SubResource("Resource_5fm22")
+_bloomScale = SubResource("Resource_48hhp")
+_recoilScale = SubResource("Resource_avg7l")
+_incomingDamage = SubResource("Resource_lvqjh")
+_outgoingDamage = SubResource("Resource_t8yvr")
+
+[node name="AnimatedSprite2D" parent="Systems/Player" index="1" unique_id=881638213]
+material = SubResource("ShaderMaterial_iu70g")
+sprite_frames = SubResource("SpriteFrames_j0gpf")
+
+[node name="M4" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="0" unique_id=265287884 instance=ExtResource("14_e4uyc")]
+_fireGroup = SubResource("Resource_6cii2")
+
+[node name="M16A4" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="1" unique_id=1457836219 instance=ExtResource("15_vcvhu")]
+_fireGroup = SubResource("Resource_et08g")
+
+[node name="Ak47" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="2" unique_id=915008798 instance=ExtResource("7_ebfjh")]
+_fireGroup = SubResource("Resource_tmjup")
+
+[node name="AA-12" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="3" unique_id=764147352 instance=ExtResource("9_rvfl2")]
+_fireGroup = SubResource("Resource_bf7v0")
+
+[node name="M17" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="4" unique_id=1989500741 instance=ExtResource("17_cwtyr")]
+_fireGroup = SubResource("Resource_lwx0q")
+
+[node name="M92FS" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="5" unique_id=1472391115 instance=ExtResource("18_paacp")]
+_fireGroup = SubResource("Resource_a15ue")
+
+[node name="M1911" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="6" unique_id=2117418475 instance=ExtResource("21_ndd4e")]
+_fireGroup = SubResource("Resource_ssf1y")
+
+[node name="Revolver" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="7" unique_id=708917318 instance=ExtResource("24_48hhp")]
+_fireGroup = SubResource("Resource_sprrt")
+
+[node name="M870" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="8" unique_id=1997007315 instance=ExtResource("25_avg7l")]
+_fireGroup = SubResource("Resource_tcdx5")
+
+[node name="MP5" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="9" unique_id=1925326848 instance=ExtResource("23_5fm22")]
+_fireGroup = SubResource("Resource_4xmj0")
+
+[node name="P90" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="10" unique_id=1437899868 instance=ExtResource("24_nj7rv")]
+_fireGroup = SubResource("Resource_rtolw")
+
+[node name="DMR" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="11" unique_id=901001043 instance=ExtResource("7_o1piw")]
+_fireGroup = SubResource("Resource_rohuk")
+
+[node name="GrenadeLauncher" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="12" unique_id=1535579917 instance=ExtResource("12_uic4c")]
+_fireGroup = SubResource("Resource_xwucb")
+
+[node name="GrenadeThrower" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="13" unique_id=1000269585 instance=ExtResource("13_jmqlf")]
+
+[node name="M249" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="14" unique_id=873525008 instance=ExtResource("19_fd0su")]
+_fireGroup = SubResource("Resource_vui8h")
+
+[node name="M249-S" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="15" unique_id=1854773231 instance=ExtResource("20_d38pd")]
+_fireGroup = SubResource("Resource_sjffd")
+
+[node name="Minigun" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="16" unique_id=636864915 instance=ExtResource("22_1l6d6")]
+
+[node name="Sniper" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="17" unique_id=399121865 instance=ExtResource("26_lvqjh")]
+_fireGroup = SubResource("Resource_x88ov")
+
+[node name="ColorRect" parent="Systems/Player/DamageVignette" parent_id_path=PackedInt32Array(1386970244, 758455490) index="0" unique_id=1773597369]
+material = SubResource("ShaderMaterial_jdoa8")
+
+[editable path="Systems/Player"]
