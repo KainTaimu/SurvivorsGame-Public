@@ -108,6 +108,8 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 
 		GetTree().Root.AddChild(smoke);
 		smoke.Emitting = true;
+
+		EnvironmentFxManager.PlaySfx("bullet_impact_concrete");
 	}
 
 	protected override void PostInitialization()

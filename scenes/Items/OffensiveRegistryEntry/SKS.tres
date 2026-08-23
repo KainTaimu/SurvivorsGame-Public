@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://cxco3dha05xnp"]
+
+[ext_resource type="PackedScene" uid="uid://dtcjylv1ewb16" path="res://scenes/Items/Offensive/SKS.tscn" id="1_vma7o"]
+[ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_8wdil"]
+
+[resource]
+script = ExtResource("2_8wdil")
+scene = ExtResource("1_vma7o")
+spawn_weight = 0.8
+rarity = 2
+metadata/_custom_type_script = "uid://brmkfowmxbv52"

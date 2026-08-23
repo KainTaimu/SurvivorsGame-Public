@@ -18,6 +18,13 @@
 [ext_resource type="PackedScene" uid="uid://x42vvsn5hrwx" path="res://scenes/Levels/WaveDebugPanel.tscn" id="12_chdw3"]
 [ext_resource type="Script" uid="uid://cksmwvaxx1m18" path="res://src/Levels/Controllers/Waves/WaveSpawnCount.cs" id="13_j7ywk"]
 [ext_resource type="PackedScene" uid="uid://7kxy1v1ggvi8" path="res://scenes/Players/PlayerRookie.tscn" id="17_j7ywk"]
+[ext_resource type="Script" uid="uid://tfaqh3bcxdha" path="res://src/Models/IntStat.cs" id="19_wavsu"]
+[ext_resource type="Script" uid="uid://wsto3khl70md" path="res://src/Models/FloatStat.cs" id="20_0833k"]
+[ext_resource type="Texture2D" uid="uid://c0d0pkcn6hw68" path="res://assets/Players/player.png" id="21_ms68o"]
+[ext_resource type="PackedScene" uid="uid://c24ayslleke42" path="res://scenes/Items/Offensive/M249.tscn" id="22_0833k"]
+[ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FullAutoFireGroup.cs" id="23_ms68o"]
+[ext_resource type="PackedScene" uid="uid://c8noyno0ootql" path="res://scenes/Items/Offensive/M249S.tscn" id="24_ovhvh"]
+[ext_resource type="Shader" uid="uid://bg3me0bhc4em2" path="res://src/Shaders/vignette.gdshader" id="24_uo14t"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_sx6oq"]
 vertices = PackedVector2Array(5998.1797, 134, -511.84375, -30.34375, 5998.1797, -44, 6296.7266, -44, 6297.203, 134, 7458.758, 3280.3672, 6317.203, 184.57813, 6317.1797, -93.390625, 6732.8906, -2116.3984, 5103.6875, 2105.4922, 1532.5938, 1372.5313, 4962.797, 1174, 5261.8203, 1174, 5645.4766, 2105.4922, 1532.5938, -277.45313, 375.04688, -277.45313, 7133.1563, -7594.5938, 6703.4297, -6044.7266, 3346.0625, -2116.3984, 4942.797, -1033.4219, 1532.5938, -1127.1094, 2804.5703, -2116.3984, 5326.5703, -1084, 6161.9297, -2116.3984, 6261.2188, 2875.1563, 6107.2813, 2762.1094, 4942.797, 1123.4219, 1532.5938, 484.3828, 375.04688, -1127.1094, -511.84375, -1341.7969, -348.34375, -2116.3984, -40.46875, -2578.2031, 5255.2734, -7623.9688, 6161.9297, -6044.7266, -40.46875, -5275.0625, 2775.1016, -6044.7266, 375.04688, 522.8672, 375.04688, 1026.1797, -819.71094, 646.7031, -819.71094, 99.546875, -357.90625, 2762.7422, -357.90625, 1451.2734, 832.03906, 2687.5469, 832.03906, 3691.1484, -819.71094, 1257.0781, 1106.2266, 1122.3906, 1125.4766, 1122.3906, 1125.4766, 1372.5313, -736.0781, 1451.2734, -819.71094, 869.21094, 3872.2188, 2259.4219, 3872.2188, 3765.711, 3826.9297, 4146.3906, 1527.7734, 3691.1484, 1527.7734, 2687.5469, 817.6094, 484.3828, 6161.9297, -5736.867, 6088, -5736.867, 6088, -5886.1094, 3391.1328, -5886.1094, 3391.1328, -5736.867, 3317.2031, -5736.867, 3317.2031, -6044.7266, -348.34375, -5275.0625, -348.34375, -5736.867, -810.1328, -5736.867, -810.1328, -6044.7266, -1967.6563, -6044.7266, -1967.6563, -5429, -3045.2031, -5429, -3615.6328, -7576, -3045.2031, -2424.2734, -1967.6563, -2424.2734, -1967.6563, -2116.3984, -348.34375, -2578.2031, 3346.0625, -2424.2734, 3391.1328, -2424.2734, 3391.1328, -2275.0313, 6088, -2275.0313, 6088, -2424.2734, 6161.9297, -2424.2734, 817.6094, 522.8672, -1823.2969, -30.34375, -1834, 99.546875, 817.6094, 1026.1797, 817.6094, 1045.4219, 1106.2266, 1045.4219, 6107.2813, 2875.1563, 5645.4766, 2762.1094, 5103.6875, 2259.4219, -973.6406, 3686.3438, -973.6406, 2762.7422, 6107.2813, 3765.711, 6107.2813, 3263.0234, 6261.2188, 3263.0234, 7448.453, 4187.539, 6100.328, 4172.2266, 1135.8516, 4115.797, -1823.3125, 3686.3438, -1685.6563, 4083.7422, -3383.1484, 4064.4375, -3391.9219, 1863.6406, -1823.3125, 1759.1406, -1823.2969, 1257.0781, -3394.539, 1208.1406, -3397.8438, 377.65625, -1823.2969, 869.21094, 4660.1094, -2116.3984, 4962.797, -1084, 4819.0234, -2116.3984, -1823.2969, -1341.7969, 4819.0234, -6044.7266, 4664.617, -7576, 4660.1094, -6044.7266, -801.9375, 1685.8125, -1152.4688, 1759.1406, -3404.5938, -1317.0313, -1834, 646.7031)
@@ -281,6 +288,192 @@ script = ExtResource("12_2ki1j")
 FrameName = &"Render"
 metadata/_custom_type_script = "uid://daw8gyvo0xom3"
 
+[sub_resource type="Resource" id="Resource_b4tdw"]
+resource_local_to_scene = true
+script = ExtResource("19_wavsu")
+BaseValue = 25
+metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+
+[sub_resource type="Resource" id="Resource_fp22m"]
+resource_local_to_scene = true
+script = ExtResource("19_wavsu")
+BaseValue = 25
+metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+
+[sub_resource type="Resource" id="Resource_0qe1x"]
+resource_local_to_scene = true
+script = ExtResource("20_0833k")
+BaseValue = 500.0
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_au8tc"]
+resource_local_to_scene = true
+script = ExtResource("20_0833k")
+BaseValue = 1.5
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_8nikp"]
+resource_local_to_scene = true
+script = ExtResource("20_0833k")
+BaseValue = 1.5
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_60tfw"]
+resource_local_to_scene = true
+script = ExtResource("20_0833k")
+BaseValue = 1.5
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_3y0xj"]
+resource_local_to_scene = true
+script = ExtResource("19_wavsu")
+metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+
+[sub_resource type="Resource" id="Resource_gdw2j"]
+resource_local_to_scene = true
+script = ExtResource("20_0833k")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_5e3ws"]
+resource_local_to_scene = true
+script = ExtResource("20_0833k")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_5tmua"]
+resource_local_to_scene = true
+script = ExtResource("19_wavsu")
+metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+
+[sub_resource type="Resource" id="Resource_nyfy6"]
+resource_local_to_scene = true
+script = ExtResource("20_0833k")
+BaseValue = 0.5
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_r5w36"]
+resource_local_to_scene = true
+script = ExtResource("20_0833k")
+BaseValue = 42.0
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_jkytk"]
+resource_local_to_scene = true
+script = ExtResource("20_0833k")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_ly7v6"]
+resource_local_to_scene = true
+script = ExtResource("20_0833k")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_gghmx"]
+resource_local_to_scene = true
+script = ExtResource("20_0833k")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_g0ijy"]
+resource_local_to_scene = true
+script = ExtResource("20_0833k")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_fdsq1"]
+resource_local_to_scene = true
+script = ExtResource("20_0833k")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_ask6t"]
+resource_local_to_scene = true
+script = ExtResource("20_0833k")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2g2d6"]
+atlas = ExtResource("21_ms68o")
+region = Rect2(0, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rask"]
+atlas = ExtResource("21_ms68o")
+region = Rect2(31, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jgr36"]
+atlas = ExtResource("21_ms68o")
+region = Rect2(62, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_espgp"]
+atlas = ExtResource("21_ms68o")
+region = Rect2(93, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ragxt"]
+atlas = ExtResource("21_ms68o")
+region = Rect2(0, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c66x0"]
+atlas = ExtResource("21_ms68o")
+region = Rect2(31, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k7ubp"]
+atlas = ExtResource("21_ms68o")
+region = Rect2(62, 0, 31, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k8uaa"]
+atlas = ExtResource("21_ms68o")
+region = Rect2(93, 0, 31, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_250w8"]
+resource_local_to_scene = true
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2g2d6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8rask")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jgr36")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_espgp")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ragxt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c66x0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k7ubp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k8uaa")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 7.0
+}]
+
+[sub_resource type="Resource" id="Resource_250w8"]
+resource_local_to_scene = true
+script = ExtResource("23_ms68o")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_prm17"]
+resource_local_to_scene = true
+script = ExtResource("23_ms68o")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m1uaf"]
+resource_local_to_scene = true
+shader = ExtResource("24_uo14t")
+shader_parameter/tint = Color(0.33618236, 2.6171097e-07, 1.2032687e-07, 1)
+shader_parameter/alpha = 0.0
+shader_parameter/inner_radius = 0.0
+shader_parameter/outer_radius = 1.0
+
 [node name="Level2" unique_id=2141389114 instance=ExtResource("1_4npl3")]
 
 [node name="Parallax2D" parent="World" parent_id_path=PackedInt32Array(197767375) index="0" unique_id=951832910]
@@ -442,8 +635,42 @@ FrameTime = SubResource("Resource_wavsu")
 
 [node name="Player" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="4" unique_id=1386970244 instance=ExtResource("17_j7ywk")]
 
+[node name="CharacterStats" parent="Systems/Player/Character" parent_id_path=PackedInt32Array(1386970244, 527218927) index="0" unique_id=465756040]
+_health = SubResource("Resource_b4tdw")
+_maxHealth = SubResource("Resource_fp22m")
+_moveSpeed = SubResource("Resource_0qe1x")
+_runSpeed = SubResource("Resource_au8tc")
+_stamina = SubResource("Resource_8nikp")
+_maxStamina = SubResource("Resource_60tfw")
+_defense = SubResource("Resource_3y0xj")
+_criticalChance = SubResource("Resource_gdw2j")
+_pickupRangeRadius = SubResource("Resource_5e3ws")
+_healthRegenPerSecond = SubResource("Resource_5tmua")
+_invincibilityTime = SubResource("Resource_nyfy6")
+_hitboxRadius = SubResource("Resource_r5w36")
+_criticalDamage = SubResource("Resource_jkytk")
+_attackSpeed = SubResource("Resource_ly7v6")
+_bloomScale = SubResource("Resource_gghmx")
+_recoilScale = SubResource("Resource_g0ijy")
+_incomingDamage = SubResource("Resource_fdsq1")
+_outgoingDamage = SubResource("Resource_ask6t")
+
+[node name="AnimatedSprite2D" parent="Systems/Player" index="1" unique_id=881638213]
+sprite_frames = SubResource("SpriteFrames_250w8")
+
+[node name="M249" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="0" unique_id=873525008 instance=ExtResource("22_0833k")]
+_fireGroup = SubResource("Resource_250w8")
+
+[node name="M249-S" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="1" unique_id=1854773231 instance=ExtResource("24_ovhvh")]
+_fireGroup = SubResource("Resource_prm17")
+
+[node name="ColorRect" parent="Systems/Player/DamageVignette" parent_id_path=PackedInt32Array(1386970244, 758455490) index="0" unique_id=1773597369]
+material = SubResource("ShaderMaterial_m1uaf")
+
 [node name="HUD" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="2" unique_id=1626912566]
 process_priority = -50
 
 [node name="PerformanceMonitor" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="3" unique_id=1872396024 node_paths=PackedStringArray("Targets")]
 Targets = []
+
+[editable path="Systems/Player"]

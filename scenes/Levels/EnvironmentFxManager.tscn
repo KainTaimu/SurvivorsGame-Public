@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://y2aqhpen7wf"]
+
+[ext_resource type="Script" uid="uid://b0akxsis11vjv" path="res://src/Levels/Controllers/EnvironmentFxManager.cs" id="1_of2i0"]
+[ext_resource type="AudioStream" uid="uid://bea4oh505csc7" path="res://assets/SFX/environment/Bullet rock Impact 4.wav" id="2_5l02b"]
+[ext_resource type="Script" uid="uid://chidsynybclhy" path="res://src/SFX/environment_sfx_info.gd" id="2_jbikd"]
+
+[sub_resource type="GDScript" id="GDScript_do71q"]
+script/source = "extends Node
+
+@export var sfx_lookup: Dictionary[StringName, EnvironmentSfxInfo] = { }
+
+var _players: Dictionary[StringName, AudioStreamPlayer] = { }
+
+
+func _ready() -> void:
+	_initialize_players()
+
+
+func _initialize_players():
+	for entry in sfx_lookup:
+		var info := sfx_lookup[entry]
+		var player := AudioStreamPlayer.new()
+		player.name = entry
+		player.stream = info.stream
+		player.volume_db = info.volume_db
+		player.bus = \"EnvironmentFx\"
+		player.max_polyphony = 9999
+		add_child(player)
+		_players[entry] = player
+
+
+func on_environment_fx_manager_sfx_played(sfx_name: StringName) -> void:
+	if not sfx_lookup.has(sfx_name):
+		CustomLogger.log_warning(\"attempt to play unknown sfx \\\"%s\\\"\" % sfx_name)
+		return
+	_players[sfx_name].play()
+"
+
+[sub_resource type="Resource" id="Resource_5l02b"]
+script = ExtResource("2_jbikd")
+stream = ExtResource("2_5l02b")
+volume_db = -8.0
+metadata/_custom_type_script = "uid://chidsynybclhy"
+
+[node name="EnvironmentFxManager" type="Node" unique_id=191797976]
+script = ExtResource("1_of2i0")
+
+[node name="SfxManager" type="Node" parent="." unique_id=367746116]
+script = SubResource("GDScript_do71q")
+sfx_lookup = Dictionary[StringName, Resource]({
+&"bullet_impact_concrete": SubResource("Resource_5l02b")
+})
+
+[connection signal="OnSfxPlayed" from="." to="SfxManager" method="on_environment_fx_manager_sfx_played"]

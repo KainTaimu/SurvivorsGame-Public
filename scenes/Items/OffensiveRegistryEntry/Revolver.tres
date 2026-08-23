@@ -6,6 +6,5 @@
 [resource]
 script = ExtResource("2_j8ip3")
 scene = ExtResource("1_cwyhf")
-spawn_weight = 0.8
-rarity = 5
+spawn_weight = 0.85
 metadata/_custom_type_script = "uid://brmkfowmxbv52"

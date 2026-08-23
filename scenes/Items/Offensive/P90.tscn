@@ -18,7 +18,7 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 script = ExtResource("4_m8lav")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0f2tb"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_g7fad"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_dkd5d"]
@@ -65,7 +65,7 @@ Stats = SubResource("Resource_34bgn")
 process_mode = 3
 stream = ExtResource("7_7i55r")
 max_polyphony = 3
-bus = &"ShootSfx"
+bus = &"ShootSfxNoDistortion"
 
 [node name="MagAlmostEmpty" parent="." unique_id=866300451 instance=ExtResource("8_pgkdl")]
 

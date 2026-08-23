@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="SurvivorsGame"
-run/main_scene="uid://drhfq4tsx8eg6"
+run/main_scene="uid://68cq6qirfliu"
 config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 

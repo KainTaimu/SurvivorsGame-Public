@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://dtcjylv1ewb16"]
+
+[ext_resource type="Script" uid="uid://d4hn7uwvshdju" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_an3hj"]
+[ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_betsp"]
+[ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/SemiAutoFireGroup.cs" id="3_an3hj"]
+[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="4_846bq"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="5_x73fq"]
+[ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_83ri7"]
+[ext_resource type="AudioStream" uid="uid://bl1hj5f7wkjid" path="res://assets/SFX/Shoot/sks/sks_r2.wav" id="7_an3hj"]
+[ext_resource type="AudioStream" uid="uid://dspbe1b535vno" path="res://assets/SFX/revolver_cocking.mp3" id="8_meo3r"]
+
+[sub_resource type="Resource" id="Resource_betsp"]
+resource_local_to_scene = true
+script = ExtResource("3_an3hj")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
+
+[sub_resource type="Resource" id="Resource_dar1o"]
+script = ExtResource("4_846bq")
+metadata/_custom_type_script = "uid://dpq42sefws67v"
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_jy61x"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_y3hip"]
+script = ExtResource("5_x73fq")
+Name = "SKS"
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
+[sub_resource type="Resource" id="Resource_n3sky"]
+script = ExtResource("6_83ri7")
+ReloadTime = 3.0
+BloomCoefficientDeg = 2.0
+MagazineCapacity = 10
+HorizontalRecoilMin = 15.0
+HorizontalBaseRecoil = 15.0
+HorizontalRecoilRandom = 10.0
+VerticalRecoilMin = 10.0
+VerticalBaseRecoil = 20.0
+VerticalRecoilRandom = 15.0
+HorizontalRecoilPunish = false
+CameraRecoilScale = 0.85
+BaseDamage = 11
+BaseCritDamageMultiplier = 1.0
+BaseCritChanceProportion = 0.5
+BaseProjectileSpeed = 4200
+BaseProjectileScaleMultiplier = 1.1
+BaseProjectileRadius = 42
+BaseAttackSpeed = 0.3
+BasePierceLimit = 2
+Additional = Dictionary[String, Variant]({
+"Knockback": 5.0,
+"SlowMultiplier": 0.0
+})
+metadata/_custom_type_script = "uid://di81uufgmcsog"
+
+[node name="SKS" type="Node" unique_id=708917318]
+script = ExtResource("1_an3hj")
+_projectileScene = ExtResource("2_betsp")
+_fireGroup = SubResource("Resource_betsp")
+_projectileAttack = SubResource("Resource_dar1o")
+Properties = SubResource("Resource_y3hip")
+Stats = SubResource("Resource_n3sky")
+
+[node name="ShootAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1706054987]
+process_mode = 3
+stream = ExtResource("7_an3hj")
+volume_db = 4.0
+max_polyphony = 3
+bus = &"ShootSfxNoDistortion"
+
+[node name="CockAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1261930206]
+process_mode = 3
+stream = ExtResource("8_meo3r")
+volume_db = 12.0
+mix_target = 2
+max_polyphony = 6
+
+[connection signal="OnAttack" from="." to="ShootAudioPlayer" method="play"]

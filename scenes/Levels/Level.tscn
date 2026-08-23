@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://jbowd6556xtq" path="res://src/Levels/Controllers/GameWorld.cs" id="3_pi0ox"]
 [ext_resource type="PackedScene" uid="uid://b802cb5a7o5fr" path="res://scenes/UI/PauseMenu.tscn" id="4_pi0ox"]
 [ext_resource type="Script" uid="uid://cyldy6fxdbadt" path="res://src/Levels/Controllers/LevelData.cs" id="4_qsiuk"]
+[ext_resource type="PackedScene" uid="uid://y2aqhpen7wf" path="res://scenes/Levels/EnvironmentFxManager.tscn" id="5_lkd4q"]
 [ext_resource type="Script" uid="uid://bkpyb01olop50" path="res://src/Levels/Controllers/EnemyRenderer.cs" id="7_ajdj3"]
 [ext_resource type="PackedScene" uid="uid://cynlbeb3umvcr" path="res://scenes/Levels/EnemyWaveController.tscn" id="8_27qwr"]
 [ext_resource type="Script" uid="uid://cuxklvvvd40t4" path="res://scenes/Levels/EnemySystems.cs" id="8_t3a6r"]
@@ -98,6 +99,8 @@ script = ExtResource("4_qsiuk")
 [node name="LevelSystems" type="Node" parent="Systems" unique_id=1543900922]
 
 [node name="AirdropManager" parent="Systems/LevelSystems" unique_id=1529584760 instance=ExtResource("20_qsiuk")]
+
+[node name="EnvironmentFxManager" parent="Systems/LevelSystems" unique_id=191797976 instance=ExtResource("5_lkd4q")]
 
 [node name="EnemySystems" type="Node" parent="Systems" unique_id=1808118587]
 script = ExtResource("8_t3a6r")

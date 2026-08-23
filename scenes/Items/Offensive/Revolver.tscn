@@ -7,41 +7,42 @@
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="5_0u5yb"]
 [ext_resource type="AudioStream" uid="uid://dspbe1b535vno" path="res://assets/SFX/revolver_cocking.mp3" id="6_0u5yb"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_y3hip"]
-[ext_resource type="AudioStream" uid="uid://cw86ceo4xhjqy" path="res://assets/SFX/Shoot/revolver/revolver_r3.wav" id="7_0u5yb"]
+[ext_resource type="AudioStream" uid="uid://hbmq8g2asy5h" path="res://assets/SFX/Shoot/python/python_r1.wav" id="7_0u5yb"]
 
 [sub_resource type="Resource" id="Resource_dar1o"]
 script = ExtResource("4_fgf34")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0f2tb"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_jy61x"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_y3hip"]
 script = ExtResource("5_0u5yb")
-Name = "M1917"
+Name = "Python"
 Description = "A 6-cylinder revolver. Offers high-damage and good penetrability for low bullet count and a lengthy reload time"
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_n3sky"]
 script = ExtResource("6_y3hip")
+ReloadTime = 2.0
 BloomCoefficientDeg = 2.0
 MagazineCapacity = 6
 HorizontalRecoilMin = 20.0
 HorizontalBaseRecoil = 20.0
 HorizontalRecoilRandom = 20.0
-VerticalRecoilMin = 120.0
-VerticalBaseRecoil = 120.0
-VerticalRecoilRandom = 40.0
+VerticalRecoilMin = 100.0
+VerticalBaseRecoil = 100.0
+VerticalRecoilRandom = 20.0
 RecoilScale = 0.6
 HorizontalRecoilPunish = false
-CameraRecoilScale = 1.8
+CameraRecoilScale = 1.2
 BaseDamage = 9
 BaseCritDamageMultiplier = 1.0
 BaseCritChanceProportion = 0.5
 BaseProjectileSpeed = 5000
 BaseProjectileScaleMultiplier = 1.2
 BaseProjectileRadius = 42
-BaseAttackSpeed = 0.3
+BaseAttackSpeed = 0.2
 BasePierceLimit = 2
 Additional = Dictionary[String, Variant]({
 "Knockback": 5.0,
@@ -60,9 +61,10 @@ Stats = SubResource("Resource_n3sky")
 [node name="ShootAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1706054987]
 process_mode = 3
 stream = ExtResource("7_0u5yb")
-volume_db = 6.0
+volume_db = 2.0
+pitch_scale = 0.8
 max_polyphony = 3
-bus = &"ShootSfx"
+bus = &"ShootSfxNoDistortion"
 
 [node name="CockAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1261930206]
 process_mode = 3
