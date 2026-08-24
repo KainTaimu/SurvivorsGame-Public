@@ -205,57 +205,22 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="Resource" id="Resource_tmjup"]
-resource_local_to_scene = true
-script = ExtResource("8_nj7rv")
-metadata/_custom_type_script = "uid://bt8inkwpypk5b"
-
-[sub_resource type="Resource" id="Resource_bf7v0"]
-resource_local_to_scene = true
-script = ExtResource("8_nj7rv")
-metadata/_custom_type_script = "uid://bt8inkwpypk5b"
-
-[sub_resource type="Resource" id="Resource_lwx0q"]
-resource_local_to_scene = true
-script = ExtResource("16_4y81w")
-_fireQueueTolerance = 1.0
-metadata/_custom_type_script = "uid://dxbw6ujou46y4"
-
-[sub_resource type="Resource" id="Resource_a15ue"]
-resource_local_to_scene = true
-script = ExtResource("8_nj7rv")
-metadata/_custom_type_script = "uid://bt8inkwpypk5b"
-
 [sub_resource type="Resource" id="Resource_ssf1y"]
 resource_local_to_scene = true
 script = ExtResource("8_nj7rv")
 metadata/_custom_type_script = "uid://bt8inkwpypk5b"
-
-[sub_resource type="Resource" id="Resource_sprrt"]
-resource_local_to_scene = true
-script = ExtResource("16_4y81w")
-metadata/_custom_type_script = "uid://dxbw6ujou46y4"
 
 [sub_resource type="Resource" id="Resource_tcdx5"]
 resource_local_to_scene = true
 script = ExtResource("8_dfrfs")
 metadata/_custom_type_script = "uid://dnodsacrptssb"
 
+[sub_resource type="Resource" id="Resource_sprrt"]
+resource_local_to_scene = true
+script = ExtResource("16_4y81w")
+metadata/_custom_type_script = "uid://dxbw6ujou46y4"
+
 [sub_resource type="Resource" id="Resource_4xmj0"]
-resource_local_to_scene = true
-script = ExtResource("8_dfrfs")
-metadata/_custom_type_script = "uid://dnodsacrptssb"
-
-[sub_resource type="Resource" id="Resource_rtolw"]
-resource_local_to_scene = true
-script = ExtResource("8_dfrfs")
-metadata/_custom_type_script = "uid://dnodsacrptssb"
-
-[sub_resource type="Resource" id="Resource_6cii2"]
-script = ExtResource("19_uic4c")
-metadata/_custom_type_script = "uid://dpq42sefws67v"
-
-[sub_resource type="Resource" id="Resource_rohuk"]
 resource_local_to_scene = true
 script = ExtResource("8_dfrfs")
 metadata/_custom_type_script = "uid://dnodsacrptssb"
@@ -270,6 +235,52 @@ resource_local_to_scene = true
 script = ExtResource("8_nj7rv")
 metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 
+[sub_resource type="Resource" id="Resource_rtolw"]
+resource_local_to_scene = true
+script = ExtResource("8_dfrfs")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
+
+[sub_resource type="Resource" id="Resource_6cii2"]
+script = ExtResource("19_uic4c")
+metadata/_custom_type_script = "uid://dpq42sefws67v"
+
+[sub_resource type="Resource" id="Resource_jdoa8"]
+resource_local_to_scene = true
+script = ExtResource("8_dfrfs")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
+
+[sub_resource type="Resource" id="Resource_4fu23"]
+resource_local_to_scene = true
+script = ExtResource("8_dfrfs")
+_fireQueueTolerance = 0.0
+metadata/_custom_type_script = "uid://dnodsacrptssb"
+
+[sub_resource type="Resource" id="Resource_bf7v0"]
+resource_local_to_scene = true
+script = ExtResource("8_nj7rv")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_tmjup"]
+resource_local_to_scene = true
+script = ExtResource("8_nj7rv")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_lwx0q"]
+resource_local_to_scene = true
+script = ExtResource("16_4y81w")
+_fireQueueTolerance = 1.0
+metadata/_custom_type_script = "uid://dxbw6ujou46y4"
+
+[sub_resource type="Resource" id="Resource_rohuk"]
+resource_local_to_scene = true
+script = ExtResource("8_dfrfs")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
+
+[sub_resource type="Resource" id="Resource_a15ue"]
+resource_local_to_scene = true
+script = ExtResource("8_nj7rv")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
 [sub_resource type="Resource" id="Resource_sjffd"]
 resource_local_to_scene = true
 script = ExtResource("8_nj7rv")
@@ -280,20 +291,9 @@ resource_local_to_scene = true
 script = ExtResource("8_nj7rv")
 metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 
-[sub_resource type="Resource" id="Resource_jdoa8"]
-resource_local_to_scene = true
-script = ExtResource("8_dfrfs")
-metadata/_custom_type_script = "uid://dnodsacrptssb"
-
 [sub_resource type="Resource" id="Resource_8hcum"]
 resource_local_to_scene = true
 script = ExtResource("8_dfrfs")
-metadata/_custom_type_script = "uid://dnodsacrptssb"
-
-[sub_resource type="Resource" id="Resource_4fu23"]
-resource_local_to_scene = true
-script = ExtResource("8_dfrfs")
-_fireQueueTolerance = 0.0
 metadata/_custom_type_script = "uid://dnodsacrptssb"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_blq8i"]
@@ -338,61 +338,61 @@ _outgoingDamage = SubResource("Resource_j0gpf")
 material = SubResource("ShaderMaterial_6cii2")
 sprite_frames = SubResource("SpriteFrames_et08g")
 
-[node name="M4" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="0" unique_id=265287884 instance=ExtResource("14_e4uyc")]
-_fireGroup = SubResource("Resource_tmjup")
-
-[node name="Ak47" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="1" unique_id=915008798 instance=ExtResource("7_ebfjh")]
-_fireGroup = SubResource("Resource_bf7v0")
-
-[node name="M16A4" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="2" unique_id=1457836219 instance=ExtResource("15_vcvhu")]
-_fireGroup = SubResource("Resource_lwx0q")
-
-[node name="AA-12" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="3" unique_id=764147352 instance=ExtResource("9_rvfl2")]
-_fireGroup = SubResource("Resource_a15ue")
-
-[node name="M17" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="4" unique_id=1989500741 instance=ExtResource("17_cwtyr")]
+[node name="M17" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="0" unique_id=1989500741 instance=ExtResource("17_cwtyr")]
 _fireGroup = SubResource("Resource_ssf1y")
 
-[node name="M92FS" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="5" unique_id=1472391115 instance=ExtResource("18_paacp")]
-_fireGroup = SubResource("Resource_sprrt")
-
-[node name="M1911" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="6" unique_id=2117418475 instance=ExtResource("21_ndd4e")]
+[node name="M1911" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="1" unique_id=2117418475 instance=ExtResource("21_ndd4e")]
 _fireGroup = SubResource("Resource_tcdx5")
 
-[node name="Revolver" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="7" unique_id=708917318 instance=ExtResource("24_48hhp")]
+[node name="M92FS" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="2" unique_id=1472391115 instance=ExtResource("18_paacp")]
+_fireGroup = SubResource("Resource_sprrt")
+
+[node name="Revolver" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="3" unique_id=708917318 instance=ExtResource("24_48hhp")]
 _fireGroup = SubResource("Resource_4xmj0")
 
-[node name="SKS" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="8" unique_id=2078401972 instance=ExtResource("18_rvfl2")]
+[node name="MP5" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="4" unique_id=1925326848 instance=ExtResource("23_5fm22")]
+_fireGroup = SubResource("Resource_xwucb")
+
+[node name="P90" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="5" unique_id=1437899868 instance=ExtResource("24_nj7rv")]
+_fireGroup = SubResource("Resource_vui8h")
+
+[node name="SKS" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="6" unique_id=2078401972 instance=ExtResource("18_rvfl2")]
 _fireGroup = SubResource("Resource_rtolw")
 _projectileAttack = SubResource("Resource_6cii2")
 
-[node name="M870" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="9" unique_id=1997007315 instance=ExtResource("25_avg7l")]
-_fireGroup = SubResource("Resource_rohuk")
-
-[node name="MP5" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="10" unique_id=1925326848 instance=ExtResource("23_5fm22")]
-_fireGroup = SubResource("Resource_xwucb")
-
-[node name="P90" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="11" unique_id=1437899868 instance=ExtResource("24_nj7rv")]
-_fireGroup = SubResource("Resource_vui8h")
-
-[node name="M249" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="12" unique_id=873525008 instance=ExtResource("19_fd0su")]
-_fireGroup = SubResource("Resource_sjffd")
-
-[node name="M249-S" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="13" unique_id=1854773231 instance=ExtResource("20_d38pd")]
-_fireGroup = SubResource("Resource_x88ov")
-
-[node name="DMR" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="14" unique_id=901001043 instance=ExtResource("7_o1piw")]
+[node name="DMR" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="7" unique_id=901001043 instance=ExtResource("7_o1piw")]
 _fireGroup = SubResource("Resource_jdoa8")
 
-[node name="GrenadeLauncher" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="15" unique_id=1535579917 instance=ExtResource("12_uic4c")]
+[node name="Sniper" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="8" unique_id=399121865 instance=ExtResource("26_lvqjh")]
+_fireGroup = SubResource("Resource_4fu23")
+
+[node name="Ak47" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="9" unique_id=915008798 instance=ExtResource("7_ebfjh")]
+_fireGroup = SubResource("Resource_bf7v0")
+
+[node name="M4" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="10" unique_id=265287884 instance=ExtResource("14_e4uyc")]
+_fireGroup = SubResource("Resource_tmjup")
+
+[node name="M16A4" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="11" unique_id=1457836219 instance=ExtResource("15_vcvhu")]
+_fireGroup = SubResource("Resource_lwx0q")
+
+[node name="M870" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="12" unique_id=1997007315 instance=ExtResource("25_avg7l")]
+_fireGroup = SubResource("Resource_rohuk")
+
+[node name="AA-12" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="13" unique_id=764147352 instance=ExtResource("9_rvfl2")]
+_fireGroup = SubResource("Resource_a15ue")
+
+[node name="M249" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="14" unique_id=873525008 instance=ExtResource("19_fd0su")]
+_fireGroup = SubResource("Resource_sjffd")
+
+[node name="M249-S" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="15" unique_id=1854773231 instance=ExtResource("20_d38pd")]
+_fireGroup = SubResource("Resource_x88ov")
+
+[node name="GrenadeLauncher" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="16" unique_id=1535579917 instance=ExtResource("12_uic4c")]
 _fireGroup = SubResource("Resource_8hcum")
 
-[node name="GrenadeThrower" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="16" unique_id=1000269585 instance=ExtResource("13_jmqlf")]
+[node name="GrenadeThrower" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="17" unique_id=1000269585 instance=ExtResource("13_jmqlf")]
 
-[node name="Minigun" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="17" unique_id=636864915 instance=ExtResource("22_1l6d6")]
-
-[node name="Sniper" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="18" unique_id=399121865 instance=ExtResource("26_lvqjh")]
-_fireGroup = SubResource("Resource_4fu23")
+[node name="Minigun" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="18" unique_id=636864915 instance=ExtResource("22_1l6d6")]
 
 [node name="ColorRect" parent="Systems/Player/DamageVignette" parent_id_path=PackedInt32Array(1386970244, 758455490) index="0" unique_id=1773597369]
 material = SubResource("ShaderMaterial_blq8i")
