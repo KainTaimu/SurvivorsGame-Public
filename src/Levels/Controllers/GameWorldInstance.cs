@@ -13,4 +13,9 @@ public partial class GameWorldInstance : Node
 	{
 		Instance = this;
 	}
+
+	public override void _ExitTree()
+	{
+		Instance = null!;
+	}
 }

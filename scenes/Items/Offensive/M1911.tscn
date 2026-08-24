@@ -2,17 +2,12 @@
 
 [ext_resource type="Script" uid="uid://d4hn7uwvshdju" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_txpck"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_7oacj"]
-[ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FullAutoFireGroup.cs" id="3_xm2c6"]
+[ext_resource type="Resource" uid="uid://cs331x12hmlod" path="res://resources/FireGroups/SemiAutoFireGroup.tres" id="3_txpck"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="4_rstrl"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="5_esh2w"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_bfo0n"]
-[ext_resource type="AudioStream" uid="uid://bk4ur13n1hsy2" path="res://assets/SFX/Shoot/Snake's SECOND Authentic Gun Sounds/Full Sounds/9mm/WAV/9mm Single.wav" id="7_5evg4"]
+[ext_resource type="AudioStream" uid="uid://cai4ndme4u2rl" path="res://assets/SFX/Shoot/m1911/m1911_r2.wav" id="7_txpck"]
 [ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="8_8jbg6"]
-
-[sub_resource type="Resource" id="Resource_o8yur"]
-resource_local_to_scene = true
-script = ExtResource("3_xm2c6")
-metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 
 [sub_resource type="Resource" id="Resource_yc6ub"]
 script = ExtResource("4_rstrl")
@@ -58,17 +53,16 @@ metadata/_custom_type_script = "uid://di81uufgmcsog"
 [node name="M1911" type="Node" unique_id=1989500741]
 script = ExtResource("1_txpck")
 _projectileScene = ExtResource("2_7oacj")
-_fireGroup = SubResource("Resource_o8yur")
+_fireGroup = ExtResource("3_txpck")
 _projectileAttack = SubResource("Resource_yc6ub")
 Properties = SubResource("Resource_7oacj")
 Stats = SubResource("Resource_k3dr5")
 
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=252809060]
 process_mode = 3
-stream = ExtResource("7_5evg4")
+stream = ExtResource("7_txpck")
 bus = &"ShootSfx"
 
 [node name="MagAlmostEmpty" parent="." unique_id=866300451 instance=ExtResource("8_8jbg6")]
 
-[connection signal="AlmostEmpty" from="." to="MagAlmostEmpty" method="play"]
 [connection signal="OnAttack" from="." to="Shoot" method="play"]

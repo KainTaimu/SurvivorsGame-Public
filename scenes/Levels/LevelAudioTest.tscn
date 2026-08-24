@@ -238,8 +238,8 @@ metadata/_custom_type_script = "uid://dxbw6ujou46y4"
 
 [sub_resource type="Resource" id="Resource_tcdx5"]
 resource_local_to_scene = true
-script = ExtResource("8_nj7rv")
-metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+script = ExtResource("8_dfrfs")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
 
 [sub_resource type="Resource" id="Resource_4xmj0"]
 resource_local_to_scene = true

@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_f52b2"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="4_11blq"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_u7hyr"]
-[ext_resource type="AudioStream" uid="uid://bo41pccs1efmv" path="res://assets/SFX/Shoot/awm/awm_r1.wav" id="7_ia1h2"]
+[ext_resource type="AudioStream" uid="uid://b20ucsoy6q3qv" path="res://assets/SFX/Shoot/awm/awm_r2.wav" id="7_0avw1"]
 [ext_resource type="AudioStream" uid="uid://b4yx7ckgqe3a4" path="res://assets/SFX/Shoot/awm/awm-bolt-cycle_full.wav" id="8_ia1h2"]
 [ext_resource type="PackedScene" uid="uid://dve8bx2iv87ya" path="res://scenes/VFX/SpentCasingEmitter.tscn" id="10_bfcl0"]
 [ext_resource type="AudioStream" uid="uid://bvldjovt60gbf" path="res://assets/SFX/Shoot/awm/awm-bolt-cycle_open.wav" id="11_ia1h2"]
@@ -22,7 +22,7 @@ metadata/_custom_type_script = "uid://dnodsacrptssb"
 script = ExtResource("4_11blq")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0u5yb"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0avw1"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_iky5m"]
@@ -73,8 +73,8 @@ Stats = SubResource("Resource_f52b2")
 
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=2103641847]
 process_mode = 3
-stream = ExtResource("7_ia1h2")
-volume_db = 7.0
+stream = ExtResource("7_0avw1")
+mix_target = 2
 bus = &"ShootSfxNoDistortion"
 
 [node name="BoltCycle" type="AudioStreamPlayer" parent="." unique_id=1900327009]

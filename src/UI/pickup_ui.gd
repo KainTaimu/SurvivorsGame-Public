@@ -1,5 +1,6 @@
+@tool
 class_name PickupUi
-extends Node
+extends CanvasLayer
 
 @export var show_on_start: bool = false
 @export var show_on_start_item_count: int = 3
@@ -15,6 +16,8 @@ var weapons_picked: Array[OffensiveRegistryEntry] = []
 
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		visible = false
 	if show_on_start:
 		_initialize_showcases(show_on_start_item_count)
 		show_ui.call_deferred(show_on_start_item_count, show_on_start_rarity_gate)
@@ -28,6 +31,7 @@ func _input(event: InputEvent) -> void:
 
 
 func show_ui(item_limit: int, rarity_gate: Globals.Rarity) -> void:
+	show()
 	PauseController.Lock(self)
 	PauseController.Pause(self)
 	var all := weapon_registry.load_all_blocking()

@@ -453,7 +453,7 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ba6rp"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_prm17"]
 resource_local_to_scene = true
 shader = ExtResource("24_uo14t")
 shader_parameter/tint = Color(0.33618236, 2.6171097e-07, 1.2032687e-07, 1)
@@ -597,6 +597,7 @@ WaveController = NodePath("../EnemySystems/EnemyWaveController")
 Waves = Array[Object]([SubResource("Resource_ms68o"), SubResource("Resource_yysbr"), SubResource("Resource_vm1ut"), SubResource("Resource_ns76g")])
 
 [node name="PickupUi" parent="Systems/EnemySystems/EnemyWaveController" index="1" unique_id=720680017 instance=ExtResource("5_h7ouo")]
+visible = false
 show_on_start = true
 
 [node name="WaveDebugPanel" parent="Systems/EnemySystems/EnemyWaveController" index="2" unique_id=812922554 node_paths=PackedStringArray("_waveController") instance=ExtResource("12_chdw3")]
@@ -648,7 +649,7 @@ _outgoingDamage = SubResource("Resource_ask6t")
 sprite_frames = SubResource("SpriteFrames_250w8")
 
 [node name="ColorRect" parent="Systems/Player/DamageVignette" parent_id_path=PackedInt32Array(1386970244, 758455490) index="0" unique_id=1773597369]
-material = SubResource("ShaderMaterial_ba6rp")
+material = SubResource("ShaderMaterial_prm17")
 
 [node name="HUD" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="2" unique_id=1626912566]
 process_priority = -50
