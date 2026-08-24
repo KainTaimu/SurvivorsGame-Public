@@ -599,6 +599,7 @@ Waves = Array[Object]([SubResource("Resource_ms68o"), SubResource("Resource_yysb
 [node name="PickupUi" parent="Systems/EnemySystems/EnemyWaveController" index="1" unique_id=720680017 instance=ExtResource("5_h7ouo")]
 visible = false
 show_on_start = true
+show_on_start_item_count = 4
 
 [node name="WaveDebugPanel" parent="Systems/EnemySystems/EnemyWaveController" index="2" unique_id=812922554 node_paths=PackedStringArray("_waveController") instance=ExtResource("12_chdw3")]
 _waveController = NodePath("..")
