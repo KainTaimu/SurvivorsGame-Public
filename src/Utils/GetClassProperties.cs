@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -7,7 +8,7 @@ namespace Game.Utils;
 
 public static class ClassInspector
 {
-	private const int _floatingPointDisplayPrecision = 4;
+	private const int FLOATING_POINT_DISPLAY_PRECISION = 4;
 
 	public static string GetClassPropertiesString(
 		object obj,
@@ -20,24 +21,13 @@ public static class ClassInspector
 		var properties = pType.GetProperties(flags);
 		foreach (var property in properties)
 		{
+			var propertyName = property.Name;
+			if (!FormatPropertyName(ref propertyName))
+				continue;
+
 			var value = property.GetValue(obj);
-			switch (value)
-			{
-				case null:
-					continue;
-				case float f:
-					value = f.ToString("F" + _floatingPointDisplayPrecision);
-					break;
-				case double d:
-					value = d.ToString("F" + _floatingPointDisplayPrecision);
-					break;
-				case Node node:
-					value = node.Name;
-					break;
-				case ICollection collection:
-					value = GetCollectionPrettyString(collection);
-					break;
-			}
+			if (FormatPropertyValue(ref value))
+				continue;
 
 			s.AppendLine($"{property.Name}: {value}");
 		}
@@ -47,7 +37,8 @@ public static class ClassInspector
 
 	public static string GetClassFieldsString(
 		object obj,
-		BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance
+		BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance,
+		int recursionDepth = 0
 	)
 	{
 		var s = new StringBuilder();
@@ -57,7 +48,7 @@ public static class ClassInspector
 		foreach (var field in fields)
 		{
 			var fieldName = field.Name;
-			if (fieldName is "NativePtr")
+			if (!FormatPropertyName(ref fieldName))
 				continue;
 			if (fieldName.StartsWith('<') && fieldName.Contains('>'))
 			{
@@ -66,28 +57,58 @@ public static class ClassInspector
 			}
 
 			var value = field.GetValue(obj);
-			switch (value)
-			{
-				case null:
-					continue;
-				case float f:
-					value = f.ToString("F" + _floatingPointDisplayPrecision);
-					break;
-				case double d:
-					value = d.ToString("F" + _floatingPointDisplayPrecision);
-					break;
-				case Node node:
-					value = node.Name;
-					break;
-				case ICollection collection:
-					value = GetCollectionPrettyString(collection);
-					break;
-			}
+			if (FormatPropertyValue(ref value))
+				continue;
 
 			s.AppendLine($"{ConvertPascalToTitleCase(fieldName)}: {value}");
 		}
 
 		return s.ToString();
+	}
+
+	private static bool FormatPropertyValue(
+		ref object? value,
+		BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance
+	)
+	{
+		switch (value)
+		{
+			case null:
+				return true;
+			case float f:
+				value = f.ToString("F" + FLOATING_POINT_DISPLAY_PRECISION);
+				break;
+			case double d:
+				value = d.ToString("F" + FLOATING_POINT_DISPLAY_PRECISION);
+				break;
+			case Node node:
+				value = node.Name;
+				break;
+			case Resource resource:
+				value = $"{{\n{GetClassFieldsString(resource, flags)},\n{GetClassPropertiesString(resource, flags)}}}";
+				break;
+			case ICollection collection:
+				value = GetCollectionPrettyString(collection);
+				break;
+		}
+
+		return false;
+	}
+
+	private static bool FormatPropertyName(ref string s)
+	{
+		switch (s)
+		{
+			case "_Bundled":
+			case "NativePtr":
+			case "ResourceLocalToScene":
+			case "ResourcePath":
+			case "ResourceName":
+			case "ResourceSceneUniqueId":
+			case "NativeInstance":
+				return false;
+		}
+		return true;
 	}
 
 	private static string GetCollectionPrettyString(ICollection enumerable)

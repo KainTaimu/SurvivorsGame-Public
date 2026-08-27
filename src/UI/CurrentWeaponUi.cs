@@ -1,3 +1,4 @@
+using System;
 using Game.Items.Offensive;
 using Game.Players.Controllers;
 
@@ -37,47 +38,56 @@ public partial class CurrentWeaponUi : CanvasLayer
 
 	public void UpdateAmmoCount()
 	{
-		if (_weaponController.PrimaryAttack is IReloadable primary)
+		var primaryAttack = _weaponController.PrimaryAttack;
+		if (primaryAttack is not IReloadable primary)
 		{
-			_primaryWeaponAmmo.Show();
-			if (primary.IsReloading)
-				_primaryWeaponAmmo.Text = "Reloading...";
-			else
-			{
-				if (primary.MagazineCount > primary.MagazineCapacity)
-				{
-					var extra = primary.MagazineCount - primary.MagazineCapacity;
-					_primaryWeaponAmmo.Text =
-						$"{primary.MagazineCount - extra}+{extra}/{primary
-							.MagazineCapacity}";
-				}
-				else
-					_primaryWeaponAmmo.Text = $"{primary.MagazineCount}/{primary.MagazineCapacity}";
-			}
-		}
-		else
 			_primaryWeaponAmmo.Hide();
-
-		if (_weaponController.SecondaryAttack is IReloadable secondary)
-		{
-			_secondaryWeaponAmmo.Show();
-			if (secondary.IsReloading)
-				_secondaryWeaponAmmo.Text = "Reloading...";
-			else
-			{
-				if (secondary.MagazineCount > secondary.MagazineCapacity)
-				{
-					var extra = secondary.MagazineCount - secondary.MagazineCapacity;
-					_secondaryWeaponAmmo.Text =
-						$"{secondary.MagazineCount - extra}+{extra}/{secondary
-							.MagazineCapacity}";
-				}
-				else
-					_secondaryWeaponAmmo.Text = $"{secondary.MagazineCount}/{secondary.MagazineCapacity}";
-			}
+			return;
 		}
-		else
-			_secondaryWeaponAmmo.Hide();
+
+		_primaryWeaponAmmo.Show();
+
+		switch (primaryAttack)
+		{
+			case ICustomReloadDisplay customReloadDisplay:
+				switch (customReloadDisplay.ReloadDisplayType)
+				{
+					case ReloadDisplayType.Normal:
+					{
+						if (primary.IsReloading)
+							_primaryWeaponAmmo.Text = "Reloading...";
+						else
+							_primaryWeaponAmmo.Text = UpdateAmmoDisplay(primary);
+						return;
+					}
+					case ReloadDisplayType.Progressive:
+						_primaryWeaponAmmo.Text = UpdateAmmoDisplay(primary);
+						return;
+					default:
+						throw new ArgumentOutOfRangeException();
+				}
+				break;
+
+			default:
+				if (primary.IsReloading)
+					_primaryWeaponAmmo.Text = "Reloading...";
+				else
+					_primaryWeaponAmmo.Text = UpdateAmmoDisplay(primary);
+
+				break;
+		}
+	}
+
+	private static string UpdateAmmoDisplay(IReloadable primary)
+	{
+		if (primary.MagazineCount > primary.MagazineCapacity)
+		{
+			var extra = primary.MagazineCount - primary.MagazineCapacity;
+			return $"{primary.MagazineCount - extra}+{extra}/{primary
+					.MagazineCapacity}";
+		}
+
+		return $"{primary.MagazineCount}/{primary.MagazineCapacity}";
 	}
 
 	public void UpdateCarousel()
@@ -116,12 +126,6 @@ public partial class CurrentWeaponUi : CanvasLayer
 				{
 					weaponItem.SelectedCaret.VisibleRatio = 1;
 					weaponItem.SelectedCaret.Text = "1";
-					weaponItem.WeaponName.LabelSettings.FontColor = Colors.White;
-				}
-				else if (_weaponController.SecondaryAttack == weapon)
-				{
-					weaponItem.SelectedCaret.VisibleRatio = 1;
-					weaponItem.SelectedCaret.Text = "2";
 					weaponItem.WeaponName.LabelSettings.FontColor = Colors.White;
 				}
 				else

@@ -4,7 +4,10 @@ extends CanvasLayer
 
 @export var show_on_start: bool = false
 @export var show_on_start_item_count: int = 3
-@export var show_on_start_rarity_gate: Globals.Rarity = Globals.Rarity.COMMON
+## Rarity is inclusive
+@export var show_on_start_rarity_lower_gate: Globals.Rarity = Globals.Rarity.COMMON
+## Rarity is inclusive
+@export var show_on_start_rarity_upper_gate: Globals.Rarity = Globals.Rarity.COMMON
 
 @export_group("Internal")
 @export var grid_container: GridContainer
@@ -18,19 +21,22 @@ var weapons_picked: Array[OffensiveRegistryEntry] = []
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		visible = false
+		return
 	if show_on_start:
 		_initialize_showcases(show_on_start_item_count)
-		show_ui.call_deferred(show_on_start_item_count, show_on_start_rarity_gate)
+		show_ui.call_deferred(show_on_start_item_count, show_on_start_rarity_lower_gate, show_on_start_rarity_upper_gate)
 
 
 func _input(event: InputEvent) -> void:
+	if Engine.is_editor_hint():
+		return
 	if OS.has_feature("prod"):
 		return
 	if event.is_action_pressed("ui_cancel"):
 		queue_free()
 
 
-func show_ui(item_limit: int, rarity_gate: Globals.Rarity) -> void:
+func show_ui(item_limit: int, rarity_lower_gate: Globals.Rarity, rarity_upper_gate: Globals.Rarity) -> void:
 	show()
 	PauseController.Lock(self)
 	PauseController.Pause(self)
@@ -39,8 +45,9 @@ func show_ui(item_limit: int, rarity_gate: Globals.Rarity) -> void:
 
 	var gated: Array[Resource] = []
 	for w in weapons:
-		if w.rarity <= rarity_gate:
+		if w.rarity >= rarity_lower_gate && w.rarity <= rarity_upper_gate:
 			gated.append(w)
+	assert(len(gated) > 0, "show_ui was called with no valid weapons after filtering by rarity.")
 	weapons = gated
 	item_limit = min(item_limit, len(weapons))
 	_initialize_showcases(item_limit)
@@ -69,6 +76,8 @@ func show_ui(item_limit: int, rarity_gate: Globals.Rarity) -> void:
 
 
 func _exit_tree() -> void:
+	if Engine.is_editor_hint():
+		return
 	PauseController.Unlock(self)
 	PauseController.Unpause(self)
 

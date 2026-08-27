@@ -3,13 +3,17 @@
 [ext_resource type="Script" uid="uid://dya38ae3wnar0" path="res://src/Levels/Environment/Car.cs" id="1_djrxf"]
 [ext_resource type="PackedScene" uid="uid://pihky31jidp2" path="res://scenes/VFX/ExplosionParticles.tscn" id="2_6nkvu"]
 [ext_resource type="Script" uid="uid://bcnx8pu0x3g8u" path="res://src/Levels/Environment/DestructableStaticBody2D.cs" id="3_m6sl4"]
+[ext_resource type="PackedScene" uid="uid://wos5frj6p77e" path="res://scenes/Levels/PolygonLightOccluder.tscn" id="4_c2w5s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_do71q"]
 size = Vector2(256, 128)
 
-[node name="Car" type="Node2D" unique_id=437076138]
+[node name="Car" type="Node2D" unique_id=437076138 node_paths=PackedStringArray("_body", "_debugPolygon")]
+z_index = 1
 script = ExtResource("1_djrxf")
 _explosionScene = ExtResource("2_6nkvu")
+_body = NodePath("StaticBody2D")
+_debugPolygon = NodePath("Polygon2D")
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=114209457]
 color = Color(0.5597129, 0.23753291, 0, 1)
@@ -22,3 +26,25 @@ NodeOwner = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1087467742]
 shape = SubResource("RectangleShape2D_do71q")
+
+[node name="Label" type="Label" parent="." unique_id=1842160102]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.5
+offset_top = -12.5
+offset_right = 64.5
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 22
+text = "EXPLOSIVE_CAR"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PolygonLightOccluder" parent="." unique_id=1199949879 instance=ExtResource("4_c2w5s")]
+scale = Vector2(0.61192644, 0.61192644)
+color = Color(0.84705883, 0.84705883, 0.84705883, 0)
+polygon = PackedVector2Array(-128, 64, -128, -64, 128, -64, 128, 64)

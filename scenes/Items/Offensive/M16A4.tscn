@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://d4hn7uwvshdju" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_xm6od"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_8o3sp"]
 [ext_resource type="Script" uid="uid://dxbw6ujou46y4" path="res://src/Items/Offensive/BurstFireGroup.cs" id="3_xm6od"]
+[ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/NormalReloadBehaviour.cs" id="4_8o3sp"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="4_setls"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="5_wcxc0"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_ppa22"]
@@ -10,11 +11,14 @@
 [ext_resource type="AudioStream" uid="uid://b0bq5864hlorn" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Reloads, Cycling & More/WAV/Angel Mag Reload Full WAV.wav" id="8_bdsgl"]
 [ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="9_53d5q"]
 
-[sub_resource type="Resource" id="Resource_xm6od"]
+[sub_resource type="Resource" id="Resource_icohf"]
 resource_local_to_scene = true
 script = ExtResource("3_xm6od")
-_fireQueueTolerance = 1.0
 metadata/_custom_type_script = "uid://dxbw6ujou46y4"
+
+[sub_resource type="Resource" id="Resource_61lue"]
+script = ExtResource("4_8o3sp")
+metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 
 [sub_resource type="Resource" id="Resource_y52bq"]
 script = ExtResource("4_setls")
@@ -60,7 +64,8 @@ metadata/_custom_type_script = "uid://di81uufgmcsog"
 [node name="M16A4" type="Node2D" unique_id=265287884]
 script = ExtResource("1_xm6od")
 _projectileScene = ExtResource("2_8o3sp")
-_fireGroup = SubResource("Resource_xm6od")
+FireGroup = SubResource("Resource_icohf")
+ReloadBehaviour = SubResource("Resource_61lue")
 _projectileAttack = SubResource("Resource_y52bq")
 Properties = SubResource("Resource_8o3sp")
 Stats = SubResource("Resource_2fu6x")

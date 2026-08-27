@@ -24,17 +24,6 @@ public abstract partial class AbstractPlayerWeaponController : Node
 		}
 	}
 
-	public IManualAttack? SecondaryAttack
-	{
-		get;
-		protected set
-		{
-			field = value;
-			if (field is not null)
-				EmitSignalOnSecondaryAttackReassigned();
-		}
-	}
-
 	public IReadOnlyList<BaseOffensive> Offensives => OffensiveList;
 	public IReadOnlyList<IManualAttack> ManualOffensives => [.. ManualOffensiveList];
 

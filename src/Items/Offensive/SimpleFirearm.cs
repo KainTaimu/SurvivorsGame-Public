@@ -5,10 +5,11 @@ using Game.UI;
 
 namespace Game.Items.Offensive;
 
+// TODO: Monolithic class, refactor
 /// <summary>
 /// A magazine-fed firearm
 /// </summary>
-public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable
+public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable, ICustomReloadDisplay
 {
 	[Signal]
 	public delegate void OnReloadStartEventHandler();
@@ -23,12 +24,22 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable
 	private PackedScene _projectileScene = null!;
 
 	[Export]
-	private AbstractFireGroup _fireGroup = null!;
+	private AbstractFireGroup FireGroup = null!;
+
+	[Export]
+	private AbstractReloadBehaviour ReloadBehaviour = null!;
 
 	[Export]
 	private AbstractProjectileAttack _projectileAttack = null!;
 
-	public bool IsReloading { get; private set; }
+	[Export]
+	private AudioStreamPlayer? _reloadAudioPlayer;
+
+	[Export]
+	private AudioStreamPlayer? _boltCloseAudioPlayer;
+
+	public bool IsReloading => ReloadBehaviour.IsReloading;
+	public ReloadDisplayType ReloadDisplayType => ReloadBehaviour.DisplayType;
 
 	private readonly ProjectilePool _pool = new();
 
@@ -47,8 +58,7 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable
 		);
 
 		InitializeFireGroupSettings();
-
-		_fireGroup.OnFire += Attack;
+		InitializeReloadBehaviour();
 
 		FirearmStats.Changed += InitializeFireGroupSettings;
 
@@ -75,10 +85,51 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable
 
 	private void InitializeFireGroupSettings()
 	{
-		if (_fireGroup is ICooldown c)
+		FireGroup.OnFire += () =>
+		{
+			if (
+				ReloadBehaviour.IsReloading
+				&& MagazineCount > 0
+				&& ReloadBehaviour is SequentialReloadBehaviour { IsInterrupted: false } seq
+			)
+				seq.TryInterrupt();
+			Attack();
+		};
+		if (FireGroup is ICooldown c)
 			c.CooldownDuration = FirearmStats.AttackSpeed;
-		if (_fireGroup is BurstFireGroup burst)
+		if (FireGroup is BurstFireGroup burst)
 			burst.TimeBetweenBursts = Stats.Additional["TimeBetweenBurst"].AsSingle();
+	}
+
+	private void InitializeReloadBehaviour()
+	{
+		ReloadBehaviour.OnReloadStart += () => { };
+		ReloadBehaviour.OnReloadEnd += () =>
+		{
+			MagazineCount = FirearmStats.MagazineCapacity;
+			_boltCloseAudioPlayer?.Play();
+		};
+		ReloadBehaviour.OnReloadEndInterrupted += () =>
+		{
+			_boltCloseAudioPlayer?.Play();
+		};
+		ReloadBehaviour.OnReloadProgress += (_, _, step) =>
+		{
+			MagazineCount += step;
+			_reloadAudioPlayer?.Play();
+		};
+		switch (ReloadBehaviour)
+		{
+			case NormalReloadBehaviour normalReloadBehaviour:
+				normalReloadBehaviour.ReloadTime = FirearmStats.ReloadTime;
+				break;
+			case SequentialReloadBehaviour sequentialReloadBehaviour:
+				sequentialReloadBehaviour.TimeBetweenRounds = FirearmStats.ReloadTime / FirearmStats.MagazineCapacity;
+				sequentialReloadBehaviour.RoundsToLoad = FirearmStats.MagazineCapacity;
+				break;
+			default:
+				throw new ArgumentOutOfRangeException(nameof(ReloadBehaviour));
+		}
 	}
 
 	public override void _Process(double delta)
@@ -86,8 +137,10 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable
 		if (AttackActionString is null)
 			return;
 
-		if (_fireGroup is ICooldown fireGroupCooldown)
+		if (FireGroup is ICooldown fireGroupCooldown)
 			fireGroupCooldown.Process((float)delta);
+
+		ReloadBehaviour.Process((float)delta);
 
 		if (Input.IsActionPressed(InputMapNames.WeaponReload))
 		{
@@ -95,16 +148,16 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable
 			return;
 		}
 
-		if (IsReloading)
-			return;
-
-		_fireGroup.ProcessInput();
+		FireGroup.ProcessInput();
 	}
 
-	public void Attack()
+	public bool Attack()
 	{
-		if (IsReloading || MagazineCount <= 0)
-			return;
+		if (MagazineCount <= 0)
+			return false;
+
+		if (ReloadBehaviour.IsReloading)
+			return false;
 
 		if (MagazineCount <= 6)
 			EmitSignalAlmostEmpty();
@@ -134,6 +187,7 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable
 		);
 
 		EmitSignalOnAttack();
+		return true;
 	}
 
 	public void Reload()
@@ -142,13 +196,9 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable
 			return;
 		if (MagazineCount >= MagazineCapacity)
 			return;
-		GetTree().CreateTimer(FirearmStats.ReloadTime, false).Timeout += () =>
-		{
-			MagazineCount = MagazineCapacity;
-			IsReloading = false;
-			EmitSignalOnReloadEnd();
-		};
-		IsReloading = true;
+		if (ReloadBehaviour is SequentialReloadBehaviour sequentialReloadBehaviour)
+			sequentialReloadBehaviour.RoundsToLoad = MagazineCapacity - MagazineCount;
+		ReloadBehaviour.Reload();
 	}
 
 	protected override void HandleHitECS(Entity entity)

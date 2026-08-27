@@ -13,8 +13,18 @@ public partial class Car : Node2D, IDestructable
 	[Export]
 	private PackedScene _explosionScene = null!;
 
+	[Export]
+	private PhysicsBody2D _body = null!;
+
+	[Export]
+	private Polygon2D _debugPolygon = null!;
+
+	private bool _dead;
+
 	public void TakeHit(int damage)
 	{
+		if (_dead)
+			return;
 		_health -= damage;
 		EnvironmentFxManager.PlaySfx("car_hit");
 		if (_health <= 0)
@@ -23,6 +33,7 @@ public partial class Car : Node2D, IDestructable
 
 	private void Explode()
 	{
+		_dead = true;
 		var targetQuery = EnemyTargetQuery.Instance;
 		if (targetQuery.TryGetTargetsInArea(GlobalPosition, 256, out var targets))
 		{
@@ -36,8 +47,10 @@ public partial class Car : Node2D, IDestructable
 		}
 
 		var data = new Dictionary<StringName, Variant>() { { "position", Position } };
+		EnvironmentFxManager.PlaySfx("car_explosion", data);
 		EnvironmentFxManager.PlayVfx("car_explosion", data);
 
-		QueueFree();
+		_debugPolygon.Color = Colors.DimGray;
+		_body.ProcessMode = ProcessModeEnum.Disabled;
 	}
 }

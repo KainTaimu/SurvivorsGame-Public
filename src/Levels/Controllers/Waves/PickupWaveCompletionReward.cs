@@ -7,7 +7,10 @@ public partial class PickupWaveCompletionReward : AbstractWaveCompletionReward
 	public int ItemCount = 1;
 
 	[Export(PropertyHint.Enum, "Common,Uncommon,Rare,Epic,Legendary,Unobtainable")]
-	public int RarityGate;
+	public int RarityLowerGate;
+
+	[Export(PropertyHint.Enum, "Common,Uncommon,Rare,Epic,Legendary,Unobtainable")]
+	public int RarityUpperGate;
 
 	[ExportGroup("Internal")]
 	[Export]
@@ -22,6 +25,6 @@ public partial class PickupWaveCompletionReward : AbstractWaveCompletionReward
 		}
 		var pickupUi = _pickupUiScene.Instantiate();
 		EnemyWaveController.Instance.AddChild(pickupUi);
-		pickupUi.CallDeferred("show_ui", ItemCount, RarityGate);
+		pickupUi.CallDeferred("show_ui", ItemCount, RarityLowerGate, RarityUpperGate);
 	}
 }

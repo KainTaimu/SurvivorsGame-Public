@@ -2,18 +2,33 @@
 
 [ext_resource type="Script" uid="uid://d4hn7uwvshdju" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_o3lg4"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_whe3a"]
-[ext_resource type="Resource" uid="uid://cs331x12hmlod" path="res://resources/FireGroups/SemiAutoFireGroup.tres" id="3_0u5yb"]
+[ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/SemiAutoFireGroup.cs" id="3_fgf34"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="4_fgf34"]
+[ext_resource type="Script" uid="uid://cx3rrg2toydba" path="res://src/Items/Offensive/SequentialReloadBehaviour.cs" id="4_y3hip"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="5_0u5yb"]
-[ext_resource type="AudioStream" uid="uid://dspbe1b535vno" path="res://assets/SFX/revolver_cocking.mp3" id="6_0u5yb"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_y3hip"]
 [ext_resource type="AudioStream" uid="uid://hbmq8g2asy5h" path="res://assets/SFX/Shoot/python/python_r1.wav" id="7_0u5yb"]
+[ext_resource type="AudioStream" uid="uid://ckwromhv1tpvg" path="res://assets/SFX/Shoot/Snake's SECOND Authentic Gun Sounds/& More/Revolver/44 Magnum/MP3/44 Magnum Single Load.mp3" id="9_fgf34"]
+[ext_resource type="AudioStream" uid="uid://djyr0kagg0qbi" path="res://assets/SFX/Shoot/Snake's SECOND Authentic Gun Sounds/& More/Revolver/44 Magnum/WAV/44 Magnum Close Cylinder.wav" id="10_y3hip"]
+
+[sub_resource type="Resource" id="Resource_d853c"]
+resource_local_to_scene = true
+script = ExtResource("3_fgf34")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
+
+[sub_resource type="Resource" id="Resource_m7wmm"]
+resource_local_to_scene = true
+script = ExtResource("4_y3hip")
+_interruptPunishTime = 0.1
+_boltCloseTime = 0.05
+DisplayType = 1
+metadata/_custom_type_script = "uid://cx3rrg2toydba"
 
 [sub_resource type="Resource" id="Resource_dar1o"]
 script = ExtResource("4_fgf34")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0u5yb"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_y3hip"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_y3hip"]
@@ -24,7 +39,7 @@ metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_n3sky"]
 script = ExtResource("6_y3hip")
-ReloadTime = 2.0
+ReloadTime = 4.0
 BloomCoefficientDeg = 2.0
 MagazineCapacity = 6
 HorizontalRecoilMin = 20.0
@@ -51,11 +66,14 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[node name="Revolver" type="Node" unique_id=708917318]
+[node name="Revolver" type="Node" unique_id=708917318 node_paths=PackedStringArray("_reloadAudioPlayer", "_boltCloseAudioPlayer")]
 script = ExtResource("1_o3lg4")
 _projectileScene = ExtResource("2_whe3a")
-_fireGroup = ExtResource("3_0u5yb")
+FireGroup = SubResource("Resource_d853c")
+ReloadBehaviour = SubResource("Resource_m7wmm")
 _projectileAttack = SubResource("Resource_dar1o")
+_reloadAudioPlayer = NodePath("RoundLoadAudioPlayer")
+_boltCloseAudioPlayer = NodePath("BoltAudioPlayer")
 Properties = SubResource("Resource_y3hip")
 Stats = SubResource("Resource_n3sky")
 
@@ -67,11 +85,10 @@ pitch_scale = 0.8
 max_polyphony = 6
 bus = &"ShootSfxNoDistortion"
 
-[node name="CockAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1261930206]
-process_mode = 3
-stream = ExtResource("6_0u5yb")
-volume_db = 12.0
-mix_target = 2
-max_polyphony = 6
+[node name="RoundLoadAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1514109353]
+stream = ExtResource("9_fgf34")
+
+[node name="BoltAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1641480401]
+stream = ExtResource("10_y3hip")
 
 [connection signal="OnAttack" from="." to="ShootAudioPlayer" method="play"]
