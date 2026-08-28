@@ -27,9 +27,4 @@ public partial class NormalReloadBehaviour : AbstractReloadBehaviour
 		EmitSignalOnReloadEnd();
 		IsReloading = false;
 	}
-
-	protected NormalReloadBehaviour()
-	{
-		ResourceLocalToScene = true;
-	}
 }

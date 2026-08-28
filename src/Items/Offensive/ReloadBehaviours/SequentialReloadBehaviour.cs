@@ -52,6 +52,10 @@ public partial class SequentialReloadBehaviour : AbstractReloadBehaviour
 
 	public void TryInterrupt()
 	{
+		if (IsInterrupted)
+			return;
+		if (_roundsLoaded == 0)
+			return;
 		IsInterrupted = true;
 		GameWorld.Instance.GetTree().CreateTimer(_timeUntilNextLoad, false).Timeout += () =>
 		{
@@ -70,10 +74,5 @@ public partial class SequentialReloadBehaviour : AbstractReloadBehaviour
 	{
 		IsReloading = false;
 		IsInterrupted = false;
-	}
-
-	protected SequentialReloadBehaviour()
-	{
-		ResourceLocalToScene = true;
 	}
 }

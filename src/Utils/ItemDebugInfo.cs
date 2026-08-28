@@ -27,6 +27,9 @@ public partial class ItemDebugInfo : CanvasLayer
 	[Export]
 	public Label Label = null!;
 
+	[Export]
+	public int RecursionDepth = 0;
+
 	public override void _Ready()
 	{
 		Visible = Enabled;
@@ -48,8 +51,8 @@ public partial class ItemDebugInfo : CanvasLayer
 			Show();
 
 		var s = new StringBuilder();
-		s.AppendLine(ClassInspector.GetClassFieldsString(target, BindingFlags.NonPublic | BindingFlags.Instance));
-		s.AppendLine(ClassInspector.GetClassPropertiesString(target, BindingFlags.NonPublic | BindingFlags.Instance));
+		s.AppendLine(ClassInspector.GetClassFieldsString(target, BindingFlags.NonPublic | BindingFlags.Instance, RecursionDepth));
+		s.AppendLine(ClassInspector.GetClassPropertiesString(target, BindingFlags.NonPublic | BindingFlags.Instance, RecursionDepth));
 		Label.Text = s.ToString();
 	}
 }

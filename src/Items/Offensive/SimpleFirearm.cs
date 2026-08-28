@@ -9,7 +9,7 @@ namespace Game.Items.Offensive;
 /// <summary>
 /// A magazine-fed firearm
 /// </summary>
-public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable, ICustomReloadDisplay
+public partial class SimpleFirearm : AbstractFirearm, IReloadable, ICustomReloadDisplay
 {
 	[Signal]
 	public delegate void OnReloadStartEventHandler();
@@ -21,16 +21,16 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable, ICusto
 	public delegate void AlmostEmptyEventHandler();
 
 	[Export]
-	private PackedScene _projectileScene = null!;
+	protected PackedScene _projectileScene = null!;
 
 	[Export]
-	private AbstractFireGroup FireGroup = null!;
+	protected AbstractFireGroup _fireGroup = null!;
 
 	[Export]
-	private AbstractReloadBehaviour ReloadBehaviour = null!;
+	protected AbstractReloadBehaviour _reloadBehaviour = null!;
 
 	[Export]
-	private AbstractProjectileAttack _projectileAttack = null!;
+	protected AbstractProjectileAttack _projectileAttack = null!;
 
 	[Export]
 	private AudioStreamPlayer? _reloadAudioPlayer;
@@ -38,17 +38,17 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable, ICusto
 	[Export]
 	private AudioStreamPlayer? _boltCloseAudioPlayer;
 
-	public bool IsReloading => ReloadBehaviour.IsReloading;
-	public ReloadDisplayType ReloadDisplayType => ReloadBehaviour.DisplayType;
+	public bool IsReloading => _reloadBehaviour.IsReloading;
+	public ReloadDisplayType ReloadDisplayType => _reloadBehaviour.DisplayType;
 
-	private readonly ProjectilePool _pool = new();
+	protected readonly ProjectilePool Pool = new();
 
 	private static Crosshair? Crosshair => Crosshair.Instance;
 	private static readonly RandomNumberGenerator _rng = new();
 
 	public override void _Ready()
 	{
-		_pool.Initialize(
+		Pool.Initialize(
 			this,
 			_projectileScene,
 			p =>
@@ -85,40 +85,51 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable, ICusto
 
 	private void InitializeFireGroupSettings()
 	{
-		FireGroup.OnFire += () =>
+		_fireGroup = (AbstractFireGroup)_fireGroup.Duplicate(true);
+		_reloadBehaviour = (AbstractReloadBehaviour)_reloadBehaviour.Duplicate(true);
+
+		_fireGroup.OnFire += () =>
 		{
 			if (
-				ReloadBehaviour.IsReloading
+				_reloadBehaviour.IsReloading
 				&& MagazineCount > 0
-				&& ReloadBehaviour is SequentialReloadBehaviour { IsInterrupted: false } seq
+				&& _reloadBehaviour is SequentialReloadBehaviour { IsInterrupted: false } seq
 			)
 				seq.TryInterrupt();
 			Attack();
 		};
-		if (FireGroup is ICooldown c)
+		if (_fireGroup is ICooldown c)
 			c.CooldownDuration = FirearmStats.AttackSpeed;
-		if (FireGroup is BurstFireGroup burst)
-			burst.TimeBetweenBursts = Stats.Additional["TimeBetweenBurst"].AsSingle();
+		if (_fireGroup is BurstFireGroup burst)
+		{
+			if (!Stats.Additional.TryGetValue("BurstCount", out var burstCount))
+				Logger.LogError($"{Name} : Key \"BurstCount\" not found in stats");
+			burst.BurstCount = burstCount.AsInt32();
+
+			if (!Stats.Additional.TryGetValue("TimeBetweenBurst", out var tbb))
+				Logger.LogError($"{Name} : Key \"TimeBetweenBurst\" not found in stats");
+			burst.TimeBetweenBursts = tbb.AsSingle();
+		}
 	}
 
 	private void InitializeReloadBehaviour()
 	{
-		ReloadBehaviour.OnReloadStart += () => { };
-		ReloadBehaviour.OnReloadEnd += () =>
+		_reloadBehaviour.OnReloadStart += () => { };
+		_reloadBehaviour.OnReloadEnd += () =>
 		{
 			MagazineCount = FirearmStats.MagazineCapacity;
 			_boltCloseAudioPlayer?.Play();
 		};
-		ReloadBehaviour.OnReloadEndInterrupted += () =>
+		_reloadBehaviour.OnReloadEndInterrupted += () =>
 		{
 			_boltCloseAudioPlayer?.Play();
 		};
-		ReloadBehaviour.OnReloadProgress += (_, _, step) =>
+		_reloadBehaviour.OnReloadProgress += (_, _, step) =>
 		{
 			MagazineCount += step;
 			_reloadAudioPlayer?.Play();
 		};
-		switch (ReloadBehaviour)
+		switch (_reloadBehaviour)
 		{
 			case NormalReloadBehaviour normalReloadBehaviour:
 				normalReloadBehaviour.ReloadTime = FirearmStats.ReloadTime;
@@ -128,7 +139,7 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable, ICusto
 				sequentialReloadBehaviour.RoundsToLoad = FirearmStats.MagazineCapacity;
 				break;
 			default:
-				throw new ArgumentOutOfRangeException(nameof(ReloadBehaviour));
+				throw new ArgumentOutOfRangeException(nameof(_reloadBehaviour));
 		}
 	}
 
@@ -137,10 +148,10 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable, ICusto
 		if (AttackActionString is null)
 			return;
 
-		if (FireGroup is ICooldown fireGroupCooldown)
+		if (_fireGroup is ICooldown fireGroupCooldown)
 			fireGroupCooldown.Process((float)delta);
 
-		ReloadBehaviour.Process((float)delta);
+		_reloadBehaviour.Process((float)delta);
 
 		if (Input.IsActionPressed(InputMapNames.WeaponReload))
 		{
@@ -148,15 +159,15 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable, ICusto
 			return;
 		}
 
-		FireGroup.ProcessInput();
+		_fireGroup.ProcessInput();
 	}
 
-	public bool Attack()
+	public virtual bool Attack()
 	{
 		if (MagazineCount <= 0)
 			return false;
 
-		if (ReloadBehaviour.IsReloading)
+		if (_reloadBehaviour.IsReloading)
 			return false;
 
 		if (MagazineCount <= 6)
@@ -177,7 +188,7 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable, ICusto
 		var scale = Vector2.One * FirearmStats.ProjectileScaleMultiplier;
 
 		_projectileAttack.Attack(
-			_pool.GetProjectile,
+			Pool.GetProjectile,
 			Player.GlobalPosition,
 			rotation,
 			FirearmStats.ProjectileRadius,
@@ -190,15 +201,15 @@ public sealed partial class SimpleFirearm : AbstractFirearm, IReloadable, ICusto
 		return true;
 	}
 
-	public void Reload()
+	public virtual void Reload()
 	{
 		if (IsReloading)
 			return;
 		if (MagazineCount >= MagazineCapacity)
 			return;
-		if (ReloadBehaviour is SequentialReloadBehaviour sequentialReloadBehaviour)
+		if (_reloadBehaviour is SequentialReloadBehaviour sequentialReloadBehaviour)
 			sequentialReloadBehaviour.RoundsToLoad = MagazineCapacity - MagazineCount;
-		ReloadBehaviour.Reload();
+		_reloadBehaviour.Reload();
 	}
 
 	protected override void HandleHitECS(Entity entity)

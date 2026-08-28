@@ -4,15 +4,13 @@ namespace Game.Items.Offensive;
 [GlobalClass]
 public partial class BurstFireGroup : AbstractFireGroup, ICooldown
 {
+	public int BurstCount { get; set; } = 3;
 	public float TimeBetweenBursts { get; set; }
 	public float CooldownDuration { get; set; }
 
 	private bool _isFireQueued;
 	private float _cooldown;
 	private int _shotsRemaining;
-
-	[Export]
-	private int _burstCount = 3;
 
 	// Allow queuing a shot if _cooldown is FIRE_QUEUE_TOLERANCE% of TimeBetweenBursts
 	[Export]
@@ -39,7 +37,7 @@ public partial class BurstFireGroup : AbstractFireGroup, ICooldown
 
 	private void StartBurst()
 	{
-		_shotsRemaining = _burstCount;
+		_shotsRemaining = BurstCount;
 		_isFireQueued = false;
 		_cooldown = 0;
 	}

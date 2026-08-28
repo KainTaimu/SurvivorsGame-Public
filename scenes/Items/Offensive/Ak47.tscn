@@ -3,19 +3,20 @@
 [ext_resource type="Script" uid="uid://d4hn7uwvshdju" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_rp6n0"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_rp6n0"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_ld3kt"]
-[ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FullAutoFireGroup.cs" id="3_nihe0"]
-[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="3_tg8rs"]
-[ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/NormalReloadBehaviour.cs" id="4_dar1o"]
+[ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FireGroups/FullAutoFireGroup.cs" id="3_nihe0"]
+[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="3_tg8rs"]
+[ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="4_dar1o"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_tg8rs"]
 [ext_resource type="AudioStream" uid="uid://c2t1664bvx4g" path="res://assets/SFX/Shoot/ak47/ak47_r1.wav" id="7_nihe0"]
 [ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="8_nihe0"]
 
-[sub_resource type="Resource" id="Resource_uic4c"]
+[sub_resource type="Resource" id="Resource_tcdx5"]
 resource_local_to_scene = true
 script = ExtResource("3_nihe0")
 metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 
-[sub_resource type="Resource" id="Resource_jmqlf"]
+[sub_resource type="Resource" id="Resource_e4uyc"]
+resource_local_to_scene = true
 script = ExtResource("4_dar1o")
 metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 
@@ -23,7 +24,7 @@ metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 script = ExtResource("3_tg8rs")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0f2tb"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_e3ubm"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_eai52"]
@@ -64,8 +65,8 @@ stream_0/stream = ExtResource("7_nihe0")
 [node name="Ak47" type="Node" unique_id=915008798]
 script = ExtResource("1_rp6n0")
 _projectileScene = ExtResource("2_rp6n0")
-FireGroup = SubResource("Resource_uic4c")
-ReloadBehaviour = SubResource("Resource_jmqlf")
+_fireGroup = SubResource("Resource_tcdx5")
+_reloadBehaviour = SubResource("Resource_e4uyc")
 _projectileAttack = SubResource("Resource_dar1o")
 Properties = SubResource("Resource_eai52")
 Stats = SubResource("Resource_ld3kt")

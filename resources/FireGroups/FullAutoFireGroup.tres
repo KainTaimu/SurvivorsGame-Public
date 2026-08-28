@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="FullAutoFireGroup" format=3 uid="uid://d28b30hxqsl07"]
 
-[ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FullAutoFireGroup.cs" id="1_xllsd"]
+[ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FireGroups/FullAutoFireGroup.cs" id="1_xllsd"]
 
 [resource]
 script = ExtResource("1_xllsd")

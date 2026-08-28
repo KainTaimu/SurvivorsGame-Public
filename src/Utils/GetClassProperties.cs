@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -12,7 +11,8 @@ public static class ClassInspector
 
 	public static string GetClassPropertiesString(
 		object obj,
-		BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance
+		BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance,
+		int recursionDepth = 0
 	)
 	{
 		var s = new StringBuilder();
@@ -25,11 +25,12 @@ public static class ClassInspector
 			if (!FormatPropertyName(ref propertyName))
 				continue;
 
+			var indent = new string('\t', recursionDepth + 1);
 			var value = property.GetValue(obj);
-			if (FormatPropertyValue(ref value))
+			if (FormatPropertyValue(ref value, recursionDepth))
 				continue;
 
-			s.AppendLine($"{property.Name}: {value}");
+			s.AppendLine($"{indent}{property.Name}: {value}");
 		}
 
 		return s.ToString();
@@ -56,11 +57,12 @@ public static class ClassInspector
 				fieldName = fieldName[1..closingArrowIdx];
 			}
 
+			var indent = new string('\t', recursionDepth + 1);
 			var value = field.GetValue(obj);
-			if (FormatPropertyValue(ref value))
+			if (FormatPropertyValue(ref value, recursionDepth))
 				continue;
 
-			s.AppendLine($"{ConvertPascalToTitleCase(fieldName)}: {value}");
+			s.AppendLine($"{indent}{ConvertPascalToTitleCase(fieldName)}: {value}");
 		}
 
 		return s.ToString();
@@ -68,6 +70,7 @@ public static class ClassInspector
 
 	private static bool FormatPropertyValue(
 		ref object? value,
+		int recursionDepth = 0,
 		BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance
 	)
 	{
@@ -84,8 +87,12 @@ public static class ClassInspector
 			case Node node:
 				value = node.Name;
 				break;
+			case Resource resource when recursionDepth > 0:
+				value =
+					$"{{\n{GetClassFieldsString(resource, flags, recursionDepth - 1)},\n{GetClassPropertiesString(resource, flags, recursionDepth - 1)}}}";
+				break;
 			case Resource resource:
-				value = $"{{\n{GetClassFieldsString(resource, flags)},\n{GetClassPropertiesString(resource, flags)}}}";
+				value = resource.ResourceName;
 				break;
 			case ICollection collection:
 				value = GetCollectionPrettyString(collection);

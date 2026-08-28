@@ -1,21 +1,10 @@
 using System.Collections.Generic;
-using Arch.Core;
-using Game.Levels.Controllers;
 using Game.UI;
 
 namespace Game.Items.Offensive;
 
-public partial class Shotgun : AbstractFirearm, IReloadable
+public partial class Shotgun : SimpleFirearm
 {
-	[Export]
-	private PackedScene _projectileScene = null!;
-
-	[Export]
-	private AbstractFireGroup _fireGroup = null!;
-
-	[Export]
-	private AbstractProjectileAttack _projectileAttack = null!;
-
 	[Export]
 	private AudioStreamPlayer? _shellReloadAudioPlayer;
 
@@ -26,77 +15,21 @@ public partial class Shotgun : AbstractFirearm, IReloadable
 
 	private int PelletCount => OffensiveStats.Additional.GetValueOrDefault("PelletCount").AsInt32();
 
-	private readonly ProjectilePool _pool = new();
-
 	private static readonly RandomNumberGenerator _rng = new();
 
 	private static Crosshair? Crosshair => Crosshair.Instance;
-	public bool IsReloading { get; private set; }
 
-	public override void _Ready()
+	public override bool Attack()
 	{
-		_pool.Initialize(
-			this,
-			_projectileScene,
-			p =>
-			{
-				p.OnEntityHit += e => TryHandleHit(e.Entity);
-			}
-		);
-
-		if (_fireGroup is ICooldown c)
-			c.CooldownDuration = FirearmStats.AttackSpeed;
-
-		_fireGroup.OnFire += Attack;
-
-		FirearmStats.Changed += () =>
-		{
-			if (_fireGroup is ICooldown cooldown)
-				cooldown.CooldownDuration = FirearmStats.AttackSpeed;
-		};
-
-		OnAttack += () => OffensiveEffects.ApplyCameraShake(FirearmStats.CameraRecoilScale, GetViewport, CreateTween);
-		OnAttack += () =>
-		{
-			if (Crosshair is not null)
-			{
-				OffensiveEffects.ApplyCrosshairRecoil(
-					Crosshair,
-					HorizontalBaseRecoil,
-					HorizontalRecoilMin,
-					HorizontalRecoilRandom,
-					VerticalBaseRecoil,
-					VerticalRecoilMin,
-					VerticalRecoilRandom,
-					RecoilScale,
-					RecoilAccumilationScale
-				);
-			}
-		};
-	}
-
-	public override void _Process(double delta)
-	{
-		if (AttackActionString is null)
-			return;
-
-		if (_fireGroup is ICooldown fireGroupCooldown)
-			fireGroupCooldown.Process((float)delta);
-
-		if (Input.IsActionPressed(InputMapNames.WeaponReload))
-		{
-			Reload();
-			return;
-		}
+		if (MagazineCount <= 0)
+			return false;
 
 		if (IsReloading)
-			return;
+			return false;
 
-		_fireGroup.ProcessInput();
-	}
+		if (MagazineCount <= 6)
+			EmitSignalAlmostEmpty();
 
-	public void Attack()
-	{
 		MagazineCount--;
 		if (MagazineCount <= 0)
 			Reload();
@@ -118,7 +51,7 @@ public partial class Shotgun : AbstractFirearm, IReloadable
 			var speed = OffensiveStats.ProjectileSpeed * (float)GD.RandRange(1f, 2f);
 
 			_projectileAttack.Attack(
-				_pool.GetProjectile,
+				Pool.GetProjectile,
 				Player.GlobalPosition,
 				(float)rotation,
 				FirearmStats.ProjectileRadius,
@@ -129,35 +62,6 @@ public partial class Shotgun : AbstractFirearm, IReloadable
 		}
 
 		EmitSignalOnAttack();
-	}
-
-	public void Reload()
-	{
-		if (IsReloading)
-			return;
-		if (MagazineCount >= MagazineCapacity)
-			return;
-		GetTree().CreateTimer(FirearmStats.ReloadTime, false).Timeout += () =>
-		{
-			if (MagazineCount == 0)
-				MagazineCount = MagazineCapacity;
-			else
-				MagazineCount = MagazineCapacity + 1; // Round in chamber
-			IsReloading = false;
-		};
-		IsReloading = true;
-	}
-
-	protected override void HandleHitECS(Entity entity)
-	{
-		OffensiveEffects.ApplyKnockback(
-			entity,
-			Player.GlobalPosition,
-			OffensiveStats.Additional.GetValueOrDefault("Knockback", 0f).AsSingle()
-		);
-		OffensiveEffects.ApplyVelocityMultiplier(
-			entity,
-			OffensiveStats.Additional.GetValueOrDefault("SlowMultiplier", 1f).AsSingle()
-		);
+		return true;
 	}
 }

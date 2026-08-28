@@ -2,20 +2,21 @@
 
 [ext_resource type="Script" uid="uid://d4hn7uwvshdju" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_gq4t1"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_jy61x"]
-[ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FullAutoFireGroup.cs" id="3_pm3ln"]
-[ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/NormalReloadBehaviour.cs" id="4_jy61x"]
-[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="4_rrw7n"]
+[ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FireGroups/FullAutoFireGroup.cs" id="3_pm3ln"]
+[ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="4_jy61x"]
+[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_rrw7n"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="5_b063g"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_80yi6"]
 [ext_resource type="AudioStream" uid="uid://fufjss1fn0qp" path="res://assets/SFX/Shoot/m249s/m249s_r1.wav" id="7_gq4t1"]
 [ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="8_gq4t1"]
 
-[sub_resource type="Resource" id="Resource_buv3c"]
+[sub_resource type="Resource" id="Resource_p0oyq"]
 resource_local_to_scene = true
 script = ExtResource("3_pm3ln")
 metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 
-[sub_resource type="Resource" id="Resource_o0n2c"]
+[sub_resource type="Resource" id="Resource_ssx3n"]
+resource_local_to_scene = true
 script = ExtResource("4_jy61x")
 metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 
@@ -23,7 +24,7 @@ metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 script = ExtResource("4_rrw7n")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0f2tb"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_lxy8y"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_bpnxk"]
@@ -55,8 +56,8 @@ metadata/_custom_type_script = "uid://di81uufgmcsog"
 [node name="M249-S" type="Node" unique_id=1854773231]
 script = ExtResource("1_gq4t1")
 _projectileScene = ExtResource("2_jy61x")
-FireGroup = SubResource("Resource_buv3c")
-ReloadBehaviour = SubResource("Resource_o0n2c")
+_fireGroup = SubResource("Resource_p0oyq")
+_reloadBehaviour = SubResource("Resource_ssx3n")
 _projectileAttack = SubResource("Resource_t84yk")
 Properties = SubResource("Resource_bpnxk")
 Stats = SubResource("Resource_7i0hn")

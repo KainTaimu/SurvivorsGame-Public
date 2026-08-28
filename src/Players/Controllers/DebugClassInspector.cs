@@ -21,6 +21,9 @@ public partial class DebugClassInspector : CanvasLayer
 	public BindingFlags BindingFlags = BindingFlags.Instance;
 
 	[Export]
+	public int RecursionDepth = 0;
+
+	[Export]
 	private PanelContainer _panel = null!;
 
 	[Export]
@@ -42,8 +45,8 @@ public partial class DebugClassInspector : CanvasLayer
 			Show();
 
 		var s = new StringBuilder();
-		s.AppendLine(ClassInspector.GetClassFieldsString(target, BindingFlags));
-		s.AppendLine(ClassInspector.GetClassPropertiesString(target, BindingFlags));
+		s.AppendLine(ClassInspector.GetClassFieldsString(target, BindingFlags, RecursionDepth));
+		s.AppendLine(ClassInspector.GetClassPropertiesString(target, BindingFlags, RecursionDepth));
 		_label.Text = s.ToString();
 	}
 }

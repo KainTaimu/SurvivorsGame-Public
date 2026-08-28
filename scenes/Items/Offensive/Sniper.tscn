@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://dsoi8oc5exk1o" path="res://src/Items/Offensive/Sniper.cs" id="1_jg7ce"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_u7hyr"]
-[ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/SemiAutoFireGroup.cs" id="3_0ap61"]
+[ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/FireGroups/SemiAutoFireGroup.cs" id="3_0ap61"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_f52b2"]
-[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="4_11blq"]
+[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_11blq"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_u7hyr"]
 [ext_resource type="AudioStream" uid="uid://dvly6b2nf0232" path="res://assets/SFX/Shoot/awm/awm1_r4.wav" id="7_0avw1"]
 [ext_resource type="AudioStream" uid="uid://b4yx7ckgqe3a4" path="res://assets/SFX/Shoot/awm/awm-bolt-cycle_full.wav" id="8_ia1h2"]
@@ -22,7 +22,7 @@ metadata/_custom_type_script = "uid://dnodsacrptssb"
 script = ExtResource("4_11blq")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ia1h2"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_e3ubm"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_iky5m"]
@@ -38,9 +38,9 @@ MagazineCapacity = 5
 HorizontalRecoilMin = 20.0
 HorizontalBaseRecoil = 20.0
 HorizontalRecoilRandom = 20.0
-VerticalRecoilMin = 120.0
-VerticalBaseRecoil = 120.0
-VerticalRecoilRandom = 40.0
+VerticalRecoilMin = 150.0
+VerticalBaseRecoil = 150.0
+VerticalRecoilRandom = 0.0
 HorizontalRecoilPunish = false
 CameraRecoilScale = 3.0
 BaseDamage = -1
@@ -74,7 +74,6 @@ Stats = SubResource("Resource_f52b2")
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=2103641847]
 process_mode = 3
 stream = ExtResource("7_0avw1")
-stream_paused = true
 mix_target = 2
 bus = &"ShootSfxNoDistortion"
 

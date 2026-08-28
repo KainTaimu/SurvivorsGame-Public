@@ -8,21 +8,20 @@
 [ext_resource type="Texture2D" uid="uid://c0d0pkcn6hw68" path="res://assets/Players/player.png" id="6_q2jy1"]
 [ext_resource type="PackedScene" uid="uid://b6pcia1iql0ct" path="res://scenes/Items/Offensive/Ak47.tscn" id="7_ebfjh"]
 [ext_resource type="PackedScene" uid="uid://qxx1q01ys1cd" path="res://scenes/Items/Offensive/Dmr.tscn" id="7_o1piw"]
-[ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/SemiAutoFireGroup.cs" id="8_dfrfs"]
-[ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FullAutoFireGroup.cs" id="8_nj7rv"]
+[ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/FireGroups/SemiAutoFireGroup.cs" id="8_dfrfs"]
+[ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FireGroups/FullAutoFireGroup.cs" id="8_nj7rv"]
 [ext_resource type="Shader" uid="uid://bg3me0bhc4em2" path="res://src/Shaders/vignette.gdshader" id="9_h4ih8"]
 [ext_resource type="PackedScene" uid="uid://c5chlqja2k2k0" path="res://scenes/Items/Offensive/AutoShotgun.tscn" id="9_rvfl2"]
-[ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/NormalReloadBehaviour.cs" id="9_vcvhu"]
+[ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="9_vcvhu"]
 [ext_resource type="PackedScene" uid="uid://bv8olcpvea07v" path="res://scenes/Items/Offensive/GrenadeLauncher.tscn" id="12_uic4c"]
 [ext_resource type="PackedScene" uid="uid://ceimmtu3q4x6n" path="res://scenes/Items/Offensive/GrenadeThrower.tscn" id="13_jmqlf"]
 [ext_resource type="PackedScene" uid="uid://chrgb8gqwh4s0" path="res://scenes/Items/Offensive/M4.tscn" id="14_e4uyc"]
-[ext_resource type="PackedScene" uid="uid://dyh06qakgf4q2" path="res://scenes/Players/DebugClassInspector.tscn" id="14_jmqlf"]
 [ext_resource type="PackedScene" uid="uid://bm5g2ndiy5ltb" path="res://scenes/Items/Offensive/M16A4.tscn" id="15_vcvhu"]
-[ext_resource type="Script" uid="uid://dxbw6ujou46y4" path="res://src/Items/Offensive/BurstFireGroup.cs" id="16_4y81w"]
+[ext_resource type="Script" uid="uid://dxbw6ujou46y4" path="res://src/Items/Offensive/FireGroups/BurstFireGroup.cs" id="16_4y81w"]
 [ext_resource type="PackedScene" uid="uid://okgy2hpbgy53" path="res://scenes/Items/Offensive/M17.tscn" id="17_cwtyr"]
 [ext_resource type="PackedScene" uid="uid://j70slgh4j2cl" path="res://scenes/Items/Offensive/M92FS.tscn" id="18_paacp"]
 [ext_resource type="PackedScene" uid="uid://dtcjylv1ewb16" path="res://scenes/Items/Offensive/SKS.tscn" id="18_rvfl2"]
-[ext_resource type="Script" uid="uid://cx3rrg2toydba" path="res://src/Items/Offensive/SequentialReloadBehaviour.cs" id="19_4y81w"]
+[ext_resource type="Script" uid="uid://cx3rrg2toydba" path="res://src/Items/Offensive/ReloadBehaviours/SequentialReloadBehaviour.cs" id="19_4y81w"]
 [ext_resource type="PackedScene" uid="uid://c24ayslleke42" path="res://scenes/Items/Offensive/M249.tscn" id="19_fd0su"]
 [ext_resource type="PackedScene" uid="uid://c8noyno0ootql" path="res://scenes/Items/Offensive/M249S.tscn" id="20_d38pd"]
 [ext_resource type="PackedScene" uid="uid://cnk5c4yvwhjun" path="res://scenes/Items/Offensive/M1911.tscn" id="21_ndd4e"]
@@ -33,6 +32,12 @@
 [ext_resource type="PackedScene" uid="uid://lvm5jo1ua73i" path="res://scenes/Items/Offensive/Shotgun.tscn" id="25_avg7l"]
 [ext_resource type="PackedScene" uid="uid://cuerorgcryk5k" path="res://scenes/Items/Offensive/Sniper.tscn" id="26_lvqjh"]
 
+[sub_resource type="Resource" id="Resource_jmqlf"]
+resource_local_to_scene = true
+script = ExtResource("3_qq1s2")
+BaseValue = 100
+metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+
 [sub_resource type="Resource" id="Resource_e4uyc"]
 resource_local_to_scene = true
 script = ExtResource("3_qq1s2")
@@ -41,14 +46,14 @@ metadata/_custom_type_script = "uid://tfaqh3bcxdha"
 
 [sub_resource type="Resource" id="Resource_vcvhu"]
 resource_local_to_scene = true
-script = ExtResource("3_qq1s2")
-BaseValue = 100
-metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+script = ExtResource("4_x5as6")
+BaseValue = 600.0
+metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_4y81w"]
 resource_local_to_scene = true
 script = ExtResource("4_x5as6")
-BaseValue = 600.0
+BaseValue = 1.5
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_cwtyr"]
@@ -65,14 +70,13 @@ metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_fd0su"]
 resource_local_to_scene = true
-script = ExtResource("4_x5as6")
-BaseValue = 1.5
-metadata/_custom_type_script = "uid://wsto3khl70md"
+script = ExtResource("3_qq1s2")
+metadata/_custom_type_script = "uid://tfaqh3bcxdha"
 
 [sub_resource type="Resource" id="Resource_d38pd"]
 resource_local_to_scene = true
-script = ExtResource("3_qq1s2")
-metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+script = ExtResource("4_x5as6")
+metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_ndd4e"]
 resource_local_to_scene = true
@@ -81,24 +85,24 @@ metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_1l6d6"]
 resource_local_to_scene = true
-script = ExtResource("4_x5as6")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_5fm22"]
-resource_local_to_scene = true
 script = ExtResource("3_qq1s2")
 metadata/_custom_type_script = "uid://tfaqh3bcxdha"
 
-[sub_resource type="Resource" id="Resource_48hhp"]
+[sub_resource type="Resource" id="Resource_5fm22"]
 resource_local_to_scene = true
 script = ExtResource("4_x5as6")
 BaseValue = 0.5
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="Resource" id="Resource_avg7l"]
+[sub_resource type="Resource" id="Resource_48hhp"]
 resource_local_to_scene = true
 script = ExtResource("4_x5as6")
 BaseValue = 42.0
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_avg7l"]
+resource_local_to_scene = true
+script = ExtResource("4_x5as6")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_lvqjh"]
@@ -126,12 +130,7 @@ resource_local_to_scene = true
 script = ExtResource("4_x5as6")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="Resource" id="Resource_et08g"]
-resource_local_to_scene = true
-script = ExtResource("4_x5as6")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tmjup"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_et08g"]
 resource_local_to_scene = true
 shader = ExtResource("5_uuyb7")
 shader_parameter/color = Color(1, 1, 1, 1)
@@ -169,7 +168,7 @@ region = Rect2(62, 0, 31, 31)
 atlas = ExtResource("6_q2jy1")
 region = Rect2(93, 0, 31, 31)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_bf7v0"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_tmjup"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -207,112 +206,115 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="Resource" id="Resource_lwx0q"]
+[sub_resource type="Resource" id="Resource_bf7v0"]
 resource_local_to_scene = true
 script = ExtResource("8_nj7rv")
 metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_lwx0q"]
+resource_local_to_scene = true
+script = ExtResource("9_vcvhu")
+metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 
 [sub_resource type="Resource" id="Resource_a15ue"]
 resource_local_to_scene = true
-script = ExtResource("9_vcvhu")
-metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
+script = ExtResource("8_nj7rv")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 
 [sub_resource type="Resource" id="Resource_ssf1y"]
 resource_local_to_scene = true
-script = ExtResource("8_dfrfs")
-metadata/_custom_type_script = "uid://dnodsacrptssb"
+script = ExtResource("9_vcvhu")
+metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 
 [sub_resource type="Resource" id="Resource_sprrt"]
 resource_local_to_scene = true
-script = ExtResource("9_vcvhu")
-metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
+script = ExtResource("8_dfrfs")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
 
 [sub_resource type="Resource" id="Resource_tcdx5"]
 resource_local_to_scene = true
-script = ExtResource("16_4y81w")
-metadata/_custom_type_script = "uid://dxbw6ujou46y4"
+script = ExtResource("8_dfrfs")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
 
 [sub_resource type="Resource" id="Resource_4xmj0"]
 resource_local_to_scene = true
-script = ExtResource("9_vcvhu")
-metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
+script = ExtResource("8_nj7rv")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 
 [sub_resource type="Resource" id="Resource_rtolw"]
 resource_local_to_scene = true
-script = ExtResource("8_nj7rv")
-metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+script = ExtResource("9_vcvhu")
+metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 
 [sub_resource type="Resource" id="Resource_rohuk"]
-resource_local_to_scene = true
-script = ExtResource("9_vcvhu")
-metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
-
-[sub_resource type="Resource" id="Resource_xwucb"]
-resource_local_to_scene = true
-script = ExtResource("8_nj7rv")
-metadata/_custom_type_script = "uid://bt8inkwpypk5b"
-
-[sub_resource type="Resource" id="Resource_vui8h"]
-resource_local_to_scene = true
-script = ExtResource("9_vcvhu")
-metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
-
-[sub_resource type="Resource" id="Resource_sjffd"]
-resource_local_to_scene = true
-script = ExtResource("8_dfrfs")
-metadata/_custom_type_script = "uid://dnodsacrptssb"
-
-[sub_resource type="Resource" id="Resource_x88ov"]
-resource_local_to_scene = true
-script = ExtResource("19_4y81w")
-DisplayType = 1
-metadata/_custom_type_script = "uid://cx3rrg2toydba"
-
-[sub_resource type="Resource" id="Resource_jdoa8"]
-resource_local_to_scene = true
-script = ExtResource("8_dfrfs")
-metadata/_custom_type_script = "uid://dnodsacrptssb"
-
-[sub_resource type="Resource" id="Resource_8hcum"]
-resource_local_to_scene = true
-script = ExtResource("8_dfrfs")
-_fireQueueTolerance = 0.0
-metadata/_custom_type_script = "uid://dnodsacrptssb"
-
-[sub_resource type="Resource" id="Resource_4fu23"]
-resource_local_to_scene = true
-script = ExtResource("8_nj7rv")
-metadata/_custom_type_script = "uid://bt8inkwpypk5b"
-
-[sub_resource type="Resource" id="Resource_blq8i"]
-resource_local_to_scene = true
-script = ExtResource("9_vcvhu")
-metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
-
-[sub_resource type="Resource" id="Resource_037yi"]
-resource_local_to_scene = true
-script = ExtResource("8_nj7rv")
-metadata/_custom_type_script = "uid://bt8inkwpypk5b"
-
-[sub_resource type="Resource" id="Resource_tlv65"]
-resource_local_to_scene = true
-script = ExtResource("9_vcvhu")
-metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
-
-[sub_resource type="Resource" id="Resource_8770o"]
 resource_local_to_scene = true
 script = ExtResource("16_4y81w")
 metadata/_custom_type_script = "uid://dxbw6ujou46y4"
 
-[sub_resource type="Resource" id="Resource_n3y0l"]
+[sub_resource type="Resource" id="Resource_xwucb"]
 resource_local_to_scene = true
 script = ExtResource("9_vcvhu")
 metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 
-[sub_resource type="Resource" id="Resource_7cya1"]
+[sub_resource type="Resource" id="Resource_vui8h"]
+resource_local_to_scene = true
+script = ExtResource("8_nj7rv")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_sjffd"]
+resource_local_to_scene = true
+script = ExtResource("9_vcvhu")
+metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
+
+[sub_resource type="Resource" id="Resource_x88ov"]
+resource_local_to_scene = true
+script = ExtResource("16_4y81w")
+metadata/_custom_type_script = "uid://dxbw6ujou46y4"
+
+[sub_resource type="Resource" id="Resource_jdoa8"]
+resource_local_to_scene = true
+script = ExtResource("9_vcvhu")
+metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
+
+[sub_resource type="Resource" id="Resource_8hcum"]
+resource_local_to_scene = true
+script = ExtResource("8_nj7rv")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_4fu23"]
+resource_local_to_scene = true
+script = ExtResource("9_vcvhu")
+metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
+
+[sub_resource type="Resource" id="Resource_blq8i"]
+resource_local_to_scene = true
+script = ExtResource("8_nj7rv")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_037yi"]
+resource_local_to_scene = true
+script = ExtResource("9_vcvhu")
+metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
+
+[sub_resource type="Resource" id="Resource_tlv65"]
 resource_local_to_scene = true
 script = ExtResource("8_dfrfs")
 metadata/_custom_type_script = "uid://dnodsacrptssb"
+
+[sub_resource type="Resource" id="Resource_8770o"]
+resource_local_to_scene = true
+script = ExtResource("9_vcvhu")
+metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
+
+[sub_resource type="Resource" id="Resource_n3y0l"]
+resource_local_to_scene = true
+script = ExtResource("8_nj7rv")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_7cya1"]
+resource_local_to_scene = true
+script = ExtResource("9_vcvhu")
+metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 
 [sub_resource type="Resource" id="Resource_v5sem"]
 resource_local_to_scene = true
@@ -321,30 +323,53 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 
 [sub_resource type="Resource" id="Resource_fs8bv"]
 resource_local_to_scene = true
-script = ExtResource("8_nj7rv")
-metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+script = ExtResource("9_vcvhu")
+metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 
 [sub_resource type="Resource" id="Resource_2so6r"]
-resource_local_to_scene = true
-script = ExtResource("9_vcvhu")
-metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
-
-[sub_resource type="Resource" id="Resource_f6s7a"]
-resource_local_to_scene = true
-script = ExtResource("8_nj7rv")
-metadata/_custom_type_script = "uid://bt8inkwpypk5b"
-
-[sub_resource type="Resource" id="Resource_dlwhr"]
-resource_local_to_scene = true
-script = ExtResource("9_vcvhu")
-metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
-
-[sub_resource type="Resource" id="Resource_0onne"]
 resource_local_to_scene = true
 script = ExtResource("8_dfrfs")
 metadata/_custom_type_script = "uid://dnodsacrptssb"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_n411x"]
+[sub_resource type="Resource" id="Resource_f6s7a"]
+resource_local_to_scene = true
+script = ExtResource("19_4y81w")
+_interruptPunishTime = 0.1
+_boltCloseTime = 0.1
+DisplayType = 1
+metadata/_custom_type_script = "uid://cx3rrg2toydba"
+
+[sub_resource type="Resource" id="Resource_dlwhr"]
+resource_local_to_scene = true
+script = ExtResource("8_dfrfs")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
+
+[sub_resource type="Resource" id="Resource_0onne"]
+resource_local_to_scene = true
+script = ExtResource("19_4y81w")
+_interruptPunishTime = 0.1
+DisplayType = 1
+metadata/_custom_type_script = "uid://cx3rrg2toydba"
+
+[sub_resource type="Resource" id="Resource_n411x"]
+resource_local_to_scene = true
+script = ExtResource("8_dfrfs")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
+
+[sub_resource type="Resource" id="Resource_yqty8"]
+resource_local_to_scene = true
+script = ExtResource("19_4y81w")
+_interruptPunishTime = 0.25
+_boltCloseTime = 0.25
+DisplayType = 1
+metadata/_custom_type_script = "uid://cx3rrg2toydba"
+
+[sub_resource type="Resource" id="Resource_vggqv"]
+resource_local_to_scene = true
+script = ExtResource("8_dfrfs")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3ajpb"]
 resource_local_to_scene = true
 shader = ExtResource("9_h4ih8")
 shader_parameter/tint = Color(0.33618236, 2.6171097e-07, 1.2032687e-07, 1)
@@ -363,97 +388,99 @@ Enabled = false
 [node name="Player" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="4" unique_id=1386970244 instance=ExtResource("2_sb208")]
 
 [node name="CharacterStats" parent="Systems/Player/Character" parent_id_path=PackedInt32Array(1386970244, 527218927) index="0" unique_id=822145143]
-_health = SubResource("Resource_e4uyc")
-_maxHealth = SubResource("Resource_vcvhu")
-_moveSpeed = SubResource("Resource_4y81w")
-_runSpeed = SubResource("Resource_cwtyr")
-_stamina = SubResource("Resource_paacp")
-_maxStamina = SubResource("Resource_fd0su")
-_defense = SubResource("Resource_d38pd")
-_criticalChance = SubResource("Resource_ndd4e")
-_pickupRangeRadius = SubResource("Resource_1l6d6")
-_healthRegenPerSecond = SubResource("Resource_5fm22")
-_invincibilityTime = SubResource("Resource_48hhp")
-_hitboxRadius = SubResource("Resource_avg7l")
-_criticalDamage = SubResource("Resource_lvqjh")
-_attackSpeed = SubResource("Resource_t8yvr")
-_bloomScale = SubResource("Resource_iu70g")
-_recoilScale = SubResource("Resource_j0gpf")
-_incomingDamage = SubResource("Resource_6cii2")
-_outgoingDamage = SubResource("Resource_et08g")
+_health = SubResource("Resource_jmqlf")
+_maxHealth = SubResource("Resource_e4uyc")
+_moveSpeed = SubResource("Resource_vcvhu")
+_runSpeed = SubResource("Resource_4y81w")
+_stamina = SubResource("Resource_cwtyr")
+_maxStamina = SubResource("Resource_paacp")
+_defense = SubResource("Resource_fd0su")
+_criticalChance = SubResource("Resource_d38pd")
+_pickupRangeRadius = SubResource("Resource_ndd4e")
+_healthRegenPerSecond = SubResource("Resource_1l6d6")
+_invincibilityTime = SubResource("Resource_5fm22")
+_hitboxRadius = SubResource("Resource_48hhp")
+_criticalDamage = SubResource("Resource_avg7l")
+_attackSpeed = SubResource("Resource_lvqjh")
+_bloomScale = SubResource("Resource_t8yvr")
+_recoilScale = SubResource("Resource_iu70g")
+_incomingDamage = SubResource("Resource_j0gpf")
+_outgoingDamage = SubResource("Resource_6cii2")
 
 [node name="AnimatedSprite2D" parent="Systems/Player" index="1" unique_id=881638213]
-material = SubResource("ShaderMaterial_tmjup")
-sprite_frames = SubResource("SpriteFrames_bf7v0")
+material = SubResource("ShaderMaterial_et08g")
+sprite_frames = SubResource("SpriteFrames_tmjup")
 
-[node name="M17" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="0" unique_id=1989500741 instance=ExtResource("17_cwtyr")]
-FireGroup = SubResource("Resource_lwx0q")
-ReloadBehaviour = SubResource("Resource_a15ue")
+[node name="Ak47" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="0" unique_id=915008798 instance=ExtResource("7_ebfjh")]
+_fireGroup = SubResource("Resource_bf7v0")
+_reloadBehaviour = SubResource("Resource_lwx0q")
 
-[node name="M1911" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="1" unique_id=2117418475 instance=ExtResource("21_ndd4e")]
-FireGroup = SubResource("Resource_ssf1y")
-ReloadBehaviour = SubResource("Resource_sprrt")
+[node name="AA-12" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="1" unique_id=764147352 instance=ExtResource("9_rvfl2")]
+_fireGroup = SubResource("Resource_a15ue")
+_reloadBehaviour = SubResource("Resource_ssf1y")
 
-[node name="M92FS" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="2" unique_id=1472391115 instance=ExtResource("18_paacp")]
-FireGroup = SubResource("Resource_tcdx5")
-ReloadBehaviour = SubResource("Resource_4xmj0")
+[node name="DMR" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="2" unique_id=901001043 instance=ExtResource("7_o1piw")]
+_fireGroup = SubResource("Resource_sprrt")
 
-[node name="Revolver" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="3" unique_id=708917318 instance=ExtResource("24_48hhp")]
+[node name="GrenadeLauncher" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="3" unique_id=1535579917 instance=ExtResource("12_uic4c")]
+_fireGroup = SubResource("Resource_tcdx5")
 
-[node name="DebugClassInspector" parent="Systems/Player/PlayerWeaponController/Revolver" index="3" unique_id=1989388267 instance=ExtResource("14_jmqlf")]
+[node name="GrenadeThrower" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="4" unique_id=1000269585 instance=ExtResource("13_jmqlf")]
 
-[node name="MP5" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="4" unique_id=1925326848 instance=ExtResource("23_5fm22")]
-FireGroup = SubResource("Resource_rtolw")
-ReloadBehaviour = SubResource("Resource_rohuk")
+[node name="M4" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="5" unique_id=265287884 instance=ExtResource("14_e4uyc")]
+_fireGroup = SubResource("Resource_4xmj0")
+_reloadBehaviour = SubResource("Resource_rtolw")
 
-[node name="P90" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="5" unique_id=1437899868 instance=ExtResource("24_nj7rv")]
-FireGroup = SubResource("Resource_xwucb")
-ReloadBehaviour = SubResource("Resource_vui8h")
+[node name="M16A4" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="6" unique_id=1279354893 instance=ExtResource("15_vcvhu")]
+_fireGroup = SubResource("Resource_rohuk")
+_reloadBehaviour = SubResource("Resource_xwucb")
 
-[node name="SKS" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="6" unique_id=2078401972 instance=ExtResource("18_rvfl2")]
-FireGroup = SubResource("Resource_sjffd")
-ReloadBehaviour = SubResource("Resource_x88ov")
+[node name="M17" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="7" unique_id=1989500741 instance=ExtResource("17_cwtyr")]
+_fireGroup = SubResource("Resource_vui8h")
+_reloadBehaviour = SubResource("Resource_sjffd")
 
-[node name="DMR" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="7" unique_id=901001043 instance=ExtResource("7_o1piw")]
-_fireGroup = SubResource("Resource_jdoa8")
+[node name="M92FS" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="8" unique_id=1472391115 instance=ExtResource("18_paacp")]
+_fireGroup = SubResource("Resource_x88ov")
+_reloadBehaviour = SubResource("Resource_jdoa8")
 
-[node name="Sniper" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="8" unique_id=399121865 instance=ExtResource("26_lvqjh")]
+[node name="M249" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="9" unique_id=873525008 instance=ExtResource("19_fd0su")]
 _fireGroup = SubResource("Resource_8hcum")
+_reloadBehaviour = SubResource("Resource_4fu23")
 
-[node name="Ak47" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="9" unique_id=915008798 instance=ExtResource("7_ebfjh")]
-FireGroup = SubResource("Resource_4fu23")
-ReloadBehaviour = SubResource("Resource_blq8i")
+[node name="M249-S" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="10" unique_id=1854773231 instance=ExtResource("20_d38pd")]
+_fireGroup = SubResource("Resource_blq8i")
+_reloadBehaviour = SubResource("Resource_037yi")
 
-[node name="M4" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="10" unique_id=265287884 instance=ExtResource("14_e4uyc")]
-FireGroup = SubResource("Resource_037yi")
-ReloadBehaviour = SubResource("Resource_tlv65")
+[node name="M1911" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="11" unique_id=615726435 instance=ExtResource("21_ndd4e")]
+_fireGroup = SubResource("Resource_tlv65")
+_reloadBehaviour = SubResource("Resource_8770o")
 
-[node name="M16A4" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="11" unique_id=1457836219 instance=ExtResource("15_vcvhu")]
-FireGroup = SubResource("Resource_8770o")
-ReloadBehaviour = SubResource("Resource_n3y0l")
+[node name="Minigun" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="12" unique_id=636864915 instance=ExtResource("22_1l6d6")]
 
-[node name="M870" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="12" unique_id=1997007315 instance=ExtResource("25_avg7l")]
-_fireGroup = SubResource("Resource_7cya1")
+[node name="MP5" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="13" unique_id=80882816 instance=ExtResource("23_5fm22")]
+_fireGroup = SubResource("Resource_n3y0l")
+_reloadBehaviour = SubResource("Resource_7cya1")
 
-[node name="AA-12" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="13" unique_id=764147352 instance=ExtResource("9_rvfl2")]
+[node name="P90" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="14" unique_id=2054436084 instance=ExtResource("24_nj7rv")]
 _fireGroup = SubResource("Resource_v5sem")
+_reloadBehaviour = SubResource("Resource_fs8bv")
 
-[node name="M249" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="14" unique_id=873525008 instance=ExtResource("19_fd0su")]
-FireGroup = SubResource("Resource_fs8bv")
-ReloadBehaviour = SubResource("Resource_2so6r")
+[node name="Revolver" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="15" unique_id=708917318 instance=ExtResource("24_48hhp")]
+_fireGroup = SubResource("Resource_2so6r")
+_reloadBehaviour = SubResource("Resource_f6s7a")
 
-[node name="M249-S" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="15" unique_id=1854773231 instance=ExtResource("20_d38pd")]
-FireGroup = SubResource("Resource_f6s7a")
-ReloadBehaviour = SubResource("Resource_dlwhr")
+[node name="M870" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="16" unique_id=1997007315 instance=ExtResource("25_avg7l")]
+_fireGroup = SubResource("Resource_dlwhr")
+_reloadBehaviour = SubResource("Resource_0onne")
 
-[node name="GrenadeLauncher" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="16" unique_id=1535579917 instance=ExtResource("12_uic4c")]
-_fireGroup = SubResource("Resource_0onne")
+[node name="SKS" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="17" unique_id=1645852161 instance=ExtResource("18_rvfl2")]
+_fireGroup = SubResource("Resource_n411x")
+_reloadBehaviour = SubResource("Resource_yqty8")
 
-[node name="GrenadeThrower" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="17" unique_id=1000269585 instance=ExtResource("13_jmqlf")]
-
-[node name="Minigun" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="18" unique_id=636864915 instance=ExtResource("22_1l6d6")]
+[node name="Sniper" parent="Systems/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="18" unique_id=399121865 instance=ExtResource("26_lvqjh")]
+_fireGroup = SubResource("Resource_vggqv")
 
 [node name="ColorRect" parent="Systems/Player/DamageVignette" parent_id_path=PackedInt32Array(1386970244, 758455490) index="0" unique_id=1773597369]
-material = SubResource("ShaderMaterial_n411x")
+material = SubResource("ShaderMaterial_3ajpb")
 
 [editable path="Systems/Player"]

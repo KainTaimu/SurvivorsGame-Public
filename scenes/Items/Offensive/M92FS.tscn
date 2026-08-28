@@ -2,20 +2,21 @@
 
 [ext_resource type="Script" uid="uid://d4hn7uwvshdju" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_wg30w"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_xxw4r"]
-[ext_resource type="Script" uid="uid://dxbw6ujou46y4" path="res://src/Items/Offensive/BurstFireGroup.cs" id="3_wg30w"]
-[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="4_xf8ly"]
-[ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/NormalReloadBehaviour.cs" id="4_xxw4r"]
+[ext_resource type="Script" uid="uid://dxbw6ujou46y4" path="res://src/Items/Offensive/FireGroups/BurstFireGroup.cs" id="3_wg30w"]
+[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_xf8ly"]
+[ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="4_xxw4r"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="5_b0bu4"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_x4l25"]
 [ext_resource type="AudioStream" uid="uid://dsn3egnvto4jq" path="res://assets/SFX/Shoot/m92fs/m92fs_r2.wav" id="7_wg30w"]
 [ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="8_t34tv"]
 
-[sub_resource type="Resource" id="Resource_2evu7"]
+[sub_resource type="Resource" id="Resource_hsdc8"]
 resource_local_to_scene = true
 script = ExtResource("3_wg30w")
 metadata/_custom_type_script = "uid://dxbw6ujou46y4"
 
-[sub_resource type="Resource" id="Resource_frv4g"]
+[sub_resource type="Resource" id="Resource_bh02q"]
+resource_local_to_scene = true
 script = ExtResource("4_xxw4r")
 metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 
@@ -56,6 +57,7 @@ BaseProjectileScaleMultiplier = 0.7
 BaseProjectileRadius = 26
 BaseAttackSpeed = 0.07
 Additional = Dictionary[String, Variant]({
+"BurstCount": 3,
 "Knockback": 10.0,
 "TimeBetweenBurst": 0.2
 })
@@ -64,8 +66,8 @@ metadata/_custom_type_script = "uid://di81uufgmcsog"
 [node name="M92FS" type="Node" unique_id=1472391115]
 script = ExtResource("1_wg30w")
 _projectileScene = ExtResource("2_xxw4r")
-FireGroup = SubResource("Resource_2evu7")
-ReloadBehaviour = SubResource("Resource_frv4g")
+_fireGroup = SubResource("Resource_hsdc8")
+_reloadBehaviour = SubResource("Resource_bh02q")
 _projectileAttack = SubResource("Resource_c62cd")
 Properties = SubResource("Resource_xxw4r")
 Stats = SubResource("Resource_34bgn")

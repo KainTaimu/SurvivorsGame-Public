@@ -2,25 +2,25 @@
 
 [ext_resource type="Script" uid="uid://d4hn7uwvshdju" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_o3lg4"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_whe3a"]
-[ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/SemiAutoFireGroup.cs" id="3_fgf34"]
-[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/SimpleBulletAttack.cs" id="4_fgf34"]
-[ext_resource type="Script" uid="uid://cx3rrg2toydba" path="res://src/Items/Offensive/SequentialReloadBehaviour.cs" id="4_y3hip"]
+[ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/FireGroups/SemiAutoFireGroup.cs" id="3_fgf34"]
+[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_fgf34"]
+[ext_resource type="Script" uid="uid://cx3rrg2toydba" path="res://src/Items/Offensive/ReloadBehaviours/SequentialReloadBehaviour.cs" id="4_y3hip"]
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="5_0u5yb"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_y3hip"]
 [ext_resource type="AudioStream" uid="uid://hbmq8g2asy5h" path="res://assets/SFX/Shoot/python/python_r1.wav" id="7_0u5yb"]
 [ext_resource type="AudioStream" uid="uid://ckwromhv1tpvg" path="res://assets/SFX/Shoot/Snake's SECOND Authentic Gun Sounds/& More/Revolver/44 Magnum/MP3/44 Magnum Single Load.mp3" id="9_fgf34"]
 [ext_resource type="AudioStream" uid="uid://djyr0kagg0qbi" path="res://assets/SFX/Shoot/Snake's SECOND Authentic Gun Sounds/& More/Revolver/44 Magnum/WAV/44 Magnum Close Cylinder.wav" id="10_y3hip"]
 
-[sub_resource type="Resource" id="Resource_d853c"]
+[sub_resource type="Resource" id="Resource_n411x"]
 resource_local_to_scene = true
 script = ExtResource("3_fgf34")
 metadata/_custom_type_script = "uid://dnodsacrptssb"
 
-[sub_resource type="Resource" id="Resource_m7wmm"]
+[sub_resource type="Resource" id="Resource_gs3iu"]
 resource_local_to_scene = true
 script = ExtResource("4_y3hip")
 _interruptPunishTime = 0.1
-_boltCloseTime = 0.05
+_boltCloseTime = 0.1
 DisplayType = 1
 metadata/_custom_type_script = "uid://cx3rrg2toydba"
 
@@ -39,7 +39,7 @@ metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_n3sky"]
 script = ExtResource("6_y3hip")
-ReloadTime = 4.0
+ReloadTime = 3.0
 BloomCoefficientDeg = 2.0
 MagazineCapacity = 6
 HorizontalRecoilMin = 20.0
@@ -69,8 +69,8 @@ metadata/_custom_type_script = "uid://di81uufgmcsog"
 [node name="Revolver" type="Node" unique_id=708917318 node_paths=PackedStringArray("_reloadAudioPlayer", "_boltCloseAudioPlayer")]
 script = ExtResource("1_o3lg4")
 _projectileScene = ExtResource("2_whe3a")
-FireGroup = SubResource("Resource_d853c")
-ReloadBehaviour = SubResource("Resource_m7wmm")
+_fireGroup = SubResource("Resource_n411x")
+_reloadBehaviour = SubResource("Resource_gs3iu")
 _projectileAttack = SubResource("Resource_dar1o")
 _reloadAudioPlayer = NodePath("RoundLoadAudioPlayer")
 _boltCloseAudioPlayer = NodePath("BoltAudioPlayer")
