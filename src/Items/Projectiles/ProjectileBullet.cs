@@ -65,7 +65,8 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 			if (node is DestructableStaticBody2D destructableBody)
 			{
 				var destructable = (IDestructable)destructableBody.NodeOwner;
-				destructable.TakeHit(50);
+				// TODO: How to get damage from origin?
+				destructable.TakeHit(10);
 			}
 			else
 			{

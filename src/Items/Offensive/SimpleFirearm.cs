@@ -85,8 +85,8 @@ public partial class SimpleFirearm : AbstractFirearm, IReloadable, ICustomReload
 
 	private void InitializeFireGroupSettings()
 	{
-		_fireGroup = (AbstractFireGroup)_fireGroup.Duplicate(true);
-		_reloadBehaviour = (AbstractReloadBehaviour)_reloadBehaviour.Duplicate(true);
+		_fireGroup.ResetState();
+		_reloadBehaviour.ResetState();
 
 		_fireGroup.OnFire += () =>
 		{
@@ -114,6 +114,9 @@ public partial class SimpleFirearm : AbstractFirearm, IReloadable, ICustomReload
 
 	private void InitializeReloadBehaviour()
 	{
+		_fireGroup.ResetState();
+		_reloadBehaviour.ResetState();
+
 		_reloadBehaviour.OnReloadStart += () => { };
 		_reloadBehaviour.OnReloadEnd += () =>
 		{

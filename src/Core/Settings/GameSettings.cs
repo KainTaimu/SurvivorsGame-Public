@@ -83,6 +83,18 @@ public partial class GameSettings : Resource
 	[ExportGroup("Graphics")]
 	[Export]
 	[JsonProperty]
+	public bool EnableVSync
+	{
+		get;
+		set
+		{
+			field = value;
+			EmitSignalOnEnableVSyncChanged();
+		}
+	}
+
+	[Export]
+	[JsonProperty]
 	public GoreEffectsEnum GoreEffects
 	{
 		get;
@@ -104,6 +116,9 @@ public partial class GameSettings : Resource
 
 	[Signal]
 	public delegate void OnGoreEffectsChangedEventHandler();
+
+	[Signal]
+	public delegate void OnEnableVSyncChangedEventHandler();
 
 	[Signal]
 	public delegate void OnDamageIndicatorsChangedEventHandler();

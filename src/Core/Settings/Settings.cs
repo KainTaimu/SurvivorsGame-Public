@@ -20,6 +20,9 @@ public partial class Settings : Control
 	public OptionButton GoreSelection = null!;
 
 	[Export]
+	public OptionButton VSyncSelection = null!;
+
+	[Export]
 	public OptionButton CameraShake = null!;
 
 	[Export]
@@ -43,6 +46,11 @@ public partial class Settings : Control
 				SubscribeOptions();
 			})
 			.CallDeferred();
+
+		DisplayServer.WindowSetVsyncMode(
+			GameSettings.Instance.EnableVSync ? DisplayServer.VSyncMode.Mailbox : DisplayServer.VSyncMode.Disabled
+		);
+		Input.UseAccumulatedInput = false;
 	}
 
 	// Try to not cause an exception in UpdateOptions and SubscribeOptions so the other settings get applied as expected
@@ -74,6 +82,8 @@ public partial class Settings : Control
 				Logger.LogError("Invalid GoreEffects toggle enum");
 				break;
 		}
+
+		VSyncSelection.Selected = GameSettings.Instance.EnableVSync ? 1 : 0;
 
 		CameraShake.Selected = GameSettings.Instance.EnableCameraShake ? 1 : 0;
 		CameraShakeScale.Value = GameSettings.Instance.CameraShakeScale;
@@ -118,6 +128,13 @@ public partial class Settings : Control
 					Logger.LogError("Invalid GoreEffects enum");
 					break;
 			}
+		};
+		VSyncSelection.ItemSelected += idx =>
+		{
+			GameSettings.Instance.EnableVSync = idx == 1;
+			DisplayServer.WindowSetVsyncMode(
+				GameSettings.Instance.EnableVSync ? DisplayServer.VSyncMode.Enabled : DisplayServer.VSyncMode.Disabled
+			);
 		};
 		CameraShake.ItemSelected += idx =>
 		{

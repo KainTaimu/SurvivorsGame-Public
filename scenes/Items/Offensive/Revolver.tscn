@@ -80,10 +80,9 @@ Stats = SubResource("Resource_n3sky")
 [node name="ShootAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1706054987]
 process_mode = 3
 stream = ExtResource("7_0u5yb")
-volume_db = 2.0
 pitch_scale = 0.8
 max_polyphony = 6
-bus = &"ShootSfxNoDistortion"
+bus = &"ShootSfxNoCompress"
 
 [node name="RoundLoadAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1514109353]
 stream = ExtResource("9_fgf34")

@@ -2,7 +2,10 @@
 class_name PickupUi
 extends CanvasLayer
 
+signal on_complete
+
 @export var show_on_start: bool = false
+@export var show_on_start_sort: bool = false
 @export var show_on_start_item_count: int = 3
 ## Rarity is inclusive
 @export var show_on_start_rarity_lower_gate: Globals.Rarity = Globals.Rarity.COMMON
@@ -24,7 +27,12 @@ func _ready() -> void:
 		return
 	if show_on_start:
 		_initialize_showcases(show_on_start_item_count)
-		show_ui.call_deferred(show_on_start_item_count, show_on_start_rarity_lower_gate, show_on_start_rarity_upper_gate)
+		show_ui.call_deferred(
+			show_on_start_item_count,
+			show_on_start_rarity_lower_gate,
+			show_on_start_rarity_upper_gate,
+			show_on_start_sort,
+		)
 
 
 func _input(event: InputEvent) -> void:
@@ -36,7 +44,11 @@ func _input(event: InputEvent) -> void:
 		queue_free()
 
 
-func show_ui(item_limit: int, rarity_lower_gate: Globals.Rarity, rarity_upper_gate: Globals.Rarity) -> void:
+func show_ui(
+		item_limit: int,
+		rarity_lower_gate: Globals.Rarity,
+		rarity_upper_gate: Globals.Rarity,
+) -> void:
 	show()
 	PauseController.Lock(self)
 	PauseController.Pause(self)
@@ -109,6 +121,7 @@ func _on_item_picked(picked_scene: PackedScene) -> void:
 		return
 	var wpn_controller: Node = player.WeaponController
 	wpn_controller.add_child(picked_scene.instantiate())
+	on_complete.emit()
 	queue_free()
 
 

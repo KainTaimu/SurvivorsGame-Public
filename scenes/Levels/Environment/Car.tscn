@@ -11,6 +11,7 @@ size = Vector2(256, 128)
 [node name="Car" type="Node2D" unique_id=437076138 node_paths=PackedStringArray("_body", "_debugPolygon")]
 z_index = 1
 script = ExtResource("1_djrxf")
+_explosionRadius = 400
 _explosionScene = ExtResource("2_6nkvu")
 _body = NodePath("StaticBody2D")
 _debugPolygon = NodePath("Polygon2D")

@@ -117,6 +117,8 @@ script = SubResource("GDScript_qlmw6")
 custom_minimum_size = Vector2(1840, 536)
 custom_maximum_size = Vector2(-1, 792)
 layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 5
 
 [node name="CenterContainer" type="CenterContainer" parent="Control/MarginContainer/HBoxContainer/ScrollContainer" unique_id=328059922]
 layout_mode = 2

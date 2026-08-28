@@ -27,7 +27,7 @@ func _initialize_players():
 		player.stream = info.stream
 		player.volume_db = info.volume_db
 		player.bus = \"EnvironmentFx\"
-		player.max_polyphony = 9999
+		player.max_polyphony = 1
 		add_child(player)
 		_players[entry] = player
 
@@ -48,19 +48,16 @@ stream = ExtResource("2_5l02b")
 volume_db = -8.0
 metadata/_custom_type_script = "uid://chidsynybclhy"
 
+[sub_resource type="Resource" id="Resource_p7ixb"]
+script = ExtResource("2_jbikd")
+stream = ExtResource("4_66r6o")
+volume_db = 4.0
+metadata/_custom_type_script = "uid://chidsynybclhy"
+
 [sub_resource type="Resource" id="Resource_6nkvu"]
 script = ExtResource("2_jbikd")
 stream = ExtResource("2_5l02b")
 volume_db = -4.0
-metadata/_custom_type_script = "uid://chidsynybclhy"
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hmxwi"]
-streams_count = 1
-stream_0/stream = ExtResource("4_66r6o")
-
-[sub_resource type="Resource" id="Resource_p7ixb"]
-script = ExtResource("2_jbikd")
-stream = SubResource("AudioStreamRandomizer_hmxwi")
 metadata/_custom_type_script = "uid://chidsynybclhy"
 
 [sub_resource type="GDScript" id="GDScript_ogoab"]

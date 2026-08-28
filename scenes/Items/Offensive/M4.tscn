@@ -25,7 +25,7 @@ metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 script = ExtResource("4_g7fad")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_lxy8y"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hamct"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_40q5n"]
@@ -45,7 +45,7 @@ VerticalRecoilRandom = 1.0
 RecoilScale = 0.75
 RecoilAccumilationScale = 0.0
 CameraRecoilScale = 0.25
-BaseDamage = 6
+BaseDamage = 10
 BaseCritDamageMultiplier = 0.6
 BaseCritChanceProportion = 0.2
 BaseProjectileSpeed = 4200

@@ -9,6 +9,9 @@ public partial class Car : Node2D, IDestructable
 	[Export]
 	private int _health = 100;
 
+	[Export]
+	private int _explosionRadius = 512;
+
 	[ExportGroup("Internal")]
 	[Export]
 	private PackedScene _explosionScene = null!;
@@ -35,7 +38,7 @@ public partial class Car : Node2D, IDestructable
 	{
 		_dead = true;
 		var targetQuery = EnemyTargetQuery.Instance;
-		if (targetQuery.TryGetTargetsInArea(GlobalPosition, 256, out var targets))
+		if (targetQuery.TryGetTargetsInArea(GlobalPosition, _explosionRadius, out var targets))
 		{
 			foreach (var entity in targets)
 			{
