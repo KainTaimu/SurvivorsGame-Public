@@ -18,5 +18,6 @@ script = ExtResource("1_xyvax")
 stream = SubResource("AudioStreamRandomizer_xyvax")
 volume_db = -10.0
 pitch_scale = 0.74
+bus = &"KillFx"
 
 [connection signal="OnEnemyDeath" from="." to="DeathSplatter" method="play" unbinds=1]

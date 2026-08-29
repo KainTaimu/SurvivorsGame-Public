@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" uid="uid://dwfbc8oub2v16" path="res://src/Levels/Controllers/EnemyHitFeedbackController.cs" id="1_sp5c2"]
 [ext_resource type="PackedScene" uid="uid://b5fp1qbog6ics" path="res://scenes/VFX/DamageIndicatorPool.tscn" id="2_4defx"]
-[ext_resource type="AudioStream" uid="uid://j7b83pb45epl" path="res://assets/SFX/universfield-classic-punch-impact-352711.wav" id="3_28y64"]
+[ext_resource type="AudioStream" uid="uid://dsnbax5us2i50" path="res://assets/SFX/hitmarker_r1.wav" id="3_4defx"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_28y64"]
 random_pitch = 1.5226489
 streams_count = 1
-stream_0/stream = ExtResource("3_28y64")
+stream_0/stream = ExtResource("3_4defx")
 
 [node name="EnemyHitFeedbackController" type="Node" unique_id=1105191984 node_paths=PackedStringArray("_hitmarkerStreamPlayer")]
 script = ExtResource("1_sp5c2")
@@ -20,3 +20,4 @@ PoolCount = 200
 stream = SubResource("AudioStreamRandomizer_28y64")
 volume_db = -2.0
 pitch_scale = 0.93
+bus = &"KillFx"

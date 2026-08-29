@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bm8s3nhidl6ca" path="res://scenes/VFX/SmokePuff.tscn" id="4_4n5px"]
 [ext_resource type="AudioStream" uid="uid://c11circnsjygb" path="res://assets/SFX/environment/car_explosion_r1.wav" id="4_66r6o"]
 [ext_resource type="AudioStream" uid="uid://ctie8kfib4pps" path="res://assets/SFX/explosion_large_07.wav" id="5_66r6o"]
+[ext_resource type="AudioStream" uid="uid://cb6a3s0iy4iaw" path="res://assets/SFX/environment/bullet_impact_metal_heavy_08.wav" id="5_a2pvt"]
 [ext_resource type="PackedScene" uid="uid://pihky31jidp2" path="res://scenes/VFX/ExplosionParticles.tscn" id="5_xr4ol"]
 
 [sub_resource type="GDScript" id="GDScript_do71q"]
@@ -55,10 +56,15 @@ stream = ExtResource("4_66r6o")
 volume_db = 4.0
 metadata/_custom_type_script = "uid://chidsynybclhy"
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_cj1ww"]
+random_pitch = 1.2599211
+streams_count = 1
+stream_0/stream = ExtResource("5_a2pvt")
+
 [sub_resource type="Resource" id="Resource_6nkvu"]
 script = ExtResource("2_jbikd")
-stream = ExtResource("2_5l02b")
-volume_db = -4.0
+stream = SubResource("AudioStreamRandomizer_cj1ww")
+volume_db = -8.0
 metadata/_custom_type_script = "uid://chidsynybclhy"
 
 [sub_resource type="Resource" id="Resource_faso5"]
