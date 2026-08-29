@@ -67,7 +67,7 @@ ItemCount = 3
 RarityUpperGate = 1
 metadata/_custom_type_script = "uid://b0b1rgkll8se8"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pl5k2"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ta1oo"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_a1e6u"]
@@ -205,12 +205,20 @@ metadata/_custom_type_script = "uid://dau6m811dtep8"
 script = ExtResource("6_vrw23")
 Weights = Array[Object]([SubResource("W_bw_w_3"), SubResource("W_bw_s_3")])
 
+[sub_resource type="Resource" id="Resource_mxkc7"]
+script = ExtResource("11_ta1oo")
+ItemCount = 3
+RarityLowerGate = 1
+RarityUpperGate = 3
+metadata/_custom_type_script = "uid://b0b1rgkll8se8"
+
 [sub_resource type="Resource" id="W_wave_3"]
 script = ExtResource("9_duif7")
 SpawnCountTarget = 80
 EnemyBlueprints = SubResource("W_col_3")
 SpawnMinTime = 0.7
 SpawnMaxTime = 1.1
+Rewards = Array[ExtResource("7_v38xc")]([SubResource("Resource_mxkc7")])
 metadata/_custom_type_script = "uid://cksmwvaxx1m18"
 
 [sub_resource type="Resource" id="W_stats_4"]

@@ -5,7 +5,6 @@ extends CanvasLayer
 signal on_complete
 
 @export var show_on_start: bool = false
-@export var show_on_start_sort: bool = false
 @export var show_on_start_item_count: int = 3
 ## Rarity is inclusive
 @export var show_on_start_rarity_lower_gate: Globals.Rarity = Globals.Rarity.COMMON
@@ -31,7 +30,6 @@ func _ready() -> void:
 			show_on_start_item_count,
 			show_on_start_rarity_lower_gate,
 			show_on_start_rarity_upper_gate,
-			show_on_start_sort,
 		)
 
 
