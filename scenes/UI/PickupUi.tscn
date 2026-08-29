@@ -44,18 +44,8 @@ func _on_mouse_exited() -> void:
 [node name="PickupUi" type="CanvasLayer" unique_id=720680017 node_paths=PackedStringArray("grid_container")]
 process_mode = 3
 layer = 2
-visible = false
 script = ExtResource("1_5cant")
 grid_container = NodePath("Control/MarginContainer/HBoxContainer/ScrollContainer/CenterContainer/GridContainer")
-
-[node name="Grayscale" type="ColorRect" parent="." unique_id=711175140]
-material = SubResource("ShaderMaterial_8b1c8")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_lock_ = true
 
 [node name="Dim" type="ColorRect" parent="." unique_id=301653202]
 z_index = -1
@@ -67,8 +57,19 @@ grow_vertical = 2
 color = Color(0.011764706, 0.011764706, 0.011764706, 0.49803922)
 metadata/_edit_lock_ = true
 
-[node name="Blur" type="ColorRect" parent="." unique_id=707983756]
+[node name="Grayscale" type="ColorRect" parent="Dim" unique_id=711175140]
+material = SubResource("ShaderMaterial_8b1c8")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Blur" type="ColorRect" parent="Dim" unique_id=707983756]
 material = SubResource("ShaderMaterial_ogoab")
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

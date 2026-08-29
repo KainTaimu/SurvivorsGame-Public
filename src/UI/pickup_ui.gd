@@ -64,27 +64,41 @@ func show_ui(
 	item_limit = min(item_limit, len(weapons))
 	_initialize_showcases(item_limit)
 
-	for showcase in showcases:
-		if len(weapons_picked) == len(weapons):
-			return
-		var entry := _weighted_pick(weapons) as OffensiveRegistryEntry
-		if entry == null:
-			CustomLogger.log_error("expected OffensiveRegistryEntry. got %s" % typeof(entry))
-			continue
+	_assign_item_recurse(showcases, weapons, item_limit)
 
-		var stats := _get_property_from_scene(entry.scene, "Stats") as BaseItemStats
-		if stats == null:
-			CustomLogger.log_error("expected BaseItemStats. got %s" % typeof(stats))
-			continue
-		var props := _get_property_from_scene(entry.scene, "Properties") as BaseItemProperties
-		if props == null:
-			CustomLogger.log_error("expected BaseItemProperties. got %s" % typeof(props))
 
-		# BUG: This sometimes causes an invalid property access crash
-		showcase.assign_item.call_deferred(entry.scene, props, stats)
-		item_limit -= 1
-		if item_limit == 0:
-			return
+func _assign_item_recurse(arr: Array[ItemShowcase], weapons: Array[Resource], remaining: int) -> void:
+	if remaining == 0:
+		return
+
+	var showcase = arr.pop_front()
+	if len(weapons_picked) == len(weapons):
+		return
+	var entry := _weighted_pick(weapons) as OffensiveRegistryEntry
+	if entry == null:
+		CustomLogger.log_error("expected OffensiveRegistryEntry. got %s" % typeof(entry))
+		return
+
+	var stats := _get_property_from_scene(entry.scene, "Stats") as BaseItemStats
+	if stats == null:
+		CustomLogger.log_error("expected BaseItemStats. got %s" % typeof(stats))
+		return
+
+	var props := _get_property_from_scene(entry.scene, "Properties") as BaseItemProperties
+	if props == null:
+		CustomLogger.log_error("expected BaseItemProperties. got %s" % typeof(props))
+
+	# BUG: This sometimes causes an invalid property access crash
+	showcase.assign_item.call_deferred(entry.scene, props, stats)
+
+	get_tree().create_timer(0.05, true, false, true).timeout.connect(
+		_assign_item_recurse.bind(
+			arr,
+			weapons,
+			remaining -
+			1,
+		),
+	)
 
 
 func _exit_tree() -> void:
@@ -100,7 +114,7 @@ func exit() -> void:
 
 func _initialize_showcases(item_count: int) -> void:
 	var columns := maxi(1, grid_container.columns)
-	var rows := maxi(1, ceili(float(item_count) / columns))
+	var rows := maxi(2, ceili(float(item_count) / columns))
 	var total := rows * columns
 
 	while showcases.size() > total:

@@ -9,13 +9,12 @@ var is_mouse_inside: bool
 var has_item_been_selected: bool
 var has_item_been_assigned: bool
 
-@export var item_name_label: RichTextLabel
-@export var item_description_label: RichTextLabel
 @export var panel: PanelContainer
-@export var item_icon_rect: TextureRect
 @export var unassigned_texture: TextureRect
-@export var main_body: Control
 @export var highlight_sfx: AudioStreamPlayer
+@export var main_body_scene: PackedScene
+
+var main_body: PickupUiMainbody
 
 
 func _gui_input(event: InputEvent) -> void:
@@ -38,9 +37,12 @@ func _gui_input(event: InputEvent) -> void:
 
 
 func assign_item(scene: PackedScene, properties: BaseItemProperties, _stats: BaseItemStats) -> void:
-	item_name_label.text = "[b]%s[/b]" % properties.Name
-	item_description_label.text = properties.Description
-	item_icon_rect.texture = properties.ItemIcon
+	main_body = main_body_scene.instantiate() as PickupUiMainbody
+	add_child(main_body)
+
+	main_body.item_name_label.text = "[b]%s[/b]" % properties.Name
+	main_body.item_description_label.text = properties.Description
+	main_body.item_icon_rect.texture = properties.ItemIcon
 	assigned_item_scene = scene
 	assigned_item_properties = properties
 	_set_assigned_state(true)
