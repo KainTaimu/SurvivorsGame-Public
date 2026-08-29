@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://chidsynybclhy" path="res://src/SFX/environment_sfx_info.gd" id="2_jbikd"]
 [ext_resource type="PackedScene" uid="uid://bm8s3nhidl6ca" path="res://scenes/VFX/SmokePuff.tscn" id="4_4n5px"]
 [ext_resource type="AudioStream" uid="uid://c11circnsjygb" path="res://assets/SFX/environment/car_explosion_r1.wav" id="4_66r6o"]
+[ext_resource type="AudioStream" uid="uid://ctie8kfib4pps" path="res://assets/SFX/explosion_large_07.wav" id="5_66r6o"]
 [ext_resource type="PackedScene" uid="uid://pihky31jidp2" path="res://scenes/VFX/ExplosionParticles.tscn" id="5_xr4ol"]
 
 [sub_resource type="GDScript" id="GDScript_do71q"]
@@ -27,14 +28,14 @@ func _initialize_players():
 		player.stream = info.stream
 		player.volume_db = info.volume_db
 		player.bus = \"EnvironmentFx\"
-		player.max_polyphony = 1
+		player.max_polyphony = info.max_polyphony
 		add_child(player)
 		_players[entry] = player
 
 
 func on_environment_fx_manager_sfx_played(
-	sfx_name: StringName,
-	_data: Dictionary[StringName, Variant],
+		sfx_name: StringName,
+		_data: Dictionary[StringName, Variant],
 ) -> void:
 	if not sfx_lookup.has(sfx_name):
 		CustomLogger.log_warning(\"attempt to play unknown sfx \\\"%s\\\"\" % sfx_name)
@@ -58,6 +59,12 @@ metadata/_custom_type_script = "uid://chidsynybclhy"
 script = ExtResource("2_jbikd")
 stream = ExtResource("2_5l02b")
 volume_db = -4.0
+metadata/_custom_type_script = "uid://chidsynybclhy"
+
+[sub_resource type="Resource" id="Resource_faso5"]
+script = ExtResource("2_jbikd")
+stream = ExtResource("5_66r6o")
+max_polyphony = 999
 metadata/_custom_type_script = "uid://chidsynybclhy"
 
 [sub_resource type="GDScript" id="GDScript_ogoab"]
@@ -91,14 +98,16 @@ script = SubResource("GDScript_do71q")
 sfx_lookup = Dictionary[StringName, ExtResource("2_jbikd")]({
 &"bullet_impact_concrete": SubResource("Resource_5l02b"),
 &"car_explosion": SubResource("Resource_p7ixb"),
-&"car_hit": SubResource("Resource_6nkvu")
+&"car_hit": SubResource("Resource_6nkvu"),
+&"explosion_generic": SubResource("Resource_faso5")
 })
 
 [node name="VfxManager" type="Node2D" parent="." unique_id=240685734]
 script = SubResource("GDScript_ogoab")
 vfx_lookup = Dictionary[StringName, PackedScene]({
 &"bullet_impact_concrete": ExtResource("4_4n5px"),
-&"car_explosion": ExtResource("5_xr4ol")
+&"car_explosion": ExtResource("5_xr4ol"),
+&"explosion": ExtResource("5_xr4ol")
 })
 
 [connection signal="OnSfxPlayed" from="." to="SfxManager" method="on_environment_fx_manager_sfx_played"]

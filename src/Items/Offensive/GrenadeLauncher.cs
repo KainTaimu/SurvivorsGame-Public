@@ -29,6 +29,9 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 	private AbstractFireGroup _fireGroup = null!;
 
 	[Export]
+	private SequentialReloadBehaviour _reloadBehaviour = null!;
+
+	[Export]
 	private AudioStreamPlayer? _explosionPlayer;
 
 	public FirearmStats FirearmStats => (FirearmStats)OffensiveStats;
@@ -86,6 +89,50 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 				);
 			}
 		};
+	}
+
+	private void InitializeFireGroupSettings()
+	{
+		_fireGroup.ResetState();
+		_reloadBehaviour.ResetState();
+
+		_fireGroup.OnFire += () =>
+		{
+			if (_reloadBehaviour.IsReloading && MagazineCount > 0 && _reloadBehaviour is { IsInterrupted: false } seq)
+				seq.TryInterrupt();
+			Attack();
+		};
+		if (_fireGroup is ICooldown c)
+			c.CooldownDuration = FirearmStats.AttackSpeed;
+		if (_fireGroup is BurstFireGroup burst)
+		{
+			if (!Stats.Additional.TryGetValue("BurstCount", out var burstCount))
+				Logger.LogError($"{Name} : Key \"BurstCount\" not found in stats");
+			burst.BurstCount = burstCount.AsInt32();
+
+			if (!Stats.Additional.TryGetValue("TimeBetweenBurst", out var tbb))
+				Logger.LogError($"{Name} : Key \"TimeBetweenBurst\" not found in stats");
+			burst.TimeBetweenBursts = tbb.AsSingle();
+		}
+	}
+
+	private void InitializeReloadBehaviour()
+	{
+		_fireGroup.ResetState();
+		_reloadBehaviour.ResetState();
+
+		_reloadBehaviour.OnReloadEnd += () =>
+		{
+			MagazineCount = FirearmStats.MagazineCapacity;
+		};
+
+		_reloadBehaviour.OnReloadProgress += (_, _, step) =>
+		{
+			MagazineCount += step;
+		};
+
+		_reloadBehaviour.TimeBetweenRounds = FirearmStats.ReloadTime / FirearmStats.MagazineCapacity;
+		_reloadBehaviour.RoundsToLoad = FirearmStats.MagazineCapacity;
 	}
 
 	public override void _Process(double delta)

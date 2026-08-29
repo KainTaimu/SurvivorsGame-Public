@@ -46,8 +46,6 @@ public partial class GoreParticleBuffer : Node2D
 	// the oldest particle gets reused when exceeding _maxParticleCount
 	private int _nextParticleIdx;
 
-	private bool _hasBurstQueueOverloadSentThisFrame;
-
 	public void Initialize(
 		int maxBurstCount,
 		GoreBurstParams deathNormal,
@@ -134,12 +132,8 @@ public partial class GoreParticleBuffer : Node2D
 			{
 				if (_burstQueue.Count > _maxParticleCount * 0.3f)
 				{
-					Logger.LogWarning("Gore burst queue overloaded");
-					_hasBurstQueueOverloadSentThisFrame = true;
 					continue;
 				}
-
-				_hasBurstQueueOverloadSentThisFrame = false;
 
 				_burstQueue.Enqueue(particles);
 			}

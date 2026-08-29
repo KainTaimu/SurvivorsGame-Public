@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cwf1ewjydxb5b"]
+
+[ext_resource type="Script" uid="uid://dr1odnxekgaxk" path="res://src/Levels/Controllers/GameWorldInstance.cs" id="1_8eiq2"]
+
+[node name="GameWorldInstance" type="Node" unique_id=525890631]
+script = ExtResource("1_8eiq2")

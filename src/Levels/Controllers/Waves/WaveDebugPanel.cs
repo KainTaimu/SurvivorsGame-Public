@@ -49,10 +49,7 @@ public partial class WaveDebugPanel : CanvasLayer
 		{
 			if (_isForceNextWaveBtnPressed)
 				return;
-			if (Input.IsPhysicalKeyPressed(Key.Shift))
-			{
-				_waveController.CurrentWave?.Call(AbstractWave.MethodName.GiveRewards);
-			}
+			_waveController.CurrentWave?.Call(AbstractWave.MethodName.GiveRewards);
 			_waveController.NextWave();
 			_isForceNextWaveBtnPressed = true;
 		}

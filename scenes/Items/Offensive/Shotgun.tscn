@@ -27,7 +27,7 @@ metadata/_custom_type_script = "uid://cx3rrg2toydba"
 script = ExtResource("4_d1d18")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_e3ubm"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_dar1o"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_fvcvv"]
@@ -54,7 +54,7 @@ BaseCritChanceProportion = 0.3
 BaseProjectileSpeed = 2700
 BaseProjectileScaleMultiplier = 0.8
 BaseAttackSpeed = 0.8
-BasePierceLimit = 3
+BasePierceLimit = 2
 Additional = Dictionary[String, Variant]({
 "PelletCount": 16
 })
@@ -82,8 +82,9 @@ bus = &"ShootSfxNoDistortion"
 [node name="ShellReload" type="AudioStreamPlayer" parent="." unique_id=2020652289]
 process_mode = 3
 stream = ExtResource("5_u167f")
-volume_db = 2.0
+volume_db = 4.0
 max_polyphony = 3
+bus = &"ShootSfx"
 
 [node name="Cocking" type="AudioStreamPlayer" parent="." unique_id=138581488]
 process_mode = 3

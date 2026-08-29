@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://d1fgx0n7b8eby"]
 
-[ext_resource type="Script" uid="uid://bylm627lgfgt7" path="res://src/Items/Projectiles/ProjectileBullet.cs" id="1_4ylwr"]
+[ext_resource type="Script" uid="uid://cxdysx687mt8s" path="res://src/Items/Projectiles/ProjectileBullet.cs" id="1_4ylwr"]
 [ext_resource type="Texture2D" uid="uid://bmu6li33qhxl7" path="res://assets/Projectiles/bullet.png" id="2_o556r"]
 
 [node name="ProjectileBullet" type="Node2D" unique_id=2072266607 node_paths=PackedStringArray("Sprite")]

@@ -25,7 +25,7 @@ metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 script = ExtResource("4_g7fad")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hamct"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_dar1o"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_40q5n"]
@@ -50,6 +50,7 @@ BaseCritDamageMultiplier = 0.6
 BaseCritChanceProportion = 0.2
 BaseProjectileSpeed = 4200
 BaseProjectileScaleMultiplier = 0.7
+BaseProjectileRadius = 30
 BaseAttackSpeed = 0.067
 BasePierceLimit = 2
 Additional = Dictionary[String, Variant]({
@@ -70,7 +71,7 @@ Stats = SubResource("Resource_2fu6x")
 process_mode = 3
 stream = ExtResource("7_g7fad")
 max_polyphony = 3
-bus = &"ShootSfxNoDistortion"
+bus = &"ShootSfxNoCompress"
 
 [node name="Reload" type="AudioStreamPlayer" parent="." unique_id=1204958426]
 stream = ExtResource("9_g7fad")

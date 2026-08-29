@@ -24,7 +24,7 @@ metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 script = ExtResource("4_c20as")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_lxy8y"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_dar1o"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_iu54j"]

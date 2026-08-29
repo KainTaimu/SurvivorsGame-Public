@@ -1,3 +1,7 @@
+using Game.Core.ECS;
+using Game.Items.Offensive;
+using Godot.Collections;
+
 namespace Game.Levels.Controllers;
 
 public partial class AirdropPlane : Node2D
@@ -16,6 +20,10 @@ public partial class AirdropPlane : Node2D
 	private PackedScene? _dropScene;
 	private Node? _dropParent;
 
+	private const float DROP_INTERVAL_SEC = 0.2f;
+	private float _timeUntilNextDrop = DROP_INTERVAL_SEC;
+	private int _dropAmount = 10;
+
 	public override void _Process(double delta)
 	{
 		if (!_isStarted)
@@ -26,7 +34,15 @@ public partial class AirdropPlane : Node2D
 		_displacement += Speed * delta;
 
 		if (_displacement > _distanceToDrop && !_hasDropped)
-			Drop();
+		{
+			_timeUntilNextDrop -= (float)delta;
+			if (_timeUntilNextDrop > 0 || _dropAmount-- <= 0)
+			{
+				return;
+			}
+			DropCarpetBomb();
+			_timeUntilNextDrop = DROP_INTERVAL_SEC;
+		}
 
 		if (_t >= _timeToExpire)
 			QueueFree();
@@ -53,6 +69,8 @@ public partial class AirdropPlane : Node2D
 		_timeToExpire = timeToExpire;
 		_dropScene = dropScene;
 		_dropParent = dropParent;
+		var p = GD.Load<PackedScene>("uid://cq8d77rrxnkkv").Instantiate();
+		AddChild(p);
 	}
 
 	private void Drop()
@@ -77,5 +95,28 @@ public partial class AirdropPlane : Node2D
 
 		Logger.LogInfo($"Dropped at {GlobalPosition}, {_t}s");
 		EmitSignalOnAirdropDropped(GlobalPosition);
+	}
+
+	private void DropCarpetBomb()
+	{
+		var rand = new Vector2(GD.RandRange(-1, 1), 0) * 200;
+		var dropPos = GlobalPosition - rand.Rotated(Rotation);
+
+		Logger.LogInfo($"Dropped at {dropPos}, {_t}s");
+		EnvironmentFxManager.PlayVfx(
+			"explosion",
+			new Dictionary<StringName, Variant>() { { "position", dropPos }, { "scale", new Vector2(2, 2) } }
+		);
+		EnvironmentFxManager.PlaySfx("explosion_generic");
+
+		if (!EnemyTargetQuery.Instance.TryGetTargetsInArea(dropPos, 400f, out var targets))
+			return;
+
+		foreach (var target in targets)
+		{
+			OffensiveEffects.ApplyDamage(target, 500, 0, 1, 1);
+			OffensiveEffects.ApplyKnockback(target, dropPos, 100);
+			GameWorld.World.Add(target, new DeathCauseComponent(DeathCauseEnum.Explosion));
+		}
 	}
 }

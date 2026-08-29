@@ -48,9 +48,8 @@ public partial class Settings : Control
 			.CallDeferred();
 
 		DisplayServer.WindowSetVsyncMode(
-			GameSettings.Instance.EnableVSync ? DisplayServer.VSyncMode.Mailbox : DisplayServer.VSyncMode.Disabled
+			GameSettings.Instance.EnableVSync ? DisplayServer.VSyncMode.Enabled : DisplayServer.VSyncMode.Disabled
 		);
-		Input.UseAccumulatedInput = false;
 	}
 
 	// Try to not cause an exception in UpdateOptions and SubscribeOptions so the other settings get applied as expected

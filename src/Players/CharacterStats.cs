@@ -107,6 +107,22 @@ public partial class CharacterStats : Node
 	[Export]
 	private Player _player = null!;
 
+	public override void _Process(double delta)
+	{
+		if (!_player.IsAlive)
+			return;
+		if (HealthRegenPerSecond <= 0)
+			return;
+
+		Heal(HealthRegenPerSecond, (float)delta);
+	}
+
+	public void Heal(int amount, in float delta)
+	{
+		var sumHeal = Mathf.CeilToInt(Mathf.Clamp(1f / amount, 0, MaxHealth - Health) * delta);
+		_health.BaseValue += sumHeal;
+	}
+
 	public void Damage(int damage)
 	{
 		var damageAfterDefense = damage - Defense;
@@ -115,6 +131,8 @@ public partial class CharacterStats : Node
 		var totalDamage = Mathf.CeilToInt(clampedDamage);
 
 		_health.BaseValue -= totalDamage;
+		if (OS.HasFeature("wrap_player_health"))
+			_health.BaseValue = Mathf.Wrap(_health.BaseValue, 0, MaxHealth);
 		_player.EmitSignal(Player.SignalName.OnDamaged, totalDamage);
 	}
 }

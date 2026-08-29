@@ -1,6 +1,8 @@
 [gd_resource type="Resource" script_class="WaveDuration" format=3 uid="uid://dqug076es4qxb"]
 
+[ext_resource type="Script" uid="uid://d02cy04gxh3di" path="res://src/Levels/Controllers/Waves/AbstractWaveCompletionReward.cs" id="1_0wm4g"]
 [ext_resource type="Script" uid="uid://b7ol6jtjagoe" path="res://src/Levels/Controllers/Waves/WaveDuration.cs" id="1_8fdam"]
+[ext_resource type="Script" uid="uid://cwbl163hsg1db" path="res://src/Levels/Controllers/Waves/AbstractWave.cs" id="2_1mpks"]
 
 [resource]
 resource_local_to_scene = true

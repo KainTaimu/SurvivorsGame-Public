@@ -20,5 +20,5 @@ public partial class Player : Node2D
 	[Export]
 	public PlayerStatusEffectController StatusEffectController { get; private set; } = null!;
 
-	public bool IsAlive => Character.CharacterStats.Health == 0;
+	public bool IsAlive => Character.CharacterStats.Health > 0;
 }

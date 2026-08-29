@@ -22,12 +22,11 @@ bg_color = Color(1, 0, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bplp6"]
 bg_color = Color(0, 1, 0, 1)
 
-[node name="HUD" type="CanvasLayer" unique_id=1626912566 node_paths=PackedStringArray("health_bar", "health_damage_bar", "enemies_alive_label", "wave_progress_label")]
+[node name="HUD" type="CanvasLayer" unique_id=1626912566 node_paths=PackedStringArray("health_bar", "health_damage_bar", "enemies_alive_label")]
 script = ExtResource("1_bg4j7")
 health_bar = NodePath("MarginContainer/PanelContainer/VBoxContainer/HealthBar")
 health_damage_bar = NodePath("MarginContainer/PanelContainer/VBoxContainer/HealthDamageBar")
 enemies_alive_label = NodePath("MarginContainer/PanelContainer/VBoxContainer/Enemies")
-wave_progress_label = NodePath("")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=116692494]
 offset_right = 576.0

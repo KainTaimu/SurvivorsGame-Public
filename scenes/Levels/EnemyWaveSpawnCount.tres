@@ -1,6 +1,8 @@
 [gd_resource type="Resource" script_class="WaveSpawnCount" format=3 uid="uid://b0ppf3hqm67qh"]
 
+[ext_resource type="Script" uid="uid://d02cy04gxh3di" path="res://src/Levels/Controllers/Waves/AbstractWaveCompletionReward.cs" id="1_adax6"]
 [ext_resource type="Script" uid="uid://cksmwvaxx1m18" path="res://src/Levels/Controllers/Waves/WaveSpawnCount.cs" id="1_gpfel"]
+[ext_resource type="Script" uid="uid://cwbl163hsg1db" path="res://src/Levels/Controllers/Waves/AbstractWave.cs" id="2_l1hqk"]
 
 [resource]
 resource_local_to_scene = true

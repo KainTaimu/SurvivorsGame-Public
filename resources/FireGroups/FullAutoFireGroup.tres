@@ -3,5 +3,6 @@
 [ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FireGroups/FullAutoFireGroup.cs" id="1_xllsd"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_xllsd")
 metadata/_custom_type_script = "uid://bt8inkwpypk5b"

@@ -29,7 +29,7 @@ public partial class GameSingleton : Node
 
 		var debugMenu = GetNode("/root/DebugMenu");
 		if (OS.HasFeature("prod"))
-			debugMenu.Set("style", 1);
+			debugMenu.QueueFree();
 		else
 			debugMenu.Set("style", 2); // Full with graph
 	}

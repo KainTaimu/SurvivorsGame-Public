@@ -77,7 +77,7 @@ Stats = SubResource("Resource_2fu6x")
 process_mode = 3
 stream = ExtResource("7_xm6od")
 max_polyphony = 3
-bus = &"ShootSfxNoDistortion"
+bus = &"ShootSfxNoCompress"
 
 [node name="Reload" type="AudioStreamPlayer" parent="." unique_id=1204958426]
 stream = ExtResource("8_bdsgl")

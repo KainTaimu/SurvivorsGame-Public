@@ -4,8 +4,8 @@ namespace Game.Levels.Controllers;
 
 public partial class GameWorldInstance : Node
 {
-	public Player? MainPlayer;
-	public LevelData? LevelData;
+	public Player? MainPlayer { get; set; }
+	public LevelData? LevelData { get; set; }
 
 	public static GameWorldInstance Instance = null!;
 

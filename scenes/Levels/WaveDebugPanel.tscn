@@ -16,6 +16,7 @@ _waveInfo = NodePath("Control/MarginContainer/CenterContainer/VBoxContainer/WAVE
 _waveProgress = NodePath("Control/MarginContainer/CenterContainer/VBoxContainer/ProgressBar")
 
 [node name="Control" type="PanelContainer" parent="." unique_id=1976089836]
+custom_minimum_size = Vector2(256, 0)
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -23,6 +24,7 @@ offset_left = -128.0
 offset_right = 128.0
 offset_bottom = 84.0
 grow_horizontal = 2
+size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ap2sm")
 
 [node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=1587461831]
@@ -52,6 +54,7 @@ label_settings = ExtResource("2_ap2sm")
 horizontal_alignment = 1
 
 [node name="ProgressBar" type="ProgressBar" parent="Control/MarginContainer/CenterContainer/VBoxContainer" unique_id=67714310]
+custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 theme = ExtResource("2_i6rcm")
 theme_override_font_sizes/font_size = 14

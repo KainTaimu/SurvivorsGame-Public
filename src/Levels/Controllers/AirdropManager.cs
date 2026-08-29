@@ -1,4 +1,5 @@
 using Game.Players;
+using Game.UI;
 
 namespace Game.Levels.Controllers;
 
@@ -14,14 +15,16 @@ public partial class AirdropManager : Node2D
 	public float PlaneVelocity = 3000;
 
 	private Player Player => GameWorld.Instance.MainPlayer;
-	private Vector2 PlayerPosition => Player.GlobalPosition;
+	private Vector2 DropPosition => Crosshair.Instance!.GlobalSpacePosition;
 
 	private bool _f1Held;
+
+	private static readonly string _bombKey = "CARPET_BOMB_CHEAT";
 
 	public override void _Process(double delta)
 	{
 		var prev = _f1Held;
-		if (Input.IsPhysicalKeyPressed(Key.F1))
+		if (Input.IsActionJustPressed(_bombKey))
 			_f1Held = true;
 		else
 		{
@@ -30,7 +33,7 @@ public partial class AirdropManager : Node2D
 		}
 
 		if (prev != _f1Held)
-			DeployItemAirdrop(PlayerPosition, GD.RandRange(0, 360), 8);
+			DeployItemAirdrop(DropPosition, GD.RandRange(0, 360), 4);
 	}
 
 	public void DeployItemAirdrop(Vector2 dropPosition, float arrivalAngleDeg, float timeToArrivalSec)
@@ -47,7 +50,7 @@ public partial class AirdropManager : Node2D
 	)
 	{
 		var distance = PlaneVelocity * timeToArrivalSec;
-		var rotVec = Vector2.One.Rotated((arrivalAngleDeg - 180) * Mathf.Pi / 180);
+		var rotVec = Vector2.One.Rotated(Mathf.DegToRad(arrivalAngleDeg));
 		rotVec *= distance;
 
 		var rand = new Vector2((float)GD.RandRange(-1f, 1f), (float)GD.RandRange(-1f, 1f));
@@ -62,6 +65,7 @@ public partial class AirdropManager : Node2D
 			startPosition.AngleToPoint(dropPosition + rand),
 			PlaneVelocity,
 			timeToArrivalSec * 2,
+			dropPrecision: 0,
 			dropScene: dropScene,
 			dropParent: dropParent
 		);

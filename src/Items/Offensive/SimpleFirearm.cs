@@ -46,6 +46,8 @@ public partial class SimpleFirearm : AbstractFirearm, IReloadable, ICustomReload
 	private static Crosshair? Crosshair => Crosshair.Instance;
 	private static readonly RandomNumberGenerator _rng = new();
 
+	private bool _fireGroupRegistered;
+
 	public override void _Ready()
 	{
 		Pool.Initialize(
@@ -88,16 +90,21 @@ public partial class SimpleFirearm : AbstractFirearm, IReloadable, ICustomReload
 		_fireGroup.ResetState();
 		_reloadBehaviour.ResetState();
 
-		_fireGroup.OnFire += () =>
+		if (!_fireGroupRegistered)
 		{
-			if (
-				_reloadBehaviour.IsReloading
-				&& MagazineCount > 0
-				&& _reloadBehaviour is SequentialReloadBehaviour { IsInterrupted: false } seq
-			)
-				seq.TryInterrupt();
-			Attack();
-		};
+			_fireGroup.OnFire += () =>
+			{
+				if (
+					_reloadBehaviour.IsReloading
+					&& MagazineCount > 0
+					&& _reloadBehaviour is SequentialReloadBehaviour { IsInterrupted: false } seq
+				)
+					seq.TryInterrupt();
+				Attack();
+			};
+			_fireGroupRegistered = true;
+		}
+
 		if (_fireGroup is ICooldown c)
 			c.CooldownDuration = FirearmStats.AttackSpeed;
 		if (_fireGroup is BurstFireGroup burst)

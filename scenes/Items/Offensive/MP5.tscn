@@ -44,7 +44,7 @@ VerticalBaseRecoil = 4.0
 VerticalRecoilRandom = 2.0
 RecoilScale = 0.3
 CameraRecoilScale = 0.3
-BaseDamage = 3
+BaseDamage = 5
 BaseDamageVarianceMultiplier = 0.05
 BaseCritDamageMultiplier = 0.5
 BaseProjectileSpeed = 5000
@@ -70,7 +70,7 @@ process_mode = 3
 stream = ExtResource("7_u5o0n")
 pitch_scale = 0.8
 max_polyphony = 29
-bus = &"ShootSfxNoDistortion"
+bus = &"ShootSfxNoCompress"
 
 [node name="MagAlmostEmpty" parent="." unique_id=866300451 instance=ExtResource("8_u5o0n")]
 
