@@ -74,14 +74,14 @@ size = Vector2(32, 32)
 script = ExtResource("13_n7qsj")
 StatName = 2
 Operation = 1
-Value = 3.0
+Value = 2.0
 metadata/_custom_type_script = "uid://d31d8uns5faa5"
 
 [sub_resource type="Resource" id="Resource_ta1oo"]
 script = ExtResource("13_n7qsj")
 StatName = 4
 Operation = 1
-Value = 1.1
+Value = 1.03
 metadata/_custom_type_script = "uid://d31d8uns5faa5"
 
 [sub_resource type="Resource" id="Resource_4wkf2"]
@@ -112,7 +112,7 @@ metadata/_custom_type_script = "uid://catd5vqs68f8g"
 
 [sub_resource type="Resource" id="W_wave_1"]
 script = ExtResource("9_duif7")
-SpawnCountTarget = 40
+SpawnCountTarget = 41
 EnemyBlueprints = SubResource("W_col_1")
 SpawnMinTime = 1.0
 SpawnMaxTime = 1.5
@@ -122,7 +122,7 @@ metadata/_custom_type_script = "uid://cksmwvaxx1m18"
 [sub_resource type="Resource" id="W_stats_2"]
 script = ExtResource("3_sl6q3")
 DamageOnContact = 4
-MaxHealth = 9
+MaxHealth = 15
 MoveSpeed = 245.0
 TurnSpeed = 4.0
 metadata/_custom_type_script = "uid://y77qtp32wo00"
@@ -145,40 +145,65 @@ Weights = Array[Object]([SubResource("W_bw_w_2")])
 
 [sub_resource type="Resource" id="Resource_uui33"]
 script = ExtResource("11_ta1oo")
-ItemCount = 3
-RarityLowerGate = 1
+ItemCount = 6
 RarityUpperGate = 1
 metadata/_custom_type_script = "uid://b0b1rgkll8se8"
+
+[sub_resource type="Resource" id="Resource_0iw8n"]
+script = ExtResource("13_n7qsj")
+StatName = 6
+Operation = 1
+Value = 1.1
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_w70hc"]
+script = ExtResource("13_n7qsj")
+StatName = 2
+Operation = 1
+Value = 1.1
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_w2wr7"]
+script = ExtResource("12_0iw8n")
+Name = "Wave 2 buff"
+Permanent = true
+Hidden = true
+Modifiers = Array[ExtResource("13_n7qsj")]([SubResource("Resource_0iw8n"), SubResource("Resource_w70hc")])
+metadata/_custom_type_script = "uid://bdk4fdcqvypav"
+
+[sub_resource type="Resource" id="Resource_g5417"]
+script = ExtResource("14_w70hc")
+_statusEffects = Array[ExtResource("12_0iw8n")]([SubResource("Resource_w2wr7")])
+metadata/_custom_type_script = "uid://catd5vqs68f8g"
 
 [sub_resource type="Resource" id="W_wave_2"]
 script = ExtResource("10_ta1oo")
 Duration = 60.0
 MaxMobs = 16384
 EnemyBlueprints = SubResource("W_col_2")
-SpawnMinTime = 0.8
-SpawnMaxTime = 1.2
-Rewards = Array[ExtResource("7_v38xc")]([SubResource("Resource_uui33")])
+SpawnMinTime = 0.77
+SpawnMaxTime = 1.16
+Rewards = Array[ExtResource("7_v38xc")]([SubResource("Resource_uui33"), SubResource("Resource_g5417")])
 metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 
-[sub_resource type="Resource" id="W_stats_3"]
+[sub_resource type="Resource" id="Resource_n7qsj"]
 script = ExtResource("3_sl6q3")
-DamageOnContact = 5
-MaxHealth = 12
-MoveSpeed = 250.0
+DamageOnContact = 4
+MaxHealth = 17
+MoveSpeed = 260.0
 TurnSpeed = 4.0
 metadata/_custom_type_script = "uid://y77qtp32wo00"
 
-[sub_resource type="Resource" id="W_bp_w_3"]
+[sub_resource type="Resource" id="Resource_urvrt"]
 script = ExtResource("4_7c8pb")
 Name = "Walker"
 SpriteName = "placeholder"
 Type = 1
-Stats = SubResource("W_stats_3")
+Stats = SubResource("Resource_n7qsj")
 
-[sub_resource type="Resource" id="W_bw_w_3"]
+[sub_resource type="Resource" id="Resource_ufwql"]
 script = ExtResource("5_iiw53")
-Blueprint = SubResource("W_bp_w_3")
-Weight = 0.9
+Blueprint = SubResource("Resource_urvrt")
 metadata/_custom_type_script = "uid://dau6m811dtep8"
 
 [sub_resource type="Resource" id="W_stats_s_3"]
@@ -203,18 +228,18 @@ metadata/_custom_type_script = "uid://dau6m811dtep8"
 
 [sub_resource type="Resource" id="W_col_3"]
 script = ExtResource("6_vrw23")
-Weights = Array[Object]([SubResource("W_bw_w_3"), SubResource("W_bw_s_3")])
+Weights = Array[Object]([SubResource("Resource_ufwql"), SubResource("W_bw_s_3")])
 
 [sub_resource type="Resource" id="Resource_mxkc7"]
 script = ExtResource("11_ta1oo")
-ItemCount = 3
+ItemCount = 4
 RarityLowerGate = 1
 RarityUpperGate = 3
 metadata/_custom_type_script = "uid://b0b1rgkll8se8"
 
 [sub_resource type="Resource" id="W_wave_3"]
 script = ExtResource("9_duif7")
-SpawnCountTarget = 80
+SpawnCountTarget = 100
 EnemyBlueprints = SubResource("W_col_3")
 SpawnMinTime = 0.7
 SpawnMaxTime = 1.1
@@ -266,18 +291,37 @@ metadata/_custom_type_script = "uid://dau6m811dtep8"
 script = ExtResource("6_vrw23")
 Weights = Array[Object]([SubResource("W_bw_w_4"), SubResource("W_bw_s_4")])
 
+[sub_resource type="Resource" id="Resource_d1d18"]
+script = ExtResource("11_ta1oo")
+ItemCount = 5
+RarityLowerGate = 2
+RarityUpperGate = 3
+metadata/_custom_type_script = "uid://b0b1rgkll8se8"
+
+[sub_resource type="Curve" id="Curve_ta1oo"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.7426366, 0.37787348), 0.5088269, 0.0, 1, 0, Vector2(0.8292239, 1), 0.0, 0.0, 0, 1, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_w2wr7"]
+_data = [Vector2(0, 1), 0.0, -0.10874375, 0, 0, Vector2(0.25701573, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
 [sub_resource type="Resource" id="W_wave_4"]
 script = ExtResource("10_ta1oo")
 Duration = 60.0
 MaxMobs = 16384
 EnemyBlueprints = SubResource("W_col_4")
-SpawnMaxTime = 0.9
+SpawnMaxTime = 0.85
+SpawnTimeCurveOverMaxTime = SubResource("Curve_w2wr7")
+SpawnBatchMax = 2
+SpawnBatchCurveOverMaxTime = SubResource("Curve_ta1oo")
+Rewards = Array[ExtResource("7_v38xc")]([SubResource("Resource_d1d18")])
 metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 
 [sub_resource type="Resource" id="W_stats_5"]
 script = ExtResource("3_sl6q3")
 DamageOnContact = 7
-MaxHealth = 21
+MaxHealth = 30
 MoveSpeed = 260.0
 TurnSpeed = 4.0
 metadata/_custom_type_script = "uid://y77qtp32wo00"
@@ -297,6 +341,7 @@ metadata/_custom_type_script = "uid://dau6m811dtep8"
 
 [sub_resource type="Resource" id="W_stats_s_5"]
 script = ExtResource("3_sl6q3")
+MaxHealth = 15
 MoveSpeed = 310.0
 SpriteScaleMultiplier = 0.85
 metadata/_custom_type_script = "uid://y77qtp32wo00"
@@ -318,19 +363,35 @@ metadata/_custom_type_script = "uid://dau6m811dtep8"
 script = ExtResource("6_vrw23")
 Weights = Array[Object]([SubResource("W_bw_w_5"), SubResource("W_bw_s_5")])
 
+[sub_resource type="Resource" id="Resource_e3ubm"]
+script = ExtResource("11_ta1oo")
+ItemCount = 6
+RarityLowerGate = 2
+RarityUpperGate = 4
+metadata/_custom_type_script = "uid://b0b1rgkll8se8"
+
+[sub_resource type="Curve" id="Curve_0iw8n"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.4209392, 0.29309773), 0.69629467, 0.0, 1, 0, Vector2(0.5037699, 1), 0.0, 0.0, 0, 1, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
 [sub_resource type="Resource" id="W_wave_5"]
 script = ExtResource("9_duif7")
-SpawnCountTarget = 120
+SpawnCountTarget = 250
 EnemyBlueprints = SubResource("W_col_5")
+SpawnMinTime = 0.4
 SpawnMaxTime = 0.8
+SpawnBatchMax = 2
+SpawnBatchCurveOverMaxTime = SubResource("Curve_0iw8n")
+Rewards = Array[ExtResource("7_v38xc")]([SubResource("Resource_e3ubm")])
 metadata/_custom_type_script = "uid://cksmwvaxx1m18"
 
 [sub_resource type="Resource" id="W_stats_6"]
 script = ExtResource("3_sl6q3")
 DamageOnContact = 8
-MaxHealth = 27
-MoveSpeed = 265.0
+MaxHealth = 35
+MoveSpeed = 280.0
 TurnSpeed = 4.0
+SpriteScaleMultiplier = 1.1
 metadata/_custom_type_script = "uid://y77qtp32wo00"
 
 [sub_resource type="Resource" id="W_bp_w_6"]
@@ -348,9 +409,9 @@ metadata/_custom_type_script = "uid://dau6m811dtep8"
 
 [sub_resource type="Resource" id="W_stats_s_6"]
 script = ExtResource("3_sl6q3")
-MaxHealth = 6
-MoveSpeed = 315.0
-SpriteScaleMultiplier = 0.85
+MaxHealth = 20
+MoveSpeed = 330.0
+SpriteScaleMultiplier = 0.9
 metadata/_custom_type_script = "uid://y77qtp32wo00"
 
 [sub_resource type="Resource" id="W_bp_s_6"]
@@ -370,22 +431,31 @@ metadata/_custom_type_script = "uid://dau6m811dtep8"
 script = ExtResource("6_vrw23")
 Weights = Array[Object]([SubResource("W_bw_w_6"), SubResource("W_bw_s_6")])
 
+[sub_resource type="Resource" id="Resource_mkf0n"]
+script = ExtResource("11_ta1oo")
+ItemCount = 6
+RarityLowerGate = 2
+RarityUpperGate = 4
+metadata/_custom_type_script = "uid://b0b1rgkll8se8"
+
 [sub_resource type="Resource" id="W_wave_6"]
 script = ExtResource("10_ta1oo")
-Duration = 60.0
+Duration = 70.0
 MaxMobs = 16384
 EnemyBlueprints = SubResource("W_col_6")
-SpawnMinTime = 0.4
-SpawnMaxTime = 0.7
+SpawnMinTime = 0.36
+SpawnMaxTime = 0.63
 SpawnBatchMax = 2
+Rewards = Array[ExtResource("7_v38xc")]([SubResource("Resource_mkf0n")])
 metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 
 [sub_resource type="Resource" id="W_stats_7"]
 script = ExtResource("3_sl6q3")
 DamageOnContact = 9
-MaxHealth = 34
-MoveSpeed = 270.0
+MaxHealth = 55
+MoveSpeed = 340.0
 TurnSpeed = 4.0
+SpriteScaleMultiplier = 1.1
 metadata/_custom_type_script = "uid://y77qtp32wo00"
 
 [sub_resource type="Resource" id="W_bp_w_7"]
@@ -403,9 +473,9 @@ metadata/_custom_type_script = "uid://dau6m811dtep8"
 
 [sub_resource type="Resource" id="W_stats_s_7"]
 script = ExtResource("3_sl6q3")
-MaxHealth = 7
-MoveSpeed = 320.0
-SpriteScaleMultiplier = 0.85
+MaxHealth = 40
+MoveSpeed = 350.0
+SpriteScaleMultiplier = 0.9
 metadata/_custom_type_script = "uid://y77qtp32wo00"
 
 [sub_resource type="Resource" id="W_bp_s_7"]
@@ -424,193 +494,144 @@ metadata/_custom_type_script = "uid://dau6m811dtep8"
 [sub_resource type="Resource" id="W_bw_big_7"]
 script = ExtResource("5_iiw53")
 Blueprint = ExtResource("11_w2wr7")
-Weight = 0.15
+Weight = 0.1
 metadata/_custom_type_script = "uid://dau6m811dtep8"
 
 [sub_resource type="Resource" id="W_col_7"]
 script = ExtResource("6_vrw23")
 Weights = Array[Object]([SubResource("W_bw_w_7"), SubResource("W_bw_s_7"), SubResource("W_bw_big_7")])
 
+[sub_resource type="Resource" id="Resource_ap6c5"]
+script = ExtResource("11_ta1oo")
+ItemCount = 5
+RarityLowerGate = 3
+RarityUpperGate = 4
+metadata/_custom_type_script = "uid://b0b1rgkll8se8"
+
+[sub_resource type="Curve" id="Curve_n7qsj"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5037699, 0.5323275), 0.7941269, 0.7941269, 0, 0, Vector2(0.89288425, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_ghrcs"]
+_data = [Vector2(0.0030827597, 1), 0.0, -2.5656261, 0, 0, Vector2(1, 0), -0.31027502, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="Resource" id="W_wave_7"]
 script = ExtResource("9_duif7")
-SpawnCountTarget = 180
+SpawnCountTarget = 500
 EnemyBlueprints = SubResource("W_col_7")
 SpawnMinTime = 0.35
 SpawnMaxTime = 0.6
+SpawnTimeCurveOverMaxTime = SubResource("Curve_ghrcs")
 SpawnBatchMax = 2
+SpawnBatchCurveOverMaxTime = SubResource("Curve_n7qsj")
+Rewards = Array[ExtResource("7_v38xc")]([SubResource("Resource_ap6c5")])
 metadata/_custom_type_script = "uid://cksmwvaxx1m18"
 
-[sub_resource type="Resource" id="W_stats_8"]
+[sub_resource type="Resource" id="Resource_bp5av"]
 script = ExtResource("3_sl6q3")
-DamageOnContact = 10
-MaxHealth = 42
-MoveSpeed = 275.0
+DamageOnContact = 9
+MaxHealth = 100
+MoveSpeed = 400.0
 TurnSpeed = 4.0
+SpriteScaleMultiplier = 1.1
 metadata/_custom_type_script = "uid://y77qtp32wo00"
 
-[sub_resource type="Resource" id="W_bp_w_8"]
+[sub_resource type="Resource" id="Resource_k2wow"]
 script = ExtResource("4_7c8pb")
 Name = "Walker"
 SpriteName = "placeholder"
 Type = 1
-Stats = SubResource("W_stats_8")
+Stats = SubResource("Resource_bp5av")
 
-[sub_resource type="Resource" id="W_bw_w_8"]
+[sub_resource type="Resource" id="Resource_tgplc"]
 script = ExtResource("5_iiw53")
-Blueprint = SubResource("W_bp_w_8")
-Weight = 0.7
+Blueprint = SubResource("Resource_k2wow")
+Weight = 0.75
 metadata/_custom_type_script = "uid://dau6m811dtep8"
 
-[sub_resource type="Resource" id="W_stats_s_8"]
+[sub_resource type="Resource" id="Resource_wbjiv"]
 script = ExtResource("3_sl6q3")
-MaxHealth = 8
-MoveSpeed = 325.0
-SpriteScaleMultiplier = 0.85
+DamageOnContact = 3
+MaxHealth = 45
+MoveSpeed = 420.0
+SpriteScaleMultiplier = 0.9
 metadata/_custom_type_script = "uid://y77qtp32wo00"
 
-[sub_resource type="Resource" id="W_bp_s_8"]
+[sub_resource type="Resource" id="Resource_j0071"]
 script = ExtResource("4_7c8pb")
 Name = "Sprinter"
 SpriteName = "placeholder"
 Type = 1
-Stats = SubResource("W_stats_s_8")
+Stats = SubResource("Resource_wbjiv")
 
-[sub_resource type="Resource" id="W_bw_s_8"]
+[sub_resource type="Resource" id="Resource_1jc4q"]
 script = ExtResource("5_iiw53")
-Blueprint = SubResource("W_bp_s_8")
-Weight = 0.3
-metadata/_custom_type_script = "uid://dau6m811dtep8"
-
-[sub_resource type="Resource" id="W_bw_big_8"]
-script = ExtResource("5_iiw53")
-Blueprint = ExtResource("11_w2wr7")
-Weight = 0.2
-metadata/_custom_type_script = "uid://dau6m811dtep8"
-
-[sub_resource type="Resource" id="W_col_8"]
-script = ExtResource("6_vrw23")
-Weights = Array[Object]([SubResource("W_bw_w_8"), SubResource("W_bw_s_8"), SubResource("W_bw_big_8")])
-
-[sub_resource type="Resource" id="W_wave_8"]
-script = ExtResource("10_ta1oo")
-Duration = 60.0
-MaxMobs = 16384
-EnemyBlueprints = SubResource("W_col_8")
-SpawnMinTime = 0.3
-SpawnMaxTime = 0.5
-SpawnBatchMax = 3
-metadata/_custom_type_script = "uid://b7ol6jtjagoe"
-
-[sub_resource type="Resource" id="W_stats_9"]
-script = ExtResource("3_sl6q3")
-DamageOnContact = 12
-MaxHealth = 52
-MoveSpeed = 280.0
-TurnSpeed = 4.0
-metadata/_custom_type_script = "uid://y77qtp32wo00"
-
-[sub_resource type="Resource" id="W_bp_w_9"]
-script = ExtResource("4_7c8pb")
-Name = "Walker"
-SpriteName = "placeholder"
-Type = 1
-Stats = SubResource("W_stats_9")
-
-[sub_resource type="Resource" id="W_bw_w_9"]
-script = ExtResource("5_iiw53")
-Blueprint = SubResource("W_bp_w_9")
-Weight = 0.65
-metadata/_custom_type_script = "uid://dau6m811dtep8"
-
-[sub_resource type="Resource" id="W_stats_s_9"]
-script = ExtResource("3_sl6q3")
-MaxHealth = 9
-MoveSpeed = 330.0
-SpriteScaleMultiplier = 0.85
-metadata/_custom_type_script = "uid://y77qtp32wo00"
-
-[sub_resource type="Resource" id="W_bp_s_9"]
-script = ExtResource("4_7c8pb")
-Name = "Sprinter"
-SpriteName = "placeholder"
-Type = 1
-Stats = SubResource("W_stats_s_9")
-
-[sub_resource type="Resource" id="W_bw_s_9"]
-script = ExtResource("5_iiw53")
-Blueprint = SubResource("W_bp_s_9")
-Weight = 0.35
-metadata/_custom_type_script = "uid://dau6m811dtep8"
-
-[sub_resource type="Resource" id="W_bw_big_9"]
-script = ExtResource("5_iiw53")
-Blueprint = ExtResource("11_w2wr7")
+Blueprint = SubResource("Resource_j0071")
 Weight = 0.25
 metadata/_custom_type_script = "uid://dau6m811dtep8"
 
-[sub_resource type="Resource" id="W_col_9"]
+[sub_resource type="Resource" id="Resource_884al"]
+script = ExtResource("3_sl6q3")
+DamageOnContact = 10
+MaxHealth = 400
+MoveSpeed = 385.0
+SpriteScaleMultiplier = 1.4
+metadata/_custom_type_script = "uid://y77qtp32wo00"
+
+[sub_resource type="Resource" id="Resource_ix03f"]
+script = ExtResource("4_7c8pb")
+Name = "Big"
+SpriteName = "placeholder"
+Type = 1
+Stats = SubResource("Resource_884al")
+
+[sub_resource type="Resource" id="Resource_885es"]
+script = ExtResource("5_iiw53")
+Blueprint = SubResource("Resource_ix03f")
+Weight = 0.1
+metadata/_custom_type_script = "uid://dau6m811dtep8"
+
+[sub_resource type="Resource" id="Resource_35lch"]
 script = ExtResource("6_vrw23")
-Weights = Array[Object]([SubResource("W_bw_w_9"), SubResource("W_bw_s_9"), SubResource("W_bw_big_9")])
+Weights = Array[Object]([SubResource("Resource_tgplc"), SubResource("Resource_1jc4q"), SubResource("Resource_885es")])
+
+[sub_resource type="Resource" id="Resource_yk4ca"]
+script = ExtResource("11_ta1oo")
+ItemCount = 6
+RarityLowerGate = 2
+RarityUpperGate = 3
+metadata/_custom_type_script = "uid://b0b1rgkll8se8"
+
+[sub_resource type="Curve" id="Curve_nhio6"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.76112515, 0.56681585), 1.763246, 1.763246, 0, 0, Vector2(0.89288425, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_t7v5b"]
+_data = [Vector2(0.17042851, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -0.711883, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Resource" id="W_wave_8"]
+script = ExtResource("10_ta1oo")
+Duration = 75.0
+MaxMobs = 16384
+EnemyBlueprints = SubResource("Resource_35lch")
+SpawnMinTime = 0.25
+SpawnMaxTime = 0.42
+SpawnTimeCurveOverMaxTime = SubResource("Curve_t7v5b")
+SpawnBatchMax = 3
+SpawnBatchCurveOverMaxTime = SubResource("Curve_nhio6")
+Rewards = Array[ExtResource("7_v38xc")]([SubResource("Resource_yk4ca")])
+metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 
 [sub_resource type="Resource" id="W_wave_9"]
 script = ExtResource("9_duif7")
-SpawnCountTarget = 260
-EnemyBlueprints = SubResource("W_col_9")
+SpawnCountTarget = 315
+EnemyBlueprints = SubResource("Resource_35lch")
 SpawnMinTime = 0.25
 SpawnMaxTime = 0.45
 SpawnBatchMax = 3
 metadata/_custom_type_script = "uid://cksmwvaxx1m18"
-
-[sub_resource type="Resource" id="W_stats_10"]
-script = ExtResource("3_sl6q3")
-DamageOnContact = 14
-MaxHealth = 60
-MoveSpeed = 285.0
-TurnSpeed = 4.0
-metadata/_custom_type_script = "uid://y77qtp32wo00"
-
-[sub_resource type="Resource" id="W_bp_w_10"]
-script = ExtResource("4_7c8pb")
-Name = "Walker"
-SpriteName = "placeholder"
-Type = 1
-Stats = SubResource("W_stats_10")
-
-[sub_resource type="Resource" id="W_bw_w_10"]
-script = ExtResource("5_iiw53")
-Blueprint = SubResource("W_bp_w_10")
-Weight = 0.6
-metadata/_custom_type_script = "uid://dau6m811dtep8"
-
-[sub_resource type="Resource" id="W_stats_s_10"]
-script = ExtResource("3_sl6q3")
-MaxHealth = 10
-MoveSpeed = 335.0
-SpriteScaleMultiplier = 0.85
-metadata/_custom_type_script = "uid://y77qtp32wo00"
-
-[sub_resource type="Resource" id="W_bp_s_10"]
-script = ExtResource("4_7c8pb")
-Name = "Sprinter"
-SpriteName = "placeholder"
-Type = 1
-Stats = SubResource("W_stats_s_10")
-
-[sub_resource type="Resource" id="W_bw_s_10"]
-script = ExtResource("5_iiw53")
-Blueprint = SubResource("W_bp_s_10")
-Weight = 0.4
-metadata/_custom_type_script = "uid://dau6m811dtep8"
-
-[sub_resource type="Resource" id="W_bw_big_10"]
-script = ExtResource("5_iiw53")
-Blueprint = ExtResource("11_w2wr7")
-Weight = 0.3
-metadata/_custom_type_script = "uid://dau6m811dtep8"
-
-[sub_resource type="Resource" id="W_col_10"]
-script = ExtResource("6_vrw23")
-Weights = Array[Object]([SubResource("W_bw_w_10"), SubResource("W_bw_s_10"), SubResource("W_bw_big_10")])
 
 [sub_resource type="Resource" id="Resource_hjcv3"]
 script = ExtResource("13_n7qsj")
@@ -637,25 +658,32 @@ script = ExtResource("14_w70hc")
 _statusEffects = Array[ExtResource("12_0iw8n")]([SubResource("Resource_ovhvh")])
 metadata/_custom_type_script = "uid://catd5vqs68f8g"
 
+[sub_resource type="Resource" id="Resource_nhio6"]
+script = ExtResource("11_ta1oo")
+ItemCount = 9
+RarityLowerGate = 3
+RarityUpperGate = 4
+metadata/_custom_type_script = "uid://b0b1rgkll8se8"
+
 [sub_resource type="Resource" id="W_wave_10"]
 script = ExtResource("10_ta1oo")
 Duration = 90.0
 MaxMobs = 16384
-EnemyBlueprints = SubResource("W_col_10")
-SpawnMinTime = 0.2
-SpawnMaxTime = 0.4
+EnemyBlueprints = SubResource("Resource_35lch")
+SpawnMinTime = 0.15
+SpawnMaxTime = 0.3
 SpawnBatchMax = 4
-Rewards = Array[ExtResource("7_v38xc")]([SubResource("Resource_ms68o")])
+Rewards = Array[ExtResource("7_v38xc")]([SubResource("Resource_ms68o"), SubResource("Resource_nhio6")])
 metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 
 [sub_resource type="Curve" id="Curve_ovhvh"]
-_data = [Vector2(0, 1), 0.0, -3.029897, 0, 0, Vector2(1, 0.038161993), -0.13087428, 0.0, 0, 0]
+_data = [Vector2(0.10266406, 1), 0.0, -3.029897, 0, 0, Vector2(1, 0.038161993), -0.13087428, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Resource" id="Resource_0qe1x"]
 script = ExtResource("9_duif7")
 SpawnCountTarget = 20000
-EnemyBlueprints = SubResource("W_col_10")
+EnemyBlueprints = SubResource("Resource_35lch")
 SpawnMinTime = 0.01
 SpawnMaxTime = 0.05
 SpawnTimeCurveOverMaxTime = SubResource("Curve_ovhvh")
@@ -663,7 +691,7 @@ SpawnBatchMin = 4
 SpawnBatchMax = 8
 metadata/_custom_type_script = "uid://cksmwvaxx1m18"
 
-[sub_resource type="Resource" id="Resource_w2wr7"]
+[sub_resource type="Resource" id="Resource_t7v5b"]
 script = ExtResource("17_faso5")
 FrameName = &"Nav"
 metadata/_custom_type_script = "uid://daw8gyvo0xom3"
@@ -759,7 +787,7 @@ script = ExtResource("17_duif7")
 pickup_scene = ExtResource("18_ta1oo")
 
 [node name="EnemyNavMeshController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="4" unique_id=7126221 instance=ExtResource("16_v38xc")]
-FrameTime = SubResource("Resource_w2wr7")
+FrameTime = SubResource("Resource_t7v5b")
 
 [node name="EnemyMover" type="Node" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="5" unique_id=46792980]
 script = ExtResource("18_duif7")

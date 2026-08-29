@@ -34,12 +34,21 @@ public partial class WaveDebugPanel : CanvasLayer
 			return;
 		FastForward(Input.IsPhysicalKeyPressed(Key.Right));
 		ForceNextWave();
+		if (Input.IsPhysicalKeyPressed(Key.Delete))
+		{
+			var wave = _waveController.CurrentWave as IWaveResettable;
+			wave?.Reset();
+			Logger.LogInfo("Wave reset");
+		}
 	}
 
 	public void Update()
 	{
 		_timeLabel.Text = $"{TimeSpan.FromSeconds(Mathf.RoundToInt(_ticks)):g}";
-		_waveInfo.Text = _waveController.CurrentWave?.ToString();
+		if (OS.HasFeature("prod"))
+			_waveInfo.Text = $"Wave {_waveController.CurrentWaveIndex + 1}";
+		else
+			_waveInfo.Text = _waveController.CurrentWave?.ToString();
 		_waveProgress.Value = 1 - _waveController.CurrentWaveProgress;
 	}
 

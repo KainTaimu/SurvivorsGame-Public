@@ -36,8 +36,6 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if Engine.is_editor_hint():
 		return
-	if OS.has_feature("prod"):
-		return
 	if event.is_action_pressed("ui_cancel"):
 		queue_free()
 

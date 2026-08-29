@@ -8,6 +8,8 @@
 [ext_resource type="Shader" uid="uid://bg3me0bhc4em2" path="res://src/Shaders/vignette.gdshader" id="5_c6sut"]
 [ext_resource type="Shader" uid="uid://bgl0yr4nfmpqx" path="res://src/Shaders/flash.gdshader" id="6_6wc5x"]
 [ext_resource type="PackedScene" uid="uid://okgy2hpbgy53" path="res://scenes/Items/Offensive/M17.tscn" id="7_tvywd"]
+[ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FireGroups/FullAutoFireGroup.cs" id="11_igdhk"]
+[ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="12_7c66e"]
 
 [sub_resource type="Resource" id="Resource_mxkc7"]
 resource_local_to_scene = true
@@ -182,6 +184,16 @@ animations = [{
 "speed": 7.0
 }]
 
+[sub_resource type="Resource" id="Resource_cbfmd"]
+resource_local_to_scene = true
+script = ExtResource("11_igdhk")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_h2f2d"]
+resource_local_to_scene = true
+script = ExtResource("12_7c66e")
+metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_04qcs"]
 resource_local_to_scene = true
 shader = ExtResource("5_c6sut")
@@ -222,6 +234,8 @@ material = SubResource("ShaderMaterial_mxkc7")
 sprite_frames = SubResource("SpriteFrames_tvywd")
 
 [node name="M17" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="0" unique_id=1989500741 instance=ExtResource("7_tvywd")]
+_fireGroup = SubResource("Resource_cbfmd")
+_reloadBehaviour = SubResource("Resource_h2f2d")
 
 [node name="ColorRect" parent="DamageVignette" parent_id_path=PackedInt32Array(758455490) index="0" unique_id=1773597369]
 material = SubResource("ShaderMaterial_04qcs")

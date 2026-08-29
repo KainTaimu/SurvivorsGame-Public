@@ -2,8 +2,13 @@ using Arch.Core;
 
 namespace Game.Levels.Controllers.Waves;
 
+public interface IWaveResettable
+{
+	void Reset();
+}
+
 [GlobalClass]
-public partial class WaveDuration : AbstractWave, IWaveProgress
+public partial class WaveDuration : AbstractWave, IWaveProgress, IWaveResettable
 {
 	[Export]
 	public double Duration = 30;
@@ -82,6 +87,11 @@ public partial class WaveDuration : AbstractWave, IWaveProgress
 			return;
 		foreach (var reward in Rewards)
 			reward.GiveReward();
+	}
+
+	public void Reset()
+	{
+		_waveTimeLeft = Duration;
 	}
 
 	private float GetRandomSpawnTime()

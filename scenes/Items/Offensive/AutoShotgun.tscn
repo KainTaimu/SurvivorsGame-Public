@@ -23,7 +23,7 @@ metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 script = ExtResource("4_2ovbf")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_dar1o"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_r2gx2"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_j05a4"]
@@ -45,13 +45,13 @@ VerticalBaseRecoil = 80.0
 VerticalRecoilRandom = 40.0
 RecoilScale = 0.5
 CameraRecoilScale = 2.0
-BaseDamage = 8
+BaseDamage = 16
 BaseCritDamageMultiplier = 1.0
-BaseCritChanceProportion = 0.3
+BaseCritChanceProportion = 0.5
 BaseProjectileSpeed = 2200
 BaseProjectileScaleMultiplier = 0.8
 BaseAttackSpeed = 0.3
-BasePierceLimit = 4
+BasePierceLimit = 5
 Additional = Dictionary[String, Variant]({
 "PelletCount": 16
 })

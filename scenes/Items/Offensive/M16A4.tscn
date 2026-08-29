@@ -38,7 +38,7 @@ metadata/_custom_type_script = "uid://8rt54h4imtxv"
 [sub_resource type="Resource" id="Resource_2fu6x"]
 script = ExtResource("6_ppa22")
 ReloadTime = 1.2
-BloomCoefficientDeg = 4.0
+BloomCoefficientDeg = 7.0
 HorizontalRecoilMin = 2.0
 HorizontalBaseRecoil = 4.0
 HorizontalRecoilRandom = 2.0
@@ -77,7 +77,7 @@ Stats = SubResource("Resource_2fu6x")
 process_mode = 3
 stream = ExtResource("7_xm6od")
 max_polyphony = 3
-bus = &"ShootSfxNoCompress"
+bus = &"ShootSfxNoDistortion"
 
 [node name="Reload" type="AudioStreamPlayer" parent="." unique_id=1204958426]
 stream = ExtResource("8_bdsgl")

@@ -6,8 +6,8 @@
 [sub_resource type="Resource" id="Resource_pw3c2"]
 script = ExtResource("1_qsasf")
 DamageOnContact = 10
-MaxHealth = 50
-MoveSpeed = 200.0
+MaxHealth = 150
+MoveSpeed = 300.0
 SpriteScaleMultiplier = 1.3
 metadata/_custom_type_script = "uid://y77qtp32wo00"
 

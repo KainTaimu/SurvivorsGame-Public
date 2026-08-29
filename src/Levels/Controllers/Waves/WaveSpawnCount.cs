@@ -3,7 +3,7 @@ using Arch.Core;
 namespace Game.Levels.Controllers.Waves;
 
 [GlobalClass]
-public partial class WaveSpawnCount : AbstractWave, IWaveProgress
+public partial class WaveSpawnCount : AbstractWave, IWaveProgress, IWaveResettable
 {
 	[Export]
 	public int SpawnCountTarget = 30;
@@ -76,6 +76,11 @@ public partial class WaveSpawnCount : AbstractWave, IWaveProgress
 			return;
 		foreach (var reward in Rewards)
 			reward.GiveReward();
+	}
+
+	public void Reset()
+	{
+		_spawnedEntitiesCount = 0;
 	}
 
 	private float GetRandomSpawnTime()
