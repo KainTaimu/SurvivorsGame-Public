@@ -57,6 +57,8 @@ public partial class WaveSpawnCount : AbstractWave, IWaveProgress, IWaveResettab
 	{
 		if (Spawner is null)
 			return;
+		if (SpawnedEntities.Count >= GameWorld.MAX_ECS_ENTITIES)
+			return;
 
 		var bp = EnemyBlueprints.GetBlueprint();
 		var id = Spawner.SpawnEnemy(bp);

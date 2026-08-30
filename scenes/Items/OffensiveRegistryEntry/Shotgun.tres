@@ -10,7 +10,7 @@ size = Vector2(32, 32)
 [sub_resource type="Resource" id="Resource_7uni7"]
 script = ExtResource("1_2u22i")
 Name = "M870"
-Description = ""
+Description = "Pump-action shotgun"
 ItemIcon = SubResource("PlaceholderTexture2D_urkig")
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 

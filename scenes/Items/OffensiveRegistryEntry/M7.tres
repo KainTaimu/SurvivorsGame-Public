@@ -10,6 +10,7 @@ size = Vector2(32, 32)
 [sub_resource type="Resource" id="Resource_hrh27"]
 script = ExtResource("1_1h3fq")
 Name = "M7"
+Description = "A rare suppressed battle rifle firing a large 6.8x51 cartridge."
 ItemIcon = SubResource("PlaceholderTexture2D_i0gs0")
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 

@@ -2,14 +2,17 @@
 
 [ext_resource type="Script" uid="uid://ciyr8n0mao26x" path="res://src/UI/WeaponItem.cs" id="1_e7aue"]
 [ext_resource type="LabelSettings" uid="uid://cu65p2lbgxmhg" path="res://scenes/UI/WeaponCarouselLabelSettings.tres" id="2_1c2hh"]
+[ext_resource type="FontFile" uid="uid://dy6ifhm3j1k7n" path="res://assets/Fonts/NotoSansMono_Condensed-Bold.ttf" id="2_x8dux"]
 
 [node name="WeaponCarouselItem" type="VBoxContainer" unique_id=1184841960 node_paths=PackedStringArray("SelectedCaret", "WeaponName")]
+theme_override_constants/separation = 0
 script = ExtResource("1_e7aue")
 SelectedCaret = NodePath("SelectedCaret")
 WeaponName = NodePath("WeaponName")
 
 [node name="SelectedCaret" type="Label" parent="." unique_id=363378440]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_x8dux")
 text = "⌄"
 label_settings = ExtResource("2_1c2hh")
 horizontal_alignment = 1

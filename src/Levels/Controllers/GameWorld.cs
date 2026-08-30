@@ -14,6 +14,8 @@ public partial class GameWorld : Node
 
 	public static World World { get; private set; } = null!;
 
+	public const int MAX_ECS_ENTITIES = 16_384; // 2^14
+
 	public override void _EnterTree()
 	{
 		World = World.Create(entityCapacity: 16_384);

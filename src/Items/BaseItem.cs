@@ -13,9 +13,6 @@ public abstract partial class BaseItem : Node
 	public delegate void OnStatUpgradesChangedEventHandler();
 
 	[Export]
-	public BaseItemProperties Properties = null!;
-
-	[Export]
 	public BaseItemStats Stats
 	{
 		get;

@@ -13,9 +13,6 @@ public partial class WaveDuration : AbstractWave, IWaveProgress, IWaveResettable
 	[Export]
 	public double Duration = 30;
 
-	[Export]
-	public uint MaxMobs = 50;
-
 	public float Progress => (float)(_waveTimeLeft / Duration);
 
 	private double _waveTimeLeft;
@@ -67,7 +64,7 @@ public partial class WaveDuration : AbstractWave, IWaveProgress, IWaveResettable
 	{
 		if (Spawner is null)
 			return;
-		if (WaveController.Alive >= MaxMobs)
+		if (SpawnedEntities.Count >= GameWorld.MAX_ECS_ENTITIES)
 			return;
 
 		var bp = EnemyBlueprints.GetBlueprint();

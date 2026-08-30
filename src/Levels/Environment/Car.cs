@@ -13,6 +13,9 @@ public partial class Car : Node2D, IDestructable
 	[Export]
 	private int _explosionRadius = 512;
 
+	[Export]
+	private int _cameraShakeScale = 5;
+
 	[ExportGroup("Internal")]
 	[Export]
 	private PackedScene _explosionScene = null!;
@@ -53,6 +56,7 @@ public partial class Car : Node2D, IDestructable
 		var data = new Dictionary<StringName, Variant>() { { "position", Position } };
 		EnvironmentFxManager.PlaySfx("car_explosion", data);
 		EnvironmentFxManager.PlayVfx("car_explosion", data);
+		OffensiveEffects.ApplyCameraShake(_cameraShakeScale, GetViewport, CreateTween);
 
 		_debugPolygon.Color = Colors.DimGray;
 		_body.ProcessMode = ProcessModeEnum.Disabled;

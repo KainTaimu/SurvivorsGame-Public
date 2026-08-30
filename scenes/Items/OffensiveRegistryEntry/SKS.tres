@@ -10,6 +10,7 @@ size = Vector2(32, 32)
 [sub_resource type="Resource" id="Resource_yjyde"]
 script = ExtResource("1_8wdil")
 Name = "SKS"
+Description = "The SKS is a semi-automatic carbine chambered in the 7.62x39 round. Uses an internal 10-round box magazine. Cheaply made, and mass-produced, it is commonly used for hunting and going on scav runs."
 ItemIcon = SubResource("PlaceholderTexture2D_lm52v")
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 

@@ -34,6 +34,13 @@ public static class OffensiveEffects
 		GameWorld.World.Set(entity, hit);
 	}
 
+	/// <summary>
+	/// Shakes the camera by shakeAmount
+	/// </summary>
+	/// <param name="shakeAmount">The scale at which the camera shakes. A value of 1 is the base amount of shake</param>
+	/// <param name="getViewport">A function that returns a Viewport. OffensiveEffects is a static class so it
+	/// cannot access the Viewport on its own</param>
+	/// <param name="getTween">A function that returns a Tween bound to the Node calling ApplyCameraShake</param>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void ApplyCameraShake(float shakeAmount, Func<Viewport> getViewport, Func<Tween> getTween)
 	{

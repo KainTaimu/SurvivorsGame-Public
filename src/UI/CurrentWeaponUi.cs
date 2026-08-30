@@ -1,6 +1,9 @@
 using System;
+using System.Linq;
+using Game.Items;
 using Game.Items.Offensive;
 using Game.Players.Controllers;
+using YARD;
 
 namespace Game.UI;
 
@@ -20,6 +23,16 @@ public partial class CurrentWeaponUi : CanvasLayer
 
 	[Export]
 	private Label _secondaryWeaponAmmo = null!;
+
+	[Export]
+	private StringName _weaponRegistryPath = new("uid://cafl4rhi4lyju");
+
+	private static Registry<Resource> _registry = null!;
+
+	public override void _EnterTree()
+	{
+		_registry = new Registry<Resource>(GD.Load(_weaponRegistryPath));
+	}
 
 	public override void _Ready()
 	{
@@ -120,12 +133,28 @@ public partial class CurrentWeaponUi : CanvasLayer
 			{
 				if (_weaponCarousel.GetChild(i) is not WeaponItem weaponItem)
 					continue;
-				weaponItem.WeaponName.Text = weapon.Properties.Name;
+
+				// HACK HACK
+				var weaponScene = GD.Load<PackedScene>(weapon.SceneFilePath);
+				var stringId = _registry.Filter("scene", weaponScene).SingleOrDefault();
+				if (stringId is null)
+				{
+					Logger.LogError(
+						$"no entry with property \"scene\" matches SceneFilePath \"{weapon.SceneFilePath}\""
+					);
+					return;
+				}
+
+				// entry is a OffensiveRegistryEntry
+				var entry = _registry.LoadEntry(stringId);
+				var properties = (BaseItemProperties)entry.Get("properties");
+				weaponItem.WeaponName.Text = properties.Name;
 
 				if (_weaponController.PrimaryAttack == weapon)
 				{
+					// Must use VisibleRatio, Setting Visible property breaks the VBoxContainer of the WeaponItem
 					weaponItem.SelectedCaret.VisibleRatio = 1;
-					weaponItem.SelectedCaret.Text = "1";
+					weaponItem.SelectedCaret.Text = "⌄";
 					weaponItem.WeaponName.LabelSettings.FontColor = Colors.White;
 				}
 				else

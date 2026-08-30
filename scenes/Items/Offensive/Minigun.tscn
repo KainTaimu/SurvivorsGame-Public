@@ -7,8 +7,8 @@
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="3_hfpx8"]
 [ext_resource type="Script" uid="uid://bdk4fdcqvypav" path="res://src/Players/Controllers/StatusEffect.cs" id="3_hoxu3"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_m53d4"]
-[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="4_qugsk"]
 [ext_resource type="AudioStream" uid="uid://cfq4doprbtei8" path="res://assets/SFX/Shoot/762x54r Single Isolated MP3.mp3" id="5_wkwsw"]
+[ext_resource type="Script" uid="uid://bs6wg1qssruhv" path="res://src/Items/Offensive/EnemyHitEffects/AbstractEnemyHitEffect.cs" id="7_1j5om"]
 
 [sub_resource type="Resource" id="Resource_m53d4"]
 script = ExtResource("4_m53d4")
@@ -18,7 +18,7 @@ metadata/_custom_type_script = "uid://dpq42sefws67v"
 script = ExtResource("2_oxxwr")
 StatName = 3
 Operation = 1
-Value = 0.5
+Value = 0.6
 metadata/_custom_type_script = "uid://d31d8uns5faa5"
 
 [sub_resource type="Resource" id="Resource_6etis"]
@@ -36,15 +36,6 @@ _limits = [0.0, 0.5, 0.0, 3.0]
 _data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(3, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_dar1o"]
-size = Vector2(32, 32)
-
-[sub_resource type="Resource" id="Resource_y2vvo"]
-script = ExtResource("4_qugsk")
-Name = "M134 Minigun"
-Description = "A heavy 6-barrel rotary machine gun firing high-velocity penetrating rounds. Takes some time to spool up before firing a barrage of bullets at ~5400RPM"
-metadata/_custom_type_script = "uid://8rt54h4imtxv"
-
 [sub_resource type="Resource" id="Resource_6kirf"]
 script = ExtResource("3_hfpx8")
 ReloadTime = 1.0
@@ -56,18 +47,19 @@ HorizontalRecoilRandom = 50.0
 VerticalRecoilMin = 15.0
 VerticalBaseRecoil = 15.0
 VerticalRecoilRandom = 15.0
-RecoilScale = 0.15
+RecoilScale = 0.1
 CameraRecoilScale = 0.9
-BaseDamage = 5
+BaseDamage = 50
+BaseDamageVarianceMultiplier = 0.2
 BaseCritChanceProportion = 0.0
 BaseProjectileSpeed = 6000
 BaseProjectileScaleMultiplier = 0.8
 BaseProjectileRadius = 30
 BaseAttackSpeed = 0.025
-BasePierceLimit = 5
+BasePierceLimit = 6
 Additional = Dictionary[String, Variant]({
 "Knockback": 10.0,
-"PlayerPushPerShot": 1700.0
+"PlayerPushPerShot": 500.0
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
@@ -77,7 +69,6 @@ _projectileScene = ExtResource("2_6kirf")
 _projectileAttack = SubResource("Resource_m53d4")
 _movementPenaltyStatusEffect = SubResource("Resource_6etis")
 _windupCurve = SubResource("Curve_e6too")
-Properties = SubResource("Resource_y2vvo")
 Stats = SubResource("Resource_6kirf")
 
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=1297129913]

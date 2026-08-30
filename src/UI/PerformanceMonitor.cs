@@ -19,6 +19,9 @@ public partial class PerformanceMonitor : CanvasLayer
 	private PackedScene _labelScene = null!;
 
 	[Export]
+	private Label? _fpsLabel;
+
+	[Export]
 	private RichTextLabel? _staticMemLabel;
 
 	[Export]

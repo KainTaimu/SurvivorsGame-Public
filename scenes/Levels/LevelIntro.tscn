@@ -22,6 +22,7 @@
 [ext_resource type="Script" uid="uid://daw8gyvo0xom3" path="res://src/UI/FrameTime.cs" id="17_faso5"]
 [ext_resource type="Script" uid="uid://bct2mtni7a82f" path="res://src/Levels/Controllers/EnemyMover.cs" id="18_duif7"]
 [ext_resource type="PackedScene" uid="uid://c8vjoa3wtku3l" path="res://scenes/UI/PickupUi.tscn" id="18_ta1oo"]
+[ext_resource type="Theme" uid="uid://cwyp7j6g53bhf" path="res://resources/UiThemes/NormalUi.tres" id="23_w2wr7"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ta1oo"]
 vertices = PackedVector2Array(8759, 1872, 17279.117, 10351.93, -3112.8516, 10320.0625, 5951, 1872, 17342.867, -10071.93, 8607, -1104, -3041.1406, -10040.0625, 5879, -1080)
@@ -67,7 +68,7 @@ ItemCount = 3
 RarityUpperGate = 1
 metadata/_custom_type_script = "uid://b0b1rgkll8se8"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ta1oo"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w2wr7"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_a1e6u"]
@@ -179,7 +180,6 @@ metadata/_custom_type_script = "uid://catd5vqs68f8g"
 [sub_resource type="Resource" id="W_wave_2"]
 script = ExtResource("10_ta1oo")
 Duration = 60.0
-MaxMobs = 16384
 EnemyBlueprints = SubResource("W_col_2")
 SpawnMinTime = 0.77
 SpawnMaxTime = 1.16
@@ -309,7 +309,6 @@ point_count = 3
 [sub_resource type="Resource" id="W_wave_4"]
 script = ExtResource("10_ta1oo")
 Duration = 60.0
-MaxMobs = 16384
 EnemyBlueprints = SubResource("W_col_4")
 SpawnMinTime = 0.45
 SpawnMaxTime = 0.85
@@ -447,7 +446,6 @@ metadata/_custom_type_script = "uid://b0b1rgkll8se8"
 [sub_resource type="Resource" id="W_wave_6"]
 script = ExtResource("10_ta1oo")
 Duration = 70.0
-MaxMobs = 16384
 EnemyBlueprints = SubResource("W_col_6")
 SpawnMinTime = 0.36
 SpawnMaxTime = 0.5
@@ -620,7 +618,6 @@ point_count = 2
 [sub_resource type="Resource" id="W_wave_8"]
 script = ExtResource("10_ta1oo")
 Duration = 75.0
-MaxMobs = 16384
 EnemyBlueprints = SubResource("Resource_35lch")
 SpawnMinTime = 0.25
 SpawnMaxTime = 0.42
@@ -651,12 +648,26 @@ StatName = 6
 Value = 9999999.0
 metadata/_custom_type_script = "uid://d31d8uns5faa5"
 
+[sub_resource type="Resource" id="Resource_6etis"]
+script = ExtResource("13_n7qsj")
+StatName = 3
+Operation = 1
+Value = 2.0
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_xuljg"]
+script = ExtResource("13_n7qsj")
+StatName = 18
+Operation = 1
+Value = 6.0
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
 [sub_resource type="Resource" id="Resource_ovhvh"]
 script = ExtResource("12_0iw8n")
 Name = "Fear"
 Cause = 3
 Permanent = true
-Modifiers = Array[ExtResource("13_n7qsj")]([SubResource("Resource_hjcv3"), SubResource("Resource_uo14t")])
+Modifiers = Array[ExtResource("13_n7qsj")]([SubResource("Resource_hjcv3"), SubResource("Resource_uo14t"), SubResource("Resource_6etis"), SubResource("Resource_xuljg")])
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
 [sub_resource type="Resource" id="Resource_ms68o"]
@@ -674,7 +685,6 @@ metadata/_custom_type_script = "uid://b0b1rgkll8se8"
 [sub_resource type="Resource" id="W_wave_10"]
 script = ExtResource("10_ta1oo")
 Duration = 90.0
-MaxMobs = 16384
 EnemyBlueprints = SubResource("Resource_35lch")
 SpawnMinTime = 0.15
 SpawnMaxTime = 0.3
@@ -688,7 +698,7 @@ point_count = 2
 
 [sub_resource type="Resource" id="Resource_0qe1x"]
 script = ExtResource("9_duif7")
-SpawnCountTarget = 20000
+SpawnCountTarget = 16384
 EnemyBlueprints = SubResource("Resource_35lch")
 SpawnMinTime = 0.01
 SpawnMaxTime = 0.05
@@ -710,6 +720,21 @@ func _on_button_up() -> void:
 	var wpn_ctrlr := player.WeaponController as Node
 	for child in wpn_ctrlr.get_children():
 		child.queue_free()
+"
+
+[sub_resource type="GDScript" id="GDScript_ogoab"]
+script/source = "extends CanvasLayer
+
+@export var fps_label: Label
+
+
+func _ready() -> void:
+	if !OS.has_feature(\"prod\"):
+		queue_free()
+
+
+func update() -> void:
+	fps_label.text = \"FPS: %s\" % roundi(Performance.get_monitor(Performance.TIME_FPS))
 "
 
 [node name="Level" unique_id=2141389114 instance=ExtResource("1_dtsfe")]
@@ -801,7 +826,7 @@ script = ExtResource("18_duif7")
 [node name="EnemyRenderer" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="8" unique_id=1054443393]
 RenderDistanceFactor = 1.1
 
-[node name="Button" type="Button" parent="UI/PauseMenu" parent_id_path=PackedInt32Array(1937596238) index="4" unique_id=1421843558]
+[node name="Button2" type="Button" parent="UI/PauseMenu" parent_id_path=PackedInt32Array(1937596238) index="4" unique_id=1421843558]
 offset_right = 8.0
 offset_bottom = 8.0
 text = "CLEAR WEAPONS"
@@ -810,4 +835,24 @@ script = SubResource("GDScript_do71q")
 [node name="PerformanceMonitor" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="3" unique_id=1872396024 node_paths=PackedStringArray("Targets")]
 Targets = [NodePath("../../Systems/EnemySystems/EnemyRenderer"), NodePath("../../Systems/EnemySystems/EnemyTargetQuery"), NodePath("../../Systems/EnemySystems/EnemyNavMeshController")]
 
-[connection signal="button_up" from="UI/PauseMenu/Button" to="UI/PauseMenu/Button" method="_on_button_up"]
+[node name="SimpleFps" type="CanvasLayer" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="4" unique_id=440619980 node_paths=PackedStringArray("fps_label")]
+script = SubResource("GDScript_ogoab")
+fps_label = NodePath("Label")
+
+[node name="Label" type="Label" parent="UI/SimpleFps" index="0" unique_id=1702484712]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 19.0
+grow_horizontal = 0
+theme = ExtResource("23_w2wr7")
+theme_override_font_sizes/font_size = 24
+text = "FPS"
+
+[node name="Timer" type="Timer" parent="UI/SimpleFps" index="1" unique_id=1138991249]
+autostart = true
+ignore_time_scale = true
+
+[connection signal="button_up" from="UI/PauseMenu/Button2" to="UI/PauseMenu/Button2" method="_on_button_up"]
+[connection signal="timeout" from="UI/SimpleFps/Timer" to="UI/SimpleFps" method="update"]

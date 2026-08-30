@@ -80,14 +80,14 @@ func _assign_item_recurse(arr: Array[ItemShowcase], weapons: Array[Resource], re
 		CustomLogger.log_error("expected BaseItemStats. got %s" % typeof(stats))
 		return
 
-	var props := _get_property_from_scene(entry.scene, "Properties") as BaseItemProperties
+	var props := entry.properties
 	if props == null:
 		CustomLogger.log_error("expected BaseItemProperties. got %s" % typeof(props))
 
 	# BUG: This sometimes causes an invalid property access crash
 	showcase.assign_item.call_deferred(entry.scene, props, stats)
 
-	get_tree().create_timer(0.05, true, false, true).timeout.connect(
+	get_tree().create_timer(0.025, true, false, true).timeout.connect(
 		_assign_item_recurse.bind(
 			arr,
 			weapons,

@@ -91,9 +91,9 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 	{
 		if (Input.IsPhysicalKeyPressed(Key.Ctrl))
 			return;
-		if (Input.IsActionPressed(InputMapNames.NextWeapon))
+		if (@event.IsActionPressed(InputMapNames.NextWeapon))
 			NextWeapon();
-		else if (Input.IsActionPressed(InputMapNames.PreviousWeapon))
+		else if (@event.IsActionPressed(InputMapNames.PreviousWeapon))
 			PreviousWeapon();
 	}
 

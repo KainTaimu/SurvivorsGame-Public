@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/FireGroups/SemiAutoFireGroup.cs" id="3_fgf34"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_fgf34"]
 [ext_resource type="Script" uid="uid://cx3rrg2toydba" path="res://src/Items/Offensive/ReloadBehaviours/SequentialReloadBehaviour.cs" id="4_y3hip"]
-[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="5_0u5yb"]
+[ext_resource type="Script" uid="uid://bs6wg1qssruhv" path="res://src/Items/Offensive/EnemyHitEffects/AbstractEnemyHitEffect.cs" id="6_n3sky"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_y3hip"]
 [ext_resource type="AudioStream" uid="uid://hbmq8g2asy5h" path="res://assets/SFX/Shoot/python/python_r1.wav" id="7_0u5yb"]
 [ext_resource type="AudioStream" uid="uid://ckwromhv1tpvg" path="res://assets/SFX/Shoot/Snake's SECOND Authentic Gun Sounds/& More/Revolver/44 Magnum/MP3/44 Magnum Single Load.mp3" id="9_fgf34"]
@@ -28,15 +28,6 @@ metadata/_custom_type_script = "uid://cx3rrg2toydba"
 script = ExtResource("4_fgf34")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_d1d18"]
-size = Vector2(32, 32)
-
-[sub_resource type="Resource" id="Resource_y3hip"]
-script = ExtResource("5_0u5yb")
-Name = "Python"
-Description = "A 6-cylinder revolver. Offers high-damage and good penetrability for low bullet count and a lengthy reload time"
-metadata/_custom_type_script = "uid://8rt54h4imtxv"
-
 [sub_resource type="Resource" id="Resource_n3sky"]
 script = ExtResource("6_y3hip")
 ReloadTime = 3.0
@@ -51,7 +42,7 @@ VerticalRecoilRandom = 20.0
 RecoilScale = 0.6
 HorizontalRecoilPunish = false
 CameraRecoilScale = 1.2
-BaseDamage = 20
+BaseDamage = 15
 BaseDamageVarianceMultiplier = 0.15
 BaseCritDamageMultiplier = 1.0
 BaseCritChanceProportion = 0.5
@@ -74,7 +65,6 @@ _reloadBehaviour = SubResource("Resource_gs3iu")
 _projectileAttack = SubResource("Resource_dar1o")
 _reloadAudioPlayer = NodePath("RoundLoadAudioPlayer")
 _boltCloseAudioPlayer = NodePath("BoltAudioPlayer")
-Properties = SubResource("Resource_y3hip")
 Stats = SubResource("Resource_n3sky")
 
 [node name="ShootAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=1706054987]

@@ -56,26 +56,6 @@ public abstract partial class BaseOffensive : BaseItem
 	// ReSharper disable once InconsistentNaming
 	protected abstract void HandleHitECS(Entity entity);
 
-	public bool TryUpgrade()
-	{
-		Logger.LogWarning("Attempted to upgrade past max level");
-		var incrementLevel = Properties.CurrentLevel + 1;
-		if (incrementLevel > Upgrades.Count)
-			return false;
-
-		Upgrade(Properties.CurrentLevel);
-		return true;
-	}
-
-	private void Upgrade(int newLevel)
-	{
-		var upgrade = Upgrades[newLevel];
-		Properties.CurrentLevel++;
-		Logger.LogDebug($"Upgraded {Properties.Name} to {Properties.CurrentLevel + 1}");
-		Stats = upgrade;
-		PostUpgrade(newLevel);
-	}
-
 	protected int CalculateCrit()
 	{
 		var roll = GD.Randf();

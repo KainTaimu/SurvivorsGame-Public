@@ -4,6 +4,8 @@
 [ext_resource type="Shader" uid="uid://cjavr4nj3ysk" path="res://src/Shaders/bw.gdshader" id="2_avwb0"]
 [ext_resource type="LabelSettings" uid="uid://c0lq4rqaj62dx" path="res://scenes/UI/SettingsLabelSettings.tres" id="3_avwb0"]
 [ext_resource type="PackedScene" uid="uid://d226hpep613tv" path="res://scenes/UI/Settings.tscn" id="5_73e60"]
+[ext_resource type="Theme" uid="uid://cwyp7j6g53bhf" path="res://resources/UiThemes/NormalUi.tres" id="5_onjwa"]
+[ext_resource type="FontFile" uid="uid://dy6ifhm3j1k7n" path="res://assets/Fonts/NotoSansMono_Condensed-Bold.ttf" id="6_onjwa"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_73e60"]
 shader = ExtResource("2_avwb0")
@@ -69,6 +71,44 @@ func on_click() -> void:
 func quit_game() -> void:
 	get_tree().quit()
 "
+
+[sub_resource type="GDScript" id="GDScript_73e60"]
+script/source = "extends Button
+
+@export var panel: Control
+@export var label_container: Node
+
+@export var font: FontFile
+var toggle: bool
+
+const licenses_dir: String = \"res://assets/Licenses/\"
+
+
+func _ready() -> void:
+	panel.hide()
+	var files := DirAccess.get_files_at(licenses_dir)
+	for file in files:
+		if not file.ends_with(\".txt\"):
+			continue
+		var path := \"%s%s\" % [licenses_dir, file]
+		var label := Label.new()
+		label.add_theme_font_override(\"font\", font)
+		label.text = \"%s\\n%s\\n\" % [file, FileAccess.open(path, FileAccess.READ).get_as_text()]
+		label_container.add_child(label)
+
+
+func _on_button_up() -> void:
+	toggle = !toggle
+	set_pressed_no_signal(toggle)
+	panel.visible = toggle
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_73e60"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
 
 [node name="PauseMenu" type="CanvasLayer" unique_id=1796089998]
 process_mode = 3
@@ -185,4 +225,50 @@ text = "QUIT"
 script = SubResource("GDScript_ogoab")
 timeout_seconds = 3.0
 
+[node name="LicenseButton" type="Button" parent="." unique_id=1870882989 node_paths=PackedStringArray("panel", "label_container")]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -27.0
+offset_right = 57.0
+grow_vertical = 0
+theme = ExtResource("5_onjwa")
+theme_type_variation = &"gray_button"
+toggle_mode = true
+text = "LICENSES"
+script = SubResource("GDScript_73e60")
+panel = NodePath("PanelContainer")
+label_container = NodePath("PanelContainer/ScrollContainer/MarginContainer/VBoxContainer")
+font = ExtResource("6_onjwa")
+
+[node name="PanelContainer" type="PanelContainer" parent="LicenseButton" unique_id=411265439]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 157.5
+offset_top = -956.0
+offset_right = 1693.5
+offset_bottom = -92.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_73e60")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="LicenseButton/PanelContainer" unique_id=219438693]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="LicenseButton/PanelContainer/ScrollContainer" unique_id=1199900099]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LicenseButton/PanelContainer/ScrollContainer/MarginContainer" unique_id=602267572]
+layout_mode = 2
+
 [connection signal="button_down" from="RightPanel/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Button" to="RightPanel/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Button" method="on_click"]
+[connection signal="button_up" from="LicenseButton" to="LicenseButton" method="_on_button_up"]

@@ -14,7 +14,7 @@ public partial class EnemyMover : Node
 
 	public override void _UnhandledKeyInput(InputEvent @event)
 	{
-		if (Input.IsActionJustPressed("DISABLE_ENEMY_MOVEMENT"))
+		if (@event.IsActionPressed("DISABLE_ENEMY_MOVEMENT"))
 			Enabled = !Enabled;
 	}
 
