@@ -311,6 +311,7 @@ script = ExtResource("10_ta1oo")
 Duration = 60.0
 MaxMobs = 16384
 EnemyBlueprints = SubResource("W_col_4")
+SpawnMinTime = 0.45
 SpawnMaxTime = 0.85
 SpawnTimeCurveOverMaxTime = SubResource("Curve_w2wr7")
 SpawnBatchMax = 2
@@ -374,12 +375,17 @@ metadata/_custom_type_script = "uid://b0b1rgkll8se8"
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.4209392, 0.29309773), 0.69629467, 0.0, 1, 0, Vector2(0.5037699, 1), 0.0, 0.0, 0, 1, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 4
 
+[sub_resource type="Curve" id="Curve_ghrcs"]
+_data = [Vector2(0.1658627, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="Resource" id="W_wave_5"]
 script = ExtResource("9_duif7")
-SpawnCountTarget = 250
+SpawnCountTarget = 300
 EnemyBlueprints = SubResource("W_col_5")
 SpawnMinTime = 0.4
 SpawnMaxTime = 0.8
+SpawnTimeCurveOverMaxTime = SubResource("Curve_ghrcs")
 SpawnBatchMax = 2
 SpawnBatchCurveOverMaxTime = SubResource("Curve_0iw8n")
 Rewards = Array[ExtResource("7_v38xc")]([SubResource("Resource_e3ubm")])
@@ -444,7 +450,7 @@ Duration = 70.0
 MaxMobs = 16384
 EnemyBlueprints = SubResource("W_col_6")
 SpawnMinTime = 0.36
-SpawnMaxTime = 0.63
+SpawnMaxTime = 0.5
 SpawnBatchMax = 2
 Rewards = Array[ExtResource("7_v38xc")]([SubResource("Resource_mkf0n")])
 metadata/_custom_type_script = "uid://b7ol6jtjagoe"
@@ -512,17 +518,17 @@ metadata/_custom_type_script = "uid://b0b1rgkll8se8"
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5037699, 0.5323275), 0.7941269, 0.7941269, 0, 0, Vector2(0.89288425, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 4
 
-[sub_resource type="Curve" id="Curve_ghrcs"]
+[sub_resource type="Curve" id="Curve_w70hc"]
 _data = [Vector2(0.0030827597, 1), 0.0, -2.5656261, 0, 0, Vector2(1, 0), -0.31027502, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Resource" id="W_wave_7"]
 script = ExtResource("9_duif7")
-SpawnCountTarget = 500
+SpawnCountTarget = 1000
 EnemyBlueprints = SubResource("W_col_7")
 SpawnMinTime = 0.35
-SpawnMaxTime = 0.6
-SpawnTimeCurveOverMaxTime = SubResource("Curve_ghrcs")
+SpawnMaxTime = 0.5
+SpawnTimeCurveOverMaxTime = SubResource("Curve_w70hc")
 SpawnBatchMax = 2
 SpawnBatchCurveOverMaxTime = SubResource("Curve_n7qsj")
 Rewards = Array[ExtResource("7_v38xc")]([SubResource("Resource_ap6c5")])
@@ -791,6 +797,9 @@ FrameTime = SubResource("Resource_t7v5b")
 
 [node name="EnemyMover" type="Node" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="5" unique_id=46792980]
 script = ExtResource("18_duif7")
+
+[node name="EnemyRenderer" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="8" unique_id=1054443393]
+RenderDistanceFactor = 1.1
 
 [node name="Button" type="Button" parent="UI/PauseMenu" parent_id_path=PackedInt32Array(1937596238) index="4" unique_id=1421843558]
 offset_right = 8.0

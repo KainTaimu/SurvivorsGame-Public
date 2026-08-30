@@ -10,35 +10,27 @@ public partial class PauseMenu : CanvasLayer
 
 	public override void _Input(InputEvent @event)
 	{
-		if (@event is InputEventKey { Pressed: true } keyEvent)
-		{
-			switch (keyEvent.Keycode)
-			{
-				case Key.Escape:
-					ToggleShow();
-					break;
-			}
-		}
+		if (Input.IsActionJustPressed(InputMapNames.UiCancel))
+			ToggleShow();
 	}
 
 	private void ToggleShow()
 	{
 		var isPaused = PauseController.Instance.IsPaused;
 
-		PauseController.Instance.Lock(this);
 		switch (!isPaused)
 		{
 			case true:
 				Show();
+				PauseController.Instance.Lock(this);
 				PauseController.Instance.Pause(this);
 				break;
 
 			case false:
 				Hide();
 				PauseController.Instance.Unpause(this);
+				PauseController.Instance.Unlock(this);
 				break;
 		}
-
-		PauseController.Instance.Unlock(this);
 	}
 }

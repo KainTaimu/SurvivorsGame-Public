@@ -13,4 +13,5 @@ public static class InputMapNames
 	public static StringName Interact { get; } = "interact";
 	public static StringName NextWeapon { get; } = "next_weapon";
 	public static StringName PreviousWeapon { get; } = "previous_weapon";
+	public static readonly StringName UiCancel = "ui_cancel";
 }

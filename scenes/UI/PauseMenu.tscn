@@ -14,7 +14,6 @@ shader_parameter/saturation = 1.0
 [sub_resource type="GDScript" id="GDScript_do71q"]
 script/source = "extends Label
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var actions := InputMap.get_actions()
@@ -22,11 +21,14 @@ func _ready() -> void:
 		if action.begins_with(\"ui_\"):
 			continue
 		var events := InputMap.action_get_events(action)
-		var key := events[0] as InputEventKey
-		if key == null:
-			continue
-		text = \"%s\\n%s = %s\" % [text, action, key.as_text_physical_keycode()]
-	pass # Replace with function body.
+		var event := events[0]
+		
+		if event is InputEventKey:
+			var key := events[0] as InputEventKey
+			text = \"%s\\n%s = %s\" % [text, action, key.as_text_physical_keycode()]
+		elif event is InputEventMouseButton:
+			var btn := events[0] as InputEventMouseButton
+			text = \"%s\\n%s = %s\" % [text, action, btn.as_text()]
 "
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_do71q"]

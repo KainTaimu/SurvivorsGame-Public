@@ -12,7 +12,7 @@ public partial class PauseController : Node
 	public bool ThrottleFpsWhenPaused = true;
 
 	[Export]
-	public int ThrottledFpsTarget = 75;
+	public int ThrottledFpsTarget = 60;
 
 	public bool IsPaused;
 
@@ -29,7 +29,10 @@ public partial class PauseController : Node
 	public void Lock(Node locker)
 	{
 		if (locker != LockedBy && LockedBy is not null)
+		{
+			// Logger.LogError($"Cannot lock the pause controller while it is already locked by another node {LockedBy}.");
 			return;
+		}
 		if (locker.ProcessMode != ProcessModeEnum.Always)
 		{
 			Logger.LogError("Locker must have ProcessMode set to Always to lock the pause controller.");
@@ -42,7 +45,10 @@ public partial class PauseController : Node
 	public void Unlock(Node locker)
 	{
 		if (locker != LockedBy && LockedBy is not null)
+		{
+			// Logger.LogError($"Cannot unlock the pause controller while it is not locked by {locker}.");
 			return;
+		}
 
 		LockedBy = null;
 	}
@@ -50,7 +56,10 @@ public partial class PauseController : Node
 	public void Pause(Node locker)
 	{
 		if (locker != LockedBy && LockedBy is not null)
+		{
+			// Logger.LogError($"Cannot pause the pause controller while it is locked by another node {LockedBy}.");
 			return;
+		}
 
 		EmitSignal(SignalName.OnPause);
 		Tree.Paused = true;
@@ -62,7 +71,10 @@ public partial class PauseController : Node
 	public void Unpause(Node locker)
 	{
 		if (locker != LockedBy && LockedBy is not null)
+		{
+			// Logger.LogError($"Cannot unpause the pause controller while it is locked by another node {LockedBy}.");
 			return;
+		}
 
 		EmitSignal(SignalName.OnUnpause);
 		Tree.Paused = false;

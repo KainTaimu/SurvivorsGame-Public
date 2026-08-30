@@ -1,5 +1,7 @@
+using Game.Items.Offensive.EnemyHitEffects;
 using Game.Levels.Controllers;
 using Game.Players;
+using Godot.Collections;
 
 namespace Game.Items.Offensive;
 
@@ -103,6 +105,17 @@ public partial class BaseOffensiveStats : BaseItemStats
 			EmitChanged();
 		}
 	} = 1;
+
+	[Export]
+	public Array<AbstractEnemyHitEffect> HitEffects
+	{
+		get;
+		set
+		{
+			field = value;
+			EmitChanged();
+		}
+	} = [];
 
 	private CharacterStats PlayerStats => GameWorld.Instance.MainPlayer.Character.CharacterStats;
 

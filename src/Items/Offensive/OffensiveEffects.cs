@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Arch.Core;
 using Game.Core.ECS;
 using Game.Core.Settings;
@@ -8,6 +9,7 @@ namespace Game.Items.Offensive;
 
 public static class OffensiveEffects
 {
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void ApplyDamage(
 		Entity entity,
 		int baseDamage,
@@ -32,6 +34,7 @@ public static class OffensiveEffects
 		GameWorld.World.Set(entity, hit);
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void ApplyCameraShake(float shakeAmount, Func<Viewport> getViewport, Func<Tween> getTween)
 	{
 		if (!GameSettings.Instance.EnableCameraShake)
@@ -58,6 +61,7 @@ public static class OffensiveEffects
 		tween.TweenProperty(camera, "offset", origPos, 1 / 8f);
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void ApplyCrosshairRecoil(
 		Crosshair crosshair,
 		float horizontalBaseRecoil,
@@ -82,6 +86,7 @@ public static class OffensiveEffects
 		crosshair.Recoil.ApplyImpulse(recoil, recoilAccumilationScale, applyHorizontalPunish);
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void ApplyKnockback(Entity entity, in Vector2 awayFrom, float knockback)
 	{
 		ref var pos = ref GameWorld.World.Get<PositionComponent>(entity);
@@ -92,6 +97,7 @@ public static class OffensiveEffects
 		pos.Position += knockbackVector;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void ApplyVelocityMultiplier(Entity entity, float slowMultiplier = 1f)
 	{
 		ref var velocity = ref GameWorld.World.Get<VelocityComponent>(entity);

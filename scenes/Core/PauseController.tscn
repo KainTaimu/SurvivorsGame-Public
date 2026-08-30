@@ -4,4 +4,4 @@
 
 [node name="PauseController" type="Node" unique_id=1728048226]
 script = ExtResource("1_2vs2l")
-ThrottledFpsTarget = 80
+ThrottledFpsTarget = 60

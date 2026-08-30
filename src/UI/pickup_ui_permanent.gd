@@ -12,6 +12,8 @@ func _input(event: InputEvent) -> void:
 		pickup_ui.exit()
 		_on_pickup_ui_closed()
 		return
+	if PauseController.IsPaused:
+		return
 	_show_pickup()
 
 
