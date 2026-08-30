@@ -1,10 +1,22 @@
 [gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://bjo1aoxs8w1yw"]
 
 [ext_resource type="PackedScene" uid="uid://cuerorgcryk5k" path="res://scenes/Items/Offensive/Sniper.tscn" id="1_4hc4g"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="1_bpepo"]
 [ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_bpepo"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_f0pdf"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_lpg18"]
+script = ExtResource("1_bpepo")
+Name = "AWM"
+Description = "A sniper rifle that fires high-velocity [b][u]penetrating[/u][/b] rounds."
+ItemIcon = SubResource("PlaceholderTexture2D_f0pdf")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [resource]
 script = ExtResource("2_bpepo")
+properties = SubResource("Resource_lpg18")
 scene = ExtResource("1_4hc4g")
 spawn_weight = 0.3
 rarity = 3

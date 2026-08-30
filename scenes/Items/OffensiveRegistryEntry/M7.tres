@@ -1,10 +1,21 @@
 [gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://dh08ymqfxu5xh"]
 
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="1_1h3fq"]
 [ext_resource type="PackedScene" uid="uid://cnhwoqxa4s0dc" path="res://scenes/Items/Offensive/M7.tscn" id="1_on3tp"]
 [ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_1h3fq"]
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_i0gs0"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_hrh27"]
+script = ExtResource("1_1h3fq")
+Name = "M7"
+ItemIcon = SubResource("PlaceholderTexture2D_i0gs0")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
 [resource]
 script = ExtResource("2_1h3fq")
+properties = SubResource("Resource_hrh27")
 scene = ExtResource("1_on3tp")
 spawn_weight = 0.45
 rarity = 3

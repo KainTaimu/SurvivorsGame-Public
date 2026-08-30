@@ -1,10 +1,22 @@
 [gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://bjjvd4bhmqet4"]
 
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="1_fegbk"]
 [ext_resource type="PackedScene" uid="uid://bm5g2ndiy5ltb" path="res://scenes/Items/Offensive/M16A4.tscn" id="1_t385p"]
 [ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_fegbk"]
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nug3y"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_3wka7"]
+script = ExtResource("1_fegbk")
+Name = "M16A4"
+Description = "A light, fast-firing rifle that shoots armor-piercing rounds. "
+ItemIcon = SubResource("PlaceholderTexture2D_nug3y")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
 [resource]
 script = ExtResource("2_fegbk")
+properties = SubResource("Resource_3wka7")
 scene = ExtResource("1_t385p")
 spawn_weight = 0.5
 rarity = 1

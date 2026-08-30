@@ -1,10 +1,22 @@
 [gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://bnxfab4uqs6n2"]
 
 [ext_resource type="PackedScene" uid="uid://2gxjr5yjrfut" path="res://scenes/Items/Offensive/Minigun.tscn" id="1_2dev3"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="1_pp84c"]
 [ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_pp84c"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_p0ocb"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_gjddc"]
+script = ExtResource("1_pp84c")
+Name = "M134 Minigun"
+Description = "A heavy 6-barrel rotary machine gun firing high-velocity penetrating rounds. Takes some time to spool up before firing a barrage of bullets at ~5400RPM"
+ItemIcon = SubResource("PlaceholderTexture2D_p0ocb")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [resource]
 script = ExtResource("2_pp84c")
+properties = SubResource("Resource_gjddc")
 scene = ExtResource("1_2dev3")
 spawn_weight = 0.01
 rarity = 4

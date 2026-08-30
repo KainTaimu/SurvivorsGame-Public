@@ -1,10 +1,22 @@
 [gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://0mop1ayfv2cg"]
 
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="1_20m8a"]
 [ext_resource type="PackedScene" uid="uid://c5chlqja2k2k0" path="res://scenes/Items/Offensive/AutoShotgun.tscn" id="1_47ocx"]
 [ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_20m8a"]
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_3bnjt"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_dfhwe"]
+script = ExtResource("1_20m8a")
+Name = "AA-12"
+Description = "A 12-gauge automatic combat shotgun equipped with a 20-round drum."
+ItemIcon = SubResource("PlaceholderTexture2D_3bnjt")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
 [resource]
 script = ExtResource("2_20m8a")
+properties = SubResource("Resource_dfhwe")
 scene = ExtResource("1_47ocx")
 spawn_weight = 0.2
 rarity = 3

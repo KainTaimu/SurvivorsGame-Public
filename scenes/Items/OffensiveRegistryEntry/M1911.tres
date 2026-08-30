@@ -1,10 +1,22 @@
 [gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://dktd8lr0rda13"]
 
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="1_ladre"]
 [ext_resource type="PackedScene" uid="uid://cnk5c4yvwhjun" path="res://scenes/Items/Offensive/M1911.tscn" id="1_wxi2v"]
 [ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_ladre"]
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wvv4q"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_wdfq5"]
+script = ExtResource("1_ladre")
+Name = "M1911"
+Description = "A rugged .45 pistol. Trades high damage for a small 7-round magazine."
+ItemIcon = SubResource("PlaceholderTexture2D_wvv4q")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
 [resource]
 script = ExtResource("2_ladre")
+properties = SubResource("Resource_wdfq5")
 scene = ExtResource("1_wxi2v")
 spawn_weight = 0.9
 metadata/_custom_type_script = "uid://brmkfowmxbv52"

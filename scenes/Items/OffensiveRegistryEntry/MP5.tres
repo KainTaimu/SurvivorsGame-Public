@@ -1,10 +1,22 @@
 [gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://nsapijc5eire"]
 
 [ext_resource type="PackedScene" uid="uid://dwyqdinyji8tt" path="res://scenes/Items/Offensive/MP5.tscn" id="1_gwgtj"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="1_mn1nx"]
 [ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_tnl0r"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_57kje"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_d6ejg"]
+script = ExtResource("1_mn1nx")
+Name = "MP5"
+Description = "A submachine gun chambered in 9x39mm. "
+ItemIcon = SubResource("PlaceholderTexture2D_57kje")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [resource]
 script = ExtResource("2_tnl0r")
+properties = SubResource("Resource_d6ejg")
 scene = ExtResource("1_gwgtj")
 spawn_weight = 0.7
 rarity = 1

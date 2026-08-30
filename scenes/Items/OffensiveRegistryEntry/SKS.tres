@@ -1,10 +1,21 @@
 [gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://cxco3dha05xnp"]
 
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="1_8wdil"]
 [ext_resource type="PackedScene" uid="uid://dtcjylv1ewb16" path="res://scenes/Items/Offensive/SKS.tscn" id="1_vma7o"]
 [ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_8wdil"]
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_lm52v"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_yjyde"]
+script = ExtResource("1_8wdil")
+Name = "SKS"
+ItemIcon = SubResource("PlaceholderTexture2D_lm52v")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
 [resource]
 script = ExtResource("2_8wdil")
+properties = SubResource("Resource_yjyde")
 scene = ExtResource("1_vma7o")
 spawn_weight = 0.8
 rarity = 1

@@ -1,10 +1,22 @@
 [gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://c7hl0io0wdufn"]
 
 [ext_resource type="PackedScene" uid="uid://bv8olcpvea07v" path="res://scenes/Items/Offensive/GrenadeLauncher.tscn" id="1_6d4si"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="1_mdbue"]
 [ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_mdbue"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_4svg4"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_nxfqj"]
+script = ExtResource("1_mdbue")
+Name = "MGL-67"
+Description = "A 6-cylinder grenade launcher firing high-explosive rounds."
+ItemIcon = SubResource("PlaceholderTexture2D_4svg4")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [resource]
 script = ExtResource("2_mdbue")
+properties = SubResource("Resource_nxfqj")
 scene = ExtResource("1_6d4si")
 spawn_weight = 0.1
 rarity = 4

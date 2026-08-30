@@ -1,10 +1,22 @@
 [gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://bjv5rfumg72tr"]
 
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="1_d5m1f"]
 [ext_resource type="PackedScene" uid="uid://c8noyno0ootql" path="res://scenes/Items/Offensive/M249S.tscn" id="1_xaona"]
 [ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_d5m1f"]
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ur04f"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_e5htb"]
+script = ExtResource("1_d5m1f")
+Name = "M249-S"
+Description = "A suppressed version of the M249. The person who attached the suppressor forgot to adjust the gas block, causing overgassing; resulting in an increase in recoil and fire rate."
+ItemIcon = SubResource("PlaceholderTexture2D_ur04f")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
 [resource]
 script = ExtResource("2_d5m1f")
+properties = SubResource("Resource_e5htb")
 scene = ExtResource("1_xaona")
 spawn_weight = 0.1
 rarity = 4

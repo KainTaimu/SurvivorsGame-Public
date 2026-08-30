@@ -1,10 +1,21 @@
 [gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://b7k47srcgebuw"]
 
 [ext_resource type="PackedScene" uid="uid://dn60j54j5e2ta" path="res://scenes/Items/Offensive/G3A3.tscn" id="1_31305"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="1_oaxja"]
 [ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_oaxja"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_x4q3v"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_q5o5k"]
+script = ExtResource("1_oaxja")
+Name = "G3A3"
+ItemIcon = SubResource("PlaceholderTexture2D_x4q3v")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [resource]
 script = ExtResource("2_oaxja")
+properties = SubResource("Resource_q5o5k")
 scene = ExtResource("1_31305")
 spawn_weight = 0.5
 rarity = 2

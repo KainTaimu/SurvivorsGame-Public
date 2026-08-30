@@ -1,10 +1,22 @@
 [gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://bx3nk3ntkr78k"]
 
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="1_ljaws"]
 [ext_resource type="PackedScene" uid="uid://j70slgh4j2cl" path="res://scenes/Items/Offensive/M92FS.tscn" id="1_yaslc"]
 [ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_ljaws"]
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_lg74w"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_5mbns"]
+script = ExtResource("1_ljaws")
+Name = "M92FS"
+Description = "A burst-fire pistol."
+ItemIcon = SubResource("PlaceholderTexture2D_lg74w")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
 [resource]
 script = ExtResource("2_ljaws")
+properties = SubResource("Resource_5mbns")
 scene = ExtResource("1_yaslc")
 spawn_weight = 0.78
 metadata/_custom_type_script = "uid://brmkfowmxbv52"

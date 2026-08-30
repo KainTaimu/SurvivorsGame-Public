@@ -1,10 +1,22 @@
 [gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://cmj08qj3le4ar"]
 
 [ext_resource type="PackedScene" uid="uid://chrgb8gqwh4s0" path="res://scenes/Items/Offensive/M4.tscn" id="1_5epbx"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="1_xrmv3"]
 [ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_xrmv3"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_y4uiw"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_xbtcw"]
+script = ExtResource("1_xrmv3")
+Name = "M4 Carbine"
+Description = "A light, fast-firing rifle that shoots armor-piercing rounds. "
+ItemIcon = SubResource("PlaceholderTexture2D_y4uiw")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [resource]
 script = ExtResource("2_xrmv3")
+properties = SubResource("Resource_xbtcw")
 scene = ExtResource("1_5epbx")
 spawn_weight = 0.6
 rarity = 2

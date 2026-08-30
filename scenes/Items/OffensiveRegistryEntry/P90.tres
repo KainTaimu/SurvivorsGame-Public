@@ -1,10 +1,21 @@
 [gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://k1vxoxjbg1ys"]
 
 [ext_resource type="PackedScene" uid="uid://cmidrkjr0le3o" path="res://scenes/Items/Offensive/P90.tscn" id="1_eg8g2"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="1_igcfg"]
 [ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_igcfg"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_cld5f"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_1xitb"]
+script = ExtResource("1_igcfg")
+Name = "P90"
+ItemIcon = SubResource("PlaceholderTexture2D_cld5f")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [resource]
 script = ExtResource("2_igcfg")
+properties = SubResource("Resource_1xitb")
 scene = ExtResource("1_eg8g2")
 spawn_weight = 0.75
 rarity = 2

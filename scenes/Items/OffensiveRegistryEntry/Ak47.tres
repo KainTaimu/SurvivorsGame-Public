@@ -2,9 +2,20 @@
 
 [ext_resource type="PackedScene" uid="uid://b6pcia1iql0ct" path="res://scenes/Items/Offensive/Ak47.tscn" id="1_d60pw"]
 [ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="1_fkt1q"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="1_n7was"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_3sp4u"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_hnsok"]
+script = ExtResource("1_n7was")
+Name = "AK-47"
+Description = "The infamous Soviet rifle chambered in 7.62x39mm. It deals a large amount of damage at the cost of inaccuracy and recoil."
+ItemIcon = SubResource("PlaceholderTexture2D_3sp4u")
 
 [resource]
 script = ExtResource("1_fkt1q")
+properties = SubResource("Resource_hnsok")
 scene = ExtResource("1_d60pw")
 spawn_weight = 0.6
 rarity = 2

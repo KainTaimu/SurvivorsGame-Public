@@ -1,10 +1,22 @@
 [gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://xlyj1jgthiqq"]
 
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="1_23nrp"]
 [ext_resource type="PackedScene" uid="uid://ceimmtu3q4x6n" path="res://scenes/Items/Offensive/GrenadeThrower.tscn" id="1_mqtqd"]
 [ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_23nrp"]
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gqar5"]
+load_path = "res://.godot/imported/grenade.png-69c6521decbb8710938046f89d284a71.ctex"
+
+[sub_resource type="Resource" id="Resource_vhimr"]
+script = ExtResource("1_23nrp")
+Name = "Grenade"
+Description = "A fragmentation grenade that deals massive damage to those caught in its blast. "
+ItemIcon = SubResource("CompressedTexture2D_gqar5")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
 [resource]
 script = ExtResource("2_23nrp")
+properties = SubResource("Resource_vhimr")
 scene = ExtResource("1_mqtqd")
 spawn_weight = 0.2
 rarity = 2

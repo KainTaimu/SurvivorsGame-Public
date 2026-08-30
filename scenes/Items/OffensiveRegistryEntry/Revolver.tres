@@ -1,10 +1,22 @@
 [gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://02537d5q0ct0"]
 
 [ext_resource type="PackedScene" uid="uid://twvhgblbtovy" path="res://scenes/Items/Offensive/Revolver.tscn" id="1_cwyhf"]
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="1_j8ip3"]
 [ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_j8ip3"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_yl276"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_bjsp0"]
+script = ExtResource("1_j8ip3")
+Name = "Python"
+Description = "A 6-cylinder revolver. Offers high-damage and good penetrability for low bullet count and a lengthy reload time"
+ItemIcon = SubResource("PlaceholderTexture2D_yl276")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [resource]
 script = ExtResource("2_j8ip3")
+properties = SubResource("Resource_bjsp0")
 scene = ExtResource("1_cwyhf")
 spawn_weight = 0.85
 metadata/_custom_type_script = "uid://brmkfowmxbv52"
