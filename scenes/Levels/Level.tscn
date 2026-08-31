@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://x42vvsn5hrwx" path="res://scenes/Levels/WaveDebugPanel.tscn" id="8_lkd4q"]
 [ext_resource type="Script" uid="uid://cuxklvvvd40t4" path="res://scenes/Levels/EnemySystems.cs" id="8_t3a6r"]
 [ext_resource type="PackedScene" uid="uid://umbqj1xym7lp" path="res://scenes/Core/FodderMultiMeshInstance2D.tscn" id="9_ror81"]
+[ext_resource type="Script" uid="uid://dhru0m0a8v1sg" path="res://src/Levels/Controllers/EnemyBehaviorController.cs" id="13_eh1w1"]
 [ext_resource type="PackedScene" uid="uid://dh3cfccrh31b0" path="res://scenes/Levels/EnemyCollisionSolverManager.tscn" id="13_faxpm"]
 [ext_resource type="PackedScene" uid="uid://bpgtq48wt7r32" path="res://scenes/Levels/EnemyHitFeedbackController.tscn" id="13_vg5sh"]
 [ext_resource type="PackedScene" uid="uid://c8d8andvaknho" path="res://scenes/Levels/EnemyDeathManager.tscn" id="14_aig1n"]
@@ -85,6 +86,9 @@ FrameTime = SubResource("Resource_27qwr")
 _goreManager = NodePath("../GoreManager")
 
 [node name="EnemyDeathManager" parent="Systems/EnemySystems" unique_id=821545961 instance=ExtResource("14_aig1n")]
+
+[node name="EnemyBehaviorController" type="Node" parent="Systems/EnemySystems" unique_id=1041908003]
+script = ExtResource("13_eh1w1")
 
 [node name="GoreManager" parent="Systems/EnemySystems" unique_id=623372769 node_paths=PackedStringArray("_deathManager") instance=ExtResource("27_3nhtq")]
 _deathManager = NodePath("../EnemyDeathManager")

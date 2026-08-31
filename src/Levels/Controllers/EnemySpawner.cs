@@ -1,3 +1,4 @@
+using System.Linq;
 using Arch.Core;
 using Game.Core.ECS;
 using Game.Core.Services;
@@ -27,7 +28,7 @@ public partial class EnemySpawner : Node
 		var stats = bp.Stats;
 		var spriteInfo = ss.GetSpriteInfo(bp.SpriteName);
 
-		return GameWorld.World.Create(
+		var entity = GameWorld.World.Create(
 			new EnemyTypeComponent(bp.Type),
 			new HealthComponent(stats.MaxHealth),
 			new PositionComponent { Position = pos },
@@ -55,6 +56,11 @@ public partial class EnemySpawner : Node
 			new CollisionLodComponent(CollisionLodLevel.Far),
 			CollisionGpuIndexComponent.NotParticipating
 		);
+
+		foreach (var behavior in bp.EnemyBehaviors)
+			behavior.AddComponent(entity);
+
+		return entity;
 	}
 
 	private Vector2 GetPositionOutsideViewport()

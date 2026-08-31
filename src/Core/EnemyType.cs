@@ -4,5 +4,4 @@ public enum EnemyType
 {
 	None,
 	Fodder,
-	Lunger,
 }

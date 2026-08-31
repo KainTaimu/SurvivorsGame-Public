@@ -7,7 +7,9 @@
 [ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="4_7c8pb"]
 [ext_resource type="Script" uid="uid://ufpoicgrn6de" path="res://src/Levels/NavMap.cs" id="4_faso5"]
 [ext_resource type="Script" uid="uid://dau6m811dtep8" path="res://src/Levels/Controllers/Waves/BlueprintWeight.cs" id="5_iiw53"]
+[ext_resource type="Script" uid="uid://3umr41bs3735" path="res://src/Levels/Controllers/AbstractEnemyBehavior.cs" id="5_n7qsj"]
 [ext_resource type="Script" uid="uid://ds8lkov4wnj2l" path="res://src/Levels/Controllers/Waves/WeightedWaveBlueprintCollection.cs" id="6_vrw23"]
+[ext_resource type="Script" uid="uid://boji730ttjnbp" path="res://src/Levels/Controllers/LungerEnemyBehavior.cs" id="6_w70hc"]
 [ext_resource type="Script" uid="uid://d02cy04gxh3di" path="res://src/Levels/Controllers/Waves/AbstractWaveCompletionReward.cs" id="7_v38xc"]
 [ext_resource type="Script" uid="uid://cwbl163hsg1db" path="res://src/Levels/Controllers/Waves/AbstractWave.cs" id="8_faso5"]
 [ext_resource type="Script" uid="uid://cksmwvaxx1m18" path="res://src/Levels/Controllers/Waves/WaveSpawnCount.cs" id="9_duif7"]
@@ -38,6 +40,11 @@ vertices = PackedVector2Array(7963.3438, -80.42969, 6812.0313, -261.54688, 7890.
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(4, 3, 5, 6, 7), PackedInt32Array(8, 7, 9, 10), PackedInt32Array(11, 12, 13, 14, 15, 16, 17), PackedInt32Array(16, 4, 7, 18), PackedInt32Array(19, 6, 5), PackedInt32Array(20, 21, 7, 8, 11), PackedInt32Array(6, 19, 22), PackedInt32Array(23, 6, 22, 24, 25, 26), PackedInt32Array(27, 25, 24, 28, 29, 30), PackedInt32Array(28, 19, 5, 29), PackedInt32Array(31, 1, 0, 15, 14, 32), PackedInt32Array(12, 10, 9, 33, 13), PackedInt32Array(29, 2, 1, 30), PackedInt32Array(17, 20, 11), PackedInt32Array(34, 31, 32, 27), PackedInt32Array(23, 26, 35), PackedInt32Array(9, 23, 35), PackedInt32Array(9, 35, 27, 33), PackedInt32Array(27, 30, 34), PackedInt32Array(27, 32, 33), PackedInt32Array(18, 17, 16), PackedInt32Array(18, 7, 21)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(5775, -1184, 8695, -1192, 8871, 1952, 5831, 1952)])
 
+[sub_resource type="Resource" id="Resource_w2wr7"]
+script = ExtResource("6_w70hc")
+LungeVelocityMultiplier = 3.5
+metadata/_custom_type_script = "uid://boji730ttjnbp"
+
 [sub_resource type="Resource" id="W_stats_1"]
 script = ExtResource("3_sl6q3")
 DamageOnContact = 4
@@ -51,6 +58,7 @@ script = ExtResource("4_7c8pb")
 Name = "Walker"
 SpriteName = "placeholder"
 Type = 1
+EnemyBehaviors = Array[ExtResource("5_n7qsj")]([SubResource("Resource_w2wr7")])
 Stats = SubResource("W_stats_1")
 
 [sub_resource type="Resource" id="W_bw_w_1"]
@@ -68,7 +76,7 @@ ItemCount = 3
 RarityUpperGate = 1
 metadata/_custom_type_script = "uid://b0b1rgkll8se8"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w2wr7"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_n7qsj"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_a1e6u"]
@@ -164,7 +172,7 @@ Operation = 1
 Value = 1.1
 metadata/_custom_type_script = "uid://d31d8uns5faa5"
 
-[sub_resource type="Resource" id="Resource_w2wr7"]
+[sub_resource type="Resource" id="Resource_vhjum"]
 script = ExtResource("12_0iw8n")
 Name = "Wave 2 buff"
 Permanent = true
@@ -174,7 +182,7 @@ metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
 [sub_resource type="Resource" id="Resource_g5417"]
 script = ExtResource("14_w70hc")
-_statusEffects = Array[ExtResource("12_0iw8n")]([SubResource("Resource_w2wr7")])
+_statusEffects = Array[ExtResource("12_0iw8n")]([SubResource("Resource_vhjum")])
 metadata/_custom_type_script = "uid://catd5vqs68f8g"
 
 [sub_resource type="Resource" id="W_wave_2"]
@@ -823,7 +831,10 @@ FrameTime = SubResource("Resource_t7v5b")
 [node name="EnemyMover" type="Node" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="5" unique_id=46792980]
 script = ExtResource("18_duif7")
 
-[node name="EnemyRenderer" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="8" unique_id=1054443393]
+[node name="EnemyBehaviorController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="6" unique_id=1041908003]
+SupportedTypes = 1
+
+[node name="EnemyRenderer" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="9" unique_id=1054443393]
 RenderDistanceFactor = 1.1
 
 [node name="Button2" type="Button" parent="UI/PauseMenu" parent_id_path=PackedInt32Array(1937596238) index="4" unique_id=1421843558]

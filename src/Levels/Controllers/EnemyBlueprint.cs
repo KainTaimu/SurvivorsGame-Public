@@ -1,5 +1,6 @@
 using Game.Core;
 using Game.Enemies;
+using Godot.Collections;
 
 namespace Game.Levels.Controllers;
 
@@ -14,6 +15,9 @@ public partial class EnemyBlueprint : Resource
 
 	[Export]
 	public EnemyType Type { get; private set; }
+
+	[Export]
+	public Array<AbstractEnemyBehavior> EnemyBehaviors = [];
 
 	[Export]
 	public EnemyStats Stats { get; private set; } = null!;
