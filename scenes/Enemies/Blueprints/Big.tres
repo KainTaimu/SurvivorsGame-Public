@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="EnemyBlueprint" format=3 uid="uid://bo0ohu302yg51"]
 
+[ext_resource type="Script" uid="uid://3umr41bs3735" path="res://src/Levels/Controllers/AbstractEnemyBehavior.cs" id="1_evvw4"]
 [ext_resource type="Script" uid="uid://y77qtp32wo00" path="res://src/Enemies/EnemyStats.cs" id="1_qsasf"]
 [ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="2_evvw4"]
 
