@@ -61,6 +61,9 @@ public partial class CharacterStats : Node
 	private FloatStat _recoilScale = null!;
 
 	[Export]
+	private FloatStat _reloadTimeScale = null!;
+
+	[Export]
 	private FloatStat _incomingDamage = null!;
 
 	[Export]
@@ -103,6 +106,8 @@ public partial class CharacterStats : Node
 	public float BloomScale => _bloomScale.Value;
 
 	public float RecoilScale => _recoilScale.Value;
+
+	public float ReloadTimeScale => _reloadTimeScale.Value;
 
 	public float IncomingDamage => _incomingDamage.Value;
 

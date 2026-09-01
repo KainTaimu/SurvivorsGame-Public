@@ -74,7 +74,7 @@ ItemCount = 3
 RarityUpperGate = 1
 metadata/_custom_type_script = "uid://b0b1rgkll8se8"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_j0071"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pl5k2"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_a1e6u"]
@@ -232,7 +232,7 @@ Weights = Array[Object]([SubResource("Resource_ufwql"), SubResource("W_bw_s_3")]
 
 [sub_resource type="Resource" id="Resource_mxkc7"]
 script = ExtResource("11_ta1oo")
-ItemCount = 3
+ItemCount = 4
 RarityUpperGate = 2
 metadata/_custom_type_script = "uid://b0b1rgkll8se8"
 
@@ -393,6 +393,26 @@ metadata/_custom_type_script = "uid://dau6m811dtep8"
 script = ExtResource("6_vrw23")
 Weights = Array[Object]([SubResource("W_bw_w_5"), SubResource("W_bw_s_5")])
 
+[sub_resource type="Resource" id="Resource_vg5sh"]
+script = ExtResource("13_n7qsj")
+StatName = 18
+Operation = 1
+Value = 0.9
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_aig1n"]
+script = ExtResource("12_0iw8n")
+Name = "Wave 5 buff"
+Permanent = true
+Hidden = true
+Modifiers = Array[ExtResource("13_n7qsj")]([SubResource("Resource_vg5sh")])
+metadata/_custom_type_script = "uid://bdk4fdcqvypav"
+
+[sub_resource type="Resource" id="Resource_eh1w1"]
+script = ExtResource("14_w70hc")
+_statusEffects = Array[ExtResource("12_0iw8n")]([SubResource("Resource_aig1n")])
+metadata/_custom_type_script = "uid://catd5vqs68f8g"
+
 [sub_resource type="Curve" id="Curve_0iw8n"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.4209392, 0.29309773), 0.69629467, 0.0, 1, 0, Vector2(0.5037699, 1), 0.0, 0.0, 0, 1, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 4
@@ -410,6 +430,7 @@ SpawnMaxTime = 0.8
 SpawnTimeCurveOverMaxTime = SubResource("Curve_ghrcs")
 SpawnBatchMax = 2
 SpawnBatchCurveOverMaxTime = SubResource("Curve_0iw8n")
+Rewards = Array[ExtResource("7_v38xc")]([SubResource("Resource_eh1w1")])
 metadata/_custom_type_script = "uid://cksmwvaxx1m18"
 
 [sub_resource type="Resource" id="W_stats_6"]

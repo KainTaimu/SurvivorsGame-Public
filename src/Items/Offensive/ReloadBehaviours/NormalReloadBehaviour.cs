@@ -4,7 +4,7 @@ namespace Game.Items.Offensive;
 [GlobalClass]
 public partial class NormalReloadBehaviour : AbstractReloadBehaviour
 {
-	public float ReloadTime { get; set; }
+	public required Func<float> ReloadTime { get; set; }
 
 	private float _timeUntilFinishedReloading;
 
@@ -12,7 +12,7 @@ public partial class NormalReloadBehaviour : AbstractReloadBehaviour
 	{
 		IsReloading = true;
 		EmitSignalOnReloadStart();
-		_timeUntilFinishedReloading = ReloadTime;
+		_timeUntilFinishedReloading = ReloadTime();
 	}
 
 	public override void Process(float delta)

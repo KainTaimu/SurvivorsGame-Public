@@ -10,7 +10,7 @@ size = Vector2(32, 32)
 [sub_resource type="Resource" id="Resource_lpg18"]
 script = ExtResource("1_bpepo")
 Name = "AWM"
-Description = "A sniper rifle that fires high-velocity [b][u]penetrating[/u][/b] rounds."
+Description = "A bolt-action sniper rifle that fires high-velocity [b][u]penetrating[/u][/b] rounds."
 ItemIcon = SubResource("PlaceholderTexture2D_f0pdf")
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 

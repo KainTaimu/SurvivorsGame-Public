@@ -20,6 +20,7 @@ public enum CharacterStatType
 	AttackSpeed,
 	BloomScale,
 	RecoilScale,
+	ReloadTimeScale,
 	IncomingDamage,
 	OutgoingDamage,
 }

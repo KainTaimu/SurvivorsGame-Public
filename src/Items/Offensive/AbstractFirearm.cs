@@ -30,6 +30,8 @@ public abstract partial class AbstractFirearm : BaseOffensive, IManualAttack
 
 	public FirearmStats FirearmStats => (FirearmStats)OffensiveStats;
 
+	// TODO: Make these properties as getters in its respective property in FirearmStats
+
 	public string? AttackActionString { get; set; }
 
 	protected float BloomCoefficientDeg => FirearmStats.BloomCoefficientDeg * PlayerStats.BloomScale;
@@ -47,6 +49,8 @@ public abstract partial class AbstractFirearm : BaseOffensive, IManualAttack
 	protected float VerticalRecoilRandom => FirearmStats.VerticalRecoilRandom;
 
 	protected float RecoilScale => FirearmStats.RecoilScale * PlayerStats.RecoilScale;
+
+	protected float ReloadTime => FirearmStats.ReloadTime * PlayerStats.ReloadTimeScale;
 
 	protected float RecoilAccumilationScale => FirearmStats.RecoilAccumilationScale;
 

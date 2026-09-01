@@ -9,8 +9,8 @@ size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_wdfq5"]
 script = ExtResource("1_ladre")
-Name = "M1911"
-Description = "A rugged .45 pistol. Trades high damage for a small 7-round magazine."
+Name = "M45"
+Description = "A rugged .45 pistol. It comes with an extended 11-round magazine"
 ItemIcon = SubResource("PlaceholderTexture2D_wvv4q")
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 

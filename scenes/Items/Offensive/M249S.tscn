@@ -29,15 +29,15 @@ script = ExtResource("6_80yi6")
 ReloadTime = 4.0
 BloomCoefficientDeg = 10.0
 MagazineCapacity = 200
-RecoilScale = 1.2
-BaseDamage = 30
-BaseDamageVarianceMultiplier = 0.22
+RecoilScale = 1.4
+BaseDamage = 40
+BaseDamageVarianceMultiplier = 0.2
 BaseCritDamageMultiplier = 1.4
-BaseCritChanceProportion = 0.25
-BaseProjectileSpeed = 5200
+BaseCritChanceProportion = 0.3
+BaseProjectileSpeed = 5700
 BaseProjectileScaleMultiplier = 0.95
 BaseAttackSpeed = 0.06
-BasePierceLimit = 4
+BasePierceLimit = 6
 Additional = Dictionary[String, Variant]({
 "Knockback": 5.0,
 "SlowMultiplier": 0.5

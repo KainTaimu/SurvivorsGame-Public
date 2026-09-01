@@ -10,7 +10,7 @@ size = Vector2(32, 32)
 [sub_resource type="Resource" id="Resource_e5htb"]
 script = ExtResource("1_d5m1f")
 Name = "M249-S"
-Description = "A suppressed version of the M249. The person who attached the suppressor forgot to adjust the gas block, causing overgassing; resulting in an increase in recoil and fire rate."
+Description = "A customized version of the M249. It features a suppressor and modified internals to withstand higher back-pressure from the suppressor. The 200-round box magazine has been loaded with tungsten carbide-tipped armor-piercing ammunition. Although the cartridge offers excellent penetrability through targets, it causes increased heat and wear on the barrel and suppressor."
 ItemIcon = SubResource("PlaceholderTexture2D_ur04f")
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 

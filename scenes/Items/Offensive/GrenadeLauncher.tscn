@@ -3,7 +3,8 @@
 [ext_resource type="Script" uid="uid://btykxyy3du0px" path="res://src/Items/Offensive/GrenadeLauncher.cs" id="1_hamct"]
 [ext_resource type="PackedScene" uid="uid://dl1vjoimv4sq7" path="res://scenes/Projectiles/HvGrenade.tscn" id="2_hamct"]
 [ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/FireGroups/SemiAutoFireGroup.cs" id="3_ysrq1"]
-[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="5_mkjub"]
+[ext_resource type="Script" uid="uid://cx3rrg2toydba" path="res://src/Items/Offensive/ReloadBehaviours/SequentialReloadBehaviour.cs" id="4_8lp6o"]
+[ext_resource type="Script" uid="uid://bs6wg1qssruhv" path="res://src/Items/Offensive/EnemyHitEffects/AbstractEnemyHitEffect.cs" id="5_ysrq1"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_3bjou"]
 [ext_resource type="AudioStream" uid="uid://dlewyy172dhok" path="res://assets/SFX/freesound_community-hq-explosion-6288.mp3" id="7_6gb1p"]
 [ext_resource type="AudioStream" uid="uid://bnxr2ix8k0jgu" path="res://assets/SFX/Shoot/m79_thumper.wav" id="8_8lp6o"]
@@ -17,18 +18,16 @@ resource_local_to_scene = true
 script = ExtResource("3_ysrq1")
 metadata/_custom_type_script = "uid://dnodsacrptssb"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_dar1o"]
-size = Vector2(32, 32)
-
-[sub_resource type="Resource" id="Resource_7i0hn"]
-script = ExtResource("5_mkjub")
-Name = "MGL-67"
-Description = "A 6-cylinder grenade launcher firing high-explosive rounds."
-metadata/_custom_type_script = "uid://8rt54h4imtxv"
+[sub_resource type="Resource" id="Resource_mokft"]
+resource_local_to_scene = true
+script = ExtResource("4_8lp6o")
+_boltCloseTime = 0.1
+DisplayType = 1
+metadata/_custom_type_script = "uid://cx3rrg2toydba"
 
 [sub_resource type="Resource" id="Resource_bpnxk"]
 script = ExtResource("6_3bjou")
-ReloadTime = 2.0
+ReloadTime = 6.0
 MagazineCapacity = 6
 HorizontalRecoilMin = 40.0
 HorizontalBaseRecoil = 40.0
@@ -58,8 +57,8 @@ _throwForce = 1500.0
 _damageDropoffFromCenter = SubResource("Curve_ysrq1")
 GrenadeScene = ExtResource("2_hamct")
 _fireGroup = SubResource("Resource_a0fn7")
+_reloadBehaviour = SubResource("Resource_mokft")
 _explosionPlayer = NodePath("Explosion")
-Properties = SubResource("Resource_7i0hn")
 Stats = SubResource("Resource_bpnxk")
 
 [node name="Explosion" type="AudioStreamPlayer" parent="." unique_id=1114139561]

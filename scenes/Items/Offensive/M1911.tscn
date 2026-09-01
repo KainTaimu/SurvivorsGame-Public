@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/FireGroups/SemiAutoFireGroup.cs" id="3_7oacj"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_rstrl"]
 [ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="4_xm2c6"]
-[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="5_esh2w"]
+[ext_resource type="Script" uid="uid://bs6wg1qssruhv" path="res://src/Items/Offensive/EnemyHitEffects/AbstractEnemyHitEffect.cs" id="6_7oacj"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_bfo0n"]
 [ext_resource type="AudioStream" uid="uid://cai4ndme4u2rl" path="res://assets/SFX/Shoot/m1911/m1911_r2.wav" id="7_txpck"]
 [ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="8_8jbg6"]
@@ -24,20 +24,10 @@ metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 script = ExtResource("4_rstrl")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_txpck"]
-size = Vector2(32, 32)
-
-[sub_resource type="Resource" id="Resource_7oacj"]
-script = ExtResource("5_esh2w")
-Name = "M1911"
-Description = "A rugged .45 pistol. Trades high damage for a small 7-round magazine."
-ItemIcon = SubResource("PlaceholderTexture2D_txpck")
-metadata/_custom_type_script = "uid://8rt54h4imtxv"
-
 [sub_resource type="Resource" id="Resource_k3dr5"]
 script = ExtResource("6_bfo0n")
 BloomCoefficientDeg = 1.0
-MagazineCapacity = 7
+MagazineCapacity = 11
 HorizontalRecoilMin = 4.0
 HorizontalBaseRecoil = 10.0
 HorizontalRecoilRandom = 2.0
@@ -47,8 +37,8 @@ VerticalRecoilRandom = 5.0
 RecoilScale = 0.8
 HorizontalRecoilPunish = false
 CameraRecoilScale = 0.35
-BaseDamage = 9
-BaseDamageVarianceMultiplier = 0.5
+BaseDamage = 11
+BaseDamageVarianceMultiplier = 0.2
 BaseCritDamageMultiplier = 0.4
 BaseCritChanceProportion = 0.3
 BaseProjectileSpeed = 2700
@@ -67,7 +57,6 @@ _projectileScene = ExtResource("2_7oacj")
 _fireGroup = SubResource("Resource_jy61x")
 _reloadBehaviour = SubResource("Resource_pm3ln")
 _projectileAttack = SubResource("Resource_yc6ub")
-Properties = SubResource("Resource_7oacj")
 Stats = SubResource("Resource_k3dr5")
 
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=252809060]

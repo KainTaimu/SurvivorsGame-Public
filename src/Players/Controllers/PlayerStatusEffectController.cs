@@ -141,6 +141,7 @@ public partial class PlayerStatusEffectController : Node
 				"_attackSpeed" => CharacterStatType.AttackSpeed,
 				"_bloomScale" => CharacterStatType.BloomScale,
 				"_recoilScale" => CharacterStatType.RecoilScale,
+				"_reloadTimeScale" => CharacterStatType.ReloadTimeScale,
 				"_incomingDamage" => CharacterStatType.IncomingDamage,
 				"_outgoingDamage" => CharacterStatType.OutgoingDamage,
 				_ => CharacterStatType.None,

@@ -105,6 +105,11 @@ resource_local_to_scene = true
 script = ExtResource("4_tvywd")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
+[sub_resource type="Resource" id="Resource_cv516"]
+resource_local_to_scene = true
+script = ExtResource("4_tvywd")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
 [sub_resource type="Resource" id="Resource_nmhw4"]
 resource_local_to_scene = true
 script = ExtResource("4_tvywd")
@@ -232,6 +237,7 @@ _criticalDamage = SubResource("Resource_kb4sv")
 _attackSpeed = SubResource("Resource_vmmr7")
 _bloomScale = SubResource("Resource_pje1o")
 _recoilScale = SubResource("Resource_l5xc2")
+_reloadTimeScale = SubResource("Resource_cv516")
 _incomingDamage = SubResource("Resource_nmhw4")
 _outgoingDamage = SubResource("Resource_h6xk1")
 _player = NodePath("../..")

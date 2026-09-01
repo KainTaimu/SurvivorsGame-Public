@@ -12,7 +12,7 @@ public partial class SequentialReloadBehaviour : AbstractReloadBehaviour
 	[Export]
 	private float _boltCloseTime = 0.2f;
 
-	public float TimeBetweenRounds { get; set; }
+	public required Func<float> TimeBetweenRounds { get; set; }
 	public int RoundsToLoad { get; set; }
 	public int Step { get; set; } = 1;
 	public bool IsInterrupted { get; private set; }
@@ -25,7 +25,7 @@ public partial class SequentialReloadBehaviour : AbstractReloadBehaviour
 		IsReloading = true;
 		IsInterrupted = false;
 		_roundsLoaded = 0;
-		_timeUntilNextLoad = TimeBetweenRounds;
+		_timeUntilNextLoad = TimeBetweenRounds();
 	}
 
 	public override void Process(float delta)
@@ -40,13 +40,13 @@ public partial class SequentialReloadBehaviour : AbstractReloadBehaviour
 			return;
 
 		_roundsLoaded += Step;
-		_timeUntilNextLoad = TimeBetweenRounds;
+		_timeUntilNextLoad = TimeBetweenRounds();
 		EmitSignalOnReloadProgress(_roundsLoaded, RoundsToLoad, Step);
 		if (_roundsLoaded < RoundsToLoad)
 			return;
 
 		Reset();
-		GameWorld.Instance.GetTree().CreateTimer(_boltCloseTime + TimeBetweenRounds, false).Timeout +=
+		GameWorld.Instance.GetTree().CreateTimer(_boltCloseTime + TimeBetweenRounds(), false).Timeout +=
 			EmitSignalOnReloadEnd;
 	}
 

@@ -142,10 +142,10 @@ public partial class SimpleFirearm : AbstractFirearm, IReloadable, ICustomReload
 		switch (_reloadBehaviour)
 		{
 			case NormalReloadBehaviour normalReloadBehaviour:
-				normalReloadBehaviour.ReloadTime = FirearmStats.ReloadTime;
+				normalReloadBehaviour.ReloadTime = () => ReloadTime;
 				break;
 			case SequentialReloadBehaviour sequentialReloadBehaviour:
-				sequentialReloadBehaviour.TimeBetweenRounds = FirearmStats.ReloadTime / FirearmStats.MagazineCapacity;
+				sequentialReloadBehaviour.TimeBetweenRounds = () => ReloadTime / FirearmStats.MagazineCapacity;
 				sequentialReloadBehaviour.RoundsToLoad = FirearmStats.MagazineCapacity;
 				break;
 			default:

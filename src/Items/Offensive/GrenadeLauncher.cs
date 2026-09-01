@@ -5,7 +5,7 @@ using Game.UI;
 
 namespace Game.Items.Offensive;
 
-public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
+public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable, ICustomReloadDisplay
 {
 	[Signal]
 	public delegate void OnReloadStartEventHandler();
@@ -39,7 +39,8 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 
 	public string? AttackActionString { get; set; }
 
-	public bool IsReloading { get; private set; }
+	public bool IsReloading => _reloadBehaviour.IsReloading;
+	public ReloadDisplayType ReloadDisplayType => _reloadBehaviour.DisplayType;
 
 	public int MagazineCapacity => FirearmStats.MagazineCapacity;
 
@@ -69,6 +70,7 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 			if (_fireGroup is ICooldown cooldown)
 				cooldown.CooldownDuration = FirearmStats.AttackSpeed;
 		};
+		InitializeReloadBehaviour();
 
 		OnAttack += () => OffensiveEffects.ApplyCameraShake(FirearmStats.CameraRecoilScale, GetViewport, CreateTween);
 		OnAttack += () =>
@@ -131,7 +133,8 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 			MagazineCount += step;
 		};
 
-		_reloadBehaviour.TimeBetweenRounds = FirearmStats.ReloadTime / FirearmStats.MagazineCapacity;
+		_reloadBehaviour.TimeBetweenRounds = () =>
+			(FirearmStats.ReloadTime * PlayerStats.ReloadTimeScale) / FirearmStats.MagazineCapacity;
 		_reloadBehaviour.RoundsToLoad = FirearmStats.MagazineCapacity;
 	}
 
@@ -142,6 +145,7 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 
 		if (_fireGroup is ICooldown fireGroupCooldown)
 			fireGroupCooldown.Process((float)delta);
+		_reloadBehaviour.Process((float)delta);
 
 		if (Input.IsActionPressed(InputMapNames.WeaponReload))
 		{
@@ -194,13 +198,8 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 			return;
 		if (MagazineCount >= MagazineCapacity)
 			return;
-		GetTree().CreateTimer(FirearmStats.ReloadTime, false).Timeout += () =>
-		{
-			MagazineCount = MagazineCapacity;
-			IsReloading = false;
-			EmitSignalOnReloadEnd();
-		};
-		IsReloading = true;
+		_reloadBehaviour.RoundsToLoad = MagazineCapacity - MagazineCount;
+		_reloadBehaviour.Reload();
 	}
 
 	protected override void HandleDamageECS(Entity entity)
