@@ -47,6 +47,12 @@ script = ExtResource("4_tvywd")
 BaseValue = 1.5
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
+[sub_resource type="Resource" id="Resource_w51uh"]
+resource_local_to_scene = true
+script = ExtResource("4_tvywd")
+BaseValue = 2.0
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
 [sub_resource type="Resource" id="Resource_igdhk"]
 resource_local_to_scene = true
 script = ExtResource("3_6wc5x")
@@ -215,6 +221,7 @@ _moveSpeed = SubResource("Resource_tvywd")
 _runSpeed = SubResource("Resource_855qw")
 _stamina = SubResource("Resource_j73re")
 _maxStamina = SubResource("Resource_mokft")
+_timeToMaxStamina = SubResource("Resource_w51uh")
 _defense = SubResource("Resource_igdhk")
 _criticalChance = SubResource("Resource_7c66e")
 _pickupRangeRadius = SubResource("Resource_7r3om")

@@ -44,6 +44,7 @@ func _on_mouse_exited() -> void:
 [node name="PickupUi" type="CanvasLayer" unique_id=720680017 node_paths=PackedStringArray("grid_container")]
 process_mode = 3
 layer = 2
+visible = false
 script = ExtResource("1_5cant")
 grid_container = NodePath("Control/MarginContainer/HBoxContainer/ScrollContainer/CenterContainer/GridContainer")
 

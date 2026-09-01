@@ -55,6 +55,7 @@ Stats = SubResource("Resource_bpnxk")
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=1953856797]
 process_mode = 3
 stream = ExtResource("7_18mki")
+volume_db = -4.0
 max_polyphony = 50
 bus = &"ShootSfxNoDistortion"
 

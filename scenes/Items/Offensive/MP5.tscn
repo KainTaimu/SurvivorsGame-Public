@@ -5,8 +5,8 @@
 [ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FireGroups/FullAutoFireGroup.cs" id="3_mtg14"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_6ie1v"]
 [ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="4_w7xe6"]
-[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="5_4wkf2"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_syor5"]
+[ext_resource type="Script" uid="uid://bs6wg1qssruhv" path="res://src/Items/Offensive/EnemyHitEffects/AbstractEnemyHitEffect.cs" id="6_w7xe6"]
 [ext_resource type="AudioStream" uid="uid://boifybv54qyo8" path="res://assets/SFX/Shoot/m92fs/m92fs_r1.wav" id="7_u5o0n"]
 [ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="8_u5o0n"]
 
@@ -23,15 +23,6 @@ metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 [sub_resource type="Resource" id="Resource_c62cd"]
 script = ExtResource("4_6ie1v")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w7xe6"]
-size = Vector2(32, 32)
-
-[sub_resource type="Resource" id="Resource_dkd5d"]
-script = ExtResource("5_4wkf2")
-Name = "MP5"
-Description = "A submachine gun chambered in 9x39mm. "
-metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_34bgn"]
 script = ExtResource("6_syor5")
@@ -62,7 +53,6 @@ _projectileScene = ExtResource("2_w7xe6")
 _fireGroup = SubResource("Resource_xm2c6")
 _reloadBehaviour = SubResource("Resource_7oacj")
 _projectileAttack = SubResource("Resource_c62cd")
-Properties = SubResource("Resource_dkd5d")
 Stats = SubResource("Resource_34bgn")
 
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=1380114539]
@@ -70,7 +60,7 @@ process_mode = 3
 stream = ExtResource("7_u5o0n")
 pitch_scale = 0.8
 max_polyphony = 29
-bus = &"ShootSfxNoCompress"
+bus = &"ShootSfxNoDistortion"
 
 [node name="MagAlmostEmpty" parent="." unique_id=866300451 instance=ExtResource("8_u5o0n")]
 

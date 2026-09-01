@@ -130,6 +130,7 @@ public partial class PlayerStatusEffectController : Node
 				"_runSpeed" => CharacterStatType.RunSpeed,
 				"_stamina" => CharacterStatType.Stamina,
 				"_maxStamina" => CharacterStatType.MaxStamina,
+				"_timeToMaxStamina" => CharacterStatType.TimeToMaxStamina,
 				"_defense" => CharacterStatType.Defense,
 				"_criticalChance" => CharacterStatType.CriticalChance,
 				"_pickupRangeRadius" => CharacterStatType.PickupRangeRadius,

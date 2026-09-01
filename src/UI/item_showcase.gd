@@ -36,13 +36,14 @@ func _gui_input(event: InputEvent) -> void:
 	on_item_picked.emit(assigned_item_scene)
 
 
-func assign_item(scene: PackedScene, properties: BaseItemProperties, _stats: BaseItemStats) -> void:
+func assign_item(scene: PackedScene, properties: BaseItemProperties, _stats: BaseItemStats, rarity: Globals.Rarity) -> void:
 	main_body = main_body_scene.instantiate() as PickupUiMainbody
 	add_child(main_body)
 
 	main_body.item_name_label.text = "[b]%s[/b]" % properties.Name
 	main_body.item_description_label.text = properties.Description
 	main_body.item_icon_rect.texture = properties.ItemIcon
+	main_body.set_rarity(rarity)
 	assigned_item_scene = scene
 	assigned_item_properties = properties
 	_set_assigned_state(true)

@@ -9,6 +9,7 @@ public enum CharacterStatType
 	RunSpeed,
 	Stamina,
 	MaxStamina,
+	TimeToMaxStamina,
 	Defense,
 	CriticalChance,
 	PickupRangeRadius,

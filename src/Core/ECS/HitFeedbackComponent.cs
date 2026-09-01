@@ -2,7 +2,7 @@ namespace Game.Core.ECS;
 
 public record struct HitFeedbackComponent()
 {
-	public required double HitTime
+	public required float HitTime
 	{
 		get;
 		init
@@ -10,12 +10,12 @@ public record struct HitFeedbackComponent()
 			field = value;
 			HitTimeLeft = value;
 		}
-	} = 0.5;
+	} = 0.5f;
 
-	public double HitTimeLeft
+	public float HitTimeLeft
 	{
 		get;
-		set => field = Math.Clamp(value, 0, double.MaxValue);
+		set => field = Math.Clamp(value, 0f, float.MaxValue);
 	}
 
 	public int Damage;

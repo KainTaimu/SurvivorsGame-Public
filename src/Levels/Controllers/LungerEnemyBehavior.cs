@@ -10,10 +10,10 @@ public partial class LungerEnemyBehavior : AbstractEnemyBehavior
 	public float TimeBetweenLunges = 5;
 
 	[Export]
-	public float MinDistanceToLunge = 612;
+	public float MinDistanceToLunge = 250;
 
 	[Export]
-	public float LungeVelocityMultiplier = 3f;
+	public float LungeVelocityMultiplier = 3.5f;
 
 	public override void AddComponent(Entity entity)
 	{

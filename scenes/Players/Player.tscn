@@ -99,6 +99,7 @@ animations = [{
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2g2d6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8rask"]
+bg_color = Color(0.82346076, 0.82346076, 0.8234605, 1)
 
 [sub_resource type="Gradient" id="Gradient_oypsu"]
 offsets = PackedFloat32Array(0, 0.67409015)

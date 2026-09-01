@@ -5,10 +5,10 @@
 [ext_resource type="Script" uid="uid://dxbw6ujou46y4" path="res://src/Items/Offensive/FireGroups/BurstFireGroup.cs" id="3_xm6od"]
 [ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="4_8o3sp"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_setls"]
-[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="5_wcxc0"]
+[ext_resource type="Script" uid="uid://bs6wg1qssruhv" path="res://src/Items/Offensive/EnemyHitEffects/AbstractEnemyHitEffect.cs" id="6_8o3sp"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_ppa22"]
-[ext_resource type="AudioStream" uid="uid://c88mthunuy3t2" path="res://assets/SFX/Shoot/m4/m4_r6.wav" id="7_xm6od"]
 [ext_resource type="AudioStream" uid="uid://b0bq5864hlorn" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Reloads, Cycling & More/WAV/Angel Mag Reload Full WAV.wav" id="8_bdsgl"]
+[ext_resource type="AudioStream" uid="uid://cdegag0i7orr5" path="res://assets/SFX/Shoot/m4/m4_r5.wav" id="8_jfqjf"]
 [ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="9_53d5q"]
 
 [sub_resource type="Resource" id="Resource_e1ej4"]
@@ -24,16 +24,6 @@ metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 [sub_resource type="Resource" id="Resource_y52bq"]
 script = ExtResource("4_setls")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xm6od"]
-size = Vector2(32, 32)
-
-[sub_resource type="Resource" id="Resource_8o3sp"]
-script = ExtResource("5_wcxc0")
-Name = "M16A4"
-Description = "A light, fast-firing rifle that shoots armor-piercing rounds. "
-ItemIcon = SubResource("PlaceholderTexture2D_xm6od")
-metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_2fu6x"]
 script = ExtResource("6_ppa22")
@@ -70,13 +60,12 @@ _projectileScene = ExtResource("2_8o3sp")
 _fireGroup = SubResource("Resource_e1ej4")
 _reloadBehaviour = SubResource("Resource_dar1o")
 _projectileAttack = SubResource("Resource_y52bq")
-Properties = SubResource("Resource_8o3sp")
 Stats = SubResource("Resource_2fu6x")
 
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=372155076]
 process_mode = 3
-stream = ExtResource("7_xm6od")
-max_polyphony = 3
+stream = ExtResource("8_jfqjf")
+max_polyphony = 30
 bus = &"ShootSfxNoDistortion"
 
 [node name="Reload" type="AudioStreamPlayer" parent="." unique_id=1204958426]

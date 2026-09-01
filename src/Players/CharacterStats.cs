@@ -28,6 +28,9 @@ public partial class CharacterStats : Node
 	private FloatStat _maxStamina = null!;
 
 	[Export]
+	private FloatStat _timeToMaxStamina = null!;
+
+	[Export]
 	private IntStat _defense = null!;
 
 	[Export]
@@ -78,6 +81,8 @@ public partial class CharacterStats : Node
 	}
 
 	public float MaxStamina => _maxStamina.Value;
+
+	public float TimeToMaxStamina => _timeToMaxStamina.Value;
 
 	public int Defense => _defense.Value;
 
