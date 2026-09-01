@@ -20,7 +20,7 @@ public abstract partial class AbstractStat : Resource
 
 	public float GetMultipliersSum()
 	{
-		return Multipliers.Count != 0 ? Multipliers.Sum() : 1;
+		return Multipliers.Count != 0 ? Multipliers.Aggregate(1f, (x, y) => x * y) : 1;
 	}
 
 	public float GetFlatSum()

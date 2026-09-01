@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dyh06qakgf4q2"]
 
 [ext_resource type="Script" uid="uid://bkbj2yohnsj6a" path="res://src/Players/Controllers/DebugClassInspector.cs" id="1_bu3gy"]
+[ext_resource type="Script" uid="uid://bnau8dx0k17pe" path="res://src/UI/scroll_container_mouse.gd" id="2_bu3gy"]
 
 [sub_resource type="SystemFont" id="SystemFont_fpx2f"]
 font_names = PackedStringArray("Monospace")
@@ -12,17 +13,15 @@ font_color = Color(0, 1, 0, 1)
 
 [node name="DebugClassInspector" type="CanvasLayer" unique_id=1989388267 node_paths=PackedStringArray("_label")]
 process_mode = 3
+layer = 207
 script = ExtResource("1_bu3gy")
 BindingFlags = 38
-_label = NodePath("PanelContainer/MarginContainer/Label")
+_label = NodePath("PanelContainer/MarginContainer/ScrollContainerMouse/Label")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=489429066]
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -162.5
-offset_right = 528.0
-offset_bottom = 162.5
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 472.0
 grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1467172368]
@@ -32,7 +31,14 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer" unique_id=1497068210]
+[node name="ScrollContainerMouse" type="ScrollContainer" parent="PanelContainer/MarginContainer" unique_id=1152094954 node_paths=PackedStringArray("scroll_area")]
+layout_mode = 2
+script = ExtResource("2_bu3gy")
+scroll_area = NodePath("..")
+snap_threshold = 0.0
+metadata/_custom_type_script = "uid://bnau8dx0k17pe"
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/ScrollContainerMouse" unique_id=1497068210]
 custom_minimum_size = Vector2(512, 0)
 custom_maximum_size = Vector2(512, -1)
 layout_mode = 2
