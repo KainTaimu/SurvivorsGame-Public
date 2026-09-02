@@ -20,7 +20,7 @@ namespace Game.Levels.Controllers;
 [GlobalClass]
 public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 {
-	private const int MAX_ENTITIES = 32768;
+	private const int MAX_ENTITIES = GameWorld.MAX_ECS_ENTITIES;
 	private const int ENTITY_STRIDE = 16;
 	private const int WORKGROUP_SIZE = 512;
 	private const int PUSH_CONSTANT_SIZE = 48;

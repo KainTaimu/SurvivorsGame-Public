@@ -14,7 +14,7 @@ public partial class GameWorld : Node
 
 	public static World World { get; private set; } = null!;
 
-	public const int MAX_ECS_ENTITIES = 16_384; // 2^14
+	public const int MAX_ECS_ENTITIES = 16_384; // 2^14 = 16_384
 
 	public override void _EnterTree()
 	{

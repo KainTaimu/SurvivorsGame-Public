@@ -9,8 +9,8 @@ size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_3wka7"]
 script = ExtResource("1_fegbk")
-Name = "M16A4"
-Description = "A light, fast-firing rifle that shoots armor-piercing rounds. "
+Name = "M16A2"
+Description = "A 3-burst assault rifle. This particular rifle has gone through extensive combat and can only reliably fire underpowered ammunition"
 ItemIcon = SubResource("PlaceholderTexture2D_nug3y")
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 

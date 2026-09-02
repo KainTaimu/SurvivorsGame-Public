@@ -37,9 +37,9 @@
 [ext_resource type="PackedScene" uid="uid://fumoyucxxk47" path="res://scenes/UI/UiHighlightClick.tscn" id="24_1jc4q"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ta1oo"]
-vertices = PackedVector2Array(8759, 1872, 17279.117, 10351.93, -3112.8516, 10320.0625, 5951, 1872, 17342.867, -10071.93, 8607, -1104, -3041.1406, -10040.0625, 5879, -1080)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 1, 0, 5), PackedInt32Array(6, 4, 5, 7), PackedInt32Array(2, 6, 7, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-3081, -10080, 17383, -10112, 17319, 10392, -3153, 10360)])
+vertices = PackedVector2Array(8759, 1872, 38133.406, 29802.813, -22892.422, 29521.18, 5951, 1872, -22040.57, -29841.617, 5879, -1080, 37291.547, -29275.367, 8607, -1104)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 2, 4, 5), PackedInt32Array(5, 4, 6, 7), PackedInt32Array(6, 1, 0, 7)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-22080, -29882, 37331, -29315, 38174, 29843, -22933, 29561)])
 source_geometry_mode = 1
 cell_size = 50.0
 border_size = 500.0
@@ -50,52 +50,79 @@ vertices = PackedVector2Array(7963.3438, -80.42969, 6812.0313, -261.54688, 7890.
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(4, 3, 5, 6, 7), PackedInt32Array(8, 7, 9, 10), PackedInt32Array(11, 12, 13, 14, 15, 16, 17), PackedInt32Array(16, 4, 7, 18), PackedInt32Array(19, 6, 5), PackedInt32Array(20, 21, 7, 8, 11), PackedInt32Array(6, 19, 22), PackedInt32Array(23, 6, 22, 24, 25, 26), PackedInt32Array(27, 25, 24, 28, 29, 30), PackedInt32Array(28, 19, 5, 29), PackedInt32Array(31, 1, 0, 15, 14, 32), PackedInt32Array(12, 10, 9, 33, 13), PackedInt32Array(29, 2, 1, 30), PackedInt32Array(17, 20, 11), PackedInt32Array(34, 31, 32, 27), PackedInt32Array(23, 26, 35), PackedInt32Array(9, 23, 35), PackedInt32Array(9, 35, 27, 33), PackedInt32Array(27, 30, 34), PackedInt32Array(27, 32, 33), PackedInt32Array(18, 17, 16), PackedInt32Array(18, 7, 21)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(5775, -1184, 8695, -1192, 8871, 1952, 5831, 1952)])
 
-[sub_resource type="Resource" id="Resource_qp8k8"]
+[sub_resource type="Resource" id="Resource_5ln3b"]
 resource_local_to_scene = true
 script = ExtResource("5_35lch")
 BaseValue = 25
 metadata/_custom_type_script = "uid://tfaqh3bcxdha"
 
-[sub_resource type="Resource" id="Resource_12xxg"]
+[sub_resource type="Resource" id="Resource_cs4dx"]
 resource_local_to_scene = true
 script = ExtResource("5_35lch")
 BaseValue = 25
 metadata/_custom_type_script = "uid://tfaqh3bcxdha"
 
-[sub_resource type="Resource" id="Resource_tchoq"]
+[sub_resource type="Resource" id="Resource_7tfia"]
 resource_local_to_scene = true
 script = ExtResource("6_nhio6")
 BaseValue = 500.0
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="Resource" id="Resource_ly2jd"]
+[sub_resource type="Resource" id="Resource_pqgaq"]
 resource_local_to_scene = true
 script = ExtResource("6_nhio6")
 BaseValue = 1.5
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="Resource" id="Resource_jgw7o"]
+[sub_resource type="Resource" id="Resource_i6jr6"]
 resource_local_to_scene = true
 script = ExtResource("6_nhio6")
 BaseValue = 1.5
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="Resource" id="Resource_g1y15"]
+[sub_resource type="Resource" id="Resource_qp8k8"]
 resource_local_to_scene = true
 script = ExtResource("6_nhio6")
 BaseValue = 1.5
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="Resource" id="Resource_70jyy"]
+[sub_resource type="Resource" id="Resource_12xxg"]
 resource_local_to_scene = true
 script = ExtResource("6_nhio6")
 BaseValue = 2.0
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="Resource" id="Resource_2qmwk"]
+[sub_resource type="Resource" id="Resource_tchoq"]
 resource_local_to_scene = true
 script = ExtResource("5_35lch")
 metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+
+[sub_resource type="Resource" id="Resource_ly2jd"]
+resource_local_to_scene = true
+script = ExtResource("6_nhio6")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_jgw7o"]
+resource_local_to_scene = true
+script = ExtResource("6_nhio6")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_g1y15"]
+resource_local_to_scene = true
+script = ExtResource("5_35lch")
+metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+
+[sub_resource type="Resource" id="Resource_70jyy"]
+resource_local_to_scene = true
+script = ExtResource("6_nhio6")
+BaseValue = 0.5
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_2qmwk"]
+resource_local_to_scene = true
+script = ExtResource("6_nhio6")
+BaseValue = 42.0
+metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_v72nv"]
 resource_local_to_scene = true
@@ -109,19 +136,17 @@ metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_ef3ac"]
 resource_local_to_scene = true
-script = ExtResource("5_35lch")
-metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+script = ExtResource("6_nhio6")
+metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_qq7qu"]
 resource_local_to_scene = true
 script = ExtResource("6_nhio6")
-BaseValue = 0.5
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_lvohr"]
 resource_local_to_scene = true
 script = ExtResource("6_nhio6")
-BaseValue = 42.0
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_unktv"]
@@ -130,31 +155,6 @@ script = ExtResource("6_nhio6")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_cdlvf"]
-resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_wgjp7"]
-resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_aprgk"]
-resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_4g4ko"]
-resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_sf4ij"]
-resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_w2eyx"]
 resource_local_to_scene = true
 script = ExtResource("6_nhio6")
 metadata/_custom_type_script = "uid://wsto3khl70md"
@@ -191,7 +191,7 @@ region = Rect2(62, 0, 31, 31)
 atlas = ExtResource("8_g5417")
 region = Rect2(93, 0, 31, 31)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_n48fn"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_wgjp7"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -229,17 +229,17 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="Resource" id="Resource_1aec1"]
+[sub_resource type="Resource" id="Resource_aprgk"]
 resource_local_to_scene = true
 script = ExtResource("9_bp5av")
 metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 
-[sub_resource type="Resource" id="Resource_c2ty2"]
+[sub_resource type="Resource" id="Resource_4g4ko"]
 resource_local_to_scene = true
 script = ExtResource("10_k2wow")
 metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ouloa"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sf4ij"]
 resource_local_to_scene = true
 shader = ExtResource("11_tgplc")
 shader_parameter/tint = Color(0.33618236, 2.6171097e-07, 1.2032687e-07, 1)
@@ -277,7 +277,7 @@ ItemCount = 3
 RarityUpperGate = 1
 metadata/_custom_type_script = "uid://b0b1rgkll8se8"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_35lch"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w2eyx"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_a1e6u"]
@@ -1305,36 +1305,36 @@ avoidance_enabled = false
 [node name="Player" parent="World" parent_id_path=PackedInt32Array(197767375) index="2" unique_id=1386970244 instance=ExtResource("3_vrw23")]
 
 [node name="CharacterStats" parent="World/Player/Character" parent_id_path=PackedInt32Array(1386970244, 527218927) index="0" unique_id=465756040]
-_health = SubResource("Resource_qp8k8")
-_maxHealth = SubResource("Resource_12xxg")
-_moveSpeed = SubResource("Resource_tchoq")
-_runSpeed = SubResource("Resource_ly2jd")
-_stamina = SubResource("Resource_jgw7o")
-_maxStamina = SubResource("Resource_g1y15")
-_timeToMaxStamina = SubResource("Resource_70jyy")
-_defense = SubResource("Resource_2qmwk")
-_criticalChance = SubResource("Resource_v72nv")
-_pickupRangeRadius = SubResource("Resource_r7cks")
-_healthRegenPerSecond = SubResource("Resource_ef3ac")
-_invincibilityTime = SubResource("Resource_qq7qu")
-_hitboxRadius = SubResource("Resource_lvohr")
-_criticalDamage = SubResource("Resource_unktv")
-_attackSpeed = SubResource("Resource_cdlvf")
-_bloomScale = SubResource("Resource_wgjp7")
-_recoilScale = SubResource("Resource_aprgk")
-_reloadTimeScale = SubResource("Resource_4g4ko")
-_incomingDamage = SubResource("Resource_sf4ij")
-_outgoingDamage = SubResource("Resource_w2eyx")
+_health = SubResource("Resource_5ln3b")
+_maxHealth = SubResource("Resource_cs4dx")
+_moveSpeed = SubResource("Resource_7tfia")
+_runSpeed = SubResource("Resource_pqgaq")
+_stamina = SubResource("Resource_i6jr6")
+_maxStamina = SubResource("Resource_qp8k8")
+_timeToMaxStamina = SubResource("Resource_12xxg")
+_defense = SubResource("Resource_tchoq")
+_criticalChance = SubResource("Resource_ly2jd")
+_pickupRangeRadius = SubResource("Resource_jgw7o")
+_healthRegenPerSecond = SubResource("Resource_g1y15")
+_invincibilityTime = SubResource("Resource_70jyy")
+_hitboxRadius = SubResource("Resource_2qmwk")
+_criticalDamage = SubResource("Resource_v72nv")
+_attackSpeed = SubResource("Resource_r7cks")
+_bloomScale = SubResource("Resource_ef3ac")
+_recoilScale = SubResource("Resource_qq7qu")
+_reloadTimeScale = SubResource("Resource_lvohr")
+_incomingDamage = SubResource("Resource_unktv")
+_outgoingDamage = SubResource("Resource_cdlvf")
 
 [node name="AnimatedSprite2D" parent="World/Player" index="1" unique_id=881638213]
-sprite_frames = SubResource("SpriteFrames_n48fn")
+sprite_frames = SubResource("SpriteFrames_wgjp7")
 
 [node name="M17" parent="World/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="0" unique_id=1989500741]
-_fireGroup = SubResource("Resource_1aec1")
-_reloadBehaviour = SubResource("Resource_c2ty2")
+_fireGroup = SubResource("Resource_aprgk")
+_reloadBehaviour = SubResource("Resource_4g4ko")
 
 [node name="ColorRect" parent="World/Player/DamageVignette" parent_id_path=PackedInt32Array(1386970244, 758455490) index="0" unique_id=1773597369]
-material = SubResource("ShaderMaterial_ouloa")
+material = SubResource("ShaderMaterial_sf4ij")
 
 [node name="GameWorld" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="0" unique_id=562045734 node_paths=PackedStringArray("MainPlayer")]
 MainPlayer = NodePath("../../World/Player")
@@ -1355,6 +1355,9 @@ script = ExtResource("18_duif7")
 
 [node name="EnemyBehaviorController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="6" unique_id=1041908003]
 SupportedTypes = 1
+
+[node name="EnemyCollisionSolverManager" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="8" unique_id=1705317581 node_paths=PackedStringArray("nav_map")]
+nav_map = NodePath("../../../World/Navigation/NavMap")
 
 [node name="EnemyRenderer" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="9" unique_id=1054443393]
 RenderDistanceFactor = 1.1
