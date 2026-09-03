@@ -5,9 +5,6 @@ namespace Game.Players.Controllers;
 public partial class PlayerMovementController : Node2D
 {
 	[Export]
-	public float ExhaustionTime = 1.5f;
-
-	[Export]
 	public bool NoClip;
 
 	[Export]
@@ -83,7 +80,7 @@ public partial class PlayerMovementController : Node2D
 		{
 			move *= Mathf.Max(1, CharacterStats.RunSpeed);
 			CharacterStats.Stamina -= (float)delta;
-			_exhaustion = ExhaustionTime;
+			_exhaustion = CharacterStats.ExhaustionTime;
 		}
 		_sprintParticles?.Emitting = _isSprinting;
 

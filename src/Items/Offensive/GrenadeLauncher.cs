@@ -63,13 +63,7 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 		if (_fireGroup is ICooldown c)
 			c.CooldownDuration = FirearmStats.AttackSpeed;
 
-		_fireGroup.OnFire += Attack;
-
-		FirearmStats.Changed += () =>
-		{
-			if (_fireGroup is ICooldown cooldown)
-				cooldown.CooldownDuration = FirearmStats.AttackSpeed;
-		};
+		InitializeFireGroupSettings();
 		InitializeReloadBehaviour();
 
 		OnAttack += () => OffensiveEffects.ApplyCameraShake(FirearmStats.CameraRecoilScale, GetViewport, CreateTween);
@@ -153,14 +147,17 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 			return;
 		}
 
-		if (IsReloading)
-			return;
-
 		_fireGroup.ProcessInput();
 	}
 
 	private void Attack()
 	{
+		if (MagazineCount <= 0)
+			return;
+
+		if (_reloadBehaviour.IsReloading)
+			return;
+
 		if (Crosshair is null)
 		{
 			Logger.LogError("No crosshair");

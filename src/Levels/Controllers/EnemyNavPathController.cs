@@ -120,11 +120,11 @@ public partial class EnemyNavPathController : Node2D, IFrameTimeTrackable
 		_lines.Clear();
 	}
 
-	[Query]
+	[Query(Parallel = true)]
 	[All<PositionComponent, VelocityComponent, MoveSpeedComponent>]
 	[None<DyingMarkerComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private void UpdateMovers(
+	private static void UpdateMovers(
 		[Data] in Rect2 visRec,
 		[Data] in float delta,
 		[Data] in bool drawNavPaths,
@@ -141,7 +141,7 @@ public partial class EnemyNavPathController : Node2D, IFrameTimeTrackable
 			MoveStraightMover(_playerPosition, delta, ref pos, ref velocity, ref moveSpeed);
 	}
 
-	private void MoveStraightMover(
+	private static void MoveStraightMover(
 		in Vector2 moveToTarget,
 		in float delta,
 		ref PositionComponent pos,
@@ -159,7 +159,7 @@ public partial class EnemyNavPathController : Node2D, IFrameTimeTrackable
 		);
 	}
 
-	private void MoveEnemy(
+	private static void MoveEnemy(
 		ref Vector2 pos,
 		ref Vector2 velocity,
 		Vector2 target,
@@ -169,11 +169,11 @@ public partial class EnemyNavPathController : Node2D, IFrameTimeTrackable
 	)
 	{
 		velocity = velocity.Lerp(pos.DirectionTo(target) * moveSpeed, turnSpeed * delta);
-		if (DrawNavPaths)
-			_lines.Enqueue(([pos, target], Colors.Blue));
+		// if (DrawNavPaths)
+		// 	_lines.Enqueue(([pos, target], Colors.Blue));
 	}
 
-	private void MoveNavMover(
+	private static void MoveNavMover(
 		float delta,
 		ref PositionComponent pos,
 		ref MoveSpeedComponent moveSpeed,

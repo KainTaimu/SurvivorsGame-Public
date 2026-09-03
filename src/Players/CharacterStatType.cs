@@ -10,6 +10,7 @@ public enum CharacterStatType
 	Stamina,
 	MaxStamina,
 	TimeToMaxStamina,
+	ExhaustionTime,
 	Defense,
 	CriticalChance,
 	PickupRangeRadius,

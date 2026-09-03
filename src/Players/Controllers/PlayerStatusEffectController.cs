@@ -29,10 +29,11 @@ public partial class PlayerStatusEffectController : Node
 	{
 		InitializeStatStacks();
 
-#if DEBUG
+		if (OS.HasFeature("prod"))
+			return;
+
 		foreach (var statusEffect in _testEffect)
 			CallDeferred(MethodName.AddStatusEffect, statusEffect);
-#endif
 	}
 
 	public override void _Process(double delta)
@@ -131,6 +132,7 @@ public partial class PlayerStatusEffectController : Node
 				"_stamina" => CharacterStatType.Stamina,
 				"_maxStamina" => CharacterStatType.MaxStamina,
 				"_timeToMaxStamina" => CharacterStatType.TimeToMaxStamina,
+				"_exhaustionTime" => CharacterStatType.ExhaustionTime,
 				"_defense" => CharacterStatType.Defense,
 				"_criticalChance" => CharacterStatType.CriticalChance,
 				"_pickupRangeRadius" => CharacterStatType.PickupRangeRadius,

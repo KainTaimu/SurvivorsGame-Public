@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://7kxy1v1ggvi8" path="res://scenes/Players/PlayerRookie.tscn" id="3_vrw23"]
 [ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="4_7c8pb"]
 [ext_resource type="Script" uid="uid://ufpoicgrn6de" path="res://src/Levels/NavMap.cs" id="4_faso5"]
+[ext_resource type="PackedScene" uid="uid://wos5frj6p77e" path="res://scenes/Levels/PolygonLightOccluder.tscn" id="4_nhio6"]
 [ext_resource type="Script" uid="uid://tfaqh3bcxdha" path="res://src/Models/IntStat.cs" id="5_35lch"]
 [ext_resource type="Script" uid="uid://dau6m811dtep8" path="res://src/Levels/Controllers/Waves/BlueprintWeight.cs" id="5_iiw53"]
 [ext_resource type="Script" uid="uid://3umr41bs3735" path="res://src/Levels/Controllers/AbstractEnemyBehavior.cs" id="5_n7qsj"]
@@ -46,8 +47,8 @@ border_size = 500.0
 agent_radius = 40.0
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_v38xc"]
-vertices = PackedVector2Array(7963.3438, -80.42969, 6812.0313, -261.54688, 7890.492, -338.53906, 8166.3438, -347.53906, 8236.359, -39.976563, 8161.508, -495.46094, 8685.539, -1181.9688, 8860.43, 1942, 7400.7266, 1625.3516, 5840.8203, 1942, 7255.172, 1652.1016, 7350.828, 1353.8984, 7205.2734, 1380.6484, 6495.7734, 543.6797, 6580.508, 422.35156, 7941.6406, 65.97656, 8214.656, 106.42969, 8099.5, 1071.3281, 8374.609, 1049.1484, 8134.672, -865.0703, 8111.3906, 1218.8516, 8386.5, 1196.6719, 8099.3594, -1008.7969, 5785.1797, -1174.0234, 7831.328, -942.9297, 6253.9766, -840.34375, 6119.578, -902.3125, 6138.422, -589.6875, 7866.6406, -799.2031, 7885.6563, -486.46094, 6639.492, -476.96875, 6696.508, -169.03125, 6354.2266, 264.3203, 6269.492, 385.64844, 6523.9688, -384.45313, 6004.0234, -651.65625)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(4, 3, 5, 6, 7), PackedInt32Array(8, 7, 9, 10), PackedInt32Array(11, 12, 13, 14, 15, 16, 17), PackedInt32Array(16, 4, 7, 18), PackedInt32Array(19, 6, 5), PackedInt32Array(20, 21, 7, 8, 11), PackedInt32Array(6, 19, 22), PackedInt32Array(23, 6, 22, 24, 25, 26), PackedInt32Array(27, 25, 24, 28, 29, 30), PackedInt32Array(28, 19, 5, 29), PackedInt32Array(31, 1, 0, 15, 14, 32), PackedInt32Array(12, 10, 9, 33, 13), PackedInt32Array(29, 2, 1, 30), PackedInt32Array(17, 20, 11), PackedInt32Array(34, 31, 32, 27), PackedInt32Array(23, 26, 35), PackedInt32Array(9, 23, 35), PackedInt32Array(9, 35, 27, 33), PackedInt32Array(27, 30, 34), PackedInt32Array(27, 32, 33), PackedInt32Array(18, 17, 16), PackedInt32Array(18, 7, 21)])
+vertices = PackedVector2Array(7963.3438, -80.42969, 6812.0313, -261.54688, 7890.492, -338.53906, 8166.3438, -347.53906, 8236.359, -39.976563, 8161.508, -495.46094, 8685.539, -1181.9688, 8860.43, 1942, 7400.7266, 1625.3516, 5840.8203, 1942, 7255.172, 1652.1016, 7941.6406, 65.97656, 8374.609, 1049.1484, 8099.5, 1071.3281, 7105.5625, 713.8281, 7159.25, 642.3906, 7744.5625, 14.828125, 8214.656, 106.42969, 8134.672, -865.0703, 8111.3906, 1218.8516, 8386.5, 1196.6719, 7350.828, 1353.8984, 8099.3594, -1008.7969, 5785.1797, -1174.0234, 7831.328, -942.9297, 6253.9766, -840.34375, 6119.578, -902.3125, 6138.422, -589.6875, 7866.6406, -799.2031, 7885.6563, -486.46094, 6639.492, -476.96875, 7678.2266, -9.6875, 7205.2734, 1380.6484, 6520.25, 1341.3906, 6474.1016, 1295.2422, 6004.0234, -651.65625, 6269.492, 385.64844, 7113.1016, 596.2422, 6495.7734, 543.6797, 6580.508, 422.35156, 6523.9688, -384.45313, 6354.2266, 264.3203, 6696.508, -169.03125, 7039.2266, 689.3125)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(4, 3, 5, 6, 7), PackedInt32Array(8, 7, 9, 10), PackedInt32Array(11, 12, 13, 14, 15, 16), PackedInt32Array(17, 4, 7), PackedInt32Array(18, 6, 5), PackedInt32Array(19, 20, 7, 8, 21), PackedInt32Array(6, 18, 22), PackedInt32Array(23, 6, 22, 24, 25, 26), PackedInt32Array(27, 25, 24, 28, 29, 30), PackedInt32Array(28, 18, 5, 29), PackedInt32Array(0, 11, 16, 31), PackedInt32Array(32, 10, 9, 33), PackedInt32Array(29, 2, 1, 30), PackedInt32Array(14, 13, 19, 21, 33), PackedInt32Array(33, 21, 32), PackedInt32Array(34, 33, 9), PackedInt32Array(34, 9, 23, 35, 36), PackedInt32Array(23, 26, 35), PackedInt32Array(37, 38, 39, 31), PackedInt32Array(27, 30, 40), PackedInt32Array(11, 17, 7, 12), PackedInt32Array(31, 39, 41, 42), PackedInt32Array(42, 1, 0, 31), PackedInt32Array(27, 40, 42, 41, 35), PackedInt32Array(35, 41, 36), PackedInt32Array(34, 36, 38), PackedInt32Array(43, 34, 38, 37), PackedInt32Array(14, 43, 37, 15), PackedInt32Array(12, 7, 20)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(5775, -1184, 8695, -1192, 8871, 1952, 5831, 1952)])
 
 [sub_resource type="Resource" id="Resource_5ln3b"]
@@ -94,13 +95,13 @@ metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_tchoq"]
 resource_local_to_scene = true
-script = ExtResource("5_35lch")
-metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+script = ExtResource("6_nhio6")
+metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_ly2jd"]
 resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-metadata/_custom_type_script = "uid://wsto3khl70md"
+script = ExtResource("5_35lch")
+metadata/_custom_type_script = "uid://tfaqh3bcxdha"
 
 [sub_resource type="Resource" id="Resource_jgw7o"]
 resource_local_to_scene = true
@@ -109,24 +110,24 @@ metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_g1y15"]
 resource_local_to_scene = true
+script = ExtResource("6_nhio6")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_70jyy"]
+resource_local_to_scene = true
 script = ExtResource("5_35lch")
 metadata/_custom_type_script = "uid://tfaqh3bcxdha"
 
-[sub_resource type="Resource" id="Resource_70jyy"]
+[sub_resource type="Resource" id="Resource_2qmwk"]
 resource_local_to_scene = true
 script = ExtResource("6_nhio6")
 BaseValue = 0.5
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="Resource" id="Resource_2qmwk"]
-resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-BaseValue = 42.0
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
 [sub_resource type="Resource" id="Resource_v72nv"]
 resource_local_to_scene = true
 script = ExtResource("6_nhio6")
+BaseValue = 42.0
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_r7cks"]
@@ -155,6 +156,11 @@ script = ExtResource("6_nhio6")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_cdlvf"]
+resource_local_to_scene = true
+script = ExtResource("6_nhio6")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_aprgk"]
 resource_local_to_scene = true
 script = ExtResource("6_nhio6")
 metadata/_custom_type_script = "uid://wsto3khl70md"
@@ -191,7 +197,7 @@ region = Rect2(62, 0, 31, 31)
 atlas = ExtResource("8_g5417")
 region = Rect2(93, 0, 31, 31)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_wgjp7"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_4g4ko"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -229,17 +235,17 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="Resource" id="Resource_aprgk"]
+[sub_resource type="Resource" id="Resource_w2eyx"]
 resource_local_to_scene = true
 script = ExtResource("9_bp5av")
 metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 
-[sub_resource type="Resource" id="Resource_4g4ko"]
+[sub_resource type="Resource" id="Resource_n48fn"]
 resource_local_to_scene = true
 script = ExtResource("10_k2wow")
 metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sf4ij"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1aec1"]
 resource_local_to_scene = true
 shader = ExtResource("11_tgplc")
 shader_parameter/tint = Color(0.33618236, 2.6171097e-07, 1.2032687e-07, 1)
@@ -277,7 +283,7 @@ ItemCount = 3
 RarityUpperGate = 1
 metadata/_custom_type_script = "uid://b0b1rgkll8se8"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w2eyx"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_35lch"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_a1e6u"]
@@ -384,8 +390,7 @@ metadata/_custom_type_script = "uid://catd5vqs68f8g"
 script = ExtResource("10_ta1oo")
 Duration = 60.0
 EnemyBlueprints = SubResource("W_col_2")
-SpawnMinTime = 0.77
-SpawnMaxTime = 1.16
+SpawnMinTime = 0.7
 Rewards = Array[ExtResource("7_v38xc")]([SubResource("Resource_g5417")])
 metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 
@@ -462,8 +467,8 @@ metadata/_custom_type_script = "uid://catd5vqs68f8g"
 script = ExtResource("9_duif7")
 SpawnCountTarget = 100
 EnemyBlueprints = SubResource("W_col_3")
-SpawnMinTime = 0.7
-SpawnMaxTime = 1.1
+SpawnMinTime = 0.6
+SpawnMaxTime = 0.9
 Rewards = Array[ExtResource("7_v38xc")]([SubResource("Resource_mxkc7"), SubResource("Resource_cv516")])
 metadata/_custom_type_script = "uid://cksmwvaxx1m18"
 
@@ -536,8 +541,8 @@ point_count = 3
 script = ExtResource("10_ta1oo")
 Duration = 60.0
 EnemyBlueprints = SubResource("W_col_4")
-SpawnMinTime = 0.45
-SpawnMaxTime = 0.85
+SpawnMinTime = 0.4
+SpawnMaxTime = 0.8
 SpawnTimeCurveOverMaxTime = SubResource("Curve_w2wr7")
 SpawnBatchMax = 2
 SpawnBatchCurveOverMaxTime = SubResource("Curve_ta1oo")
@@ -926,7 +931,7 @@ SpriteName = "placeholder"
 Type = 1
 Stats = SubResource("Resource_884al")
 
-[sub_resource type="Resource" id="Resource_885es"]
+[sub_resource type="Resource" id="Resource_5n2l8"]
 script = ExtResource("5_iiw53")
 Blueprint = SubResource("Resource_ix03f")
 Weight = 0.1
@@ -934,7 +939,7 @@ metadata/_custom_type_script = "uid://dau6m811dtep8"
 
 [sub_resource type="Resource" id="Resource_35lch"]
 script = ExtResource("6_vrw23")
-Weights = Array[Object]([SubResource("Resource_tgplc"), SubResource("Resource_1jc4q"), SubResource("Resource_885es")])
+Weights = Array[Object]([SubResource("Resource_tgplc"), SubResource("Resource_1jc4q"), SubResource("Resource_5n2l8")])
 
 [sub_resource type="Resource" id="Resource_yk4ca"]
 script = ExtResource("11_ta1oo")
@@ -970,6 +975,26 @@ RarityLowerGate = 3
 RarityUpperGate = 4
 metadata/_custom_type_script = "uid://b0b1rgkll8se8"
 
+[sub_resource type="Resource" id="Resource_t7v5b"]
+script = ExtResource("13_n7qsj")
+StatName = 8
+Operation = 1
+Value = 0.1
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_wgjp7"]
+script = ExtResource("12_0iw8n")
+Name = "Wave 9 buff"
+Permanent = true
+Hidden = true
+Modifiers = Array[ExtResource("13_n7qsj")]([SubResource("Resource_t7v5b")])
+metadata/_custom_type_script = "uid://bdk4fdcqvypav"
+
+[sub_resource type="Resource" id="Resource_4g4ko"]
+script = ExtResource("14_w70hc")
+_statusEffects = Array[ExtResource("12_0iw8n")]([SubResource("Resource_wgjp7")])
+metadata/_custom_type_script = "uid://catd5vqs68f8g"
+
 [sub_resource type="Resource" id="W_wave_9"]
 script = ExtResource("9_duif7")
 SpawnCountTarget = 315
@@ -977,7 +1002,7 @@ EnemyBlueprints = SubResource("Resource_35lch")
 SpawnMinTime = 0.25
 SpawnMaxTime = 0.45
 SpawnBatchMax = 3
-Rewards = Array[ExtResource("7_v38xc")]([SubResource("Resource_uui33")])
+Rewards = Array[ExtResource("7_v38xc")]([SubResource("Resource_uui33"), SubResource("Resource_4g4ko")])
 metadata/_custom_type_script = "uid://cksmwvaxx1m18"
 
 [sub_resource type="Resource" id="Resource_xuljg"]
@@ -1205,7 +1230,7 @@ SpawnBatchMin = 4
 SpawnBatchMax = 8
 metadata/_custom_type_script = "uid://cksmwvaxx1m18"
 
-[sub_resource type="Resource" id="Resource_t7v5b"]
+[sub_resource type="Resource" id="Resource_sf4ij"]
 script = ExtResource("17_faso5")
 FrameName = &"Nav"
 metadata/_custom_type_script = "uid://daw8gyvo0xom3"
@@ -1247,7 +1272,6 @@ position = Vector2(-7031, 0)
 navigation_polygon = SubResource("NavigationPolygon_ta1oo")
 script = ExtResource("4_faso5")
 GridSize = 255
-RangeFactor = 5.0
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="World/Navigation" index="1" unique_id=539000798]
 position = Vector2(-7031, 0)
@@ -1296,6 +1320,14 @@ z_as_relative = false
 position = Vector2(272, 1503.0001)
 rotation = 1.3889992
 
+[node name="PolygonLightOccluder" parent="World/Navigation/NavigationRegion2D" index="1" unique_id=1199949879 instance=ExtResource("4_nhio6")]
+position = Vector2(7308, 329)
+polygon = PackedVector2Array(-181, 267, 373, -327, 419, -310, -149, 299)
+
+[node name="PolygonLightOccluder2" parent="World/Navigation/NavigationRegion2D" index="2" unique_id=541885480 instance=ExtResource("4_nhio6")]
+position = Vector2(6669, 1028)
+polygon = PackedVector2Array(-181, 267, 373, -327, 419, -310, -149, 299)
+
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="World/Navigation" index="2" unique_id=1964352253 groups=["navigation_polygon_source_geometry_group"]]
 vertices = PackedVector2Array(-1152, -1080, 1576, -1104, 1728, 1872, -1080, 1872)
 affect_navigation_mesh = true
@@ -1312,29 +1344,31 @@ _runSpeed = SubResource("Resource_pqgaq")
 _stamina = SubResource("Resource_i6jr6")
 _maxStamina = SubResource("Resource_qp8k8")
 _timeToMaxStamina = SubResource("Resource_12xxg")
-_defense = SubResource("Resource_tchoq")
-_criticalChance = SubResource("Resource_ly2jd")
-_pickupRangeRadius = SubResource("Resource_jgw7o")
-_healthRegenPerSecond = SubResource("Resource_g1y15")
-_invincibilityTime = SubResource("Resource_70jyy")
-_hitboxRadius = SubResource("Resource_2qmwk")
-_criticalDamage = SubResource("Resource_v72nv")
-_attackSpeed = SubResource("Resource_r7cks")
-_bloomScale = SubResource("Resource_ef3ac")
-_recoilScale = SubResource("Resource_qq7qu")
-_reloadTimeScale = SubResource("Resource_lvohr")
-_incomingDamage = SubResource("Resource_unktv")
-_outgoingDamage = SubResource("Resource_cdlvf")
+_exhaustionTime = SubResource("Resource_tchoq")
+_defense = SubResource("Resource_ly2jd")
+_criticalChance = SubResource("Resource_jgw7o")
+_pickupRangeRadius = SubResource("Resource_g1y15")
+_healthRegenPerSecond = SubResource("Resource_70jyy")
+_invincibilityTime = SubResource("Resource_2qmwk")
+_hitboxRadius = SubResource("Resource_v72nv")
+_criticalDamage = SubResource("Resource_r7cks")
+_attackSpeed = SubResource("Resource_ef3ac")
+_bloomScale = SubResource("Resource_qq7qu")
+_recoilScale = SubResource("Resource_lvohr")
+_reloadTimeScale = SubResource("Resource_unktv")
+_incomingDamage = SubResource("Resource_cdlvf")
+_outgoingDamage = SubResource("Resource_aprgk")
 
 [node name="AnimatedSprite2D" parent="World/Player" index="1" unique_id=881638213]
-sprite_frames = SubResource("SpriteFrames_wgjp7")
+sprite_frames = SubResource("SpriteFrames_4g4ko")
 
 [node name="M17" parent="World/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="0" unique_id=1989500741]
-_fireGroup = SubResource("Resource_aprgk")
-_reloadBehaviour = SubResource("Resource_4g4ko")
+_fireGroup = SubResource("Resource_w2eyx")
+_reloadBehaviour = SubResource("Resource_n48fn")
 
 [node name="ColorRect" parent="World/Player/DamageVignette" parent_id_path=PackedInt32Array(1386970244, 758455490) index="0" unique_id=1773597369]
-material = SubResource("ShaderMaterial_sf4ij")
+material = SubResource("ShaderMaterial_1aec1")
+metadata/_edit_lock_ = true
 
 [node name="GameWorld" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="0" unique_id=562045734 node_paths=PackedStringArray("MainPlayer")]
 MainPlayer = NodePath("../../World/Player")
@@ -1348,13 +1382,18 @@ script = ExtResource("17_duif7")
 pickup_scene = ExtResource("18_ta1oo")
 
 [node name="EnemyNavMeshController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="4" unique_id=7126221 instance=ExtResource("16_v38xc")]
-FrameTime = SubResource("Resource_t7v5b")
+FrameTime = SubResource("Resource_sf4ij")
 
 [node name="EnemyMover" type="Node" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="5" unique_id=46792980]
 script = ExtResource("18_duif7")
 
 [node name="EnemyBehaviorController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="6" unique_id=1041908003]
 SupportedTypes = 1
+
+[node name="GoreManager" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="7" unique_id=623372769]
+process_thread_group = 2
+process_thread_group_order = 0
+process_thread_messages = 0
 
 [node name="EnemyCollisionSolverManager" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="8" unique_id=1705317581 node_paths=PackedStringArray("nav_map")]
 nav_map = NodePath("../../../World/Navigation/NavMap")

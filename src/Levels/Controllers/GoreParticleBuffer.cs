@@ -157,7 +157,8 @@ public partial class GoreParticleBuffer : Node2D
 		_activeParticles = Mathf.Clamp(_activeParticles + 1, 0, _maxParticleCount - 1);
 		_nextParticleIdx = Mathf.Wrap(_nextParticleIdx + 1, 0, _maxParticleCount - 1);
 		Upload(_nextParticleIdx, in particle);
-		_multiMesh.VisibleInstanceCount = _activeParticles;
+		if (_activeParticles <= _maxParticleCount - 1)
+			_multiMesh.VisibleInstanceCount = _activeParticles;
 	}
 
 	private void Upload(int idx, in GoreParticle particle)
