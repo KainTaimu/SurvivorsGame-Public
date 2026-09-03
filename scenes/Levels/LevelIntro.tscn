@@ -7,21 +7,15 @@
 [ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="4_7c8pb"]
 [ext_resource type="Script" uid="uid://ufpoicgrn6de" path="res://src/Levels/NavMap.cs" id="4_faso5"]
 [ext_resource type="PackedScene" uid="uid://wos5frj6p77e" path="res://scenes/Levels/PolygonLightOccluder.tscn" id="4_nhio6"]
-[ext_resource type="Script" uid="uid://tfaqh3bcxdha" path="res://src/Models/IntStat.cs" id="5_35lch"]
 [ext_resource type="Script" uid="uid://dau6m811dtep8" path="res://src/Levels/Controllers/Waves/BlueprintWeight.cs" id="5_iiw53"]
 [ext_resource type="Script" uid="uid://3umr41bs3735" path="res://src/Levels/Controllers/AbstractEnemyBehavior.cs" id="5_n7qsj"]
-[ext_resource type="Script" uid="uid://wsto3khl70md" path="res://src/Models/FloatStat.cs" id="6_nhio6"]
 [ext_resource type="Script" uid="uid://ds8lkov4wnj2l" path="res://src/Levels/Controllers/Waves/WeightedWaveBlueprintCollection.cs" id="6_vrw23"]
 [ext_resource type="Script" uid="uid://boji730ttjnbp" path="res://src/Levels/Controllers/LungerEnemyBehavior.cs" id="6_w70hc"]
 [ext_resource type="Script" uid="uid://d02cy04gxh3di" path="res://src/Levels/Controllers/Waves/AbstractWaveCompletionReward.cs" id="7_v38xc"]
 [ext_resource type="Script" uid="uid://cwbl163hsg1db" path="res://src/Levels/Controllers/Waves/AbstractWave.cs" id="8_faso5"]
-[ext_resource type="Texture2D" uid="uid://c0d0pkcn6hw68" path="res://assets/Players/player.png" id="8_g5417"]
-[ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FireGroups/FullAutoFireGroup.cs" id="9_bp5av"]
 [ext_resource type="Script" uid="uid://cksmwvaxx1m18" path="res://src/Levels/Controllers/Waves/WaveSpawnCount.cs" id="9_duif7"]
-[ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="10_k2wow"]
 [ext_resource type="Script" uid="uid://b7ol6jtjagoe" path="res://src/Levels/Controllers/Waves/WaveDuration.cs" id="10_ta1oo"]
 [ext_resource type="Script" uid="uid://b0b1rgkll8se8" path="res://src/Levels/Controllers/Waves/PickupWaveCompletionReward.cs" id="11_ta1oo"]
-[ext_resource type="Shader" uid="uid://bg3me0bhc4em2" path="res://src/Shaders/vignette.gdshader" id="11_tgplc"]
 [ext_resource type="Resource" uid="uid://bo0ohu302yg51" path="res://scenes/Enemies/Blueprints/Big.tres" id="11_w2wr7"]
 [ext_resource type="Script" uid="uid://bdk4fdcqvypav" path="res://src/Players/Controllers/StatusEffect.cs" id="12_0iw8n"]
 [ext_resource type="Script" uid="uid://d31d8uns5faa5" path="res://src/Players/Controllers/StatusEffectModifier.cs" id="13_n7qsj"]
@@ -50,208 +44,6 @@ agent_radius = 40.0
 vertices = PackedVector2Array(7963.3438, -80.42969, 6812.0313, -261.54688, 7890.492, -338.53906, 8166.3438, -347.53906, 8236.359, -39.976563, 8161.508, -495.46094, 8685.539, -1181.9688, 8860.43, 1942, 7400.7266, 1625.3516, 5840.8203, 1942, 7255.172, 1652.1016, 7941.6406, 65.97656, 8374.609, 1049.1484, 8099.5, 1071.3281, 7105.5625, 713.8281, 7159.25, 642.3906, 7744.5625, 14.828125, 8214.656, 106.42969, 8134.672, -865.0703, 8111.3906, 1218.8516, 8386.5, 1196.6719, 7350.828, 1353.8984, 8099.3594, -1008.7969, 5785.1797, -1174.0234, 7831.328, -942.9297, 6253.9766, -840.34375, 6119.578, -902.3125, 6138.422, -589.6875, 7866.6406, -799.2031, 7885.6563, -486.46094, 6639.492, -476.96875, 7678.2266, -9.6875, 7205.2734, 1380.6484, 6520.25, 1341.3906, 6474.1016, 1295.2422, 6004.0234, -651.65625, 6269.492, 385.64844, 7113.1016, 596.2422, 6495.7734, 543.6797, 6580.508, 422.35156, 6523.9688, -384.45313, 6354.2266, 264.3203, 6696.508, -169.03125, 7039.2266, 689.3125)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(4, 3, 5, 6, 7), PackedInt32Array(8, 7, 9, 10), PackedInt32Array(11, 12, 13, 14, 15, 16), PackedInt32Array(17, 4, 7), PackedInt32Array(18, 6, 5), PackedInt32Array(19, 20, 7, 8, 21), PackedInt32Array(6, 18, 22), PackedInt32Array(23, 6, 22, 24, 25, 26), PackedInt32Array(27, 25, 24, 28, 29, 30), PackedInt32Array(28, 18, 5, 29), PackedInt32Array(0, 11, 16, 31), PackedInt32Array(32, 10, 9, 33), PackedInt32Array(29, 2, 1, 30), PackedInt32Array(14, 13, 19, 21, 33), PackedInt32Array(33, 21, 32), PackedInt32Array(34, 33, 9), PackedInt32Array(34, 9, 23, 35, 36), PackedInt32Array(23, 26, 35), PackedInt32Array(37, 38, 39, 31), PackedInt32Array(27, 30, 40), PackedInt32Array(11, 17, 7, 12), PackedInt32Array(31, 39, 41, 42), PackedInt32Array(42, 1, 0, 31), PackedInt32Array(27, 40, 42, 41, 35), PackedInt32Array(35, 41, 36), PackedInt32Array(34, 36, 38), PackedInt32Array(43, 34, 38, 37), PackedInt32Array(14, 43, 37, 15), PackedInt32Array(12, 7, 20)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(5775, -1184, 8695, -1192, 8871, 1952, 5831, 1952)])
-
-[sub_resource type="Resource" id="Resource_5ln3b"]
-resource_local_to_scene = true
-script = ExtResource("5_35lch")
-BaseValue = 25
-metadata/_custom_type_script = "uid://tfaqh3bcxdha"
-
-[sub_resource type="Resource" id="Resource_cs4dx"]
-resource_local_to_scene = true
-script = ExtResource("5_35lch")
-BaseValue = 25
-metadata/_custom_type_script = "uid://tfaqh3bcxdha"
-
-[sub_resource type="Resource" id="Resource_7tfia"]
-resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-BaseValue = 500.0
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_pqgaq"]
-resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-BaseValue = 1.5
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_i6jr6"]
-resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-BaseValue = 1.5
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_qp8k8"]
-resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-BaseValue = 1.5
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_12xxg"]
-resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-BaseValue = 2.0
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_tchoq"]
-resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_ly2jd"]
-resource_local_to_scene = true
-script = ExtResource("5_35lch")
-metadata/_custom_type_script = "uid://tfaqh3bcxdha"
-
-[sub_resource type="Resource" id="Resource_jgw7o"]
-resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_g1y15"]
-resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_70jyy"]
-resource_local_to_scene = true
-script = ExtResource("5_35lch")
-metadata/_custom_type_script = "uid://tfaqh3bcxdha"
-
-[sub_resource type="Resource" id="Resource_2qmwk"]
-resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-BaseValue = 0.5
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_v72nv"]
-resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-BaseValue = 42.0
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_r7cks"]
-resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_ef3ac"]
-resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_qq7qu"]
-resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_lvohr"]
-resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_unktv"]
-resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_cdlvf"]
-resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_aprgk"]
-resource_local_to_scene = true
-script = ExtResource("6_nhio6")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2g2d6"]
-atlas = ExtResource("8_g5417")
-region = Rect2(0, 0, 31, 31)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8rask"]
-atlas = ExtResource("8_g5417")
-region = Rect2(31, 0, 31, 31)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jgr36"]
-atlas = ExtResource("8_g5417")
-region = Rect2(62, 0, 31, 31)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_espgp"]
-atlas = ExtResource("8_g5417")
-region = Rect2(93, 0, 31, 31)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ragxt"]
-atlas = ExtResource("8_g5417")
-region = Rect2(0, 0, 31, 31)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_c66x0"]
-atlas = ExtResource("8_g5417")
-region = Rect2(31, 0, 31, 31)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_k7ubp"]
-atlas = ExtResource("8_g5417")
-region = Rect2(62, 0, 31, 31)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_k8uaa"]
-atlas = ExtResource("8_g5417")
-region = Rect2(93, 0, 31, 31)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_4g4ko"]
-resource_local_to_scene = true
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2g2d6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8rask")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jgr36")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_espgp")
-}],
-"loop": 1,
-"name": &"idle",
-"speed": 7.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ragxt")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_c66x0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_k7ubp")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_k8uaa")
-}],
-"loop": 1,
-"name": &"run",
-"speed": 7.0
-}]
-
-[sub_resource type="Resource" id="Resource_w2eyx"]
-resource_local_to_scene = true
-script = ExtResource("9_bp5av")
-metadata/_custom_type_script = "uid://bt8inkwpypk5b"
-
-[sub_resource type="Resource" id="Resource_n48fn"]
-resource_local_to_scene = true
-script = ExtResource("10_k2wow")
-metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1aec1"]
-resource_local_to_scene = true
-shader = ExtResource("11_tgplc")
-shader_parameter/tint = Color(0.33618236, 2.6171097e-07, 1.2032687e-07, 1)
-shader_parameter/alpha = 0.0
-shader_parameter/inner_radius = 0.0
-shader_parameter/outer_radius = 1.0
 
 [sub_resource type="Resource" id="W_stats_1"]
 script = ExtResource("3_sl6q3")
@@ -283,7 +75,7 @@ ItemCount = 3
 RarityUpperGate = 1
 metadata/_custom_type_script = "uid://b0b1rgkll8se8"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_35lch"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wbp0e"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_a1e6u"]
@@ -1235,31 +1027,6 @@ script = ExtResource("17_faso5")
 FrameName = &"Nav"
 metadata/_custom_type_script = "uid://daw8gyvo0xom3"
 
-[sub_resource type="GDScript" id="GDScript_do71q"]
-script/source = "extends Button
-
-func _on_button_up() -> void:
-	var player := GameWorldInstance.MainPlayer as Player
-	var wpn_ctrlr := player.WeaponController as Node
-	for child in wpn_ctrlr.get_children():
-		child.queue_free()
-"
-
-[sub_resource type="GDScript" id="GDScript_ogoab"]
-script/source = "extends CanvasLayer
-
-@export var fps_label: Label
-
-
-func _ready() -> void:
-	if !OS.has_feature(\"prod\"):
-		queue_free()
-
-
-func update() -> void:
-	fps_label.text = \"FPS: %s\" % roundi(Performance.get_monitor(Performance.TIME_FPS))
-"
-
 [node name="Level" unique_id=2141389114 instance=ExtResource("1_dtsfe")]
 
 [node name="Parallax2D" parent="World" parent_id_path=PackedInt32Array(197767375) index="0" unique_id=951832910]
@@ -1336,40 +1103,6 @@ avoidance_enabled = false
 
 [node name="Player" parent="World" parent_id_path=PackedInt32Array(197767375) index="2" unique_id=1386970244 instance=ExtResource("3_vrw23")]
 
-[node name="CharacterStats" parent="World/Player/Character" parent_id_path=PackedInt32Array(1386970244, 527218927) index="0" unique_id=465756040]
-_health = SubResource("Resource_5ln3b")
-_maxHealth = SubResource("Resource_cs4dx")
-_moveSpeed = SubResource("Resource_7tfia")
-_runSpeed = SubResource("Resource_pqgaq")
-_stamina = SubResource("Resource_i6jr6")
-_maxStamina = SubResource("Resource_qp8k8")
-_timeToMaxStamina = SubResource("Resource_12xxg")
-_exhaustionTime = SubResource("Resource_tchoq")
-_defense = SubResource("Resource_ly2jd")
-_criticalChance = SubResource("Resource_jgw7o")
-_pickupRangeRadius = SubResource("Resource_g1y15")
-_healthRegenPerSecond = SubResource("Resource_70jyy")
-_invincibilityTime = SubResource("Resource_2qmwk")
-_hitboxRadius = SubResource("Resource_v72nv")
-_criticalDamage = SubResource("Resource_r7cks")
-_attackSpeed = SubResource("Resource_ef3ac")
-_bloomScale = SubResource("Resource_qq7qu")
-_recoilScale = SubResource("Resource_lvohr")
-_reloadTimeScale = SubResource("Resource_unktv")
-_incomingDamage = SubResource("Resource_cdlvf")
-_outgoingDamage = SubResource("Resource_aprgk")
-
-[node name="AnimatedSprite2D" parent="World/Player" index="1" unique_id=881638213]
-sprite_frames = SubResource("SpriteFrames_4g4ko")
-
-[node name="M17" parent="World/Player/PlayerWeaponController" parent_id_path=PackedInt32Array(1386970244, 1687061162) index="0" unique_id=1989500741]
-_fireGroup = SubResource("Resource_w2eyx")
-_reloadBehaviour = SubResource("Resource_n48fn")
-
-[node name="ColorRect" parent="World/Player/DamageVignette" parent_id_path=PackedInt32Array(1386970244, 758455490) index="0" unique_id=1773597369]
-material = SubResource("ShaderMaterial_1aec1")
-metadata/_edit_lock_ = true
-
 [node name="GameWorld" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="0" unique_id=562045734 node_paths=PackedStringArray("MainPlayer")]
 MainPlayer = NodePath("../../World/Player")
 
@@ -1401,35 +1134,8 @@ nav_map = NodePath("../../../World/Navigation/NavMap")
 [node name="EnemyRenderer" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="9" unique_id=1054443393]
 RenderDistanceFactor = 1.1
 
-[node name="Button2" type="Button" parent="UI/PauseMenu" parent_id_path=PackedInt32Array(1937596238) index="4" unique_id=1421843558]
-offset_right = 8.0
-offset_bottom = 8.0
-text = "CLEAR WEAPONS"
-script = SubResource("GDScript_do71q")
+[node name="PauseMenu" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="0" unique_id=1937596238]
+visible = true
 
 [node name="PerformanceMonitor" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="3" unique_id=1872396024 node_paths=PackedStringArray("Targets")]
 Targets = [NodePath("../../Systems/EnemySystems/EnemyRenderer"), NodePath("../../Systems/EnemySystems/EnemyTargetQuery"), NodePath("../../Systems/EnemySystems/EnemyNavMeshController")]
-
-[node name="SimpleFps" type="CanvasLayer" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="4" unique_id=440619980 node_paths=PackedStringArray("fps_label")]
-script = SubResource("GDScript_ogoab")
-fps_label = NodePath("Label")
-
-[node name="Label" type="Label" parent="UI/SimpleFps" index="0" unique_id=1702484712]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -40.0
-offset_bottom = 19.0
-grow_horizontal = 0
-theme = ExtResource("23_w2wr7")
-theme_override_font_sizes/font_size = 24
-text = "FPS"
-
-[node name="Timer" type="Timer" parent="UI/SimpleFps" index="1" unique_id=1138991249]
-autostart = true
-ignore_time_scale = true
-
-[connection signal="button_up" from="UI/PauseMenu/Button2" to="UI/PauseMenu/Button2" method="_on_button_up"]
-[connection signal="timeout" from="UI/SimpleFps/Timer" to="UI/SimpleFps" method="update"]
-
-[editable path="World/Player"]

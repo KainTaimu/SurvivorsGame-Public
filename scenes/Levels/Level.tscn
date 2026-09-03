@@ -19,6 +19,7 @@
 [ext_resource type="Script" uid="uid://djv8orxale1c3" path="res://src/Levels/Controllers/EnemyTargetQuery.cs" id="16_x7tv3"]
 [ext_resource type="PackedScene" uid="uid://bh4q5xe8eps71" path="res://scenes/Levels/AirdropManager.tscn" id="20_qsiuk"]
 [ext_resource type="PackedScene" uid="uid://do6p1pg4x0vkf" path="res://scenes/UI/Hud.tscn" id="20_vg5sh"]
+[ext_resource type="Theme" uid="uid://cwyp7j6g53bhf" path="res://resources/UiThemes/NormalUi.tres" id="22_aig1n"]
 [ext_resource type="PackedScene" uid="uid://cb6opjo4xaaio" path="res://scenes/UI/PerformanceMonitor.tscn" id="24_qsiuk"]
 [ext_resource type="PackedScene" uid="uid://1hchpk0m1v70" path="res://scenes/Levels/GoreManager.tscn" id="27_3nhtq"]
 
@@ -31,6 +32,21 @@ metadata/_custom_type_script = "uid://daw8gyvo0xom3"
 script = ExtResource("14_faxpm")
 FrameName = &"Render"
 metadata/_custom_type_script = "uid://daw8gyvo0xom3"
+
+[sub_resource type="GDScript" id="GDScript_vg5sh"]
+script/source = "extends CanvasLayer
+
+@export var fps_label: Label
+
+
+func _ready() -> void:
+	if !OS.has_feature(\"prod\"):
+		queue_free()
+
+
+func update() -> void:
+	fps_label.text = \"FPS: %s\" % roundi(Performance.get_monitor(Performance.TIME_FPS))
+"
 
 [node name="Level" type="Node2D" unique_id=2141389114]
 z_index = -999
@@ -117,3 +133,24 @@ visible = false
 [node name="PerformanceMonitor" parent="UI" unique_id=1872396024 node_paths=PackedStringArray("Targets") instance=ExtResource("24_qsiuk")]
 Targets = [NodePath("../../Systems/EnemySystems/EnemyRenderer"), NodePath("../../Systems/EnemySystems/EnemyTargetQuery")]
 RefreshRate = 5
+
+[node name="SimpleFps" type="CanvasLayer" parent="UI" unique_id=1867266027 node_paths=PackedStringArray("fps_label")]
+script = SubResource("GDScript_vg5sh")
+fps_label = NodePath("Label")
+
+[node name="Label" type="Label" parent="UI/SimpleFps" unique_id=5563140]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 19.0
+grow_horizontal = 0
+theme = ExtResource("22_aig1n")
+theme_override_font_sizes/font_size = 24
+text = "FPS"
+
+[node name="Timer" type="Timer" parent="UI/SimpleFps" unique_id=1073716978]
+autostart = true
+ignore_time_scale = true
+
+[connection signal="timeout" from="UI/SimpleFps/Timer" to="UI/SimpleFps" method="update"]

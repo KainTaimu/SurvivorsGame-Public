@@ -110,6 +110,16 @@ border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 
+[sub_resource type="GDScript" id="GDScript_onjwa"]
+script/source = "extends Button
+
+func _on_button_up() -> void:
+	var player := GameWorldInstance.MainPlayer as Player
+	var wpn_ctrlr := player.WeaponController as Node
+	for child in wpn_ctrlr.get_children():
+		child.queue_free()
+"
+
 [node name="PauseMenu" type="CanvasLayer" unique_id=1796089998]
 process_mode = 3
 layer = 2
@@ -270,5 +280,12 @@ theme_override_constants/margin_bottom = 8
 [node name="VBoxContainer" type="VBoxContainer" parent="LicenseButton/PanelContainer/ScrollContainer/MarginContainer" unique_id=602267572]
 layout_mode = 2
 
+[node name="Button2" type="Button" parent="." unique_id=659916264]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "CLEAR WEAPONS"
+script = SubResource("GDScript_onjwa")
+
 [connection signal="button_down" from="RightPanel/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Button" to="RightPanel/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Button" method="on_click"]
 [connection signal="button_up" from="LicenseButton" to="LicenseButton" method="_on_button_up"]
+[connection signal="button_up" from="Button2" to="Button2" method="_on_button_up"]

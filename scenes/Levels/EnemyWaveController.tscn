@@ -5,7 +5,6 @@
 
 [node name="EnemyWaveController" type="Node" unique_id=2001503768]
 script = ExtResource("1_5bvdh")
-Waves = Array[Object]([])
 
 [node name="EnemySpawner" type="Node" parent="." unique_id=1455964209]
 script = ExtResource("2_el7fo")
