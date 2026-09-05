@@ -81,8 +81,6 @@ public partial class NavMap : NavigationRegion2D
 	public override void _PhysicsProcess(double delta)
 	{
 		_cachedSpace = GetWorld2D().DirectSpaceState;
-		if (_cachedPlayerPosition.IsEqualApprox(GameWorld.Instance.MainPlayer.GlobalPosition))
-			return;
 
 		_cachedPlayerPosition = GameWorld.Instance.MainPlayer.GlobalPosition;
 
