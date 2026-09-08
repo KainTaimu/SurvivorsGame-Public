@@ -5,7 +5,6 @@
 [ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FireGroups/FullAutoFireGroup.cs" id="3_buqgn"]
 [ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="4_5fkaf"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="5_grhei"]
-[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="6_qoasw"]
 [ext_resource type="Script" uid="uid://bs6wg1qssruhv" path="res://src/Items/Offensive/EnemyHitEffects/AbstractEnemyHitEffect.cs" id="7_ghrcs"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="7_h8333"]
 [ext_resource type="AudioStream" uid="uid://4c4atd84imnn" path="res://assets/SFX/Shoot/g3a3/g3a3_r7.wav" id="8_8reff"]
@@ -25,14 +24,6 @@ metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 [sub_resource type="Resource" id="Resource_y52bq"]
 script = ExtResource("5_grhei")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_m8lav"]
-size = Vector2(32, 32)
-
-[sub_resource type="Resource" id="Resource_40q5n"]
-script = ExtResource("6_qoasw")
-Name = "G3A3"
-metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_2fu6x"]
 script = ExtResource("7_h8333")
@@ -67,12 +58,12 @@ _projectileScene = ExtResource("2_ghrcs")
 _fireGroup = SubResource("Resource_4xmj0")
 _reloadBehaviour = SubResource("Resource_rtolw")
 _projectileAttack = SubResource("Resource_y52bq")
-Properties = SubResource("Resource_40q5n")
 Stats = SubResource("Resource_2fu6x")
 
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=372155076]
 process_mode = 3
 stream = ExtResource("8_8reff")
+volume_db = -2.0
 pitch_scale = 0.9
 max_polyphony = 30
 bus = &"ShootSfxNoCompress"

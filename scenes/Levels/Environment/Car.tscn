@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://wos5frj6p77e" path="res://scenes/Levels/PolygonLightOccluder.tscn" id="4_c2w5s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_do71q"]
-size = Vector2(256, 128)
+size = Vector2(224, 96)
 
 [node name="Car" type="Node2D" unique_id=437076138 node_paths=PackedStringArray("_body", "_debugPolygon")]
 z_index = 1

@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://cmidrkjr0le3o" path="res://scenes/Items/Offensive/P90.tscn" id="19_q0pvf"]
 [ext_resource type="PackedScene" uid="uid://dwyqdinyji8tt" path="res://scenes/Items/Offensive/MP5.tscn" id="20_oi6mw"]
 [ext_resource type="PackedScene" uid="uid://ceimmtu3q4x6n" path="res://scenes/Items/Offensive/GrenadeThrower.tscn" id="21_dpdnh"]
+[ext_resource type="PackedScene" uid="uid://culqrn6mdcvx3" path="res://scenes/Items/Offensive/MP7.tscn" id="22_04byt"]
 
 [resource]
 script = ExtResource("1_cngp6")
@@ -42,6 +43,7 @@ _uids_to_string_ids = Dictionary[StringName, StringName]({
 &"uid://bjo1aoxs8w1yw": &"Sniper",
 &"uid://bjv5rfumg72tr": &"M249S",
 &"uid://bkabsg23vh70n": &"Ak47",
+&"uid://bmuioy8fb8jll": &"MP7",
 &"uid://bnxfab4uqs6n2": &"Minigun",
 &"uid://bx3nk3ntkr78k": &"M92FS",
 &"uid://c7hl0io0wdufn": &"GrenadeLauncher",
@@ -73,6 +75,7 @@ _string_ids_to_uids = Dictionary[StringName, StringName]({
 &"M7": &"uid://dh08ymqfxu5xh",
 &"M92FS": &"uid://bx3nk3ntkr78k",
 &"MP5": &"uid://nsapijc5eire",
+&"MP7": &"uid://bmuioy8fb8jll",
 &"Minigun": &"uid://bnxfab4uqs6n2",
 &"P90": &"uid://k1vxoxjbg1ys",
 &"Revolver": &"uid://02537d5q0ct0",
@@ -82,68 +85,71 @@ _string_ids_to_uids = Dictionary[StringName, StringName]({
 })
 _property_index = Dictionary[StringName, Dictionary]({
 &"scene": {
-ExtResource("1_anleb"): {
-&"Revolver": true
+ExtResource("22_04byt"): {
+&"MP7": true
 },
-ExtResource("2_04byt"): {
-&"AutoShotgun": true
-},
-ExtResource("3_yj66o"): {
-&"G3A3": true
-},
-ExtResource("4_1pdk2"): {
-&"M16A4": true
-},
-ExtResource("5_16g23"): {
-&"Sniper": true
-},
-ExtResource("6_mmlnp"): {
-&"M249S": true
-},
-ExtResource("7_aan2q"): {
-&"Ak47": true
-},
-ExtResource("8_a5qbb"): {
-&"Minigun": true
-},
-ExtResource("9_lr57v"): {
-&"M92FS": true
-},
-ExtResource("10_rxhkk"): {
-&"GrenadeLauncher": true
-},
-ExtResource("11_beu6o"): {
-&"M17": true
-},
-ExtResource("12_yjphm"): {
-&"M4": true
-},
-ExtResource("13_bdckn"): {
-&"M249": true
-},
-ExtResource("14_1jhp7"): {
-&"SKS": true
-},
-ExtResource("15_c420m"): {
-&"Dmr": true
-},
-ExtResource("16_ca340"): {
-&"Shotgun": true
-},
-ExtResource("17_kf61w"): {
-&"M7": true
-},
-ExtResource("18_2hw1k"): {
-&"M1911": true
-},
-ExtResource("19_q0pvf"): {
-&"P90": true
+ExtResource("21_dpdnh"): {
+&"GrenadeThrower": true
 },
 ExtResource("20_oi6mw"): {
 &"MP5": true
 },
-ExtResource("21_dpdnh"): {
-&"GrenadeThrower": true
+ExtResource("19_q0pvf"): {
+&"P90": true
+},
+ExtResource("18_2hw1k"): {
+&"M1911": true
+},
+ExtResource("17_kf61w"): {
+&"M7": true
+},
+ExtResource("16_ca340"): {
+&"Shotgun": true
+},
+ExtResource("15_c420m"): {
+&"Dmr": true
+},
+ExtResource("14_1jhp7"): {
+&"SKS": true
+},
+ExtResource("13_bdckn"): {
+&"M249": true
+},
+ExtResource("12_yjphm"): {
+&"M4": true
+},
+ExtResource("11_beu6o"): {
+&"M17": true
+},
+ExtResource("10_rxhkk"): {
+&"GrenadeLauncher": true
+},
+ExtResource("9_lr57v"): {
+&"M92FS": true
+},
+ExtResource("8_a5qbb"): {
+&"Minigun": true
+},
+ExtResource("7_aan2q"): {
+&"Ak47": true
+},
+ExtResource("6_mmlnp"): {
+&"M249S": true
+},
+ExtResource("5_16g23"): {
+&"Sniper": true
+},
+ExtResource("4_1pdk2"): {
+&"M16A4": true
+},
+ExtResource("3_yj66o"): {
+&"G3A3": true
+},
+ExtResource("2_04byt"): {
+&"AutoShotgun": true
+},
+ExtResource("1_anleb"): {
+&"Revolver": true
 }
 }
 })
