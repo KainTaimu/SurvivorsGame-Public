@@ -29,7 +29,7 @@ public class NavWallProximity
 		var (boundaryEdges, polygons) = GatherNavmeshGeometry(regions);
 		if (boundaryEdges.Count == 0)
 		{
-			Logger.LogError(
+			CustomLogger.LogError(
 				"NavWallProximity: no boundary edges found;",
 				"clamp pre-filter disabled (NeedsClamp always true)."
 			);
@@ -41,7 +41,7 @@ public class NavWallProximity
 		MarkOutsideCells(polygons);
 
 		_ready = true;
-		Logger.LogDebug("NavWallProximity: baked ", _dims, " cells, ", boundaryEdges.Count, " boundary edges.");
+		CustomLogger.LogDebug("NavWallProximity: baked ", _dims, " cells, ", boundaryEdges.Count, " boundary edges.");
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]

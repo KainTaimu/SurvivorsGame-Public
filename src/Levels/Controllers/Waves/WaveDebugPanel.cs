@@ -38,7 +38,7 @@ public partial class WaveDebugPanel : CanvasLayer
 		{
 			var wave = _waveController.CurrentWave as IWaveResettable;
 			wave?.Reset();
-			Logger.LogInfo("Wave reset");
+			CustomLogger.LogInfo("Wave reset");
 		}
 	}
 

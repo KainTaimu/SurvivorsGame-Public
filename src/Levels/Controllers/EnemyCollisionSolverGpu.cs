@@ -101,7 +101,7 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 		var viewport = GetViewport();
 		if (viewport is null)
 		{
-			Logger.LogError("EnemyCollisionSolverGpu: missing viewport.");
+			CustomLogger.LogError("EnemyCollisionSolverGpu: missing viewport.");
 			return;
 		}
 
@@ -141,7 +141,7 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 			if (_gpuCounter[0] > MAX_ENTITIES && !_overflowWarned)
 			{
 				_overflowWarned = true;
-				Logger.LogError(
+				CustomLogger.LogError(
 					"EnemyCollisionSolverGpu: entity count exceeded " + MAX_ENTITIES,
 					"; entities beyond the cap are not collision-solved."
 				);
@@ -232,7 +232,7 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 		_rd = RenderingServer.CreateLocalRenderingDevice();
 		if (_rd is null)
 		{
-			Logger.LogError(
+			CustomLogger.LogError(
 				"EnemyCollisionSolverGpu: no local RenderingDevice",
 				"(RenderingDevice requires Forward+ or Mobile renderer).",
 				"Solver disabled."
@@ -293,7 +293,7 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 		var file = GD.Load<RDShaderFile>(path);
 		if (file is null)
 		{
-			Logger.LogError("EnemyCollisionSolverGpu: missing shader ", path);
+			CustomLogger.LogError("EnemyCollisionSolverGpu: missing shader ", path);
 			Enabled = false;
 			return default;
 		}
@@ -302,7 +302,7 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 		var compileError = spirv.GetStageCompileError(RenderingDevice.ShaderStage.Compute);
 		if (!string.IsNullOrEmpty(compileError))
 		{
-			Logger.LogError("EnemyCollisionSolverGpu: shader error in ", path, compileError);
+			CustomLogger.LogError("EnemyCollisionSolverGpu: shader error in ", path, compileError);
 			Enabled = false;
 			return default;
 		}
@@ -310,7 +310,7 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 		var shader = _rd!.ShaderCreateFromSpirV(spirv);
 		if (!shader.IsValid)
 		{
-			Logger.LogError("EnemyCollisionSolverGpu: shader create failed ", path);
+			CustomLogger.LogError("EnemyCollisionSolverGpu: shader create failed ", path);
 			Enabled = false;
 		}
 

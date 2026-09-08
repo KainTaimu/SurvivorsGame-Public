@@ -139,7 +139,7 @@ public partial class CurrentWeaponUi : CanvasLayer
 				var stringId = _registry.Filter("scene", weaponScene).SingleOrDefault();
 				if (stringId is null)
 				{
-					Logger.LogError(
+					CustomLogger.LogError(
 						$"no entry with property \"scene\" matches SceneFilePath \"{weapon.SceneFilePath}\""
 					);
 					return;

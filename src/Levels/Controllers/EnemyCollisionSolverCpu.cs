@@ -52,7 +52,7 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 		var viewport = GetViewport();
 		if (viewport is null)
 		{
-			Logger.LogError("missing viewport.");
+			CustomLogger.LogError("missing viewport.");
 			return;
 		}
 
@@ -65,7 +65,7 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 		// makes it harder for player to avoid the spilled enemies.
 		_grid = new UniformGridWorld<(Vector2, Entity, float)>(_gridSize, new Vector2(windowSize.X, windowSize.X), 128);
 
-		Logger.LogDebug("in", _grid.Dimensions, _grid.CellSize);
+		CustomLogger.LogDebug("in", _grid.Dimensions, _grid.CellSize);
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -168,9 +168,11 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 		var newPos = entries[id].pos;
 		// Arch does not support nullable operator in parameters
 		// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-		if (navMap is not null
+		if (
+			navMap is not null
 			&& navMap.GridVisibilityRect.HasPoint(pos.Position)
-			&& (navMap.WallProximity is null || navMap.WallProximity.NeedsClamp(newPos)))
+			&& (navMap.WallProximity is null || navMap.WallProximity.NeedsClamp(newPos))
+		)
 			pos.Position = NavigationServer2D.MapGetClosestPoint(NavMap.Map, newPos);
 		else
 			pos.Position = newPos;

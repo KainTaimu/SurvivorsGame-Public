@@ -18,7 +18,7 @@ public partial class ServiceLocator : Node
 	{
 		if (_services.Count > 0)
 		{
-			Logger.LogError(
+			CustomLogger.LogError(
 				"_services is not empty when it shouldn't. ServiceLocator should only ever have one instance per launch. Clearing previous entries"
 			);
 			_services.Clear();
@@ -36,7 +36,7 @@ public partial class ServiceLocator : Node
 		var service = _services.OfType<T>().FirstOrDefault();
 		if (service is null)
 		{
-			Logger.LogError($"Service \"{typeof(T).Name}\" not found!");
+			CustomLogger.LogError($"Service \"{typeof(T).Name}\" not found!");
 			return null;
 		}
 

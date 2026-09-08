@@ -35,7 +35,7 @@ public partial class PauseController : Node
 		}
 		if (locker.ProcessMode != ProcessModeEnum.Always)
 		{
-			Logger.LogError("Locker must have ProcessMode set to Always to lock the pause controller.");
+			CustomLogger.LogError("Locker must have ProcessMode set to Always to lock the pause controller.");
 			return;
 		}
 

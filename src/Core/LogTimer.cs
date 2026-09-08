@@ -10,7 +10,7 @@ public static class LogTimer
 		{
 			stopwatch.Stop();
 			var elapsed = stopwatch.Elapsed.TotalMilliseconds;
-			Logger.LogDebug($"{name} took {elapsed:0.###} ms");
+			CustomLogger.LogDebug($"{name} took {elapsed:0.###} ms");
 		});
 	}
 
@@ -22,7 +22,7 @@ public static class LogTimer
 		{
 			stopwatch.Stop();
 			var elapsed = stopwatch.Elapsed.TotalMilliseconds;
-			Logger.LogDebug($"{name} took {elapsed:0.###} ms");
+			CustomLogger.LogDebug($"{name} took {elapsed:0.###} ms");
 		});
 	}
 
@@ -33,7 +33,7 @@ public static class LogTimer
 		{
 			stopwatch.Stop();
 			var elapsed = stopwatch.Elapsed.TotalMicroseconds;
-			Logger.LogDebug($"{name} took {elapsed:0.###} us");
+			CustomLogger.LogDebug($"{name} took {elapsed:0.###} us");
 		});
 	}
 
@@ -45,7 +45,7 @@ public static class LogTimer
 		{
 			stopwatch.Stop();
 			var elapsed = stopwatch.Elapsed.TotalMicroseconds;
-			Logger.LogDebug($"{name} took {elapsed:0.###} us");
+			CustomLogger.LogDebug($"{name} took {elapsed:0.###} us");
 		});
 	}
 

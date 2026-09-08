@@ -20,7 +20,7 @@ public partial class PickupWaveCompletionReward : AbstractWaveCompletionReward
 	{
 		if (EnemyWaveController.Instance is null)
 		{
-			Logger.LogError("Tried to spawn pickup UI without wave controller.");
+			CustomLogger.LogError("Tried to spawn pickup UI without wave controller.");
 			return;
 		}
 		var pickupUi = _pickupUiScene.Instantiate();

@@ -25,7 +25,7 @@ public abstract partial class AbstractWave : Resource
 		{
 			if (value > SpawnMaxTime)
 			{
-				Logger.LogWarning($"SpawnMinTime ({field}) clamped to SpawnMaxTime ({SpawnMaxTime})");
+				CustomLogger.LogWarning($"SpawnMinTime ({field}) clamped to SpawnMaxTime ({SpawnMaxTime})");
 				field = SpawnMaxTime;
 				return;
 			}
@@ -42,7 +42,7 @@ public abstract partial class AbstractWave : Resource
 		{
 			if (value < SpawnMinTime)
 			{
-				Logger.LogWarning($"SpawnMaxTime ({field}) clamped to SpawnMinTime ({SpawnMinTime})");
+				CustomLogger.LogWarning($"SpawnMaxTime ({field}) clamped to SpawnMinTime ({SpawnMinTime})");
 				field = SpawnMinTime;
 				return;
 			}

@@ -40,13 +40,13 @@ public partial class PerformanceMonitor : CanvasLayer
 		{
 			if (node is null)
 			{
-				Logger.LogWarning("Null reference in Targets");
+				CustomLogger.LogWarning("Null reference in Targets");
 				continue;
 			}
 
 			if (node is not IFrameTimeTrackable)
 			{
-				Logger.LogError($"{node.Name} is not IFrameTimeTrackable");
+				CustomLogger.LogError($"{node.Name} is not IFrameTimeTrackable");
 				continue;
 			}
 

@@ -103,11 +103,11 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 		if (_fireGroup is BurstFireGroup burst)
 		{
 			if (!Stats.Additional.TryGetValue("BurstCount", out var burstCount))
-				Logger.LogError($"{Name} : Key \"BurstCount\" not found in stats");
+				CustomLogger.LogError($"{Name} : Key \"BurstCount\" not found in stats");
 			burst.BurstCount = burstCount.AsInt32();
 
 			if (!Stats.Additional.TryGetValue("TimeBetweenBurst", out var tbb))
-				Logger.LogError($"{Name} : Key \"TimeBetweenBurst\" not found in stats");
+				CustomLogger.LogError($"{Name} : Key \"TimeBetweenBurst\" not found in stats");
 			burst.TimeBetweenBursts = tbb.AsSingle();
 		}
 	}
@@ -160,7 +160,7 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 
 		if (Crosshair is null)
 		{
-			Logger.LogError("No crosshair");
+			CustomLogger.LogError("No crosshair");
 			return;
 		}
 

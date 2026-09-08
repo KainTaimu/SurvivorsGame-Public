@@ -69,6 +69,8 @@ public partial class AirdropManager : Node2D
 			dropScene: dropScene,
 			dropParent: dropParent
 		);
-		Logger.LogInfo($"Spawned airdrop : Drop={dropPosition} : TTA={timeToArrivalSec} : Angle={arrivalAngleDeg}");
+		CustomLogger.LogInfo(
+			$"Spawned airdrop : Drop={dropPosition} : TTA={timeToArrivalSec} : Angle={arrivalAngleDeg}"
+		);
 	}
 }

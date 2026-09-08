@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://bp4nxtqkp6d2o"]
+
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="1_jhi6t"]
+[ext_resource type="PackedScene" uid="uid://etybfmdjqx38" path="res://scenes/Items/Offensive/G17-F.tscn" id="2_jhi6t"]
+[ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="3_s33ih"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_60k07"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_63ro6"]
+script = ExtResource("1_jhi6t")
+Name = "G17-F"
+Description = "A 9x19mm pistol with an aftermarket trigger and an extended magazine. Its ridiculous firing rate and lack of a recoil reduction device makes this an extremely difficult weapon to yield for an inexperienced shooter."
+ItemIcon = SubResource("PlaceholderTexture2D_60k07")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
+[resource]
+script = ExtResource("3_s33ih")
+properties = SubResource("Resource_63ro6")
+scene = ExtResource("2_jhi6t")
+spawn_weight = 0.6
+rarity = 1
+metadata/_custom_type_script = "uid://brmkfowmxbv52"

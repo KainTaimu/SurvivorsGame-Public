@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://etybfmdjqx38"]
+
+[ext_resource type="Script" uid="uid://d4hn7uwvshdju" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_lwg7w"]
+[ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_1st61"]
+[ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FireGroups/FullAutoFireGroup.cs" id="3_p6buy"]
+[ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="4_4vdmh"]
+[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="5_t502c"]
+[ext_resource type="Script" uid="uid://bs6wg1qssruhv" path="res://src/Items/Offensive/EnemyHitEffects/AbstractEnemyHitEffect.cs" id="6_mo0ng"]
+[ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="7_5x82t"]
+[ext_resource type="AudioStream" uid="uid://dsn3egnvto4jq" path="res://assets/SFX/Shoot/m92fs/m92fs_r2.wav" id="8_nbdnq"]
+[ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="10_fd7j2"]
+
+[sub_resource type="Resource" id="Resource_nwir2"]
+resource_local_to_scene = true
+script = ExtResource("3_p6buy")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_wy0k6"]
+resource_local_to_scene = true
+script = ExtResource("4_4vdmh")
+metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
+
+[sub_resource type="Resource" id="Resource_nbdnq"]
+script = ExtResource("5_t502c")
+metadata/_custom_type_script = "uid://dpq42sefws67v"
+
+[sub_resource type="Resource" id="Resource_lwg7w"]
+script = ExtResource("7_5x82t")
+ReloadTime = 2.5
+BloomCoefficientDeg = 14.0
+HorizontalRecoilMin = 8.0
+HorizontalBaseRecoil = 8.0
+HorizontalRecoilRandom = 8.0
+VerticalBaseRecoil = 8.0
+VerticalRecoilRandom = 2.0
+RecoilScale = 0.5
+HorizontalRecoilPunish = false
+CameraRecoilScale = 0.5
+BaseDamage = 5
+BaseDamageVarianceMultiplier = 0.05
+BaseCritDamageMultiplier = 0.5
+BaseCritChanceProportion = 0.1
+BaseProjectileSpeed = 4100
+BaseProjectileScaleMultiplier = 0.7
+BaseProjectileRadius = 30
+BaseAttackSpeed = 0.04
+BasePierceLimit = 2
+Additional = Dictionary[String, Variant]({
+"Knockback": 10.0
+})
+metadata/_custom_type_script = "uid://di81uufgmcsog"
+
+[node name="G17-F" type="Node2D" unique_id=265287884]
+script = ExtResource("1_lwg7w")
+_projectileScene = ExtResource("2_1st61")
+_fireGroup = SubResource("Resource_nwir2")
+_reloadBehaviour = SubResource("Resource_wy0k6")
+_projectileAttack = SubResource("Resource_nbdnq")
+Stats = SubResource("Resource_lwg7w")
+
+[node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=372155076]
+process_mode = 3
+stream = ExtResource("8_nbdnq")
+pitch_scale = 1.1
+max_polyphony = 30
+bus = &"ShootSfx"
+
+[node name="MagAlmostEmpty" parent="." unique_id=866300451 instance=ExtResource("10_fd7j2")]
+
+[connection signal="AlmostEmpty" from="." to="MagAlmostEmpty" method="play"]
+[connection signal="OnAttack" from="." to="Shoot" method="play"]

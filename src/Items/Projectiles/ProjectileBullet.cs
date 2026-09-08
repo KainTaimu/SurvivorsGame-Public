@@ -46,7 +46,7 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 		}
 
 		if (!IsInitialized)
-			Logger.LogWarning($"Projectile {GetType().Name} is processing but is not initialized");
+			CustomLogger.LogWarning($"Projectile {GetType().Name} is processing but is not initialized");
 
 		var from = Position;
 

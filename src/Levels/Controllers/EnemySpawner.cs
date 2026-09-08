@@ -19,7 +19,7 @@ public partial class EnemySpawner : Node
 		var ss = ServiceLocator.GetService<SpriteFrameMappingsService>();
 		if (ss is null)
 		{
-			Logger.LogError("Could not get sprite frame mappings service");
+			CustomLogger.LogError("Could not get sprite frame mappings service");
 			return null;
 		}
 

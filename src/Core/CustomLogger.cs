@@ -2,7 +2,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-public static class Logger
+public static class CustomLogger
 {
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void LogInfo(params object[] s)
@@ -31,6 +31,8 @@ public static class Logger
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static void SendLog(Action<string> method, string message)
 	{
+		if (OS.HasFeature("prod"))
+			return;
 		method(message);
 	}
 

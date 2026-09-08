@@ -105,7 +105,7 @@ public partial class Crosshair : Node2D
 	public void ChangePrimaryCrosshairSpread(float spreadRatio)
 	{
 		if (spreadRatio < 0 || spreadRatio > 1)
-			Logger.LogError("spreadRatio should be 0 < spreadRatio < 1");
+			CustomLogger.LogError("spreadRatio should be 0 < spreadRatio < 1");
 		var frameCount = PrimaryCrosshairSprite.SpriteFrames.GetFrameCount(PrimaryCrosshairSprite.Animation);
 		var idx = (int)Math.Round(spreadRatio * frameCount);
 		PrimaryCrosshairSprite.Frame = Mathf.Clamp(idx, 0, frameCount - 1);
@@ -114,7 +114,7 @@ public partial class Crosshair : Node2D
 	public void ChangeSecondaryCrosshairSpread(float spreadRatio)
 	{
 		if (spreadRatio < 0 || spreadRatio > 1)
-			Logger.LogError("spreadRatio should be 0 < spreadRatio < 1");
+			CustomLogger.LogError("spreadRatio should be 0 < spreadRatio < 1");
 		var frameCount = SecondaryCrosshairSprite.SpriteFrames.GetFrameCount(SecondaryCrosshairSprite.Animation);
 		var idx = (int)Math.Round(spreadRatio * frameCount);
 		SecondaryCrosshairSprite.Frame = Mathf.Clamp(idx, 0, frameCount);

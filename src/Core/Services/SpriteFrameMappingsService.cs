@@ -23,7 +23,7 @@ public partial class SpriteFrameMappingsService : Service
 	{
 		if (!_spriteMapping.TryGetValue(name, out var sprite))
 		{
-			Logger.LogError($"{name} does not exist");
+			CustomLogger.LogError($"{name} does not exist");
 			return PlaceholderSpriteFrame;
 		}
 

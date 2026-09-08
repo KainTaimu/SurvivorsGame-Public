@@ -57,7 +57,7 @@ public partial class PlayerStatusEffectController : Node
 	{
 		if (!_activeEffects.Contains(statusEffect))
 		{
-			Logger.LogError($"Attempt to remove status effect {statusEffect.Name} that has not been applied.");
+			CustomLogger.LogError($"Attempt to remove status effect {statusEffect.Name} that has not been applied.");
 			return;
 		}
 
@@ -90,7 +90,7 @@ public partial class PlayerStatusEffectController : Node
 		{
 			if (!_statToStatField.TryGetValue(modifier.StatName, out var targetStat))
 			{
-				Logger.LogError($"Unknown stat name {modifier.StatName}");
+				CustomLogger.LogError($"Unknown stat name {modifier.StatName}");
 				continue;
 			}
 

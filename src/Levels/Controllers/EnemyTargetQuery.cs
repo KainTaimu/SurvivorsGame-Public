@@ -48,7 +48,7 @@ public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
 		var viewport = GetViewport();
 		if (viewport is null)
 		{
-			Logger.LogError("missing viewport.");
+			CustomLogger.LogError("missing viewport.");
 			return;
 		}
 

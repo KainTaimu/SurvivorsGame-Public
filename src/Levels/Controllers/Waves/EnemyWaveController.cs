@@ -87,7 +87,7 @@ public partial class EnemyWaveController : Node
 		if (CurrentWaveIndex + 1 >= Waves.Count)
 		{
 			CurrentWave = null;
-			Logger.LogDebug("Waves finished");
+			CustomLogger.LogDebug("Waves finished");
 			return;
 		}
 

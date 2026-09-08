@@ -51,7 +51,7 @@ public partial class WaveDuration : AbstractWave, IWaveProgress, IWaveResettable
 		SpawnTimeLeft = SpawnMaxTime;
 		Index = waveIndex;
 		EmitSignalOnWaveStart();
-		Logger.LogDebug($"New {ToString()}");
+		CustomLogger.LogDebug($"New {ToString()}");
 	}
 
 	public override void EndWave()
@@ -71,7 +71,7 @@ public partial class WaveDuration : AbstractWave, IWaveProgress, IWaveResettable
 		var enemy = Spawner.SpawnEnemy(bp);
 		if (enemy is null)
 		{
-			Logger.LogError("failed to spawn");
+			CustomLogger.LogError("failed to spawn");
 			return;
 		}
 

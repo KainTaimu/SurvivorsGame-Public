@@ -78,7 +78,7 @@ public partial class Settings : Control
 				GoreSelection.Selected = 4;
 				break;
 			default:
-				Logger.LogError("Invalid GoreEffects toggle enum");
+				CustomLogger.LogError("Invalid GoreEffects toggle enum");
 				break;
 		}
 
@@ -124,7 +124,7 @@ public partial class Settings : Control
 					GameSettings.Instance.GoreEffects = GoreEffectsEnum.VeryHigh;
 					break;
 				default:
-					Logger.LogError("Invalid GoreEffects enum");
+					CustomLogger.LogError("Invalid GoreEffects enum");
 					break;
 			}
 		};
@@ -146,7 +146,7 @@ public partial class Settings : Control
 					GameSettings.Instance.EnableCameraShake = true;
 					break;
 				default:
-					Logger.LogError("Invalid CameraShake toggle enum");
+					CustomLogger.LogError("Invalid CameraShake toggle enum");
 					break;
 			}
 		};
@@ -167,7 +167,7 @@ public partial class Settings : Control
 					GameSettings.Instance.EnableDamageIndicators = true;
 					break;
 				default:
-					Logger.LogError("Invalid DamageIndicators toggle enum");
+					CustomLogger.LogError("Invalid DamageIndicators toggle enum");
 					break;
 			}
 		};

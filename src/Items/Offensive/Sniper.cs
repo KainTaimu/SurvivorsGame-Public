@@ -104,7 +104,7 @@ public partial class Sniper : AbstractFirearm, IReloadable
 
 		if (OffensiveStats.Damage > 0)
 		{
-			Logger.LogError(
+			CustomLogger.LogError(
 				$"Sniper {Name} has base damage {OffensiveStats.Damage}, but it will be overridden by move time damage. Consider setting base damage to 0."
 			);
 		}

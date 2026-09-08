@@ -78,7 +78,7 @@ public partial class GameSingleton : Node
 		}
 		catch (Exception exception)
 		{
-			Logger.LogError("Failed to read", ProjectSettings.GlobalizePath(SETTINGS_FILE), exception.ToString());
+			CustomLogger.LogError("Failed to read", ProjectSettings.GlobalizePath(SETTINGS_FILE), exception.ToString());
 			GameSettings = GD.Load<GameSettings>(GameSettings.DEFAULT_SETTINGS);
 			return;
 		}
@@ -90,14 +90,14 @@ public partial class GameSingleton : Node
 	{
 		if (Input.IsPhysicalKeyPressed(Key.Quoteleft))
 		{
-			Logger.LogDebug($"{Engine.GetFramesPerSecond()} FPS");
+			CustomLogger.LogDebug($"{Engine.GetFramesPerSecond()} FPS");
 			GetTree().Quit();
 			return;
 		}
 
 		if (Input.IsPhysicalKeyPressed(Key.F12))
 		{
-			Logger.LogDebug($"Reloading current scene \"{GetTree().CurrentScene.Name}\"");
+			CustomLogger.LogDebug($"Reloading current scene \"{GetTree().CurrentScene.Name}\"");
 			GetTree().ReloadCurrentScene();
 		}
 	}

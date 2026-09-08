@@ -26,7 +26,7 @@ public class UniformGridWorld<T> : IUniformGridWorld<T>
 	{
 		if (cellSize <= 0)
 		{
-			Logger.LogError("Invalid cell size, cellSize must be > 0. Setting as 16px.");
+			CustomLogger.LogError("Invalid cell size, cellSize must be > 0. Setting as 16px.");
 			cellSize = 16;
 		}
 

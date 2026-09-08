@@ -81,7 +81,7 @@ public partial class AirdropPlane : Node2D
 			var drop = _dropScene.InstantiateOrNull<Node2D>();
 			if (drop is null)
 			{
-				Logger.LogError("Failed to instantiate drop. Does it inherit from Node2D?");
+				CustomLogger.LogError("Failed to instantiate drop. Does it inherit from Node2D?");
 				return;
 			}
 
@@ -93,7 +93,7 @@ public partial class AirdropPlane : Node2D
 				GetTree().Root.CallDeferred(Node.MethodName.AddChild, drop);
 		}
 
-		Logger.LogInfo($"Dropped at {GlobalPosition}, {_t}s");
+		CustomLogger.LogInfo($"Dropped at {GlobalPosition}, {_t}s");
 		EmitSignalOnAirdropDropped(GlobalPosition);
 	}
 
@@ -102,7 +102,7 @@ public partial class AirdropPlane : Node2D
 		var rand = new Vector2(GD.RandRange(-1, 1), 0) * 200;
 		var dropPos = GlobalPosition - rand.Rotated(Rotation);
 
-		Logger.LogInfo($"Dropped at {dropPos}, {_t}s");
+		CustomLogger.LogInfo($"Dropped at {dropPos}, {_t}s");
 		EnvironmentFxManager.PlayVfx(
 			"explosion",
 			new Dictionary<StringName, Variant>() { { "position", dropPos }, { "scale", new Vector2(2, 2) } }

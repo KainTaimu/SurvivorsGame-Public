@@ -157,7 +157,7 @@ public partial class EnemyRenderer : Node, IFrameTimeTrackable
 		var ss = ServiceLocator.GetService<SpriteFrameMappingsService>();
 		if (ss is null)
 		{
-			Logger.LogError("Could not get SpriteFrameMappingsService.");
+			CustomLogger.LogError("Could not get SpriteFrameMappingsService.");
 			mmi.Texture = new PlaceholderTexture2D { Size = new Vector2(32, 32) };
 			_spriteToMultiMesh.Add(spriteName, mmi.Multimesh);
 			_mmiVisibilityCount.TryAdd(mmi.Multimesh, 0);

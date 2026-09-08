@@ -39,7 +39,7 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 	{
 		if (Crosshair is null)
 		{
-			Logger.LogError("No crosshair");
+			CustomLogger.LogError("No crosshair");
 			return;
 		}
 

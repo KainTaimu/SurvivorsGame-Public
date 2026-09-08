@@ -75,7 +75,7 @@ ItemCount = 3
 RarityUpperGate = 1
 metadata/_custom_type_script = "uid://b0b1rgkll8se8"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w51uh"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pl5k2"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_a1e6u"]
@@ -544,6 +544,37 @@ metadata/_custom_type_script = "uid://dau6m811dtep8"
 script = ExtResource("6_vrw23")
 Weights = Array[Object]([SubResource("W_bw_w_6"), SubResource("W_bw_s_6")])
 
+[sub_resource type="PackedScene" id="PackedScene_w51uh"]
+_bundled = {
+"conn_count": 10,
+"conns": PackedInt32Array(1073741837, 1073741836, 96, 95, 2, 0, 0, 1073741839, 1073741838, 98, 97, 2, 0, 0, 1073741841, 1073741840, 100, 99, 2, 0, 0, 1073741843, 1073741842, 102, 101, 2, 0, 0, 1073741845, 1073741844, 104, 103, 2, 0, 0, 1073741847, 1073741846, 106, 105, 2, 0, 0, 1073741849, 1073741848, 108, 107, 2, 0, 0, 1073741851, 1073741850, 110, 109, 2, 0, 0, 1073741853, 1073741852, 112, 111, 2, 0, 0, 1073741855, 1073741854, 114, 113, 2, 0, 0),
+"editable_instances": [],
+"id_paths": [PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array(), PackedInt32Array()],
+"names": PackedStringArray("PickupUi", "CanvasLayer", "process_mode", "layer", "visible", "script", "grid_container", "Dim", "ColorRect", "z_index", "anchors_preset", "anchor_right", "anchor_bottom", "grow_horizontal", "grow_vertical", "color", "metadata/_edit_lock_", "Grayscale", "ColorRect", "material", "layout_mode", "anchors_preset", "anchor_right", "anchor_bottom", "grow_horizontal", "grow_vertical", "metadata/_edit_lock_", "Blur", "ColorRect", "material", "layout_mode", "anchors_preset", "anchor_right", "anchor_bottom", "grow_horizontal", "grow_vertical", "Control", "PanelContainer", "process_mode", "top_level", "z_index", "z_as_relative", "anchors_preset", "anchor_top", "anchor_right", "anchor_bottom", "offset_top", "offset_bottom", "grow_horizontal", "grow_vertical", "mouse_filter", "theme_override_styles/panel", "MarginContainer", "MarginContainer", "layout_mode", "mouse_filter", "theme_override_constants/margin_top", "theme_override_constants/margin_bottom", "HBoxContainer", "HBoxContainer", "layout_mode", "alignment", "CloseLeft", "Button", "custom_minimum_size", "layout_mode", "theme", "text", "autowrap_mode", "script", "ScrollContainer", "ScrollContainer", "custom_minimum_size", "custom_maximum_size", "layout_mode", "horizontal_scroll_mode", "vertical_scroll_mode", "CenterContainer", "CenterContainer", "layout_mode", "mouse_filter", "GridContainer", "GridContainer", "layout_mode", "mouse_filter", "columns", "CloseRight", "Button", "custom_minimum_size", "layout_mode", "theme", "text", "autowrap_mode", "script", "UIHighlightClick", "queue_free", "button_up", "_on_mouse_entered", "mouse_entered", "play", "mouse_entered", "_on_mouse_exited", "mouse_exited", "play", "mouse_exited", "queue_free", "button_up", "_on_mouse_entered", "mouse_entered", "play", "mouse_entered", "_on_mouse_exited", "mouse_exited", "play", "mouse_exited"),
+"node_count": 13,
+"node_ids": PackedInt32Array(720680017, 301653202, 711175140, 707983756, 1639386775, 21910808, 730578786, 1953490377, 1428596445, 328059922, 323042347, 1735945372, 893066757),
+"node_paths": [NodePath("."), NodePath("./Dim"), NodePath("./Dim"), NodePath("."), NodePath("./Control"), NodePath("./Control/MarginContainer"), NodePath("./Control/MarginContainer/HBoxContainer"), NodePath("./Control/MarginContainer/HBoxContainer"), NodePath("./Control/MarginContainer/HBoxContainer/ScrollContainer"), NodePath("./Control/MarginContainer/HBoxContainer/ScrollContainer/CenterContainer"), NodePath("./Control/MarginContainer/HBoxContainer"), NodePath("."), NodePath("."), NodePath("Control/MarginContainer/HBoxContainer/CloseLeft"), NodePath("Control/MarginContainer/HBoxContainer/CloseLeft"), NodePath("Control/MarginContainer/HBoxContainer/CloseLeft"), NodePath("UIHighlightClick"), NodePath("Control/MarginContainer/HBoxContainer/CloseLeft"), NodePath("Control/MarginContainer/HBoxContainer/CloseLeft"), NodePath("Control/MarginContainer/HBoxContainer/CloseLeft"), NodePath("UIHighlightClick"), NodePath("Control/MarginContainer/HBoxContainer/CloseLeft"), NodePath("."), NodePath("Control/MarginContainer/HBoxContainer/CloseRight"), NodePath("Control/MarginContainer/HBoxContainer/CloseRight"), NodePath("Control/MarginContainer/HBoxContainer/CloseRight"), NodePath("UIHighlightClick"), NodePath("Control/MarginContainer/HBoxContainer/CloseRight"), NodePath("Control/MarginContainer/HBoxContainer/CloseRight"), NodePath("Control/MarginContainer/HBoxContainer/CloseRight"), NodePath("UIHighlightClick"), NodePath("Control/MarginContainer/HBoxContainer/CloseRight")],
+"nodes": PackedInt32Array(-1, -1, 1, 0, -1, 5, 2, 0, 3, 1, 4, 2, 5, 3, 1073741830, 4, 0, 1073741824, 0, 8, 7, -1, 8, 9, 5, 10, 6, 11, 7, 12, 8, 13, 9, 14, 10, 15, 11, 16, 12, 0, 1073741825, 0, 18, 17, -1, 8, 19, 13, 20, 14, 21, 15, 22, 16, 23, 17, 24, 18, 25, 19, 26, 20, 0, 1073741826, 0, 28, 27, -1, 7, 29, 21, 30, 22, 31, 23, 32, 24, 33, 25, 34, 26, 35, 27, 0, 1073741827, 0, 37, 36, -1, 14, 38, 28, 39, 29, 40, 30, 41, 31, 42, 32, 43, 33, 44, 34, 45, 35, 46, 36, 47, 37, 48, 38, 49, 39, 50, 40, 51, 41, 0, 1073741828, 0, 53, 52, -1, 4, 54, 42, 55, 43, 56, 44, 57, 45, 0, 1073741829, 0, 59, 58, -1, 2, 60, 46, 61, 47, 0, 1073741830, 0, 63, 62, -1, 6, 64, 48, 65, 49, 66, 50, 67, 51, 68, 52, 69, 53, 0, 1073741831, 0, 71, 70, -1, 5, 72, 54, 73, 55, 74, 56, 75, 57, 76, 58, 0, 1073741832, 0, 78, 77, -1, 2, 79, 59, 80, 60, 0, 1073741833, 0, 82, 81, -1, 3, 83, 61, 84, 62, 85, 63, 0, 1073741834, 0, 87, 86, -1, 6, 88, 64, 89, 65, 90, 66, 91, 67, 92, 68, 93, 69, 0, 1073741835, 0, 2147483647, 94, 70, 0, 0),
+"variants": [3, 2, false, ExtResource("20_pl5k2"), NodePath("Control/MarginContainer/HBoxContainer/ScrollContainer/CenterContainer/GridContainer"), -1, 15, 1.0, 1.0, 2, 2, Color(0.011764706, 0.011764706, 0.011764706, 0.49803922), true, SubResource("ShaderMaterial_8b1c8"), 1, 15, 1.0, 1.0, 2, 2, true, SubResource("ShaderMaterial_ogoab"), 1, 15, 1.0, 1.0, 2, 2, 3, true, 2048, false, 14, 0.5, 1.0, 0.5, -59.5, 59.5, 2, 2, 2, SubResource("StyleBoxFlat_5cant"), 2, 2, 8, 8, 2, 1, Vector2(32, 0), 2, ExtResource("23_w2wr7"), "C
+L
+O
+S
+E", 3, SubResource("GDScript_qlmw6"), Vector2(1840, 536), Vector2(-1, 792), 2, 0, 5, 2, 2, 2, 2, 3, Vector2(32, 0), 2, ExtResource("23_w2wr7"), "C
+L
+O
+S
+E", 3, SubResource("GDScript_qlmw6"), ExtResource("24_1jc4q")],
+"version": 3
+}
+
+[sub_resource type="Resource" id="Resource_5ln3b"]
+script = ExtResource("11_ta1oo")
+ItemCount = 4
+RarityLowerGate = 2
+RarityUpperGate = 3
+_pickupUiScene = SubResource("PackedScene_w51uh")
+metadata/_custom_type_script = "uid://b0b1rgkll8se8"
+
 [sub_resource type="Resource" id="W_wave_6"]
 script = ExtResource("10_ta1oo")
 Duration = 70.0
@@ -551,6 +582,7 @@ EnemyBlueprints = SubResource("W_col_6")
 SpawnMinTime = 0.36
 SpawnMaxTime = 0.5
 SpawnBatchMax = 2
+Rewards = Array[ExtResource("7_v38xc")]([SubResource("Resource_5ln3b")])
 metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 
 [sub_resource type="Resource" id="Resource_vmdw7"]
