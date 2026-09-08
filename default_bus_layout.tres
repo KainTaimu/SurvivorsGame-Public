@@ -1,0 +1,74 @@
+[gd_resource type="AudioBusLayout" format=3 uid="uid://cd1ytmgy4kjgv"]
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_h4aup"]
+resource_name = "Reverb"
+predelay_msec = 500.0
+room_size = 0.4
+damping = 0.2
+wet = 0.2
+
+[sub_resource type="AudioEffectDistortion" id="AudioEffectDistortion_h4aup"]
+resource_name = "Distortion"
+pre_gain = 12.0
+keep_hf_hz = 20500.0
+post_gain = -12.0
+
+[sub_resource type="AudioEffectDistortion" id="AudioEffectDistortion_b6gj2"]
+resource_name = "Distortion"
+pre_gain = 15.0
+keep_hf_hz = 6438.0
+post_gain = -10.0
+
+[sub_resource type="AudioEffectEQ" id="AudioEffectEQ_h4aup"]
+resource_name = "EQ"
+band_db/32_hz = 6.0
+band_db/100_hz = 3.0
+band_db/3200_hz = -2.0
+band_db/10000_hz = -5.0
+
+[sub_resource type="AudioEffectCompressor" id="AudioEffectCompressor_h4aup"]
+resource_name = "Compressor"
+threshold = -2.0
+release_ms = 50.0
+
+[resource]
+bus/0/effect/0/effect = SubResource("AudioEffectReverb_h4aup")
+bus/0/effect/0/enabled = false
+bus/1/name = &"ShootSfx"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = -0.010509491
+bus/1/send = &"Master"
+bus/1/effect/0/effect = SubResource("AudioEffectDistortion_h4aup")
+bus/1/effect/0/enabled = true
+bus/1/effect/1/effect = SubResource("AudioEffectDistortion_b6gj2")
+bus/1/effect/1/enabled = true
+bus/1/effect/2/effect = SubResource("AudioEffectEQ_h4aup")
+bus/1/effect/2/enabled = true
+bus/2/name = &"ShootSfxNoDistortion"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = -0.0016212463
+bus/2/send = &"Master"
+bus/2/effect/0/effect = SubResource("AudioEffectCompressor_h4aup")
+bus/2/effect/0/enabled = true
+bus/3/name = &"ShootSfxNoCompress"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = 0.0
+bus/3/send = &"Master"
+bus/4/name = &"EnvironmentFx"
+bus/4/solo = false
+bus/4/mute = false
+bus/4/bypass_fx = false
+bus/4/volume_db = 0.0
+bus/4/send = &"Master"
+bus/5/name = &"KillFx"
+bus/5/solo = false
+bus/5/mute = false
+bus/5/bypass_fx = false
+bus/5/volume_db = 2.0026226
+bus/5/send = &"Master"
