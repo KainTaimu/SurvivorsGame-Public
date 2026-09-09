@@ -10,7 +10,7 @@ size = Vector2(32, 32)
 [sub_resource type="Resource" id="Resource_nv8sy"]
 script = ExtResource("1_jnca1")
 Name = "Matrix"
-Description = "A submachine gun chambered in .45ACP with a very fast firing rate. The Matrix features an unconventional delayed blowback system that uses the energy of the bolt to reduce muzzle climb. This particular one's previous owner thought it would be really funny if the gun reduced recoil a bit too well, and welded an over-compensated muzzle break to make the muzzle climb downwards."
+Description = "A submachine gun chambered in .45ACP with a very fast firing rate. The Matrix features an unconventional delayed blowback system that uses the energy of the bolt to reduce muzzle climb."
 ItemIcon = SubResource("PlaceholderTexture2D_cld5f")
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 

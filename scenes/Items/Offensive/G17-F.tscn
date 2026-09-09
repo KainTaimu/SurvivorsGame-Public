@@ -63,7 +63,7 @@ process_mode = 3
 stream = ExtResource("8_nbdnq")
 pitch_scale = 1.1
 max_polyphony = 30
-bus = &"ShootSfx"
+bus = &"ShootSfxNoDistortion"
 
 [node name="MagAlmostEmpty" parent="." unique_id=866300451 instance=ExtResource("10_fd7j2")]
 

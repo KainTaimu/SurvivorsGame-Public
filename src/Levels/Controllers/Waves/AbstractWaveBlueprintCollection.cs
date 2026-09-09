@@ -4,5 +4,5 @@ namespace Game.Levels.Controllers.Waves;
 public abstract partial class AbstractWaveBlueprintCollection : Resource
 {
 	public abstract int Count { get; }
-	public abstract EnemyBlueprint GetBlueprint();
+	public abstract EnemyBlueprint? GetBlueprint();
 }

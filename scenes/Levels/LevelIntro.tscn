@@ -472,16 +472,16 @@ _pickupUiScene = SubResource("PackedScene_pl5k2")
 metadata/_custom_type_script = "uid://b0b1rgkll8se8"
 
 [sub_resource type="Curve" id="Curve_0iw8n"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.4209392, 0.29309773), 0.69629467, 0.0, 1, 0, Vector2(0.5037699, 1), 0.0, 0.0, 0, 1, Vector2(1, 1), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.25276637, 0.508465), 1.5019711, 1.5019711, 0, 0, Vector2(0.5037699, 1), 0.0, 0.0, 0, 1, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="Curve" id="Curve_ghrcs"]
-_data = [Vector2(0.1658627, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
 point_count = 2
 
 [sub_resource type="Resource" id="W_wave_5"]
 script = ExtResource("9_duif7")
-SpawnCountTarget = 300
+SpawnCountTarget = 500
 EnemyBlueprints = SubResource("W_col_5")
 SpawnMinTime = 0.4
 SpawnMaxTime = 0.8
@@ -569,7 +569,7 @@ E", 3, SubResource("GDScript_qlmw6"), ExtResource("24_1jc4q")],
 
 [sub_resource type="Resource" id="Resource_5ln3b"]
 script = ExtResource("11_ta1oo")
-ItemCount = 4
+ItemCount = 6
 RarityLowerGate = 2
 RarityUpperGate = 3
 _pickupUiScene = SubResource("PackedScene_w51uh")
@@ -818,16 +818,16 @@ Weights = Array[Object]([SubResource("Resource_tgplc"), SubResource("Resource_1j
 [sub_resource type="Resource" id="Resource_yk4ca"]
 script = ExtResource("11_ta1oo")
 ItemCount = 6
-RarityLowerGate = 2
+RarityLowerGate = 3
 RarityUpperGate = 4
 metadata/_custom_type_script = "uid://b0b1rgkll8se8"
 
 [sub_resource type="Curve" id="Curve_nhio6"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.76112515, 0.56681585), 1.763246, 1.763246, 0, 0, Vector2(0.89288425, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 4
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5650609, 0.66535425), 1.763246, 1.763246, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="Curve" id="Curve_t7v5b"]
-_data = [Vector2(0.17042851, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -0.711883, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
 point_count = 2
 
 [sub_resource type="Resource" id="W_wave_8"]
@@ -862,14 +862,21 @@ script = ExtResource("14_w70hc")
 _statusEffects = Array[ExtResource("12_0iw8n")]([SubResource("Resource_wgjp7")])
 metadata/_custom_type_script = "uid://catd5vqs68f8g"
 
+[sub_resource type="Resource" id="Resource_cs4dx"]
+script = ExtResource("11_ta1oo")
+ItemCount = 9
+RarityLowerGate = 3
+RarityUpperGate = 4
+metadata/_custom_type_script = "uid://b0b1rgkll8se8"
+
 [sub_resource type="Resource" id="W_wave_9"]
 script = ExtResource("9_duif7")
-SpawnCountTarget = 315
+SpawnCountTarget = 600
 EnemyBlueprints = SubResource("Resource_35lch")
 SpawnMinTime = 0.25
 SpawnMaxTime = 0.45
 SpawnBatchMax = 3
-Rewards = Array[ExtResource("7_v38xc")]([SubResource("Resource_4g4ko")])
+Rewards = Array[ExtResource("7_v38xc")]([SubResource("Resource_4g4ko"), SubResource("Resource_cs4dx")])
 metadata/_custom_type_script = "uid://cksmwvaxx1m18"
 
 [sub_resource type="Resource" id="Resource_xuljg"]
@@ -978,7 +985,7 @@ metadata/_custom_type_script = "uid://d31d8uns5faa5"
 
 [sub_resource type="Resource" id="Resource_8j4j4"]
 script = ExtResource("12_0iw8n")
-Name = "Fear"
+Name = "The ground trembles..."
 Cause = 3
 Permanent = true
 Icon = SubResource("PlaceholderTexture2D_5ln3b")
@@ -1005,6 +1012,17 @@ SpawnMinTime = 0.15
 SpawnMaxTime = 0.3
 SpawnBatchMax = 4
 Rewards = Array[ExtResource("7_v38xc")]([SubResource("Resource_78m5g"), SubResource("Resource_uui33")])
+metadata/_custom_type_script = "uid://b7ol6jtjagoe"
+
+[sub_resource type="Resource" id="Resource_7tfia"]
+script = ExtResource("6_vrw23")
+Weights = Array[Object]([])
+metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
+
+[sub_resource type="Resource" id="Resource_pqgaq"]
+script = ExtResource("10_ta1oo")
+Duration = 15.0
+EnemyBlueprints = SubResource("Resource_7tfia")
 metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 
 [sub_resource type="Resource" id="Resource_7hybo"]
@@ -1107,7 +1125,6 @@ metadata/_custom_type_script = "uid://cksmwvaxx1m18"
 [sub_resource type="Resource" id="Resource_sf4ij"]
 script = ExtResource("17_faso5")
 FrameName = &"Nav"
-TimeUnit = 1
 metadata/_custom_type_script = "uid://daw8gyvo0xom3"
 
 [node name="Level" unique_id=2141389114 instance=ExtResource("1_dtsfe")]
@@ -1188,7 +1205,7 @@ avoidance_enabled = false
 MainPlayer = NodePath("../../World/Player")
 
 [node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=2001503768]
-Waves = Array[Object]([SubResource("W_wave_1"), SubResource("W_wave_2"), SubResource("W_wave_3"), SubResource("W_wave_4"), SubResource("W_wave_5"), SubResource("W_wave_6"), SubResource("W_wave_7"), SubResource("W_wave_8"), SubResource("W_wave_9"), SubResource("Resource_ta7mx"), SubResource("Resource_owniy")])
+Waves = Array[Object]([SubResource("W_wave_1"), SubResource("W_wave_2"), SubResource("W_wave_3"), SubResource("W_wave_4"), SubResource("W_wave_5"), SubResource("W_wave_6"), SubResource("W_wave_7"), SubResource("W_wave_8"), SubResource("W_wave_9"), SubResource("Resource_ta7mx"), SubResource("Resource_pqgaq"), SubResource("Resource_owniy")])
 
 [node name="PickupUiPermanent" type="Node2D" parent="Systems/EnemySystems/EnemyWaveController" index="2" unique_id=1845374368]
 process_mode = 3

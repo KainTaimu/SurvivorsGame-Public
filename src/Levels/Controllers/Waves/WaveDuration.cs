@@ -68,6 +68,9 @@ public partial class WaveDuration : AbstractWave, IWaveProgress, IWaveResettable
 			return;
 
 		var bp = EnemyBlueprints.GetBlueprint();
+		if (bp is null)
+			return;
+
 		var enemy = Spawner.SpawnEnemy(bp);
 		if (enemy is null)
 		{

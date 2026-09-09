@@ -61,7 +61,7 @@ Stats = SubResource("Resource_34bgn")
 process_mode = 3
 stream = ExtResource("8_kk2yf")
 max_polyphony = 29
-bus = &"ShootSfxNoDistortion"
+bus = &"ShootSfx"
 
 [node name="MagAlmostEmpty" parent="." unique_id=866300451 instance=ExtResource("9_mb4xb")]
 

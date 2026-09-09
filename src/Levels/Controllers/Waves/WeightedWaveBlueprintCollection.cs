@@ -13,7 +13,7 @@ public partial class WeightedWaveBlueprintCollection : AbstractWaveBlueprintColl
 
 	private float WeightsSum => Weights.Sum(x => x.Weight);
 
-	public override EnemyBlueprint GetBlueprint()
+	public override EnemyBlueprint? GetBlueprint()
 	{
 		EnemyBlueprint? pickedScene = null;
 
@@ -29,6 +29,6 @@ public partial class WeightedWaveBlueprintCollection : AbstractWaveBlueprintColl
 			break;
 		}
 
-		return pickedScene ?? throw new Exception("No scene picked");
+		return pickedScene;
 	}
 }
