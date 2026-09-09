@@ -7,7 +7,7 @@ namespace Game.Levels.Controllers.Waves;
 public partial class WeightedWaveBlueprintCollection : AbstractWaveBlueprintCollection
 {
 	[Export]
-	public Array<BlueprintWeight> Weights = null!;
+	public Array<BlueprintWeight> Weights = [];
 
 	public override int Count => Weights.Count;
 

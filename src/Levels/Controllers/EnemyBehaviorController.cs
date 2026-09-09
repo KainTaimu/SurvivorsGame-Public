@@ -8,8 +8,8 @@ namespace Game.Levels.Controllers;
 [Flags]
 public enum EnemyBehaviorTypes
 {
-	None,
-	Lunger,
+	None = 0,
+	Lunger = 1 << 1,
 }
 
 [GlobalClass]

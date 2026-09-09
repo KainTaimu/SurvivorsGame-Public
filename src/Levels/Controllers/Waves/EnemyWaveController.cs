@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.Linq;
-using Arch.Core;
 using Godot.Collections;
 
 namespace Game.Levels.Controllers.Waves;
@@ -15,7 +13,9 @@ public partial class EnemyWaveController : Node
 	public delegate void OnWaveEndEventHandler();
 
 	[Export]
-	public Array<AbstractWave> Waves = null!;
+	private Node _wavesNode = null!;
+
+	public readonly Array<AbstractWave> Waves = [];
 
 	[ExportCategory("Toggles")]
 	[Export]
@@ -29,12 +29,8 @@ public partial class EnemyWaveController : Node
 
 	public float CurrentWaveProgress => GetWaveProgress();
 
-	public int Alive => SpawnedEntities.Count;
-
 	public AbstractWave? CurrentWave { get; private set; }
 	public int CurrentWaveIndex { get; private set; }
-
-	public readonly HashSet<Entity> SpawnedEntities = [];
 
 	public static EnemyWaveController? Instance { get; private set; }
 
@@ -42,12 +38,7 @@ public partial class EnemyWaveController : Node
 	{
 		Instance = this;
 
-		GameWorld.World.SubscribeEntityDestroyed(
-			(in entity) =>
-			{
-				SpawnedEntities.Remove(entity);
-			}
-		);
+		Waves.AddRange(_wavesNode.GetChildren().OfType<AbstractWave>());
 
 		foreach (var wave in Waves)
 			wave.Initialize(this);

@@ -29,6 +29,6 @@ public partial class Hud : Node
 	public override void _Process(double delta)
 	{
 		_playerHealthLabel?.Text = "Health: " + Stats.Health;
-		_enemyCountLabel?.Text = "Enemies: " + WaveController?.Alive;
+		_enemyCountLabel?.Text = "Enemies: " + EnemyTracker.EnemyCount;
 	}
 }

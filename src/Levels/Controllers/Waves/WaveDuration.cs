@@ -1,11 +1,6 @@
-using Arch.Core;
+using Game.Utils;
 
 namespace Game.Levels.Controllers.Waves;
-
-public interface IWaveResettable
-{
-	void Reset();
-}
 
 [GlobalClass]
 public partial class WaveDuration : AbstractWave, IWaveProgress, IWaveResettable
@@ -64,21 +59,17 @@ public partial class WaveDuration : AbstractWave, IWaveProgress, IWaveResettable
 	{
 		if (Spawner is null)
 			return;
-		if (SpawnedEntities.Count >= GameWorld.MAX_ECS_ENTITIES)
-			return;
 
 		var bp = EnemyBlueprints.GetBlueprint();
 		if (bp is null)
 			return;
 
-		var enemy = Spawner.SpawnEnemy(bp);
+		var enemy = Spawner.SpawnEnemy(bp, ViewportTools.GetPositionOutsideViewport(followViewportScale: false));
 		if (enemy is null)
 		{
 			CustomLogger.LogError("failed to spawn");
 			return;
 		}
-
-		SpawnedEntities.Add((Entity)enemy);
 	}
 
 	private protected override void GiveRewards()

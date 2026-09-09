@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://jbowd6556xtq" path="res://src/Levels/Controllers/GameWorld.cs" id="3_pi0ox"]
 [ext_resource type="PackedScene" uid="uid://b802cb5a7o5fr" path="res://scenes/UI/PauseMenu.tscn" id="4_pi0ox"]
 [ext_resource type="Script" uid="uid://cyldy6fxdbadt" path="res://src/Levels/Controllers/LevelData.cs" id="4_qsiuk"]
+[ext_resource type="Script" uid="uid://bbq7mr20ar54n" path="res://src/Levels/Controllers/EnemyTracker.cs" id="4_vg5sh"]
 [ext_resource type="PackedScene" uid="uid://y2aqhpen7wf" path="res://scenes/Levels/EnvironmentFxManager.tscn" id="5_lkd4q"]
 [ext_resource type="Script" uid="uid://bkpyb01olop50" path="res://src/Levels/Controllers/EnemyRenderer.cs" id="7_ajdj3"]
 [ext_resource type="PackedScene" uid="uid://cynlbeb3umvcr" path="res://scenes/Levels/EnemyWaveController.tscn" id="8_27qwr"]
@@ -79,6 +80,9 @@ script = ExtResource("3_pi0ox")
 [node name="LevelData" type="Node" parent="Systems" unique_id=1461409732]
 script = ExtResource("4_qsiuk")
 
+[node name="EnemyTracker" type="Node" parent="Systems" unique_id=256955547]
+script = ExtResource("4_vg5sh")
+
 [node name="LevelSystems" type="Node" parent="Systems" unique_id=1543900922]
 
 [node name="AirdropManager" parent="Systems/LevelSystems" unique_id=1529584760 instance=ExtResource("20_qsiuk")]
@@ -88,7 +92,10 @@ script = ExtResource("4_qsiuk")
 [node name="EnemySystems" type="Node" parent="Systems" unique_id=1808118587]
 script = ExtResource("8_t3a6r")
 
-[node name="EnemyWaveController" parent="Systems/EnemySystems" unique_id=2001503768 instance=ExtResource("8_27qwr")]
+[node name="EnemyWaveController" parent="Systems/EnemySystems" unique_id=2001503768 node_paths=PackedStringArray("_wavesNode") instance=ExtResource("8_27qwr")]
+_wavesNode = NodePath("Waves")
+
+[node name="Waves" type="Node" parent="Systems/EnemySystems/EnemyWaveController" unique_id=1382166870]
 
 [node name="WaveDebugPanel" parent="Systems/EnemySystems/EnemyWaveController" unique_id=812922554 node_paths=PackedStringArray("_waveController") instance=ExtResource("8_lkd4q")]
 _waveController = NodePath("..")

@@ -1,11 +1,9 @@
-using System.Collections.Generic;
-using Arch.Core;
 using Godot.Collections;
 
 namespace Game.Levels.Controllers.Waves;
 
 [GlobalClass]
-public abstract partial class AbstractWave : Resource
+public abstract partial class AbstractWave : Node
 {
 	[Signal]
 	public delegate void OnWaveStartEventHandler();
@@ -13,10 +11,11 @@ public abstract partial class AbstractWave : Resource
 	[Signal]
 	public delegate void OnWaveEndEventHandler();
 
-	[ExportGroup("Spawning")]
+	[ExportCategory("Spawning")]
 	[Export]
 	public AbstractWaveBlueprintCollection EnemyBlueprints = null!;
 
+	[ExportCategory("Spawn time")]
 	[Export]
 	public double SpawnMinTime
 	{
@@ -57,6 +56,7 @@ public abstract partial class AbstractWave : Resource
 	[Export]
 	public Curve? SpawnTimeCurveOverMaxTime;
 
+	[ExportCategory("Spawn batches")]
 	[Export]
 	public int SpawnBatchMin = 1;
 
@@ -66,15 +66,9 @@ public abstract partial class AbstractWave : Resource
 	[Export]
 	public Curve? SpawnBatchCurveOverMaxTime;
 
-	[ExportGroup("Sub-waves")]
-	[Export]
-	private Array<AbstractWave> _subWaves = [];
-
-	[ExportGroup("Completion Rewards")]
+	[ExportCategory("Completion Rewards")]
 	[Export]
 	public Array<AbstractWaveCompletionReward>? Rewards = [];
-
-	public HashSet<Entity> SpawnedEntities => WaveController.SpawnedEntities;
 
 	public double LastSpawnTime;
 	public double SpawnTimeLeft;

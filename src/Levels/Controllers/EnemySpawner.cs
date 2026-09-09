@@ -1,5 +1,6 @@
-using System.Linq;
+using System.Collections.Generic;
 using Arch.Core;
+using CommunityToolkit.HighPerformance;
 using Game.Core.ECS;
 using Game.Core.Services;
 
@@ -14,7 +15,7 @@ public partial class EnemySpawner : Node
 		Instance = this;
 	}
 
-	public Entity? SpawnEnemy(EnemyBlueprint bp)
+	public Entity? SpawnEnemy(EnemyBlueprint bp, in Vector2 position)
 	{
 		var ss = ServiceLocator.GetService<SpriteFrameMappingsService>();
 		if (ss is null)
@@ -23,15 +24,15 @@ public partial class EnemySpawner : Node
 			return null;
 		}
 
-		var pos = GetPositionOutsideViewport();
-
 		var stats = bp.Stats;
 		var spriteInfo = ss.GetSpriteInfo(bp.SpriteName);
 
-		var entity = GameWorld.World.Create(
+		var entity = EnemyTracker.CreateEntity();
+		var comps = new List<object>()
+		{
 			new EnemyTypeComponent(bp.Type),
 			new HealthComponent(stats.MaxHealth),
-			new PositionComponent { Position = pos },
+			new PositionComponent { Position = position },
 			new AnimatedSpriteComponent
 			{
 				SpriteName = spriteInfo?.SpriteName ?? "",
@@ -54,43 +55,13 @@ public partial class EnemySpawner : Node
 			new DeathRewardComponent(Mathf.CeilToInt(stats.MoneyDrop * stats.MoneyDropMultiplier)),
 			new HitFeedbackComponent { HitTime = 0 },
 			new CollisionLodComponent(CollisionLodLevel.Far),
-			CollisionGpuIndexComponent.NotParticipating
-		);
+			CollisionGpuIndexComponent.NotParticipating,
+		};
+		GameWorld.World.AddRange(entity, comps.AsSpan());
 
 		foreach (var behavior in bp.EnemyBehaviors)
 			behavior.AddComponent(entity);
 
 		return entity;
-	}
-
-	private Vector2 GetPositionOutsideViewport()
-	{
-		var viewport = GameWorld.Instance.GetViewport().GetCamera2D();
-		var center = viewport.GetScreenCenterPosition();
-		var zoom = viewport.Zoom;
-		var halfSize = viewport.GetViewportRect().Size / zoom;
-		const float margin = 0;
-
-		var edge = GD.RandRange(0, 3);
-		return edge switch
-		{
-			0 => new Vector2(
-				(float)GD.RandRange(center.X - halfSize.X - margin, center.X + halfSize.X + margin),
-				center.Y - halfSize.Y - margin
-			),
-			1 => new Vector2(
-				(float)GD.RandRange(center.X - halfSize.X - margin, center.X + halfSize.X + margin),
-				center.Y + halfSize.Y + margin
-			),
-			2 => new Vector2(
-				center.X - halfSize.X - margin,
-				(float)GD.RandRange(center.Y - halfSize.Y - margin, center.Y + halfSize.Y + margin)
-			),
-			3 => new Vector2(
-				center.X + halfSize.X + margin,
-				(float)GD.RandRange(center.Y - halfSize.Y - margin, center.Y + halfSize.Y + margin)
-			),
-			_ => Vector2.Zero,
-		};
 	}
 }

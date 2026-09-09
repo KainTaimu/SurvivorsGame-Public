@@ -1,4 +1,4 @@
-using Arch.Core;
+using Game.Utils;
 
 namespace Game.Levels.Controllers.Waves;
 
@@ -57,21 +57,18 @@ public partial class WaveSpawnCount : AbstractWave, IWaveProgress, IWaveResettab
 	{
 		if (Spawner is null)
 			return;
-		if (SpawnedEntities.Count >= GameWorld.MAX_ECS_ENTITIES)
-			return;
 
 		var bp = EnemyBlueprints.GetBlueprint();
 		if (bp is null)
 			return;
 
-		var id = Spawner.SpawnEnemy(bp);
+		var id = Spawner.SpawnEnemy(bp, ViewportTools.GetPositionOutsideViewport(followViewportScale: false));
 		if (id is null)
 		{
 			CustomLogger.LogError("failed to spawn");
 			return;
 		}
 
-		SpawnedEntities.Add((Entity)id);
 		_spawnedEntitiesCount++;
 	}
 

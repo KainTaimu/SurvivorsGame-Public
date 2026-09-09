@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Game.Items;
 using Game.Items.Offensive;
@@ -79,7 +78,6 @@ public partial class CurrentWeaponUi : CanvasLayer
 					default:
 						throw new ArgumentOutOfRangeException();
 				}
-				break;
 
 			default:
 				if (primary.IsReloading)

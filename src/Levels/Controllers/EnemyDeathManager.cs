@@ -4,7 +4,6 @@ using System.Runtime.CompilerServices;
 using Arch.Core;
 using Arch.System;
 using Arch.System.SourceGenerator;
-using Game.Core;
 using Game.Core.ECS;
 using Game.Items.Projectiles;
 
@@ -16,8 +15,6 @@ public partial class EnemyDeathManager : Node
 	public delegate void OnEnemyDeathEventHandler(EntityObject entity);
 
 	private readonly ConcurrentQueue<Entity> _pendingDeaths = [];
-
-	private readonly EntityDeletionBuffer _deletionBuffer = new();
 
 	public override void _Process(double delta)
 	{

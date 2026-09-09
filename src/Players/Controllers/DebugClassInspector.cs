@@ -21,7 +21,7 @@ public partial class DebugClassInspector : CanvasLayer
 	public BindingFlags BindingFlags = BindingFlags.Instance;
 
 	[Export]
-	public int RecursionDepth = 0;
+	public int RecursionDepth;
 
 	[Export]
 	private PanelContainer _panel = null!;
