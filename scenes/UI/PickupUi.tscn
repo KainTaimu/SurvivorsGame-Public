@@ -44,6 +44,7 @@ func _on_mouse_exited() -> void:
 [node name="PickupUi" type="CanvasLayer" unique_id=720680017 node_paths=PackedStringArray("grid_container")]
 process_mode = 3
 layer = 2
+visible = false
 script = ExtResource("1_5cant")
 grid_container = NodePath("Control/MarginContainer/HBoxContainer/ScrollContainer/CenterContainer/GridContainer")
 
@@ -116,8 +117,10 @@ script = SubResource("GDScript_qlmw6")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Control/MarginContainer/HBoxContainer" unique_id=1428596445]
 custom_minimum_size = Vector2(1840, 536)
+custom_maximum_size = Vector2(-1, 792)
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("4_mkqwl")
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 5
 

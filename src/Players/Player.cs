@@ -8,6 +8,7 @@ public partial class Player : Node2D
 	[Signal]
 	public delegate void OnHealthChangedEventHandler(int newHealth, int difference);
 
+	[Obsolete("Use OnHealthChanged signal")]
 	[Signal]
 	public delegate void OnDamagedEventHandler(int damage);
 

@@ -122,6 +122,9 @@ public partial class CharacterStats : Node
 	[Export]
 	private Player _player = null!;
 
+	[Export]
+	private bool _godMode;
+
 	public override void _Process(double delta)
 	{
 		if (!_player.IsAlive)
@@ -140,6 +143,12 @@ public partial class CharacterStats : Node
 
 	public void Damage(int damage)
 	{
+		if (_godMode)
+		{
+			_player.EmitSignal(Player.SignalName.OnDamaged, 0);
+			_player.EmitSignal(Player.SignalName.OnHealthChanged, Health, Health);
+			return;
+		}
 		var damageAfterDefense = damage - Defense;
 		var scaledDamage = damageAfterDefense * IncomingDamage;
 		var clampedDamage = Math.Clamp(scaledDamage, 1, float.PositiveInfinity);

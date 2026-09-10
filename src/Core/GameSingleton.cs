@@ -95,7 +95,7 @@ public partial class GameSingleton : Node
 			return;
 		}
 
-		if (Input.IsPhysicalKeyPressed(Key.F12))
+		if (Input.IsPhysicalKeyPressed(Key.F11))
 		{
 			CustomLogger.LogDebug($"Reloading current scene \"{GetTree().CurrentScene.Name}\"");
 			GetTree().ReloadCurrentScene();

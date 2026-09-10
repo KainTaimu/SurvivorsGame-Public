@@ -36,12 +36,22 @@ public partial class CurrentWeaponUi : CanvasLayer
 
 	public override void _Ready()
 	{
-		PauseController.Instance.OnPauseToggled += toggle => Visible = !toggle;
+		PauseController.Instance.OnPauseToggled += OnInstanceOnOnPauseToggled;
 		_weaponController.OnPrimaryAttackReassigned += UpdateCarousel;
 		_weaponController.OnSecondaryAttackReassigned += UpdateCarousel;
 		_weaponController.OnOffensiveListChanged += _ => UpdateCarousel();
 		_weaponController.ChildOrderChanged += UpdateCarousel;
 		Callable.From(UpdateCarousel).CallDeferred();
+	}
+
+	public override void _ExitTree()
+	{
+		PauseController.Instance.OnPauseToggled -= OnInstanceOnOnPauseToggled;
+	}
+
+	private void OnInstanceOnOnPauseToggled(bool toggle)
+	{
+		Visible = !toggle;
 	}
 
 	public override void _Process(double delta)
