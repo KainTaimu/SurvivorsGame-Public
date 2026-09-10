@@ -67,11 +67,10 @@ public partial class PlayerHitController : Node
 		tween.SetTrans(Tween.TransitionType.Expo);
 		tween.SetEase(Tween.EaseType.Out);
 
-		spriteShaderMaterial.SetShaderParameter("flash_state", 1f);
-		spriteShaderMaterial.SetShaderParameter("color", Colors.White);
+		_playerSprite.SetInstanceShaderParameter("flash_state", 1f);
 
 		tween.TweenMethod(
-			Callable.From((float i) => spriteShaderMaterial.SetShaderParameter("flash_state", i)),
+			Callable.From((float i) => _playerSprite.SetInstanceShaderParameter("flash_state", i)),
 			1f,
 			0f,
 			1f

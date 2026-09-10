@@ -10,10 +10,10 @@ public partial class WaveDebugPanel : CanvasLayer
 	private Label _timeLabel = null!;
 
 	[Export]
-	private Label _waveInfo = null!;
+	private Label? _waveInfo;
 
 	[Export]
-	private ProgressBar _waveProgress = null!;
+	private ProgressBar? _waveProgress;
 
 	private double _ticks;
 	private bool _isForceNextWaveBtnPressed;
@@ -42,14 +42,19 @@ public partial class WaveDebugPanel : CanvasLayer
 		}
 	}
 
-	public void Update()
+	private void Update()
 	{
 		_timeLabel.Text = $"{TimeSpan.FromSeconds(Mathf.RoundToInt(_ticks)):g}";
-		if (OS.HasFeature("prod"))
-			_waveInfo.Text = $"Wave {_waveController.CurrentWaveIndex + 1}";
+		_waveInfo?.Text = OS.HasFeature("prod")
+			? $"Wave {_waveController.CurrentWaveIndex + 1}"
+			: _waveController.CurrentWave?.ToString();
+		if (_waveController.CurrentWaveProgress is not null)
+		{
+			_waveProgress?.Visible = true;
+			_waveProgress?.Value = (double)(1 - _waveController.CurrentWaveProgress);
+		}
 		else
-			_waveInfo.Text = _waveController.CurrentWave?.ToString();
-		_waveProgress.Value = 1 - _waveController.CurrentWaveProgress;
+			_waveProgress?.Visible = false;
 	}
 
 	private void ForceNextWave()

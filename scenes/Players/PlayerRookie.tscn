@@ -127,8 +127,6 @@ metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mxkc7"]
 shader = ExtResource("6_6wc5x")
-shader_parameter/color = Color(0, 0, 0, 1)
-shader_parameter/flash_state = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2g2d6"]
 atlas = ExtResource("3_oxech")

@@ -9,11 +9,15 @@
 [ext_resource type="Resource" uid="uid://d3sq28pskbjjy" path="res://scenes/Enemies/Blueprints/Walker.tres" id="7_d75v4"]
 [ext_resource type="Script" uid="uid://cksmwvaxx1m18" path="res://src/Levels/Controllers/Waves/WaveSpawnCount.cs" id="9_duif7"]
 [ext_resource type="Script" uid="uid://b7ol6jtjagoe" path="res://src/Levels/Controllers/Waves/WaveDuration.cs" id="10_ta1oo"]
+[ext_resource type="Script" uid="uid://3umr41bs3735" path="res://src/Levels/Controllers/AbstractEnemyBehavior.cs" id="10_vrw23"]
+[ext_resource type="Script" uid="uid://y77qtp32wo00" path="res://src/Enemies/EnemyStats.cs" id="11_v38xc"]
+[ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="12_faso5"]
 [ext_resource type="PackedScene" uid="uid://tw6dfgyd6h7y" path="res://scenes/Levels/EnemyNavMeshController.tscn" id="16_v38xc"]
 [ext_resource type="Script" uid="uid://dtq8xwbt4y4ob" path="res://src/UI/pickup_ui_permanent.gd" id="17_duif7"]
 [ext_resource type="Script" uid="uid://daw8gyvo0xom3" path="res://src/UI/FrameTime.cs" id="17_faso5"]
 [ext_resource type="Script" uid="uid://bct2mtni7a82f" path="res://src/Levels/Controllers/EnemyMover.cs" id="18_duif7"]
 [ext_resource type="PackedScene" uid="uid://c8vjoa3wtku3l" path="res://scenes/UI/PickupUi.tscn" id="18_ta1oo"]
+[ext_resource type="PackedScene" uid="uid://ce17hh7p7dmkh" path="res://scenes/UI/DeathScreen.tscn" id="22_ta1oo"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ta1oo"]
 vertices = PackedVector2Array(8759, 1872, 38133.406, 29802.813, -22892.422, 29521.18, 5951, 1872, -22040.57, -29841.617, 5879, -1080, 37291.547, -29275.367, 8607, -1104)
@@ -30,24 +34,49 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Arr
 outlines = Array[PackedVector2Array]([PackedVector2Array(5775, -1184, 8695, -1192, 8871, 1952, 5831, 1952)])
 agent_radius = 24.0
 
-[sub_resource type="Resource" id="Resource_mfd0g"]
+[sub_resource type="Resource" id="Resource_vrw23"]
 script = ExtResource("5_iiw53")
 Blueprint = ExtResource("7_d75v4")
 metadata/_custom_type_script = "uid://dau6m811dtep8"
 
-[sub_resource type="Resource" id="Resource_d75v4"]
+[sub_resource type="Resource" id="Resource_iiw53"]
 script = ExtResource("6_vrw23")
-Weights = Array[ExtResource("5_iiw53")]([SubResource("Resource_mfd0g")])
+Weights = Array[ExtResource("5_iiw53")]([SubResource("Resource_vrw23")])
 metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
 
-[sub_resource type="Resource" id="Resource_ogoab"]
+[sub_resource type="Resource" id="Resource_jmr7q"]
+script = ExtResource("11_v38xc")
+DamageOnContact = 4
+MaxHealth = 15
+MoveSpeed = 280.0
+TurnSpeed = 4.0
+metadata/_custom_type_script = "uid://y77qtp32wo00"
+
+[sub_resource type="Resource" id="Resource_duif7"]
+script = ExtResource("12_faso5")
+Name = "Walker"
+SpriteName = "placeholder"
+Type = 1
+Stats = SubResource("Resource_jmr7q")
+
+[sub_resource type="Resource" id="Resource_7c8pb"]
+script = ExtResource("5_iiw53")
+Blueprint = SubResource("Resource_duif7")
+metadata/_custom_type_script = "uid://dau6m811dtep8"
+
+[sub_resource type="Resource" id="Resource_sl6q3"]
+script = ExtResource("6_vrw23")
+Weights = Array[ExtResource("5_iiw53")]([SubResource("Resource_7c8pb")])
+metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
+
+[sub_resource type="Resource" id="Resource_r5o7b"]
 script = ExtResource("5_iiw53")
 Blueprint = ExtResource("7_d75v4")
 metadata/_custom_type_script = "uid://dau6m811dtep8"
 
-[sub_resource type="Resource" id="Resource_do71q"]
+[sub_resource type="Resource" id="Resource_kew7b"]
 script = ExtResource("6_vrw23")
-Weights = Array[ExtResource("5_iiw53")]([SubResource("Resource_ogoab")])
+Weights = Array[ExtResource("5_iiw53")]([SubResource("Resource_r5o7b")])
 metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
 
 [sub_resource type="Resource" id="Resource_sf4ij"]
@@ -132,18 +161,27 @@ avoidance_enabled = false
 [node name="GameWorld" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="0" unique_id=562045734 node_paths=PackedStringArray("MainPlayer")]
 MainPlayer = NodePath("../../World/Player")
 
-[node name="WaveSpawnCount2" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="0" unique_id=1604725013]
+[node name="WaveDuration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="0" unique_id=233059836]
+script = ExtResource("10_ta1oo")
+EnemyBlueprints = SubResource("Resource_iiw53")
+SpawnMinTime = 0.65
+SpawnMaxTime = 1.5
+metadata/_custom_type_script = "uid://b7ol6jtjagoe"
+
+[node name="WaveSpawnCount3" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="1" unique_id=616732534]
 script = ExtResource("9_duif7")
 SpawnCountTarget = 100
-EnemyBlueprints = SubResource("Resource_d75v4")
-SpawnMinTime = 0.85
-SpawnMaxTime = 2.0
+EnemyBlueprints = SubResource("Resource_sl6q3")
+SpawnMinTime = 0.65
+SpawnMaxTime = 1.1
 metadata/_custom_type_script = "uid://cksmwvaxx1m18"
 
-[node name="WaveDuration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="1" unique_id=233059836]
-script = ExtResource("10_ta1oo")
-EnemyBlueprints = SubResource("Resource_do71q")
-metadata/_custom_type_script = "uid://b7ol6jtjagoe"
+[node name="Wave 1" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="2" unique_id=1604725013]
+script = ExtResource("9_duif7")
+SpawnCountTarget = 150
+EnemyBlueprints = SubResource("Resource_kew7b")
+SpawnBatchMax = 2
+metadata/_custom_type_script = "uid://cksmwvaxx1m18"
 
 [node name="PickupUiPermanent" type="Node2D" parent="Systems/EnemySystems/EnemyWaveController" parent_id_path=PackedInt32Array(2001503768) index="2" unique_id=1845374368]
 process_mode = 3
@@ -170,5 +208,12 @@ nav_map = NodePath("../../../World/Navigation/NavMap")
 [node name="EnemyRenderer" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="9" unique_id=1054443393]
 RenderDistanceFactor = 1.1
 
-[node name="PerformanceMonitor" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="3" unique_id=1872396024 node_paths=PackedStringArray("Targets")]
+[node name="DeathScreen" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="0" unique_id=264734334 instance=ExtResource("22_ta1oo")]
+layer = 2
+visible = false
+
+[node name="PerformanceMonitor" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="4" unique_id=1872396024 node_paths=PackedStringArray("Targets")]
 Targets = [NodePath("../../Systems/EnemySystems/EnemyRenderer"), NodePath("../../Systems/EnemySystems/EnemyTargetQuery"), NodePath("../../Systems/EnemySystems/EnemyNavMeshController")]
+
+[connection signal="OnDamaged" from="World/Player" to="World/Player/PlayerCameraController" method="Shake"]
+[connection signal="OnPlayerDeath" from="World/Player" to="UI/DeathScreen" method="show_death_screen"]

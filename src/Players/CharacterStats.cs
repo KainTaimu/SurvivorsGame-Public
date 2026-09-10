@@ -29,7 +29,7 @@ public partial class CharacterStats : Node
 
 	[Export]
 	private FloatStat _timeToMaxStamina = null!;
-	
+
 	[Export]
 	private FloatStat _exhaustionTime = null!;
 
@@ -149,5 +149,8 @@ public partial class CharacterStats : Node
 		if (OS.HasFeature("wrap_player_health"))
 			_health.BaseValue = Mathf.Wrap(_health.BaseValue, 0, MaxHealth);
 		_player.EmitSignal(Player.SignalName.OnDamaged, totalDamage);
+		_player.EmitSignal(Player.SignalName.OnHealthChanged, Health, Health + totalDamage);
+		if (Health <= 0)
+			_player.EmitSignal(Player.SignalName.OnPlayerDeath);
 	}
 }

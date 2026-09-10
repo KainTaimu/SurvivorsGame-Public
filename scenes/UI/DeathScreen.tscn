@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://ce17hh7p7dmkh"]
+
+[ext_resource type="Script" uid="uid://0qwo7ky3aa5l" path="res://src/UI/DeathScreen/death_screen.gd" id="1_wpgvk"]
+[ext_resource type="Shader" uid="uid://bdro8be0jajun" path="res://src/Shaders/blur.gdshader" id="2_fiwl2"]
+[ext_resource type="Theme" uid="uid://cwyp7j6g53bhf" path="res://resources/UiThemes/NormalUi.tres" id="3_cat5s"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cat5s"]
+shader = ExtResource("2_fiwl2")
+shader_parameter/amount = 0.0
+
+[sub_resource type="GDScript" id="GDScript_cat5s"]
+script/source = "extends ColorRect
+
+@export var final_blur_amount: float = 1.4
+@export var time_to_final_blur: float = 3
+var started: bool
+var blur_time: float
+var blur_amount: float
+@onready var shader_material := material as ShaderMaterial
+
+
+func _process(delta: float) -> void:
+	if not started or time_to_final_blur <= 0:
+		return
+	blur_time = max(0, blur_time - delta)
+	blur_amount = lerpf(0, final_blur_amount, (time_to_final_blur - blur_time) / time_to_final_blur)
+	shader_material.set_shader_parameter(&\"amount\", blur_amount)
+
+
+func start_blurring():
+	started = true
+	blur_time = time_to_final_blur
+	blur_amount = 0
+"
+
+[node name="DeathScreen" type="CanvasLayer" unique_id=264734334]
+process_mode = 3
+script = ExtResource("1_wpgvk")
+
+[node name="Dim" type="ColorRect" parent="." unique_id=1266362435]
+z_index = -1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.011764706, 0.011764706, 0.011764706, 0.49803922)
+metadata/_edit_lock_ = true
+
+[node name="Blur" type="ColorRect" parent="." unique_id=906367714]
+z_index = -2
+material = SubResource("ShaderMaterial_cat5s")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_cat5s")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1171701829]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -162.0
+offset_bottom = 0.00024414063
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("3_cat5s")
+metadata/_edit_lock_ = true
+
+[node name="CenterContainer" type="CenterContainer" parent="PanelContainer" unique_id=833332846]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/CenterContainer" unique_id=1208106780]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/CenterContainer/VBoxContainer" unique_id=262456955]
+layout_mode = 2
+theme = ExtResource("3_cat5s")
+text = "DEAD"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/CenterContainer/VBoxContainer" unique_id=898002370]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="PanelContainer/CenterContainer/VBoxContainer/HBoxContainer" unique_id=575741348]
+layout_mode = 2
+theme = ExtResource("3_cat5s")
+text = "RESTART"
+
+[connection signal="on_death_screen_show" from="." to="Blur" method="start_blurring"]
+[connection signal="button_up" from="PanelContainer/CenterContainer/VBoxContainer/HBoxContainer/Button" to="." method="_restart_game"]

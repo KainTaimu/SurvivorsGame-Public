@@ -6,7 +6,13 @@ namespace Game.Players;
 public partial class Player : Node2D
 {
 	[Signal]
+	public delegate void OnHealthChangedEventHandler(int newHealth, int difference);
+
+	[Signal]
 	public delegate void OnDamagedEventHandler(int damage);
+
+	[Signal]
+	public delegate void OnPlayerDeathEventHandler();
 
 	[Export]
 	public Character Character { get; private set; } = null!;
@@ -21,4 +27,12 @@ public partial class Player : Node2D
 	public PlayerStatusEffectController StatusEffectController { get; private set; } = null!;
 
 	public bool IsAlive => Character.CharacterStats.Health > 0;
+
+	public override void _Ready()
+	{
+		if (!HasConnections(SignalName.OnPlayerDeath))
+		{
+			CustomLogger.LogWarning("No connections to OnDamaged signal");
+		}
+	}
 }

@@ -7,13 +7,12 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ap2sm"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ap2sm"]
-font_size = 14
+font_size = 18
+shadow_color = Color(0, 0, 0, 1)
 
-[node name="WaveDebugPanel" type="CanvasLayer" unique_id=812922554 node_paths=PackedStringArray("_timeLabel", "_waveInfo", "_waveProgress")]
+[node name="WaveDebugPanel" type="CanvasLayer" unique_id=812922554 node_paths=PackedStringArray("_timeLabel")]
 script = ExtResource("1_6r014")
 _timeLabel = NodePath("Control/MarginContainer/CenterContainer/VBoxContainer/TIME")
-_waveInfo = NodePath("Control/MarginContainer/CenterContainer/VBoxContainer/WAVE")
-_waveProgress = NodePath("Control/MarginContainer/CenterContainer/VBoxContainer/ProgressBar")
 
 [node name="Control" type="PanelContainer" parent="." unique_id=1976089836]
 custom_minimum_size = Vector2(256, 0)
@@ -34,7 +33,7 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="CenterContainer" type="CenterContainer" parent="Control/MarginContainer" unique_id=2048240526]
+[node name="CenterContainer" type="VBoxContainer" parent="Control/MarginContainer" unique_id=921232671]
 layout_mode = 2
 theme = ExtResource("2_i6rcm")
 
@@ -43,17 +42,21 @@ layout_mode = 2
 
 [node name="TIME" type="Label" parent="Control/MarginContainer/CenterContainer/VBoxContainer" unique_id=298995412]
 layout_mode = 2
+theme = ExtResource("2_i6rcm")
 text = "TIME"
 label_settings = SubResource("LabelSettings_ap2sm")
 horizontal_alignment = 1
 
 [node name="WAVE" type="Label" parent="Control/MarginContainer/CenterContainer/VBoxContainer" unique_id=1545023085]
+visible = false
 layout_mode = 2
+theme = ExtResource("2_i6rcm")
 text = "WAVE"
 label_settings = ExtResource("2_ap2sm")
 horizontal_alignment = 1
 
 [node name="ProgressBar" type="ProgressBar" parent="Control/MarginContainer/CenterContainer/VBoxContainer" unique_id=67714310]
+visible = false
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 theme = ExtResource("2_i6rcm")

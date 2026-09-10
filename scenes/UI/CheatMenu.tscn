@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://dx68tbn0u3n8k"]
+
+[ext_resource type="Script" uid="uid://dtom4aix07xlh" path="res://src/UI/cheat_menu.gd" id="1_jfysb"]
+[ext_resource type="Theme" uid="uid://cwyp7j6g53bhf" path="res://resources/UiThemes/NormalUi.tres" id="2_07t15"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vqgn6"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.019607844, 0.019607844, 0.019607844, 0.8039216)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_detail = 5
+
+[sub_resource type="GDScript" id="GDScript_lhn0x"]
+script/source = "extends Button
+
+
+func _exit_tree() -> void:
+	mouse_default_cursor_shape = Control.CURSOR_ARROW
+
+
+func _on_mouse_entered() -> void:
+	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+
+
+func _on_mouse_exited() -> void:
+	mouse_default_cursor_shape = Control.CURSOR_ARROW
+"
+
+[node name="CheatMenu" type="CanvasLayer" unique_id=291053026]
+script = ExtResource("1_jfysb")
+
+[node name="Control" type="PanelContainer" parent="." unique_id=150098687]
+process_mode = 3
+top_level = true
+z_index = 2048
+z_as_relative = false
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -59.5
+offset_bottom = 59.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vqgn6")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=880771814]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer" unique_id=727461993]
+layout_mode = 2
+alignment = 1
+
+[node name="CloseLeft" type="Button" parent="Control/MarginContainer/HBoxContainer" unique_id=428912087]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+theme = ExtResource("2_07t15")
+text = "C
+L
+O
+S
+E"
+autowrap_mode = 3
+script = SubResource("GDScript_lhn0x")
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/MarginContainer/HBoxContainer" unique_id=2010182025]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CloseRight" type="Button" parent="Control/MarginContainer/HBoxContainer" unique_id=454488736]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+theme = ExtResource("2_07t15")
+text = "C
+L
+O
+S
+E"
+autowrap_mode = 3
+script = SubResource("GDScript_lhn0x")
+
+[connection signal="mouse_entered" from="Control/MarginContainer/HBoxContainer/CloseLeft" to="Control/MarginContainer/HBoxContainer/CloseLeft" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Control/MarginContainer/HBoxContainer/CloseLeft" to="Control/MarginContainer/HBoxContainer/CloseLeft" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="Control/MarginContainer/HBoxContainer/CloseRight" to="Control/MarginContainer/HBoxContainer/CloseRight" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Control/MarginContainer/HBoxContainer/CloseRight" to="Control/MarginContainer/HBoxContainer/CloseRight" method="_on_mouse_exited"]

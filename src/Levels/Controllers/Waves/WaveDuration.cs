@@ -72,14 +72,6 @@ public partial class WaveDuration : AbstractWave, IWaveProgress, IWaveResettable
 		}
 	}
 
-	private protected override void GiveRewards()
-	{
-		if (Rewards is null)
-			return;
-		foreach (var reward in Rewards)
-			reward.GiveReward();
-	}
-
 	public void Reset()
 	{
 		_waveTimeLeft = Duration;

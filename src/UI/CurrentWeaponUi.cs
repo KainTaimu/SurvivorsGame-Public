@@ -1,4 +1,5 @@
 using System.Linq;
+using Game.Core;
 using Game.Items;
 using Game.Items.Offensive;
 using Game.Players.Controllers;
@@ -35,6 +36,7 @@ public partial class CurrentWeaponUi : CanvasLayer
 
 	public override void _Ready()
 	{
+		PauseController.Instance.OnPauseToggled += toggle => Visible = !toggle;
 		_weaponController.OnPrimaryAttackReassigned += UpdateCarousel;
 		_weaponController.OnSecondaryAttackReassigned += UpdateCarousel;
 		_weaponController.OnOffensiveListChanged += _ => UpdateCarousel();

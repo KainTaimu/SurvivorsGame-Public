@@ -3,34 +3,21 @@
 [ext_resource type="Script" uid="uid://bvumasotjkltv" path="res://src/UI/hud.gd" id="1_bg4j7"]
 [ext_resource type="Theme" uid="uid://cwyp7j6g53bhf" path="res://resources/UiThemes/NormalUi.tres" id="1_bplp6"]
 [ext_resource type="LabelSettings" uid="uid://cu65p2lbgxmhg" path="res://scenes/UI/WeaponCarouselLabelSettings.tres" id="2_bplp6"]
+[ext_resource type="Script" uid="uid://df22nw3i0hqp6" path="res://src/UI/HealthBar/health_bar.gd" id="4_t4hrf"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y52bq"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_47idg"]
-content_margin_left = 2.0
-content_margin_top = 2.0
-content_margin_right = 2.0
-content_margin_bottom = 2.0
-bg_color = Color(0.1, 0.1, 0.1, 0.3)
-corner_detail = 6
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kq8v2"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg4j7"]
-bg_color = Color(1, 0, 0, 1)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bplp6"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bplp6"]
-bg_color = Color(0, 1, 0, 1)
-
-[node name="HUD" type="CanvasLayer" unique_id=1626912566 node_paths=PackedStringArray("health_bar", "health_damage_bar", "enemies_alive_label")]
+[node name="HUD" type="CanvasLayer" unique_id=1626912566 node_paths=PackedStringArray("health_bar", "enemies_alive_label")]
 script = ExtResource("1_bg4j7")
 health_bar = NodePath("MarginContainer/PanelContainer/VBoxContainer/HealthBar")
-health_damage_bar = NodePath("MarginContainer/PanelContainer/VBoxContainer/HealthDamageBar")
 enemies_alive_label = NodePath("MarginContainer/PanelContainer/VBoxContainer/Enemies")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=116692494]
 offset_right = 576.0
 offset_bottom = 216.0
+offset_transform_visual_only = false
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 4
 
@@ -42,27 +29,14 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_y52bq")
 layout_mode = 2
 mouse_filter = 2
 
-[node name="HealthDamageBar" type="ProgressBar" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1409059223]
+[node name="HealthBar" type="PanelContainer" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1317610295]
 custom_minimum_size = Vector2(0, 8)
 layout_mode = 2
 offset_transform_enabled = true
-theme_override_styles/background = SubResource("StyleBoxFlat_47idg")
-theme_override_styles/fill = SubResource("StyleBoxFlat_bg4j7")
-max_value = 1.0
-value = 1.0
-show_percentage = false
-
-[node name="HealthBar" type="ProgressBar" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=464323161]
-custom_minimum_size = Vector2(0, 8)
-layout_mode = 2
-offset_transform_enabled = true
-offset_transform_position = Vector2(0, -12)
-theme_override_styles/background = SubResource("StyleBoxEmpty_bplp6")
-theme_override_styles/fill = SubResource("StyleBoxFlat_bplp6")
-max_value = 1.0
-step = 0.001
-value = 1.0
-show_percentage = false
+theme_override_styles/panel = SubResource("StyleBoxEmpty_kq8v2")
+script = ExtResource("4_t4hrf")
+ratio = 1.0
+background = Color(0.1, 0.1, 0.1, 0.6)
 
 [node name="Enemies" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=649557123]
 layout_mode = 2

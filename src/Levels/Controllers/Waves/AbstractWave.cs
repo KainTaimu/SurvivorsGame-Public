@@ -87,7 +87,13 @@ public abstract partial class AbstractWave : Node
 
 	public abstract void SpawnEnemy();
 
-	private protected abstract void GiveRewards();
+	protected void GiveRewards()
+	{
+		if (Rewards is null)
+			return;
+		foreach (var reward in Rewards)
+			reward.GiveReward();
+	}
 
 	public override string ToString()
 	{

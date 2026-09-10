@@ -53,6 +53,9 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 corner_detail = 6
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cat5s"]
+bg_color = Color(0.004024883, 0.004024883, 0.004024883, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hmxwi"]
 content_margin_left = 2.0
 content_margin_top = 2.0
@@ -142,6 +145,7 @@ Button/styles/normal = SubResource("StyleBoxFlat_42q84")
 Button/styles/pressed = SubResource("StyleBoxFlat_1d35m")
 HSlider/styles/slider = SubResource("StyleBoxFlat_p7ixb")
 Label/colors/font_shadow_color = Color(0, 0, 0, 1)
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_cat5s")
 ProgressBar/styles/background = SubResource("StyleBoxFlat_hmxwi")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_6bngf")
 RichTextLabel/colors/font_shadow_color = Color(0, 0, 0, 1)

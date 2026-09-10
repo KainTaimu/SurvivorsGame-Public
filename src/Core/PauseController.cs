@@ -8,6 +8,9 @@ public partial class PauseController : Node
 	[Signal]
 	public delegate void OnUnpauseEventHandler();
 
+	[Signal]
+	public delegate void OnPauseToggledEventHandler(bool toggle);
+
 	[Export]
 	public bool ThrottleFpsWhenPaused = true;
 
@@ -62,6 +65,7 @@ public partial class PauseController : Node
 		}
 
 		EmitSignal(SignalName.OnPause);
+		EmitSignalOnPauseToggled(true);
 		Tree.Paused = true;
 		IsPaused = Tree.Paused;
 		if (ThrottleFpsWhenPaused)
@@ -77,6 +81,7 @@ public partial class PauseController : Node
 		}
 
 		EmitSignal(SignalName.OnUnpause);
+		EmitSignalOnPauseToggled(false);
 		Tree.Paused = false;
 		IsPaused = Tree.Paused;
 		if (ThrottleFpsWhenPaused)

@@ -27,7 +27,7 @@ public partial class EnemyWaveController : Node
 
 	public int TotalSpawned { get; private set; }
 
-	public float CurrentWaveProgress => GetWaveProgress();
+	public float? CurrentWaveProgress => GetWaveProgress();
 
 	public AbstractWave? CurrentWave { get; private set; }
 	public int CurrentWaveIndex { get; private set; }
@@ -96,10 +96,10 @@ public partial class EnemyWaveController : Node
 		EmitSignalOnWaveStart(wave);
 	}
 
-	private float GetWaveProgress()
+	private float? GetWaveProgress()
 	{
 		if (CurrentWave is not IWaveProgress progress)
-			return -1;
+			return null;
 		return progress.Progress;
 	}
 }

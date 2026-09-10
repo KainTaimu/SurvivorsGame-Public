@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://bpdbdnifhxaxh" path="res://src/Players/Controllers/player_stamina_bar.gd" id="5_jgr36"]
 [ext_resource type="Script" uid="uid://jk25jpibrbm3" path="res://src/Players/Controllers/LookLight.cs" id="5_oypsu"]
 [ext_resource type="Texture2D" uid="uid://c0d0pkcn6hw68" path="res://assets/Players/player.png" id="5_ragxt"]
-[ext_resource type="Script" uid="uid://b8nlijamaetyr" path="res://src/Players/Controllers/PlayerCameraController.cs" id="6_kfojw"]
+[ext_resource type="Script" uid="uid://5dqqvm433y3" path="res://src/Players/Controllers/player_camera_controller.gd" id="6_jgr36"]
 [ext_resource type="Shader" uid="uid://bgl0yr4nfmpqx" path="res://src/Shaders/flash.gdshader" id="8_wuwji"]
 [ext_resource type="Texture2D" uid="uid://c7kegqurrrx0w" path="res://assets/VFX/small_chevron.png" id="9_c66x0"]
 [ext_resource type="Script" uid="uid://d2moqmcv2k22p" path="res://src/Players/Controllers/LookHeader.cs" id="10_k7ubp"]
@@ -21,8 +21,6 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5pqvm"]
 shader = ExtResource("8_wuwji")
-shader_parameter/color = Color(1, 1, 1, 1)
-shader_parameter/flash_state = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2g2d6"]
 atlas = ExtResource("5_ragxt")
@@ -157,6 +155,7 @@ StatusEffectController = NodePath("PlayerStatusEffectController")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=881638213]
 material = SubResource("ShaderMaterial_5pqvm")
+instance_shader_parameters/color = Color(1, 1, 1, 1)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_dpv53")
 animation = &"run"
@@ -206,10 +205,10 @@ value = 0.1
 show_percentage = false
 
 [node name="PlayerCameraController" type="Camera2D" parent="." unique_id=68646763]
+ignore_rotation = false
 zoom = Vector2(0.65, 0.65)
-script = ExtResource("6_kfojw")
-MaxZoom = 0.65
-CurrentZoom = 0.65
+script = ExtResource("6_jgr36")
+_damage_shake_scale = 0.06
 metadata/_edit_lock_ = true
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1140483799]
@@ -282,4 +281,5 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[connection signal="OnDamaged" from="." to="PlayerCameraController" method="on_player_damaged" unbinds=1]
 [connection signal="OnDamaged" from="." to="DamageVignette" method="on_player_damaged" unbinds=1]

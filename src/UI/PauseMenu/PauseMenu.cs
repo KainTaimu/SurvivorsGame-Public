@@ -4,6 +4,7 @@ using Game.Players;
 
 namespace Game.UI.Menus;
 
+[GlobalClass]
 public partial class PauseMenu : CanvasLayer
 {
 	private Player Player => GameWorld.Instance.MainPlayer;

@@ -1,7 +1,6 @@
 extends CanvasLayer
 
-@export var health_bar: ProgressBar
-@export var health_damage_bar: ProgressBar
+@export var health_bar: HealthBar
 @export var enemies_alive_label: Label
 
 var damage_bar_tween: Tween
@@ -14,6 +13,7 @@ func _ready() -> void:
 	var main_player: Player = GameWorldInstance.MainPlayer
 	if main_player != null:
 		GameWorldInstance.MainPlayer.connect("OnDamaged", on_player_damaged)
+	health_bar.ratio = player_stats.Health / float(player_stats.MaxHealth)
 
 
 func _process(_delta: float) -> void:
@@ -23,16 +23,7 @@ func _process(_delta: float) -> void:
 
 
 func on_player_damaged(_dmg) -> void:
-	health_bar.value = player_stats.Health / float(player_stats.MaxHealth)
-
-	_kill_damage_bar_tween()
-	damage_bar_tween = create_tween()
-	damage_bar_tween.tween_interval(0.5)
-	damage_bar_tween \
-			.tween_property(health_damage_bar, "value", health_bar.value, 0.1) \
-			.set_ease(Tween.EASE_OUT) \
-			.set_trans(Tween.TRANS_EXPO)
-	damage_bar_tween.tween_callback(_kill_damage_bar_tween)
+	health_bar.ratio = player_stats.Health / float(player_stats.MaxHealth)
 
 
 func _kill_damage_bar_tween():
