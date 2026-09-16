@@ -269,6 +269,9 @@ script = SubResource("GDScript_do71q")
 material = SubResource("ShaderMaterial_mxkc7")
 sprite_frames = SubResource("SpriteFrames_tvywd")
 
+[node name="PlayerCameraController" parent="." index="2" unique_id=68646763]
+max_zoom = 0.65
+
 [node name="M17" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="0" unique_id=1989500741 instance=ExtResource("7_tvywd")]
 _fireGroup = SubResource("Resource_cbfmd")
 _reloadBehaviour = SubResource("Resource_h2f2d")

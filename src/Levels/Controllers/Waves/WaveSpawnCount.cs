@@ -62,7 +62,13 @@ public partial class WaveSpawnCount : AbstractWave, IWaveProgress, IWaveResettab
 		if (bp is null)
 			return;
 
-		var id = Spawner.SpawnEnemy(bp, ViewportTools.GetPositionOutsideViewport(followViewportScale: false));
+		var id = Spawner.SpawnEnemy(
+			bp,
+			ViewportTools.GetPositionOutsideViewport(
+				followViewportScale: false,
+				spawnDirection: CardinalDirection.East | CardinalDirection.East
+			)
+		);
 		if (id is null)
 		{
 			CustomLogger.LogError("failed to spawn");

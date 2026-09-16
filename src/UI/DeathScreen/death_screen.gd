@@ -15,13 +15,13 @@ func _exit_tree() -> void:
 	if Engine.is_editor_hint():
 		return
 	PauseController.Unlock(self)
-	PauseController.Unpause(self)
+	# PauseController.Unpause(self)
 
 
 func show_death_screen():
 	show()
 	PauseController.Lock(self)
-	PauseController.Pause(self)
+	# PauseController.Pause(self)
 	on_death_screen_show.emit()
 
 

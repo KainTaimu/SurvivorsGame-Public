@@ -11,6 +11,9 @@ public abstract partial class AbstractWave : Node
 	[Signal]
 	public delegate void OnWaveEndEventHandler();
 
+	[Export]
+	public string WaveName { get; set; } = "";
+
 	[ExportCategory("Spawning")]
 	[Export]
 	public AbstractWaveBlueprintCollection EnemyBlueprints = null!;

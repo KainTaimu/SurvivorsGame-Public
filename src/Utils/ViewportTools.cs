@@ -17,7 +17,7 @@ public static class ViewportTools
 		if (followViewportScale)
 			size /= zoom;
 
-		var edge = spawnDirection is not null ? (int)spawnDirection : GD.RandRange(0, 3);
+		var edge = GD.RandRange(0, 3);
 		return edge switch
 		{
 			0 => new Vector2(

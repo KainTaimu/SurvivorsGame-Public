@@ -10,9 +10,21 @@
 font_size = 18
 shadow_color = Color(0, 0, 0, 1)
 
-[node name="WaveDebugPanel" type="CanvasLayer" unique_id=812922554 node_paths=PackedStringArray("_timeLabel")]
+[sub_resource type="GDScript" id="GDScript_ap2sm"]
+script/source = "extends Control
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	if OS.has_feature(\"prod\"):
+		hide()
+"
+
+[node name="WaveDebugPanel" type="CanvasLayer" unique_id=812922554 node_paths=PackedStringArray("_timeLabel", "_waveInfo", "_waveProgress")]
 script = ExtResource("1_6r014")
 _timeLabel = NodePath("Control/MarginContainer/CenterContainer/VBoxContainer/TIME")
+_waveInfo = NodePath("Control/MarginContainer/CenterContainer/VBoxContainer/WAVE")
+_waveProgress = NodePath("Control/MarginContainer/CenterContainer/VBoxContainer/ProgressBar")
 
 [node name="Control" type="PanelContainer" parent="." unique_id=1976089836]
 custom_minimum_size = Vector2(256, 0)
@@ -48,20 +60,20 @@ label_settings = SubResource("LabelSettings_ap2sm")
 horizontal_alignment = 1
 
 [node name="WAVE" type="Label" parent="Control/MarginContainer/CenterContainer/VBoxContainer" unique_id=1545023085]
-visible = false
 layout_mode = 2
 theme = ExtResource("2_i6rcm")
 text = "WAVE"
 label_settings = ExtResource("2_ap2sm")
 horizontal_alignment = 1
+script = SubResource("GDScript_ap2sm")
 
 [node name="ProgressBar" type="ProgressBar" parent="Control/MarginContainer/CenterContainer/VBoxContainer" unique_id=67714310]
-visible = false
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 theme = ExtResource("2_i6rcm")
 theme_override_font_sizes/font_size = 14
 max_value = 1.0
+script = SubResource("GDScript_ap2sm")
 
 [node name="Timer" type="Timer" parent="." unique_id=1522388757]
 autostart = true

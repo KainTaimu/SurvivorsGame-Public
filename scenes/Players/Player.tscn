@@ -92,6 +92,15 @@ animations = [{
 "speed": 7.0
 }]
 
+[sub_resource type="GDScript" id="GDScript_tvywd"]
+script/source = "extends AnimatedSprite2D
+
+
+func on_player_on_player_death() -> void:
+	set_instance_shader_parameter(&\"color\", Color.DARK_RED)
+	set_instance_shader_parameter(&\"flash_state\", 1.0)
+"
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oypsu"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2g2d6"]
@@ -160,6 +169,7 @@ scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_dpv53")
 animation = &"run"
 autoplay = "idle"
+script = SubResource("GDScript_tvywd")
 metadata/_edit_lock_ = true
 
 [node name="StaminaBar" type="PanelContainer" parent="AnimatedSprite2D" unique_id=1603668418 node_paths=PackedStringArray("bar_left", "bar_right")]
@@ -283,3 +293,5 @@ grow_vertical = 2
 
 [connection signal="OnDamaged" from="." to="PlayerCameraController" method="on_player_damaged" unbinds=1]
 [connection signal="OnDamaged" from="." to="DamageVignette" method="on_player_damaged" unbinds=1]
+[connection signal="OnPlayerDeath" from="." to="." method="OnDeath"]
+[connection signal="OnPlayerDeath" from="." to="AnimatedSprite2D" method="on_player_on_player_death"]

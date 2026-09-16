@@ -14,16 +14,10 @@ shader_parameter/saturation = 1.0
 shader = ExtResource("3_8b1c8")
 shader_parameter/amount = 1.0000000475
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5cant"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-bg_color = Color(0.019607844, 0.019607844, 0.019607844, 0.8039216)
-border_width_top = 2
-border_width_bottom = 2
-border_color = Color(0, 0, 0, 1)
-corner_detail = 5
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pnxkk"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pnxkk"]
 
 [sub_resource type="GDScript" id="GDScript_qlmw6"]
 script/source = "extends Button
@@ -44,7 +38,6 @@ func _on_mouse_exited() -> void:
 [node name="PickupUi" type="CanvasLayer" unique_id=720680017 node_paths=PackedStringArray("grid_container")]
 process_mode = 3
 layer = 2
-visible = false
 script = ExtResource("1_5cant")
 grid_container = NodePath("Control/MarginContainer/HBoxContainer/ScrollContainer/CenterContainer/GridContainer")
 
@@ -91,7 +84,7 @@ offset_bottom = 59.5
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_5cant")
+theme_override_styles/panel = SubResource("StyleBoxFlat_pnxkk")
 
 [node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=21910808]
 layout_mode = 2
@@ -107,6 +100,7 @@ alignment = 1
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 theme = ExtResource("4_mkqwl")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_pnxkk")
 text = "C
 L
 O
@@ -137,6 +131,7 @@ columns = 3
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 theme = ExtResource("4_mkqwl")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_pnxkk")
 text = "C
 L
 O

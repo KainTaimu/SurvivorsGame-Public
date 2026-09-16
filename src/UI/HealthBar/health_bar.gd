@@ -8,9 +8,8 @@ extends PanelContainer
 	set(v):
 		var old_value := ratio
 		ratio = clampf(v, 0.0, 1.0)
-		_time_until_standby = 3
-		if v > old_value:
-			_damage_rect = _real_rect
+		if v < old_value:
+			_time_until_standby = 3
 		queue_redraw()
 @export var health_color: Color = Color.GREEN
 @export var damage_color: Color = Color.RED

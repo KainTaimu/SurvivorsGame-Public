@@ -65,6 +65,7 @@ public partial class Crosshair : Node2D
 		GameSettings.Instance.OnCrosshairScaleChanged += OnInstanceOnOnCrosshairScaleChanged;
 
 		Recoil = new CrossHairRecoil(this);
+		AddChild(Recoil);
 
 		Input.SetMouseMode(_visibleMouseMode);
 		Position = GetViewportRect().GetCenter();
@@ -166,6 +167,10 @@ public partial class Crosshair : Node2D
 		private Tween? _impulseTweener;
 		private Tween? _recoilJumpTweener;
 
+		private static readonly NodePath _positionNodePath = new("position");
+		private static readonly NodePath _accumilatedImpulseNodePath = new("_accumilatedImpulse");
+		private static readonly NodePath _impulseScaleNodePath = new("_impulseScale");
+
 		public void ApplyImpulse(Vector2 impulse, float accumilatedImpuseFactor = 1f, bool applyHorizontalRecoil = true)
 		{
 			const float easeReturn = 0.2f;
@@ -188,12 +193,12 @@ public partial class Crosshair : Node2D
 				.CreateTween()
 				.SetTrans(Tween.TransitionType.Elastic)
 				.SetEase(Tween.EaseType.Out);
-			_recoilJumpTweener.TweenProperty(targetCrosshair, "position", finalCrosshairPos, 0.33f);
+			_recoilJumpTweener.TweenProperty(targetCrosshair, _positionNodePath, finalCrosshairPos, 0.33f);
 
 			_impulseTweener?.Kill();
 			_impulseTweener = crosshair.CreateTween().SetTrans(Tween.TransitionType.Linear);
-			_impulseTweener.TweenProperty(this, "_accumilatedImpulse", Vector2.Zero, easeReturn);
-			_impulseTweener.TweenProperty(this, "_impulseScale", 0f, 0.6f);
+			_impulseTweener.TweenProperty(this, _accumilatedImpulseNodePath, Vector2.Zero, easeReturn);
+			_impulseTweener.TweenProperty(this, _impulseScaleNodePath, 0f, 0.6f);
 
 			crosshair.ClampCrosshairToViewport();
 		}

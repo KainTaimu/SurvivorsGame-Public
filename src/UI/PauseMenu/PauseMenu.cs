@@ -11,12 +11,16 @@ public partial class PauseMenu : CanvasLayer
 
 	public override void _Input(InputEvent @event)
 	{
-		if (@event.IsActionPressed(InputMapNames.UiCancel))
-			ToggleShow();
+		if (!@event.IsActionPressed(InputMapNames.UiCancel))
+			return;
+
+		ToggleShow();
 	}
 
 	private void ToggleShow()
 	{
+		if (PauseController.Instance.IsLocked && PauseController.Instance.LockedBy != this)
+			return;
 		var isPaused = PauseController.Instance.IsPaused;
 
 		switch (!isPaused)

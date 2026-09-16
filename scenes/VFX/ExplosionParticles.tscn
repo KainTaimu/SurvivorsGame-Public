@@ -6,7 +6,7 @@
 particles_animation = true
 particles_anim_h_frames = 4
 particles_anim_v_frames = 4
-particles_anim_loop = false
+particles_anim_loop = true
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ssqlr"]
 atlas = ExtResource("1_351pr")

@@ -36,4 +36,9 @@ public partial class Player : Node2D
 			CustomLogger.LogWarning("No connections to OnDamaged signal");
 		}
 	}
+
+	public void OnDeath()
+	{
+		ProcessMode = ProcessModeEnum.Disabled;
+	}
 }

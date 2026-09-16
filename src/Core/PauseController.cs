@@ -17,7 +17,8 @@ public partial class PauseController : Node
 	[Export]
 	public int ThrottledFpsTarget = 60;
 
-	public bool IsPaused;
+	public bool IsLocked => LockedBy is not null;
+	public bool IsPaused { get; private set; }
 
 	public Node? LockedBy { get; private set; }
 	private SceneTree Tree => GetTree();
@@ -29,20 +30,29 @@ public partial class PauseController : Node
 		Instance = this;
 	}
 
-	public void Lock(Node locker)
+	public override void _ExitTree()
+	{
+		Instance = null!;
+	}
+
+	/// <summary>
+	/// Returns true if lock successful
+	/// </summary>
+	public bool Lock(Node locker)
 	{
 		if (locker != LockedBy && LockedBy is not null)
 		{
 			// Logger.LogError($"Cannot lock the pause controller while it is already locked by another node {LockedBy}.");
-			return;
+			return false;
 		}
 		if (locker.ProcessMode != ProcessModeEnum.Always)
 		{
 			CustomLogger.LogError("Locker must have ProcessMode set to Always to lock the pause controller.");
-			return;
+			return false;
 		}
 
 		LockedBy = locker;
+		return true;
 	}
 
 	public void Unlock(Node locker)

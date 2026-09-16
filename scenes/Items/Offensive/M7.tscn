@@ -28,7 +28,8 @@ metadata/_custom_type_script = "uid://dpq42sefws67v"
 [sub_resource type="Resource" id="Resource_2fu6x"]
 script = ExtResource("7_7na0o")
 ReloadTime = 1.3
-BloomCoefficientDeg = 6.0
+BloomCoefficientDeg = 2.0
+MagazineCapacity = 35
 HorizontalBaseRecoil = 6.0
 VerticalRecoilMin = 5.0
 VerticalBaseRecoil = 5.0
