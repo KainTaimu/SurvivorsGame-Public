@@ -3,8 +3,11 @@ using Game.UI;
 
 namespace Game.Items.Offensive;
 
-public partial class Shotgun : SimpleFirearm
+public partial class Shotgun : SimpleFirearm, IHasPumpActionStats
 {
+	[Export]
+	public PumpActionStats PumpActionStats { get; set; } = null!;
+
 	[Export]
 	private AudioStreamPlayer? _shellReloadAudioPlayer;
 
@@ -13,7 +16,7 @@ public partial class Shotgun : SimpleFirearm
 
 	private double _reloadCooldown;
 
-	private int PelletCount => OffensiveStats.Additional.GetValueOrDefault("PelletCount").AsInt32();
+	private int PelletCount => PumpActionStats.PelletCount;
 
 	private static readonly RandomNumberGenerator _rng = new();
 
@@ -35,7 +38,7 @@ public partial class Shotgun : SimpleFirearm
 			Reload();
 
 		if (_cockingAudioPlayer is not null)
-			GetTree().CreateTimer(OffensiveStats.AttackSpeed / 2).Timeout += () => _cockingAudioPlayer.Play();
+			GetTree().CreateTimer(AttackStats.AttackSpeed / 2).Timeout += () => _cockingAudioPlayer.Play();
 
 		var playerPosition = Player.GetCanvasTransform() * Player.Position;
 
@@ -44,19 +47,19 @@ public partial class Shotgun : SimpleFirearm
 		var baseRotation = playerPosition.AngleToPoint(mouseVector);
 		for (var i = 0; i < PelletCount; i++)
 		{
-			var bloomRad = BloomCoefficientDeg * (Math.PI / 180);
+			var bloomRad = BloomStats.BloomCoefficientDeg * (Math.PI / 180);
 			var bloom = 0.0 + (bloomRad / 2) * _rng.Randfn();
 			var rotation = baseRotation + bloom;
-			var scale = Vector2.One * FirearmStats.ProjectileScaleMultiplier;
-			var speed = OffensiveStats.ProjectileSpeed * (float)GD.RandRange(1f, 2f);
+			var scale = Vector2.One * ProjectileStats.Scale;
+			var speed = ProjectileStats.Speed * (float)GD.RandRange(1f, 2f);
 
 			_projectileAttack.Attack(
 				Pool.GetProjectile,
 				Player.GlobalPosition,
 				(float)rotation,
-				FirearmStats.ProjectileRadius,
+				ProjectileStats.HitRadius,
 				speed,
-				FirearmStats.PierceLimit,
+				PierceStats.PierceLimit,
 				scale
 			);
 		}

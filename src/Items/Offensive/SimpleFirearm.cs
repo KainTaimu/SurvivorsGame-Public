@@ -2,14 +2,26 @@ using System.Collections.Generic;
 using Arch.Core;
 using Game.Levels.Controllers;
 using Game.UI;
+using Game.Utils;
 
 namespace Game.Items.Offensive;
 
-// TODO: Monolithic class, refactor
 /// <summary>
 /// A magazine-fed firearm
 /// </summary>
-public partial class SimpleFirearm : AbstractFirearm, IReloadable, ICustomReloadDisplay
+public partial class SimpleFirearm
+	: BaseOffensive,
+		IReloadable,
+		ICustomReloadDisplay,
+		IHasDamageStats,
+		IHasMagazineStats,
+		IHasBloomStats,
+		IHasRecoilStats,
+		IHasProjectileStats,
+		IHasAttackStats,
+		IHasPierceStats,
+		IHasSlowStats,
+		IHasKnockbackStats
 {
 	[Signal]
 	public delegate void OnReloadStartEventHandler();
@@ -20,6 +32,38 @@ public partial class SimpleFirearm : AbstractFirearm, IReloadable, ICustomReload
 	[Signal]
 	public delegate void AlmostEmptyEventHandler();
 
+	[ExportCategory("Stats")]
+	[Export]
+	public DamageStats DamageStats { get; set; } = null!;
+
+	[Export]
+	public MagazineStats MagazineStats { get; set; } = null!;
+
+	[Export]
+	public BloomStats BloomStats { get; set; } = null!;
+
+	[Export]
+	public RecoilStats RecoilStats { get; set; } = null!;
+
+	[Export]
+	public ReloadStats ReloadStats { get; set; } = null!;
+
+	[Export]
+	public ProjectileStats ProjectileStats { get; set; } = null!;
+
+	[Export]
+	public AttackStats AttackStats { get; set; } = null!;
+
+	[Export]
+	public PierceStats PierceStats { get; set; } = null!;
+
+	[Export]
+	public SlowStats SlowStats { get; set; } = null!;
+
+	[Export]
+	public KnockbackStats KnockbackStats { get; set; } = null!;
+
+	[ExportCategory("")]
 	[Export]
 	protected PackedScene _projectileScene = null!;
 
@@ -38,7 +82,16 @@ public partial class SimpleFirearm : AbstractFirearm, IReloadable, ICustomReload
 	[Export]
 	private AudioStreamPlayer? _boltCloseAudioPlayer;
 
+	public int MagazineCapacity => MagazineStats.Capacity;
+
+	public int MagazineCount
+	{
+		get => MagazineStats.Count;
+		set => MagazineStats.Count = value;
+	}
+
 	public bool IsReloading => _reloadBehaviour.IsReloading;
+
 	public ReloadDisplayType ReloadDisplayType => _reloadBehaviour.DisplayType;
 
 	protected readonly ProjectilePool Pool = new();
@@ -62,24 +115,22 @@ public partial class SimpleFirearm : AbstractFirearm, IReloadable, ICustomReload
 		InitializeFireGroupSettings();
 		InitializeReloadBehaviour();
 
-		FirearmStats.Changed += InitializeFireGroupSettings;
-
-		OnAttack += () => OffensiveEffects.ApplyCameraShake(FirearmStats.CameraRecoilScale, GetViewport, CreateTween);
+		OnAttack += () => OffensiveEffects.ApplyCameraShake(RecoilStats.CameraRecoilScale, GetViewport, CreateTween);
 		OnAttack += () =>
 		{
 			if (Crosshair is not null)
 			{
 				OffensiveEffects.ApplyCrosshairRecoil(
 					Crosshair,
-					HorizontalBaseRecoil,
-					HorizontalRecoilMin,
-					HorizontalRecoilRandom,
-					VerticalBaseRecoil,
-					VerticalRecoilMin,
-					VerticalRecoilRandom,
-					RecoilScale,
-					RecoilAccumilationScale,
-					HorizontalRecoilPunish
+					RecoilStats.HorizontalBaseRecoil,
+					RecoilStats.HorizontalRecoilMin,
+					RecoilStats.HorizontalRecoilRandom,
+					RecoilStats.VerticalBaseRecoil,
+					RecoilStats.VerticalRecoilMin,
+					RecoilStats.VerticalRecoilRandom,
+					RecoilStats.RecoilScale,
+					RecoilStats.RecoilAccumilationScale,
+					RecoilStats.HorizontalRecoilPunish
 				);
 			}
 		};
@@ -106,7 +157,7 @@ public partial class SimpleFirearm : AbstractFirearm, IReloadable, ICustomReload
 		}
 
 		if (_fireGroup is ICooldown c)
-			c.CooldownDuration = FirearmStats.AttackSpeed;
+			c.CooldownDuration = AttackStats.AttackSpeed;
 		if (_fireGroup is BurstFireGroup burst)
 		{
 			if (!Stats.Additional.TryGetValue("BurstCount", out var burstCount))
@@ -127,7 +178,7 @@ public partial class SimpleFirearm : AbstractFirearm, IReloadable, ICustomReload
 		_reloadBehaviour.OnReloadStart += () => { };
 		_reloadBehaviour.OnReloadEnd += () =>
 		{
-			MagazineCount = FirearmStats.MagazineCapacity;
+			MagazineCount = MagazineStats.Capacity;
 			_boltCloseAudioPlayer?.Play();
 		};
 		_reloadBehaviour.OnReloadEndInterrupted += () =>
@@ -142,22 +193,19 @@ public partial class SimpleFirearm : AbstractFirearm, IReloadable, ICustomReload
 		switch (_reloadBehaviour)
 		{
 			case NormalReloadBehaviour normalReloadBehaviour:
-				normalReloadBehaviour.ReloadTime = () => ReloadTime;
+				normalReloadBehaviour.ReloadTime = () => ReloadStats.ReloadTime;
 				break;
 			case SequentialReloadBehaviour sequentialReloadBehaviour:
-				sequentialReloadBehaviour.TimeBetweenRounds = () => ReloadTime / FirearmStats.MagazineCapacity;
-				sequentialReloadBehaviour.RoundsToLoad = FirearmStats.MagazineCapacity;
+				sequentialReloadBehaviour.TimeBetweenRounds = () => ReloadStats.ReloadTime / MagazineStats.Capacity;
+				sequentialReloadBehaviour.RoundsToLoad = MagazineStats.Capacity;
 				break;
 			default:
 				throw new ArgumentOutOfRangeException(nameof(_reloadBehaviour));
 		}
 	}
 
-	public override void _Process(double delta)
+	public override void Process(double delta)
 	{
-		if (AttackActionString is null)
-			return;
-
 		if (_fireGroup is ICooldown fireGroupCooldown)
 			fireGroupCooldown.Process((float)delta);
 
@@ -192,18 +240,18 @@ public partial class SimpleFirearm : AbstractFirearm, IReloadable, ICustomReload
 		var mouseVector = Crosshair?.CanvasSpacePosition ?? Player.GetGlobalMousePosition();
 		var rotation = playerPosition.AngleToPoint(mouseVector);
 
-		var bloomRad = BloomCoefficientDeg * (Math.PI / 180);
+		var bloomRad = BloomStats.BloomCoefficientDeg * (Math.PI / 180);
 		var bloom = 0.0 + (bloomRad / 2) * _rng.Randfn();
 		rotation += (float)bloom;
-		var scale = Vector2.One * FirearmStats.ProjectileScaleMultiplier;
+		var scale = Vector2.One * ProjectileStats.Scale;
 
 		_projectileAttack.Attack(
 			Pool.GetProjectile,
 			Player.GlobalPosition,
 			rotation,
-			FirearmStats.ProjectileRadius,
-			FirearmStats.ProjectileSpeed,
-			FirearmStats.PierceLimit,
+			ProjectileStats.HitRadius,
+			ProjectileStats.Speed,
+			PierceStats.PierceLimit,
 			scale
 		);
 
@@ -222,16 +270,20 @@ public partial class SimpleFirearm : AbstractFirearm, IReloadable, ICustomReload
 		_reloadBehaviour.Reload();
 	}
 
-	protected override void HandleHitECS(Entity entity)
+	protected override void HandleDamage(Entity entity)
 	{
-		OffensiveEffects.ApplyKnockback(
+		OffensiveEffects.ApplyDamage(
 			entity,
-			Player.GlobalPosition,
-			OffensiveStats.Additional.GetValueOrDefault("Knockback", 0f).AsSingle()
+			DamageStats.Damage,
+			DamageStats.CalculateCrit(),
+			DamageStats.DamageVariance,
+			PlayerStats.OutgoingDamage
 		);
-		OffensiveEffects.ApplyVelocityMultiplier(
-			entity,
-			OffensiveStats.Additional.GetValueOrDefault("SlowMultiplier", 1f).AsSingle()
-		);
+	}
+
+	protected override void HandleHitEffects(Entity entity)
+	{
+		OffensiveEffects.ApplyKnockback(entity, Player.GlobalPosition, KnockbackStats.KnockbackForce);
+		OffensiveEffects.ApplyVelocityMultiplier(entity, SlowStats.SlowCoefficient);
 	}
 }

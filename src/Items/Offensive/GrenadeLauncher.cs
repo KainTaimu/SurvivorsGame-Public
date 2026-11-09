@@ -5,7 +5,17 @@ using Game.UI;
 
 namespace Game.Items.Offensive;
 
-public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable, ICustomReloadDisplay
+public partial class GrenadeLauncher
+	: BaseOffensive,
+		IReloadable,
+		ICustomReloadDisplay,
+		IHasDamageStats,
+		IHasMagazineStats,
+		IHasBloomStats,
+		IHasRecoilStats,
+		IHasProjectileStats,
+		IHasAttackStats,
+		IHasGrenadeStats
 {
 	[Signal]
 	public delegate void OnReloadStartEventHandler();
@@ -16,6 +26,32 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 	[Signal]
 	public delegate void AlmostEmptyEventHandler();
 
+	[ExportCategory("Stats")]
+	[Export]
+	public DamageStats DamageStats { get; set; } = null!;
+
+	[Export]
+	public MagazineStats MagazineStats { get; set; } = null!;
+
+	[Export]
+	public BloomStats BloomStats { get; set; } = null!;
+
+	[Export]
+	public RecoilStats RecoilStats { get; set; } = null!;
+
+	[Export]
+	public ReloadStats ReloadStats { get; set; } = null!;
+
+	[Export]
+	public ProjectileStats ProjectileStats { get; set; } = null!;
+
+	[Export]
+	public AttackStats AttackStats { get; set; } = null!;
+
+	[Export]
+	public GrenadeStats GrenadeStats { get; set; } = null!;
+
+	[ExportCategory("")]
 	[Export]
 	private float _throwForce = 1250;
 
@@ -34,15 +70,12 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 	[Export]
 	private AudioStreamPlayer? _explosionPlayer;
 
-	public FirearmStats FirearmStats => (FirearmStats)OffensiveStats;
 	private Crosshair? Crosshair => Crosshair.Instance;
-
-	public string? AttackActionString { get; set; }
 
 	public bool IsReloading => _reloadBehaviour.IsReloading;
 	public ReloadDisplayType ReloadDisplayType => _reloadBehaviour.DisplayType;
 
-	public int MagazineCapacity => FirearmStats.MagazineCapacity;
+	public int MagazineCapacity => MagazineStats.Capacity;
 
 	public int MagazineCount
 	{
@@ -61,27 +94,27 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 	public override void _Ready()
 	{
 		if (_fireGroup is ICooldown c)
-			c.CooldownDuration = FirearmStats.AttackSpeed;
+			c.CooldownDuration = AttackStats.AttackSpeed;
 
 		InitializeFireGroupSettings();
 		InitializeReloadBehaviour();
 
-		OnAttack += () => OffensiveEffects.ApplyCameraShake(FirearmStats.CameraRecoilScale, GetViewport, CreateTween);
+		OnAttack += () => OffensiveEffects.ApplyCameraShake(RecoilStats.CameraRecoilScale, GetViewport, CreateTween);
 		OnAttack += () =>
 		{
 			if (Crosshair is not null)
 			{
 				OffensiveEffects.ApplyCrosshairRecoil(
 					Crosshair,
-					FirearmStats.HorizontalBaseRecoil,
-					FirearmStats.HorizontalRecoilMin,
-					FirearmStats.HorizontalRecoilRandom,
-					FirearmStats.VerticalBaseRecoil,
-					FirearmStats.VerticalRecoilMin,
-					FirearmStats.VerticalRecoilRandom,
-					FirearmStats.RecoilScale,
-					FirearmStats.RecoilAccumilationScale,
-					FirearmStats.HorizontalRecoilPunish
+					RecoilStats.HorizontalBaseRecoil,
+					RecoilStats.HorizontalRecoilMin,
+					RecoilStats.HorizontalRecoilRandom,
+					RecoilStats.VerticalBaseRecoil,
+					RecoilStats.VerticalRecoilMin,
+					RecoilStats.VerticalRecoilRandom,
+					RecoilStats.RecoilScale,
+					RecoilStats.RecoilAccumilationScale,
+					RecoilStats.HorizontalRecoilPunish
 				);
 			}
 		};
@@ -99,7 +132,7 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 			Attack();
 		};
 		if (_fireGroup is ICooldown c)
-			c.CooldownDuration = FirearmStats.AttackSpeed;
+			c.CooldownDuration = AttackStats.AttackSpeed;
 		if (_fireGroup is BurstFireGroup burst)
 		{
 			if (!Stats.Additional.TryGetValue("BurstCount", out var burstCount))
@@ -119,7 +152,7 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 
 		_reloadBehaviour.OnReloadEnd += () =>
 		{
-			MagazineCount = FirearmStats.MagazineCapacity;
+			MagazineCount = MagazineStats.Capacity;
 		};
 
 		_reloadBehaviour.OnReloadProgress += (_, _, step) =>
@@ -128,15 +161,12 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 		};
 
 		_reloadBehaviour.TimeBetweenRounds = () =>
-			(FirearmStats.ReloadTime * PlayerStats.ReloadTimeScale) / FirearmStats.MagazineCapacity;
-		_reloadBehaviour.RoundsToLoad = FirearmStats.MagazineCapacity;
+			(ReloadStats.ReloadTime * PlayerStats.ReloadTimeScale) / MagazineStats.Capacity;
+		_reloadBehaviour.RoundsToLoad = MagazineStats.Capacity;
 	}
 
-	public override void _Process(double delta)
+	public override void Process(double delta)
 	{
-		if (AttackActionString is null)
-			return;
-
 		if (_fireGroup is ICooldown fireGroupCooldown)
 			fireGroupCooldown.Process((float)delta);
 		_reloadBehaviour.Process((float)delta);
@@ -178,9 +208,14 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 
 		nade.OffensiveOrigin = this;
 		nade.GlobalPosition = Player.GlobalPosition;
+		nade.ArmingDistance = GrenadeStats.ArmingDistance;
+		nade.CameraRecoilScale = RecoilStats.CameraRecoilScale;
+		nade.EnemiesInAreaUntilExplode = GrenadeStats.EnemiesInAreaUntilExplode;
+		nade.TimeToExplode = GrenadeStats.TimeToExplode;
+
 		var mouseVector = Crosshair?.GlobalSpacePosition ?? Player.GetGlobalMousePosition();
 
-		var bloomRad = FirearmStats.BloomCoefficientDeg * (Math.PI / 180);
+		var bloomRad = BloomStats.BloomCoefficientDeg * (Math.PI / 180);
 		var bloom = (float)GD.RandRange(-bloomRad / 2, bloomRad / 2);
 
 		var force = Vector2.Right.Rotated(nade.GlobalPosition.AngleToPoint(mouseVector) + bloom) * _throwForce;
@@ -199,24 +234,24 @@ public partial class GrenadeLauncher : BaseOffensive, IManualAttack, IReloadable
 		_reloadBehaviour.Reload();
 	}
 
-	protected override void HandleDamageECS(Entity entity)
+	protected override void HandleDamage(Entity entity)
 	{
 		ref var pos = ref GameWorld.World.Get<PositionComponent>(entity);
 
-		var offset = (_lastBlastPosition.DistanceTo(pos.Position) / OffensiveStats.ProjectileRadius);
+		var offset = (_lastBlastPosition.DistanceTo(pos.Position) / ProjectileStats.HitRadius);
 		offset = Mathf.Clamp(offset, 0, 1);
 		var dropoffScale = _damageDropoffFromCenter.Sample(offset);
 
 		OffensiveEffects.ApplyDamage(
 			entity,
-			Mathf.CeilToInt(OffensiveStats.Damage * dropoffScale),
-			CalculateCrit(),
-			OffensiveStats.DamageVarianceMultiplier,
+			Mathf.CeilToInt(DamageStats.Damage * dropoffScale),
+			DamageStats.CalculateCrit(),
+			DamageStats.DamageVariance,
 			PlayerStats.OutgoingDamage
 		);
 	}
 
-	protected override void HandleHitECS(Entity entity)
+	protected override void HandleHitEffects(Entity entity)
 	{
 		OffensiveEffects.ApplyVelocityMultiplier(entity, 0f);
 

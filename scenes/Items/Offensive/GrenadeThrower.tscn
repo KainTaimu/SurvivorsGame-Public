@@ -2,21 +2,18 @@
 
 [ext_resource type="Script" uid="uid://bhmou5mah3e4m" path="res://src/Items/Offensive/GrenadeThrower.cs" id="1_oiqqx"]
 [ext_resource type="PackedScene" uid="uid://d1nqrtaecqgq7" path="res://scenes/Projectiles/Grenade.tscn" id="2_18auf"]
-[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_5d54y"]
-[ext_resource type="Texture2D" uid="uid://86rk4yr07033" path="res://assets/Sprites/grenade.png" id="4_5d54y"]
+[ext_resource type="Script" uid="uid://bs6wg1qssruhv" path="res://src/Items/Offensive/EnemyHitEffects/AbstractEnemyHitEffect.cs" id="3_utchl"]
 [ext_resource type="Script" uid="uid://os8ycjo6m7r0" path="res://src/Items/Offensive/BaseOffensiveStats.cs" id="4_gjjd4"]
 [ext_resource type="AudioStream" uid="uid://dlewyy172dhok" path="res://assets/SFX/freesound_community-hq-explosion-6288.mp3" id="6_gjjd4"]
+[ext_resource type="Script" uid="uid://c8bfvbbqfaakj" path="res://src/Items/Offensive/Stats/DamageStats.cs" id="7_j690r"]
+[ext_resource type="Script" uid="uid://cuyrbm7tgm3od" path="res://src/Items/Offensive/Stats/ProjectileStats.cs" id="8_oda1q"]
+[ext_resource type="Script" uid="uid://bjysatf11t7bw" path="res://src/Items/Offensive/Stats/AttackStats.cs" id="9_bxa0o"]
+[ext_resource type="Script" uid="uid://xtlc02w402jw" path="res://src/Items/Offensive/Stats/RecoilStats.cs" id="9_ymf82"]
+[ext_resource type="Script" uid="uid://v1aixejhddar" path="res://src/Items/Offensive/Stats/GrenadeStats.cs" id="10_ggrax"]
 
 [sub_resource type="Curve" id="Curve_ysrq1"]
 _data = [Vector2(0, 1), 0.0, -0.49786425, 0, 1, Vector2(1, 0.50213575), -0.49786425, 0.0, 1, 0]
 point_count = 2
-
-[sub_resource type="Resource" id="Resource_r85fg"]
-script = ExtResource("3_5d54y")
-Name = "Grenade"
-Description = "A fragmentation grenade that deals massive damage to those caught in its blast. "
-ItemIcon = ExtResource("4_5d54y")
-metadata/_custom_type_script = "uid://8rt54h4imtxv"
 
 [sub_resource type="Resource" id="Resource_jlsja"]
 script = ExtResource("4_gjjd4")
@@ -36,13 +33,48 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://os8ycjo6m7r0"
 
-[node name="GrenadeThrower" type="Node2D" unique_id=1000269585 node_paths=PackedStringArray("_explosionPlayer")]
+[node name="GrenadeThrower" type="Node2D" unique_id=1000269585 node_paths=PackedStringArray("DamageStats", "ProjectileStats", "AttackStats", "GrenadeStats", "RecoilStats", "_explosionPlayer")]
 script = ExtResource("1_oiqqx")
+DamageStats = NodePath("Stats/DamageStats")
+ProjectileStats = NodePath("Stats/ProjectileStats")
+AttackStats = NodePath("Stats/AttackStats")
+GrenadeStats = NodePath("Stats/GrenadeStats")
+RecoilStats = NodePath("Stats/RecoilStats")
 GrenadeScene = ExtResource("2_18auf")
 _explosionPlayer = NodePath("AudioStreamPlayer")
 _damageDropoffFromCenter = SubResource("Curve_ysrq1")
-Properties = SubResource("Resource_r85fg")
 Stats = SubResource("Resource_jlsja")
+
+[node name="Stats" type="Node" parent="." unique_id=203377008]
+
+[node name="DamageStats" type="Node" parent="Stats" unique_id=171393035]
+script = ExtResource("7_j690r")
+Damage = 67
+CritDamageMultiplier = 0.1
+CritDamageChance = 1.0
+metadata/_custom_type_script = "uid://c8bfvbbqfaakj"
+
+[node name="ProjectileStats" type="Node" parent="Stats" unique_id=184557650]
+script = ExtResource("8_oda1q")
+HitRadius = 250
+metadata/_custom_type_script = "uid://cuyrbm7tgm3od"
+
+[node name="AttackStats" type="Node" parent="Stats" unique_id=1466655824]
+script = ExtResource("9_bxa0o")
+AttackSpeed = 1.0
+metadata/_custom_type_script = "uid://bjysatf11t7bw"
+
+[node name="GrenadeStats" type="Node" parent="Stats" unique_id=469146702]
+script = ExtResource("10_ggrax")
+TimeToExplode = 1.0
+EnemiesInAreaUntilExplode = 6
+ArmingDistance = 400.0
+metadata/_custom_type_script = "uid://v1aixejhddar"
+
+[node name="RecoilStats" type="Node" parent="Stats" unique_id=1257264734]
+script = ExtResource("9_ymf82")
+CameraRecoilScale = 3.0
+metadata/_custom_type_script = "uid://xtlc02w402jw"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1456739657]
 stream = ExtResource("6_gjjd4")

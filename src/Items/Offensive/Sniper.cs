@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Arch.Core;
 using Game.Levels.Controllers;
 using Game.Players.Controllers;
@@ -6,7 +5,18 @@ using Game.UI;
 
 namespace Game.Items.Offensive;
 
-public partial class Sniper : AbstractFirearm, IReloadable
+public partial class Sniper
+	: BaseOffensive,
+		IReloadable,
+		IHasDamageStats,
+		IHasMagazineStats,
+		IHasBloomStats,
+		IHasRecoilStats,
+		IHasProjectileStats,
+		IHasAttackStats,
+		IHasPierceStats,
+		IHasMoveBloomStats,
+		IHasKnockbackStats
 {
 	[Signal]
 	public delegate void OnReloadStartEventHandler();
@@ -17,6 +27,38 @@ public partial class Sniper : AbstractFirearm, IReloadable
 	[Signal]
 	public delegate void AlmostEmptyEventHandler();
 
+	[ExportCategory("Stats")]
+	[Export]
+	public DamageStats DamageStats { get; set; } = null!;
+
+	[Export]
+	public MagazineStats MagazineStats { get; set; } = null!;
+
+	[Export]
+	public BloomStats BloomStats { get; set; } = null!;
+
+	[Export]
+	public RecoilStats RecoilStats { get; set; } = null!;
+
+	[Export]
+	public ReloadStats ReloadStats { get; set; } = null!;
+
+	[Export]
+	public ProjectileStats ProjectileStats { get; set; } = null!;
+
+	[Export]
+	public AttackStats AttackStats { get; set; } = null!;
+
+	[Export]
+	public PierceStats PierceStats { get; set; } = null!;
+
+	[Export]
+	public MoveBloomStats MoveBloomStats { get; set; } = null!;
+
+	[Export]
+	public KnockbackStats KnockbackStats { get; set; } = null!;
+
+	[ExportCategory("")]
 	[Export]
 	private PackedScene _projectileScene = null!;
 
@@ -29,30 +71,14 @@ public partial class Sniper : AbstractFirearm, IReloadable
 	[Export]
 	private AudioStreamPlayer? _boltCyclingPlayer;
 
-	private double MoveTime
-	{
-		get;
-		set => field = Math.Clamp(value, 0, MoveTimeToMaxBloom);
-	}
-
-	private double MoveTimeFactor => MoveTime / (MoveTimeToMaxBloom != 0 ? MoveTimeToMaxBloom : 1 / double.MaxValue);
-
-	private double MoveTimeToMaxBloom => Stats.Additional["MoveTimeToMaxBloom"].AsDouble();
-
-	private double MoveBloomGrowthRate => Stats.Additional["MoveTimeGrowthRate"].AsDouble();
-
-	private double MoveBloomShrinkRate => Stats.Additional["MoveTimeShrinkRate"].AsDouble();
-
-	private double MoveBloomMinDeg => Stats.Additional["MoveBloomMinDeg"].AsDouble();
-
-	private double MoveBloomMaxDeg => Stats.Additional["MoveBloomMaxDeg"].AsDouble();
-
-	private int MoveDamageMin => Stats.Additional["MoveDamageMin"].AsInt32();
-
-	private int MoveDamageMax => Stats.Additional["MoveDamageMax"].AsInt32();
-
 	private PlayerMovementController MovementController => GameWorld.Instance.MainPlayer.MovementController;
 
+	public int MagazineCapacity => MagazineStats.Capacity;
+	public int MagazineCount
+	{
+		get => MagazineStats.Count;
+		set => MagazineStats.Count = value;
+	}
 	public bool IsReloading { get; private set; }
 
 	private readonly ProjectilePool _pool = new();
@@ -71,16 +97,16 @@ public partial class Sniper : AbstractFirearm, IReloadable
 		);
 
 		if (_fireGroup is ICooldown c)
-			c.CooldownDuration = FirearmStats.AttackSpeed;
+			c.CooldownDuration = AttackStats.AttackSpeed;
 
 		_fireGroup.OnFire += OnFireGroupFire;
 
-		OnAttack += () => OffensiveEffects.ApplyCameraShake(FirearmStats.CameraRecoilScale, GetViewport, CreateTween);
+		OnAttack += () => OffensiveEffects.ApplyCameraShake(RecoilStats.CameraRecoilScale, GetViewport, CreateTween);
 		OnAttack += () =>
 		{
 			if (MagazineCount != 0)
 			{
-				GetTree().CreateTimer(OffensiveStats.AttackSpeed / 6, false).Timeout += () =>
+				GetTree().CreateTimer(AttackStats.AttackSpeed / 6, false).Timeout += () =>
 				{
 					_boltCyclingPlayer?.Play();
 				};
@@ -90,31 +116,21 @@ public partial class Sniper : AbstractFirearm, IReloadable
 			{
 				OffensiveEffects.ApplyCrosshairRecoil(
 					Crosshair,
-					HorizontalBaseRecoil,
-					HorizontalRecoilMin,
-					HorizontalRecoilRandom,
-					VerticalBaseRecoil,
-					VerticalRecoilMin,
-					VerticalRecoilRandom,
-					RecoilScale,
-					RecoilAccumilationScale
+					RecoilStats.HorizontalBaseRecoil,
+					RecoilStats.HorizontalRecoilMin,
+					RecoilStats.HorizontalRecoilRandom,
+					RecoilStats.VerticalBaseRecoil,
+					RecoilStats.VerticalRecoilMin,
+					RecoilStats.VerticalRecoilRandom,
+					RecoilStats.RecoilScale,
+					RecoilStats.RecoilAccumilationScale
 				);
 			}
 		};
-
-		if (OffensiveStats.Damage > 0)
-		{
-			CustomLogger.LogError(
-				$"Sniper {Name} has base damage {OffensiveStats.Damage}, but it will be overridden by move time damage. Consider setting base damage to 0."
-			);
-		}
 	}
 
-	public override void _Process(double delta)
+	public override void Process(double delta)
 	{
-		if (AttackActionString is null)
-			return;
-
 		UpdateMoveTimeBloom(delta);
 		if (_fireGroup is ICooldown fireGroupCooldown)
 			fireGroupCooldown.Process((float)delta);
@@ -133,13 +149,18 @@ public partial class Sniper : AbstractFirearm, IReloadable
 
 	private void OnFireGroupFire()
 	{
-		OffensiveStats.BaseCritChanceProportion = (float)(1 - MoveTimeFactor);
-		OffensiveStats.BaseDamage = (int)Math.Clamp(MoveDamageMax * (1 - MoveTimeFactor), MoveDamageMin, MoveDamageMax);
+		DamageStats.CritDamageChance = (float)(1 - MoveBloomStats.MoveTimeFactor);
+		DamageStats.Damage = (int)
+			Math.Clamp(
+				MoveBloomStats.MoveDamageMax * (1 - MoveBloomStats.MoveTimeFactor),
+				MoveBloomStats.MoveDamageMin,
+				MoveBloomStats.MoveDamageMax
+			);
 
-		var bloom = MoveBloomMaxDeg * MoveTimeFactor;
-		bloom = Math.Clamp(bloom, MoveBloomMinDeg, MoveBloomMaxDeg);
+		var bloom = MoveBloomStats.MoveBloomMaxDeg * MoveBloomStats.MoveTimeFactor;
+		bloom = Math.Clamp(bloom, MoveBloomStats.MoveBloomMinDeg, MoveBloomStats.MoveBloomMaxDeg);
 
-		FirearmStats.BloomCoefficientDeg = (float)bloom;
+		BloomStats.BloomCoefficientDeg = (float)bloom;
 
 		Attack();
 	}
@@ -155,18 +176,18 @@ public partial class Sniper : AbstractFirearm, IReloadable
 		var mouseVector = Crosshair?.CanvasSpacePosition ?? Player.GetGlobalMousePosition();
 		var rotation = playerPosition.AngleToPoint(mouseVector);
 
-		var bloomRad = BloomCoefficientDeg * (Math.PI / 180);
+		var bloomRad = BloomStats.BloomCoefficientDeg * (Math.PI / 180);
 		var bloom = (float)GD.RandRange(-bloomRad / 2, bloomRad / 2);
 		rotation += bloom;
-		var scale = Vector2.One * FirearmStats.ProjectileScaleMultiplier;
+		var scale = Vector2.One * ProjectileStats.Scale;
 
 		_projectileAttack.Attack(
 			_pool.GetProjectile,
 			Player.GlobalPosition,
 			rotation,
-			FirearmStats.ProjectileRadius,
-			FirearmStats.ProjectileSpeed,
-			FirearmStats.PierceLimit,
+			ProjectileStats.HitRadius,
+			ProjectileStats.Speed,
+			PierceStats.PierceLimit,
 			scale
 		);
 
@@ -179,7 +200,7 @@ public partial class Sniper : AbstractFirearm, IReloadable
 			return;
 		if (MagazineCount >= MagazineCapacity)
 			return;
-		GetTree().CreateTimer(FirearmStats.ReloadTime, false).Timeout += () =>
+		GetTree().CreateTimer(ReloadStats.ReloadTime, false).Timeout += () =>
 		{
 			MagazineCount = MagazineCapacity;
 			IsReloading = false;
@@ -192,35 +213,31 @@ public partial class Sniper : AbstractFirearm, IReloadable
 	private void UpdateMoveTimeBloom(double delta)
 	{
 		if (MovementController.Velocity.LengthSquared() > 0 || Crosshair?.CrosshairVelocity.LengthSquared() > 0)
-			MoveTime += delta * MoveBloomGrowthRate;
+			MoveBloomStats.MoveTime += delta * MoveBloomStats.MoveBloomGrowthRate;
 		else
-			MoveTime -= delta * MoveBloomShrinkRate;
+			MoveBloomStats.MoveTime -= delta * MoveBloomStats.MoveBloomShrinkRate;
 
-		SpreadCrosshair((float)MoveTimeFactor);
+		SpreadCrosshair((float)MoveBloomStats.MoveTimeFactor);
 	}
 
 	private void SpreadCrosshair(float spreadRatio)
 	{
-		if (AttackActionString is null)
-		{
-			Crosshair?.ChangePrimaryCrosshairSpread(spreadRatio);
-			return;
-		}
-
-		if (AttackActionString == InputMapNames.PrimaryAttack)
-			Crosshair?.ChangePrimaryCrosshairSpread(spreadRatio);
-		else if (AttackActionString == InputMapNames.SecondaryAttack)
-			Crosshair?.ChangeSecondaryCrosshairSpread(spreadRatio);
-		else
-			Crosshair?.ChangePrimaryCrosshairSpread(spreadRatio);
+		Crosshair?.ChangePrimaryCrosshairSpread(spreadRatio);
 	}
 
-	protected override void HandleHitECS(Entity entity)
+	protected override void HandleDamage(Entity entity)
 	{
-		OffensiveEffects.ApplyKnockback(
+		OffensiveEffects.ApplyDamage(
 			entity,
-			Player.GlobalPosition,
-			OffensiveStats.Additional.GetValueOrDefault("Knockback", 0f).AsSingle()
+			DamageStats.Damage,
+			DamageStats.CalculateCrit(),
+			DamageStats.DamageVariance,
+			PlayerStats.OutgoingDamage
 		);
+	}
+
+	protected override void HandleHitEffects(Entity entity)
+	{
+		OffensiveEffects.ApplyKnockback(entity, Player.GlobalPosition, KnockbackStats.KnockbackForce);
 	}
 }

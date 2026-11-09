@@ -8,6 +8,17 @@
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="5_2akch"]
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_i7f5u"]
 [ext_resource type="AudioStream" uid="uid://ebralxchb6m1" path="res://assets/SFX/Shoot/aa12/aa12_r1.wav" id="7_qwex2"]
+[ext_resource type="Script" uid="uid://c8bfvbbqfaakj" path="res://src/Items/Offensive/Stats/DamageStats.cs" id="9_e328p"]
+[ext_resource type="Script" uid="uid://bj6pph867oydf" path="res://src/Items/Offensive/Stats/MagazineStats.cs" id="10_jke7s"]
+[ext_resource type="Script" uid="uid://5u8113et07vu" path="res://src/Items/Offensive/Stats/BloomStats.cs" id="11_ok2rf"]
+[ext_resource type="Script" uid="uid://xtlc02w402jw" path="res://src/Items/Offensive/Stats/RecoilStats.cs" id="12_zuu0p"]
+[ext_resource type="Script" uid="uid://gr35snno6a2m" path="res://src/Items/Offensive/Stats/ReloadStats.cs" id="13_cutyj"]
+[ext_resource type="Script" uid="uid://cuyrbm7tgm3od" path="res://src/Items/Offensive/Stats/ProjectileStats.cs" id="14_fq5dl"]
+[ext_resource type="Script" uid="uid://bjysatf11t7bw" path="res://src/Items/Offensive/Stats/AttackStats.cs" id="15_tfmsf"]
+[ext_resource type="Script" uid="uid://cjlv7mciafksn" path="res://src/Items/Offensive/Stats/PierceStats.cs" id="16_9g98l"]
+[ext_resource type="Script" uid="uid://doyqd2gp5rtvn" path="res://src/Items/Offensive/Stats/SlowStats.cs" id="17_gqowt"]
+[ext_resource type="Script" uid="uid://66x4x0yo47cj" path="res://src/Items/Offensive/Stats/KnockbackStats.cs" id="18_oqgl9"]
+[ext_resource type="Script" uid="uid://cd13blujyxjw8" path="res://src/Items/Offensive/Stats/PumpActionStats.cs" id="19_g07jk"]
 
 [sub_resource type="Resource" id="Resource_vf4av"]
 resource_local_to_scene = true
@@ -57,15 +68,93 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[node name="AA-12" type="Node" unique_id=764147352 node_paths=PackedStringArray("_shellReloadAudioPlayer")]
+[node name="AA-12" type="Node" unique_id=764147352 node_paths=PackedStringArray("PumpActionStats", "_shellReloadAudioPlayer", "DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats")]
 script = ExtResource("1_vf4av")
+PumpActionStats = NodePath("Stats/PumpActionStats")
 _shellReloadAudioPlayer = NodePath("Shoot")
+DamageStats = NodePath("Stats/DamageStats")
+MagazineStats = NodePath("Stats/MagazineStats")
+BloomStats = NodePath("Stats/BloomStats")
+RecoilStats = NodePath("Stats/RecoilStats")
+ReloadStats = NodePath("Stats/ReloadStats")
+ProjectileStats = NodePath("Stats/ProjectileStats")
+AttackStats = NodePath("Stats/AttackStats")
+PierceStats = NodePath("Stats/PierceStats")
+SlowStats = NodePath("Stats/SlowStats")
+KnockbackStats = NodePath("Stats/KnockbackStats")
 _projectileScene = ExtResource("2_qwex2")
 _fireGroup = SubResource("Resource_vf4av")
 _reloadBehaviour = SubResource("Resource_jmqlf")
 _projectileAttack = SubResource("Resource_qswie")
 Properties = SubResource("Resource_j05a4")
 Stats = SubResource("Resource_0tk84")
+
+[node name="Stats" type="Node" parent="." unique_id=129266883]
+
+[node name="DamageStats" type="Node" parent="Stats" unique_id=35137854]
+script = ExtResource("9_e328p")
+Damage = 16
+CritDamageMultiplier = 1.0
+CritDamageChance = 0.5
+metadata/_custom_type_script = "uid://c8bfvbbqfaakj"
+
+[node name="MagazineStats" type="Node" parent="Stats" unique_id=2095795880]
+script = ExtResource("10_jke7s")
+Capacity = 20
+metadata/_custom_type_script = "uid://bj6pph867oydf"
+
+[node name="BloomStats" type="Node" parent="Stats" unique_id=1957852244]
+script = ExtResource("11_ok2rf")
+BloomCoefficientDeg = 13.0
+metadata/_custom_type_script = "uid://5u8113et07vu"
+
+[node name="RecoilStats" type="Node" parent="Stats" unique_id=321382656]
+script = ExtResource("12_zuu0p")
+HorizontalRecoilMin = 20.0
+HorizontalBaseRecoil = 20.0
+HorizontalRecoilRandom = 20.0
+VerticalRecoilMin = 80.0
+VerticalBaseRecoil = 80.0
+VerticalRecoilRandom = 40.0
+RecoilScale = 0.5
+CameraRecoilScale = 2.0
+metadata/_custom_type_script = "uid://xtlc02w402jw"
+
+[node name="ReloadStats" type="Node" parent="Stats" unique_id=1529631650]
+script = ExtResource("13_cutyj")
+ReloadTime = 3.0
+metadata/_custom_type_script = "uid://gr35snno6a2m"
+
+[node name="ProjectileStats" type="Node" parent="Stats" unique_id=1394869166]
+script = ExtResource("14_fq5dl")
+Speed = 2200
+HitRadius = 24
+Scale = 0.8
+metadata/_custom_type_script = "uid://cuyrbm7tgm3od"
+
+[node name="AttackStats" type="Node" parent="Stats" unique_id=1304369592]
+script = ExtResource("15_tfmsf")
+AttackSpeed = 0.3
+metadata/_custom_type_script = "uid://bjysatf11t7bw"
+
+[node name="PierceStats" type="Node" parent="Stats" unique_id=1787223602]
+script = ExtResource("16_9g98l")
+PierceLimit = 5
+metadata/_custom_type_script = "uid://cjlv7mciafksn"
+
+[node name="SlowStats" type="Node" parent="Stats" unique_id=68840116]
+script = ExtResource("17_gqowt")
+SlowCoefficient = 1.0
+metadata/_custom_type_script = "uid://doyqd2gp5rtvn"
+
+[node name="KnockbackStats" type="Node" parent="Stats" unique_id=28278113]
+script = ExtResource("18_oqgl9")
+metadata/_custom_type_script = "uid://66x4x0yo47cj"
+
+[node name="PumpActionStats" type="Node" parent="Stats" unique_id=1843645088]
+script = ExtResource("19_g07jk")
+PelletCount = 16
+metadata/_custom_type_script = "uid://cd13blujyxjw8"
 
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=1956405043]
 process_mode = 3

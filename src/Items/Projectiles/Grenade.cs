@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Arch.Core;
 using Game.Core.Settings;
 using Game.Levels.Controllers;
@@ -23,16 +22,13 @@ public partial class Grenade : RigidBody2D
 	private double _t;
 	private double _distanceTraveled;
 
-	private float TimeToExplode => OffensiveOrigin.Stats.Additional.GetValueOrDefault("TimeToExplode").AsSingle();
+	public float TimeToExplode { get; set; }
 
-	private int EnemiesInAreaUntilExplode =>
-		OffensiveOrigin.Stats.Additional.GetValueOrDefault("EnemiesInAreaUntilExplode", 6).AsInt32();
+	public int EnemiesInAreaUntilExplode { get; set; }
 
-	private float ArmingDistance =>
-		OffensiveOrigin.Stats.Additional.GetValueOrDefault("ArmingDistance", 200f).AsSingle();
+	public float ArmingDistance { get; set; }
 
-	private float CameraRecoilScale =>
-		OffensiveOrigin.Stats.Additional.GetValueOrDefault("CameraRecoilScale").AsSingle();
+	public float CameraRecoilScale { get; set; }
 
 	public override void _Ready()
 	{
@@ -64,7 +60,7 @@ public partial class Grenade : RigidBody2D
 
 		TargetQuery.TryGetTargetsInArea(
 			GlobalPosition,
-			OffensiveOrigin.OffensiveStats.ProjectileRadius,
+			((IHasProjectileStats)OffensiveOrigin).ProjectileStats.HitRadius,
 			out var entities
 		);
 
@@ -84,7 +80,7 @@ public partial class Grenade : RigidBody2D
 		{
 			TargetQuery.TryGetTargetsInArea(
 				GlobalPosition,
-				OffensiveOrigin.OffensiveStats.ProjectileRadius,
+				((IHasProjectileStats)OffensiveOrigin).ProjectileStats.HitRadius,
 				out var entities
 			);
 			Explode(entities);
@@ -102,11 +98,8 @@ public partial class Grenade : RigidBody2D
 
 			OffensiveOrigin.HandleHit(entity);
 
-			OffensiveEffects.ApplyKnockback(
-				entity,
-				GlobalPosition,
-				OffensiveOrigin.OffensiveStats.Additional.GetValueOrDefault("Knockback", 0f).AsSingle()
-			);
+			if (OffensiveOrigin is IHasKnockbackStats knockbackStats)
+				OffensiveEffects.ApplyKnockback(entity, GlobalPosition, knockbackStats.KnockbackStats.KnockbackForce);
 		}
 
 		ApplyCameraRecoil();

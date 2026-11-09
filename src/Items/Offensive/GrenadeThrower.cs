@@ -5,8 +5,30 @@ using Game.UI;
 
 namespace Game.Items.Offensive;
 
-public partial class GrenadeThrower : BaseOffensive, IManualAttack
+public partial class GrenadeThrower
+	: BaseOffensive,
+		IHasGrenadeStats,
+		IHasAttackStats,
+		IHasProjectileStats,
+		IHasRecoilStats
 {
+	[ExportCategory("Stats")]
+	[Export]
+	public DamageStats DamageStats { get; set; } = null!;
+
+	[Export]
+	public ProjectileStats ProjectileStats { get; set; } = null!;
+
+	[Export]
+	public AttackStats AttackStats { get; set; } = null!;
+
+	[Export]
+	public GrenadeStats GrenadeStats { get; set; } = null!;
+
+	[Export]
+	public RecoilStats RecoilStats { get; set; } = null!;
+
+	[ExportCategory("")]
 	[Export]
 	public PackedScene GrenadeScene = null!;
 
@@ -19,8 +41,6 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 	[Export]
 	private Curve _damageDropoffFromCenter = null!;
 
-	public string? AttackActionString { get; set; }
-
 	private Crosshair? Crosshair => Crosshair.Instance;
 	private double _fireCooldown;
 
@@ -30,7 +50,7 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 	{
 		_fireCooldown -= delta;
 
-		if (!Input.IsActionPressed(AttackActionString ?? InputMapNames.PrimaryAttack))
+		if (!Input.IsActionPressed(InputMapNames.PrimaryAttack))
 			return;
 		Attack();
 	}
@@ -45,7 +65,7 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 
 		if (_fireCooldown > 0)
 			return;
-		_fireCooldown = OffensiveStats.AttackSpeed;
+		_fireCooldown = AttackStats.AttackSpeed;
 
 		var nade = GrenadeScene.Instantiate<Grenade>();
 		nade.OnExploded += (pos) =>
@@ -58,6 +78,12 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 
 		nade.OffensiveOrigin = this;
 		nade.GlobalPosition = Player.GlobalPosition;
+		nade.GlobalPosition = Player.GlobalPosition;
+		nade.ArmingDistance = GrenadeStats.ArmingDistance;
+		nade.CameraRecoilScale = RecoilStats.CameraRecoilScale;
+		nade.EnemiesInAreaUntilExplode = GrenadeStats.EnemiesInAreaUntilExplode;
+		nade.TimeToExplode = GrenadeStats.TimeToExplode;
+
 		var force =
 			Vector2.Right.Rotated(
 				GetViewport().GetCamera2D().GetScreenCenterPosition().AngleToPoint(Crosshair.GlobalSpacePosition)
@@ -67,24 +93,24 @@ public partial class GrenadeThrower : BaseOffensive, IManualAttack
 		GetTree().Root.CallDeferred(Window.MethodName.AddChild, nade);
 	}
 
-	protected override void HandleDamageECS(Entity entity)
+	protected override void HandleDamage(Entity entity)
 	{
 		ref var pos = ref GameWorld.World.Get<PositionComponent>(entity);
 
-		var offset = (_blastPosition.DistanceTo(pos.Position) / OffensiveStats.ProjectileRadius);
+		var offset = (_blastPosition.DistanceTo(pos.Position) / ProjectileStats.HitRadius);
 		offset = Mathf.Clamp(offset, 0, 1);
 		var dropoffScale = _damageDropoffFromCenter.Sample(offset);
 
 		OffensiveEffects.ApplyDamage(
 			entity,
-			Mathf.CeilToInt(OffensiveStats.Damage * dropoffScale),
-			CalculateCrit(),
-			OffensiveStats.DamageVarianceMultiplier,
+			Mathf.CeilToInt(DamageStats.Damage * dropoffScale),
+			DamageStats.CalculateCrit(),
+			DamageStats.DamageVariance,
 			PlayerStats.OutgoingDamage
 		);
 	}
 
-	protected override void HandleHitECS(Entity entity)
+	protected override void HandleHitEffects(Entity entity)
 	{
 		OffensiveEffects.ApplyVelocityMultiplier(entity, 0f);
 

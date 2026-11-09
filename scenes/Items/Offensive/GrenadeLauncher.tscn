@@ -8,6 +8,14 @@
 [ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_3bjou"]
 [ext_resource type="AudioStream" uid="uid://dlewyy172dhok" path="res://assets/SFX/freesound_community-hq-explosion-6288.mp3" id="7_6gb1p"]
 [ext_resource type="AudioStream" uid="uid://bnxr2ix8k0jgu" path="res://assets/SFX/Shoot/m79_thumper.wav" id="8_8lp6o"]
+[ext_resource type="Script" uid="uid://c8bfvbbqfaakj" path="res://src/Items/Offensive/Stats/DamageStats.cs" id="9_4h2g9"]
+[ext_resource type="Script" uid="uid://bj6pph867oydf" path="res://src/Items/Offensive/Stats/MagazineStats.cs" id="10_jkyuc"]
+[ext_resource type="Script" uid="uid://5u8113et07vu" path="res://src/Items/Offensive/Stats/BloomStats.cs" id="11_j8m2z"]
+[ext_resource type="Script" uid="uid://xtlc02w402jw" path="res://src/Items/Offensive/Stats/RecoilStats.cs" id="12_fmmo5"]
+[ext_resource type="Script" uid="uid://gr35snno6a2m" path="res://src/Items/Offensive/Stats/ReloadStats.cs" id="13_7wl0k"]
+[ext_resource type="Script" uid="uid://cuyrbm7tgm3od" path="res://src/Items/Offensive/Stats/ProjectileStats.cs" id="14_clg0s"]
+[ext_resource type="Script" uid="uid://v1aixejhddar" path="res://src/Items/Offensive/Stats/GrenadeStats.cs" id="14_mfe1e"]
+[ext_resource type="Script" uid="uid://bjysatf11t7bw" path="res://src/Items/Offensive/Stats/AttackStats.cs" id="15_ra4bw"]
 
 [sub_resource type="Curve" id="Curve_ysrq1"]
 _data = [Vector2(0, 1), 0.0, -0.49786425, 0, 1, Vector2(1, 0.50213575), -0.49786425, 0.0, 1, 0]
@@ -51,8 +59,16 @@ Additional = Dictionary[String, Variant]({
 })
 metadata/_custom_type_script = "uid://di81uufgmcsog"
 
-[node name="GrenadeLauncher" type="Node" unique_id=1535579917 node_paths=PackedStringArray("_explosionPlayer")]
+[node name="GrenadeLauncher" type="Node" unique_id=1535579917 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "GrenadeStats", "_explosionPlayer")]
 script = ExtResource("1_hamct")
+DamageStats = NodePath("Stats/DamageStats")
+MagazineStats = NodePath("Stats/MagazineStats")
+BloomStats = NodePath("Stats/BloomStats")
+RecoilStats = NodePath("Stats/RecoilStats")
+ReloadStats = NodePath("Stats/ReloadStats")
+ProjectileStats = NodePath("Stats/ProjectileStats")
+AttackStats = NodePath("Stats/AttackStats")
+GrenadeStats = NodePath("Stats/GrenadeStats")
 _throwForce = 1500.0
 _damageDropoffFromCenter = SubResource("Curve_ysrq1")
 GrenadeScene = ExtResource("2_hamct")
@@ -60,6 +76,56 @@ _fireGroup = SubResource("Resource_a0fn7")
 _reloadBehaviour = SubResource("Resource_mokft")
 _explosionPlayer = NodePath("Explosion")
 Stats = SubResource("Resource_bpnxk")
+
+[node name="Stats" type="Node" parent="." unique_id=1006702990]
+
+[node name="DamageStats" type="Node" parent="Stats" unique_id=389467622]
+script = ExtResource("9_4h2g9")
+Damage = 67
+metadata/_custom_type_script = "uid://c8bfvbbqfaakj"
+
+[node name="MagazineStats" type="Node" parent="Stats" unique_id=617877814]
+script = ExtResource("10_jkyuc")
+Capacity = 6
+metadata/_custom_type_script = "uid://bj6pph867oydf"
+
+[node name="BloomStats" type="Node" parent="Stats" unique_id=1757298587]
+script = ExtResource("11_j8m2z")
+metadata/_custom_type_script = "uid://5u8113et07vu"
+
+[node name="RecoilStats" type="Node" parent="Stats" unique_id=575650975]
+script = ExtResource("12_fmmo5")
+HorizontalRecoilMin = 40.0
+HorizontalBaseRecoil = 40.0
+HorizontalRecoilRandom = 20.0
+VerticalRecoilMin = 80.0
+VerticalBaseRecoil = 80.0
+VerticalRecoilRandom = 40.0
+RecoilScale = 0.5
+HorizontalRecoilPunish = false
+CameraRecoilScale = 3.0
+metadata/_custom_type_script = "uid://xtlc02w402jw"
+
+[node name="ReloadStats" type="Node" parent="Stats" unique_id=2044726573]
+script = ExtResource("13_7wl0k")
+ReloadTime = 6.0
+metadata/_custom_type_script = "uid://gr35snno6a2m"
+
+[node name="ProjectileStats" type="Node" parent="Stats" unique_id=2063911314]
+script = ExtResource("14_clg0s")
+HitRadius = 200
+metadata/_custom_type_script = "uid://cuyrbm7tgm3od"
+
+[node name="AttackStats" type="Node" parent="Stats" unique_id=1094544153]
+script = ExtResource("15_ra4bw")
+AttackSpeed = 0.3
+metadata/_custom_type_script = "uid://bjysatf11t7bw"
+
+[node name="GrenadeStats" type="Node" parent="Stats" unique_id=334085025]
+script = ExtResource("14_mfe1e")
+TimeToExplode = 0.6
+ArmingDistance = 300.0
+metadata/_custom_type_script = "uid://v1aixejhddar"
 
 [node name="Explosion" type="AudioStreamPlayer" parent="." unique_id=1114139561]
 stream = ExtResource("7_6gb1p")

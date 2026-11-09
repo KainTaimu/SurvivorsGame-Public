@@ -3,10 +3,10 @@ using Game.Levels.Controllers;
 
 namespace Game.Items.Offensive;
 
-public sealed partial class MarksmanRifle : Sniper
+public sealed partial class MarksmanRifle : Sniper, IHasRadialPushStats
 {
-	private float NearbyPushRadius => FirearmStats.Additional["NearbyPushRadius"].AsSingle();
-	private float NearbyPushAmount => FirearmStats.Additional["NearbyPushAmount"].AsSingle();
+	[Export]
+	public RadialPushStats RadialPushStats { get; set; } = null!;
 
 	public override void _Ready()
 	{
@@ -17,7 +17,7 @@ public sealed partial class MarksmanRifle : Sniper
 	private void PushNearEnemies()
 	{
 		var playerPos = Player.GlobalPosition;
-		if (!TargetQuery.TryGetTargetsInArea(playerPos, NearbyPushRadius, out var ids))
+		if (!TargetQuery.TryGetTargetsInArea(playerPos, RadialPushStats.NearbyPushRadius, out var ids))
 			return;
 
 		foreach (var id in ids)
@@ -27,7 +27,7 @@ public sealed partial class MarksmanRifle : Sniper
 
 			ref var posComponent = ref GameWorld.World.Get<PositionComponent>(id);
 
-			var pushForce = playerPos.DirectionTo(posComponent.Position) * NearbyPushAmount;
+			var pushForce = playerPos.DirectionTo(posComponent.Position) * RadialPushStats.NearbyPushAmount;
 			GameWorld.World.Set(id, new PositionComponent(posComponent.Position + pushForce));
 		}
 	}

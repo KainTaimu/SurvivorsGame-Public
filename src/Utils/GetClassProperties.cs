@@ -2,6 +2,7 @@ using System.Collections;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using Game.Items.Offensive;
 
 namespace Game.Utils;
 
@@ -83,6 +84,9 @@ public static class ClassInspector
 				break;
 			case double d:
 				value = d.ToString("F" + FLOATING_POINT_DISPLAY_PRECISION);
+				break;
+			case ItemStat stat:
+				value = stat.ToString();
 				break;
 			case Node node:
 				value = node.Name;

@@ -14,7 +14,7 @@ public abstract partial class AbstractPlayerWeaponController : Node
 	[Signal]
 	public delegate void OnSecondaryAttackReassignedEventHandler();
 
-	public IManualAttack? PrimaryAttack
+	public BaseOffensive? PrimaryAttack
 	{
 		get;
 		protected set
@@ -24,38 +24,7 @@ public abstract partial class AbstractPlayerWeaponController : Node
 		}
 	}
 
-	public IReadOnlyList<BaseOffensive> Offensives => OffensiveList;
-	public IReadOnlyList<IManualAttack> ManualOffensives => [.. ManualOffensiveList];
+	public LinkedList<BaseOffensive> Offensives => OffensiveList;
 
-	protected readonly List<BaseOffensive> OffensiveList = [];
-	protected readonly LinkedList<IManualAttack> ManualOffensiveList = [];
-
-	// NOTE:
-	// May break if the nodes ProcessMode is was not originally
-	// Inherit
-	protected void EnableManualOffensive(IManualAttack? manual)
-	{
-		if (manual is null)
-			return;
-		var node = (Node)manual;
-		manual.AttackActionString = InputMapNames.PrimaryAttack;
-		node.ProcessMode = ProcessModeEnum.Inherit;
-		if (node is Node2D node2D)
-			node2D.Show();
-		var offensive = (manual as BaseOffensive)!;
-		offensive.EmitSignal(BaseOffensive.SignalName.OnEquipped);
-	}
-
-	protected void DisableManualOffensive(IManualAttack? manual)
-	{
-		if (manual is null)
-			return;
-		var node = (Node)manual;
-		manual.AttackActionString = null;
-		node.ProcessMode = ProcessModeEnum.Disabled;
-		if (node is Node2D node2D)
-			node2D.Hide();
-		var offensive = (manual as BaseOffensive)!;
-		offensive.EmitSignal(BaseOffensive.SignalName.OnUnequipped);
-	}
+	protected readonly LinkedList<BaseOffensive> OffensiveList = [];
 }

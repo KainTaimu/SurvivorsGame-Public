@@ -39,12 +39,12 @@
 [ext_resource type="PackedScene" uid="uid://c8vjoa3wtku3l" path="res://scenes/UI/PickupUi.tscn" id="18_ta1oo"]
 [ext_resource type="Script" uid="uid://cn5rlmdgj2uue" path="res://src/Players/Controllers/PlayerMovementController.cs" id="19_vvuu7"]
 [ext_resource type="PackedScene" uid="uid://b7tvc0jib1mqf" path="res://scenes/Players/PlayerWeaponController.tscn" id="20_q733l"]
-[ext_resource type="PackedScene" uid="uid://2gxjr5yjrfut" path="res://scenes/Items/Offensive/Minigun.tscn" id="21_fbj5h"]
+[ext_resource type="PackedScene" uid="uid://b6pcia1iql0ct" path="res://scenes/Items/Offensive/Ak47.tscn" id="21_xuljg"]
 [ext_resource type="PackedScene" uid="uid://ce17hh7p7dmkh" path="res://scenes/UI/DeathScreen.tscn" id="22_ta1oo"]
 [ext_resource type="PackedScene" uid="uid://c5q166p2d4241" path="res://scenes/UI/CurrentWeaponUi.tscn" id="22_upwdq"]
-[ext_resource type="Script" uid="uid://bs6wg1qssruhv" path="res://src/Items/Offensive/EnemyHitEffects/AbstractEnemyHitEffect.cs" id="22_xuljg"]
+[ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FireGroups/FullAutoFireGroup.cs" id="22_vhjum"]
 [ext_resource type="PackedScene" uid="uid://jqf8r7a2ybte" path="res://scenes/UI/CurrentStatusEffectsUi.tscn" id="23_e7x4y"]
-[ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="23_vhjum"]
+[ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="23_h210h"]
 [ext_resource type="Script" uid="uid://bve4e6tonid55" path="res://src/Players/Controllers/player_damage_vignette.gd" id="24_niwbi"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ta1oo"]
@@ -315,32 +315,15 @@ scale_max = 8.0
 scale_curve = SubResource("CurveTexture_oypsu")
 turbulence_enabled = true
 
-[sub_resource type="Resource" id="Resource_q733l"]
-script = ExtResource("23_vhjum")
-ReloadTime = 1.0
-BloomCoefficientDeg = 30.0
-MagazineCapacity = 1000
-HorizontalRecoilMin = 50.0
-HorizontalBaseRecoil = 50.0
-HorizontalRecoilRandom = 50.0
-VerticalRecoilMin = 15.0
-VerticalBaseRecoil = 15.0
-VerticalRecoilRandom = 15.0
-RecoilScale = 0.1
-CameraRecoilScale = 0.9
-BaseDamage = 50
-BaseDamageVarianceMultiplier = 0.2
-BaseCritChanceProportion = 0.0
-BaseProjectileSpeed = 6000
-BaseProjectileScaleMultiplier = 0.8
-BaseProjectileRadius = 30
-BaseAttackSpeed = 0.025
-BasePierceLimit = 6
-Additional = Dictionary[String, Variant]({
-"Knockback": 10.0,
-"PlayerPushPerShot": 500.0
-})
-metadata/_custom_type_script = "uid://di81uufgmcsog"
+[sub_resource type="Resource" id="Resource_xuljg"]
+resource_local_to_scene = true
+script = ExtResource("22_vhjum")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[sub_resource type="Resource" id="Resource_vhjum"]
+resource_local_to_scene = true
+script = ExtResource("23_h210h")
+metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h210h"]
 resource_local_to_scene = true
@@ -695,8 +678,9 @@ process_material = SubResource("ParticleProcessMaterial_oypsu")
 
 [node name="PlayerWeaponController" parent="World/Player" index="9" unique_id=1687061162 instance=ExtResource("20_q733l")]
 
-[node name="Minigun" parent="World/Player/PlayerWeaponController" index="0" unique_id=636864915 instance=ExtResource("21_fbj5h")]
-Stats = SubResource("Resource_q733l")
+[node name="Ak47" parent="World/Player/PlayerWeaponController" index="0" unique_id=915008798 instance=ExtResource("21_xuljg")]
+_fireGroup = SubResource("Resource_xuljg")
+_reloadBehaviour = SubResource("Resource_vhjum")
 
 [node name="CurrentWeaponUI" parent="World/Player" index="10" unique_id=2135368036 node_paths=PackedStringArray("_weaponController") instance=ExtResource("22_upwdq")]
 _weaponController = NodePath("../PlayerWeaponController")

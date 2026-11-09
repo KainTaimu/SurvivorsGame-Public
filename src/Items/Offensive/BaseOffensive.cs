@@ -15,12 +15,9 @@ public abstract partial class BaseOffensive : BaseItem
 	[Signal]
 	public delegate void OnUnequippedEventHandler();
 
-	[Export]
-	public Array<BaseOffensiveStats> Upgrades = [];
-
-	public BaseOffensiveStats OffensiveStats => (BaseOffensiveStats)Stats;
-
 	protected EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
+
+	public virtual void Process(double delta) { }
 
 	protected virtual void PostUpgrade(int newLevel) { }
 
@@ -35,33 +32,15 @@ public abstract partial class BaseOffensive : BaseItem
 
 	public void HandleHit(Entity entity)
 	{
-		HandleDamageECS(entity);
-		HandleHitECS(entity);
+		HandleDamage(entity);
+		HandleHitEffects(entity);
 	}
 
 	/// <summary> Handle the damage to the enemy </summary>
 	// ReSharper disable once InconsistentNaming
-	protected virtual void HandleDamageECS(Entity entity)
-	{
-		OffensiveEffects.ApplyDamage(
-			entity,
-			OffensiveStats.Damage,
-			CalculateCrit(),
-			OffensiveStats.DamageVarianceMultiplier,
-			PlayerStats.OutgoingDamage
-		);
-	}
+	protected abstract void HandleDamage(Entity entity);
 
 	/// <summary> Handle additional effects to the enemy like knockback </summary>
 	// ReSharper disable once InconsistentNaming
-	protected abstract void HandleHitECS(Entity entity);
-
-	protected int CalculateCrit()
-	{
-		var roll = GD.Randf();
-		if (roll > OffensiveStats.CritChanceProportion)
-			return 0;
-
-		return Mathf.CeilToInt(OffensiveStats.Damage * OffensiveStats.CritDamageMultiplier);
-	}
+	protected abstract void HandleHitEffects(Entity entity);
 }
