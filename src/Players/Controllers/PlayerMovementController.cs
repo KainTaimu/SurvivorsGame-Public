@@ -44,7 +44,8 @@ public partial class PlayerMovementController : Node2D
 				_exhaustion = Mathf.Max(0, _exhaustion - (float)delta);
 				return;
 			}
-			CharacterStats.Stamina += (CharacterStats.MaxStamina / CharacterStats.TimeToMaxStamina) * (float)delta;
+
+			CharacterStats.Stamina += CharacterStats.MaxStamina / CharacterStats.TimeToMaxStamina * (float)delta;
 		}
 	}
 
@@ -82,6 +83,7 @@ public partial class PlayerMovementController : Node2D
 			CharacterStats.Stamina -= (float)delta;
 			_exhaustion = CharacterStats.ExhaustionTime;
 		}
+
 		_sprintParticles?.Emitting = _isSprinting;
 
 		Velocity = move;

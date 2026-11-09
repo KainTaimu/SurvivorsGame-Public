@@ -161,7 +161,7 @@ public partial class GrenadeLauncher
 		};
 
 		_reloadBehaviour.TimeBetweenRounds = () =>
-			(ReloadStats.ReloadTime * PlayerStats.ReloadTimeScale) / MagazineStats.Capacity;
+			ReloadStats.ReloadTime * PlayerStats.ReloadTimeScale / MagazineStats.Capacity;
 		_reloadBehaviour.RoundsToLoad = MagazineStats.Capacity;
 	}
 
@@ -238,7 +238,7 @@ public partial class GrenadeLauncher
 	{
 		ref var pos = ref GameWorld.World.Get<PositionComponent>(entity);
 
-		var offset = (_lastBlastPosition.DistanceTo(pos.Position) / ProjectileStats.HitRadius);
+		var offset = _lastBlastPosition.DistanceTo(pos.Position) / ProjectileStats.HitRadius;
 		offset = Mathf.Clamp(offset, 0, 1);
 		var dropoffScale = _damageDropoffFromCenter.Sample(offset);
 

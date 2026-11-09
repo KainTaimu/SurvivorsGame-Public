@@ -65,9 +65,9 @@ public partial class AirdropManager : Node2D
 			startPosition.AngleToPoint(dropPosition + rand),
 			PlaneVelocity,
 			timeToArrivalSec * 2,
-			dropPrecision: 0,
-			dropScene: dropScene,
-			dropParent: dropParent
+			0,
+			dropScene,
+			dropParent
 		);
 		CustomLogger.LogInfo(
 			$"Spawned airdrop : Drop={dropPosition} : TTA={timeToArrivalSec} : Angle={arrivalAngleDeg}"

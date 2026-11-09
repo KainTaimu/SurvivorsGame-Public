@@ -149,6 +149,7 @@ public partial class CharacterStats : Node
 			_player.EmitSignal(Player.SignalName.OnHealthChanged, Health, Health);
 			return;
 		}
+
 		var damageAfterDefense = damage - Defense;
 		var scaledDamage = damageAfterDefense * IncomingDamage;
 		var clampedDamage = Math.Clamp(scaledDamage, 1, float.PositiveInfinity);

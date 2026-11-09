@@ -1,6 +1,5 @@
 using Arch.Core;
 using Game.UI;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Game.Items.Offensive;
 

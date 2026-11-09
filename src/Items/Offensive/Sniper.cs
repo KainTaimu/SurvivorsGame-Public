@@ -74,11 +74,13 @@ public partial class Sniper
 	private PlayerMovementController MovementController => GameWorld.Instance.MainPlayer.MovementController;
 
 	public int MagazineCapacity => MagazineStats.Capacity;
+
 	public int MagazineCount
 	{
 		get => MagazineStats.Count;
 		set => MagazineStats.Count = value;
 	}
+
 	public bool IsReloading { get; private set; }
 
 	private readonly ProjectilePool _pool = new();

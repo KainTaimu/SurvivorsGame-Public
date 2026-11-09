@@ -97,7 +97,7 @@ public partial class GrenadeThrower
 	{
 		ref var pos = ref GameWorld.World.Get<PositionComponent>(entity);
 
-		var offset = (_blastPosition.DistanceTo(pos.Position) / ProjectileStats.HitRadius);
+		var offset = _blastPosition.DistanceTo(pos.Position) / ProjectileStats.HitRadius;
 		offset = Mathf.Clamp(offset, 0, 1);
 		var dropoffScale = _damageDropoffFromCenter.Sample(offset);
 

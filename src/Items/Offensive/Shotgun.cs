@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Game.UI;
 
 namespace Game.Items.Offensive;
@@ -48,7 +47,7 @@ public partial class Shotgun : SimpleFirearm, IHasPumpActionStats
 		for (var i = 0; i < PelletCount; i++)
 		{
 			var bloomRad = BloomStats.BloomCoefficientDeg * (Math.PI / 180);
-			var bloom = 0.0 + (bloomRad / 2) * _rng.Randfn();
+			var bloom = 0.0 + bloomRad / 2 * _rng.Randfn();
 			var rotation = baseRotation + bloom;
 			var scale = Vector2.One * ProjectileStats.Scale;
 			var speed = ProjectileStats.Speed * (float)GD.RandRange(1f, 2f);

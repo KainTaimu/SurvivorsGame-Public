@@ -6,9 +6,9 @@ uniform float inner_radius = 0.0;
 uniform float outer_radius = 1.0;
 
 void fragment() {
-	float x = abs(UV.r-.5)*2.0;
-	float y = abs(UV.g-.5)*2.0;
-	float q = 1.0-(1.0-sqrt(x*x+y*y)/outer_radius)/(1.0-inner_radius);
+    float x = abs(UV.r - .5) * 2.0;
+    float y = abs(UV.g - .5) * 2.0;
+    float q = 1.0 - (1.0 - sqrt(x * x + y * y) / outer_radius) / (1.0 - inner_radius);
     COLOR = tint;
     COLOR.a = q * alpha;
 }

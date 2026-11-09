@@ -45,6 +45,7 @@ public partial class PauseController : Node
 			// Logger.LogError($"Cannot lock the pause controller while it is already locked by another node {LockedBy}.");
 			return false;
 		}
+
 		if (locker.ProcessMode != ProcessModeEnum.Always)
 		{
 			CustomLogger.LogError("Locker must have ProcessMode set to Always to lock the pause controller.");

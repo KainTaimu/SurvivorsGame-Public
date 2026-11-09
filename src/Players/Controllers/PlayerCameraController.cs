@@ -16,7 +16,7 @@ public partial class PlayerCameraController : SignalCamera2D
 		const float a = 15;
 		const float b = 90;
 		const float m = 0.1f;
-		Rotation = Mathf.Pow(Mathf.E, (-a * (3 - _shake))) * Mathf.Cos(b * (3 - _shake)) * m;
+		Rotation = Mathf.Pow(Mathf.E, -a * (3 - _shake)) * Mathf.Cos(b * (3 - _shake)) * m;
 	}
 
 	public override void _Input(InputEvent @event)

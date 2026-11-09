@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b6pcia1iql0ct"]
 
-[ext_resource type="Script" uid="uid://d4hn7uwvshdju" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_rp6n0"]
+[ext_resource type="Script" uid="uid://igbacr2wbu1g" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_rp6n0"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_rp6n0"]
 [ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FireGroups/FullAutoFireGroup.cs" id="3_nihe0"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="3_tg8rs"]

@@ -199,7 +199,7 @@ public class NavWallProximity
 			{
 				var a = poly[i];
 				var b = poly[(i + 1) % poly.Length];
-				if ((a.Y <= centerY) == (b.Y <= centerY))
+				if (a.Y <= centerY == b.Y <= centerY)
 					continue;
 				var t = (centerY - a.Y) / (b.Y - a.Y);
 				crossings[count++] = a.X + t * (b.X - a.X);

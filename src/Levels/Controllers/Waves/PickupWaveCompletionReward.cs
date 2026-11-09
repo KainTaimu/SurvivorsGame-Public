@@ -23,6 +23,7 @@ public partial class PickupWaveCompletionReward : AbstractWaveCompletionReward
 			CustomLogger.LogError("Tried to spawn pickup UI without wave controller.");
 			return;
 		}
+
 		var pickupUi = _pickupUiScene.Instantiate();
 		EnemyWaveController.Instance.AddChild(pickupUi);
 		pickupUi.CallDeferred("show_ui", ItemCount, RarityLowerGate, RarityUpperGate);

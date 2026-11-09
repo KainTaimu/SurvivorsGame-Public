@@ -72,6 +72,7 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 			{
 				SpawnContactEffects((Vector2)result["position"], (Vector2)result["normal"]);
 			}
+
 			ReturnToPool();
 			return;
 		}
@@ -109,7 +110,7 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 
 	private void SpawnContactEffects(Vector2 pos, Vector2 normal)
 	{
-		var data = new Godot.Collections.Dictionary<StringName, Variant>()
+		var data = new Godot.Collections.Dictionary<StringName, Variant>
 		{
 			{ "position", pos },
 			{ "rotation", normal.Angle() },

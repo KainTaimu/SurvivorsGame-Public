@@ -13,7 +13,10 @@ public class FairRandomBag<T> : IEnumerable
 
 	private readonly Queue<T> _pool = [];
 
-	public IEnumerator GetEnumerator() => _pool.GetEnumerator();
+	public IEnumerator GetEnumerator()
+	{
+		return _pool.GetEnumerator();
+	}
 
 	public FairRandomBag(IEnumerable<T> objects)
 	{

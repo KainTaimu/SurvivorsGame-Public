@@ -52,7 +52,7 @@ public partial class Car : Node2D, IDestructable
 			}
 		}
 
-		var data = new Dictionary<StringName, Variant>() { { "position", Position } };
+		var data = new Dictionary<StringName, Variant> { { "position", Position } };
 		EnvironmentFxManager.PlaySfx("car_explosion", data);
 		EnvironmentFxManager.PlayVfx("car_explosion", data);
 		OffensiveEffects.ApplyCameraShake(_cameraShakeScale, GetViewport, CreateTween);

@@ -107,7 +107,7 @@ public partial class CurrentWeaponUi : CanvasLayer
 		{
 			var extra = primary.MagazineCount - primary.MagazineCapacity;
 			return $"{primary.MagazineCount - extra}+{extra}/{primary
-					.MagazineCapacity}";
+				.MagazineCapacity}";
 		}
 
 		return $"{primary.MagazineCount}/{primary.MagazineCapacity}";

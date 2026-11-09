@@ -28,7 +28,7 @@ public partial class EnemySpawner : Node
 		var spriteInfo = ss.GetSpriteInfo(bp.SpriteName);
 
 		var entity = EnemyTracker.CreateEntity();
-		var comps = new List<object>()
+		var comps = new List<object>
 		{
 			new EnemyTypeComponent(bp.Type),
 			new HealthComponent(stats.MaxHealth),

@@ -119,6 +119,7 @@ public static class ClassInspector
 			case "NativeInstance":
 				return false;
 		}
+
 		return true;
 	}
 

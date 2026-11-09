@@ -85,13 +85,12 @@ public partial class WaveSpawnCount : AbstractWave, IWaveProgress, IWaveResettab
 
 	private float GetRandomSpawnTime()
 	{
-		return (float)(
+		return (float)
 			Mathf.Clamp(
 				GD.RandRange(SpawnMinTime, SpawnMaxTime * (SpawnTimeCurveOverMaxTime?.Sample(1 - Progress) ?? 1f)),
 				SpawnMinTime,
 				SpawnMaxTime
-			)
-		);
+			);
 	}
 
 	private int GetRandomSpawnBatchCount()

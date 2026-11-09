@@ -5,7 +5,7 @@ extends Node
 	get:
 		return do_rename
 	set(v):
-		if !v:
+		if ! v:
 			return
 		v = false
 		_do_rename()

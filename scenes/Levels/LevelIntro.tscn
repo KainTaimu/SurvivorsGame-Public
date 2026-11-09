@@ -12,10 +12,10 @@
 [ext_resource type="Script" uid="uid://rykv3f6ereih" path="res://src/Players/CharacterStats.cs" id="6_xuljg"]
 [ext_resource type="Resource" uid="uid://d3sq28pskbjjy" path="res://scenes/Enemies/Blueprints/Walker.tres" id="7_d75v4"]
 [ext_resource type="Texture2D" uid="uid://c0d0pkcn6hw68" path="res://assets/Players/player.png" id="7_w70hc"]
-[ext_resource type="Script" uid="uid://cksmwvaxx1m18" path="res://src/Levels/Controllers/Waves/WaveSpawnCount.cs" id="9_duif7"]
+[ext_resource type="Script" uid="uid://c3xa2iila340u" path="res://src/Levels/Controllers/Waves/WaveSpawnCount.cs" id="9_duif7"]
 [ext_resource type="Shader" uid="uid://bgl0yr4nfmpqx" path="res://src/Shaders/flash.gdshader" id="9_vhjum"]
 [ext_resource type="Shader" uid="uid://bg3me0bhc4em2" path="res://src/Shaders/vignette.gdshader" id="10_pl5k2"]
-[ext_resource type="Script" uid="uid://b7ol6jtjagoe" path="res://src/Levels/Controllers/Waves/WaveDuration.cs" id="10_ta1oo"]
+[ext_resource type="Script" uid="uid://rou54n4aiaoh" path="res://src/Levels/Controllers/Waves/WaveDuration.cs" id="10_ta1oo"]
 [ext_resource type="Script" uid="uid://3umr41bs3735" path="res://src/Levels/Controllers/AbstractEnemyBehavior.cs" id="10_vrw23"]
 [ext_resource type="Script" uid="uid://bpdbdnifhxaxh" path="res://src/Players/Controllers/player_stamina_bar.gd" id="11_h210h"]
 [ext_resource type="Script" uid="uid://y77qtp32wo00" path="res://src/Enemies/EnemyStats.cs" id="11_v38xc"]
@@ -26,7 +26,7 @@
 [ext_resource type="Script" uid="uid://bdk4fdcqvypav" path="res://src/Players/Controllers/StatusEffect.cs" id="13_pl5k2"]
 [ext_resource type="Script" uid="uid://d31d8uns5faa5" path="res://src/Players/Controllers/StatusEffectModifier.cs" id="14_pl5k2"]
 [ext_resource type="Script" uid="uid://jk25jpibrbm3" path="res://src/Players/Controllers/LookLight.cs" id="14_vmdw7"]
-[ext_resource type="Script" uid="uid://catd5vqs68f8g" path="res://src/Levels/Controllers/Waves/StatusEffectWaveCompletionReward.cs" id="14_w51uh"]
+[ext_resource type="Script" uid="uid://b0ii37onuijvb" path="res://src/Levels/Controllers/Waves/StatusEffectWaveCompletionReward.cs" id="14_w51uh"]
 [ext_resource type="Texture2D" uid="uid://c7kegqurrrx0w" path="res://assets/VFX/small_chevron.png" id="15_a6la3"]
 [ext_resource type="Script" uid="uid://bhhh8235y54bg" path="res://src/Levels/Controllers/Waves/WaveDebugStopper.cs" id="15_n7qsj"]
 [ext_resource type="Script" uid="uid://d2moqmcv2k22p" path="res://src/Players/Controllers/LookHeader.cs" id="16_6h3lq"]
@@ -362,7 +362,7 @@ metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
 script = ExtResource("6_vrw23")
 metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xuljg"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_h210h"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_ufwql"]
@@ -681,6 +681,7 @@ process_material = SubResource("ParticleProcessMaterial_oypsu")
 [node name="Ak47" parent="World/Player/PlayerWeaponController" index="0" unique_id=915008798 instance=ExtResource("21_xuljg")]
 _fireGroup = SubResource("Resource_xuljg")
 _reloadBehaviour = SubResource("Resource_vhjum")
+Stats = null
 
 [node name="CurrentWeaponUI" parent="World/Player" index="10" unique_id=2135368036 node_paths=PackedStringArray("_weaponController") instance=ExtResource("22_upwdq")]
 _weaponController = NodePath("../PlayerWeaponController")

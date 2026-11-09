@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using Arch.Core;
 using Game.Levels.Controllers;
 using Game.UI;
-using Game.Utils;
 
 namespace Game.Items.Offensive;
 
@@ -241,7 +239,7 @@ public partial class SimpleFirearm
 		var rotation = playerPosition.AngleToPoint(mouseVector);
 
 		var bloomRad = BloomStats.BloomCoefficientDeg * (Math.PI / 180);
-		var bloom = 0.0 + (bloomRad / 2) * _rng.Randfn();
+		var bloom = 0.0 + bloomRad / 2 * _rng.Randfn();
 		rotation += (float)bloom;
 		var scale = Vector2.One * ProjectileStats.Scale;
 

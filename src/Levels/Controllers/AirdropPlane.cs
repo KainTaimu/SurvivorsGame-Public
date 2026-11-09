@@ -40,6 +40,7 @@ public partial class AirdropPlane : Node2D
 			{
 				return;
 			}
+
 			DropCarpetBomb();
 			_timeUntilNextDrop = DROP_INTERVAL_SEC;
 		}
@@ -105,7 +106,7 @@ public partial class AirdropPlane : Node2D
 		CustomLogger.LogInfo($"Dropped at {dropPos}, {_t}s");
 		EnvironmentFxManager.PlayVfx(
 			"explosion",
-			new Dictionary<StringName, Variant>() { { "position", dropPos }, { "scale", new Vector2(2, 2) } }
+			new Dictionary<StringName, Variant> { { "position", dropPos }, { "scale", new Vector2(2, 2) } }
 		);
 		EnvironmentFxManager.PlaySfx("explosion_generic");
 

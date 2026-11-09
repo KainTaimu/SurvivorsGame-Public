@@ -1,6 +1,6 @@
 class_name Globals
 
-enum Rarity { COMMON, UNCOMMON, RARE, EPIC, LEGENDARY, UNOBTAINABLE }
+enum Rarity {COMMON, UNCOMMON, RARE, EPIC, LEGENDARY, UNOBTAINABLE}
 
 const RARITY_NAMES := ["Common", "Uncommon", "Rare", "Epic", "Legendary", "Unobtainable"]
 
