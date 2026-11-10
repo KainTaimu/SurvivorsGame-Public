@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cynlbeb3umvcr" path="res://scenes/Levels/EnemyWaveController.tscn" id="8_27qwr"]
 [ext_resource type="PackedScene" uid="uid://x42vvsn5hrwx" path="res://scenes/Levels/WaveDebugPanel.tscn" id="8_lkd4q"]
 [ext_resource type="Script" uid="uid://cuxklvvvd40t4" path="res://scenes/Levels/EnemySystems.cs" id="8_t3a6r"]
-[ext_resource type="Script" uid="uid://da4ncrayev2sh" path="res://src/Levels/Controllers/Waves/wave_node.gd" id="9_qsiuk"]
+[ext_resource type="Script" uid="uid://c1q55t1tc3v2w" path="res://src/Levels/Controllers/Waves/wave_node.gd" id="9_qsiuk"]
 [ext_resource type="PackedScene" uid="uid://umbqj1xym7lp" path="res://scenes/Core/FodderMultiMeshInstance2D.tscn" id="9_ror81"]
 [ext_resource type="Script" uid="uid://dhru0m0a8v1sg" path="res://src/Levels/Controllers/EnemyBehaviorController.cs" id="13_eh1w1"]
 [ext_resource type="PackedScene" uid="uid://dh3cfccrh31b0" path="res://scenes/Levels/EnemyCollisionSolverManager.tscn" id="13_faxpm"]

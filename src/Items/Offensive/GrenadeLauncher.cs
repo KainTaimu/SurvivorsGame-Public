@@ -133,16 +133,6 @@ public partial class GrenadeLauncher
 		};
 		if (_fireGroup is ICooldown c)
 			c.CooldownDuration = AttackStats.AttackSpeed;
-		if (_fireGroup is BurstFireGroup burst)
-		{
-			if (!Stats.Additional.TryGetValue("BurstCount", out var burstCount))
-				CustomLogger.LogError($"{Name} : Key \"BurstCount\" not found in stats");
-			burst.BurstCount = burstCount.AsInt32();
-
-			if (!Stats.Additional.TryGetValue("TimeBetweenBurst", out var tbb))
-				CustomLogger.LogError($"{Name} : Key \"TimeBetweenBurst\" not found in stats");
-			burst.TimeBetweenBursts = tbb.AsSingle();
-		}
 	}
 
 	private void InitializeReloadBehaviour()

@@ -41,9 +41,9 @@ func _input(event: InputEvent) -> void:
 
 
 func show_ui(
-	item_limit: int,
-	rarity_lower_gate: Globals.Rarity,
-	rarity_upper_gate: Globals.Rarity,
+		item_limit: int,
+		rarity_lower_gate: Globals.Rarity,
+		rarity_upper_gate: Globals.Rarity,
 ) -> void:
 	show()
 	PauseController.Lock(self)
@@ -67,7 +67,7 @@ func _assign_item_recurse(arr: Array[ItemShowcase], weapons: Array[Resource], re
 	if remaining == 0:
 		return
 
-	var showcase = arr.pop_front()
+	var showcase: ItemShowcase = arr.pop_front()
 	if len(weapons_picked) == len(weapons):
 		return
 	var entry := _weighted_pick(weapons) as OffensiveRegistryEntry
@@ -75,24 +75,27 @@ func _assign_item_recurse(arr: Array[ItemShowcase], weapons: Array[Resource], re
 		CustomLogger.log_error("expected OffensiveRegistryEntry. got %s" % typeof(entry))
 		return
 
-	var stats := _get_property_from_scene(entry.scene, "Stats") as BaseItemStats
-	if stats == null:
-		CustomLogger.log_error("expected BaseItemStats. got %s" % typeof(stats))
-		return
+	# var stats := _get_property_from_scene(entry.scene, "Stats") as BaseItemStats
+	# if stats == null:
+	# 	CustomLogger.log_error("expected BaseItemStats. got %s" % typeof(stats))
+	# 	return
 
 	var props := entry.properties
 	if props == null:
 		CustomLogger.log_error("expected BaseItemProperties. got %s" % typeof(props))
 
-	# BUG: This sometimes causes an invalid property access crash
-	showcase.assign_item.call_deferred(entry.scene, props, stats, entry.rarity)
+	showcase.assign_item.call_deferred(entry.scene, props, entry.rarity)
+	showcase.offset_transform_scale = Vector2.ONE * 1.04
+	var tween := showcase.create_tween()
+	tween.set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN)
+	tween.tween_property(showcase, "offset_transform_scale", Vector2(1.0, 1.0), 0.2)
 
 	get_tree().create_timer(0.025, true, false, true).timeout.connect(
 		_assign_item_recurse.bind(
 			arr,
 			weapons,
 			remaining -
-				1,
+			1,
 		),
 	)
 

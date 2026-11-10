@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://x42vvsn5hrwx"]
 
-[ext_resource type="Script" uid="uid://bgmolhccvqux6" path="res://src/Levels/Controllers/Waves/WaveDebugPanel.cs" id="1_6r014"]
+[ext_resource type="Script" uid="uid://sdy865ivmgid" path="res://src/Levels/Controllers/Waves/WaveDebugPanel.cs" id="1_6r014"]
 [ext_resource type="LabelSettings" uid="uid://c0lq4rqaj62dx" path="res://scenes/UI/SettingsLabelSettings.tres" id="2_ap2sm"]
 [ext_resource type="Theme" uid="uid://cwyp7j6g53bhf" path="res://resources/UiThemes/NormalUi.tres" id="2_i6rcm"]
 

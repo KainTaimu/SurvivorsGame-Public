@@ -1,11 +1,9 @@
 [gd_scene format=3 uid="uid://bv8olcpvea07v"]
 
-[ext_resource type="Script" uid="uid://btykxyy3du0px" path="res://src/Items/Offensive/GrenadeLauncher.cs" id="1_hamct"]
+[ext_resource type="Script" uid="uid://rjud73prqa6q" path="res://src/Items/Offensive/GrenadeLauncher.cs" id="1_hamct"]
 [ext_resource type="PackedScene" uid="uid://dl1vjoimv4sq7" path="res://scenes/Projectiles/HvGrenade.tscn" id="2_hamct"]
 [ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/FireGroups/SemiAutoFireGroup.cs" id="3_ysrq1"]
 [ext_resource type="Script" uid="uid://cx3rrg2toydba" path="res://src/Items/Offensive/ReloadBehaviours/SequentialReloadBehaviour.cs" id="4_8lp6o"]
-[ext_resource type="Script" uid="uid://bs6wg1qssruhv" path="res://src/Items/Offensive/EnemyHitEffects/AbstractEnemyHitEffect.cs" id="5_ysrq1"]
-[ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_3bjou"]
 [ext_resource type="AudioStream" uid="uid://dlewyy172dhok" path="res://assets/SFX/freesound_community-hq-explosion-6288.mp3" id="7_6gb1p"]
 [ext_resource type="AudioStream" uid="uid://bnxr2ix8k0jgu" path="res://assets/SFX/Shoot/m79_thumper.wav" id="8_8lp6o"]
 [ext_resource type="Script" uid="uid://c8bfvbbqfaakj" path="res://src/Items/Offensive/Stats/DamageStats.cs" id="9_4h2g9"]
@@ -33,32 +31,6 @@ _interruptPunishTime = 0.0
 _boltCloseTime = 0.0
 metadata/_custom_type_script = "uid://cx3rrg2toydba"
 
-[sub_resource type="Resource" id="Resource_bpnxk"]
-script = ExtResource("6_3bjou")
-ReloadTime = 6.0
-MagazineCapacity = 6
-HorizontalRecoilMin = 40.0
-HorizontalBaseRecoil = 40.0
-HorizontalRecoilRandom = 20.0
-VerticalRecoilMin = 80.0
-VerticalBaseRecoil = 80.0
-VerticalRecoilRandom = 40.0
-RecoilScale = 0.5
-HorizontalRecoilPunish = false
-BaseDamage = 67
-BaseProjectileRadius = 200
-BaseAttackSpeed = 0.3
-BasePierceLimit = 9999
-Additional = Dictionary[String, Variant]({
-"ArmingDistance": 300.0,
-"CameraRecoilScale": 4.2,
-"EnemiesInAreaUntilExplode": 0,
-"Knockback": 150.0,
-"SlowMultiplier": 0.0,
-"TimeToExplode": 0.6
-})
-metadata/_custom_type_script = "uid://di81uufgmcsog"
-
 [node name="GrenadeLauncher" type="Node" unique_id=1535579917 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "GrenadeStats", "_explosionPlayer")]
 script = ExtResource("1_hamct")
 DamageStats = NodePath("Stats/DamageStats")
@@ -75,7 +47,6 @@ GrenadeScene = ExtResource("2_hamct")
 _fireGroup = SubResource("Resource_a0fn7")
 _reloadBehaviour = SubResource("Resource_mokft")
 _explosionPlayer = NodePath("Explosion")
-Stats = SubResource("Resource_bpnxk")
 
 [node name="Stats" type="Node" parent="." unique_id=1006702990]
 

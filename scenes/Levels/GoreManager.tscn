@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://btsjfyj4mvtfa" path="res://src/Levels/Controllers/GoreManager.cs" id="1_2mqri"]
 [ext_resource type="Script" uid="uid://chh33akj67s1w" path="res://src/Levels/Controllers/GoreBurstParams.cs" id="2_pkkq0"]
-[ext_resource type="Script" uid="uid://qs0cp17nnu37" path="res://src/Levels/Controllers/GoreParticleBuffer.cs" id="3_rxqt6"]
+[ext_resource type="Script" uid="uid://do22hrblk0inl" path="res://src/Levels/Controllers/GoreParticleBuffer.cs" id="3_rxqt6"]
 [ext_resource type="Texture2D" uid="uid://c7kegqurrrx0w" path="res://assets/VFX/small_chevron.png" id="4_y53ej"]
 [ext_resource type="Shader" uid="uid://q0v4lo1dgueb" path="res://src/Shaders/gore.gdshader" id="5_v26op"]
 

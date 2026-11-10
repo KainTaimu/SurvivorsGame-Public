@@ -1,12 +1,10 @@
 [gd_scene format=3 uid="uid://dtcjylv1ewb16"]
 
-[ext_resource type="Script" uid="uid://d4hn7uwvshdju" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_an3hj"]
+[ext_resource type="Script" uid="uid://igbacr2wbu1g" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_an3hj"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_betsp"]
 [ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/FireGroups/SemiAutoFireGroup.cs" id="3_an3hj"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_846bq"]
 [ext_resource type="Script" uid="uid://cx3rrg2toydba" path="res://src/Items/Offensive/ReloadBehaviours/SequentialReloadBehaviour.cs" id="4_betsp"]
-[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="5_x73fq"]
-[ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_83ri7"]
 [ext_resource type="AudioStream" uid="uid://bl1hj5f7wkjid" path="res://assets/SFX/Shoot/sks/sks_r2.wav" id="7_an3hj"]
 [ext_resource type="AudioStream" uid="uid://dl730wny5ih3s" path="res://assets/SFX/Shoot/sks/sks-load_r1.wav" id="9_cyvfi"]
 [ext_resource type="AudioStream" uid="uid://j1b3xiu8twci" path="res://assets/SFX/Shoot/sks/sks-bolt-close_r1.wav" id="10_cyvfi"]
@@ -38,41 +36,6 @@ metadata/_custom_type_script = "uid://cx3rrg2toydba"
 script = ExtResource("4_846bq")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_cyvfi"]
-size = Vector2(32, 32)
-
-[sub_resource type="Resource" id="Resource_y3hip"]
-script = ExtResource("5_x73fq")
-Name = "SKS"
-metadata/_custom_type_script = "uid://8rt54h4imtxv"
-
-[sub_resource type="Resource" id="Resource_n3sky"]
-script = ExtResource("6_83ri7")
-ReloadTime = 5.0
-BloomCoefficientDeg = 4.0
-MagazineCapacity = 10
-HorizontalRecoilMin = 15.0
-HorizontalBaseRecoil = 15.0
-HorizontalRecoilRandom = 10.0
-VerticalRecoilMin = 10.0
-VerticalBaseRecoil = 20.0
-VerticalRecoilRandom = 15.0
-HorizontalRecoilPunish = false
-CameraRecoilScale = 0.85
-BaseDamage = 13
-BaseCritDamageMultiplier = 0.5
-BaseCritChanceProportion = 0.5
-BaseProjectileSpeed = 4200
-BaseProjectileScaleMultiplier = 1.1
-BaseProjectileRadius = 42
-BaseAttackSpeed = 0.3
-BasePierceLimit = 3
-Additional = Dictionary[String, Variant]({
-"Knockback": 5.0,
-"SlowMultiplier": 0.0
-})
-metadata/_custom_type_script = "uid://di81uufgmcsog"
-
 [node name="SKS" type="Node" unique_id=708917318 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats", "_reloadAudioPlayer", "_boltCloseAudioPlayer")]
 script = ExtResource("1_an3hj")
 DamageStats = NodePath("Stats/DamageStats")
@@ -91,8 +54,6 @@ _reloadBehaviour = SubResource("Resource_n411x")
 _projectileAttack = SubResource("Resource_dar1o")
 _reloadAudioPlayer = NodePath("RoundLoadAudioPlayer")
 _boltCloseAudioPlayer = NodePath("BoltAudioPlayer")
-Properties = SubResource("Resource_y3hip")
-Stats = SubResource("Resource_n3sky")
 
 [node name="Stats" type="Node" parent="." unique_id=466033644]
 

@@ -2,10 +2,8 @@
 
 [ext_resource type="Script" uid="uid://brww1ycug2hf2" path="res://src/Items/Offensive/MarksmanRifle.cs" id="1_lnmnp"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_nt1f2"]
-[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="3_0f2tb"]
 [ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/FireGroups/SemiAutoFireGroup.cs" id="3_f5pnb"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_db67r"]
-[ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_f5pnb"]
 [ext_resource type="AudioStream" uid="uid://dbj00vnmvpki5" path="res://assets/SFX/Shoot/dmr/dmr_r1.wav" id="7_0f2tb"]
 [ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="8_0f2tb"]
 [ext_resource type="Script" uid="uid://c8bfvbbqfaakj" path="res://src/Items/Offensive/Stats/DamageStats.cs" id="9_de6ov"]
@@ -29,49 +27,6 @@ metadata/_custom_type_script = "uid://dnodsacrptssb"
 script = ExtResource("4_db67r")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0f2tb"]
-size = Vector2(32, 32)
-
-[sub_resource type="Resource" id="Resource_o65qt"]
-script = ExtResource("3_0f2tb")
-Name = "RSASS"
-Description = "A designated marksman rifle firing the 7.62x51mm cartridge. It can deal a [b][u]large amount of damage[/u][/b] to a single enemy. It includes a large muzzle break to lower recoil and can [b][u]push enemies[/u][/b] with its blast."
-metadata/_custom_type_script = "uid://8rt54h4imtxv"
-
-[sub_resource type="Resource" id="Resource_lnmnp"]
-script = ExtResource("4_f5pnb")
-ReloadTime = 2.2
-BloomCoefficientDeg = 5.0
-MagazineCapacity = 10
-HorizontalRecoilMin = 10.0
-HorizontalBaseRecoil = 10.0
-HorizontalRecoilRandom = 10.0
-VerticalRecoilMin = 10.0
-VerticalBaseRecoil = 10.0
-VerticalRecoilRandom = 10.0
-RecoilScale = 1.5
-CameraRecoilScale = 0.55
-BaseDamage = -1
-BaseCritDamageMultiplier = 1.1
-BaseCritChanceProportion = 0.2
-BaseProjectileSpeed = 7000
-BaseProjectileScaleMultiplier = 1.1
-BaseProjectileRadius = 32
-BaseAttackSpeed = 0.15
-BasePierceLimit = 5
-Additional = Dictionary[String, Variant]({
-"MoveBloomMaxDeg": 20.0,
-"MoveBloomMinDeg": 2.0,
-"MoveDamageMax": 56,
-"MoveDamageMin": 18,
-"MoveTimeGrowthRate": 1.0,
-"MoveTimeShrinkRate": 1.2,
-"MoveTimeToMaxBloom": 0.3,
-"NearbyPushAmount": 35.0,
-"NearbyPushRadius": 125.0
-})
-metadata/_custom_type_script = "uid://di81uufgmcsog"
-
 [node name="DMR" type="Node" unique_id=901001043 node_paths=PackedStringArray("RadialPushStats", "DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "MoveBloomStats", "KnockbackStats")]
 script = ExtResource("1_lnmnp")
 RadialPushStats = NodePath("Stats/RadialPushStats")
@@ -88,8 +43,6 @@ KnockbackStats = NodePath("Stats/KnockbackStats")
 _projectileScene = ExtResource("2_nt1f2")
 _fireGroup = SubResource("Resource_62a23")
 _projectileAttack = SubResource("Resource_d1d18")
-Properties = SubResource("Resource_o65qt")
-Stats = SubResource("Resource_lnmnp")
 
 [node name="Stats" type="Node" parent="." unique_id=1580392105]
 

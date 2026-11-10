@@ -4,17 +4,10 @@
 [ext_resource type="PackedScene" uid="uid://7kxy1v1ggvi8" path="res://scenes/Players/PlayerRookie.tscn" id="2_jkyfg"]
 [ext_resource type="Script" uid="uid://ufpoicgrn6de" path="res://src/Levels/NavMap.cs" id="2_o8yur"]
 [ext_resource type="PackedScene" uid="uid://wos5frj6p77e" path="res://scenes/Levels/PolygonLightOccluder.tscn" id="3_o8yur"]
-[ext_resource type="Script" uid="uid://d02cy04gxh3di" path="res://src/Levels/Controllers/Waves/AbstractWaveCompletionReward.cs" id="8_n31k3"]
 [ext_resource type="Script" uid="uid://bct2mtni7a82f" path="res://src/Levels/Controllers/EnemyMover.cs" id="8_u4ox6"]
 [ext_resource type="PackedScene" uid="uid://dyh06qakgf4q2" path="res://scenes/Players/DebugClassInspector.tscn" id="9_5mhgh"]
-[ext_resource type="Script" uid="uid://cwbl163hsg1db" path="res://src/Levels/Controllers/Waves/AbstractWave.cs" id="9_jng41"]
 [ext_resource type="PackedScene" uid="uid://tw6dfgyd6h7y" path="res://scenes/Levels/EnemyNavMeshController.tscn" id="9_nu2g1"]
 [ext_resource type="Script" uid="uid://daw8gyvo0xom3" path="res://src/UI/FrameTime.cs" id="10_5mhgh"]
-[ext_resource type="Script" uid="uid://dau6m811dtep8" path="res://src/Levels/Controllers/Waves/BlueprintWeight.cs" id="13_yq63u"]
-[ext_resource type="Script" uid="uid://y77qtp32wo00" path="res://src/Enemies/EnemyStats.cs" id="16_6ykrs"]
-[ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="17_k3qtc"]
-[ext_resource type="Script" uid="uid://ds8lkov4wnj2l" path="res://src/Levels/Controllers/Waves/WeightedWaveBlueprintCollection.cs" id="18_aw5j3"]
-[ext_resource type="Script" uid="uid://b7ol6jtjagoe" path="res://src/Levels/Controllers/Waves/WaveDuration.cs" id="19_rdjc1"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_nu2g1"]
 vertices = PackedVector2Array(5998.1797, 134, -511.84375, -30.34375, 5998.1797, -44, 6296.7266, -44, 6297.203, 134, 6317.1797, -93.390625, 6732.8906, -2116.3984, 6317.203, 184.57813, 5103.6875, 2105.4922, 1532.5938, 1372.5313, 4962.797, 1174, 5261.8203, 1174, 5645.4766, 2105.4922, 1532.5938, -277.45313, 375.04688, -277.45313, 7703.758, -10455.852, 7576.2266, 11160.281, 6703.4297, -6044.7266, 6261.2188, 3263.0234, 6261.2188, 2875.1563, 3346.0625, -2116.3984, 4942.797, -1033.4219, 1532.5938, -1127.1094, 2804.5703, -2116.3984, 6107.2813, 2762.1094, 5326.5703, -1084, 6161.9297, -2116.3984, 4942.797, 1123.4219, 1532.5938, 484.3828, 375.04688, -1127.1094, -511.84375, -1341.7969, -348.34375, -2116.3984, -40.46875, -2578.2031, -9752.57, -10392.141, 6161.9297, -6044.7266, -40.46875, -5275.0625, 2775.1016, -6044.7266, 375.04688, 522.8672, 375.04688, 1026.1797, -819.71094, 646.7031, -819.71094, 99.546875, -357.90625, 2762.7422, -357.90625, 1451.2734, 832.03906, 2687.5469, 832.03906, 3691.1484, -819.71094, 1257.0781, 1106.2266, 1122.3906, 1125.4766, 1122.3906, 1125.4766, 1372.5313, -736.0781, 1451.2734, -819.71094, 869.21094, 1527.7734, 3691.1484, 3872.2188, 2259.4219, 3872.2188, 3765.711, -10071.391, 11287.703, 1527.7734, 2687.5469, 817.6094, 484.3828, 6107.2813, 2875.1563, 5645.4766, 2762.1094, 5103.6875, 2259.4219, -973.6406, 3686.3438, -973.6406, 2762.7422, 6107.2813, 3765.711, 6107.2813, 3263.0234, -1823.2969, 3686.3438, -1823.2969, 1759.1406, 6161.9297, -5736.867, 6088, -5736.867, 6088, -5886.1094, 4819.0234, -6044.7266, 4660.1094, -6044.7266, 3391.1328, -5886.1094, 3391.1328, -5736.867, 3317.2031, -5736.867, 3317.2031, -6044.7266, -348.34375, -5275.0625, -348.34375, -5736.867, -810.1328, -5736.867, -810.1328, -6044.7266, -1967.6563, -6044.7266, -1967.6563, -5429, -3045.2031, -5429, -3045.2031, -2424.2734, -1967.6563, -2424.2734, -1967.6563, -2116.3984, -348.34375, -2578.2031, 3346.0625, -2424.2734, 3391.1328, -2424.2734, 3391.1328, -2275.0313, 6088, -2275.0313, 6088, -2424.2734, 6161.9297, -2424.2734, 817.6094, 522.8672, -1823.2969, -30.34375, -1834, 99.546875, 817.6094, 1026.1797, 817.6094, 1045.4219, 1106.2266, 1045.4219, 4660.1094, -2116.3984, 4962.797, -1084, 4819.0234, -2116.3984, -1823.2969, -1341.7969, -1823.2969, 1257.0781, -801.9375, 1685.8125, -1152.4688, 1759.1406, -1823.2969, 869.21094, -1834, 646.7031)
@@ -31,82 +24,6 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-4224, -10688, -4160, 1
 cell_size = 50.0
 border_size = 100.0
 agent_radius = 40.0
-
-[sub_resource type="Resource" id="Resource_o8yur"]
-script = ExtResource("16_6ykrs")
-DamageOnContact = 4
-MaxHealth = 15
-MoveSpeed = 240.0
-TurnSpeed = 4.0
-metadata/_custom_type_script = "uid://y77qtp32wo00"
-
-[sub_resource type="Resource" id="Resource_nu2g1"]
-script = ExtResource("17_k3qtc")
-Name = "Walker"
-SpriteName = "placeholder"
-Type = 1
-Stats = SubResource("Resource_o8yur")
-
-[sub_resource type="Resource" id="Resource_5mhgh"]
-script = ExtResource("13_yq63u")
-Blueprint = SubResource("Resource_nu2g1")
-metadata/_custom_type_script = "uid://dau6m811dtep8"
-
-[sub_resource type="Resource" id="Resource_dfih8"]
-script = ExtResource("16_6ykrs")
-MaxHealth = 2
-MoveSpeed = 300.0
-SpriteScaleMultiplier = 0.85
-metadata/_custom_type_script = "uid://y77qtp32wo00"
-
-[sub_resource type="Resource" id="Resource_n31k3"]
-script = ExtResource("17_k3qtc")
-Name = "Sprinter"
-SpriteName = "placeholder"
-Type = 1
-Stats = SubResource("Resource_dfih8")
-
-[sub_resource type="Resource" id="Resource_jng41"]
-script = ExtResource("13_yq63u")
-Blueprint = SubResource("Resource_n31k3")
-Weight = 0.25
-metadata/_custom_type_script = "uid://dau6m811dtep8"
-
-[sub_resource type="Resource" id="Resource_yclo3"]
-script = ExtResource("16_6ykrs")
-DamageOnContact = 10
-MaxHealth = 50
-MoveSpeed = 200.0
-SpriteScaleMultiplier = 1.3
-metadata/_custom_type_script = "uid://y77qtp32wo00"
-
-[sub_resource type="Resource" id="Resource_84hcr"]
-script = ExtResource("17_k3qtc")
-Name = "Big"
-SpriteName = "placeholder"
-Type = 1
-Stats = SubResource("Resource_yclo3")
-
-[sub_resource type="Resource" id="Resource_sq7sj"]
-script = ExtResource("13_yq63u")
-Blueprint = SubResource("Resource_84hcr")
-Weight = 0.01
-metadata/_custom_type_script = "uid://dau6m811dtep8"
-
-[sub_resource type="Resource" id="Resource_tf0rn"]
-script = ExtResource("18_aw5j3")
-Weights = Array[Object]([SubResource("Resource_5mhgh"), SubResource("Resource_jng41"), SubResource("Resource_sq7sj")])
-metadata/_custom_type_script = "uid://d2tvxgxbv87i2"
-
-[sub_resource type="Resource" id="Resource_coqn3"]
-script = ExtResource("19_rdjc1")
-Duration = 999999999.0
-MaxMobs = 1500
-EnemyBlueprints = SubResource("Resource_tf0rn")
-SpawnMinTime = 1.0
-SpawnMaxTime = 1.2
-SpawnBatchMax = 2
-metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 
 [sub_resource type="Resource" id="Resource_7886b"]
 script = ExtResource("10_5mhgh")
@@ -276,10 +193,7 @@ polygon = PackedVector2Array(-576, 512, 448, -447.99994, 704, -447.99997, -320, 
 [node name="GameWorld" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="0" unique_id=562045734 node_paths=PackedStringArray("MainPlayer")]
 MainPlayer = NodePath("../../Player")
 
-[node name="EnemyWaveController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="0" unique_id=2001503768]
-Waves = Array[Object]([SubResource("Resource_coqn3")])
-
-[node name="DebugClassInspector" parent="Systems/EnemySystems/EnemyWaveController" index="1" unique_id=1989388267 instance=ExtResource("9_5mhgh")]
+[node name="DebugClassInspector" parent="Systems/EnemySystems/EnemyWaveController" parent_id_path=PackedInt32Array(2001503768) index="1" unique_id=1989388267 instance=ExtResource("9_5mhgh")]
 BindingFlags = 54
 
 [node name="EnemyNavMeshController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="4" unique_id=7126221 instance=ExtResource("9_nu2g1")]
@@ -288,7 +202,7 @@ FrameTime = SubResource("Resource_7886b")
 [node name="EnemyMover" type="Node" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="5" unique_id=1005457254]
 script = ExtResource("8_u4ox6")
 
-[node name="EnemyCollisionSolverManager" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="7" unique_id=1705317581 node_paths=PackedStringArray("nav_map")]
+[node name="EnemyCollisionSolverManager" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="8" unique_id=1705317581 node_paths=PackedStringArray("nav_map")]
 nav_map = NodePath("../../../World/NavMap")
 
 [node name="Player" parent="." index="2" unique_id=1386970244 instance=ExtResource("2_jkyfg")]

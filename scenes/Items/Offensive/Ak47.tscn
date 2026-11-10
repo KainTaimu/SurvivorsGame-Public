@@ -5,8 +5,6 @@
 [ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FireGroups/FullAutoFireGroup.cs" id="3_nihe0"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="3_tg8rs"]
 [ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="4_dar1o"]
-[ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_tg8rs"]
-[ext_resource type="Script" uid="uid://bs6wg1qssruhv" path="res://src/Items/Offensive/EnemyHitEffects/AbstractEnemyHitEffect.cs" id="7_e1ej4"]
 [ext_resource type="AudioStream" uid="uid://c2t1664bvx4g" path="res://assets/SFX/Shoot/ak47/ak47_r1.wav" id="7_nihe0"]
 [ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="8_nihe0"]
 [ext_resource type="Script" uid="uid://c8bfvbbqfaakj" path="res://src/Items/Offensive/Stats/DamageStats.cs" id="10_sej7r"]
@@ -34,31 +32,6 @@ metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 script = ExtResource("3_tg8rs")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="Resource" id="Resource_ld3kt"]
-script = ExtResource("4_tg8rs")
-ReloadTime = 1.2
-BloomCoefficientDeg = 7.0
-HorizontalRecoilMin = 5.0
-HorizontalBaseRecoil = 10.0
-VerticalRecoilMin = 8.0
-VerticalBaseRecoil = 12.0
-VerticalRecoilRandom = 2.0
-RecoilScale = 0.9
-RecoilAccumilationScale = 0.1
-CameraRecoilScale = 0.5
-BaseDamage = 15
-BaseDamageVarianceMultiplier = 0.1
-BaseCritDamageMultiplier = 0.9
-BaseCritChanceProportion = 0.1
-BaseProjectileSpeed = 2800
-BaseProjectileScaleMultiplier = 0.85
-BaseAttackSpeed = 0.1
-BasePierceLimit = 2
-Additional = Dictionary[String, Variant]({
-"Knockback": 30.0
-})
-metadata/_custom_type_script = "uid://di81uufgmcsog"
-
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_nihe0"]
 playback_mode = 2
 random_pitch = 1.122462
@@ -82,7 +55,6 @@ _projectileScene = ExtResource("2_rp6n0")
 _fireGroup = SubResource("Resource_tcdx5")
 _reloadBehaviour = SubResource("Resource_e4uyc")
 _projectileAttack = SubResource("Resource_dar1o")
-Stats = SubResource("Resource_ld3kt")
 
 [node name="Stats" type="Node" parent="." unique_id=1366702552]
 

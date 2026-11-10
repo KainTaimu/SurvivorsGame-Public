@@ -12,26 +12,6 @@ public abstract partial class BaseItem : Node
 	[Signal]
 	public delegate void OnStatUpgradesChangedEventHandler();
 
-	[Export]
-	public BaseItemStats Stats
-	{
-		get;
-		set
-		{
-			if (
-				// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-				field
-					is not null
-				&& field.IsConnected(Resource.SignalName.Changed, Callable.From(EmitSignalOnStatsChanged))
-			)
-				field.Changed -= EmitSignalOnStatsChanged;
-
-			field = value;
-			value.Changed += EmitSignalOnStatsChanged;
-			EmitSignalOnStatsChanged();
-		}
-	} = null!;
-
 	public static Player Player => GameWorld.Instance.MainPlayer;
 
 	public static CharacterStats PlayerStats => GameWorld.Instance.MainPlayer.Character.CharacterStats;

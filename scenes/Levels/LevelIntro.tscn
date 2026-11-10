@@ -362,7 +362,7 @@ metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
 script = ExtResource("6_vrw23")
 metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_h210h"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xuljg"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_ufwql"]
@@ -681,7 +681,6 @@ process_material = SubResource("ParticleProcessMaterial_oypsu")
 [node name="Ak47" parent="World/Player/PlayerWeaponController" index="0" unique_id=915008798 instance=ExtResource("21_xuljg")]
 _fireGroup = SubResource("Resource_xuljg")
 _reloadBehaviour = SubResource("Resource_vhjum")
-Stats = null
 
 [node name="CurrentWeaponUI" parent="World/Player" index="10" unique_id=2135368036 node_paths=PackedStringArray("_weaponController") instance=ExtResource("22_upwdq")]
 _weaponController = NodePath("../PlayerWeaponController")
@@ -710,7 +709,6 @@ EnemyBlueprints = SubResource("Resource_vvuu7")
 SpawnMinTime = 0.1
 SpawnMaxTime = 0.3
 SpawnBatchMax = 2
-metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 
 [node name="2 DebugStopper" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="1" unique_id=565233767]
 script = ExtResource("15_n7qsj")
@@ -721,7 +719,6 @@ script = ExtResource("9_duif7")
 SpawnCountTarget = 0
 EnemyBlueprints = SubResource("Resource_8i8db")
 Rewards = Array[ExtResource("12_j0071")]([SubResource("Resource_do71q")])
-metadata/_custom_type_script = "uid://cksmwvaxx1m18"
 
 [node name="4 HORDE SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="3" unique_id=1421423771]
 script = ExtResource("9_duif7")
@@ -732,7 +729,6 @@ SpawnMinTime = 0.01
 SpawnMaxTime = 0.01
 SpawnBatchMin = 50
 SpawnBatchMax = 50
-metadata/_custom_type_script = "uid://cksmwvaxx1m18"
 
 [node name="5 Duration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="4" unique_id=233059836]
 script = ExtResource("10_ta1oo")
@@ -740,7 +736,6 @@ Duration = 60.0
 EnemyBlueprints = SubResource("Resource_iiw53")
 SpawnMinTime = 1.0
 SpawnMaxTime = 1.5
-metadata/_custom_type_script = "uid://b7ol6jtjagoe"
 
 [node name="6 SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="5" unique_id=616732534]
 script = ExtResource("9_duif7")
@@ -748,14 +743,12 @@ SpawnCountTarget = 100
 EnemyBlueprints = SubResource("Resource_sl6q3")
 SpawnMinTime = 0.65
 SpawnMaxTime = 1.1
-metadata/_custom_type_script = "uid://cksmwvaxx1m18"
 
 [node name="7 SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="6" unique_id=1604725013]
 script = ExtResource("9_duif7")
 SpawnCountTarget = 150
 EnemyBlueprints = SubResource("Resource_kew7b")
 SpawnBatchMax = 2
-metadata/_custom_type_script = "uid://cksmwvaxx1m18"
 
 [node name="PickupUiPermanent" type="Node2D" parent="Systems/EnemySystems/EnemyWaveController" parent_id_path=PackedInt32Array(2001503768) index="2" unique_id=1845374368]
 process_mode = 3

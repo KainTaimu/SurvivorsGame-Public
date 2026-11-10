@@ -1,12 +1,10 @@
 [gd_scene format=3 uid="uid://c5chlqja2k2k0"]
 
-[ext_resource type="Script" uid="uid://d16s2voefyry4" path="res://src/Items/Offensive/Shotgun.cs" id="1_vf4av"]
+[ext_resource type="Script" uid="uid://b22sxrf4f8mno" path="res://src/Items/Offensive/Shotgun.cs" id="1_vf4av"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_qwex2"]
 [ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FireGroups/FullAutoFireGroup.cs" id="3_8vupm"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_2ovbf"]
 [ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="4_8vupm"]
-[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="5_2akch"]
-[ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_i7f5u"]
 [ext_resource type="AudioStream" uid="uid://ebralxchb6m1" path="res://assets/SFX/Shoot/aa12/aa12_r1.wav" id="7_qwex2"]
 [ext_resource type="Script" uid="uid://c8bfvbbqfaakj" path="res://src/Items/Offensive/Stats/DamageStats.cs" id="9_e328p"]
 [ext_resource type="Script" uid="uid://bj6pph867oydf" path="res://src/Items/Offensive/Stats/MagazineStats.cs" id="10_jke7s"]
@@ -34,40 +32,6 @@ metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 script = ExtResource("4_2ovbf")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_r2gx2"]
-size = Vector2(32, 32)
-
-[sub_resource type="Resource" id="Resource_j05a4"]
-script = ExtResource("5_2akch")
-Name = "AA-12"
-Description = "A 12-gauge automatic combat shotgun equipped with a 20-round drum."
-metadata/_custom_type_script = "uid://8rt54h4imtxv"
-
-[sub_resource type="Resource" id="Resource_0tk84"]
-script = ExtResource("6_i7f5u")
-ReloadTime = 3.0
-BloomCoefficientDeg = 13.0
-MagazineCapacity = 20
-HorizontalRecoilMin = 20.0
-HorizontalBaseRecoil = 20.0
-HorizontalRecoilRandom = 20.0
-VerticalRecoilMin = 80.0
-VerticalBaseRecoil = 80.0
-VerticalRecoilRandom = 40.0
-RecoilScale = 0.5
-CameraRecoilScale = 2.0
-BaseDamage = 16
-BaseCritDamageMultiplier = 1.0
-BaseCritChanceProportion = 0.5
-BaseProjectileSpeed = 2200
-BaseProjectileScaleMultiplier = 0.8
-BaseAttackSpeed = 0.3
-BasePierceLimit = 5
-Additional = Dictionary[String, Variant]({
-"PelletCount": 16
-})
-metadata/_custom_type_script = "uid://di81uufgmcsog"
-
 [node name="AA-12" type="Node" unique_id=764147352 node_paths=PackedStringArray("PumpActionStats", "_shellReloadAudioPlayer", "DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats")]
 script = ExtResource("1_vf4av")
 PumpActionStats = NodePath("Stats/PumpActionStats")
@@ -86,8 +50,6 @@ _projectileScene = ExtResource("2_qwex2")
 _fireGroup = SubResource("Resource_vf4av")
 _reloadBehaviour = SubResource("Resource_jmqlf")
 _projectileAttack = SubResource("Resource_qswie")
-Properties = SubResource("Resource_j05a4")
-Stats = SubResource("Resource_0tk84")
 
 [node name="Stats" type="Node" parent="." unique_id=129266883]
 

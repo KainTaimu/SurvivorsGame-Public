@@ -1,9 +1,7 @@
 [gd_scene format=3 uid="uid://ceimmtu3q4x6n"]
 
-[ext_resource type="Script" uid="uid://bhmou5mah3e4m" path="res://src/Items/Offensive/GrenadeThrower.cs" id="1_oiqqx"]
+[ext_resource type="Script" uid="uid://ctc0x7r5vxom4" path="res://src/Items/Offensive/GrenadeThrower.cs" id="1_oiqqx"]
 [ext_resource type="PackedScene" uid="uid://d1nqrtaecqgq7" path="res://scenes/Projectiles/Grenade.tscn" id="2_18auf"]
-[ext_resource type="Script" uid="uid://bs6wg1qssruhv" path="res://src/Items/Offensive/EnemyHitEffects/AbstractEnemyHitEffect.cs" id="3_utchl"]
-[ext_resource type="Script" uid="uid://os8ycjo6m7r0" path="res://src/Items/Offensive/BaseOffensiveStats.cs" id="4_gjjd4"]
 [ext_resource type="AudioStream" uid="uid://dlewyy172dhok" path="res://assets/SFX/freesound_community-hq-explosion-6288.mp3" id="6_gjjd4"]
 [ext_resource type="Script" uid="uid://c8bfvbbqfaakj" path="res://src/Items/Offensive/Stats/DamageStats.cs" id="7_j690r"]
 [ext_resource type="Script" uid="uid://cuyrbm7tgm3od" path="res://src/Items/Offensive/Stats/ProjectileStats.cs" id="8_oda1q"]
@@ -15,24 +13,6 @@
 _data = [Vector2(0, 1), 0.0, -0.49786425, 0, 1, Vector2(1, 0.50213575), -0.49786425, 0.0, 1, 0]
 point_count = 2
 
-[sub_resource type="Resource" id="Resource_jlsja"]
-script = ExtResource("4_gjjd4")
-BaseDamage = 67
-BaseCritDamageMultiplier = 0.1
-BaseCritChanceProportion = 1.0
-BaseProjectileRadius = 250
-BaseAttackSpeed = 1.0
-BasePierceLimit = 999
-Additional = Dictionary[String, Variant]({
-"ArmingDistance": 400.0,
-"CameraRecoilScale": 4.2,
-"EnemiesInAreaUntilExplode": 6,
-"Knockback": 150.0,
-"SlowMultiplier": 0.0,
-"TimeToExplode": 1.0
-})
-metadata/_custom_type_script = "uid://os8ycjo6m7r0"
-
 [node name="GrenadeThrower" type="Node2D" unique_id=1000269585 node_paths=PackedStringArray("DamageStats", "ProjectileStats", "AttackStats", "GrenadeStats", "RecoilStats", "_explosionPlayer")]
 script = ExtResource("1_oiqqx")
 DamageStats = NodePath("Stats/DamageStats")
@@ -43,7 +23,6 @@ RecoilStats = NodePath("Stats/RecoilStats")
 GrenadeScene = ExtResource("2_18auf")
 _explosionPlayer = NodePath("AudioStreamPlayer")
 _damageDropoffFromCenter = SubResource("Curve_ysrq1")
-Stats = SubResource("Resource_jlsja")
 
 [node name="Stats" type="Node" parent="." unique_id=203377008]
 

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cq8d77rrxnkkv"]
 
-[ext_resource type="Script" uid="uid://baar5nau4ntim" path="res://src/Levels/Controllers/AirdropPlane.cs" id="1_qt882"]
+[ext_resource type="Script" uid="uid://dfd6a16twf7lm" path="res://src/Levels/Controllers/AirdropPlane.cs" id="1_qt882"]
 [ext_resource type="Texture2D" uid="uid://ciss6iaayf6h1" path="res://assets/Levels/aircraft.png" id="1_vykd8"]
 
 [node name="AirdropPlane" type="Node2D" unique_id=507387755]

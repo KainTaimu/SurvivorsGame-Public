@@ -1,12 +1,10 @@
 [gd_scene format=3 uid="uid://twvhgblbtovy"]
 
-[ext_resource type="Script" uid="uid://d4hn7uwvshdju" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_o3lg4"]
+[ext_resource type="Script" uid="uid://igbacr2wbu1g" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_o3lg4"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_whe3a"]
 [ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/FireGroups/SemiAutoFireGroup.cs" id="3_fgf34"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_fgf34"]
 [ext_resource type="Script" uid="uid://cx3rrg2toydba" path="res://src/Items/Offensive/ReloadBehaviours/SequentialReloadBehaviour.cs" id="4_y3hip"]
-[ext_resource type="Script" uid="uid://bs6wg1qssruhv" path="res://src/Items/Offensive/EnemyHitEffects/AbstractEnemyHitEffect.cs" id="6_n3sky"]
-[ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="6_y3hip"]
 [ext_resource type="AudioStream" uid="uid://hbmq8g2asy5h" path="res://assets/SFX/Shoot/python/python_r1.wav" id="7_0u5yb"]
 [ext_resource type="AudioStream" uid="uid://ckwromhv1tpvg" path="res://assets/SFX/Shoot/Snake's SECOND Authentic Gun Sounds/& More/Revolver/44 Magnum/MP3/44 Magnum Single Load.mp3" id="9_fgf34"]
 [ext_resource type="AudioStream" uid="uid://djyr0kagg0qbi" path="res://assets/SFX/Shoot/Snake's SECOND Authentic Gun Sounds/& More/Revolver/44 Magnum/WAV/44 Magnum Close Cylinder.wav" id="10_y3hip"]
@@ -38,35 +36,6 @@ metadata/_custom_type_script = "uid://cx3rrg2toydba"
 script = ExtResource("4_fgf34")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="Resource" id="Resource_n3sky"]
-script = ExtResource("6_y3hip")
-ReloadTime = 3.0
-BloomCoefficientDeg = 2.0
-MagazineCapacity = 6
-HorizontalRecoilMin = 20.0
-HorizontalBaseRecoil = 20.0
-HorizontalRecoilRandom = 20.0
-VerticalRecoilMin = 100.0
-VerticalBaseRecoil = 100.0
-VerticalRecoilRandom = 20.0
-RecoilScale = 0.6
-HorizontalRecoilPunish = false
-CameraRecoilScale = 1.2
-BaseDamage = 15
-BaseDamageVarianceMultiplier = 0.15
-BaseCritDamageMultiplier = 1.0
-BaseCritChanceProportion = 0.5
-BaseProjectileSpeed = 5000
-BaseProjectileScaleMultiplier = 1.2
-BaseProjectileRadius = 50
-BaseAttackSpeed = 0.2
-BasePierceLimit = 2
-Additional = Dictionary[String, Variant]({
-"Knockback": 5.0,
-"SlowMultiplier": 0.0
-})
-metadata/_custom_type_script = "uid://di81uufgmcsog"
-
 [node name="Revolver" type="Node" unique_id=708917318 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats", "_reloadAudioPlayer", "_boltCloseAudioPlayer")]
 script = ExtResource("1_o3lg4")
 DamageStats = NodePath("Stats/DamageStats")
@@ -85,7 +54,6 @@ _reloadBehaviour = SubResource("Resource_gs3iu")
 _projectileAttack = SubResource("Resource_dar1o")
 _reloadAudioPlayer = NodePath("RoundLoadAudioPlayer")
 _boltCloseAudioPlayer = NodePath("BoltAudioPlayer")
-Stats = SubResource("Resource_n3sky")
 
 [node name="Stats" type="Node" parent="." unique_id=1862640400]
 

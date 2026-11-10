@@ -49,6 +49,7 @@ offset_bottom = 264.0
 pivot_offset = Vector2(304, 132)
 size_flags_horizontal = 10
 size_flags_vertical = 3
+offset_transform_enabled = true
 mouse_filter = 0
 script = ExtResource("1_ci30e")
 panel = NodePath("OuterPanel")

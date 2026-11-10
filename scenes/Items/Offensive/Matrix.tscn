@@ -1,12 +1,10 @@
 [gd_scene format=3 uid="uid://cuf1ut26wc716"]
 
-[ext_resource type="Script" uid="uid://d4hn7uwvshdju" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_o1peo"]
+[ext_resource type="Script" uid="uid://igbacr2wbu1g" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_o1peo"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_8r2hk"]
 [ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FireGroups/FullAutoFireGroup.cs" id="3_pdqnw"]
 [ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="4_nj2k5"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="5_vam7u"]
-[ext_resource type="Script" uid="uid://bs6wg1qssruhv" path="res://src/Items/Offensive/EnemyHitEffects/AbstractEnemyHitEffect.cs" id="6_ommqt"]
-[ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="7_kwdgn"]
 [ext_resource type="AudioStream" uid="uid://b80a2owuwn4ml" path="res://assets/SFX/Shoot/smg/smg_r1.wav" id="8_61i6o"]
 [ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="9_rmnc5"]
 [ext_resource type="Script" uid="uid://c8bfvbbqfaakj" path="res://src/Items/Offensive/Stats/DamageStats.cs" id="10_8q2he"]
@@ -34,34 +32,6 @@ metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 script = ExtResource("5_vam7u")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="Resource" id="Resource_34bgn"]
-script = ExtResource("7_kwdgn")
-ReloadTime = 2.0
-BloomCoefficientDeg = 8.0
-MagazineCapacity = 50
-HorizontalRecoilMin = 8.0
-HorizontalBaseRecoil = 8.0
-HorizontalRecoilRandom = 4.0
-VerticalRecoilMin = 8.0
-VerticalBaseRecoil = 8.0
-VerticalRecoilRandom = 8.0
-RecoilScale = 0.1
-HorizontalRecoilPunish = false
-CameraRecoilScale = 0.2
-BaseDamage = 16
-BaseDamageVarianceMultiplier = 0.2
-BaseCritDamageMultiplier = 0.9
-BaseCritChanceProportion = 0.2
-BaseProjectileSpeed = 5000
-BaseProjectileScaleMultiplier = 0.75
-BaseProjectileRadius = 26
-BaseAttackSpeed = 0.04
-BasePierceLimit = 3
-Additional = Dictionary[String, Variant]({
-"Knockback": 10.0
-})
-metadata/_custom_type_script = "uid://di81uufgmcsog"
-
 [node name="Matrix" type="Node" unique_id=1472391115 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats")]
 script = ExtResource("1_o1peo")
 DamageStats = NodePath("Stats/DamageStats")
@@ -78,7 +48,6 @@ _projectileScene = ExtResource("2_8r2hk")
 _fireGroup = SubResource("Resource_w7xe6")
 _reloadBehaviour = SubResource("Resource_mtg14")
 _projectileAttack = SubResource("Resource_c62cd")
-Stats = SubResource("Resource_34bgn")
 
 [node name="Stats" type="Node" parent="." unique_id=1532129759]
 

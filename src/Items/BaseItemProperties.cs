@@ -6,9 +6,6 @@ public partial class BaseItemProperties : Resource
 	[Export]
 	public string Name = "PLACEHOLDER_NAME";
 
-	[Export]
-	public ItemType ItemType;
-
 	[Export(PropertyHint.MultilineText)]
 	public string Description = _placeholderDescription;
 

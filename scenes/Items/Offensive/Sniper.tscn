@@ -1,12 +1,10 @@
 [gd_scene format=3 uid="uid://cuerorgcryk5k"]
 
-[ext_resource type="Script" uid="uid://dsoi8oc5exk1o" path="res://src/Items/Offensive/Sniper.cs" id="1_jg7ce"]
-[ext_resource type="Script" uid="uid://cxdysx687mt8s" path="res://src/Items/Projectiles/ProjectileBullet.cs" id="2_ia1h2"]
+[ext_resource type="Script" uid="uid://g0pwr7pclw52" path="res://src/Items/Offensive/Sniper.cs" id="1_jg7ce"]
+[ext_resource type="Script" uid="uid://bg3majqt3gpc7" path="res://src/Items/Projectiles/ProjectileBullet.cs" id="2_ia1h2"]
 [ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/FireGroups/SemiAutoFireGroup.cs" id="3_0ap61"]
 [ext_resource type="Texture2D" uid="uid://bmu6li33qhxl7" path="res://assets/Projectiles/bullet.png" id="3_hagd0"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_11blq"]
-[ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="4_u7hyr"]
-[ext_resource type="Script" uid="uid://bs6wg1qssruhv" path="res://src/Items/Offensive/EnemyHitEffects/AbstractEnemyHitEffect.cs" id="6_avifb"]
 [ext_resource type="AudioStream" uid="uid://dvly6b2nf0232" path="res://assets/SFX/Shoot/awm/awm1_r4.wav" id="7_0avw1"]
 [ext_resource type="AudioStream" uid="uid://b4yx7ckgqe3a4" path="res://assets/SFX/Shoot/awm/awm-bolt-cycle_full.wav" id="8_ia1h2"]
 [ext_resource type="Script" uid="uid://c8bfvbbqfaakj" path="res://src/Items/Offensive/Stats/DamageStats.cs" id="8_qao0l"]
@@ -49,37 +47,6 @@ metadata/_custom_type_script = "uid://dnodsacrptssb"
 script = ExtResource("4_11blq")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="Resource" id="Resource_f52b2"]
-script = ExtResource("4_u7hyr")
-ReloadTime = 4.0
-MagazineCapacity = 5
-HorizontalRecoilMin = 20.0
-HorizontalBaseRecoil = 20.0
-HorizontalRecoilRandom = 20.0
-VerticalRecoilMin = 150.0
-VerticalBaseRecoil = 150.0
-VerticalRecoilRandom = 0.0
-HorizontalRecoilPunish = false
-CameraRecoilScale = 3.0
-BaseDamage = -1
-BaseCritDamageMultiplier = 1.0
-BaseCritChanceProportion = 1.0
-BaseProjectileSpeed = 10000
-BaseProjectileScaleMultiplier = 1.5
-BaseProjectileRadius = 64
-BaseAttackSpeed = 1.0
-BasePierceLimit = 15
-Additional = Dictionary[String, Variant]({
-"MoveBloomMaxDeg": 50.0,
-"MoveBloomMinDeg": 0.0,
-"MoveDamageMax": 200.0,
-"MoveDamageMin": 50,
-"MoveTimeGrowthRate": 1.0,
-"MoveTimeShrinkRate": 0.4,
-"MoveTimeToMaxBloom": 0.2
-})
-metadata/_custom_type_script = "uid://di81uufgmcsog"
-
 [node name="Sniper" type="Node2D" unique_id=399121865 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "MoveBloomStats", "KnockbackStats", "_boltCyclingPlayer")]
 script = ExtResource("1_jg7ce")
 DamageStats = NodePath("Stats/DamageStats")
@@ -96,7 +63,6 @@ _projectileScene = SubResource("PackedScene_5un85")
 _fireGroup = SubResource("Resource_11blq")
 _projectileAttack = SubResource("Resource_c52kb")
 _boltCyclingPlayer = NodePath("BoltCycle")
-Stats = SubResource("Resource_f52b2")
 
 [node name="Stats" type="Node" parent="." unique_id=1628629901]
 

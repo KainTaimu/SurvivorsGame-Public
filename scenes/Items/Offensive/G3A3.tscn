@@ -1,12 +1,10 @@
 [gd_scene format=3 uid="uid://dn60j54j5e2ta"]
 
-[ext_resource type="Script" uid="uid://d4hn7uwvshdju" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_8reff"]
+[ext_resource type="Script" uid="uid://igbacr2wbu1g" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_8reff"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_ghrcs"]
 [ext_resource type="Script" uid="uid://bt8inkwpypk5b" path="res://src/Items/Offensive/FireGroups/FullAutoFireGroup.cs" id="3_buqgn"]
 [ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="4_5fkaf"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="5_grhei"]
-[ext_resource type="Script" uid="uid://bs6wg1qssruhv" path="res://src/Items/Offensive/EnemyHitEffects/AbstractEnemyHitEffect.cs" id="7_ghrcs"]
-[ext_resource type="Script" uid="uid://di81uufgmcsog" path="res://src/Items/Offensive/FirearmStats.cs" id="7_h8333"]
 [ext_resource type="AudioStream" uid="uid://4c4atd84imnn" path="res://assets/SFX/Shoot/g3a3/g3a3_r7.wav" id="8_8reff"]
 [ext_resource type="AudioStream" uid="uid://b0bq5864hlorn" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Reloads, Cycling & More/WAV/Angel Mag Reload Full WAV.wav" id="9_73b8a"]
 [ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="10_ldxx1"]
@@ -35,33 +33,6 @@ metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 script = ExtResource("5_grhei")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="Resource" id="Resource_2fu6x"]
-script = ExtResource("7_h8333")
-ReloadTime = 2.5
-BloomCoefficientDeg = 3.0
-MagazineCapacity = 20
-HorizontalRecoilMin = 5.0
-HorizontalBaseRecoil = 5.0
-VerticalRecoilMin = 11.0
-VerticalBaseRecoil = 15.0
-VerticalRecoilRandom = 5.0
-RecoilScale = 1.3
-RecoilAccumilationScale = 0.0
-CameraRecoilScale = 0.8
-BaseDamage = 25
-BaseDamageVarianceMultiplier = 0.08
-BaseCritDamageMultiplier = 0.6
-BaseCritChanceProportion = 0.1
-BaseProjectileSpeed = 5500
-BaseProjectileScaleMultiplier = 1.1
-BaseProjectileRadius = 42
-BaseAttackSpeed = 0.13
-BasePierceLimit = 3
-Additional = Dictionary[String, Variant]({
-"Knockback": 10.0
-})
-metadata/_custom_type_script = "uid://di81uufgmcsog"
-
 [node name="G3A3" type="Node2D" unique_id=265287884 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats")]
 script = ExtResource("1_8reff")
 DamageStats = NodePath("Stats/DamageStats")
@@ -78,7 +49,6 @@ _projectileScene = ExtResource("2_ghrcs")
 _fireGroup = SubResource("Resource_4xmj0")
 _reloadBehaviour = SubResource("Resource_rtolw")
 _projectileAttack = SubResource("Resource_y52bq")
-Stats = SubResource("Resource_2fu6x")
 
 [node name="Stats" type="Node" parent="." unique_id=325739537]
 
