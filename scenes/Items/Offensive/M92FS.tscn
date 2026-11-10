@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://gr35snno6a2m" path="res://src/Items/Offensive/Stats/ReloadStats.cs" id="14_nu0z4"]
 [ext_resource type="Script" uid="uid://cuyrbm7tgm3od" path="res://src/Items/Offensive/Stats/ProjectileStats.cs" id="15_a12ds"]
 [ext_resource type="Script" uid="uid://bjysatf11t7bw" path="res://src/Items/Offensive/Stats/AttackStats.cs" id="16_6ex3m"]
+[ext_resource type="Script" uid="uid://cb4n0cu03xv4d" path="res://src/Items/Offensive/Stats/BurstFireStats.cs" id="16_skq8r"]
 [ext_resource type="Script" uid="uid://cjlv7mciafksn" path="res://src/Items/Offensive/Stats/PierceStats.cs" id="17_7735p"]
 [ext_resource type="Script" uid="uid://doyqd2gp5rtvn" path="res://src/Items/Offensive/Stats/SlowStats.cs" id="18_g23qu"]
 [ext_resource type="Script" uid="uid://66x4x0yo47cj" path="res://src/Items/Offensive/Stats/KnockbackStats.cs" id="19_txmae"]
@@ -32,7 +33,7 @@ metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 script = ExtResource("4_xf8ly")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[node name="M92FS" type="Node" unique_id=1472391115 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats")]
+[node name="M92FS" type="Node" unique_id=1472391115 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats", "BurstFireStats")]
 script = ExtResource("1_wg30w")
 DamageStats = NodePath("Stats/DamageStats")
 MagazineStats = NodePath("Stats/MagazineStats")
@@ -44,6 +45,7 @@ AttackStats = NodePath("Stats/AttackStats")
 PierceStats = NodePath("Stats/PierceStats")
 SlowStats = NodePath("Stats/SlowStats")
 KnockbackStats = NodePath("Stats/KnockbackStats")
+BurstFireStats = NodePath("Stats/BurstFireStats")
 _projectileScene = ExtResource("2_xxw4r")
 _fireGroup = SubResource("Resource_hsdc8")
 _reloadBehaviour = SubResource("Resource_bh02q")
@@ -111,6 +113,11 @@ metadata/_custom_type_script = "uid://doyqd2gp5rtvn"
 script = ExtResource("19_txmae")
 KnockbackForce = 10.0
 metadata/_custom_type_script = "uid://66x4x0yo47cj"
+
+[node name="BurstFireStats" type="Node" parent="Stats" unique_id=217204375]
+script = ExtResource("16_skq8r")
+TimeBetweenBurst = 0.2
+metadata/_custom_type_script = "uid://cb4n0cu03xv4d"
 
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=1380114539]
 process_mode = 3

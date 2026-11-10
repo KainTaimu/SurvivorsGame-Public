@@ -19,7 +19,8 @@ public partial class SimpleFirearm
 		IHasAttackStats,
 		IHasPierceStats,
 		IHasSlowStats,
-		IHasKnockbackStats
+		IHasKnockbackStats,
+		IMayHasBurstFireStats
 {
 	[Signal]
 	public delegate void OnReloadStartEventHandler();
@@ -60,6 +61,9 @@ public partial class SimpleFirearm
 
 	[Export]
 	public KnockbackStats KnockbackStats { get; set; } = null!;
+
+	[Export]
+	public BurstFireStats? BurstFireStats { get; set; }
 
 	[ExportCategory("")]
 	[Export]
@@ -156,16 +160,11 @@ public partial class SimpleFirearm
 
 		if (_fireGroup is ICooldown c)
 			c.CooldownDuration = AttackStats.AttackSpeed;
-		// if (_fireGroup is BurstFireGroup burst)
-		// {
-		// 	if (!Stats.Additional.TryGetValue("BurstCount", out var burstCount))
-		// 		CustomLogger.LogError($"{Name} : Key \"BurstCount\" not found in stats");
-		// 	burst.BurstCount = burstCount.AsInt32();
-		//
-		// 	if (!Stats.Additional.TryGetValue("TimeBetweenBurst", out var tbb))
-		// 		CustomLogger.LogError($"{Name} : Key \"TimeBetweenBurst\" not found in stats");
-		// 	burst.TimeBetweenBursts = tbb.AsSingle();
-		// }
+		if (_fireGroup is BurstFireGroup burst && BurstFireStats != null)
+		{
+			burst.BurstCount = BurstFireStats.BurstCount;
+			burst.TimeBetweenBursts = BurstFireStats.TimeBetweenBurst;
+		}
 	}
 
 	private void InitializeReloadBehaviour()
