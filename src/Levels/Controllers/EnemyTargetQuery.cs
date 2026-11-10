@@ -8,7 +8,6 @@ using System.Runtime.CompilerServices;
 using Arch.Core;
 using Arch.System;
 using Arch.System.SourceGenerator;
-using CommunityToolkit.HighPerformance;
 using Game.Core.ECS;
 using Game.Core.Extensions;
 using Game.Models;
@@ -150,63 +149,47 @@ public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
 		}
 	}
 
-	/// <summary>
-	/// Samples all grid cells along a line forming an angle, with thickness.
-	/// Uses Bresenham line algorithm to traverse grid cells.
-	/// </summary>
-	/// <param name="from">Ray origin in world coordinates.</param>
-	/// <param name="angle">Ray angle in radians.</param>
-	/// <param name="width">Ray thickness (radius perpendicular to direction).</param>
-	/// <param name="entities">Entities caught in ray. Sorted by distance</param>
-	/// <param name="hitLimit">How many hits before giving up</param>
-	/// <returns>
-	/// <c>true</c> when at least one target lies within raycast corridor.
-	/// </returns>
-	public bool GetTargetsRayCast(
-		Vector2 from,
-		float angle,
-		float width,
-		out ReadOnlySpan<Entity> entities,
-		int hitLimit = -1
-	)
+	private readonly List<Vector2I> _cachedAllCells = [];
+	private readonly List<Vector2I> _cachedSurrounding = [];
+	private readonly HashSet<Vector2I> _cachedCellsOnRay = [];
+	private readonly HashSet<Entity> _cachedSeenIds = [];
+
+	// NOTE: NOT THREAD SAFE
+	public int GetTargetsRayCast(Vector2 from, float angle, float width, Span<Entity> hitBuffer, int hitLimit = -1)
 	{
+		_cachedAllCells.Clear();
+		_cachedCellsOnRay.Clear();
+		_cachedSeenIds.Clear();
 		var direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 		var rayLength = _grid.WindowSize.Length();
 		var rayEnd = from + direction * rayLength;
 
-		var cellsOnRay = new HashSet<Vector2I>();
-		GetCellsAlongLine(from, rayEnd, cellsOnRay);
+		GetCellsAlongLine(from, rayEnd, _cachedCellsOnRay);
 
-		var cellsOnRayList = cellsOnRay.ToList();
-
-		var allCells = new List<Vector2I>();
 		var cellWidth = Mathf.Clamp(Mathf.FloorToInt(width / _grid.CellSize), 0, int.MaxValue);
-		foreach (var cellIdx in cellsOnRayList)
+		foreach (var cellIdx in _cachedCellsOnRay)
 		{
-			var surrounding = new List<Vector2I>();
+			_cachedSurrounding.Clear();
 			for (var dx = -cellWidth; dx <= cellWidth; dx++)
 			for (var dy = -cellWidth; dy <= cellWidth; dy++)
 			{
 				var checkCell = new Vector2I(cellIdx.X + dx, cellIdx.Y + dy);
 				if (_grid.IsValidCell(checkCell.X, checkCell.Y))
-					surrounding.Add(checkCell);
+					_cachedSurrounding.Add(checkCell);
 			}
 
-			allCells.AddRange(surrounding);
+			_cachedAllCells.AddRange(_cachedSurrounding);
 		}
-
-		var targets = new List<Entity>();
-		var seenIds = new HashSet<Entity>();
 
 		var hitCount = 0;
 
-		foreach (var cellIndex in allCells)
+		foreach (var cellIndex in _cachedAllCells)
 		{
 			foreach (var entity in _grid.GetEnumerator(cellIndex.X, cellIndex.Y))
 			{
 				if (!GameWorld.World.IsAlive(entity))
 					continue;
-				if (!seenIds.Add(entity))
+				if (!_cachedSeenIds.Add(entity))
 					continue;
 
 				if (!GameWorld.World.TryGet<PositionComponent>(entity, out var pos))
@@ -218,7 +201,7 @@ public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
 				var radiusSum = width + hitbox.Radius;
 				if (distSq <= radiusSum * radiusSum)
 				{
-					targets.Add(entity);
+					hitBuffer[hitCount] = entity;
 					hitCount++;
 					if (hitCount != -1 && hitCount >= hitLimit)
 						goto Exit;
@@ -227,8 +210,7 @@ public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
 		}
 
 		Exit:
-		entities = targets.AsSpan();
-		return targets.Count > 0;
+		return hitCount;
 	}
 
 	private void GetCellsAlongLine(Vector2 start, Vector2 end, HashSet<Vector2I> cells)

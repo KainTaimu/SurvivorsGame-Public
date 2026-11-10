@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Arch.Core;
+using CommunityToolkit.HighPerformance.Buffers;
 using Game.Core.ECS;
 using Game.Core.Extensions;
 using Game.Levels.Controllers;
@@ -100,8 +101,7 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 
 	public void ReturnToPool()
 	{
-		_hits.Clear();
-		_hitsHandled.Clear();
+		ClearHits();
 		_distanceTravelled = 0;
 		_pierceCount = 0;
 		ProjectilePool.ReturnProjectile(this);
@@ -121,20 +121,45 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 
 	protected override void PostInitialization()
 	{
-		_hits.Clear();
+		ClearHits();
 		var tweenScale = CreateTween().SetTrans(Tween.TransitionType.Linear).SetEase(Tween.EaseType.In);
 		var finalScale = Scale * new Vector2(8, 1);
 		tweenScale.TweenProperty(Sprite, "scale", finalScale, 0.05);
 		IsInitialized = true;
 
-		if (!TargetQuery.GetTargetsRayCast(Position, Rotation, HitRadius, out var hits, PierceLimit))
+		const int maxHitBufferSize = 512 / 12;
+		if (PierceLimit <= maxHitBufferSize)
+		{
+			Span<Entity> hitBuffer = stackalloc Entity[PierceLimit];
+			HitTargets(hitBuffer);
+		}
+		else
+		{
+			using var hitBuffer = SpanOwner<Entity>.Allocate(maxHitBufferSize);
+			var span = hitBuffer.Span;
+			HitTargets(span);
+		}
+	}
+
+	private void HitTargets(Span<Entity> hitBuffer)
+	{
+		var hitCount = TargetQuery.GetTargetsRayCast(Position, Rotation, HitRadius, hitBuffer, PierceLimit);
+		if (hitCount <= 0)
 			return;
 
-		foreach (var entity in hits)
+		foreach (var entity in hitBuffer)
 		{
 			if (!GameWorld.World.IsAlive(entity))
 				continue;
-			if (_hits.Any(data => data.Target == entity))
+			var alreadyHit = false;
+			foreach (var data in _hits)
+			{
+				if (data.Target != entity)
+					continue;
+				alreadyHit = true;
+				break;
+			}
+			if (alreadyHit)
 				continue;
 
 			var entityPos = GameWorld.World.Get<PositionComponent>(entity);
@@ -145,6 +170,12 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 			if (_pierceCount >= PierceLimit)
 				break;
 		}
+	}
+
+	private void ClearHits()
+	{
+		_hits.Clear();
+		_hitsHandled.Clear();
 	}
 
 	public readonly record struct HitData(Entity Target, Vector2 Position, float DistanceToHitPosition);
