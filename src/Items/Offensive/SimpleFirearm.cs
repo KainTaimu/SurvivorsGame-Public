@@ -167,18 +167,6 @@ public partial class SimpleFirearm
 			MagazineCount += step;
 			_reloadAudioPlayer?.Play();
 		};
-		switch (_reloadBehaviour)
-		{
-			case NormalReloadBehaviour normalReloadBehaviour:
-				normalReloadBehaviour.ReloadTime = () => ReloadStats.ReloadTime;
-				break;
-			case SequentialReloadBehaviour sequentialReloadBehaviour:
-				sequentialReloadBehaviour.TimeBetweenRounds = () => ReloadStats.ReloadTime / MagazineStats.Capacity;
-				sequentialReloadBehaviour.RoundsToLoad = MagazineStats.Capacity;
-				break;
-			default:
-				throw new ArgumentOutOfRangeException(nameof(_reloadBehaviour));
-		}
 	}
 
 	public override void Process(double delta)
@@ -238,12 +226,6 @@ public partial class SimpleFirearm
 
 	public virtual void Reload()
 	{
-		if (IsReloading)
-			return;
-		if (MagazineCount >= MagazineCapacity)
-			return;
-		if (_reloadBehaviour is SequentialReloadBehaviour sequentialReloadBehaviour)
-			sequentialReloadBehaviour.RoundsToLoad = MagazineCapacity - MagazineCount;
 		_reloadBehaviour.Reload();
 	}
 

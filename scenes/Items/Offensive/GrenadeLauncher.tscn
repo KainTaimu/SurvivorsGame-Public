@@ -19,7 +19,7 @@
 _data = [Vector2(0, 1), 0.0, -0.49786425, 0, 1, Vector2(1, 0.50213575), -0.49786425, 0.0, 1, 0]
 point_count = 2
 
-[node name="GrenadeLauncher" type="Node" unique_id=1535579917 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "GrenadeStats", "_explosionPlayer", "_fireGroup", "_reloadBehaviour")]
+[node name="GrenadeLauncher" type="Node" unique_id=1535579917 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "GrenadeStats", "_fireGroup", "_reloadBehaviour", "_explosionPlayer")]
 script = ExtResource("1_hamct")
 DamageStats = NodePath("Stats/DamageStats")
 MagazineStats = NodePath("Stats/MagazineStats")
@@ -102,8 +102,10 @@ script = ExtResource("3_ysrq1")
 AttackStats = NodePath("../Stats/AttackStats")
 metadata/_custom_type_script = "uid://dnodsacrptssb"
 
-[node name="SequentialReloadBehaviour" type="Node" parent="." unique_id=1681559892]
+[node name="SequentialReloadBehaviour" type="Node" parent="." unique_id=1681559892 node_paths=PackedStringArray("MagazineStats", "ReloadStats")]
 script = ExtResource("4_8lp6o")
+MagazineStats = NodePath("../Stats/MagazineStats")
+ReloadStats = NodePath("../Stats/ReloadStats")
 _interruptPunishTime = 0.0
 _boltCloseTime = 0.0
 metadata/_custom_type_script = "uid://cx3rrg2toydba"

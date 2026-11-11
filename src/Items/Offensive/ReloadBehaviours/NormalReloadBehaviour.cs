@@ -3,15 +3,20 @@ namespace Game.Items.Offensive;
 [GlobalClass]
 public partial class NormalReloadBehaviour : AbstractReloadBehaviour
 {
-	public required Func<float> ReloadTime { get; set; }
+	[Export]
+	private ReloadStats ReloadStats { get; set; } = null!;
+
+	private float ReloadTime => ReloadStats.ReloadTime;
 
 	private float _timeUntilFinishedReloading;
+
+	public override ReloadDisplayType DisplayType => ReloadDisplayType.Normal;
 
 	public override void Reload()
 	{
 		IsReloading = true;
 		EmitSignalOnReloadStart();
-		_timeUntilFinishedReloading = ReloadTime();
+		_timeUntilFinishedReloading = ReloadTime;
 	}
 
 	public override void Process(float delta)

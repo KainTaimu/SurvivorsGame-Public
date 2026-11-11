@@ -123,8 +123,9 @@ script = ExtResource("3_nihe0")
 AttackStats = NodePath("../Stats/AttackStats")
 metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 
-[node name="NormalReloadBehaviour" type="Node" parent="." unique_id=613128468]
+[node name="NormalReloadBehaviour" type="Node" parent="." unique_id=613128468 node_paths=PackedStringArray("ReloadStats")]
 script = ExtResource("4_dar1o")
+ReloadStats = NodePath("../Stats/ReloadStats")
 metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 
 [connection signal="AlmostEmpty" from="." to="MagAlmostEmpty" method="play"]

@@ -79,15 +79,9 @@ public partial class GrenadeLauncher
 
 	public int MagazineCount
 	{
-		get
-		{
-			// YUCK
-			if (field == int.MinValue)
-				field = MagazineCapacity;
-			return field;
-		}
-		set => field = field == int.MinValue ? MagazineCapacity : value;
-	} = int.MinValue;
+		get => MagazineStats.Count;
+		set => MagazineStats.Count = value;
+	}
 
 	private Vector2 _lastBlastPosition;
 
@@ -137,10 +131,6 @@ public partial class GrenadeLauncher
 		{
 			MagazineCount += step;
 		};
-
-		_reloadBehaviour.TimeBetweenRounds = () =>
-			ReloadStats.ReloadTime * PlayerStats.ReloadTimeScale / MagazineStats.Capacity;
-		_reloadBehaviour.RoundsToLoad = MagazineStats.Capacity;
 	}
 
 	public override void Process(double delta)
@@ -204,11 +194,6 @@ public partial class GrenadeLauncher
 
 	public void Reload()
 	{
-		if (IsReloading)
-			return;
-		if (MagazineCount >= MagazineCapacity)
-			return;
-		_reloadBehaviour.RoundsToLoad = MagazineCapacity - MagazineCount;
 		_reloadBehaviour.Reload();
 	}
 

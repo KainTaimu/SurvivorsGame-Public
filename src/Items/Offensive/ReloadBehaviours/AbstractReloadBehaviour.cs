@@ -2,7 +2,14 @@ namespace Game.Items.Offensive;
 
 public enum ReloadDisplayType
 {
+	/// <summary>
+	/// Displays "Reloading..." prompt
+	/// </summary>
 	Normal,
+
+	/// <summary>
+	/// Always displays ammo count
+	/// </summary>
 	Progressive,
 }
 
@@ -21,8 +28,7 @@ public abstract partial class AbstractReloadBehaviour : Node
 	[Signal]
 	public delegate void OnReloadProgressEventHandler(int progress, int maxProgress, int step);
 
-	[Export]
-	public ReloadDisplayType DisplayType = ReloadDisplayType.Normal;
+	public abstract ReloadDisplayType DisplayType { get; }
 
 	public bool IsReloading { get; protected set; }
 

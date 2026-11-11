@@ -135,10 +135,11 @@ script = ExtResource("3_62a23")
 AttackStats = NodePath("../Stats/AttackStats")
 metadata/_custom_type_script = "uid://dnodsacrptssb"
 
-[node name="SequentialReloadBehaviour" type="Node" parent="." unique_id=113955983]
+[node name="SequentialReloadBehaviour" type="Node" parent="." unique_id=113955983 node_paths=PackedStringArray("MagazineStats", "ReloadStats")]
 script = ExtResource("5_d1d18")
+MagazineStats = NodePath("../Stats/MagazineStats")
+ReloadStats = NodePath("../Stats/ReloadStats")
 _interruptPunishTime = 0.05
-DisplayType = 1
 metadata/_custom_type_script = "uid://cx3rrg2toydba"
 
 [connection signal="OnAttack" from="." to="Shoot" method="play"]
