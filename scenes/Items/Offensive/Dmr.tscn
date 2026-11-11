@@ -57,7 +57,6 @@ metadata/_custom_type_script = "uid://bj6pph867oydf"
 
 [node name="BloomStats" type="Node" parent="Stats" unique_id=14420558]
 script = ExtResource("11_txoki")
-BloomCoefficientDeg = 5.0
 metadata/_custom_type_script = "uid://5u8113et07vu"
 
 [node name="RecoilStats" type="Node" parent="Stats" unique_id=1398610540]
@@ -98,8 +97,7 @@ script = ExtResource("17_sa2d3")
 MoveTimeToMaxBloom = 0.3
 MoveBloomGrowthRate = 1.0
 MoveBloomShrinkRate = 1.2
-MoveBloomMinDeg = 2.0
-MoveBloomMaxDeg = 20.0
+MoveBloomMaxDeg = 30.0
 MoveDamageMin = 18
 MoveDamageMax = 56
 metadata/_custom_type_script = "uid://b1j7f3uyd80s3"

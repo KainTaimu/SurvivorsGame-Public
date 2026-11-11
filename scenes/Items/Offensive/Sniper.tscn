@@ -76,7 +76,6 @@ metadata/_custom_type_script = "uid://bj6pph867oydf"
 
 [node name="BloomStats" type="Node" parent="Stats" unique_id=654227940]
 script = ExtResource("10_8bwop")
-BloomCoefficientDeg = 50.0
 metadata/_custom_type_script = "uid://5u8113et07vu"
 
 [node name="RecoilStats" type="Node" parent="Stats" unique_id=84016086]
