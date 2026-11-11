@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://bjysatf11t7bw" path="res://src/Items/Offensive/Stats/AttackStats.cs" id="15_r5wip"]
 [ext_resource type="Script" uid="uid://cjlv7mciafksn" path="res://src/Items/Offensive/Stats/PierceStats.cs" id="16_7rf2k"]
 [ext_resource type="Script" uid="uid://b1j7f3uyd80s3" path="res://src/Items/Offensive/Stats/MoveBloomStats.cs" id="17_sa2d3"]
+[ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="18_14xh6"]
 [ext_resource type="Script" uid="uid://66x4x0yo47cj" path="res://src/Items/Offensive/Stats/KnockbackStats.cs" id="18_i42lw"]
 [ext_resource type="Script" uid="uid://6a5xttelgv2" path="res://src/Items/Offensive/Stats/RadialPushStats.cs" id="19_vzczf"]
 
@@ -22,7 +23,7 @@
 script = ExtResource("4_db67r")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[node name="DMR" type="Node" unique_id=901001043 node_paths=PackedStringArray("RadialPushStats", "DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "MoveBloomStats", "KnockbackStats", "_fireGroup")]
+[node name="DMR" type="Node" unique_id=901001043 node_paths=PackedStringArray("RadialPushStats", "DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "MoveBloomStats", "KnockbackStats", "_fireGroup", "_reloadBehaviour")]
 script = ExtResource("1_lnmnp")
 RadialPushStats = NodePath("Stats/RadialPushStats")
 DamageStats = NodePath("Stats/DamageStats")
@@ -37,6 +38,7 @@ MoveBloomStats = NodePath("Stats/MoveBloomStats")
 KnockbackStats = NodePath("Stats/KnockbackStats")
 _projectileScene = ExtResource("2_nt1f2")
 _fireGroup = NodePath("SemiAutoFireGroup")
+_reloadBehaviour = NodePath("NormalReloadBehaviour")
 _projectileAttack = SubResource("Resource_d1d18")
 
 [node name="Stats" type="Node" parent="." unique_id=1580392105]
@@ -126,5 +128,12 @@ script = ExtResource("3_f5pnb")
 AttackStats = NodePath("../Stats/AttackStats")
 metadata/_custom_type_script = "uid://dnodsacrptssb"
 
+[node name="NormalReloadBehaviour" type="Node" parent="." unique_id=920739839 node_paths=PackedStringArray("MagazineStats", "ReloadStats")]
+script = ExtResource("18_14xh6")
+MagazineStats = NodePath("../Stats/MagazineStats")
+ReloadStats = NodePath("../Stats/ReloadStats")
+metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
+
 [connection signal="AlmostEmpty" from="." to="MagAlmostEmpty" method="play"]
 [connection signal="OnAttack" from="." to="Shoot" method="play"]
+[connection signal="OnFire" from="SemiAutoFireGroup" to="." method="Attack"]

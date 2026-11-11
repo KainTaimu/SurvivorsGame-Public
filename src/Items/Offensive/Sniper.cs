@@ -66,6 +66,9 @@ public partial class Sniper
 	private AbstractFireGroup _fireGroup = null!;
 
 	[Export]
+	private AbstractReloadBehaviour _reloadBehaviour = null!;
+
+	[Export]
 	private AbstractProjectileAttack _projectileAttack = null!;
 
 	[Export]
@@ -98,8 +101,6 @@ public partial class Sniper
 			}
 		);
 
-		_fireGroup.OnFire += OnFireGroupFire;
-
 		OnAttack += () => OffensiveEffects.ApplyCameraShake(RecoilStats.CameraRecoilScale, GetViewport, CreateTween);
 		OnAttack += () =>
 		{
@@ -131,8 +132,9 @@ public partial class Sniper
 	public override void Process(double delta)
 	{
 		UpdateMoveTimeBloom(delta);
-		if (_fireGroup is ICooldown fireGroupCooldown)
-			fireGroupCooldown.Process((float)delta);
+
+		(_fireGroup as ICooldown)?.Process((float)delta);
+		_reloadBehaviour.Process((float)delta);
 
 		if (Input.IsActionPressed(InputMapNames.WeaponReload))
 		{
@@ -146,7 +148,7 @@ public partial class Sniper
 		_fireGroup.ProcessInput();
 	}
 
-	private void OnFireGroupFire()
+	public void Attack()
 	{
 		DamageStats.CritDamageChance = (float)(1 - MoveBloomStats.MoveTimeFactor);
 		DamageStats.Damage = (int)
@@ -156,16 +158,9 @@ public partial class Sniper
 				MoveBloomStats.MoveDamageMax
 			);
 
-		var bloom = MoveBloomStats.MoveBloomMaxDeg * MoveBloomStats.MoveTimeFactor;
-		bloom = Math.Clamp(bloom, MoveBloomStats.MoveBloomMinDeg, MoveBloomStats.MoveBloomMaxDeg);
+		var bloomDeg = MoveBloomStats.MoveBloomMaxDeg * MoveBloomStats.MoveTimeFactor;
+		bloomDeg = Math.Clamp(bloomDeg, MoveBloomStats.MoveBloomMinDeg, MoveBloomStats.MoveBloomMaxDeg);
 
-		BloomStats.BloomCoefficientDeg = (float)bloom;
-
-		Attack();
-	}
-
-	public void Attack()
-	{
 		MagazineCount--;
 		if (MagazineCount == 0)
 			Reload();
@@ -175,7 +170,7 @@ public partial class Sniper
 		var mouseVector = Crosshair?.CanvasSpacePosition ?? Player.GetGlobalMousePosition();
 		var rotation = playerPosition.AngleToPoint(mouseVector);
 
-		var bloomRad = BloomStats.BloomCoefficientDeg * (Math.PI / 180);
+		var bloomRad = bloomDeg * (Math.PI / 180);
 		var bloom = (float)GD.RandRange(-bloomRad / 2, bloomRad / 2);
 		rotation += bloom;
 		var scale = Vector2.One * ProjectileStats.Scale;

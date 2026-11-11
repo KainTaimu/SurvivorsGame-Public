@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://b22sxrf4f8mno" path="res://src/Items/Offensive/Shotgun.cs" id="1_f4o5x"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_e0ol0"]
 [ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/FireGroups/SemiAutoFireGroup.cs" id="3_62a23"]
-[ext_resource type="Script" uid="uid://cx3rrg2toydba" path="res://src/Items/Offensive/ReloadBehaviours/SequentialReloadBehaviour.cs" id="5_d1d18"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_d1d18"]
+[ext_resource type="Script" uid="uid://cx3rrg2toydba" path="res://src/Items/Offensive/ReloadBehaviours/SequentialReloadBehaviour.cs" id="5_d1d18"]
 [ext_resource type="AudioStream" uid="uid://dukuiytyl14r4" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Reloads, Cycling & More/WAV/Pump Shell Load WAV.wav" id="5_u167f"]
 [ext_resource type="AudioStream" uid="uid://bqfiejd6bxng0" path="res://assets/SFX/Shoot/m870/m870_r1.wav" id="8_d1d18"]
 [ext_resource type="AudioStream" uid="uid://cttlwhjgh8ji6" path="res://assets/SFX/Shoot/m870/Shotgun_Quick Pump_01.wav" id="9_62a23"]
@@ -24,7 +24,7 @@
 script = ExtResource("4_d1d18")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[node name="M870" type="Node" unique_id=1997007315 node_paths=PackedStringArray("PumpActionStats", "_shellReloadAudioPlayer", "_cockingAudioPlayer", "DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats", "_reloadAudioPlayer", "_boltCloseAudioPlayer", "_fireGroup", "_reloadBehaviour")]
+[node name="M870" type="Node" unique_id=1997007315 node_paths=PackedStringArray("PumpActionStats", "_shellReloadAudioPlayer", "_cockingAudioPlayer", "DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats", "_fireGroup", "_reloadBehaviour", "_reloadAudioPlayer", "_boltCloseAudioPlayer")]
 script = ExtResource("1_f4o5x")
 PumpActionStats = NodePath("Stats/PumpActionStats")
 _shellReloadAudioPlayer = NodePath("ShellReload")
@@ -143,3 +143,8 @@ _interruptPunishTime = 0.05
 metadata/_custom_type_script = "uid://cx3rrg2toydba"
 
 [connection signal="OnAttack" from="." to="Shoot" method="play"]
+[connection signal="OnFire" from="SemiAutoFireGroup" to="." method="Attack"]
+[connection signal="OnFire" from="SemiAutoFireGroup" to="SequentialReloadBehaviour" method="TryInterrupt"]
+[connection signal="OnReloadEnd" from="SequentialReloadBehaviour" to="Cocking" method="play"]
+[connection signal="OnReloadEndInterrupted" from="SequentialReloadBehaviour" to="Cocking" method="play"]
+[connection signal="OnReloadProgress" from="SequentialReloadBehaviour" to="ShellReload" method="play" unbinds=3]

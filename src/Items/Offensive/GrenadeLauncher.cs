@@ -87,9 +87,6 @@ public partial class GrenadeLauncher
 
 	public override void _Ready()
 	{
-		InitializeFireGroupSettings();
-		InitializeReloadBehaviour();
-
 		OnAttack += () => OffensiveEffects.ApplyCameraShake(RecoilStats.CameraRecoilScale, GetViewport, CreateTween);
 		OnAttack += () =>
 		{
@@ -111,32 +108,9 @@ public partial class GrenadeLauncher
 		};
 	}
 
-	private void InitializeFireGroupSettings()
-	{
-		_fireGroup.OnFire += () =>
-		{
-			_reloadBehaviour.TryInterrupt();
-			Attack();
-		};
-	}
-
-	private void InitializeReloadBehaviour()
-	{
-		_reloadBehaviour.OnReloadEnd += () =>
-		{
-			MagazineCount = MagazineStats.Capacity;
-		};
-
-		_reloadBehaviour.OnReloadProgress += (_, _, step) =>
-		{
-			MagazineCount += step;
-		};
-	}
-
 	public override void Process(double delta)
 	{
-		if (_fireGroup is ICooldown fireGroupCooldown)
-			fireGroupCooldown.Process((float)delta);
+		(_fireGroup as ICooldown)?.Process((float)delta);
 		_reloadBehaviour.Process((float)delta);
 
 		if (Input.IsActionPressed(InputMapNames.WeaponReload))

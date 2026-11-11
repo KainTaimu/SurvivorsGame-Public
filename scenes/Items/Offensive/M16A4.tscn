@@ -137,3 +137,4 @@ metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 
 [connection signal="AlmostEmpty" from="." to="MagAlmostEmpty" method="play"]
 [connection signal="OnAttack" from="." to="Shoot" method="play"]
+[connection signal="OnFire" from="BurstFireGroup" to="." method="Attack"]

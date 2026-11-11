@@ -120,3 +120,4 @@ ReloadStats = NodePath("../Stats/ReloadStats")
 metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 
 [connection signal="OnAttack" from="." to="Shoot" method="play"]
+[connection signal="OnFire" from="SemiAutoFireGroup" to="." method="Attack"]

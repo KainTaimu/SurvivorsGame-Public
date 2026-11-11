@@ -114,9 +114,6 @@ public partial class SimpleFirearm
 			}
 		);
 
-		InitializeFireGroupSettings();
-		InitializeReloadBehaviour();
-
 		OnAttack += () => OffensiveEffects.ApplyCameraShake(RecoilStats.CameraRecoilScale, GetViewport, CreateTween);
 		OnAttack += () =>
 		{
@@ -138,41 +135,9 @@ public partial class SimpleFirearm
 		};
 	}
 
-	private void InitializeFireGroupSettings()
-	{
-		if (_fireGroupRegistered)
-			return;
-		_fireGroup.OnFire += () =>
-		{
-			(_reloadBehaviour as IInterruptableReloadBehaviour)?.TryInterrupt();
-			Attack();
-		};
-		_fireGroupRegistered = true;
-	}
-
-	private void InitializeReloadBehaviour()
-	{
-		_reloadBehaviour.OnReloadStart += () => { };
-		_reloadBehaviour.OnReloadEnd += () =>
-		{
-			_boltCloseAudioPlayer?.Play();
-		};
-		_reloadBehaviour.OnReloadEndInterrupted += () =>
-		{
-			_boltCloseAudioPlayer?.Play();
-		};
-		_reloadBehaviour.OnReloadProgress += (_, _, step) =>
-		{
-			MagazineCount += step;
-			_reloadAudioPlayer?.Play();
-		};
-	}
-
 	public override void Process(double delta)
 	{
-		if (_fireGroup is ICooldown fireGroupCooldown)
-			fireGroupCooldown.Process((float)delta);
-
+		(_fireGroup as ICooldown)?.Process((float)delta);
 		_reloadBehaviour.Process((float)delta);
 
 		if (Input.IsActionPressed(InputMapNames.WeaponReload))
@@ -197,10 +162,7 @@ public partial class SimpleFirearm
 
 		MagazineCount--;
 		if (MagazineCount <= 0)
-		{
 			Reload();
-			return false;
-		}
 
 		var playerPosition = Player.GetCanvasTransform() * Player.Position;
 

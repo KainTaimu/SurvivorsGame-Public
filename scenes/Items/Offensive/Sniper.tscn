@@ -21,6 +21,7 @@
 [ext_resource type="Script" uid="uid://doyqd2gp5rtvn" path="res://src/Items/Offensive/Stats/SlowStats.cs" id="16_vwmip"]
 [ext_resource type="Script" uid="uid://66x4x0yo47cj" path="res://src/Items/Offensive/Stats/KnockbackStats.cs" id="17_ore6g"]
 [ext_resource type="Script" uid="uid://b1j7f3uyd80s3" path="res://src/Items/Offensive/Stats/MoveBloomStats.cs" id="18_tbgkn"]
+[ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="22_k7g5g"]
 
 [sub_resource type="PackedScene" id="PackedScene_5un85"]
 _bundled = {
@@ -41,7 +42,7 @@ _bundled = {
 script = ExtResource("4_11blq")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[node name="Sniper" type="Node2D" unique_id=399121865 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "MoveBloomStats", "KnockbackStats", "_boltCyclingPlayer", "_fireGroup")]
+[node name="Sniper" type="Node2D" unique_id=399121865 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "MoveBloomStats", "KnockbackStats", "_fireGroup", "_reloadBehaviour", "_boltCyclingPlayer")]
 script = ExtResource("1_jg7ce")
 DamageStats = NodePath("Stats/DamageStats")
 MagazineStats = NodePath("Stats/MagazineStats")
@@ -55,6 +56,7 @@ MoveBloomStats = NodePath("Stats/MoveBloomStats")
 KnockbackStats = NodePath("Stats/KnockbackStats")
 _projectileScene = SubResource("PackedScene_5un85")
 _fireGroup = NodePath("SemiAutoFireGroup")
+_reloadBehaviour = NodePath("NormalReloadBehaviour")
 _projectileAttack = SubResource("Resource_c52kb")
 _boltCyclingPlayer = NodePath("BoltCycle")
 
@@ -74,6 +76,7 @@ metadata/_custom_type_script = "uid://bj6pph867oydf"
 
 [node name="BloomStats" type="Node" parent="Stats" unique_id=654227940]
 script = ExtResource("10_8bwop")
+BloomCoefficientDeg = 50.0
 metadata/_custom_type_script = "uid://5u8113et07vu"
 
 [node name="RecoilStats" type="Node" parent="Stats" unique_id=84016086]
@@ -158,6 +161,16 @@ AttackStats = NodePath("../Stats/AttackStats")
 _fireQueueTolerance = 0.0
 metadata/_custom_type_script = "uid://dnodsacrptssb"
 
+[node name="NormalReloadBehaviour" type="Node" parent="." unique_id=1417054273 node_paths=PackedStringArray("MagazineStats", "ReloadStats")]
+script = ExtResource("22_k7g5g")
+MagazineStats = NodePath("../Stats/MagazineStats")
+ReloadStats = NodePath("../Stats/ReloadStats")
+metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
+
 [connection signal="OnAttack" from="." to="Shoot" method="play"]
 [connection signal="OnReloadEnd" from="." to="308BoltCycleClose" method="play"]
 [connection signal="OnReloadStart" from="." to="308BoltCycleOpen" method="play"]
+[connection signal="OnFire" from="SemiAutoFireGroup" to="." method="Attack"]
+[connection signal="OnReloadEnd" from="NormalReloadBehaviour" to="308BoltCycleClose" method="play"]
+[connection signal="OnReloadEndInterrupted" from="NormalReloadBehaviour" to="308BoltCycleClose" method="play"]
+[connection signal="OnReloadStart" from="NormalReloadBehaviour" to="308BoltCycleOpen" method="play"]

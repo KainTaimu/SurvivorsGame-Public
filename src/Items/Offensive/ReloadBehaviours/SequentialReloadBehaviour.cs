@@ -55,6 +55,7 @@ public partial class SequentialReloadBehaviour : AbstractReloadBehaviour, IInter
 			return;
 
 		_roundsLoaded += Step;
+		MagazineStats.Count++;
 		_timeUntilNextLoad = TimeBetweenRounds;
 		EmitSignalOnReloadProgress(_roundsLoaded, RoundsToLoad, Step);
 		if (_roundsLoaded < RoundsToLoad)
@@ -67,6 +68,8 @@ public partial class SequentialReloadBehaviour : AbstractReloadBehaviour, IInter
 
 	public void TryInterrupt()
 	{
+		if (!IsReloading)
+			return;
 		if (IsInterrupted)
 			return;
 		if (_roundsLoaded == 0)

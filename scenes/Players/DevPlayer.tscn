@@ -8,7 +8,31 @@
 [ext_resource type="Texture2D" uid="uid://c0d0pkcn6hw68" path="res://assets/Players/player.png" id="6_y52bq"]
 [ext_resource type="Script" uid="uid://bdk4fdcqvypav" path="res://src/Players/Controllers/StatusEffect.cs" id="7_qh10d"]
 [ext_resource type="Script" uid="uid://d31d8uns5faa5" path="res://src/Players/Controllers/StatusEffectModifier.cs" id="8_agk5e"]
+[ext_resource type="PackedScene" uid="uid://b6pcia1iql0ct" path="res://scenes/Items/Offensive/Ak47.tscn" id="9_cv8r4"]
+[ext_resource type="PackedScene" uid="uid://c5chlqja2k2k0" path="res://scenes/Items/Offensive/AutoShotgun.tscn" id="10_uawkc"]
+[ext_resource type="PackedScene" uid="uid://qxx1q01ys1cd" path="res://scenes/Items/Offensive/Dmr.tscn" id="11_l68un"]
+[ext_resource type="PackedScene" uid="uid://dn60j54j5e2ta" path="res://scenes/Items/Offensive/G3A3.tscn" id="12_ya27f"]
+[ext_resource type="PackedScene" uid="uid://etybfmdjqx38" path="res://scenes/Items/Offensive/G17-F.tscn" id="13_qoswm"]
+[ext_resource type="PackedScene" uid="uid://bv8olcpvea07v" path="res://scenes/Items/Offensive/GrenadeLauncher.tscn" id="14_ygwx1"]
+[ext_resource type="PackedScene" uid="uid://ceimmtu3q4x6n" path="res://scenes/Items/Offensive/GrenadeThrower.tscn" id="15_rg3gt"]
+[ext_resource type="PackedScene" uid="uid://chrgb8gqwh4s0" path="res://scenes/Items/Offensive/M4.tscn" id="16_6a21i"]
+[ext_resource type="PackedScene" uid="uid://cnhwoqxa4s0dc" path="res://scenes/Items/Offensive/M7.tscn" id="17_epxog"]
+[ext_resource type="PackedScene" uid="uid://bm5g2ndiy5ltb" path="res://scenes/Items/Offensive/M16A4.tscn" id="18_p0vfj"]
+[ext_resource type="PackedScene" uid="uid://okgy2hpbgy53" path="res://scenes/Items/Offensive/M17.tscn" id="19_w107a"]
+[ext_resource type="PackedScene" uid="uid://j70slgh4j2cl" path="res://scenes/Items/Offensive/M92FS.tscn" id="20_pdi6p"]
+[ext_resource type="PackedScene" uid="uid://c24ayslleke42" path="res://scenes/Items/Offensive/M249.tscn" id="21_pwwtk"]
 [ext_resource type="Shader" uid="uid://bg3me0bhc4em2" path="res://src/Shaders/vignette.gdshader" id="21_vujg4"]
+[ext_resource type="PackedScene" uid="uid://c8noyno0ootql" path="res://scenes/Items/Offensive/M249S.tscn" id="22_3logm"]
+[ext_resource type="PackedScene" uid="uid://cnk5c4yvwhjun" path="res://scenes/Items/Offensive/M1911.tscn" id="23_lk35y"]
+[ext_resource type="PackedScene" uid="uid://cuf1ut26wc716" path="res://scenes/Items/Offensive/Matrix.tscn" id="24_0t3tl"]
+[ext_resource type="PackedScene" uid="uid://2gxjr5yjrfut" path="res://scenes/Items/Offensive/Minigun.tscn" id="25_y0rwl"]
+[ext_resource type="PackedScene" uid="uid://dwyqdinyji8tt" path="res://scenes/Items/Offensive/MP5.tscn" id="26_h7b02"]
+[ext_resource type="PackedScene" uid="uid://culqrn6mdcvx3" path="res://scenes/Items/Offensive/MP7.tscn" id="27_xw6rq"]
+[ext_resource type="PackedScene" uid="uid://cmidrkjr0le3o" path="res://scenes/Items/Offensive/P90.tscn" id="28_mvllv"]
+[ext_resource type="PackedScene" uid="uid://twvhgblbtovy" path="res://scenes/Items/Offensive/Revolver.tscn" id="29_jlyqp"]
+[ext_resource type="PackedScene" uid="uid://lvm5jo1ua73i" path="res://scenes/Items/Offensive/Shotgun.tscn" id="30_ck20b"]
+[ext_resource type="PackedScene" uid="uid://dtcjylv1ewb16" path="res://scenes/Items/Offensive/SKS.tscn" id="31_tdu7j"]
+[ext_resource type="PackedScene" uid="uid://cuerorgcryk5k" path="res://scenes/Items/Offensive/Sniper.tscn" id="32_kxri3"]
 
 [sub_resource type="Resource" id="Resource_comn3"]
 resource_local_to_scene = true
@@ -140,7 +164,7 @@ func _toggle_god():
 	CustomLogger.log_info(\"god: %s\" % !god)
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_comn3"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7hk4g"]
 resource_local_to_scene = true
 shader = ExtResource("5_t84yk")
 
@@ -176,7 +200,7 @@ region = Rect2(62, 0, 31, 31)
 atlas = ExtResource("6_y52bq")
 region = Rect2(93, 0, 31, 31)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_wkerx"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_hbcge"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -214,7 +238,7 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w2wr7"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ja4tk"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_agk5e"]
@@ -223,7 +247,7 @@ Name = "DEV"
 Permanent = true
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_q2wbp"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2b8op"]
 resource_local_to_scene = true
 shader = ExtResource("21_vujg4")
 shader_parameter/tint = Color(0.33618236, 2.6171097e-07, 1.2032687e-07, 1)
@@ -266,8 +290,8 @@ _godMode = true
 script = SubResource("GDScript_yvf4j")
 
 [node name="AnimatedSprite2D" parent="." index="1" unique_id=881638213]
-material = SubResource("ShaderMaterial_comn3")
-sprite_frames = SubResource("SpriteFrames_wkerx")
+material = SubResource("ShaderMaterial_7hk4g")
+sprite_frames = SubResource("SpriteFrames_hbcge")
 animation = &"idle"
 
 [node name="PlayerCameraController" parent="." index="2" unique_id=68646763]
@@ -279,5 +303,53 @@ shadow_enabled = true
 [node name="PlayerStatusEffectController" parent="." index="7" unique_id=1019311816]
 _testEffect = Array[ExtResource("7_qh10d")]([SubResource("Resource_agk5e")])
 
+[node name="Ak47" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="0" unique_id=915008798 instance=ExtResource("9_cv8r4")]
+
+[node name="AA-12" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="1" unique_id=764147352 instance=ExtResource("10_uawkc")]
+
+[node name="DMR" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="2" unique_id=901001043 instance=ExtResource("11_l68un")]
+
+[node name="G3A3" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="3" unique_id=265287884 instance=ExtResource("12_ya27f")]
+
+[node name="G17-F" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="4" unique_id=1647482133 instance=ExtResource("13_qoswm")]
+
+[node name="GrenadeLauncher" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="5" unique_id=1535579917 instance=ExtResource("14_ygwx1")]
+
+[node name="GrenadeThrower" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="6" unique_id=1000269585 instance=ExtResource("15_rg3gt")]
+
+[node name="M4" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="7" unique_id=1420893548 instance=ExtResource("16_6a21i")]
+
+[node name="M7" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="8" unique_id=1438286126 instance=ExtResource("17_epxog")]
+
+[node name="M16A4" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="9" unique_id=1479162965 instance=ExtResource("18_p0vfj")]
+
+[node name="M17" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="10" unique_id=1989500741 instance=ExtResource("19_w107a")]
+
+[node name="M92FS" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="11" unique_id=1472391115 instance=ExtResource("20_pdi6p")]
+
+[node name="M249" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="12" unique_id=873525008 instance=ExtResource("21_pwwtk")]
+
+[node name="M249-S" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="13" unique_id=1854773231 instance=ExtResource("22_3logm")]
+
+[node name="M1911" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="14" unique_id=444173585 instance=ExtResource("23_lk35y")]
+
+[node name="Matrix" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="15" unique_id=1443127197 instance=ExtResource("24_0t3tl")]
+
+[node name="Minigun" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="16" unique_id=636864915 instance=ExtResource("25_y0rwl")]
+
+[node name="MP5" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="17" unique_id=1723988049 instance=ExtResource("26_h7b02")]
+
+[node name="MP7" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="18" unique_id=1559340987 instance=ExtResource("27_xw6rq")]
+
+[node name="P90" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="19" unique_id=1165127518 instance=ExtResource("28_mvllv")]
+
+[node name="Revolver" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="20" unique_id=708917318 instance=ExtResource("29_jlyqp")]
+
+[node name="M870" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="21" unique_id=1997007315 instance=ExtResource("30_ck20b")]
+
+[node name="SKS" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="22" unique_id=376943576 instance=ExtResource("31_tdu7j")]
+
+[node name="Sniper" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="23" unique_id=399121865 instance=ExtResource("32_kxri3")]
+
 [node name="ColorRect" parent="DamageVignette" parent_id_path=PackedInt32Array(758455490) index="0" unique_id=1773597369]
-material = SubResource("ShaderMaterial_q2wbp")
+material = SubResource("ShaderMaterial_2b8op")

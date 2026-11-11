@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://igbacr2wbu1g" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_o3lg4"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_whe3a"]
 [ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/FireGroups/SemiAutoFireGroup.cs" id="3_fgf34"]
-[ext_resource type="Script" uid="uid://cx3rrg2toydba" path="res://src/Items/Offensive/ReloadBehaviours/SequentialReloadBehaviour.cs" id="4_y3hip"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_fgf34"]
+[ext_resource type="Script" uid="uid://cx3rrg2toydba" path="res://src/Items/Offensive/ReloadBehaviours/SequentialReloadBehaviour.cs" id="4_y3hip"]
 [ext_resource type="AudioStream" uid="uid://hbmq8g2asy5h" path="res://assets/SFX/Shoot/python/python_r1.wav" id="7_0u5yb"]
 [ext_resource type="AudioStream" uid="uid://ckwromhv1tpvg" path="res://assets/SFX/Shoot/Snake's SECOND Authentic Gun Sounds/& More/Revolver/44 Magnum/MP3/44 Magnum Single Load.mp3" id="9_fgf34"]
 [ext_resource type="AudioStream" uid="uid://djyr0kagg0qbi" path="res://assets/SFX/Shoot/Snake's SECOND Authentic Gun Sounds/& More/Revolver/44 Magnum/WAV/44 Magnum Close Cylinder.wav" id="10_y3hip"]
@@ -23,7 +23,7 @@
 script = ExtResource("4_fgf34")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[node name="Revolver" type="Node" unique_id=708917318 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats", "_reloadAudioPlayer", "_boltCloseAudioPlayer", "_fireGroup", "_reloadBehaviour")]
+[node name="Revolver" type="Node" unique_id=708917318 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats", "_fireGroup", "_reloadBehaviour", "_reloadAudioPlayer", "_boltCloseAudioPlayer")]
 script = ExtResource("1_o3lg4")
 DamageStats = NodePath("Stats/DamageStats")
 MagazineStats = NodePath("Stats/MagazineStats")
@@ -131,3 +131,9 @@ _boltCloseTime = 0.1
 metadata/_custom_type_script = "uid://cx3rrg2toydba"
 
 [connection signal="OnAttack" from="." to="ShootAudioPlayer" method="play"]
+[connection signal="OnFire" from="SemiAutoFireGroup" to="." method="Attack"]
+[connection signal="OnFire" from="SemiAutoFireGroup" to="SequentialReloadBehaviour" method="TryInterrupt"]
+[connection signal="OnReloadEnd" from="SequentialReloadBehaviour" to="BoltAudioPlayer" method="play"]
+[connection signal="OnReloadEndInterrupted" from="SequentialReloadBehaviour" to="BoltAudioPlayer" method="play"]
+[connection signal="OnReloadProgress" from="SequentialReloadBehaviour" to="RoundLoadAudioPlayer" method="play" unbinds=3]
+[connection signal="OnReloadStart" from="SequentialReloadBehaviour" to="BoltAudioPlayer" method="play"]
