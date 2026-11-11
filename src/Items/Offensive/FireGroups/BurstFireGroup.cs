@@ -1,8 +1,5 @@
-using Godot.NativeInterop;
-
 namespace Game.Items.Offensive;
 
-[Tool]
 [GlobalClass]
 public partial class BurstFireGroup : AbstractFireGroup, ICooldown
 {

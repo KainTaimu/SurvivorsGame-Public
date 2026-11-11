@@ -46,7 +46,7 @@ public partial class GrenadeThrower
 
 	private Vector2 _blastPosition;
 
-	public override void _Process(double delta)
+	public override void Process(double delta)
 	{
 		_fireCooldown -= delta;
 

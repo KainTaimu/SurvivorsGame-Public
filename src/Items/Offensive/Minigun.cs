@@ -64,7 +64,12 @@ public partial class Minigun
 	private bool _isMovementPenaltyWearOffApplied;
 
 	public int MagazineCapacity => MagazineStats.Capacity;
-	public int MagazineCount { get; set; }
+	public int MagazineCount
+	{
+		get => MagazineStats.Count;
+		set => MagazineStats.Count = value;
+	}
+
 	public bool IsReloading => false;
 
 	private readonly ProjectilePool _pool = new();
@@ -165,7 +170,10 @@ public partial class Minigun
 
 		MagazineStats.Count--;
 		if (MagazineStats.Count == 0)
+		{
 			Reload();
+			return;
+		}
 
 		var playerPosition = Player.GetCanvasTransform() * Player.Position;
 

@@ -4,6 +4,9 @@ namespace Game.Items.Offensive;
 public partial class NormalReloadBehaviour : AbstractReloadBehaviour
 {
 	[Export]
+	private MagazineStats MagazineStats { get; set; } = null!;
+
+	[Export]
 	private ReloadStats ReloadStats { get; set; } = null!;
 
 	private float ReloadTime => ReloadStats.ReloadTime;
@@ -14,6 +17,9 @@ public partial class NormalReloadBehaviour : AbstractReloadBehaviour
 
 	public override void Reload()
 	{
+		if (IsReloading)
+			return;
+
 		IsReloading = true;
 		EmitSignalOnReloadStart();
 		_timeUntilFinishedReloading = ReloadTime;
@@ -30,5 +36,6 @@ public partial class NormalReloadBehaviour : AbstractReloadBehaviour
 
 		EmitSignalOnReloadEnd();
 		IsReloading = false;
+		MagazineStats.Count = MagazineStats.Capacity;
 	}
 }

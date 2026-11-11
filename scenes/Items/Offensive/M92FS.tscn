@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://igbacr2wbu1g" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_wg30w"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_xxw4r"]
 [ext_resource type="Script" uid="uid://dxbw6ujou46y4" path="res://src/Items/Offensive/FireGroups/BurstFireGroup.cs" id="3_wg30w"]
-[ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="4_xxw4r"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_xf8ly"]
+[ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="4_xxw4r"]
 [ext_resource type="AudioStream" uid="uid://dsn3egnvto4jq" path="res://assets/SFX/Shoot/m92fs/m92fs_r2.wav" id="7_wg30w"]
 [ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="8_t34tv"]
 [ext_resource type="Script" uid="uid://c8bfvbbqfaakj" path="res://src/Items/Offensive/Stats/DamageStats.cs" id="10_ejfi5"]
@@ -124,8 +124,9 @@ AttackStats = NodePath("../Stats/AttackStats")
 BurstFireStats = NodePath("../Stats/BurstFireStats")
 metadata/_custom_type_script = "uid://dxbw6ujou46y4"
 
-[node name="NormalReloadBehaviour" type="Node" parent="." unique_id=156985561 node_paths=PackedStringArray("ReloadStats")]
+[node name="NormalReloadBehaviour" type="Node" parent="." unique_id=156985561 node_paths=PackedStringArray("MagazineStats", "ReloadStats")]
 script = ExtResource("4_xxw4r")
+MagazineStats = NodePath("../Stats/MagazineStats")
 ReloadStats = NodePath("../Stats/ReloadStats")
 metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 

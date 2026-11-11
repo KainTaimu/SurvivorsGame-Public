@@ -121,8 +121,9 @@ script = ExtResource("3_buqgn")
 AttackStats = NodePath("../Stats/AttackStats")
 metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 
-[node name="NormalReloadBehaviour" type="Node" parent="." unique_id=579341423 node_paths=PackedStringArray("ReloadStats")]
+[node name="NormalReloadBehaviour" type="Node" parent="." unique_id=579341423 node_paths=PackedStringArray("MagazineStats", "ReloadStats")]
 script = ExtResource("4_5fkaf")
+MagazineStats = NodePath("../Stats/MagazineStats")
 ReloadStats = NodePath("../Stats/ReloadStats")
 metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 

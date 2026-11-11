@@ -155,7 +155,6 @@ public partial class SimpleFirearm
 		_reloadBehaviour.OnReloadStart += () => { };
 		_reloadBehaviour.OnReloadEnd += () =>
 		{
-			MagazineCount = MagazineStats.Capacity;
 			_boltCloseAudioPlayer?.Play();
 		};
 		_reloadBehaviour.OnReloadEndInterrupted += () =>
@@ -198,7 +197,10 @@ public partial class SimpleFirearm
 
 		MagazineCount--;
 		if (MagazineCount <= 0)
+		{
 			Reload();
+			return false;
+		}
 
 		var playerPosition = Player.GetCanvasTransform() * Player.Position;
 

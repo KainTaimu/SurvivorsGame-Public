@@ -40,10 +40,33 @@
 [ext_resource type="Script" uid="uid://cn5rlmdgj2uue" path="res://src/Players/Controllers/PlayerMovementController.cs" id="19_vvuu7"]
 [ext_resource type="PackedScene" uid="uid://b7tvc0jib1mqf" path="res://scenes/Players/PlayerWeaponController.tscn" id="20_q733l"]
 [ext_resource type="PackedScene" uid="uid://b6pcia1iql0ct" path="res://scenes/Items/Offensive/Ak47.tscn" id="21_xuljg"]
+[ext_resource type="PackedScene" uid="uid://c5chlqja2k2k0" path="res://scenes/Items/Offensive/AutoShotgun.tscn" id="22_cyml8"]
 [ext_resource type="PackedScene" uid="uid://ce17hh7p7dmkh" path="res://scenes/UI/DeathScreen.tscn" id="22_ta1oo"]
 [ext_resource type="PackedScene" uid="uid://c5q166p2d4241" path="res://scenes/UI/CurrentWeaponUi.tscn" id="22_upwdq"]
+[ext_resource type="PackedScene" uid="uid://qxx1q01ys1cd" path="res://scenes/Items/Offensive/Dmr.tscn" id="23_8jtm6"]
 [ext_resource type="PackedScene" uid="uid://jqf8r7a2ybte" path="res://scenes/UI/CurrentStatusEffectsUi.tscn" id="23_e7x4y"]
+[ext_resource type="PackedScene" uid="uid://dn60j54j5e2ta" path="res://scenes/Items/Offensive/G3A3.tscn" id="24_kd8uq"]
 [ext_resource type="Script" uid="uid://bve4e6tonid55" path="res://src/Players/Controllers/player_damage_vignette.gd" id="24_niwbi"]
+[ext_resource type="PackedScene" uid="uid://etybfmdjqx38" path="res://scenes/Items/Offensive/G17-F.tscn" id="25_cs4dx"]
+[ext_resource type="PackedScene" uid="uid://bv8olcpvea07v" path="res://scenes/Items/Offensive/GrenadeLauncher.tscn" id="26_8j4j4"]
+[ext_resource type="PackedScene" uid="uid://ceimmtu3q4x6n" path="res://scenes/Items/Offensive/GrenadeThrower.tscn" id="27_78m5g"]
+[ext_resource type="PackedScene" uid="uid://chrgb8gqwh4s0" path="res://scenes/Items/Offensive/M4.tscn" id="28_ta7mx"]
+[ext_resource type="PackedScene" uid="uid://cnhwoqxa4s0dc" path="res://scenes/Items/Offensive/M7.tscn" id="29_7hybo"]
+[ext_resource type="PackedScene" uid="uid://bm5g2ndiy5ltb" path="res://scenes/Items/Offensive/M16A4.tscn" id="30_upocf"]
+[ext_resource type="PackedScene" uid="uid://okgy2hpbgy53" path="res://scenes/Items/Offensive/M17.tscn" id="31_hydjq"]
+[ext_resource type="PackedScene" uid="uid://j70slgh4j2cl" path="res://scenes/Items/Offensive/M92FS.tscn" id="32_uqnko"]
+[ext_resource type="PackedScene" uid="uid://c24ayslleke42" path="res://scenes/Items/Offensive/M249.tscn" id="33_te6tj"]
+[ext_resource type="PackedScene" uid="uid://c8noyno0ootql" path="res://scenes/Items/Offensive/M249S.tscn" id="34_lgg0o"]
+[ext_resource type="PackedScene" uid="uid://cnk5c4yvwhjun" path="res://scenes/Items/Offensive/M1911.tscn" id="35_obrof"]
+[ext_resource type="PackedScene" uid="uid://cuf1ut26wc716" path="res://scenes/Items/Offensive/Matrix.tscn" id="36_kat0y"]
+[ext_resource type="PackedScene" uid="uid://2gxjr5yjrfut" path="res://scenes/Items/Offensive/Minigun.tscn" id="37_nmfwp"]
+[ext_resource type="PackedScene" uid="uid://dwyqdinyji8tt" path="res://scenes/Items/Offensive/MP5.tscn" id="38_g07qw"]
+[ext_resource type="PackedScene" uid="uid://culqrn6mdcvx3" path="res://scenes/Items/Offensive/MP7.tscn" id="39_ywtwb"]
+[ext_resource type="PackedScene" uid="uid://cmidrkjr0le3o" path="res://scenes/Items/Offensive/P90.tscn" id="40_f6fvi"]
+[ext_resource type="PackedScene" uid="uid://twvhgblbtovy" path="res://scenes/Items/Offensive/Revolver.tscn" id="41_7tfia"]
+[ext_resource type="PackedScene" uid="uid://lvm5jo1ua73i" path="res://scenes/Items/Offensive/Shotgun.tscn" id="42_owniy"]
+[ext_resource type="PackedScene" uid="uid://dtcjylv1ewb16" path="res://scenes/Items/Offensive/SKS.tscn" id="43_pqgaq"]
+[ext_resource type="PackedScene" uid="uid://cuerorgcryk5k" path="res://scenes/Items/Offensive/Sniper.tscn" id="44_i6jr6"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ta1oo"]
 vertices = PackedVector2Array(8759, 1872, 38133.406, 29802.813, -22892.422, 29521.18, 5951, 1872, -22040.57, -29841.617, 5879, -1080, 37291.547, -29275.367, 8607, -1104)
@@ -350,7 +373,7 @@ metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
 script = ExtResource("6_vrw23")
 metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_urvrt"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_qp8k8"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_ufwql"]
@@ -667,6 +690,52 @@ process_material = SubResource("ParticleProcessMaterial_oypsu")
 [node name="PlayerWeaponController" parent="World/Player" index="9" unique_id=1687061162 instance=ExtResource("20_q733l")]
 
 [node name="Ak47" parent="World/Player/PlayerWeaponController" index="0" unique_id=915008798 instance=ExtResource("21_xuljg")]
+
+[node name="AA-12" parent="World/Player/PlayerWeaponController" index="1" unique_id=764147352 instance=ExtResource("22_cyml8")]
+
+[node name="DMR" parent="World/Player/PlayerWeaponController" index="2" unique_id=901001043 instance=ExtResource("23_8jtm6")]
+
+[node name="G3A3" parent="World/Player/PlayerWeaponController" index="3" unique_id=265287884 instance=ExtResource("24_kd8uq")]
+
+[node name="G17-F" parent="World/Player/PlayerWeaponController" index="4" unique_id=1621465073 instance=ExtResource("25_cs4dx")]
+
+[node name="GrenadeLauncher" parent="World/Player/PlayerWeaponController" index="5" unique_id=1535579917 instance=ExtResource("26_8j4j4")]
+
+[node name="GrenadeThrower" parent="World/Player/PlayerWeaponController" index="6" unique_id=1000269585 instance=ExtResource("27_78m5g")]
+
+[node name="M4" parent="World/Player/PlayerWeaponController" index="7" unique_id=228622889 instance=ExtResource("28_ta7mx")]
+
+[node name="M7" parent="World/Player/PlayerWeaponController" index="8" unique_id=269409232 instance=ExtResource("29_7hybo")]
+
+[node name="M16A4" parent="World/Player/PlayerWeaponController" index="9" unique_id=1911722663 instance=ExtResource("30_upocf")]
+
+[node name="M17" parent="World/Player/PlayerWeaponController" index="10" unique_id=1989500741 instance=ExtResource("31_hydjq")]
+
+[node name="M92FS" parent="World/Player/PlayerWeaponController" index="11" unique_id=1472391115 instance=ExtResource("32_uqnko")]
+
+[node name="M249" parent="World/Player/PlayerWeaponController" index="12" unique_id=873525008 instance=ExtResource("33_te6tj")]
+
+[node name="M249-S" parent="World/Player/PlayerWeaponController" index="13" unique_id=1854773231 instance=ExtResource("34_lgg0o")]
+
+[node name="M1911" parent="World/Player/PlayerWeaponController" index="14" unique_id=946704089 instance=ExtResource("35_obrof")]
+
+[node name="Matrix" parent="World/Player/PlayerWeaponController" index="15" unique_id=1671362321 instance=ExtResource("36_kat0y")]
+
+[node name="Minigun" parent="World/Player/PlayerWeaponController" index="16" unique_id=636864915 instance=ExtResource("37_nmfwp")]
+
+[node name="MP5" parent="World/Player/PlayerWeaponController" index="17" unique_id=413312151 instance=ExtResource("38_g07qw")]
+
+[node name="MP7" parent="World/Player/PlayerWeaponController" index="18" unique_id=1539856320 instance=ExtResource("39_ywtwb")]
+
+[node name="P90" parent="World/Player/PlayerWeaponController" index="19" unique_id=1839692460 instance=ExtResource("40_f6fvi")]
+
+[node name="Revolver" parent="World/Player/PlayerWeaponController" index="20" unique_id=708917318 instance=ExtResource("41_7tfia")]
+
+[node name="M870" parent="World/Player/PlayerWeaponController" index="21" unique_id=1997007315 instance=ExtResource("42_owniy")]
+
+[node name="SKS" parent="World/Player/PlayerWeaponController" index="22" unique_id=340104408 instance=ExtResource("43_pqgaq")]
+
+[node name="Sniper" parent="World/Player/PlayerWeaponController" index="23" unique_id=399121865 instance=ExtResource("44_i6jr6")]
 
 [node name="CurrentWeaponUI" parent="World/Player" index="10" unique_id=2135368036 node_paths=PackedStringArray("_weaponController") instance=ExtResource("22_upwdq")]
 _weaponController = NodePath("../PlayerWeaponController")
