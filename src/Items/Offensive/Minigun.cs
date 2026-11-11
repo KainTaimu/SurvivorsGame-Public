@@ -188,6 +188,7 @@ public partial class Minigun
 
 		_projectileAttack.Attack(
 			_pool.GetProjectile,
+			this,
 			Player.GlobalPosition,
 			rotation,
 			ProjectileStats.HitRadius,

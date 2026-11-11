@@ -7,7 +7,8 @@ public abstract partial class AbstractProjectileAttack : Resource, IProjectileAt
 {
 	public abstract BaseProjectile Attack(
 		Func<BaseProjectile> getProjectile,
-		Vector2 origin,
+		Node? origin,
+		Vector2 position,
 		float rotation,
 		float radius,
 		float speed,

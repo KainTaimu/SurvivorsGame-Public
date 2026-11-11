@@ -54,6 +54,7 @@ public partial class Shotgun : SimpleFirearm, IHasPumpActionStats
 
 			_projectileAttack.Attack(
 				Pool.GetProjectile,
+				this,
 				Player.GlobalPosition,
 				(float)rotation,
 				ProjectileStats.HitRadius,

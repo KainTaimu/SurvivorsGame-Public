@@ -176,6 +176,7 @@ public partial class SimpleFirearm
 
 		_projectileAttack.Attack(
 			Pool.GetProjectile,
+			this,
 			Player.GlobalPosition,
 			rotation,
 			ProjectileStats.HitRadius,

@@ -7,7 +7,8 @@ public partial class SimpleBulletAttack : AbstractProjectileAttack
 {
 	public override BaseProjectile Attack(
 		Func<BaseProjectile> getProjectile,
-		Vector2 origin,
+		Node? origin,
+		Vector2 position,
 		float rotation,
 		float radius,
 		float speed,
@@ -18,10 +19,10 @@ public partial class SimpleBulletAttack : AbstractProjectileAttack
 		var projectile = getProjectile();
 
 		projectile.SetScale(spriteScale);
-		projectile.SetPosition(origin);
+		projectile.SetPosition(position);
 		projectile.Rotation = rotation;
 
-		projectile.Initialize(radius, speed, pierceLimit);
+		projectile.Initialize(origin, radius, speed, pierceLimit);
 		return projectile;
 	}
 }

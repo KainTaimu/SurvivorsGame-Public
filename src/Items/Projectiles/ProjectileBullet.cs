@@ -4,6 +4,7 @@ using Arch.Core;
 using CommunityToolkit.HighPerformance.Buffers;
 using Game.Core.ECS;
 using Game.Core.Extensions;
+using Game.Items.Offensive;
 using Game.Levels.Controllers;
 using Game.Levels.Environment;
 
@@ -66,8 +67,8 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 			if (node is DestructableStaticBody2D destructableBody)
 			{
 				var destructable = (IDestructable)destructableBody.NodeOwner;
-				// TODO: How to get damage from origin?
-				destructable.TakeHit(10);
+				if (Origin is IHasDamageStats damage)
+					destructable.TakeHit(damage.DamageStats.Damage);
 			}
 			else
 			{
