@@ -10,103 +10,135 @@
 [ext_resource type="Script" uid="uid://d31d8uns5faa5" path="res://src/Players/Controllers/StatusEffectModifier.cs" id="8_agk5e"]
 [ext_resource type="Shader" uid="uid://bg3me0bhc4em2" path="res://src/Shaders/vignette.gdshader" id="21_vujg4"]
 
-[sub_resource type="Resource" id="Resource_klnc8"]
+[sub_resource type="Resource" id="Resource_comn3"]
 resource_local_to_scene = true
 script = ExtResource("3_y52bq")
-BaseValue = 100
+BaseValue = 25
 metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+
+[sub_resource type="Resource" id="Resource_wkerx"]
+resource_local_to_scene = true
+script = ExtResource("3_y52bq")
+BaseValue = 25
+metadata/_custom_type_script = "uid://tfaqh3bcxdha"
+
+[sub_resource type="Resource" id="Resource_q2wbp"]
+resource_local_to_scene = true
+script = ExtResource("4_qh10d")
+BaseValue = 500.0
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_g7v3u"]
+resource_local_to_scene = true
+script = ExtResource("4_qh10d")
+BaseValue = 1.5
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_kag5i"]
+resource_local_to_scene = true
+script = ExtResource("4_qh10d")
+BaseValue = 1.5
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_23k0g"]
+resource_local_to_scene = true
+script = ExtResource("4_qh10d")
+BaseValue = 1.5
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_klnc8"]
+resource_local_to_scene = true
+script = ExtResource("4_qh10d")
+BaseValue = 2.0
+metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_mre4m"]
 resource_local_to_scene = true
+script = ExtResource("4_qh10d")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_y52bq"]
+resource_local_to_scene = true
 script = ExtResource("3_y52bq")
-BaseValue = 100
 metadata/_custom_type_script = "uid://tfaqh3bcxdha"
 
-[sub_resource type="Resource" id="Resource_ygwx1"]
+[sub_resource type="Resource" id="Resource_qh10d"]
 resource_local_to_scene = true
 script = ExtResource("4_qh10d")
-BaseValue = 600.0
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_1uj6g"]
-resource_local_to_scene = true
-script = ExtResource("4_qh10d")
-BaseValue = 1.5
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_snw84"]
-resource_local_to_scene = true
-script = ExtResource("4_qh10d")
-BaseValue = 1.5
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
 [sub_resource type="Resource" id="Resource_vsrt8"]
 resource_local_to_scene = true
 script = ExtResource("4_qh10d")
-BaseValue = 1.5
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="Resource" id="Resource_rg3gt"]
+[sub_resource type="Resource" id="Resource_vujg4"]
 resource_local_to_scene = true
 script = ExtResource("3_y52bq")
 metadata/_custom_type_script = "uid://tfaqh3bcxdha"
 
-[sub_resource type="Resource" id="Resource_6a21i"]
-resource_local_to_scene = true
-script = ExtResource("4_qh10d")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_epxog"]
-resource_local_to_scene = true
-script = ExtResource("4_qh10d")
-metadata/_custom_type_script = "uid://wsto3khl70md"
-
-[sub_resource type="Resource" id="Resource_p0vfj"]
-resource_local_to_scene = true
-script = ExtResource("3_y52bq")
-metadata/_custom_type_script = "uid://tfaqh3bcxdha"
-
-[sub_resource type="Resource" id="Resource_w107a"]
+[sub_resource type="Resource" id="Resource_t84yk"]
 resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 BaseValue = 0.5
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="Resource" id="Resource_pdi6p"]
+[sub_resource type="Resource" id="Resource_bpnxk"]
 resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 BaseValue = 42.0
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="Resource" id="Resource_criticalDamage"]
+[sub_resource type="Resource" id="Resource_7i0hn"]
 resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="Resource" id="Resource_attackSpeed"]
+[sub_resource type="Resource" id="Resource_iu54j"]
 resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="Resource" id="Resource_bloom"]
+[sub_resource type="Resource" id="Resource_nd3y7"]
 resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="Resource" id="Resource_recoil"]
+[sub_resource type="Resource" id="Resource_1d8ks"]
 resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="Resource" id="Resource_incomingDamage"]
+[sub_resource type="Resource" id="Resource_a0fn7"]
 resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="Resource" id="Resource_outgoingDamage"]
+[sub_resource type="Resource" id="Resource_j1i1x"]
 resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="Resource" id="Resource_ofy2w"]
+resource_local_to_scene = true
+script = ExtResource("4_qh10d")
+metadata/_custom_type_script = "uid://wsto3khl70md"
+
+[sub_resource type="GDScript" id="GDScript_yvf4j"]
+script/source = "extends Node
+
+
+func _ready() -> void:
+	Console.pause_enabled = true
+	Console.add_command(\"god\", _toggle_god)
+
+
+func _toggle_god():
+	var stats := GameWorldInstance.MainPlayer.Character.CharacterStats as CharacterStats
+	var god: bool = stats.get(\"_godMode\")
+	stats.set(\"_godMode\", !god)
+	CustomLogger.log_info(\"god: %s\" % !god)
+"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_comn3"]
 resource_local_to_scene = true
@@ -182,7 +214,7 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_urvrt"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w2wr7"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_agk5e"]
@@ -199,32 +231,39 @@ shader_parameter/alpha = 0.0
 shader_parameter/inner_radius = 0.0
 shader_parameter/outer_radius = 1.0
 
-[node name="Player" unique_id=1386970244 instance=ExtResource("1_rmun4")]
+[node name="PlayerDev" unique_id=1386970244 instance=ExtResource("1_rmun4")]
 
 [node name="Character" parent="." index="0" unique_id=527218927 node_paths=PackedStringArray("CharacterStats")]
 CharacterStats = NodePath("CharacterStats")
 
-[node name="CharacterStats" type="Node" parent="Character" index="0" unique_id=822145143 node_paths=PackedStringArray("_player")]
+[node name="CharacterStats" type="Node" parent="Character" index="0" unique_id=703718260 node_paths=PackedStringArray("_player")]
 script = ExtResource("2_qh10d")
-_health = SubResource("Resource_klnc8")
-_maxHealth = SubResource("Resource_mre4m")
-_moveSpeed = SubResource("Resource_ygwx1")
-_runSpeed = SubResource("Resource_1uj6g")
-_stamina = SubResource("Resource_snw84")
-_maxStamina = SubResource("Resource_vsrt8")
-_defense = SubResource("Resource_rg3gt")
-_criticalChance = SubResource("Resource_6a21i")
-_pickupRangeRadius = SubResource("Resource_epxog")
-_healthRegenPerSecond = SubResource("Resource_p0vfj")
-_invincibilityTime = SubResource("Resource_w107a")
-_hitboxRadius = SubResource("Resource_pdi6p")
-_criticalDamage = SubResource("Resource_criticalDamage")
-_attackSpeed = SubResource("Resource_attackSpeed")
-_bloomScale = SubResource("Resource_bloom")
-_recoilScale = SubResource("Resource_recoil")
-_incomingDamage = SubResource("Resource_incomingDamage")
-_outgoingDamage = SubResource("Resource_outgoingDamage")
+_health = SubResource("Resource_comn3")
+_maxHealth = SubResource("Resource_wkerx")
+_moveSpeed = SubResource("Resource_q2wbp")
+_runSpeed = SubResource("Resource_g7v3u")
+_stamina = SubResource("Resource_kag5i")
+_maxStamina = SubResource("Resource_23k0g")
+_timeToMaxStamina = SubResource("Resource_klnc8")
+_exhaustionTime = SubResource("Resource_mre4m")
+_defense = SubResource("Resource_y52bq")
+_criticalChance = SubResource("Resource_qh10d")
+_pickupRangeRadius = SubResource("Resource_vsrt8")
+_healthRegenPerSecond = SubResource("Resource_vujg4")
+_invincibilityTime = SubResource("Resource_t84yk")
+_hitboxRadius = SubResource("Resource_bpnxk")
+_criticalDamage = SubResource("Resource_7i0hn")
+_attackSpeed = SubResource("Resource_iu54j")
+_bloomScale = SubResource("Resource_nd3y7")
+_recoilScale = SubResource("Resource_1d8ks")
+_reloadTimeScale = SubResource("Resource_a0fn7")
+_incomingDamage = SubResource("Resource_j1i1x")
+_outgoingDamage = SubResource("Resource_ofy2w")
 _player = NodePath("../..")
+_godMode = true
+
+[node name="ConsoleCheat" type="Node" parent="Character/CharacterStats" index="0" unique_id=1559900995]
+script = SubResource("GDScript_yvf4j")
 
 [node name="AnimatedSprite2D" parent="." index="1" unique_id=881638213]
 material = SubResource("ShaderMaterial_comn3")

@@ -65,11 +65,14 @@ public partial class PlayerWeaponControllerSingleHanded : AbstractPlayerWeaponCo
 	private void AddWeapon(BaseOffensive offensive)
 	{
 		OffensiveList.AddLast(offensive);
+		PrimaryAttack ??= offensive;
 	}
 
 	private void RemoveWeapon(BaseOffensive offensive)
 	{
 		OffensiveList.Remove(offensive);
+		if (OffensiveList.Count == 0)
+			PrimaryAttack = null;
 	}
 
 	private void NextWeapon()
