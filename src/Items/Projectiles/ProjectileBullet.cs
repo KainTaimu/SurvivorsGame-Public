@@ -160,6 +160,7 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 				alreadyHit = true;
 				break;
 			}
+
 			if (alreadyHit)
 				continue;
 

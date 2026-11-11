@@ -41,9 +41,9 @@ func _input(event: InputEvent) -> void:
 
 
 func show_ui(
-		item_limit: int,
-		rarity_lower_gate: Globals.Rarity,
-		rarity_upper_gate: Globals.Rarity,
+	item_limit: int,
+	rarity_lower_gate: Globals.Rarity,
+	rarity_upper_gate: Globals.Rarity,
 ) -> void:
 	show()
 	PauseController.Lock(self)
@@ -95,7 +95,7 @@ func _assign_item_recurse(arr: Array[ItemShowcase], weapons: Array[Resource], re
 			arr,
 			weapons,
 			remaining -
-			1,
+				1,
 		),
 	)
 

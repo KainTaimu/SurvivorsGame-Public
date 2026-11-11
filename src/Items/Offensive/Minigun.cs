@@ -64,6 +64,7 @@ public partial class Minigun
 	private bool _isMovementPenaltyWearOffApplied;
 
 	public int MagazineCapacity => MagazineStats.Capacity;
+
 	public int MagazineCount
 	{
 		get => MagazineStats.Count;

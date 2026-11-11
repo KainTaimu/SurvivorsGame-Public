@@ -37,9 +37,9 @@ func _gui_input(event: InputEvent) -> void:
 
 
 func assign_item(
-		scene: PackedScene,
-		properties: BaseItemProperties,
-		rarity: Globals.Rarity,
+	scene: PackedScene,
+	properties: BaseItemProperties,
+	rarity: Globals.Rarity,
 ) -> void:
 	main_body = main_body_scene.instantiate() as PickupUiMainbody
 	add_child(main_body)
@@ -71,9 +71,9 @@ func _set_mouse_inside(inside: bool) -> void:
 		return
 	is_mouse_inside = inside
 	mouse_default_cursor_shape = (
-			CursorShape.CURSOR_POINTING_HAND
-			if is_mouse_inside
-			else CursorShape.CURSOR_ARROW
+		CursorShape.CURSOR_POINTING_HAND
+		if is_mouse_inside
+		else CursorShape.CURSOR_ARROW
 	)
 
 	highlight(inside)
