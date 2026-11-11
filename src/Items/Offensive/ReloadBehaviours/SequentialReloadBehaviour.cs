@@ -2,9 +2,13 @@ using Game.Levels.Controllers;
 
 namespace Game.Items.Offensive;
 
-[Tool]
+public interface IInterruptableReloadBehaviour
+{
+	void TryInterrupt();
+}
+
 [GlobalClass]
-public partial class SequentialReloadBehaviour : AbstractReloadBehaviour
+public partial class SequentialReloadBehaviour : AbstractReloadBehaviour, IInterruptableReloadBehaviour
 {
 	[Export]
 	private float _interruptPunishTime = 0.5f;

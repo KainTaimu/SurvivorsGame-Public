@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://igbacr2wbu1g" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_an3hj"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_betsp"]
 [ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/FireGroups/SemiAutoFireGroup.cs" id="3_an3hj"]
-[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_846bq"]
 [ext_resource type="Script" uid="uid://cx3rrg2toydba" path="res://src/Items/Offensive/ReloadBehaviours/SequentialReloadBehaviour.cs" id="4_betsp"]
+[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_846bq"]
 [ext_resource type="AudioStream" uid="uid://bl1hj5f7wkjid" path="res://assets/SFX/Shoot/sks/sks_r2.wav" id="7_an3hj"]
 [ext_resource type="AudioStream" uid="uid://dl730wny5ih3s" path="res://assets/SFX/Shoot/sks/sks-load_r1.wav" id="9_cyvfi"]
 [ext_resource type="AudioStream" uid="uid://j1b3xiu8twci" path="res://assets/SFX/Shoot/sks/sks-bolt-close_r1.wav" id="10_cyvfi"]
@@ -19,24 +19,11 @@
 [ext_resource type="Script" uid="uid://doyqd2gp5rtvn" path="res://src/Items/Offensive/Stats/SlowStats.cs" id="19_eksgj"]
 [ext_resource type="Script" uid="uid://66x4x0yo47cj" path="res://src/Items/Offensive/Stats/KnockbackStats.cs" id="20_4yaez"]
 
-[sub_resource type="Resource" id="Resource_yqty8"]
-resource_local_to_scene = true
-script = ExtResource("3_an3hj")
-metadata/_custom_type_script = "uid://dnodsacrptssb"
-
-[sub_resource type="Resource" id="Resource_n411x"]
-resource_local_to_scene = true
-script = ExtResource("4_betsp")
-_interruptPunishTime = 0.1
-_boltCloseTime = 0.25
-DisplayType = 1
-metadata/_custom_type_script = "uid://cx3rrg2toydba"
-
 [sub_resource type="Resource" id="Resource_dar1o"]
 script = ExtResource("4_846bq")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[node name="SKS" type="Node" unique_id=708917318 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats", "_reloadAudioPlayer", "_boltCloseAudioPlayer")]
+[node name="SKS" type="Node" unique_id=708917318 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats", "_reloadAudioPlayer", "_boltCloseAudioPlayer", "_fireGroup", "_reloadBehaviour")]
 script = ExtResource("1_an3hj")
 DamageStats = NodePath("Stats/DamageStats")
 MagazineStats = NodePath("Stats/MagazineStats")
@@ -49,8 +36,8 @@ PierceStats = NodePath("Stats/PierceStats")
 SlowStats = NodePath("Stats/SlowStats")
 KnockbackStats = NodePath("Stats/KnockbackStats")
 _projectileScene = ExtResource("2_betsp")
-_fireGroup = SubResource("Resource_yqty8")
-_reloadBehaviour = SubResource("Resource_n411x")
+_fireGroup = NodePath("SemiAutoFireGroup")
+_reloadBehaviour = NodePath("SequentialReloadBehaviour")
 _projectileAttack = SubResource("Resource_dar1o")
 _reloadAudioPlayer = NodePath("RoundLoadAudioPlayer")
 _boltCloseAudioPlayer = NodePath("BoltAudioPlayer")
@@ -129,5 +116,17 @@ stream = ExtResource("9_cyvfi")
 
 [node name="BoltAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=754327973]
 stream = ExtResource("10_cyvfi")
+
+[node name="SemiAutoFireGroup" type="Node" parent="." unique_id=697409992 node_paths=PackedStringArray("AttackStats")]
+script = ExtResource("3_an3hj")
+AttackStats = NodePath("../Stats/AttackStats")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
+
+[node name="SequentialReloadBehaviour" type="Node" parent="." unique_id=1838238661]
+script = ExtResource("4_betsp")
+_interruptPunishTime = 0.1
+_boltCloseTime = 0.25
+DisplayType = 1
+metadata/_custom_type_script = "uid://cx3rrg2toydba"
 
 [connection signal="OnAttack" from="." to="ShootAudioPlayer" method="play"]

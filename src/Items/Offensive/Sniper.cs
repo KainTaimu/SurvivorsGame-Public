@@ -98,9 +98,6 @@ public partial class Sniper
 			}
 		);
 
-		if (_fireGroup is ICooldown c)
-			c.CooldownDuration = AttackStats.AttackSpeed;
-
 		_fireGroup.OnFire += OnFireGroupFire;
 
 		OnAttack += () => OffensiveEffects.ApplyCameraShake(RecoilStats.CameraRecoilScale, GetViewport, CreateTween);

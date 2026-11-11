@@ -37,17 +37,11 @@ _bundled = {
 "version": 3
 }
 
-[sub_resource type="Resource" id="Resource_11blq"]
-resource_local_to_scene = true
-script = ExtResource("3_0ap61")
-_fireQueueTolerance = 0.0
-metadata/_custom_type_script = "uid://dnodsacrptssb"
-
 [sub_resource type="Resource" id="Resource_c52kb"]
 script = ExtResource("4_11blq")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[node name="Sniper" type="Node2D" unique_id=399121865 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "MoveBloomStats", "KnockbackStats", "_boltCyclingPlayer")]
+[node name="Sniper" type="Node2D" unique_id=399121865 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "MoveBloomStats", "KnockbackStats", "_boltCyclingPlayer", "_fireGroup")]
 script = ExtResource("1_jg7ce")
 DamageStats = NodePath("Stats/DamageStats")
 MagazineStats = NodePath("Stats/MagazineStats")
@@ -60,7 +54,7 @@ PierceStats = NodePath("Stats/PierceStats")
 MoveBloomStats = NodePath("Stats/MoveBloomStats")
 KnockbackStats = NodePath("Stats/KnockbackStats")
 _projectileScene = SubResource("PackedScene_5un85")
-_fireGroup = SubResource("Resource_11blq")
+_fireGroup = NodePath("SemiAutoFireGroup")
 _projectileAttack = SubResource("Resource_c52kb")
 _boltCyclingPlayer = NodePath("BoltCycle")
 
@@ -157,6 +151,12 @@ volume_db = 8.0
 [node name="308BoltCycleClose" type="AudioStreamPlayer" parent="." unique_id=508340117]
 stream = ExtResource("12_hagd0")
 volume_db = 8.0
+
+[node name="SemiAutoFireGroup" type="Node" parent="." unique_id=1729526405 node_paths=PackedStringArray("AttackStats")]
+script = ExtResource("3_0ap61")
+AttackStats = NodePath("../Stats/AttackStats")
+_fireQueueTolerance = 0.0
+metadata/_custom_type_script = "uid://dnodsacrptssb"
 
 [connection signal="OnAttack" from="." to="Shoot" method="play"]
 [connection signal="OnReloadEnd" from="." to="308BoltCycleClose" method="play"]

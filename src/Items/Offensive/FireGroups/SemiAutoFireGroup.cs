@@ -1,10 +1,12 @@
 namespace Game.Items.Offensive;
 
-[Tool]
 [GlobalClass]
 public partial class SemiAutoFireGroup : AbstractFireGroup, ICooldown
 {
-	public float CooldownDuration { get; set; }
+	[Export]
+	private AttackStats AttackStats { get; set; } = null!;
+
+	private float CooldownDuration => AttackStats.AttackSpeed;
 
 	private bool _isFireQueued;
 	private ulong _ticksSinceLastFire;

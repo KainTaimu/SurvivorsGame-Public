@@ -1,12 +1,20 @@
+using Godot.NativeInterop;
+
 namespace Game.Items.Offensive;
 
 [Tool]
 [GlobalClass]
 public partial class BurstFireGroup : AbstractFireGroup, ICooldown
 {
-	public int BurstCount { get; set; } = 3;
-	public float TimeBetweenBursts { get; set; }
-	public float CooldownDuration { get; set; }
+	[Export]
+	private AttackStats AttackStats { get; set; } = null!;
+
+	[Export]
+	private BurstFireStats BurstFireStats { get; set; } = null!;
+
+	private int BurstCount => BurstFireStats.BurstCount;
+	private float TimeBetweenBursts => BurstFireStats.TimeBetweenBurst;
+	private float CooldownDuration => AttackStats.AttackSpeed;
 
 	private bool _isFireQueued;
 	private float _cooldown;

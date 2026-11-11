@@ -93,9 +93,6 @@ public partial class GrenadeLauncher
 
 	public override void _Ready()
 	{
-		if (_fireGroup is ICooldown c)
-			c.CooldownDuration = AttackStats.AttackSpeed;
-
 		InitializeFireGroupSettings();
 		InitializeReloadBehaviour();
 
@@ -122,24 +119,15 @@ public partial class GrenadeLauncher
 
 	private void InitializeFireGroupSettings()
 	{
-		_fireGroup.ResetState();
-		_reloadBehaviour.ResetState();
-
 		_fireGroup.OnFire += () =>
 		{
-			if (_reloadBehaviour.IsReloading && MagazineCount > 0 && _reloadBehaviour is { IsInterrupted: false } seq)
-				seq.TryInterrupt();
+			_reloadBehaviour.TryInterrupt();
 			Attack();
 		};
-		if (_fireGroup is ICooldown c)
-			c.CooldownDuration = AttackStats.AttackSpeed;
 	}
 
 	private void InitializeReloadBehaviour()
 	{
-		_fireGroup.ResetState();
-		_reloadBehaviour.ResetState();
-
 		_reloadBehaviour.OnReloadEnd += () =>
 		{
 			MagazineCount = MagazineStats.Capacity;

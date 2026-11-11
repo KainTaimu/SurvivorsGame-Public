@@ -1,10 +1,12 @@
 namespace Game.Items.Offensive;
 
-[Tool]
 [GlobalClass]
 public partial class FullAutoFireGroup : AbstractFireGroup, ICooldown
 {
-	public float CooldownDuration { get; set; }
+	[Export]
+	private AttackStats AttackStats { get; set; } = null!;
+
+	private float CooldownDuration => AttackStats.AttackSpeed;
 	private float _cooldown;
 
 	public override void ProcessInput()

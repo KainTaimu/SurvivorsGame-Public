@@ -18,21 +18,11 @@
 [ext_resource type="Script" uid="uid://doyqd2gp5rtvn" path="res://src/Items/Offensive/Stats/SlowStats.cs" id="18_dnr8g"]
 [ext_resource type="Script" uid="uid://66x4x0yo47cj" path="res://src/Items/Offensive/Stats/KnockbackStats.cs" id="19_q9bej"]
 
-[sub_resource type="Resource" id="Resource_w7xe6"]
-resource_local_to_scene = true
-script = ExtResource("3_pdqnw")
-metadata/_custom_type_script = "uid://bt8inkwpypk5b"
-
-[sub_resource type="Resource" id="Resource_mtg14"]
-resource_local_to_scene = true
-script = ExtResource("4_nj2k5")
-metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
-
 [sub_resource type="Resource" id="Resource_c62cd"]
 script = ExtResource("5_vam7u")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[node name="Matrix" type="Node" unique_id=1472391115 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats")]
+[node name="Matrix" type="Node" unique_id=1472391115 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats", "_fireGroup", "_reloadBehaviour")]
 script = ExtResource("1_o1peo")
 DamageStats = NodePath("Stats/DamageStats")
 MagazineStats = NodePath("Stats/MagazineStats")
@@ -45,8 +35,8 @@ PierceStats = NodePath("Stats/PierceStats")
 SlowStats = NodePath("Stats/SlowStats")
 KnockbackStats = NodePath("Stats/KnockbackStats")
 _projectileScene = ExtResource("2_8r2hk")
-_fireGroup = SubResource("Resource_w7xe6")
-_reloadBehaviour = SubResource("Resource_mtg14")
+_fireGroup = NodePath("FullAutoFireGroup")
+_reloadBehaviour = NodePath("NormalReloadBehaviour")
 _projectileAttack = SubResource("Resource_c62cd")
 
 [node name="Stats" type="Node" parent="." unique_id=1532129759]
@@ -122,6 +112,15 @@ max_polyphony = 2
 bus = &"ShootSfx"
 
 [node name="MagAlmostEmpty" parent="." unique_id=866300451 instance=ExtResource("9_rmnc5")]
+
+[node name="FullAutoFireGroup" type="Node" parent="." unique_id=1606083910 node_paths=PackedStringArray("AttackStats")]
+script = ExtResource("3_pdqnw")
+AttackStats = NodePath("../Stats/AttackStats")
+metadata/_custom_type_script = "uid://bt8inkwpypk5b"
+
+[node name="NormalReloadBehaviour" type="Node" parent="." unique_id=1270252923]
+script = ExtResource("4_nj2k5")
+metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 
 [connection signal="AlmostEmpty" from="." to="MagAlmostEmpty" method="play"]
 [connection signal="OnAttack" from="." to="Shoot" method="play"]

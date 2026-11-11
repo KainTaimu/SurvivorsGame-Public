@@ -6,9 +6,8 @@ public enum ReloadDisplayType
 	Progressive,
 }
 
-[Tool]
 [GlobalClass]
-public abstract partial class AbstractReloadBehaviour : Resource
+public abstract partial class AbstractReloadBehaviour : Node
 {
 	[Signal]
 	public delegate void OnReloadStartEventHandler();
@@ -30,9 +29,4 @@ public abstract partial class AbstractReloadBehaviour : Resource
 	public abstract void Reload();
 
 	public abstract void Process(float delta);
-
-	protected AbstractReloadBehaviour()
-	{
-		ResourceLocalToScene = true;
-	}
 }

@@ -140,38 +140,18 @@ public partial class SimpleFirearm
 
 	private void InitializeFireGroupSettings()
 	{
-		_fireGroup.ResetState();
-		_reloadBehaviour.ResetState();
-
-		if (!_fireGroupRegistered)
+		if (_fireGroupRegistered)
+			return;
+		_fireGroup.OnFire += () =>
 		{
-			_fireGroup.OnFire += () =>
-			{
-				if (
-					_reloadBehaviour.IsReloading
-					&& MagazineCount > 0
-					&& _reloadBehaviour is SequentialReloadBehaviour { IsInterrupted: false } seq
-				)
-					seq.TryInterrupt();
-				Attack();
-			};
-			_fireGroupRegistered = true;
-		}
-
-		if (_fireGroup is ICooldown c)
-			c.CooldownDuration = AttackStats.AttackSpeed;
-		if (_fireGroup is BurstFireGroup burst && BurstFireStats != null)
-		{
-			burst.BurstCount = BurstFireStats.BurstCount;
-			burst.TimeBetweenBursts = BurstFireStats.TimeBetweenBurst;
-		}
+			(_reloadBehaviour as IInterruptableReloadBehaviour)?.TryInterrupt();
+			Attack();
+		};
+		_fireGroupRegistered = true;
 	}
 
 	private void InitializeReloadBehaviour()
 	{
-		_fireGroup.ResetState();
-		_reloadBehaviour.ResetState();
-
 		_reloadBehaviour.OnReloadStart += () => { };
 		_reloadBehaviour.OnReloadEnd += () =>
 		{

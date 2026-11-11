@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://igbacr2wbu1g" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_txpck"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_7oacj"]
 [ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/FireGroups/SemiAutoFireGroup.cs" id="3_7oacj"]
-[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_rstrl"]
 [ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="4_xm2c6"]
+[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_rstrl"]
 [ext_resource type="AudioStream" uid="uid://cai4ndme4u2rl" path="res://assets/SFX/Shoot/m1911/m1911_r2.wav" id="7_txpck"]
 [ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="8_8jbg6"]
 [ext_resource type="Script" uid="uid://c8bfvbbqfaakj" path="res://src/Items/Offensive/Stats/DamageStats.cs" id="10_k2ans"]
@@ -18,21 +18,11 @@
 [ext_resource type="Script" uid="uid://doyqd2gp5rtvn" path="res://src/Items/Offensive/Stats/SlowStats.cs" id="18_7ugql"]
 [ext_resource type="Script" uid="uid://66x4x0yo47cj" path="res://src/Items/Offensive/Stats/KnockbackStats.cs" id="19_03rqs"]
 
-[sub_resource type="Resource" id="Resource_jy61x"]
-resource_local_to_scene = true
-script = ExtResource("3_7oacj")
-metadata/_custom_type_script = "uid://dnodsacrptssb"
-
-[sub_resource type="Resource" id="Resource_pm3ln"]
-resource_local_to_scene = true
-script = ExtResource("4_xm2c6")
-metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
-
 [sub_resource type="Resource" id="Resource_yc6ub"]
 script = ExtResource("4_rstrl")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[node name="M1911" type="Node" unique_id=1989500741 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats")]
+[node name="M1911" type="Node" unique_id=1989500741 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats", "_fireGroup", "_reloadBehaviour")]
 script = ExtResource("1_txpck")
 DamageStats = NodePath("Stats/DamageStats")
 MagazineStats = NodePath("Stats/MagazineStats")
@@ -45,8 +35,8 @@ PierceStats = NodePath("Stats/PierceStats")
 SlowStats = NodePath("Stats/SlowStats")
 KnockbackStats = NodePath("Stats/KnockbackStats")
 _projectileScene = ExtResource("2_7oacj")
-_fireGroup = SubResource("Resource_jy61x")
-_reloadBehaviour = SubResource("Resource_pm3ln")
+_fireGroup = NodePath("SemiAutoFireGroup")
+_reloadBehaviour = NodePath("NormalReloadBehaviour")
 _projectileAttack = SubResource("Resource_yc6ub")
 
 [node name="Stats" type="Node" parent="." unique_id=2011311805]
@@ -117,5 +107,14 @@ stream = ExtResource("7_txpck")
 bus = &"ShootSfx"
 
 [node name="MagAlmostEmpty" parent="." unique_id=866300451 instance=ExtResource("8_8jbg6")]
+
+[node name="SemiAutoFireGroup" type="Node" parent="." unique_id=1271165722 node_paths=PackedStringArray("AttackStats")]
+script = ExtResource("3_7oacj")
+AttackStats = NodePath("../Stats/AttackStats")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
+
+[node name="NormalReloadBehaviour" type="Node" parent="." unique_id=286699713]
+script = ExtResource("4_xm2c6")
+metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 
 [connection signal="OnAttack" from="." to="Shoot" method="play"]

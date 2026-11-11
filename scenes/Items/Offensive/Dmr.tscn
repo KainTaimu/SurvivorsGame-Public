@@ -18,16 +18,11 @@
 [ext_resource type="Script" uid="uid://66x4x0yo47cj" path="res://src/Items/Offensive/Stats/KnockbackStats.cs" id="18_i42lw"]
 [ext_resource type="Script" uid="uid://6a5xttelgv2" path="res://src/Items/Offensive/Stats/RadialPushStats.cs" id="19_vzczf"]
 
-[sub_resource type="Resource" id="Resource_62a23"]
-resource_local_to_scene = true
-script = ExtResource("3_f5pnb")
-metadata/_custom_type_script = "uid://dnodsacrptssb"
-
 [sub_resource type="Resource" id="Resource_d1d18"]
 script = ExtResource("4_db67r")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[node name="DMR" type="Node" unique_id=901001043 node_paths=PackedStringArray("RadialPushStats", "DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "MoveBloomStats", "KnockbackStats")]
+[node name="DMR" type="Node" unique_id=901001043 node_paths=PackedStringArray("RadialPushStats", "DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "MoveBloomStats", "KnockbackStats", "_fireGroup")]
 script = ExtResource("1_lnmnp")
 RadialPushStats = NodePath("Stats/RadialPushStats")
 DamageStats = NodePath("Stats/DamageStats")
@@ -41,7 +36,7 @@ PierceStats = NodePath("Stats/PierceStats")
 MoveBloomStats = NodePath("Stats/MoveBloomStats")
 KnockbackStats = NodePath("Stats/KnockbackStats")
 _projectileScene = ExtResource("2_nt1f2")
-_fireGroup = SubResource("Resource_62a23")
+_fireGroup = NodePath("SemiAutoFireGroup")
 _projectileAttack = SubResource("Resource_d1d18")
 
 [node name="Stats" type="Node" parent="." unique_id=1580392105]
@@ -125,6 +120,11 @@ max_polyphony = 29
 bus = &"ShootSfxNoDistortion"
 
 [node name="MagAlmostEmpty" parent="." unique_id=866300451 instance=ExtResource("8_0f2tb")]
+
+[node name="SemiAutoFireGroup" type="Node" parent="." unique_id=153710184 node_paths=PackedStringArray("AttackStats")]
+script = ExtResource("3_f5pnb")
+AttackStats = NodePath("../Stats/AttackStats")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
 
 [connection signal="AlmostEmpty" from="." to="MagAlmostEmpty" method="play"]
 [connection signal="OnAttack" from="." to="Shoot" method="play"]

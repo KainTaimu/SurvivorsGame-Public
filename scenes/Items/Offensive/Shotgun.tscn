@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://b22sxrf4f8mno" path="res://src/Items/Offensive/Shotgun.cs" id="1_f4o5x"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_e0ol0"]
 [ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/FireGroups/SemiAutoFireGroup.cs" id="3_62a23"]
-[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_d1d18"]
 [ext_resource type="Script" uid="uid://cx3rrg2toydba" path="res://src/Items/Offensive/ReloadBehaviours/SequentialReloadBehaviour.cs" id="5_d1d18"]
+[ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_d1d18"]
 [ext_resource type="AudioStream" uid="uid://dukuiytyl14r4" path="res://assets/SFX/Shoot/Snake's Authentic Gun Sounds/Reloads, Cycling & More/WAV/Pump Shell Load WAV.wav" id="5_u167f"]
 [ext_resource type="AudioStream" uid="uid://bqfiejd6bxng0" path="res://assets/SFX/Shoot/m870/m870_r1.wav" id="8_d1d18"]
 [ext_resource type="AudioStream" uid="uid://cttlwhjgh8ji6" path="res://assets/SFX/Shoot/m870/Shotgun_Quick Pump_01.wav" id="9_62a23"]
@@ -20,23 +20,11 @@
 [ext_resource type="Script" uid="uid://66x4x0yo47cj" path="res://src/Items/Offensive/Stats/KnockbackStats.cs" id="20_6fydu"]
 [ext_resource type="Script" uid="uid://cd13blujyxjw8" path="res://src/Items/Offensive/Stats/PumpActionStats.cs" id="21_a765d"]
 
-[sub_resource type="Resource" id="Resource_e3ubm"]
-resource_local_to_scene = true
-script = ExtResource("3_62a23")
-metadata/_custom_type_script = "uid://dnodsacrptssb"
-
-[sub_resource type="Resource" id="Resource_d1d18"]
-resource_local_to_scene = true
-script = ExtResource("5_d1d18")
-_interruptPunishTime = 0.05
-DisplayType = 1
-metadata/_custom_type_script = "uid://cx3rrg2toydba"
-
 [sub_resource type="Resource" id="Resource_mkf0n"]
 script = ExtResource("4_d1d18")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[node name="M870" type="Node" unique_id=1997007315 node_paths=PackedStringArray("PumpActionStats", "_shellReloadAudioPlayer", "_cockingAudioPlayer", "DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats", "_reloadAudioPlayer", "_boltCloseAudioPlayer")]
+[node name="M870" type="Node" unique_id=1997007315 node_paths=PackedStringArray("PumpActionStats", "_shellReloadAudioPlayer", "_cockingAudioPlayer", "DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats", "_reloadAudioPlayer", "_boltCloseAudioPlayer", "_fireGroup", "_reloadBehaviour")]
 script = ExtResource("1_f4o5x")
 PumpActionStats = NodePath("Stats/PumpActionStats")
 _shellReloadAudioPlayer = NodePath("ShellReload")
@@ -52,8 +40,8 @@ PierceStats = NodePath("Stats/PierceStats")
 SlowStats = NodePath("Stats/SlowStats")
 KnockbackStats = NodePath("Stats/KnockbackStats")
 _projectileScene = ExtResource("2_e0ol0")
-_fireGroup = SubResource("Resource_e3ubm")
-_reloadBehaviour = SubResource("Resource_d1d18")
+_fireGroup = NodePath("SemiAutoFireGroup")
+_reloadBehaviour = NodePath("SequentialReloadBehaviour")
 _projectileAttack = SubResource("Resource_mkf0n")
 _reloadAudioPlayer = NodePath("ShellReload")
 _boltCloseAudioPlayer = NodePath("Cocking")
@@ -141,5 +129,16 @@ bus = &"ShootSfx"
 [node name="Cocking" type="AudioStreamPlayer" parent="." unique_id=138581488]
 process_mode = 3
 stream = ExtResource("9_62a23")
+
+[node name="SemiAutoFireGroup" type="Node" parent="." unique_id=1966808229 node_paths=PackedStringArray("AttackStats")]
+script = ExtResource("3_62a23")
+AttackStats = NodePath("../Stats/AttackStats")
+metadata/_custom_type_script = "uid://dnodsacrptssb"
+
+[node name="SequentialReloadBehaviour" type="Node" parent="." unique_id=113955983]
+script = ExtResource("5_d1d18")
+_interruptPunishTime = 0.05
+DisplayType = 1
+metadata/_custom_type_script = "uid://cx3rrg2toydba"
 
 [connection signal="OnAttack" from="." to="Shoot" method="play"]

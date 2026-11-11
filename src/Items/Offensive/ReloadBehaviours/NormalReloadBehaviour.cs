@@ -1,6 +1,5 @@
 namespace Game.Items.Offensive;
 
-[Tool]
 [GlobalClass]
 public partial class NormalReloadBehaviour : AbstractReloadBehaviour
 {
