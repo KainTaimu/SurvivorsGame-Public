@@ -239,7 +239,7 @@ script = ExtResource("10_ta1oo")
 Duration = 999.0
 EnemyBlueprints = SubResource("Resource_vvuu7")
 SpawnMinTime = 0.1
-SpawnMaxTime = 0.3
+SpawnMaxTime = 0.1
 SpawnBatchMax = 2
 
 [node name="2 DebugStopper" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="1" unique_id=565233767]

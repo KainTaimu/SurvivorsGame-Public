@@ -2,9 +2,7 @@
 
 [ext_resource type="Script" uid="uid://btsjfyj4mvtfa" path="res://src/Levels/Controllers/GoreManager.cs" id="1_2mqri"]
 [ext_resource type="Script" uid="uid://chh33akj67s1w" path="res://src/Levels/Controllers/GoreBurstParams.cs" id="2_pkkq0"]
-[ext_resource type="Script" uid="uid://do22hrblk0inl" path="res://src/Levels/Controllers/GoreParticleBuffer.cs" id="3_rxqt6"]
-[ext_resource type="Texture2D" uid="uid://c7kegqurrrx0w" path="res://assets/VFX/small_chevron.png" id="4_y53ej"]
-[ext_resource type="Shader" uid="uid://q0v4lo1dgueb" path="res://src/Shaders/gore.gdshader" id="5_v26op"]
+[ext_resource type="PackedScene" uid="uid://dds0plu5beg5s" path="res://scenes/Levels/GoreParticleBuffer.tscn" id="3_0ylxp"]
 
 [sub_resource type="Resource" id="Resource_pkkq0"]
 script = ExtResource("2_pkkq0")
@@ -42,19 +40,20 @@ BaseTint = Color(0.4422327, 6.9187956e-07, 9.62615e-08, 1)
 HueVariationMin = -0.225
 HueVariationMax = -0.149
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_do71q"]
-shader = ExtResource("5_v26op")
-shader_parameter/game_time = 0.0
-
-[node name="GoreManager" type="Node2D" unique_id=1386313910 node_paths=PackedStringArray("_particleBuffer")]
+[node name="GoreManager" type="Node2D" unique_id=1386313910]
+process_thread_group = 2
+process_thread_group_order = 0
+process_thread_messages = 0
 modulate = Color(1, 0, 0, 1)
 script = ExtResource("1_2mqri")
 _deathNormalParams = SubResource("Resource_pkkq0")
 _deathExplosionParams = SubResource("Resource_0ylxp")
 _spurtParams = SubResource("Resource_fo3s0")
-_particleBuffer = NodePath("GoreParticleBuffer")
 
-[node name="GoreParticleBuffer" type="Node2D" parent="." unique_id=121852980]
-script = ExtResource("3_rxqt6")
-_particleSprite = ExtResource("4_y53ej")
-_goreShaderMaterial = SubResource("ShaderMaterial_do71q")
+[node name="GoreParticleBuffer" parent="." unique_id=56453676 instance=ExtResource("3_0ylxp")]
+
+[node name="GoreParticleBuffer2" parent="." unique_id=486705635 instance=ExtResource("3_0ylxp")]
+
+[node name="GoreParticleBuffer3" parent="." unique_id=971166902 instance=ExtResource("3_0ylxp")]
+
+[node name="GoreParticleBuffer4" parent="." unique_id=1150221819 instance=ExtResource("3_0ylxp")]

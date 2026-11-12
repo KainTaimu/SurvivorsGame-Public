@@ -13,6 +13,9 @@ font_color = Color(0, 1, 0, 1)
 
 [node name="DebugClassInspector" type="CanvasLayer" unique_id=1989388267 node_paths=PackedStringArray("_label")]
 process_mode = 3
+process_thread_group = 1
+process_thread_group_order = 0
+process_thread_messages = 0
 layer = 207
 script = ExtResource("1_bu3gy")
 BindingFlags = 38

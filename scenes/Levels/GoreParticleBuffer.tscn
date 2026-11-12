@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dds0plu5beg5s"]
+
+[ext_resource type="Script" uid="uid://do22hrblk0inl" path="res://src/Levels/Controllers/GoreParticleBuffer.cs" id="1_vaxyg"]
+[ext_resource type="Texture2D" uid="uid://c7kegqurrrx0w" path="res://assets/VFX/small_chevron.png" id="2_7gntp"]
+[ext_resource type="Shader" uid="uid://q0v4lo1dgueb" path="res://src/Shaders/gore.gdshader" id="3_71qmw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_do71q"]
+shader = ExtResource("3_71qmw")
+shader_parameter/game_time = 0.0
+
+[node name="GoreParticleBuffer" type="Node2D" unique_id=56453676]
+script = ExtResource("1_vaxyg")
+_particleSprite = ExtResource("2_7gntp")
+_goreShaderMaterial = SubResource("ShaderMaterial_do71q")
