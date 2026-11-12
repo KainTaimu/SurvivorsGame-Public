@@ -150,15 +150,13 @@ public partial class CurrentWeaponUi : CanvasLayer
 				weaponItem.WeaponName.Text = properties.Name;
 
 				if (_weaponController.PrimaryAttack == weapon)
-				{
 					selectedIndex = i;
-				}
 
 				weaponItem.Name = i++.ToString();
 			}
 
 			_weaponCarousel.RefreshLayout();
-			_weaponCarousel.SelectIndex(selectedIndex, animate: !countChanged);
+			_weaponCarousel.SelectIndex(selectedIndex, !countChanged);
 		}
 		catch (ObjectDisposedException)
 		{

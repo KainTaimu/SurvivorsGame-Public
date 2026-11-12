@@ -40,7 +40,7 @@ public partial class ItemDebugInfo : CanvasLayer
 		if (!Enabled)
 			return;
 
-		var target = Target ?? PlayerWeaponController?.PrimaryAttack as Node;
+		var target = Target ?? PlayerWeaponController?.PrimaryAttack;
 		if (target is null)
 		{
 			Hide();

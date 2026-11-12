@@ -40,12 +40,14 @@ public partial class GoreManager : Node2D
 		}
 
 		foreach (var buffer in _particleBuffers)
+		{
 			buffer.Initialize(
 				MaxParticleCount / _particleBuffers.Count,
 				_deathNormalParams,
 				_deathExplosionParams,
 				_spurtParams
 			);
+		}
 
 		GameSettings.Instance.OnGoreEffectsChanged += OnGoreSettingsChanged;
 

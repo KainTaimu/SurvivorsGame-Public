@@ -7,6 +7,8 @@ using System.Threading;
 using Arch.System;
 using Arch.System.SourceGenerator;
 using Game.Core.ECS;
+using Godot.Collections;
+using Array = System.Array;
 
 namespace Game.Levels.Controllers;
 
@@ -319,7 +321,7 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 
 	private Rid CreateSet(Rid shader, params (int Binding, Rid Buffer)[] entries)
 	{
-		var uniforms = new Godot.Collections.Array<RDUniform>();
+		var uniforms = new Array<RDUniform>();
 		foreach (var (binding, buffer) in entries)
 		{
 			var uniform = new RDUniform { UniformType = RenderingDevice.UniformType.StorageBuffer, Binding = binding };

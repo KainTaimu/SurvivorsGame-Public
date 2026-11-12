@@ -32,9 +32,7 @@ public partial class Player : Node2D
 	public override void _Ready()
 	{
 		if (!HasConnections(SignalName.OnPlayerDeath))
-		{
 			CustomLogger.LogWarning("No connections to OnDamaged signal");
-		}
 	}
 
 	public void OnDeath()

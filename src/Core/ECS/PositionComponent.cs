@@ -13,4 +13,4 @@ public struct PositionComponent(Vector2 position)
 	{
 		return new PositionComponent(left.Position + right.Velocity);
 	}
-};
+}

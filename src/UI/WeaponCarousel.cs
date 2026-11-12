@@ -36,9 +36,7 @@ public partial class WeaponCarousel : Control
 		foreach (var child in _track.GetChildren())
 		{
 			if (child is Control control)
-			{
 				_items.Add(control);
-			}
 		}
 
 		LayoutItems();
@@ -73,14 +71,15 @@ public partial class WeaponCarousel : Control
 			_hasInitialSelection = false;
 		}
 		else if (_selectedIndex >= _items.Count)
-		{
 			_selectedIndex = _items.Count - 1;
-		}
 
 		return _items.Count > 0 ? (T)_items[0] : null!;
 	}
 
-	public Control GetItem(int index) => _items[index];
+	public Control GetItem(int index)
+	{
+		return _items[index];
+	}
 
 	public void RefreshLayout()
 	{

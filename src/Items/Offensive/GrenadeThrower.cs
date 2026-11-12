@@ -68,7 +68,7 @@ public partial class GrenadeThrower
 		_fireCooldown = AttackStats.AttackSpeed;
 
 		var nade = GrenadeScene.Instantiate<Grenade>();
-		nade.OnExploded += (pos) =>
+		nade.OnExploded += pos =>
 		{
 			_blastPosition = pos;
 			_explosionPlayer?.Reparent(GetTree().Root);

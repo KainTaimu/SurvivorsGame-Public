@@ -141,7 +141,7 @@ public partial class GrenadeLauncher
 			Reload();
 
 		var nade = GrenadeScene.Instantiate<Grenade>();
-		nade.OnExploded += (blastPos) =>
+		nade.OnExploded += blastPos =>
 		{
 			_explosionPlayer?.Reparent(GetTree().Root);
 			_explosionPlayer?.Play();

@@ -69,9 +69,7 @@ public partial class WaveDebugPanel : CanvasLayer
 			_isForceNextWaveBtnPressed = true;
 		}
 		else
-		{
 			_isForceNextWaveBtnPressed = false;
-		}
 	}
 
 	private void FastForward(bool flag)

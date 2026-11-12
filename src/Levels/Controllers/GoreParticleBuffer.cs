@@ -131,9 +131,7 @@ public partial class GoreParticleBuffer : Node2D
 			else
 			{
 				if (_burstQueue.Count > _maxParticleCount * 0.3f)
-				{
 					continue;
-				}
 
 				_burstQueue.Enqueue(particles);
 			}

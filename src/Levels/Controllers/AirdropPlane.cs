@@ -37,9 +37,7 @@ public partial class AirdropPlane : Node2D
 		{
 			_timeUntilNextDrop -= (float)delta;
 			if (_timeUntilNextDrop > 0 || _dropAmount-- <= 0)
-			{
 				return;
-			}
 
 			DropCarpetBomb();
 			_timeUntilNextDrop = DROP_INTERVAL_SEC;

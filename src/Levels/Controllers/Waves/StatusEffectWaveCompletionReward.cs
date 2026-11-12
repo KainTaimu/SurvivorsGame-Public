@@ -12,8 +12,6 @@ public partial class StatusEffectWaveCompletionReward : AbstractWaveCompletionRe
 	public override void GiveReward()
 	{
 		foreach (var statusEffect in _statusEffects)
-		{
 			GameWorld.Instance.MainPlayer.StatusEffectController.AddStatusEffect(statusEffect);
-		}
 	}
 }

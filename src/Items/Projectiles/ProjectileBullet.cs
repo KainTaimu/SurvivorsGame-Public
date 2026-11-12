@@ -71,9 +71,7 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 					destructable.TakeHit(damage.DamageStats.Damage);
 			}
 			else
-			{
 				SpawnContactEffects((Vector2)result["position"], (Vector2)result["normal"]);
-			}
 
 			ReturnToPool();
 			return;

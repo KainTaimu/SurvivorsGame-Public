@@ -66,10 +66,7 @@ public partial class WaveDuration : AbstractWave, IWaveProgress, IWaveResettable
 
 		var enemy = Spawner.SpawnEnemy(bp, ViewportTools.GetPositionOutsideViewport(followViewportScale: false));
 		if (enemy is null)
-		{
 			CustomLogger.LogError("failed to spawn");
-			return;
-		}
 	}
 
 	public void Reset()

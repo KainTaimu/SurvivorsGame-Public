@@ -74,7 +74,7 @@ VerticalBaseRecoil = 12.0
 VerticalRecoilRandom = 2.0
 RecoilScale = 0.9
 RecoilAccumilationScale = 0.1
-CameraRecoilScale = 0.5
+CameraRecoilScale = 0.35
 metadata/_custom_type_script = "uid://xtlc02w402jw"
 
 [node name="ReloadStats" type="Node" parent="Stats" unique_id=612848981]

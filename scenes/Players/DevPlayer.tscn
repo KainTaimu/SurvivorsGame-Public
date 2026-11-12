@@ -145,7 +145,7 @@ func _toggle_god():
 	CustomLogger.log_info(\"god: %s\" % !god)
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qh10d"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_23k0g"]
 resource_local_to_scene = true
 shader = ExtResource("5_t84yk")
 
@@ -181,7 +181,7 @@ region = Rect2(62, 0, 31, 31)
 atlas = ExtResource("6_y52bq")
 region = Rect2(93, 0, 31, 31)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_agk5e"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_klnc8"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -219,7 +219,7 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vsrt8"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w2wr7"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_agk5e"]
@@ -228,7 +228,7 @@ Name = "DEV"
 Permanent = true
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vujg4"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mre4m"]
 resource_local_to_scene = true
 shader = ExtResource("21_vujg4")
 shader_parameter/tint = Color(0.33618236, 2.6171097e-07, 1.2032687e-07, 1)
@@ -271,12 +271,13 @@ _godMode = true
 script = SubResource("GDScript_yvf4j")
 
 [node name="AnimatedSprite2D" parent="." index="1" unique_id=881638213]
-material = SubResource("ShaderMaterial_qh10d")
-sprite_frames = SubResource("SpriteFrames_agk5e")
+material = SubResource("ShaderMaterial_23k0g")
+sprite_frames = SubResource("SpriteFrames_klnc8")
 animation = &"idle"
 
 [node name="PlayerCameraController" parent="." index="2" unique_id=68646763]
 editor_draw_limits = true
+max_zoom = 0.65
 
 [node name="LookLight" parent="." index="4" unique_id=1398023543]
 shadow_enabled = true
@@ -295,4 +296,4 @@ _testEffect = Array[ExtResource("7_qh10d")]([SubResource("Resource_agk5e")])
 [node name="M249" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="4" unique_id=873525008 instance=ExtResource("21_pwwtk")]
 
 [node name="ColorRect" parent="DamageVignette" parent_id_path=PackedInt32Array(758455490) index="0" unique_id=1773597369]
-material = SubResource("ShaderMaterial_vujg4")
+material = SubResource("ShaderMaterial_mre4m")

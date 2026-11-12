@@ -60,7 +60,7 @@ public partial class PlayerHitController : Node
 
 	private void DamageFeedback()
 	{
-		if (_playerSprite.Material is not ShaderMaterial spriteShaderMaterial)
+		if (_playerSprite.Material is not ShaderMaterial)
 			return;
 
 		var tween = CreateTween();
