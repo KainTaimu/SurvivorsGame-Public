@@ -5,3 +5,5 @@
 [node name="UIHighlightClick" type="AudioStreamPlayer" unique_id=893066757]
 stream = ExtResource("1_tgenn")
 volume_db = 8.0
+mix_target = 2
+bus = &"UI"

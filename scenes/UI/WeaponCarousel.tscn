@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://02qn3awmb1b"]
 
 [ext_resource type="Script" uid="uid://boyu4ja35a2cs" path="res://src/UI/WeaponCarousel.cs" id="1_hsgm8"]
+[ext_resource type="PackedScene" uid="uid://fumoyucxxk47" path="res://scenes/UI/UiHighlightClick.tscn" id="2_hsgm8"]
 
 [node name="WeaponCarousel" type="Control" unique_id=2086571498 node_paths=PackedStringArray("_track")]
 clip_contents = true
@@ -18,3 +19,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="UIHighlightClick" parent="." unique_id=893066757 instance=ExtResource("2_hsgm8")]
+volume_db = 0.0
+max_polyphony = 999
+
+[connection signal="SelectionChanged" from="." to="UIHighlightClick" method="play" flags=3 unbinds=1]

@@ -168,7 +168,7 @@ public partial class WeaponCarousel : Control
 			_tween.Kill();
 
 		_tween = CreateTween().SetParallel();
-		_tween.SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.Out);
+		_tween.SetTrans(Tween.TransitionType.Spring).SetEase(Tween.EaseType.Out);
 
 		var targetX = GetTargetTrackX(index);
 		_tween.TweenProperty(_track, "position:x", targetX, SlideDuration);
