@@ -16,7 +16,7 @@ public partial class CurrentWeaponUi : CanvasLayer
 	private PackedScene _weaponCarouselItemScene = null!;
 
 	[Export]
-	private Control _weaponCarousel = null!;
+	private WeaponCarousel _weaponCarousel = null!;
 
 	[Export]
 	private Label _primaryWeaponAmmo = null!;
@@ -38,7 +38,6 @@ public partial class CurrentWeaponUi : CanvasLayer
 	{
 		PauseController.Instance.OnPauseToggled += OnInstanceOnOnPauseToggled;
 		_weaponController.OnPrimaryAttackReassigned += UpdateCarousel;
-		_weaponController.OnSecondaryAttackReassigned += UpdateCarousel;
 		_weaponController.OnOffensiveListChanged += _ => UpdateCarousel();
 		_weaponController.ChildOrderChanged += UpdateCarousel;
 		Callable.From(UpdateCarousel).CallDeferred();
@@ -121,28 +120,18 @@ public partial class CurrentWeaponUi : CanvasLayer
 		// weapon node exiting normally and it being freed due to Root reloading
 		try
 		{
-			var diff = _weaponController.Offensives.Count - _weaponCarousel.GetChildCount();
-			while (diff > 0)
-			{
-				var weaponItem = _weaponCarouselItemScene.Instantiate<WeaponItem>();
-				_weaponCarousel.AddChild(weaponItem);
-				diff--;
-			}
-
-			while (diff < 0)
-			{
-				var lastChildIndex = _weaponCarousel.GetChildCount() - 1;
-				var child = _weaponCarousel.GetChild(lastChildIndex);
-				_weaponCarousel.RemoveChild(child);
-				child.QueueFree();
-				diff++;
-			}
+			var countChanged = _weaponCarousel.ItemCount != _weaponController.Offensives.Count;
+			_weaponCarousel.EnsureItemCount<WeaponItem>(_weaponController.Offensives.Count, _weaponCarouselItemScene);
 
 			var i = 0;
+			var selectedIndex = 0;
 			foreach (var weapon in _weaponController.Offensives)
 			{
-				if (_weaponCarousel.GetChild(i) is not WeaponItem weaponItem)
+				if (_weaponCarousel.GetItem(i) is not WeaponItem weaponItem)
+				{
+					i++;
 					continue;
+				}
 
 				// HACK HACK
 				var weaponScene = GD.Load<PackedScene>(weapon.SceneFilePath);
@@ -162,24 +151,18 @@ public partial class CurrentWeaponUi : CanvasLayer
 
 				if (_weaponController.PrimaryAttack == weapon)
 				{
-					// Must use VisibleRatio, Setting Visible property breaks the VBoxContainer of the WeaponItem
-					weaponItem.SelectedCaret.VisibleRatio = 1;
-					weaponItem.SelectedCaret.Text = "⌄";
-					weaponItem.WeaponName.LabelSettings.FontColor = Colors.White;
-				}
-				else
-				{
-					weaponItem.SelectedCaret.VisibleRatio = 0;
-					weaponItem.WeaponName.LabelSettings.FontColor = Colors.DarkGray;
+					selectedIndex = i;
 				}
 
 				weaponItem.Name = i++.ToString();
 			}
+
+			_weaponCarousel.RefreshLayout();
+			_weaponCarousel.SelectIndex(selectedIndex, animate: !countChanged);
 		}
-		catch (ObjectDisposedException ex)
+		catch (ObjectDisposedException)
 		{
-			if (ex.ObjectName != "Godot.HBoxContainer")
-				throw;
+			// Ignore disposal during scene reload
 		}
 	}
 }

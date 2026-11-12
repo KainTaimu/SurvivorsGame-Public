@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://02qn3awmb1b"]
+
+[ext_resource type="Script" uid="uid://boyu4ja35a2cs" path="res://src/UI/WeaponCarousel.cs" id="1_hsgm8"]
+
+[node name="WeaponCarousel" type="Control" unique_id=2086571498 node_paths=PackedStringArray("_track")]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_hsgm8")
+_track = NodePath("Track")
+
+[node name="Track" type="Control" parent="." unique_id=2075908636]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

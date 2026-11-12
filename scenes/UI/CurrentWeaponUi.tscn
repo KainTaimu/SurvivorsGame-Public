@@ -3,11 +3,12 @@
 [ext_resource type="Script" uid="uid://xy08twumu55m" path="res://src/UI/CurrentWeaponUi.cs" id="1_tlm74"]
 [ext_resource type="PackedScene" uid="uid://gf8aatfp6j1o" path="res://scenes/UI/WeaponCarouselItem.tscn" id="2_8t4bl"]
 [ext_resource type="LabelSettings" uid="uid://cu65p2lbgxmhg" path="res://scenes/UI/WeaponCarouselLabelSettings.tres" id="3_r6iw8"]
+[ext_resource type="PackedScene" uid="uid://02qn3awmb1b" path="res://scenes/UI/WeaponCarousel.tscn" id="4_wc123"]
 
 [node name="CurrentWeaponUI" type="CanvasLayer" unique_id=2135368036 node_paths=PackedStringArray("_weaponCarousel", "_primaryWeaponAmmo", "_secondaryWeaponAmmo")]
 script = ExtResource("1_tlm74")
 _weaponCarouselItemScene = ExtResource("2_8t4bl")
-_weaponCarousel = NodePath("MarginContainer/Control/VBoxContainer/WeaponCarousel")
+_weaponCarousel = NodePath("MarginContainer/Control/WeaponCarousel")
 _primaryWeaponAmmo = NodePath("MarginContainer/Control/Label")
 _secondaryWeaponAmmo = NodePath("MarginContainer/Control/Label2")
 
@@ -24,23 +25,14 @@ theme_override_constants/margin_bottom = 2
 [node name="Control" type="Control" parent="MarginContainer" unique_id=2001976314]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control" unique_id=734686485]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -33.0
-offset_top = -48.0
-offset_right = 33.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="WeaponCarousel" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer" unique_id=1139512538]
-layout_mode = 2
-theme_override_constants/separation = 24
-alignment = 1
+[node name="WeaponCarousel" parent="MarginContainer/Control" unique_id=1139512538 instance=ExtResource("4_wc123")]
+custom_minimum_size = Vector2(960, 48)
+clip_contents = false
+layout_mode = 0
+offset_left = 480.0
+offset_top = 1039.0
+offset_right = 1440.0
+offset_bottom = 1087.0
 
 [node name="Label" type="Label" parent="MarginContainer/Control" unique_id=1833705021]
 layout_mode = 1

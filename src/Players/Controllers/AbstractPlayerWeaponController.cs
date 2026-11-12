@@ -11,9 +11,6 @@ public abstract partial class AbstractPlayerWeaponController : Node
 	[Signal]
 	public delegate void OnPrimaryAttackReassignedEventHandler();
 
-	[Signal]
-	public delegate void OnSecondaryAttackReassignedEventHandler();
-
 	public BaseOffensive? PrimaryAttack
 	{
 		get;
