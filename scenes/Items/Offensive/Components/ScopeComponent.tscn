@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://3egbr6rh75nk"]
+
+[ext_resource type="Script" uid="uid://cv12cpro6oun8" path="res://scenes/VFX/ScopeComponent.cs" id="1_kstem"]
+[ext_resource type="Shader" uid="uid://crradnsj7ridu" path="res://src/Shaders/scope_overlay.gdshader" id="2_6yfuu"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_do71q"]
+shader = ExtResource("2_6yfuu")
+shader_parameter/edge_width = 0.243
+shader_parameter/refraction_strength = 0.04
+shader_parameter/chromatic_aberration = 0.003
+
+[node name="ScopeComponent" type="CanvasLayer" unique_id=1715852719 node_paths=PackedStringArray("_overlay")]
+layer = 0
+visible = false
+script = ExtResource("1_kstem")
+_overlay = NodePath("Overlay")
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=550574645]
+material = SubResource("ShaderMaterial_do71q")
+instance_shader_parameters/feather = 0.054
+instance_shader_parameters/point = Vector2(0.5, 0.5)
+instance_shader_parameters/radius = 0.2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

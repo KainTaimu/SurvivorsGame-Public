@@ -16,6 +16,7 @@ public abstract partial class AbstractPlayerWeaponController : Node
 		get;
 		protected set
 		{
+			field?.EmitSignal(BaseOffensive.SignalName.OnUnequipped);
 			field = value;
 			EmitSignalOnPrimaryAttackReassigned();
 		}

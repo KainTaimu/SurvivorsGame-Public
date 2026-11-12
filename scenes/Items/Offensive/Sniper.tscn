@@ -22,6 +22,10 @@
 [ext_resource type="Script" uid="uid://66x4x0yo47cj" path="res://src/Items/Offensive/Stats/KnockbackStats.cs" id="17_ore6g"]
 [ext_resource type="Script" uid="uid://b1j7f3uyd80s3" path="res://src/Items/Offensive/Stats/MoveBloomStats.cs" id="18_tbgkn"]
 [ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="22_k7g5g"]
+[ext_resource type="PackedScene" uid="uid://3egbr6rh75nk" path="res://scenes/Items/Offensive/Components/ScopeComponent.tscn" id="24_bgsbt"]
+[ext_resource type="Script" uid="uid://c0xnhv61iiqba" path="res://src/Items/Offensive/Components/StatusEffectComponent.cs" id="26_8bwop"]
+[ext_resource type="Script" uid="uid://d31d8uns5faa5" path="res://src/Players/Controllers/StatusEffectModifier.cs" id="27_5hpaj"]
+[ext_resource type="Script" uid="uid://bdk4fdcqvypav" path="res://src/Players/Controllers/StatusEffect.cs" id="28_k7qs1"]
 
 [sub_resource type="PackedScene" id="PackedScene_5un85"]
 _bundled = {
@@ -42,7 +46,33 @@ _bundled = {
 script = ExtResource("4_11blq")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[node name="Sniper" type="Node2D" unique_id=399121865 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "MoveBloomStats", "KnockbackStats", "_fireGroup", "_reloadBehaviour", "_boltCyclingPlayer")]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_bgsbt"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_5hpaj"]
+script = ExtResource("27_5hpaj")
+StatName = 3
+Operation = 1
+Value = 0.5
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_k7qs1"]
+script = ExtResource("27_5hpaj")
+StatName = 21
+Operation = 1
+Value = 1.5
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_bgsbt"]
+script = ExtResource("28_k7qs1")
+Name = "Scoped In"
+Cause = 2
+Permanent = true
+Icon = SubResource("PlaceholderTexture2D_bgsbt")
+Modifiers = Array[ExtResource("27_5hpaj")]([SubResource("Resource_5hpaj"), SubResource("Resource_k7qs1")])
+metadata/_custom_type_script = "uid://bdk4fdcqvypav"
+
+[node name="Sniper" type="Node2D" unique_id=399121865 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "MoveBloomStats", "KnockbackStats", "_scopeComponent", "_fireGroup", "_reloadBehaviour", "_boltCyclingPlayer")]
 script = ExtResource("1_jg7ce")
 DamageStats = NodePath("Stats/DamageStats")
 MagazineStats = NodePath("Stats/MagazineStats")
@@ -54,6 +84,7 @@ AttackStats = NodePath("Stats/AttackStats")
 PierceStats = NodePath("Stats/PierceStats")
 MoveBloomStats = NodePath("Stats/MoveBloomStats")
 KnockbackStats = NodePath("Stats/KnockbackStats")
+_scopeComponent = NodePath("ScopeComponent")
 _projectileScene = SubResource("PackedScene_5un85")
 _fireGroup = NodePath("SemiAutoFireGroup")
 _reloadBehaviour = NodePath("NormalReloadBehaviour")
@@ -88,7 +119,7 @@ VerticalBaseRecoil = 150.0
 VerticalRecoilRandom = 0.0
 RecoilAccumilationScale = 0.0
 HorizontalRecoilPunish = false
-CameraRecoilScale = 3.0
+CameraRecoilScale = 4.0
 metadata/_custom_type_script = "uid://xtlc02w402jw"
 
 [node name="ReloadStats" type="Node" parent="Stats" unique_id=1187073488]
@@ -166,10 +197,21 @@ MagazineStats = NodePath("../Stats/MagazineStats")
 ReloadStats = NodePath("../Stats/ReloadStats")
 metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 
+[node name="ScopeComponent" parent="." unique_id=1715852719 instance=ExtResource("24_bgsbt")]
+
+[node name="ScopedStatusEffectComponent" type="Node" parent="." unique_id=2100231185]
+script = ExtResource("26_8bwop")
+_statusEffect = SubResource("Resource_bgsbt")
+metadata/_custom_type_script = "uid://c0xnhv61iiqba"
+
 [connection signal="OnAttack" from="." to="Shoot" method="play"]
 [connection signal="OnReloadEnd" from="." to="308BoltCycleClose" method="play"]
 [connection signal="OnReloadStart" from="." to="308BoltCycleOpen" method="play"]
+[connection signal="OnReloadStart" from="." to="ScopeComponent" method="HideScope"]
+[connection signal="OnUnequipped" from="." to="ScopeComponent" method="HideScope"]
 [connection signal="OnFire" from="SemiAutoFireGroup" to="." method="Attack"]
 [connection signal="OnReloadEnd" from="NormalReloadBehaviour" to="308BoltCycleClose" method="play"]
 [connection signal="OnReloadEndInterrupted" from="NormalReloadBehaviour" to="308BoltCycleClose" method="play"]
 [connection signal="OnReloadStart" from="NormalReloadBehaviour" to="308BoltCycleOpen" method="play"]
+[connection signal="OnScopedIn" from="ScopeComponent" to="ScopedStatusEffectComponent" method="GiveStatusEffect"]
+[connection signal="OnScopedOut" from="ScopeComponent" to="ScopedStatusEffectComponent" method="RemoveStatusEffect"]

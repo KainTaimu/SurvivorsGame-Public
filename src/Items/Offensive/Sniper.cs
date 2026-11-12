@@ -2,6 +2,7 @@ using Arch.Core;
 using Game.Levels.Controllers;
 using Game.Players.Controllers;
 using Game.UI;
+using Game.VFX;
 
 namespace Game.Items.Offensive;
 
@@ -57,6 +58,10 @@ public partial class Sniper
 
 	[Export]
 	public KnockbackStats KnockbackStats { get; set; } = null!;
+
+	[ExportCategory("")]
+	[Export]
+	private ScopeComponent _scopeComponent = null!;
 
 	[ExportCategory("")]
 	[Export]
@@ -146,9 +151,10 @@ public partial class Sniper
 			return;
 
 		_fireGroup.ProcessInput();
+		_scopeComponent.Process();
 	}
 
-	public void Attack()
+	private void Attack()
 	{
 		DamageStats.CritDamageChance = (float)(1 - MoveBloomStats.MoveTimeFactor);
 		DamageStats.Damage = (int)
@@ -158,6 +164,14 @@ public partial class Sniper
 				MoveBloomStats.MoveDamageMax
 			);
 
+		if (_scopeComponent.ScopedIn)
+			AttackScoped();
+		else
+			AttackNotScoped();
+	}
+
+	private void AttackNotScoped()
+	{
 		var bloomDeg = MoveBloomStats.MoveBloomMaxDeg * MoveBloomStats.MoveTimeFactor;
 		bloomDeg = Math.Clamp(bloomDeg, MoveBloomStats.MoveBloomMinDeg, MoveBloomStats.MoveBloomMaxDeg);
 
@@ -186,6 +200,22 @@ public partial class Sniper
 			scale
 		);
 
+		EmitSignalOnAttack();
+	}
+
+	private void AttackScoped()
+	{
+		MagazineCount--;
+		if (MagazineCount == 0)
+			Reload();
+
+		var mousePos = Crosshair?.GlobalSpacePosition ?? Player.GetGlobalMousePosition();
+
+		if (TargetQuery.TryGetTargetsInArea(mousePos, ProjectileStats.HitRadius, out var targetIds))
+		{
+			foreach (var entity in targetIds)
+				TryHandleHit(entity);
+		}
 		EmitSignalOnAttack();
 	}
 

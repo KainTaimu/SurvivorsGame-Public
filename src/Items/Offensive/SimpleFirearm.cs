@@ -169,9 +169,7 @@ public partial class SimpleFirearm
 		var mouseVector = Crosshair?.CanvasSpacePosition ?? Player.GetGlobalMousePosition();
 		var rotation = playerPosition.AngleToPoint(mouseVector);
 
-		var bloomRad = BloomStats.BloomCoefficientDeg * (Math.PI / 180);
-		var bloom = 0.0 + bloomRad / 2 * _rng.Randfn();
-		rotation += (float)bloom;
+		rotation += BloomStats.CalculateBloomRads();
 		var scale = Vector2.One * ProjectileStats.Scale;
 
 		_projectileAttack.Attack(

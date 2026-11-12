@@ -17,13 +17,42 @@
 [ext_resource type="Script" uid="uid://b1j7f3uyd80s3" path="res://src/Items/Offensive/Stats/MoveBloomStats.cs" id="17_sa2d3"]
 [ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="18_14xh6"]
 [ext_resource type="Script" uid="uid://66x4x0yo47cj" path="res://src/Items/Offensive/Stats/KnockbackStats.cs" id="18_i42lw"]
+[ext_resource type="PackedScene" uid="uid://3egbr6rh75nk" path="res://scenes/Items/Offensive/Components/ScopeComponent.tscn" id="19_ep1kr"]
 [ext_resource type="Script" uid="uid://6a5xttelgv2" path="res://src/Items/Offensive/Stats/RadialPushStats.cs" id="19_vzczf"]
+[ext_resource type="Script" uid="uid://c0xnhv61iiqba" path="res://src/Items/Offensive/Components/StatusEffectComponent.cs" id="20_uc0br"]
+[ext_resource type="Script" uid="uid://d31d8uns5faa5" path="res://src/Players/Controllers/StatusEffectModifier.cs" id="21_7v4s2"]
+[ext_resource type="Script" uid="uid://bdk4fdcqvypav" path="res://src/Players/Controllers/StatusEffect.cs" id="22_me7b4"]
 
 [sub_resource type="Resource" id="Resource_d1d18"]
 script = ExtResource("4_db67r")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[node name="DMR" type="Node" unique_id=901001043 node_paths=PackedStringArray("RadialPushStats", "DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "MoveBloomStats", "KnockbackStats", "_fireGroup", "_reloadBehaviour")]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ep1kr"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_5hpaj"]
+script = ExtResource("21_7v4s2")
+StatName = 3
+Operation = 1
+Value = 0.5
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_k7qs1"]
+script = ExtResource("21_7v4s2")
+StatName = 21
+Operation = 1
+Value = 2.0
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_dsdhu"]
+script = ExtResource("22_me7b4")
+Name = "Scoped In"
+Cause = 2
+Permanent = true
+Modifiers = Array[ExtResource("21_7v4s2")]([SubResource("Resource_5hpaj"), SubResource("Resource_k7qs1")])
+metadata/_custom_type_script = "uid://bdk4fdcqvypav"
+
+[node name="DMR" type="Node" unique_id=901001043 node_paths=PackedStringArray("RadialPushStats", "DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "MoveBloomStats", "KnockbackStats", "_scopeComponent", "_fireGroup", "_reloadBehaviour")]
 script = ExtResource("1_lnmnp")
 RadialPushStats = NodePath("Stats/RadialPushStats")
 DamageStats = NodePath("Stats/DamageStats")
@@ -36,6 +65,7 @@ AttackStats = NodePath("Stats/AttackStats")
 PierceStats = NodePath("Stats/PierceStats")
 MoveBloomStats = NodePath("Stats/MoveBloomStats")
 KnockbackStats = NodePath("Stats/KnockbackStats")
+_scopeComponent = NodePath("ScopeComponent")
 _projectileScene = ExtResource("2_nt1f2")
 _fireGroup = NodePath("SemiAutoFireGroup")
 _reloadBehaviour = NodePath("NormalReloadBehaviour")
@@ -132,6 +162,19 @@ MagazineStats = NodePath("../Stats/MagazineStats")
 ReloadStats = NodePath("../Stats/ReloadStats")
 metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
 
+[node name="ScopeComponent" parent="." unique_id=1715852719 instance=ExtResource("19_ep1kr")]
+_zoomInTime = 0.3
+MaxRadius = 0.3
+
+[node name="ScopedStatusEffectComponent" type="Node" parent="." unique_id=742410642]
+script = ExtResource("20_uc0br")
+_statusEffect = SubResource("Resource_dsdhu")
+metadata/_custom_type_script = "uid://c0xnhv61iiqba"
+
 [connection signal="AlmostEmpty" from="." to="MagAlmostEmpty" method="play"]
 [connection signal="OnAttack" from="." to="Shoot" method="play"]
+[connection signal="OnReloadStart" from="." to="ScopeComponent" method="HideScope"]
+[connection signal="OnUnequipped" from="." to="ScopeComponent" method="HideScope"]
 [connection signal="OnFire" from="SemiAutoFireGroup" to="." method="Attack"]
+[connection signal="OnScopedIn" from="ScopeComponent" to="ScopedStatusEffectComponent" method="GiveStatusEffect"]
+[connection signal="OnScopedOut" from="ScopeComponent" to="ScopedStatusEffectComponent" method="RemoveStatusEffect"]
