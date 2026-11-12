@@ -159,6 +159,9 @@ public partial class WeaponCarousel : Control
 		}
 	}
 
+	private static readonly NodePath _positionX = "position:x";
+	private static readonly NodePath _modulateA = "modulate:a";
+
 	private void AnimateToIndex(int index)
 	{
 		if (_items.Count == 0)
@@ -168,17 +171,21 @@ public partial class WeaponCarousel : Control
 			_tween.Kill();
 
 		_tween = CreateTween().SetParallel();
-		_tween.SetTrans(Tween.TransitionType.Spring).SetEase(Tween.EaseType.Out);
 
 		var targetX = GetTargetTrackX(index);
-		_tween.TweenProperty(_track, "position:x", targetX, SlideDuration);
+		if (Mathf.Abs(targetX - _track.Position.X) < 300)
+			_tween.SetTrans(Tween.TransitionType.Spring).SetEase(Tween.EaseType.Out);
+		else
+			_tween.SetTrans(Tween.TransitionType.Expo).SetEase(Tween.EaseType.Out);
+
+		_tween.TweenProperty(_track, _positionX, targetX, SlideDuration);
 
 		for (var i = 0; i < _items.Count; i++)
 		{
 			var isSelected = i == index;
 			var targetAlpha = isSelected ? 1.0f : UnselectedAlpha;
 
-			_tween.TweenProperty(_items[i], "modulate:a", targetAlpha, SlideDuration);
+			_tween.TweenProperty(_items[i], _modulateA, targetAlpha, SlideDuration);
 		}
 	}
 }
