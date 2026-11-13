@@ -1,3 +1,6 @@
+// Copyright 2026 Erwin Panergo
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 namespace Game.Utils;
 
 public class DebugRectCreator(SceneTree tree)

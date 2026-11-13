@@ -1,3 +1,6 @@
+// Copyright 2026 Erwin Panergo
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 // namespace Game.Models;
 
 // public class FastCollection<T>(int initialCapacity = 4)
