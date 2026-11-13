@@ -313,7 +313,7 @@ autowrap_mode = 0
 horizontal_alignment = 1
 vertical_alignment = 1
 script = SubResource("GDScript_63fni")
-tips = Array[StringName]([&"Avoid getting surrounded. Damage is determined by all of the enemies within your hitbox.", &"Hit F1 to open a cheat menu"])
+tips = Array[StringName]([&"Avoid getting surrounded. Damage is determined by all of the enemies within your hitbox.", &"Hit F1 to open a cheat menu.", &"Some weapons have magnified optics. Click the right mouse button to zoom in and deal higher damage."])
 
 [connection signal="visibility_changed" from="." to="HelpTips" method="on_pause_menu_visibility_changed"]
 [connection signal="button_down" from="RightPanel/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Button" to="RightPanel/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/Button" method="on_click"]

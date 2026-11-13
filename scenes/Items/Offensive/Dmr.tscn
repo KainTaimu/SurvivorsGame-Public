@@ -28,7 +28,7 @@
 script = ExtResource("4_db67r")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_uc0br"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0iw8n"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_5hpaj"]
@@ -50,6 +50,7 @@ script = ExtResource("22_me7b4")
 Name = "Scoped In"
 Cause = 2
 Permanent = true
+Hidden = true
 Modifiers = Array[ExtResource("21_7v4s2")]([SubResource("Resource_5hpaj"), SubResource("Resource_k7qs1")])
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
@@ -182,6 +183,6 @@ metadata/_custom_type_script = "uid://c0xnhv61iiqba"
 [connection signal="OnReloadStart" from="." to="ScopeComponent" method="HideScope"]
 [connection signal="OnUnequipped" from="." to="ScopeComponent" method="HideScope"]
 [connection signal="OnFire" from="SemiAutoFireGroup" to="." method="Attack"]
-[connection signal="OnScopedIn" from="ScopeComponent" to="ScopedStatusEffectComponent" method="GiveStatusEffect"]
 [connection signal="OnScopedIn" from="ScopeComponent" to="ScopeComponent/ScopeZoomR1" method="play"]
+[connection signal="OnScopedIn" from="ScopeComponent" to="ScopedStatusEffectComponent" method="GiveStatusEffect"]
 [connection signal="OnScopedOut" from="ScopeComponent" to="ScopedStatusEffectComponent" method="RemoveStatusEffect"]

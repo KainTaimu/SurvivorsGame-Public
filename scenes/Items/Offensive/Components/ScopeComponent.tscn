@@ -6,8 +6,8 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_do71q"]
 shader = ExtResource("2_6yfuu")
 shader_parameter/edge_width = 0.243
-shader_parameter/refraction_strength = 0.04
-shader_parameter/chromatic_aberration = 0.003
+shader_parameter/refraction_strength = 0.03
+shader_parameter/chromatic_aberration = 0.005
 
 [node name="ScopeComponent" type="CanvasLayer" unique_id=1715852719 node_paths=PackedStringArray("_overlay")]
 layer = 0
