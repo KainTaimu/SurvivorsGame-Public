@@ -43,9 +43,9 @@ _projectileAttack = SubResource("Resource_c62cd")
 
 [node name="DamageStats" type="Node" parent="Stats" unique_id=1050359549]
 script = ExtResource("10_nrtk0")
-Damage = 12
+Damage = 11
 DamageVariance = 0.05
-CritDamageMultiplier = 0.7
+CritDamageMultiplier = 0.5
 metadata/_custom_type_script = "uid://c8bfvbbqfaakj"
 
 [node name="MagazineStats" type="Node" parent="Stats" unique_id=1568832488]
@@ -88,17 +88,16 @@ metadata/_custom_type_script = "uid://bjysatf11t7bw"
 
 [node name="PierceStats" type="Node" parent="Stats" unique_id=1254188634]
 script = ExtResource("17_lnczg")
-PierceLimit = 4
+PierceLimit = 3
 metadata/_custom_type_script = "uid://cjlv7mciafksn"
 
 [node name="SlowStats" type="Node" parent="Stats" unique_id=1947254330]
 script = ExtResource("18_xqioe")
-SlowCoefficient = 1.0
+SlowCoefficient = -0.5
 metadata/_custom_type_script = "uid://doyqd2gp5rtvn"
 
 [node name="KnockbackStats" type="Node" parent="Stats" unique_id=672098742]
 script = ExtResource("19_rauzt")
-KnockbackForce = 10.0
 metadata/_custom_type_script = "uid://66x4x0yo47cj"
 
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=1380114539]
