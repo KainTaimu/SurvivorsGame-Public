@@ -28,7 +28,7 @@
 script = ExtResource("4_db67r")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0iw8n"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_uc0br"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_5hpaj"]
@@ -93,14 +93,16 @@ metadata/_custom_type_script = "uid://5u8113et07vu"
 
 [node name="RecoilStats" type="Node" parent="Stats" unique_id=1398610540]
 script = ExtResource("12_b9rbr")
-HorizontalRecoilMin = 10.0
-HorizontalBaseRecoil = 10.0
-HorizontalRecoilRandom = 10.0
-VerticalRecoilMin = 10.0
-VerticalBaseRecoil = 10.0
-VerticalRecoilRandom = 10.0
-RecoilScale = 1.5
-CameraRecoilScale = 0.55
+HorizontalRecoilMin = 20.0
+HorizontalBaseRecoil = 20.0
+HorizontalRecoilRandom = 20.0
+VerticalRecoilMin = 150.0
+VerticalBaseRecoil = 150.0
+VerticalRecoilRandom = 0.0
+RecoilScale = 0.4
+RecoilAccumilationScale = 0.0
+HorizontalRecoilPunish = false
+CameraRecoilScale = 0.6
 metadata/_custom_type_script = "uid://xtlc02w402jw"
 
 [node name="ReloadStats" type="Node" parent="Stats" unique_id=375205383]
