@@ -1,3 +1,6 @@
+// Copyright 2026 Erwin Panergo
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 using Game.Items.Offensive;
 using Game.Levels.Controllers;
 using Game.Players;

@@ -1,3 +1,6 @@
+// Copyright 2026 Erwin Panergo
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 namespace Game.Core.ECS;
 
 // Dense slot (0..N-1) written by the GPU collision solver's upload pass

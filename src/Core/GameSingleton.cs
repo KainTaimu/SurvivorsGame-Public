@@ -1,3 +1,6 @@
+// Copyright 2026 Erwin Panergo
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 using System.Text;
 using Game.Core.Settings;
 using Newtonsoft.Json;
