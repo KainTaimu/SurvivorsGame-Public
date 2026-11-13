@@ -7,6 +7,9 @@
     <Nullable>enable</Nullable>
     <LangVersion>preview</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+    <Copyright>Copyright © 2026 Erwin Panergo. Licensed under GPL-3.0-or-later.</Copyright>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -51,6 +54,10 @@
     <Content Include="**/*.glsl" />
     <Content Include="**/*.gdshader" />
     <Content Include="**/*.gd" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="LICENSE.txt" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <Target Name="SetSourceRevisionId" BeforeTargets="InitializeSourceControlInformation">
