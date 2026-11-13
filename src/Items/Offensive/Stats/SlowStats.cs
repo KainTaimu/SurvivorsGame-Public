@@ -7,5 +7,5 @@ namespace Game.Items.Offensive;
 public partial class SlowStats : ItemStat
 {
 	[Export]
-	public float SlowCoefficient { get; set; }
+	public float SlowCoefficient { get; set; } = 1;
 }

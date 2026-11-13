@@ -133,7 +133,7 @@ metadata/_custom_type_script = "uid://cx3rrg2toydba"
 [connection signal="OnAttack" from="." to="ShootAudioPlayer" method="play"]
 [connection signal="OnFire" from="SemiAutoFireGroup" to="." method="Attack"]
 [connection signal="OnFire" from="SemiAutoFireGroup" to="SequentialReloadBehaviour" method="TryInterrupt"]
-[connection signal="OnReloadEnd" from="SequentialReloadBehaviour" to="." method="play"]
+[connection signal="OnReloadEnd" from="SequentialReloadBehaviour" to="BoltAudioPlayer" method="play"]
 [connection signal="OnReloadEndInterrupted" from="SequentialReloadBehaviour" to="BoltAudioPlayer" method="play"]
 [connection signal="OnReloadProgress" from="SequentialReloadBehaviour" to="RoundLoadAudioPlayer" method="play" unbinds=3]
 [connection signal="OnReloadStart" from="SequentialReloadBehaviour" to="BoltAudioPlayer" method="play"]
