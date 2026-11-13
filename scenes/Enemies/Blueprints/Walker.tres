@@ -2,9 +2,14 @@
 
 [ext_resource type="Script" uid="uid://3umr41bs3735" path="res://src/Levels/Controllers/AbstractEnemyBehavior.cs" id="1_iqtvm"]
 [ext_resource type="Script" uid="uid://y77qtp32wo00" path="res://src/Enemies/EnemyStats.cs" id="1_jmr7q"]
+[ext_resource type="Script" uid="uid://boji730ttjnbp" path="res://src/Levels/Controllers/LungerEnemyBehavior.cs" id="2_5v7wc"]
 [ext_resource type="Script" uid="uid://fti2ky20j85c" path="res://src/Levels/Controllers/EnemyBlueprint.cs" id="2_iqtvm"]
 
-[sub_resource type="Resource" id="Resource_jmr7q"]
+[sub_resource type="Resource" id="Resource_n7qsj"]
+script = ExtResource("2_5v7wc")
+metadata/_custom_type_script = "uid://boji730ttjnbp"
+
+[sub_resource type="Resource" id="Resource_1o67r"]
 script = ExtResource("1_jmr7q")
 DamageOnContact = 4
 MaxHealth = 10
@@ -17,4 +22,5 @@ script = ExtResource("2_iqtvm")
 Name = "Walker"
 SpriteName = "placeholder"
 Type = 1
-Stats = SubResource("Resource_jmr7q")
+EnemyBehaviors = Array[ExtResource("1_iqtvm")]([SubResource("Resource_n7qsj")])
+Stats = SubResource("Resource_1o67r")

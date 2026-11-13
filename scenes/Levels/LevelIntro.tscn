@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://ds8lkov4wnj2l" path="res://src/Levels/Controllers/Waves/WeightedWaveBlueprintCollection.cs" id="6_vrw23"]
 [ext_resource type="Resource" uid="uid://d3sq28pskbjjy" path="res://scenes/Enemies/Blueprints/Walker.tres" id="7_d75v4"]
 [ext_resource type="Script" uid="uid://c3xa2iila340u" path="res://src/Levels/Controllers/Waves/WaveSpawnCount.cs" id="9_duif7"]
+[ext_resource type="Resource" uid="uid://bo0ohu302yg51" path="res://scenes/Enemies/Blueprints/Big.tres" id="10_0iw8n"]
 [ext_resource type="Script" uid="uid://rou54n4aiaoh" path="res://src/Levels/Controllers/Waves/WaveDuration.cs" id="10_ta1oo"]
 [ext_resource type="Script" uid="uid://3umr41bs3735" path="res://src/Levels/Controllers/AbstractEnemyBehavior.cs" id="10_vrw23"]
 [ext_resource type="Script" uid="uid://y77qtp32wo00" path="res://src/Enemies/EnemyStats.cs" id="11_v38xc"]
@@ -59,9 +60,20 @@ script = ExtResource("5_iiw53")
 Blueprint = SubResource("Resource_6h3lq")
 metadata/_custom_type_script = "uid://dau6m811dtep8"
 
+[sub_resource type="Resource" id="Resource_6yfuu"]
+script = ExtResource("5_iiw53")
+Blueprint = ExtResource("10_0iw8n")
+Weight = 0.1
+metadata/_custom_type_script = "uid://dau6m811dtep8"
+
+[sub_resource type="Resource" id="Resource_0iw8n"]
+script = ExtResource("5_iiw53")
+Blueprint = ExtResource("7_d75v4")
+metadata/_custom_type_script = "uid://dau6m811dtep8"
+
 [sub_resource type="Resource" id="Resource_vvuu7"]
 script = ExtResource("6_vrw23")
-Weights = Array[ExtResource("5_iiw53")]([SubResource("Resource_jay86")])
+Weights = Array[ExtResource("5_iiw53")]([SubResource("Resource_jay86"), SubResource("Resource_6yfuu"), SubResource("Resource_0iw8n")])
 metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
 
 [sub_resource type="Resource" id="Resource_8i8db"]
@@ -294,7 +306,7 @@ FrameTime = SubResource("Resource_sf4ij")
 script = ExtResource("18_duif7")
 
 [node name="EnemyBehaviorController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="6" unique_id=1041908003]
-SupportedTypes = 1
+SupportedTypes = 3
 
 [node name="EnemyCollisionSolverManager" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="8" unique_id=1705317581 node_paths=PackedStringArray("nav_map")]
 nav_map = NodePath("../../../World/Navigation/NavMap")
