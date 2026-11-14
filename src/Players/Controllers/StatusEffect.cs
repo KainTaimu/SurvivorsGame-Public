@@ -30,8 +30,8 @@ public partial class StatusEffect : Resource
 	[Export]
 	public StatusEffectCause Cause = StatusEffectCause.NotSpecified;
 
-	public Guid Id => _id;
-	private Guid _id;
+	public static readonly Guid EffectId = Guid.CreateVersion7();
+	public Guid EffectInstanceId { get; } = Guid.CreateVersion7();
 
 	[Export]
 	public required float InitialDuration;
@@ -60,7 +60,6 @@ public partial class StatusEffect : Resource
 
 	public void Initialize()
 	{
-		_id = Guid.CreateVersion7();
 		if (Permanent)
 			Duration = -1;
 		else
@@ -69,7 +68,8 @@ public partial class StatusEffect : Resource
 
 	public override string ToString()
 	{
-		return $"{{Name: {Name}, Id: {_id}, InitialDuration: {InitialDuration}, Duration: {Duration},"
+		return $"{{Name: {Name}, InstanceId: {EffectInstanceId}, InitialDuration: {InitialDuration}, Duration: "
+			+ $"{Duration},"
 			+ $" Tags: [{string.Join(", ", Tags)}], Modifiers: [{string.Join(", ", Modifiers)}]}}";
 	}
 }

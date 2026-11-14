@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://c2bradk7lbxae"]
+
+[ext_resource type="Script" uid="uid://dmjiai53k0541" path="res://src/Items/Offensive/DamageInjector.cs" id="1_8n4x4"]
+[ext_resource type="Script" uid="uid://c0xnhv61iiqba" path="res://src/Items/Offensive/Modules/StatusEffectModule.cs" id="2_hx5eo"]
+[ext_resource type="Script" uid="uid://d31d8uns5faa5" path="res://src/Players/Controllers/StatusEffectModifier.cs" id="3_7kour"]
+[ext_resource type="Script" uid="uid://bdk4fdcqvypav" path="res://src/Players/Controllers/StatusEffect.cs" id="4_an6hm"]
+[ext_resource type="AudioStream" uid="uid://nuv2y6g1glvt" path="res://assets/SFX/gulp 2.wav" id="5_vymhx"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8n4x4"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_asbm0"]
+script = ExtResource("3_7kour")
+StatName = 6
+Value = 99999.0
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_u8w1d"]
+script = ExtResource("3_7kour")
+StatName = 8
+Operation = 1
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_f33jn"]
+script = ExtResource("3_7kour")
+StatName = 21
+Operation = 1
+Value = 5.0
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_aan2q"]
+script = ExtResource("3_7kour")
+StatName = 3
+Operation = 1
+Value = 1.15
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_a5qbb"]
+script = ExtResource("3_7kour")
+StatName = 4
+Operation = 1
+Value = 1.2
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_fex1s"]
+script = ExtResource("3_7kour")
+StatName = 5
+Value = 9999999.0
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_do71q"]
+script = ExtResource("4_an6hm")
+Name = "Tweaking on fent"
+InitialDuration = 120.0
+Permanent = true
+Modifiers = Array[ExtResource("3_7kour")]([SubResource("Resource_asbm0"), SubResource("Resource_u8w1d"), SubResource("Resource_f33jn"), SubResource("Resource_aan2q"), SubResource("Resource_a5qbb"), SubResource("Resource_fex1s")])
+metadata/_custom_type_script = "uid://bdk4fdcqvypav"
+
+[node name="FentPill" type="Node" unique_id=1845625201]
+script = ExtResource("1_8n4x4")
+
+[node name="StatusEffectModule" type="Node" parent="." unique_id=1514074665]
+script = ExtResource("2_hx5eo")
+_statusEffect = SubResource("Resource_do71q")
+metadata/_custom_type_script = "uid://c0xnhv61iiqba"
+
+[node name="Gulp2" type="AudioStreamPlayer" parent="." unique_id=1320871910]
+stream = ExtResource("5_vymhx")
+volume_db = 20.0
+mix_target = 2
+bus = &"EnvironmentFx"
+
+[connection signal="OnAttack" from="." to="StatusEffectModule" method="GiveStatusEffect"]
+[connection signal="OnAttack" from="." to="Gulp2" method="play"]
+[connection signal="finished" from="Gulp2" to="." method="queue_free"]

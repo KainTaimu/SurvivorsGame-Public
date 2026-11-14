@@ -29,6 +29,7 @@ public partial class CurrentStatusEffectsUi : CanvasLayer
 
 			label.Text = GetStatusEffectText(effect);
 			_labelControl.AddChild(label);
+			// BUG: Breaks when status effect text already exists in _labels
 			_labels.Add(effect, label);
 		};
 		_statusEffectController.OnStatusEffectRemoved += effect =>
