@@ -7,4 +7,4 @@ shadow_color = Color(0, 0, 0, 1)
 [node name="StatusEffectLabel" type="Label" unique_id=1615123072]
 text = "Slow"
 label_settings = SubResource("LabelSettings_f6ug3")
-horizontal_alignment = 1
+vertical_alignment = 1

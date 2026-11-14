@@ -22,9 +22,11 @@
 [ext_resource type="PackedScene" uid="uid://cmidrkjr0le3o" path="res://scenes/Items/Offensive/P90.tscn" id="19_q0pvf"]
 [ext_resource type="PackedScene" uid="uid://dwyqdinyji8tt" path="res://scenes/Items/Offensive/MP5.tscn" id="20_oi6mw"]
 [ext_resource type="PackedScene" uid="uid://ceimmtu3q4x6n" path="res://scenes/Items/Offensive/GrenadeThrower.tscn" id="21_dpdnh"]
+[ext_resource type="PackedScene" uid="uid://c2bradk7lbxae" path="res://scenes/Items/Offensive/FentPill.tscn" id="21_mmlnp"]
 [ext_resource type="PackedScene" uid="uid://culqrn6mdcvx3" path="res://scenes/Items/Offensive/MP7.tscn" id="22_04byt"]
 [ext_resource type="PackedScene" uid="uid://etybfmdjqx38" path="res://scenes/Items/Offensive/G17-F.tscn" id="23_1pdk2"]
 [ext_resource type="PackedScene" uid="uid://cuf1ut26wc716" path="res://scenes/Items/Offensive/Matrix.tscn" id="24_16g23"]
+[ext_resource type="PackedScene" uid="uid://bw0y45qdkgbmf" path="res://scenes/Items/Offensive/DamageInjector.tscn" id="25_16g23"]
 
 [resource]
 script = ExtResource("1_cngp6")
@@ -50,6 +52,7 @@ _uids_to_string_ids = Dictionary[StringName, StringName]({
 &"uid://bp4nxtqkp6d2o": &"G17-F",
 &"uid://bpcgl00cg72h7": &"Matrix",
 &"uid://bx3nk3ntkr78k": &"M92FS",
+&"uid://c4b66i7cyon41": &"DamageInjector",
 &"uid://c7hl0io0wdufn": &"GrenadeLauncher",
 &"uid://cfauo6em32ia0": &"M17",
 &"uid://cmj08qj3le4ar": &"M4",
@@ -57,6 +60,7 @@ _uids_to_string_ids = Dictionary[StringName, StringName]({
 &"uid://cxco3dha05xnp": &"SKS",
 &"uid://d37pj80g4j5cy": &"Dmr",
 &"uid://dd7q76kfjdvxq": &"Shotgun",
+&"uid://dfi450hlcvmli": &"FentPill",
 &"uid://dh08ymqfxu5xh": &"M7",
 &"uid://dktd8lr0rda13": &"M1911",
 &"uid://k1vxoxjbg1ys": &"P90",
@@ -66,7 +70,9 @@ _uids_to_string_ids = Dictionary[StringName, StringName]({
 _string_ids_to_uids = Dictionary[StringName, StringName]({
 &"Ak47": &"uid://bkabsg23vh70n",
 &"AutoShotgun": &"uid://0mop1ayfv2cg",
+&"DamageInjector": &"uid://c4b66i7cyon41",
 &"Dmr": &"uid://d37pj80g4j5cy",
+&"FentPill": &"uid://dfi450hlcvmli",
 &"G17-F": &"uid://bp4nxtqkp6d2o",
 &"G3A3": &"uid://b7k47srcgebuw",
 &"GrenadeLauncher": &"uid://c7hl0io0wdufn",
@@ -91,14 +97,8 @@ _string_ids_to_uids = Dictionary[StringName, StringName]({
 })
 _property_index = Dictionary[StringName, Dictionary]({
 &"scene": {
-ExtResource("24_16g23"): {
-&"Matrix": true
-},
-ExtResource("23_1pdk2"): {
-&"G17-F": true
-},
-ExtResource("22_04byt"): {
-&"MP7": true
+ExtResource("21_mmlnp"): {
+&"FentPill": true
 },
 ExtResource("21_dpdnh"): {
 &"GrenadeThrower": true
@@ -136,11 +136,23 @@ ExtResource("11_beu6o"): {
 ExtResource("10_rxhkk"): {
 &"GrenadeLauncher": true
 },
+ExtResource("25_16g23"): {
+&"DamageInjector": true
+},
 ExtResource("9_lr57v"): {
 &"M92FS": true
 },
+ExtResource("24_16g23"): {
+&"Matrix": true
+},
+ExtResource("23_1pdk2"): {
+&"G17-F": true
+},
 ExtResource("8_a5qbb"): {
 &"Minigun": true
+},
+ExtResource("22_04byt"): {
+&"MP7": true
 },
 ExtResource("7_aan2q"): {
 &"Ak47": true

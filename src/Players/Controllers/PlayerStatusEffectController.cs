@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Game.Models;
 using Godot.Collections;
@@ -87,6 +88,14 @@ public partial class PlayerStatusEffectController : Node
 	// TODO: Handle already existing status effect. Reset duration?
 	public void AddStatusEffect(StatusEffect statusEffect)
 	{
+		if (_activeEffects.Any(x => x == statusEffect))
+		{
+			CustomLogger.LogWarning(
+				$"Status effect {statusEffect} already exists. But handling duplicate effects are"
+					+ $" not yet implemented. Discarding new status effect"
+			);
+			return;
+		}
 		statusEffect.Initialize();
 
 		foreach (var modifier in statusEffect.Modifiers)

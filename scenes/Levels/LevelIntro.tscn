@@ -92,7 +92,7 @@ script = ExtResource("6_vrw23")
 Weights = Array[ExtResource("5_iiw53")]([SubResource("Resource_w2_walker_wt")])
 metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w70hc"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_25nja"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_mod_health"]
@@ -1432,6 +1432,139 @@ ItemCount = 24
 RarityUpperGate = 4
 metadata/_custom_type_script = "uid://3d6fji4uf0l8"
 
+[sub_resource type="Resource" id="Resource_j0071"]
+script = ExtResource("13_lunger")
+TimeBetweenLunges = 5.5
+MinDistanceToLunge = 240.0
+LungeVelocityMultiplier = 3.0
+metadata/_custom_type_script = "uid://boji730ttjnbp"
+
+[sub_resource type="Resource" id="Resource_pl5k2"]
+script = ExtResource("11_v38xc")
+DamageOnContact = 12
+MaxHealth = 85
+MoveSpeed = 260.0
+TurnSpeed = 5.6
+metadata/_custom_type_script = "uid://y77qtp32wo00"
+
+[sub_resource type="Resource" id="Resource_w51uh"]
+script = ExtResource("12_faso5")
+Name = "Walker"
+SpriteName = "placeholder"
+Type = 1
+EnemyBehaviors = Array[ExtResource("10_vrw23")]([SubResource("Resource_j0071")])
+Stats = SubResource("Resource_pl5k2")
+
+[sub_resource type="Resource" id="Resource_uui33"]
+script = ExtResource("5_iiw53")
+Blueprint = SubResource("Resource_w51uh")
+metadata/_custom_type_script = "uid://dau6m811dtep8"
+
+[sub_resource type="Resource" id="Resource_1jc4q"]
+script = ExtResource("13_lunger")
+TimeBetweenLunges = 5.5
+MinDistanceToLunge = 240.0
+LungeVelocityMultiplier = 3.0
+metadata/_custom_type_script = "uid://boji730ttjnbp"
+
+[sub_resource type="Resource" id="Resource_884al"]
+script = ExtResource("11_v38xc")
+DamageOnContact = 12
+MaxHealth = 75
+MoveSpeed = 260.0
+TurnSpeed = 5.6
+metadata/_custom_type_script = "uid://y77qtp32wo00"
+
+[sub_resource type="Resource" id="Resource_ix03f"]
+script = ExtResource("12_faso5")
+Name = "Walker"
+SpriteName = "placeholder"
+Type = 1
+EnemyBehaviors = Array[ExtResource("10_vrw23")]([SubResource("Resource_1jc4q")])
+Stats = SubResource("Resource_884al")
+
+[sub_resource type="Resource" id="Resource_885es"]
+script = ExtResource("5_iiw53")
+Blueprint = SubResource("Resource_ix03f")
+Weight = 0.25
+metadata/_custom_type_script = "uid://dau6m811dtep8"
+
+[sub_resource type="Resource" id="Resource_35lch"]
+script = ExtResource("11_v38xc")
+DamageOnContact = 8
+MaxHealth = 32
+MoveSpeed = 350.0
+SpriteScaleMultiplier = 0.85
+metadata/_custom_type_script = "uid://y77qtp32wo00"
+
+[sub_resource type="Resource" id="Resource_nhio6"]
+script = ExtResource("12_faso5")
+Name = "Sprinter"
+SpriteName = "placeholder"
+Type = 1
+Stats = SubResource("Resource_35lch")
+
+[sub_resource type="Resource" id="Resource_t7v5b"]
+script = ExtResource("5_iiw53")
+Blueprint = SubResource("Resource_nhio6")
+Weight = 0.5
+metadata/_custom_type_script = "uid://dau6m811dtep8"
+
+[sub_resource type="Resource" id="Resource_g5417"]
+script = ExtResource("13_lunger")
+TimeBetweenLunges = 6.0
+MinDistanceToLunge = 220.0
+LungeVelocityMultiplier = 2.4
+metadata/_custom_type_script = "uid://boji730ttjnbp"
+
+[sub_resource type="Resource" id="Resource_bp5av"]
+script = ExtResource("11_v38xc")
+DamageOnContact = 8
+MaxHealth = 28
+MoveSpeed = 350.0
+SpriteScaleMultiplier = 0.85
+metadata/_custom_type_script = "uid://y77qtp32wo00"
+
+[sub_resource type="Resource" id="Resource_k2wow"]
+script = ExtResource("12_faso5")
+Name = "Sprinter"
+SpriteName = "placeholder"
+Type = 1
+EnemyBehaviors = Array[ExtResource("10_vrw23")]([SubResource("Resource_g5417")])
+Stats = SubResource("Resource_bp5av")
+
+[sub_resource type="Resource" id="Resource_tgplc"]
+script = ExtResource("5_iiw53")
+Blueprint = SubResource("Resource_k2wow")
+Weight = 0.15
+metadata/_custom_type_script = "uid://dau6m811dtep8"
+
+[sub_resource type="Resource" id="Resource_yk4ca"]
+script = ExtResource("11_v38xc")
+DamageOnContact = 18
+MaxHealth = 380
+MoveSpeed = 260.0
+SpriteScaleMultiplier = 1.3
+metadata/_custom_type_script = "uid://y77qtp32wo00"
+
+[sub_resource type="Resource" id="Resource_urvrt"]
+script = ExtResource("12_faso5")
+Name = "Big"
+SpriteName = "placeholder"
+Type = 1
+Stats = SubResource("Resource_yk4ca")
+
+[sub_resource type="Resource" id="Resource_ufwql"]
+script = ExtResource("5_iiw53")
+Blueprint = SubResource("Resource_urvrt")
+Weight = 0.15
+metadata/_custom_type_script = "uid://dau6m811dtep8"
+
+[sub_resource type="Resource" id="Resource_xuljg"]
+script = ExtResource("6_vrw23")
+Weights = Array[ExtResource("5_iiw53")]([SubResource("Resource_uui33"), SubResource("Resource_885es"), SubResource("Resource_t7v5b"), SubResource("Resource_tgplc"), SubResource("Resource_ufwql")])
+metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
+
 [sub_resource type="Resource" id="Resource_oo16t"]
 script = ExtResource("11_v38xc")
 DamageOnContact = 4
@@ -1697,11 +1830,21 @@ SpawnBatchMin = 8
 SpawnBatchMax = 9
 Rewards = Array[ExtResource("12_j0071")]([SubResource("Resource_w15_reward_se"), SubResource("Resource_w15_reward_pickup")])
 
-[node name="16 DebugStopper" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="15" unique_id=526366324]
+[node name="16 SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="15" unique_id=1053226975]
+script = ExtResource("9_duif7")
+SpawnCountTarget = 6000
+EnemyBlueprints = SubResource("Resource_xuljg")
+SpawnMinTime = 0.01
+SpawnMaxTime = 0.1
+SpawnBatchMin = 2
+SpawnBatchMax = 2
+Rewards = Array[ExtResource("12_j0071")]([SubResource("Resource_w14_reward_se"), SubResource("Resource_w14_reward_pickup")])
+
+[node name="17 DebugStopper" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="16" unique_id=526366324]
 script = ExtResource("15_n7qsj")
 metadata/_custom_type_script = "uid://bhhh8235y54bg"
 
-[node name="17 Duration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="16" unique_id=563917666]
+[node name="18 Duration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="17" unique_id=563917666]
 script = ExtResource("10_ta1oo")
 Duration = 999.0
 EnemyBlueprints = SubResource("Resource_vvuu7")
@@ -1709,7 +1852,7 @@ SpawnMinTime = 0.07
 SpawnMaxTime = 0.07
 SpawnBatchMax = 2
 
-[node name="18 HORDE SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="17" unique_id=1421423771]
+[node name="19 HORDE SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="18" unique_id=1421423771]
 script = ExtResource("9_duif7")
 SpawnCountTarget = 6000
 WaveName = "HORDE"
@@ -1719,7 +1862,7 @@ SpawnMaxTime = 0.007
 SpawnBatchMin = 50
 SpawnBatchMax = 50
 
-[node name="19 DebugStopper" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="18" unique_id=565233767]
+[node name="20 DebugStopper" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="19" unique_id=565233767]
 script = ExtResource("15_n7qsj")
 metadata/_custom_type_script = "uid://bhhh8235y54bg"
 
