@@ -13,11 +13,14 @@ build_linux() {
 
 build_windows() {
     godot-mono --path ${SCRIPT_DIR}/ --export-release "Windows Prod" ${SCRIPT_DIR}/exports/windows_prod/HordeHunters.exe --headless
-    (cd ${SCRIPT_DIR}/exports/ && 7z a -mx9 HordeHunters_windows.7z windows_prod/)
+    (cd ${SCRIPT_DIR}/exports/ && 7z a -tzip -mx9 HordeHunters_windows.zip windows_prod/)
     ARTIFACTS+=(${SCRIPT_DIR}/exports/HordeHunters_windows.7z)
 }
 
 ARTIFACTS=()
+
+mkdir -p exports/windows_prod/
+mkdir -p exports/linux_prod/
 
 case $1 in
 linux)
