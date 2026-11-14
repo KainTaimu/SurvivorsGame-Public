@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="3_tg8rs"]
 [ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="4_dar1o"]
 [ext_resource type="AudioStream" uid="uid://c2t1664bvx4g" path="res://assets/SFX/Shoot/ak47/ak47_r1.wav" id="7_nihe0"]
-[ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="8_nihe0"]
+[ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Modules/MagAlmostEmpty.tscn" id="8_nihe0"]
 [ext_resource type="Script" uid="uid://c8bfvbbqfaakj" path="res://src/Items/Offensive/Stats/DamageStats.cs" id="10_sej7r"]
 [ext_resource type="Script" uid="uid://bj6pph867oydf" path="res://src/Items/Offensive/Stats/MagazineStats.cs" id="11_wcrld"]
 [ext_resource type="Script" uid="uid://5u8113et07vu" path="res://src/Items/Offensive/Stats/BloomStats.cs" id="12_6x7ri"]

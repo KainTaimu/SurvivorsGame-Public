@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="4_gs3iu"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_m8lav"]
 [ext_resource type="AudioStream" uid="uid://b80a2owuwn4ml" path="res://assets/SFX/Shoot/smg/smg_r1.wav" id="7_7i55r"]
-[ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="8_pgkdl"]
+[ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Modules/MagAlmostEmpty.tscn" id="8_pgkdl"]
 [ext_resource type="Script" uid="uid://c8bfvbbqfaakj" path="res://src/Items/Offensive/Stats/DamageStats.cs" id="10_qcowv"]
 [ext_resource type="Script" uid="uid://bj6pph867oydf" path="res://src/Items/Offensive/Stats/MagazineStats.cs" id="11_dunm9"]
 [ext_resource type="Script" uid="uid://5u8113et07vu" path="res://src/Items/Offensive/Stats/BloomStats.cs" id="12_wqk9h"]

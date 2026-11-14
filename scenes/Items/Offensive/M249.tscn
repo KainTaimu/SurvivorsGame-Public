@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_c20as"]
 [ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="4_p0oyq"]
 [ext_resource type="AudioStream" uid="uid://bec8qqw0vbmos" path="res://assets/SFX/Shoot/m249/m249_r3.wav" id="7_18mki"]
-[ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Components/MagAlmostEmpty.tscn" id="8_18mki"]
+[ext_resource type="PackedScene" uid="uid://dghvpfmj68ok" path="res://scenes/Items/Offensive/Modules/MagAlmostEmpty.tscn" id="8_18mki"]
 [ext_resource type="Script" uid="uid://c8bfvbbqfaakj" path="res://src/Items/Offensive/Stats/DamageStats.cs" id="10_5o7jr"]
 [ext_resource type="Script" uid="uid://bj6pph867oydf" path="res://src/Items/Offensive/Stats/MagazineStats.cs" id="11_98cbo"]
 [ext_resource type="Script" uid="uid://5u8113et07vu" path="res://src/Items/Offensive/Stats/BloomStats.cs" id="12_k7i84"]
@@ -112,7 +112,6 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 
 [node name="NormalReloadBehaviour" type="Node" parent="." unique_id=1006070220 node_paths=PackedStringArray("MagazineStats", "ReloadStats")]
 script = ExtResource("4_p0oyq")
-CanReloadInBackground = true
 MagazineStats = NodePath("../Stats/MagazineStats")
 ReloadStats = NodePath("../Stats/ReloadStats")
 metadata/_custom_type_script = "uid://b7arqp2dmxhtx"

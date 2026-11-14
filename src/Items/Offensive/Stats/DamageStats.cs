@@ -26,4 +26,13 @@ public partial class DamageStats : ItemStat
 
 		return Mathf.CeilToInt(Damage * CritDamageMultiplier);
 	}
+
+	public static int CalculateCrit(float damage, float chance, float mult)
+	{
+		var roll = GD.Randf();
+		if (roll > chance)
+			return 0;
+
+		return Mathf.CeilToInt(damage * mult);
+	}
 }

@@ -5,10 +5,10 @@ using Game.Levels.Controllers;
 using Game.Players;
 using Game.Players.Controllers;
 
-namespace Game.Items.Offensive.Components;
+namespace Game.Items.Offensive.Modules;
 
 [GlobalClass]
-public partial class StatusEffectComponent : Node
+public partial class StatusEffectModule : Node
 {
 	[Export]
 	private StatusEffect _statusEffect = null!;

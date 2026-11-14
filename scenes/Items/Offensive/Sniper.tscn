@@ -23,9 +23,10 @@
 [ext_resource type="Script" uid="uid://b1j7f3uyd80s3" path="res://src/Items/Offensive/Stats/MoveBloomStats.cs" id="18_tbgkn"]
 [ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="22_k7g5g"]
 [ext_resource type="AudioStream" uid="uid://dbhqck2rp7d25" path="res://assets/SFX/Shoot/scope_zoom_r1.wav" id="24_5hpaj"]
-[ext_resource type="PackedScene" uid="uid://3egbr6rh75nk" path="res://scenes/Items/Offensive/Components/ScopeComponent.tscn" id="24_bgsbt"]
-[ext_resource type="Script" uid="uid://c0xnhv61iiqba" path="res://src/Items/Offensive/Components/StatusEffectComponent.cs" id="26_8bwop"]
+[ext_resource type="PackedScene" uid="uid://3egbr6rh75nk" path="res://scenes/Items/Offensive/Modules/ScopeModule.tscn" id="24_bgsbt"]
+[ext_resource type="Script" uid="uid://c0xnhv61iiqba" path="res://src/Items/Offensive/Modules/StatusEffectModule.cs" id="26_8bwop"]
 [ext_resource type="Script" uid="uid://d31d8uns5faa5" path="res://src/Players/Controllers/StatusEffectModifier.cs" id="27_5hpaj"]
+[ext_resource type="Script" uid="uid://doh6x5pfspjv7" path="res://src/Items/Offensive/Modules/MoveBloomModule.cs" id="28_5hpaj"]
 [ext_resource type="Script" uid="uid://bdk4fdcqvypav" path="res://src/Players/Controllers/StatusEffect.cs" id="28_k7qs1"]
 
 [sub_resource type="PackedScene" id="PackedScene_5un85"]
@@ -158,11 +159,10 @@ metadata/_custom_type_script = "uid://66x4x0yo47cj"
 [node name="MoveBloomStats" type="Node" parent="Stats" unique_id=1164612352]
 script = ExtResource("18_tbgkn")
 MoveTimeToMaxBloom = 0.1
-MoveBloomGrowthRate = 1.0
 MoveBloomShrinkRate = 0.2
 MoveBloomMinDeg = 50.0
 MoveBloomMaxDeg = 80.0
-MoveDamageMin = 50
+MoveDamageMin = 20
 MoveDamageMax = 300
 metadata/_custom_type_script = "uid://b1j7f3uyd80s3"
 
@@ -207,10 +207,17 @@ stream = ExtResource("24_5hpaj")
 volume_db = -4.0
 mix_target = 2
 
-[node name="ScopedStatusEffectComponent" type="Node" parent="." unique_id=2100231185]
+[node name="ScopedStatusEffectModule" type="Node" parent="." unique_id=2100231185]
 script = ExtResource("26_8bwop")
 _statusEffect = SubResource("Resource_bgsbt")
-metadata/_custom_type_script = "uid://c0xnhv61iiqba"
+
+[node name="MoveBloomModule" type="Node" parent="." unique_id=2054162779 node_paths=PackedStringArray("Parent", "DamageStats", "BloomStats", "MoveBloomStats")]
+script = ExtResource("28_5hpaj")
+Parent = NodePath("..")
+DamageStats = NodePath("../Stats/DamageStats")
+BloomStats = NodePath("../Stats/BloomStats")
+MoveBloomStats = NodePath("../Stats/MoveBloomStats")
+metadata/_custom_type_script = "uid://doh6x5pfspjv7"
 
 [connection signal="OnAttack" from="." to="Shoot" method="play"]
 [connection signal="OnReloadEnd" from="." to="308BoltCycleClose" method="play"]
@@ -222,5 +229,5 @@ metadata/_custom_type_script = "uid://c0xnhv61iiqba"
 [connection signal="OnReloadEndInterrupted" from="NormalReloadBehaviour" to="308BoltCycleClose" method="play"]
 [connection signal="OnReloadStart" from="NormalReloadBehaviour" to="308BoltCycleOpen" method="play"]
 [connection signal="OnScopedIn" from="ScopeComponent" to="ScopeComponent/ScopeZoomR1" method="play"]
-[connection signal="OnScopedIn" from="ScopeComponent" to="ScopedStatusEffectComponent" method="GiveStatusEffect"]
-[connection signal="OnScopedOut" from="ScopeComponent" to="ScopedStatusEffectComponent" method="RemoveStatusEffect"]
+[connection signal="OnScopedIn" from="ScopeComponent" to="ScopedStatusEffectModule" method="GiveStatusEffect"]
+[connection signal="OnScopedOut" from="ScopeComponent" to="ScopedStatusEffectModule" method="RemoveStatusEffect"]
