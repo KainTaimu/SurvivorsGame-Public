@@ -112,6 +112,7 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 
 [node name="NormalReloadBehaviour" type="Node" parent="." unique_id=1006070220 node_paths=PackedStringArray("MagazineStats", "ReloadStats")]
 script = ExtResource("4_p0oyq")
+CanReloadInBackground = true
 MagazineStats = NodePath("../Stats/MagazineStats")
 ReloadStats = NodePath("../Stats/ReloadStats")
 metadata/_custom_type_script = "uid://b7arqp2dmxhtx"

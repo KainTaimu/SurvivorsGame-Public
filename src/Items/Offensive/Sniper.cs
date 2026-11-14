@@ -176,7 +176,10 @@ public partial class Sniper
 	private void AttackNotScoped()
 	{
 		var bloomDeg = MoveBloomStats.MoveBloomMaxDeg * MoveBloomStats.MoveTimeFactor;
-		bloomDeg = Math.Clamp(bloomDeg, MoveBloomStats.MoveBloomMinDeg, MoveBloomStats.MoveBloomMaxDeg);
+		if (MoveBloomStats.MoveTimeFactor < 0.05f)
+			bloomDeg = BloomStats.BloomCoefficientDeg;
+		else
+			bloomDeg = Math.Clamp(bloomDeg, MoveBloomStats.MoveBloomMinDeg, MoveBloomStats.MoveBloomMaxDeg);
 
 		MagazineCount--;
 		if (MagazineCount == 0)
