@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using Arch.Core;
+using Game.Items.Offensive.Modules;
 using Game.Levels.Controllers;
 using Game.Players.Controllers;
 using Game.UI;
@@ -139,8 +140,6 @@ public partial class Sniper
 
 	public override void Process(double delta)
 	{
-		UpdateMoveTimeBloom(delta);
-
 		(_fireGroup as ICooldown)?.Process((float)delta);
 		_reloadBehaviour.Process((float)delta);
 
@@ -159,14 +158,6 @@ public partial class Sniper
 
 	private void Attack()
 	{
-		DamageStats.CritDamageChance = (float)(1 - MoveBloomStats.MoveTimeFactor);
-		DamageStats.Damage = (int)
-			Math.Clamp(
-				MoveBloomStats.MoveDamageMax * (1 - MoveBloomStats.MoveTimeFactor),
-				MoveBloomStats.MoveDamageMin,
-				MoveBloomStats.MoveDamageMax
-			);
-
 		if (_scopeComponent.ScopedIn)
 			AttackScoped();
 		else
@@ -175,12 +166,6 @@ public partial class Sniper
 
 	private void AttackNotScoped()
 	{
-		var bloomDeg = MoveBloomStats.MoveBloomMaxDeg * MoveBloomStats.MoveTimeFactor;
-		if (MoveBloomStats.MoveTimeFactor < 0.05f)
-			bloomDeg = BloomStats.BloomCoefficientDeg;
-		else
-			bloomDeg = Math.Clamp(bloomDeg, MoveBloomStats.MoveBloomMinDeg, MoveBloomStats.MoveBloomMaxDeg);
-
 		MagazineCount--;
 		if (MagazineCount == 0)
 			Reload();
@@ -190,7 +175,7 @@ public partial class Sniper
 		var mouseVector = Crosshair?.CanvasSpacePosition ?? Player.GetGlobalMousePosition();
 		var rotation = playerPosition.AngleToPoint(mouseVector);
 
-		var bloomRad = bloomDeg * (Math.PI / 180);
+		var bloomRad = BloomStats.BloomCoefficientDeg * (Math.PI / 180);
 		var bloom = (float)GD.RandRange(-bloomRad / 2, bloomRad / 2);
 		rotation += bloom;
 		var scale = Vector2.One * ProjectileStats.Scale;
@@ -239,21 +224,6 @@ public partial class Sniper
 		};
 		IsReloading = true;
 		EmitSignalOnReloadStart();
-	}
-
-	private void UpdateMoveTimeBloom(double delta)
-	{
-		if (MovementController.Velocity.LengthSquared() > 0 || Crosshair?.CrosshairVelocity.LengthSquared() > 0)
-			MoveBloomStats.MoveTime += delta * MoveBloomStats.MoveBloomGrowthRate;
-		else
-			MoveBloomStats.MoveTime -= delta * MoveBloomStats.MoveBloomShrinkRate;
-
-		SpreadCrosshair((float)MoveBloomStats.MoveTimeFactor);
-	}
-
-	private void SpreadCrosshair(float spreadRatio)
-	{
-		Crosshair?.ChangePrimaryCrosshairSpread(spreadRatio);
 	}
 
 	protected override void HandleDamage(Entity entity)
