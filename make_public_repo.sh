@@ -8,3 +8,6 @@ git filter-repo --path addons --path assets --path dev --path .ignore --path sto
 git remote add origin git@github.com:KainTaimu/SurvivorsGame-Public.git
 git fetch origin
 git branch --set-upstream-to=origin/master master
+
+chmod -R -c -w ../SurvivorsGame-Public/
+chmod -R -c +w ../SurvivorsGame-Public/.git/
