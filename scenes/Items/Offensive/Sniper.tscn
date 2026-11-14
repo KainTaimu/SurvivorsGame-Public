@@ -148,7 +148,6 @@ metadata/_custom_type_script = "uid://cjlv7mciafksn"
 
 [node name="SlowStats" type="Node" parent="Stats" unique_id=1053680751]
 script = ExtResource("16_vwmip")
-SlowCoefficient = 1.0
 metadata/_custom_type_script = "uid://doyqd2gp5rtvn"
 
 [node name="KnockbackStats" type="Node" parent="Stats" unique_id=1624617998]
@@ -161,7 +160,8 @@ script = ExtResource("18_tbgkn")
 MoveTimeToMaxBloom = 0.1
 MoveBloomGrowthRate = 1.0
 MoveBloomShrinkRate = 0.2
-MoveBloomMaxDeg = 50.0
+MoveBloomMinDeg = 50.0
+MoveBloomMaxDeg = 80.0
 MoveDamageMin = 50
 MoveDamageMax = 300
 metadata/_custom_type_script = "uid://b1j7f3uyd80s3"

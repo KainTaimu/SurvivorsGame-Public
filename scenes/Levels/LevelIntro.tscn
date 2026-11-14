@@ -92,7 +92,7 @@ script = ExtResource("6_vrw23")
 Weights = Array[ExtResource("5_iiw53")]([SubResource("Resource_w2_walker_wt")])
 metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_23k0g"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w70hc"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_mod_health"]
@@ -105,18 +105,6 @@ metadata/_custom_type_script = "uid://d31d8uns5faa5"
 script = ExtResource("14_pl5k2")
 StatName = 2
 Value = 5.0
-metadata/_custom_type_script = "uid://d31d8uns5faa5"
-
-[sub_resource type="Resource" id="Resource_mod_move_speed"]
-script = ExtResource("14_pl5k2")
-StatName = 3
-Value = 12.0
-metadata/_custom_type_script = "uid://d31d8uns5faa5"
-
-[sub_resource type="Resource" id="Resource_mod_run_speed"]
-script = ExtResource("14_pl5k2")
-StatName = 4
-Value = 0.025
 metadata/_custom_type_script = "uid://d31d8uns5faa5"
 
 [sub_resource type="Resource" id="Resource_mod_max_stamina"]
@@ -136,7 +124,7 @@ script = ExtResource("13_pl5k2")
 Name = "Wave 2 Buff"
 Permanent = true
 Hidden = true
-Modifiers = Array[ExtResource("14_pl5k2")]([SubResource("Resource_mod_health"), SubResource("Resource_mod_max_health"), SubResource("Resource_mod_move_speed"), SubResource("Resource_mod_run_speed"), SubResource("Resource_mod_max_stamina"), SubResource("Resource_mod_exhaustion")])
+Modifiers = Array[ExtResource("14_pl5k2")]([SubResource("Resource_mod_health"), SubResource("Resource_mod_max_health"), SubResource("Resource_mod_max_stamina"), SubResource("Resource_mod_exhaustion")])
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
 [sub_resource type="Resource" id="Resource_w2_reward_se"]
@@ -180,7 +168,7 @@ script = ExtResource("13_pl5k2")
 Name = "Wave 3 Buff"
 Permanent = true
 Hidden = true
-Modifiers = Array[ExtResource("14_pl5k2")]([SubResource("Resource_mod_health"), SubResource("Resource_mod_max_health"), SubResource("Resource_mod_move_speed"), SubResource("Resource_mod_run_speed"), SubResource("Resource_mod_max_stamina"), SubResource("Resource_mod_exhaustion")])
+Modifiers = Array[ExtResource("14_pl5k2")]([SubResource("Resource_mod_health"), SubResource("Resource_mod_max_health"), SubResource("Resource_mod_max_stamina"), SubResource("Resource_mod_exhaustion")])
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
 [sub_resource type="Resource" id="Resource_w3_reward_se"]
@@ -253,7 +241,7 @@ script = ExtResource("13_pl5k2")
 Name = "Wave 4 Buff"
 Permanent = true
 Hidden = true
-Modifiers = Array[ExtResource("14_pl5k2")]([SubResource("Resource_mod_health"), SubResource("Resource_mod_max_health"), SubResource("Resource_mod_move_speed"), SubResource("Resource_mod_run_speed"), SubResource("Resource_mod_max_stamina"), SubResource("Resource_mod_exhaustion")])
+Modifiers = Array[ExtResource("14_pl5k2")]([SubResource("Resource_mod_health"), SubResource("Resource_mod_max_health"), SubResource("Resource_mod_max_stamina"), SubResource("Resource_mod_exhaustion")])
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
 [sub_resource type="Resource" id="Resource_w4_reward_se"]
@@ -263,8 +251,8 @@ metadata/_custom_type_script = "uid://b0ii37onuijvb"
 
 [sub_resource type="Resource" id="Resource_w4_reward_pickup"]
 script = ExtResource("15_pickup")
-ItemCount = 4
-RarityUpperGate = 1
+ItemCount = 5
+RarityUpperGate = 2
 metadata/_custom_type_script = "uid://3d6fji4uf0l8"
 
 [sub_resource type="Resource" id="Resource_w5_walker_stats"]
@@ -319,7 +307,7 @@ script = ExtResource("13_pl5k2")
 Name = "Wave 5 Buff"
 Permanent = true
 Hidden = true
-Modifiers = Array[ExtResource("14_pl5k2")]([SubResource("Resource_mod_health"), SubResource("Resource_mod_max_health"), SubResource("Resource_mod_move_speed"), SubResource("Resource_mod_run_speed"), SubResource("Resource_mod_max_stamina"), SubResource("Resource_mod_exhaustion")])
+Modifiers = Array[ExtResource("14_pl5k2")]([SubResource("Resource_mod_health"), SubResource("Resource_mod_max_health"), SubResource("Resource_mod_max_stamina"), SubResource("Resource_mod_exhaustion")])
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
 [sub_resource type="Resource" id="Resource_w5_reward_se"]
@@ -329,7 +317,7 @@ metadata/_custom_type_script = "uid://b0ii37onuijvb"
 
 [sub_resource type="Resource" id="Resource_w5_reward_pickup"]
 script = ExtResource("15_pickup")
-ItemCount = 4
+ItemCount = 6
 RarityUpperGate = 2
 metadata/_custom_type_script = "uid://3d6fji4uf0l8"
 
@@ -362,7 +350,7 @@ script = ExtResource("13_pl5k2")
 Name = "Wave 6 Buff"
 Permanent = true
 Hidden = true
-Modifiers = Array[ExtResource("14_pl5k2")]([SubResource("Resource_mod_health"), SubResource("Resource_mod_max_health"), SubResource("Resource_mod_move_speed"), SubResource("Resource_mod_run_speed"), SubResource("Resource_mod_max_stamina"), SubResource("Resource_mod_exhaustion")])
+Modifiers = Array[ExtResource("14_pl5k2")]([SubResource("Resource_mod_health"), SubResource("Resource_mod_max_health"), SubResource("Resource_mod_max_stamina"), SubResource("Resource_mod_exhaustion")])
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
 [sub_resource type="Resource" id="Resource_w6_reward_se"]
@@ -372,8 +360,8 @@ metadata/_custom_type_script = "uid://b0ii37onuijvb"
 
 [sub_resource type="Resource" id="Resource_w6_reward_pickup"]
 script = ExtResource("15_pickup")
-ItemCount = 5
-RarityUpperGate = 2
+ItemCount = 3
+RarityUpperGate = 3
 metadata/_custom_type_script = "uid://3d6fji4uf0l8"
 
 [sub_resource type="Resource" id="Resource_w7_walker_stats"]
@@ -450,7 +438,7 @@ script = ExtResource("13_pl5k2")
 Name = "Wave 7 Buff"
 Permanent = true
 Hidden = true
-Modifiers = Array[ExtResource("14_pl5k2")]([SubResource("Resource_mod_health"), SubResource("Resource_mod_max_health"), SubResource("Resource_mod_move_speed"), SubResource("Resource_mod_run_speed"), SubResource("Resource_mod_max_stamina"), SubResource("Resource_mod_exhaustion")])
+Modifiers = Array[ExtResource("14_pl5k2")]([SubResource("Resource_mod_health"), SubResource("Resource_mod_max_health"), SubResource("Resource_mod_max_stamina"), SubResource("Resource_mod_exhaustion")])
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
 [sub_resource type="Resource" id="Resource_w7_reward_se"]
@@ -460,8 +448,8 @@ metadata/_custom_type_script = "uid://b0ii37onuijvb"
 
 [sub_resource type="Resource" id="Resource_w7_reward_pickup"]
 script = ExtResource("15_pickup")
-ItemCount = 5
-RarityUpperGate = 2
+ItemCount = 4
+RarityUpperGate = 3
 metadata/_custom_type_script = "uid://3d6fji4uf0l8"
 
 [sub_resource type="Resource" id="Resource_w8_walker_stats"]
@@ -538,7 +526,7 @@ script = ExtResource("13_pl5k2")
 Name = "Wave 8 Buff"
 Permanent = true
 Hidden = true
-Modifiers = Array[ExtResource("14_pl5k2")]([SubResource("Resource_mod_health"), SubResource("Resource_mod_max_health"), SubResource("Resource_mod_move_speed"), SubResource("Resource_mod_run_speed"), SubResource("Resource_mod_max_stamina"), SubResource("Resource_mod_exhaustion")])
+Modifiers = Array[ExtResource("14_pl5k2")]([SubResource("Resource_mod_health"), SubResource("Resource_mod_max_health"), SubResource("Resource_mod_max_stamina"), SubResource("Resource_mod_exhaustion")])
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
 [sub_resource type="Resource" id="Resource_w8_reward_se"]
@@ -549,7 +537,7 @@ metadata/_custom_type_script = "uid://b0ii37onuijvb"
 [sub_resource type="Resource" id="Resource_w8_reward_pickup"]
 script = ExtResource("15_pickup")
 ItemCount = 6
-RarityUpperGate = 2
+RarityUpperGate = 3
 metadata/_custom_type_script = "uid://3d6fji4uf0l8"
 
 [sub_resource type="Resource" id="Resource_w9_walker_stats"]
@@ -655,7 +643,7 @@ script = ExtResource("13_pl5k2")
 Name = "Wave 9 Buff"
 Permanent = true
 Hidden = true
-Modifiers = Array[ExtResource("14_pl5k2")]([SubResource("Resource_mod_health"), SubResource("Resource_mod_max_health"), SubResource("Resource_mod_move_speed"), SubResource("Resource_mod_run_speed"), SubResource("Resource_mod_max_stamina"), SubResource("Resource_mod_exhaustion")])
+Modifiers = Array[ExtResource("14_pl5k2")]([SubResource("Resource_mod_max_health"), SubResource("Resource_mod_max_stamina"), SubResource("Resource_mod_exhaustion")])
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
 [sub_resource type="Resource" id="Resource_w9_reward_se"]
@@ -765,7 +753,7 @@ script = ExtResource("13_pl5k2")
 Name = "Wave 10 Buff"
 Permanent = true
 Hidden = true
-Modifiers = Array[ExtResource("14_pl5k2")]([SubResource("Resource_mod_health"), SubResource("Resource_mod_max_health"), SubResource("Resource_mod_move_speed"), SubResource("Resource_mod_run_speed"), SubResource("Resource_mod_max_stamina"), SubResource("Resource_mod_exhaustion")])
+Modifiers = Array[ExtResource("14_pl5k2")]([SubResource("Resource_mod_health"), SubResource("Resource_mod_max_health"), SubResource("Resource_mod_max_stamina"), SubResource("Resource_mod_exhaustion")])
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
 [sub_resource type="Resource" id="Resource_w10_reward_se"]
@@ -891,12 +879,18 @@ script = ExtResource("6_vrw23")
 Weights = Array[ExtResource("5_iiw53")]([SubResource("Resource_w11_walker_wt"), SubResource("Resource_w11_walker_lunge_wt"), SubResource("Resource_w11_sprinter_wt"), SubResource("Resource_w11_sprinter_lunge_wt"), SubResource("Resource_w11_big_wt")])
 metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
 
+[sub_resource type="Resource" id="Resource_mod_run_speed"]
+script = ExtResource("14_pl5k2")
+StatName = 4
+Value = 0.025
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
 [sub_resource type="Resource" id="Resource_w11_se"]
 script = ExtResource("13_pl5k2")
 Name = "Wave 11 Buff"
 Permanent = true
 Hidden = true
-Modifiers = Array[ExtResource("14_pl5k2")]([SubResource("Resource_mod_health"), SubResource("Resource_mod_max_health"), SubResource("Resource_mod_move_speed"), SubResource("Resource_mod_run_speed"), SubResource("Resource_mod_max_stamina"), SubResource("Resource_mod_exhaustion")])
+Modifiers = Array[ExtResource("14_pl5k2")]([SubResource("Resource_mod_health"), SubResource("Resource_mod_max_health"), SubResource("Resource_mod_run_speed"), SubResource("Resource_mod_max_stamina"), SubResource("Resource_mod_exhaustion")])
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
 [sub_resource type="Resource" id="Resource_w11_reward_se"]
@@ -1019,6 +1013,12 @@ metadata/_custom_type_script = "uid://dau6m811dtep8"
 script = ExtResource("6_vrw23")
 Weights = Array[ExtResource("5_iiw53")]([SubResource("Resource_w12_walker_wt"), SubResource("Resource_w12_walker_lunge_wt"), SubResource("Resource_w12_sprinter_wt"), SubResource("Resource_w12_sprinter_lunge_wt"), SubResource("Resource_w12_big_wt")])
 metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
+
+[sub_resource type="Resource" id="Resource_mod_move_speed"]
+script = ExtResource("14_pl5k2")
+StatName = 3
+Value = 12.0
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
 
 [sub_resource type="Resource" id="Resource_w12_se"]
 script = ExtResource("13_pl5k2")

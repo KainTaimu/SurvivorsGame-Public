@@ -7,6 +7,9 @@ namespace Game.Items.Offensive;
 public partial class NormalReloadBehaviour : AbstractReloadBehaviour
 {
 	[Export]
+	private bool CanReloadInBackground { get; set; } = true;
+
+	[Export]
 	private MagazineStats MagazineStats { get; set; } = null!;
 
 	[Export]
@@ -28,7 +31,22 @@ public partial class NormalReloadBehaviour : AbstractReloadBehaviour
 		_timeUntilFinishedReloading = ReloadTime;
 	}
 
+	public override void _Process(double delta)
+	{
+		if (!CanReloadInBackground)
+			return;
+
+		ReloadTick((float)delta);
+	}
+
 	public override void Process(float delta)
+	{
+		if (CanReloadInBackground)
+			return;
+		ReloadTick(delta);
+	}
+
+	private void ReloadTick(float delta)
 	{
 		if (!IsReloading)
 			return;

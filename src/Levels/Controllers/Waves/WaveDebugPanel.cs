@@ -51,6 +51,9 @@ public partial class WaveDebugPanel : CanvasLayer
 		_waveInfo?.Text = OS.HasFeature("prod")
 			? $"Wave {_waveController.CurrentWaveIndex + 1}"
 			: _waveController.CurrentWave?.ToString();
+
+		if (OS.HasFeature("prod"))
+			return;
 		if (_waveController.CurrentWaveProgress is not null)
 		{
 			_waveProgress?.Visible = true;

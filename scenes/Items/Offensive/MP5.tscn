@@ -92,7 +92,6 @@ metadata/_custom_type_script = "uid://cjlv7mciafksn"
 
 [node name="SlowStats" type="Node" parent="Stats" unique_id=816347580]
 script = ExtResource("18_76prg")
-SlowCoefficient = 1.0
 metadata/_custom_type_script = "uid://doyqd2gp5rtvn"
 
 [node name="KnockbackStats" type="Node" parent="Stats" unique_id=85228396]
@@ -116,6 +115,7 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 
 [node name="NormalReloadBehaviour" type="Node" parent="." unique_id=527000596 node_paths=PackedStringArray("MagazineStats", "ReloadStats")]
 script = ExtResource("4_w7xe6")
+CanReloadInBackground = true
 MagazineStats = NodePath("../Stats/MagazineStats")
 ReloadStats = NodePath("../Stats/ReloadStats")
 metadata/_custom_type_script = "uid://b7arqp2dmxhtx"

@@ -20,6 +20,16 @@ func _ready() -> void:
 		hide()
 "
 
+[sub_resource type="GDScript" id="GDScript_brgr8"]
+script/source = "extends Control
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	if OS.has_feature(\"prod\"):
+		hide()
+"
+
 [node name="WaveDebugPanel" type="CanvasLayer" unique_id=812922554 node_paths=PackedStringArray("_timeLabel", "_waveInfo", "_waveProgress")]
 script = ExtResource("1_6r014")
 _timeLabel = NodePath("Control/MarginContainer/CenterContainer/VBoxContainer/TIME")
@@ -73,7 +83,7 @@ layout_mode = 2
 theme = ExtResource("2_i6rcm")
 theme_override_font_sizes/font_size = 14
 max_value = 1.0
-script = SubResource("GDScript_ap2sm")
+script = SubResource("GDScript_brgr8")
 
 [node name="Timer" type="Timer" parent="." unique_id=1522388757]
 autostart = true
