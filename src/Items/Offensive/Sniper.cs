@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using Arch.Core;
-using Game.Items.Offensive.Modules;
 using Game.Levels.Controllers;
 using Game.Players.Controllers;
 using Game.UI;

@@ -62,7 +62,7 @@ public partial class Shotgun : SimpleFirearm, IHasPumpActionStats
 				(float)rotation,
 				ProjectileStats.HitRadius,
 				speed,
-				PierceStats.PierceLimit,
+				PierceStats?.PierceLimit ?? 1,
 				scale
 			);
 		}

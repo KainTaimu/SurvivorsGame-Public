@@ -20,11 +20,12 @@ public partial class SimpleFirearm
 		IHasRecoilStats,
 		IHasProjectileStats,
 		IHasAttackStats,
-		IHasPierceStats,
-		IHasSlowStats,
-		IHasKnockbackStats,
+		IMayHasPierceStats,
+		IMayHasSlowStats,
+		IMayHasKnockbackStats,
 		IMayHasBurstFireStats
 {
+	// TODO: Remove these. AbstractReloadBehaviour's signals should be used instead.
 	[Signal]
 	public delegate void OnReloadStartEventHandler();
 
@@ -57,13 +58,13 @@ public partial class SimpleFirearm
 	public AttackStats AttackStats { get; set; } = null!;
 
 	[Export]
-	public PierceStats PierceStats { get; set; } = null!;
+	public PierceStats? PierceStats { get; set; }
 
 	[Export]
-	public SlowStats SlowStats { get; set; } = null!;
+	public SlowStats? SlowStats { get; set; }
 
 	[Export]
-	public KnockbackStats KnockbackStats { get; set; } = null!;
+	public KnockbackStats? KnockbackStats { get; set; }
 
 	[Export]
 	public BurstFireStats? BurstFireStats { get; set; }
@@ -102,7 +103,6 @@ public partial class SimpleFirearm
 	protected readonly ProjectilePool Pool = new();
 
 	private static Crosshair? Crosshair => Crosshair.Instance;
-	private static readonly RandomNumberGenerator _rng = new();
 
 	private bool _fireGroupRegistered;
 
@@ -182,7 +182,7 @@ public partial class SimpleFirearm
 			rotation,
 			ProjectileStats.HitRadius,
 			ProjectileStats.Speed,
-			PierceStats.PierceLimit,
+			PierceStats?.PierceLimit ?? 1,
 			scale
 		);
 
@@ -208,7 +208,9 @@ public partial class SimpleFirearm
 
 	protected override void HandleHitEffects(Entity entity)
 	{
-		OffensiveEffects.ApplyKnockback(entity, Player.GlobalPosition, KnockbackStats.KnockbackForce);
-		OffensiveEffects.ApplyVelocityMultiplier(entity, SlowStats.SlowCoefficient);
+		if (KnockbackStats is not null)
+			OffensiveEffects.ApplyKnockback(entity, Player.GlobalPosition, KnockbackStats.KnockbackForce);
+		if (SlowStats is not null)
+			OffensiveEffects.ApplyVelocityMultiplier(entity, SlowStats.SlowCoefficient);
 	}
 }

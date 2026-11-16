@@ -1,8 +1,7 @@
 [gd_scene format=3 uid="uid://2gxjr5yjrfut"]
 
-[ext_resource type="Script" uid="uid://ebbvrd2jnuyy" path="res://src/Items/Offensive/Minigun.cs" id="1_6kirf"]
+[ext_resource type="Script" uid="uid://igbacr2wbu1g" path="res://src/Items/Offensive/SimpleFirearm.cs" id="1_0asml"]
 [ext_resource type="PackedScene" uid="uid://d1fgx0n7b8eby" path="res://scenes/Projectiles/ProjectileBullet.tscn" id="2_6kirf"]
-[ext_resource type="Texture2D" uid="uid://bce8puoo5xtcr" path="res://assets/UI/keyboard_arrow_down.png" id="2_hoxu3"]
 [ext_resource type="Script" uid="uid://d31d8uns5faa5" path="res://src/Players/Controllers/StatusEffectModifier.cs" id="2_oxxwr"]
 [ext_resource type="Script" uid="uid://bdk4fdcqvypav" path="res://src/Players/Controllers/StatusEffect.cs" id="3_hoxu3"]
 [ext_resource type="Script" uid="uid://dpq42sefws67v" path="res://src/Items/Offensive/ProjectileAttackBehaviours/SimpleBulletAttack.cs" id="4_m53d4"]
@@ -12,40 +11,46 @@
 [ext_resource type="Script" uid="uid://5u8113et07vu" path="res://src/Items/Offensive/Stats/BloomStats.cs" id="12_7urwb"]
 [ext_resource type="Script" uid="uid://xtlc02w402jw" path="res://src/Items/Offensive/Stats/RecoilStats.cs" id="13_k7m7y"]
 [ext_resource type="Script" uid="uid://gr35snno6a2m" path="res://src/Items/Offensive/Stats/ReloadStats.cs" id="14_68ym6"]
+[ext_resource type="Script" uid="uid://doyqd2gp5rtvn" path="res://src/Items/Offensive/Stats/SlowStats.cs" id="14_lcbdc"]
 [ext_resource type="Script" uid="uid://cuyrbm7tgm3od" path="res://src/Items/Offensive/Stats/ProjectileStats.cs" id="15_mh3qx"]
+[ext_resource type="Script" uid="uid://dn7etfgk5kkqv" path="res://src/Items/Offensive/FireGroups/WindupFireGroup.cs" id="15_mnn5e"]
+[ext_resource type="Script" uid="uid://c0xnhv61iiqba" path="res://src/Items/Offensive/Modules/StatusEffectModule.cs" id="15_uelw1"]
 [ext_resource type="Script" uid="uid://bjysatf11t7bw" path="res://src/Items/Offensive/Stats/AttackStats.cs" id="16_hcczv"]
 [ext_resource type="Script" uid="uid://cjlv7mciafksn" path="res://src/Items/Offensive/Stats/PierceStats.cs" id="17_mv4jx"]
 [ext_resource type="Script" uid="uid://dwbllc4vgk7xi" path="res://src/Items/Offensive/Stats/PushOnAttackStats.cs" id="18_3rs1a"]
+[ext_resource type="Script" uid="uid://bypgfhe4pxfqo" path="res://src/Items/Offensive/Modules/PushPlayerOnAttackModule.cs" id="19_2wdo6"]
 [ext_resource type="Script" uid="uid://66x4x0yo47cj" path="res://src/Items/Offensive/Stats/KnockbackStats.cs" id="19_3bpjy"]
+[ext_resource type="Script" uid="uid://cfowxfu5s002r" path="res://src/Items/Offensive/ReloadBehaviours/DisposableReloadBehaviour.cs" id="20_auml2"]
 
-[sub_resource type="Resource" id="Resource_m53d4"]
+[sub_resource type="Resource" id="Resource_ogoab"]
 script = ExtResource("4_m53d4")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[sub_resource type="Resource" id="Resource_1j5om"]
+[sub_resource type="Curve" id="Curve_2wdo6"]
+_limits = [0.0, 0.5, 0.0, 3.0]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(3, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0asml"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_2wdo6"]
 script = ExtResource("2_oxxwr")
 StatName = 3
 Operation = 1
 Value = 0.6
 metadata/_custom_type_script = "uid://d31d8uns5faa5"
 
-[sub_resource type="Resource" id="Resource_6etis"]
+[sub_resource type="Resource" id="Resource_auml2"]
 script = ExtResource("3_hoxu3")
-Name = "Overweight"
+Name = "Heavy!"
 Cause = 2
 Permanent = true
-Icon = ExtResource("2_hoxu3")
-Tags = Array[int]([2])
-Modifiers = Array[ExtResource("2_oxxwr")]([SubResource("Resource_1j5om")])
+Modifiers = Array[ExtResource("2_oxxwr")]([SubResource("Resource_2wdo6")])
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
-[sub_resource type="Curve" id="Curve_e6too"]
-_limits = [0.0, 0.5, 0.0, 3.0]
-_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(3, 0), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[node name="Minigun" type="Node" unique_id=636864915 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "PushOnAttackStats", "KnockbackStats")]
-script = ExtResource("1_6kirf")
+[node name="Minigun" type="Node" unique_id=636864915 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats", "_fireGroup", "_reloadBehaviour")]
+script = ExtResource("1_0asml")
 DamageStats = NodePath("Stats/DamageStats")
 MagazineStats = NodePath("Stats/MagazineStats")
 BloomStats = NodePath("Stats/BloomStats")
@@ -54,12 +59,12 @@ ReloadStats = NodePath("Stats/ReloadStats")
 ProjectileStats = NodePath("Stats/ProjectileStats")
 AttackStats = NodePath("Stats/AttackStats")
 PierceStats = NodePath("Stats/PierceStats")
-PushOnAttackStats = NodePath("Stats/PushOnAttackStats")
+SlowStats = NodePath("Stats/SlowStats")
 KnockbackStats = NodePath("Stats/KnockbackStats")
 _projectileScene = ExtResource("2_6kirf")
-_projectileAttack = SubResource("Resource_m53d4")
-_movementPenaltyStatusEffect = SubResource("Resource_6etis")
-_windupCurve = SubResource("Curve_e6too")
+_fireGroup = NodePath("WindupFireGroup")
+_reloadBehaviour = NodePath("DisposableReloadBehaviour")
+_projectileAttack = SubResource("Resource_ogoab")
 
 [node name="Stats" type="Node" parent="." unique_id=1296597385]
 
@@ -116,13 +121,17 @@ metadata/_custom_type_script = "uid://cjlv7mciafksn"
 
 [node name="PushOnAttackStats" type="Node" parent="Stats" unique_id=1153921681]
 script = ExtResource("18_3rs1a")
-PushPerAttack = 500.0
+PushPerAttack = 700.0
 metadata/_custom_type_script = "uid://dwbllc4vgk7xi"
 
 [node name="KnockbackStats" type="Node" parent="Stats" unique_id=1330355372]
 script = ExtResource("19_3bpjy")
 KnockbackForce = 10.0
 metadata/_custom_type_script = "uid://66x4x0yo47cj"
+
+[node name="SlowStats" type="Node" parent="Stats" unique_id=145982147]
+script = ExtResource("14_lcbdc")
+metadata/_custom_type_script = "uid://doyqd2gp5rtvn"
 
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=1297129913]
 process_mode = 3
@@ -131,4 +140,29 @@ pitch_scale = 0.8
 max_polyphony = 5
 bus = &"ShootSfx"
 
+[node name="WindupFireGroup" type="Node" parent="." unique_id=570902673 node_paths=PackedStringArray("AttackStats")]
+script = ExtResource("15_mnn5e")
+AttackStats = NodePath("../Stats/AttackStats")
+_windupCurve = SubResource("Curve_2wdo6")
+metadata/_custom_type_script = "uid://dn7etfgk5kkqv"
+
+[node name="HeavyStatusEffectModule" type="Node" parent="." unique_id=2141183398]
+script = ExtResource("15_uelw1")
+_statusEffect = SubResource("Resource_auml2")
+metadata/_custom_type_script = "uid://c0xnhv61iiqba"
+
+[node name="PushPlayerOnAttackModule" type="Node" parent="." unique_id=640663340 node_paths=PackedStringArray("PushOnAttackStats")]
+script = ExtResource("19_2wdo6")
+PushOnAttackStats = NodePath("../Stats/PushOnAttackStats")
+metadata/_custom_type_script = "uid://bypgfhe4pxfqo"
+
+[node name="DisposableReloadBehaviour" type="Node" parent="." unique_id=1320831997]
+script = ExtResource("20_auml2")
+metadata/_custom_type_script = "uid://cfowxfu5s002r"
+
 [connection signal="OnAttack" from="." to="Shoot" method="play"]
+[connection signal="OnAttack" from="." to="PushPlayerOnAttackModule" method="PushPlayer"]
+[connection signal="OnEquipped" from="." to="HeavyStatusEffectModule" method="GiveStatusEffect"]
+[connection signal="OnUnequipped" from="." to="HeavyStatusEffectModule" method="RemoveStatusEffect"]
+[connection signal="OnFire" from="WindupFireGroup" to="." method="Attack"]
+[connection signal="OnReloadStart" from="DisposableReloadBehaviour" to="." method="queue_free"]
