@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c0bbuesyh0ls7" path="res://scenes/UI/PerformanceMonitorLabel.tscn" id="2_cdxyh"]
 
 [node name="PerformanceMonitor" type="CanvasLayer" unique_id=1872396024 node_paths=PackedStringArray("Targets", "_vBoxContainer", "_fpsLabel", "_staticMemLabel", "_vidMemLabel", "_gcLabel")]
+process_mode = 3
 script = ExtResource("1_l031m")
 Targets = []
 _vBoxContainer = NodePath("MarginContainer/VBoxContainer")

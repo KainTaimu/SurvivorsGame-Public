@@ -28,6 +28,7 @@ AudioManager="*uid://b6x82ongi5yps"
 ServiceLocator="*res://scenes/Core/ServiceLocator.tscn"
 PauseController="*uid://dhous8k4t2iwo"
 Console="*uid://ouiu5xh1cs8n"
+ConsoleCommands="*uid://boqs35wncx1gk"
 
 [debug]
 

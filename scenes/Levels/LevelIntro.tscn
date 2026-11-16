@@ -92,7 +92,7 @@ script = ExtResource("6_vrw23")
 Weights = Array[ExtResource("5_iiw53")]([SubResource("Resource_w2_walker_wt")])
 metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w70hc"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ja4tk"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_mod_health"]

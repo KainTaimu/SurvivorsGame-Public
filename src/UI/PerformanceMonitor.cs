@@ -57,9 +57,12 @@ public partial class PerformanceMonitor : CanvasLayer
 		}
 
 		if (OS.HasFeature("prod"))
-			QueueFree();
+		{
+			Hide();
+		}
 
 #if !DEBUG
+		// These are unavailable in optimized builds
 		_staticMemLabel?.QueueFree();
 		_vidMemLabel?.QueueFree();
 #endif
@@ -71,6 +74,8 @@ public partial class PerformanceMonitor : CanvasLayer
 
 	public override void _Process(double delta)
 	{
+		if (!Visible)
+			return;
 		if (Engine.GetProcessFrames() % RefreshRate != 0)
 			return;
 		foreach (var (node, label) in _labels)

@@ -125,22 +125,6 @@ resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="GDScript" id="GDScript_yvf4j"]
-script/source = "extends Node
-
-
-func _ready() -> void:
-	Console.pause_enabled = true
-	Console.add_command(\"god\", _toggle_god)
-
-
-func _toggle_god():
-	var stats := GameWorldInstance.MainPlayer.Character.CharacterStats as CharacterStats
-	var god: bool = stats.get(\"_godMode\")
-	stats.set(\"_godMode\", !god)
-	CustomLogger.log_info(\"god: %s\" % !god)
-"
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wkerx"]
 resource_local_to_scene = true
 shader = ExtResource("5_t84yk")
@@ -215,7 +199,7 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ja4tk"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wkerx"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_agk5e"]
@@ -261,10 +245,6 @@ _reloadTimeScale = SubResource("Resource_a0fn7")
 _incomingDamage = SubResource("Resource_j1i1x")
 _outgoingDamage = SubResource("Resource_ofy2w")
 _player = NodePath("../..")
-_godMode = true
-
-[node name="ConsoleCheat" type="Node" parent="Character/CharacterStats" index="0" unique_id=1559900995]
-script = SubResource("GDScript_yvf4j")
 
 [node name="AnimatedSprite2D" parent="." index="1" unique_id=881638213]
 material = SubResource("ShaderMaterial_wkerx")
