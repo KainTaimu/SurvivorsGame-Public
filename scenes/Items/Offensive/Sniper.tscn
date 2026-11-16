@@ -220,14 +220,12 @@ MoveBloomStats = NodePath("../Stats/MoveBloomStats")
 metadata/_custom_type_script = "uid://doh6x5pfspjv7"
 
 [connection signal="OnAttack" from="." to="Shoot" method="play"]
-[connection signal="OnReloadEnd" from="." to="308BoltCycleClose" method="play"]
-[connection signal="OnReloadStart" from="." to="308BoltCycleOpen" method="play"]
-[connection signal="OnReloadStart" from="." to="ScopeComponent" method="HideScope"]
 [connection signal="OnUnequipped" from="." to="ScopeComponent" method="HideScope"]
 [connection signal="OnFire" from="SemiAutoFireGroup" to="." method="Attack"]
 [connection signal="OnReloadEnd" from="NormalReloadBehaviour" to="308BoltCycleClose" method="play"]
 [connection signal="OnReloadEndInterrupted" from="NormalReloadBehaviour" to="308BoltCycleClose" method="play"]
 [connection signal="OnReloadStart" from="NormalReloadBehaviour" to="308BoltCycleOpen" method="play"]
+[connection signal="OnReloadStart" from="NormalReloadBehaviour" to="ScopeComponent" method="HideScope"]
 [connection signal="OnScopedIn" from="ScopeComponent" to="ScopeComponent/ScopeZoomR1" method="play"]
 [connection signal="OnScopedIn" from="ScopeComponent" to="ScopedStatusEffectModule" method="GiveStatusEffect"]
 [connection signal="OnScopedOut" from="ScopeComponent" to="ScopedStatusEffectModule" method="RemoveStatusEffect"]

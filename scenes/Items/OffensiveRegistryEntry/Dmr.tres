@@ -10,7 +10,7 @@ size = Vector2(32, 32)
 [sub_resource type="Resource" id="Resource_qq7yy"]
 script = ExtResource("1_q4oun")
 Name = "RSASS"
-Description = "A designated marksman rifle firing the 7.62x51mm cartridge. It can deal a [b][u]large amount of damage[/u][/b] to a single enemy. It includes a large muzzle break to lower recoil and can [b][u]push enemies[/u][/b] with its blast."
+Description = "A designated marksman rifle firing the 7.62x51mm cartridge. It can deal a [b][u]large amount of damage[/u][/b] to a single enemy. It features a magnified optic for precise targeting."
 ItemIcon = SubResource("PlaceholderTexture2D_pf5p6")
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 

@@ -25,6 +25,8 @@ public partial class NormalReloadBehaviour : AbstractReloadBehaviour
 	{
 		if (IsReloading)
 			return;
+		if (MagazineStats.Count >= MagazineStats.Capacity)
+			return;
 
 		IsReloading = true;
 		EmitSignalOnReloadStart();

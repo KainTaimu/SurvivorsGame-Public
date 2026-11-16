@@ -22,15 +22,6 @@ public partial class Sniper
 		IHasMoveBloomStats,
 		IHasKnockbackStats
 {
-	[Signal]
-	public delegate void OnReloadStartEventHandler();
-
-	[Signal]
-	public delegate void OnReloadEndEventHandler();
-
-	[Signal]
-	public delegate void AlmostEmptyEventHandler();
-
 	[ExportCategory("Stats")]
 	[Export]
 	public DamageStats DamageStats { get; set; } = null!;
@@ -92,7 +83,7 @@ public partial class Sniper
 		set => MagazineStats.Count = value;
 	}
 
-	public bool IsReloading { get; private set; }
+	public bool IsReloading => _reloadBehaviour.IsReloading;
 
 	private readonly ProjectilePool _pool = new();
 
@@ -211,18 +202,7 @@ public partial class Sniper
 
 	public void Reload()
 	{
-		if (IsReloading)
-			return;
-		if (MagazineCount >= MagazineCapacity)
-			return;
-		GetTree().CreateTimer(ReloadStats.ReloadTime, false).Timeout += () =>
-		{
-			MagazineCount = MagazineCapacity;
-			IsReloading = false;
-			EmitSignalOnReloadEnd();
-		};
-		IsReloading = true;
-		EmitSignalOnReloadStart();
+		_reloadBehaviour.Reload();
 	}
 
 	protected override void HandleDamage(Entity entity)
