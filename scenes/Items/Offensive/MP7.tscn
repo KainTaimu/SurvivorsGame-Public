@@ -22,7 +22,7 @@
 script = ExtResource("5_858eq")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[node name="MP7" type="Node" unique_id=1472391115 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats", "_fireGroup", "_reloadBehaviour")]
+[node name="MP7" type="Node" unique_id=1472391115 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats", "FireGroup", "ReloadBehaviour")]
 script = ExtResource("1_kk2yf")
 DamageStats = NodePath("Stats/DamageStats")
 MagazineStats = NodePath("Stats/MagazineStats")
@@ -34,10 +34,10 @@ AttackStats = NodePath("Stats/AttackStats")
 PierceStats = NodePath("Stats/PierceStats")
 SlowStats = NodePath("Stats/SlowStats")
 KnockbackStats = NodePath("Stats/KnockbackStats")
-_projectileScene = ExtResource("2_5qh0p")
-_fireGroup = NodePath("FullAutoFireGroup")
-_reloadBehaviour = NodePath("NormalReloadBehaviour")
-_projectileAttack = SubResource("Resource_c62cd")
+ProjectileScene = ExtResource("2_5qh0p")
+FireGroup = NodePath("FullAutoFireGroup")
+ReloadBehaviour = NodePath("NormalReloadBehaviour")
+ProjectileAttack = SubResource("Resource_c62cd")
 
 [node name="Stats" type="Node" parent="." unique_id=358762233]
 

@@ -71,16 +71,16 @@ public partial class SimpleFirearm
 
 	[ExportCategory("")]
 	[Export]
-	protected PackedScene _projectileScene = null!;
+	protected PackedScene ProjectileScene { get; private set; } = null!;
 
 	[Export]
-	protected AbstractFireGroup _fireGroup = null!;
+	protected AbstractFireGroup FireGroup { get; private set; } = null!;
 
 	[Export]
-	protected AbstractReloadBehaviour _reloadBehaviour = null!;
+	protected AbstractReloadBehaviour ReloadBehaviour { get; private set; } = null!;
 
 	[Export]
-	protected AbstractProjectileAttack _projectileAttack = null!;
+	protected AbstractProjectileAttack ProjectileAttack { get; private set; } = null!;
 
 	[Export]
 	private AudioStreamPlayer? _reloadAudioPlayer;
@@ -96,9 +96,9 @@ public partial class SimpleFirearm
 		set => MagazineStats.Count = value;
 	}
 
-	public bool IsReloading => _reloadBehaviour.IsReloading;
+	public bool IsReloading => ReloadBehaviour.IsReloading;
 
-	public ReloadDisplayType ReloadDisplayType => _reloadBehaviour.DisplayType;
+	public ReloadDisplayType ReloadDisplayType => ReloadBehaviour.DisplayType;
 
 	protected readonly ProjectilePool Pool = new();
 
@@ -110,7 +110,7 @@ public partial class SimpleFirearm
 	{
 		Pool.Initialize(
 			this,
-			_projectileScene,
+			ProjectileScene,
 			p =>
 			{
 				p.OnEntityHit += e => TryHandleHit(e.Entity);
@@ -140,8 +140,8 @@ public partial class SimpleFirearm
 
 	public override void Process(double delta)
 	{
-		(_fireGroup as ICooldown)?.Process((float)delta);
-		_reloadBehaviour.Process((float)delta);
+		(FireGroup as ICooldown)?.Process((float)delta);
+		ReloadBehaviour.Process((float)delta);
 
 		if (Input.IsActionPressed(InputMapNames.WeaponReload))
 		{
@@ -149,7 +149,7 @@ public partial class SimpleFirearm
 			return;
 		}
 
-		_fireGroup.ProcessInput();
+		FireGroup.ProcessInput();
 	}
 
 	public virtual bool Attack()
@@ -157,7 +157,7 @@ public partial class SimpleFirearm
 		if (MagazineCount <= 0)
 			return false;
 
-		if (_reloadBehaviour.IsReloading)
+		if (ReloadBehaviour.IsReloading)
 			return false;
 
 		if (MagazineCount <= 6)
@@ -175,7 +175,7 @@ public partial class SimpleFirearm
 		rotation += BloomStats.CalculateBloomRads();
 		var scale = Vector2.One * ProjectileStats.Scale;
 
-		_projectileAttack.Attack(
+		ProjectileAttack.Attack(
 			Pool.GetProjectile,
 			this,
 			Player.GlobalPosition,
@@ -192,7 +192,7 @@ public partial class SimpleFirearm
 
 	public virtual void Reload()
 	{
-		_reloadBehaviour.Reload();
+		ReloadBehaviour.Reload();
 	}
 
 	protected override void HandleDamage(Entity entity)

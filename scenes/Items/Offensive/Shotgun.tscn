@@ -24,7 +24,7 @@
 script = ExtResource("4_d1d18")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
-[node name="M870" type="Node" unique_id=1997007315 node_paths=PackedStringArray("PumpActionStats", "_shellReloadAudioPlayer", "_cockingAudioPlayer", "DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats", "_fireGroup", "_reloadBehaviour", "_reloadAudioPlayer", "_boltCloseAudioPlayer")]
+[node name="M870" type="Node" unique_id=1997007315 node_paths=PackedStringArray("PumpActionStats", "_shellReloadAudioPlayer", "_cockingAudioPlayer", "DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats", "FireGroup", "ReloadBehaviour", "_reloadAudioPlayer", "_boltCloseAudioPlayer")]
 script = ExtResource("1_f4o5x")
 PumpActionStats = NodePath("Stats/PumpActionStats")
 _shellReloadAudioPlayer = NodePath("ShellReload")
@@ -39,10 +39,10 @@ AttackStats = NodePath("Stats/AttackStats")
 PierceStats = NodePath("Stats/PierceStats")
 SlowStats = NodePath("Stats/SlowStats")
 KnockbackStats = NodePath("Stats/KnockbackStats")
-_projectileScene = ExtResource("2_e0ol0")
-_fireGroup = NodePath("SemiAutoFireGroup")
-_reloadBehaviour = NodePath("SequentialReloadBehaviour")
-_projectileAttack = SubResource("Resource_mkf0n")
+ProjectileScene = ExtResource("2_e0ol0")
+FireGroup = NodePath("SemiAutoFireGroup")
+ReloadBehaviour = NodePath("SequentialReloadBehaviour")
+ProjectileAttack = SubResource("Resource_mkf0n")
 _reloadAudioPlayer = NodePath("ShellReload")
 _boltCloseAudioPlayer = NodePath("Cocking")
 

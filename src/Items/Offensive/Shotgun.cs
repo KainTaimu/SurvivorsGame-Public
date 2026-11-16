@@ -55,7 +55,7 @@ public partial class Shotgun : SimpleFirearm, IHasPumpActionStats
 			var scale = Vector2.One * ProjectileStats.Scale;
 			var speed = ProjectileStats.Speed * (float)GD.RandRange(1f, 2f);
 
-			_projectileAttack.Attack(
+			ProjectileAttack.Attack(
 				Pool.GetProjectile,
 				this,
 				Player.GlobalPosition,

@@ -29,7 +29,7 @@ random_volume_offset_db = 1.0
 streams_count = 1
 stream_0/stream = ExtResource("7_nihe0")
 
-[node name="Ak47" type="Node" unique_id=915008798 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats", "_fireGroup", "_reloadBehaviour")]
+[node name="Ak47" type="Node" unique_id=915008798 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats", "FireGroup", "ReloadBehaviour")]
 script = ExtResource("1_rp6n0")
 DamageStats = NodePath("Stats/DamageStats")
 MagazineStats = NodePath("Stats/MagazineStats")
@@ -41,10 +41,10 @@ AttackStats = NodePath("Stats/AttackStats")
 PierceStats = NodePath("Stats/PierceStats")
 SlowStats = NodePath("Stats/SlowStats")
 KnockbackStats = NodePath("Stats/KnockbackStats")
-_projectileScene = ExtResource("2_rp6n0")
-_fireGroup = NodePath("FullAutoFireGroup")
-_reloadBehaviour = NodePath("NormalReloadBehaviour")
-_projectileAttack = SubResource("Resource_dar1o")
+ProjectileScene = ExtResource("2_rp6n0")
+FireGroup = NodePath("FullAutoFireGroup")
+ReloadBehaviour = NodePath("NormalReloadBehaviour")
+ProjectileAttack = SubResource("Resource_dar1o")
 
 [node name="Stats" type="Node" parent="." unique_id=1366702552]
 
