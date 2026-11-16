@@ -215,7 +215,7 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_g7v3u"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ja4tk"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_agk5e"]
@@ -224,7 +224,7 @@ Name = "DEV"
 Permanent = true
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kag5i"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g7v3u"]
 resource_local_to_scene = true
 shader = ExtResource("21_vujg4")
 shader_parameter/tint = Color(0.33618236, 2.6171097e-07, 1.2032687e-07, 1)
@@ -284,4 +284,4 @@ _testEffect = Array[ExtResource("7_qh10d")]([SubResource("Resource_agk5e")])
 [node name="M17" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="0" unique_id=1989500741 instance=ExtResource("9_wkerx")]
 
 [node name="ColorRect" parent="DamageVignette" parent_id_path=PackedInt32Array(758455490) index="0" unique_id=1773597369]
-material = SubResource("ShaderMaterial_kag5i")
+material = SubResource("ShaderMaterial_g7v3u")

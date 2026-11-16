@@ -18,7 +18,7 @@
 [ext_resource type="Script" uid="uid://doyqd2gp5rtvn" path="res://src/Items/Offensive/Stats/SlowStats.cs" id="18_oyix5"]
 [ext_resource type="Script" uid="uid://66x4x0yo47cj" path="res://src/Items/Offensive/Stats/KnockbackStats.cs" id="19_klz7q"]
 
-[sub_resource type="Resource" id="Resource_yc6ub"]
+[sub_resource type="Resource" id="Resource_3bk4h"]
 script = ExtResource("4_2l6dk")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
@@ -37,7 +37,7 @@ KnockbackStats = NodePath("Stats/KnockbackStats")
 ProjectileScene = ExtResource("2_1j0xa")
 FireGroup = NodePath("FullAutoFireGroup")
 ReloadBehaviour = NodePath("NormalReloadBehaviour")
-ProjectileAttack = SubResource("Resource_yc6ub")
+ProjectileAttack = SubResource("Resource_3bk4h")
 
 [node name="Stats" type="Node" parent="." unique_id=416838076]
 
