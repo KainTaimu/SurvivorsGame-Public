@@ -12,7 +12,6 @@ public partial class WindupFireGroup : AbstractFireGroup
 	[Export]
 	private Curve _windupCurve = null!;
 
-	private float CooldownDuration => AttackStats.AttackSpeed;
 	private float _cooldown;
 	private double _windupTime;
 
