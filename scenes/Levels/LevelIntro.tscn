@@ -92,7 +92,7 @@ script = ExtResource("6_vrw23")
 Weights = Array[ExtResource("5_iiw53")]([SubResource("Resource_w2_walker_wt")])
 metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_25nja"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w70hc"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_mod_health"]
@@ -1565,6 +1565,16 @@ script = ExtResource("6_vrw23")
 Weights = Array[ExtResource("5_iiw53")]([SubResource("Resource_uui33"), SubResource("Resource_885es"), SubResource("Resource_t7v5b"), SubResource("Resource_tgplc"), SubResource("Resource_ufwql")])
 metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
 
+[sub_resource type="Resource" id="Resource_a6la3"]
+script = ExtResource("5_iiw53")
+Blueprint = ExtResource("7_d75v4")
+metadata/_custom_type_script = "uid://dau6m811dtep8"
+
+[sub_resource type="Resource" id="Resource_vmdw7"]
+script = ExtResource("6_vrw23")
+Weights = Array[ExtResource("5_iiw53")]([SubResource("Resource_a6la3")])
+metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
+
 [sub_resource type="Resource" id="Resource_oo16t"]
 script = ExtResource("11_v38xc")
 DamageOnContact = 4
@@ -1601,15 +1611,10 @@ script = ExtResource("6_vrw23")
 Weights = Array[ExtResource("5_iiw53")]([SubResource("Resource_jay86"), SubResource("Resource_6yfuu"), SubResource("Resource_0iw8n")])
 metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
 
-[sub_resource type="Resource" id="Resource_a6la3"]
-script = ExtResource("5_iiw53")
-Blueprint = ExtResource("7_d75v4")
-metadata/_custom_type_script = "uid://dau6m811dtep8"
-
-[sub_resource type="Resource" id="Resource_vmdw7"]
-script = ExtResource("6_vrw23")
-Weights = Array[ExtResource("5_iiw53")]([SubResource("Resource_a6la3")])
-metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
+[sub_resource type="Resource" id="Resource_vhjum"]
+script = ExtResource("17_faso5")
+FrameName = &"LastTargetRaycast"
+metadata/_custom_type_script = "uid://daw8gyvo0xom3"
 
 [sub_resource type="Resource" id="Resource_sf4ij"]
 script = ExtResource("17_faso5")
@@ -1844,15 +1849,7 @@ Rewards = Array[ExtResource("12_j0071")]([SubResource("Resource_w14_reward_se"),
 script = ExtResource("15_n7qsj")
 metadata/_custom_type_script = "uid://bhhh8235y54bg"
 
-[node name="18 Duration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="17" unique_id=563917666]
-script = ExtResource("10_ta1oo")
-Duration = 999.0
-EnemyBlueprints = SubResource("Resource_vvuu7")
-SpawnMinTime = 0.07
-SpawnMaxTime = 0.07
-SpawnBatchMax = 2
-
-[node name="19 HORDE SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="18" unique_id=1421423771]
+[node name="18 HORDE SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="17" unique_id=1421423771]
 script = ExtResource("9_duif7")
 SpawnCountTarget = 6000
 WaveName = "HORDE"
@@ -1862,6 +1859,14 @@ SpawnMaxTime = 0.007
 SpawnBatchMin = 50
 SpawnBatchMax = 50
 
+[node name="19 Duration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="18" unique_id=563917666]
+script = ExtResource("10_ta1oo")
+Duration = 999.0
+EnemyBlueprints = SubResource("Resource_vvuu7")
+SpawnMinTime = 0.07
+SpawnMaxTime = 0.07
+SpawnBatchMax = 2
+
 [node name="20 DebugStopper" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="19" unique_id=565233767]
 script = ExtResource("15_n7qsj")
 metadata/_custom_type_script = "uid://bhhh8235y54bg"
@@ -1870,6 +1875,9 @@ metadata/_custom_type_script = "uid://bhhh8235y54bg"
 process_mode = 3
 script = ExtResource("17_duif7")
 pickup_scene = ExtResource("18_ta1oo")
+
+[node name="EnemyTargetQuery" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="1" unique_id=991938994]
+FrameTime = SubResource("Resource_vhjum")
 
 [node name="EnemyNavMeshController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="4" unique_id=7126221 instance=ExtResource("16_v38xc")]
 FrameTime = SubResource("Resource_sf4ij")

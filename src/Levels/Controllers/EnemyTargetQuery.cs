@@ -66,12 +66,9 @@ public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
 		var player = GameWorld.Instance.MainPlayer;
 		var playerPos = player.GlobalPosition;
 
-		using (FrameTime.Record())
-		{
-			_grid.ClearAll();
-			_grid.Recenter(playerPos);
-			AddObjectsToGridQuery(GameWorld.World, _grid);
-		}
+		_grid.ClearAll();
+		_grid.Recenter(playerPos);
+		AddObjectsToGridQuery(GameWorld.World, _grid);
 	}
 
 	[Query]
@@ -157,6 +154,7 @@ public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
 	// NOTE: NOT THREAD SAFE
 	public int GetTargetsRayCast(Vector2 from, float angle, float width, Span<Entity> hitBuffer, int hitLimit = -1)
 	{
+		using var _ = FrameTime.Record();
 		_cachedCellsOnRay.Clear();
 		_cachedSeenIds.Clear();
 		var direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
@@ -174,6 +172,8 @@ public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
 			{
 				var checkCell = new Vector2I(cellIdx.X + dx, cellIdx.Y + dy);
 				if (!_grid.IsValidCell(checkCell.X, checkCell.Y))
+					continue;
+				if (_grid.GetCellCount(checkCell.X, checkCell.Y) <= 0)
 					continue;
 
 				foreach (var entity in _grid.GetEnumerator(checkCell.X, checkCell.Y))
