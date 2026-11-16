@@ -75,7 +75,7 @@ metadata/_custom_type_script = "uid://xtlc02w402jw"
 
 [node name="ReloadStats" type="Node" parent="Stats" unique_id=1661418748]
 script = ExtResource("15_g8tcj")
-ReloadTime = 5.0
+ReloadTime = 4.0
 metadata/_custom_type_script = "uid://gr35snno6a2m"
 
 [node name="ProjectileStats" type="Node" parent="Stats" unique_id=564501865]

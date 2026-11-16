@@ -18,13 +18,13 @@
 [ext_resource type="PackedScene" uid="uid://qxx1q01ys1cd" path="res://scenes/Items/Offensive/Dmr.tscn" id="15_c420m"]
 [ext_resource type="PackedScene" uid="uid://lvm5jo1ua73i" path="res://scenes/Items/Offensive/Shotgun.tscn" id="16_ca340"]
 [ext_resource type="PackedScene" uid="uid://cnhwoqxa4s0dc" path="res://scenes/Items/Offensive/M7.tscn" id="17_kf61w"]
-[ext_resource type="PackedScene" uid="uid://cnk5c4yvwhjun" path="res://scenes/Items/Offensive/M1911.tscn" id="18_2hw1k"]
 [ext_resource type="PackedScene" uid="uid://cmidrkjr0le3o" path="res://scenes/Items/Offensive/P90.tscn" id="19_q0pvf"]
 [ext_resource type="PackedScene" uid="uid://dwyqdinyji8tt" path="res://scenes/Items/Offensive/MP5.tscn" id="20_oi6mw"]
 [ext_resource type="PackedScene" uid="uid://ceimmtu3q4x6n" path="res://scenes/Items/Offensive/GrenadeThrower.tscn" id="21_dpdnh"]
 [ext_resource type="PackedScene" uid="uid://c2bradk7lbxae" path="res://scenes/Items/Offensive/FentPill.tscn" id="21_mmlnp"]
 [ext_resource type="PackedScene" uid="uid://culqrn6mdcvx3" path="res://scenes/Items/Offensive/MP7.tscn" id="22_04byt"]
 [ext_resource type="PackedScene" uid="uid://etybfmdjqx38" path="res://scenes/Items/Offensive/G17-F.tscn" id="23_1pdk2"]
+[ext_resource type="PackedScene" uid="uid://cnk5c4yvwhjun" path="res://scenes/Items/Offensive/M45.tscn" id="23_mmlnp"]
 [ext_resource type="PackedScene" uid="uid://cuf1ut26wc716" path="res://scenes/Items/Offensive/Matrix.tscn" id="24_16g23"]
 [ext_resource type="PackedScene" uid="uid://bw0y45qdkgbmf" path="res://scenes/Items/Offensive/DamageInjector.tscn" id="25_16g23"]
 
@@ -62,7 +62,7 @@ _uids_to_string_ids = Dictionary[StringName, StringName]({
 &"uid://dd7q76kfjdvxq": &"Shotgun",
 &"uid://dfi450hlcvmli": &"FentPill",
 &"uid://dh08ymqfxu5xh": &"M7",
-&"uid://dktd8lr0rda13": &"M1911",
+&"uid://dktd8lr0rda13": &"M45",
 &"uid://k1vxoxjbg1ys": &"P90",
 &"uid://nsapijc5eire": &"MP5",
 &"uid://xlyj1jgthiqq": &"GrenadeThrower"
@@ -79,10 +79,10 @@ _string_ids_to_uids = Dictionary[StringName, StringName]({
 &"GrenadeThrower": &"uid://xlyj1jgthiqq",
 &"M16A4": &"uid://bjjvd4bhmqet4",
 &"M17": &"uid://cfauo6em32ia0",
-&"M1911": &"uid://dktd8lr0rda13",
 &"M249": &"uid://cpvuqkwl3k0g1",
 &"M249S": &"uid://bjv5rfumg72tr",
 &"M4": &"uid://cmj08qj3le4ar",
+&"M45": &"uid://dktd8lr0rda13",
 &"M7": &"uid://dh08ymqfxu5xh",
 &"M92FS": &"uid://bx3nk3ntkr78k",
 &"MP5": &"uid://nsapijc5eire",
@@ -97,8 +97,8 @@ _string_ids_to_uids = Dictionary[StringName, StringName]({
 })
 _property_index = Dictionary[StringName, Dictionary]({
 &"scene": {
-ExtResource("21_mmlnp"): {
-&"FentPill": true
+ExtResource("23_mmlnp"): {
+&"M45": true
 },
 ExtResource("21_dpdnh"): {
 &"GrenadeThrower": true
@@ -109,11 +109,11 @@ ExtResource("20_oi6mw"): {
 ExtResource("19_q0pvf"): {
 &"P90": true
 },
-ExtResource("18_2hw1k"): {
-&"M1911": true
-},
 ExtResource("17_kf61w"): {
 &"M7": true
+},
+ExtResource("21_mmlnp"): {
+&"FentPill": true
 },
 ExtResource("16_ca340"): {
 &"Shotgun": true

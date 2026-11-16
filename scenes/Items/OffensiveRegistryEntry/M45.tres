@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://dktd8lr0rda13"]
 
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="1_ladre"]
-[ext_resource type="PackedScene" uid="uid://cnk5c4yvwhjun" path="res://scenes/Items/Offensive/M1911.tscn" id="1_wxi2v"]
+[ext_resource type="PackedScene" uid="uid://cnk5c4yvwhjun" path="res://scenes/Items/Offensive/M45.tscn" id="1_wxi2v"]
 [ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_ladre"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wvv4q"]
@@ -10,7 +10,7 @@ size = Vector2(32, 32)
 [sub_resource type="Resource" id="Resource_wdfq5"]
 script = ExtResource("1_ladre")
 Name = "M45"
-Description = "A rugged .45 pistol. It comes with an extended 11-round magazine"
+Description = "A modern variant of the M1911 with upgraded internals. It comes with an extended 11-round magazine."
 ItemIcon = SubResource("PlaceholderTexture2D_wvv4q")
 metadata/_custom_type_script = "uid://8rt54h4imtxv"
 

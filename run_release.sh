@@ -16,6 +16,9 @@ build_windows() {
 
 ARTIFACTS=()
 
+mkdir -p exports/windows/
+mkdir -p exports/linux/
+
 case $1 in
 linux)
     build_linux

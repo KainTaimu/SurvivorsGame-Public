@@ -104,7 +104,7 @@ metadata/_custom_type_script = "uid://gr35snno6a2m"
 
 [node name="ProjectileStats" type="Node" parent="Stats" unique_id=1964454056]
 script = ExtResource("15_mh3qx")
-Speed = 6000
+Speed = 8000
 HitRadius = 30
 Scale = 0.8
 metadata/_custom_type_script = "uid://cuyrbm7tgm3od"

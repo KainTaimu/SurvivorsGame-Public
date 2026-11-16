@@ -21,7 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://dtcjylv1ewb16" path="res://scenes/Items/Offensive/SKS.tscn" id="18_rvfl2"]
 [ext_resource type="PackedScene" uid="uid://c24ayslleke42" path="res://scenes/Items/Offensive/M249.tscn" id="19_fd0su"]
 [ext_resource type="PackedScene" uid="uid://c8noyno0ootql" path="res://scenes/Items/Offensive/M249S.tscn" id="20_d38pd"]
-[ext_resource type="PackedScene" uid="uid://cnk5c4yvwhjun" path="res://scenes/Items/Offensive/M1911.tscn" id="21_ndd4e"]
+[ext_resource type="PackedScene" uid="uid://cnk5c4yvwhjun" path="res://scenes/Items/Offensive/M45.tscn" id="21_ndd4e"]
 [ext_resource type="PackedScene" uid="uid://2gxjr5yjrfut" path="res://scenes/Items/Offensive/Minigun.tscn" id="22_1l6d6"]
 [ext_resource type="PackedScene" uid="uid://dwyqdinyji8tt" path="res://scenes/Items/Offensive/MP5.tscn" id="23_5fm22"]
 [ext_resource type="PackedScene" uid="uid://twvhgblbtovy" path="res://scenes/Items/Offensive/Revolver.tscn" id="24_48hhp"]
