@@ -9,19 +9,24 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		visible = false
 		return
+	var p: Player = GameWorldInstance.MainPlayer
+	if not p.has_signal("OnPlayerDeath"):
+		CustomLogger.log_error("expected player to have OnDeath signal")
+		return
+	p.connect("OnPlayerDeath", show_death_screen)
 
 
 func _exit_tree() -> void:
 	if Engine.is_editor_hint():
 		return
+	PauseController.Unpause(self)
 	PauseController.Unlock(self)
-# PauseController.Unpause(self)
 
 
 func show_death_screen():
 	show()
 	PauseController.Lock(self)
-	# PauseController.Pause(self)
+	PauseController.Pause(self)
 	on_death_screen_show.emit()
 
 

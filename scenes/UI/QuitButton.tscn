@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://beketx2fnpmh7"]
+
+[sub_resource type="GDScript" id="GDScript_ogoab"]
+script/source = "extends Button
+
+@export var timeout_seconds = 2.0
+
+var click_count: int:
+	get:
+		return click_count
+	set(value):
+		click_count = value
+		match click_count:
+			0:
+				text = \"Quit\"
+			1:
+				text = \"Confirm quit\"
+var last_click: float
+var secs_until_timeout: float
+
+
+func _process(delta: float) -> void:
+	if secs_until_timeout <= 0:
+		_reset_click_count()
+		return
+	secs_until_timeout -= delta
+
+
+func on_click() -> void:
+	click_count += 1
+	secs_until_timeout = timeout_seconds
+	if click_count >= 2:
+		quit_game()
+
+
+func quit_game() -> void:
+	get_tree().quit()
+
+
+func _reset_click_count():
+	click_count = 0
+"
+
+[node name="QuitButton" type="Button" unique_id=1326788780]
+custom_minimum_size = Vector2(128, 0)
+text = "QUIT"
+script = SubResource("GDScript_ogoab")
+timeout_seconds = 3.0
+
+[connection signal="button_down" from="." to="." method="on_click"]
+[connection signal="mouse_exited" from="." to="." method="_reset_click_count"]
