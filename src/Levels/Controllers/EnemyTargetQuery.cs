@@ -151,15 +151,12 @@ public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
 		}
 	}
 
-	private readonly List<Vector2I> _cachedAllCells = [];
-	private readonly List<Vector2I> _cachedSurrounding = [];
 	private readonly HashSet<Vector2I> _cachedCellsOnRay = [];
 	private readonly HashSet<Entity> _cachedSeenIds = [];
 
 	// NOTE: NOT THREAD SAFE
 	public int GetTargetsRayCast(Vector2 from, float angle, float width, Span<Entity> hitBuffer, int hitLimit = -1)
 	{
-		_cachedAllCells.Clear();
 		_cachedCellsOnRay.Clear();
 		_cachedSeenIds.Clear();
 		var direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
@@ -169,44 +166,37 @@ public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
 		GetCellsAlongLine(from, rayEnd, _cachedCellsOnRay);
 
 		var cellWidth = Mathf.Clamp(Mathf.FloorToInt(width / _grid.CellSize), 0, int.MaxValue);
+		var hitCount = 0;
 		foreach (var cellIdx in _cachedCellsOnRay)
 		{
-			_cachedSurrounding.Clear();
 			for (var dx = -cellWidth; dx <= cellWidth; dx++)
 			for (var dy = -cellWidth; dy <= cellWidth; dy++)
 			{
 				var checkCell = new Vector2I(cellIdx.X + dx, cellIdx.Y + dy);
-				if (_grid.IsValidCell(checkCell.X, checkCell.Y))
-					_cachedSurrounding.Add(checkCell);
-			}
-
-			_cachedAllCells.AddRange(_cachedSurrounding);
-		}
-
-		var hitCount = 0;
-
-		foreach (var cellIndex in _cachedAllCells)
-		{
-			foreach (var entity in _grid.GetEnumerator(cellIndex.X, cellIndex.Y))
-			{
-				if (!GameWorld.World.IsAlive(entity))
-					continue;
-				if (!_cachedSeenIds.Add(entity))
+				if (!_grid.IsValidCell(checkCell.X, checkCell.Y))
 					continue;
 
-				if (!GameWorld.World.TryGet<PositionComponent>(entity, out var pos))
-					continue;
-				if (!GameWorld.World.TryGet<CircleHitboxComponent>(entity, out var hitbox))
-					continue;
-
-				var distSq = DistanceSquaredPointToRay(pos.Position, from, direction, rayLength);
-				var radiusSum = width + hitbox.Radius;
-				if (distSq <= radiusSum * radiusSum)
+				foreach (var entity in _grid.GetEnumerator(checkCell.X, checkCell.Y))
 				{
-					hitBuffer[hitCount] = entity;
-					hitCount++;
-					if (hitCount != -1 && hitCount >= hitLimit)
-						goto Exit;
+					if (!GameWorld.World.IsAlive(entity))
+						continue;
+					if (!_cachedSeenIds.Add(entity))
+						continue;
+
+					if (!GameWorld.World.TryGet<PositionComponent>(entity, out var pos))
+						continue;
+					if (!GameWorld.World.TryGet<CircleHitboxComponent>(entity, out var hitbox))
+						continue;
+
+					var distSq = DistanceSquaredPointToRay(pos.Position, from, direction, rayLength);
+					var radiusSum = width + hitbox.Radius;
+					if (distSq <= radiusSum * radiusSum)
+					{
+						hitBuffer[hitCount] = entity;
+						hitCount++;
+						if (hitCount != -1 && hitCount >= hitLimit)
+							goto Exit;
+					}
 				}
 			}
 		}
