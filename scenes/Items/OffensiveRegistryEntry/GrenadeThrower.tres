@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://xlyj1jgthiqq"]
+[gd_resource type="Resource" script_class="ItemRegistryEntry" format=3 uid="uid://xlyj1jgthiqq"]
 
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="1_23nrp"]
 [ext_resource type="PackedScene" uid="uid://ceimmtu3q4x6n" path="res://scenes/Items/Offensive/GrenadeThrower.tscn" id="1_mqtqd"]
-[ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="2_23nrp"]
+[ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/ItemRegistryEntry.gd" id="2_23nrp"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gqar5"]
 load_path = "res://.godot/imported/grenade.png-69c6521decbb8710938046f89d284a71.ctex"

@@ -11,15 +11,7 @@ public abstract partial class BaseOffensive : BaseItem
 	[Signal]
 	public delegate void OnAttackEventHandler();
 
-	[Signal]
-	public delegate void OnEquippedEventHandler();
-
-	[Signal]
-	public delegate void OnUnequippedEventHandler();
-
 	protected EnemyTargetQuery TargetQuery => EnemyTargetQuery.Instance;
-
-	public virtual void Process(double delta) { }
 
 	protected virtual void PostUpgrade(int newLevel) { }
 

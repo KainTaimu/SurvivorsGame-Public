@@ -25,7 +25,7 @@ public partial class Player : Node2D
 	public PlayerMovementController MovementController { get; private set; } = null!;
 
 	[Export]
-	public AbstractPlayerWeaponController WeaponController { get; private set; } = null!;
+	public AbstractPlayerItemController ItemController { get; private set; } = null!;
 
 	[Export]
 	public PlayerStatusEffectController StatusEffectController { get; private set; } = null!;

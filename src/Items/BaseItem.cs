@@ -10,12 +10,14 @@ namespace Game.Items;
 public abstract partial class BaseItem : Node
 {
 	[Signal]
-	public delegate void OnStatsChangedEventHandler();
+	public delegate void OnEquippedEventHandler();
 
 	[Signal]
-	public delegate void OnStatUpgradesChangedEventHandler();
+	public delegate void OnUnequippedEventHandler();
 
 	public static Player Player => GameWorld.Instance.MainPlayer;
 
 	public static CharacterStats PlayerStats => GameWorld.Instance.MainPlayer.Character.CharacterStats;
+
+	public virtual void Process(double delta) { }
 }

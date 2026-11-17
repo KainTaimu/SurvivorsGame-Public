@@ -13,8 +13,8 @@
 [ext_resource type="Script" uid="uid://d2moqmcv2k22p" path="res://src/Players/Controllers/LookHeader.cs" id="10_k7ubp"]
 [ext_resource type="Script" uid="uid://bpqjji00j8p6x" path="res://src/Levels/Controllers/PlayerHitController.cs" id="10_ragxt"]
 [ext_resource type="Script" uid="uid://cp1kck1yb1g48" path="res://src/Players/Controllers/PlayerStatusEffectController.cs" id="11_f1vlf"]
-[ext_resource type="PackedScene" uid="uid://b7tvc0jib1mqf" path="res://scenes/Players/PlayerWeaponController.tscn" id="12_oypsu"]
-[ext_resource type="PackedScene" uid="uid://c5q166p2d4241" path="res://scenes/UI/CurrentWeaponUi.tscn" id="14_8rask"]
+[ext_resource type="PackedScene" uid="uid://b7tvc0jib1mqf" path="res://scenes/Players/PlayerItemController.tscn" id="12_oypsu"]
+[ext_resource type="PackedScene" uid="uid://c5q166p2d4241" path="res://scenes/UI/CurrentItemUi.tscn" id="14_8rask"]
 [ext_resource type="Shader" uid="uid://bg3me0bhc4em2" path="res://src/Shaders/vignette.gdshader" id="16_2g2d6"]
 [ext_resource type="Script" uid="uid://bve4e6tonid55" path="res://src/Players/Controllers/player_damage_vignette.gd" id="16_8rask"]
 [ext_resource type="PackedScene" uid="uid://jqf8r7a2ybte" path="res://scenes/UI/CurrentStatusEffectsUi.tscn" id="26_xsyvw"]
@@ -150,14 +150,14 @@ shader_parameter/alpha = 0.0
 shader_parameter/inner_radius = 0.0
 shader_parameter/outer_radius = 1.0
 
-[node name="Player" type="Node2D" unique_id=1386970244 node_paths=PackedStringArray("Character", "MovementController", "WeaponController", "StatusEffectController")]
+[node name="Player" type="Node2D" unique_id=1386970244 node_paths=PackedStringArray("Character", "MovementController", "ItemController", "StatusEffectController")]
 top_level = true
 z_index = 32
 z_as_relative = false
 script = ExtResource("1_f0mf6")
 Character = NodePath("Character")
 MovementController = NodePath("PlayerMovementController")
-WeaponController = NodePath("PlayerWeaponController")
+ItemController = NodePath("PlayerItemController")
 StatusEffectController = NodePath("PlayerStatusEffectController")
 
 [node name="Character" parent="." unique_id=527218927 instance=ExtResource("2_ragxt")]
@@ -272,10 +272,10 @@ randomness = 1.0
 fixed_fps = 16
 process_material = SubResource("ParticleProcessMaterial_oypsu")
 
-[node name="PlayerWeaponController" parent="." unique_id=1687061162 instance=ExtResource("12_oypsu")]
+[node name="PlayerItemController" parent="." unique_id=1687061162 instance=ExtResource("12_oypsu")]
 
-[node name="CurrentWeaponUI" parent="." unique_id=2135368036 node_paths=PackedStringArray("_weaponController") instance=ExtResource("14_8rask")]
-_weaponController = NodePath("../PlayerWeaponController")
+[node name="CurrentItemUI" parent="." unique_id=2135368036 node_paths=PackedStringArray("_itemController") instance=ExtResource("14_8rask")]
+_itemController = NodePath("../PlayerItemController")
 
 [node name="CurrentStatusEffectsUI" parent="." unique_id=1231089179 node_paths=PackedStringArray("_statusEffectController") instance=ExtResource("26_xsyvw")]
 _statusEffectController = NodePath("../PlayerStatusEffectController")

@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://gf8aatfp6j1o"]
+
+[ext_resource type="Script" uid="uid://ciyr8n0mao26x" path="res://src/UI/ItemCarouselItem.cs" id="1_ifeqp"]
+[ext_resource type="LabelSettings" uid="uid://cu65p2lbgxmhg" path="res://scenes/UI/ItemCarouselLabelSettings.tres" id="2_1c2hh"]
+
+[node name="ItemCarouselItem" type="VBoxContainer" unique_id=1184841960 node_paths=PackedStringArray("ItemName")]
+theme_override_constants/separation = 0
+script = ExtResource("1_ifeqp")
+ItemName = NodePath("ItemName")
+
+[node name="ItemName" type="Label" parent="." unique_id=393295308]
+layout_mode = 2
+text = "A"
+label_settings = ExtResource("2_1c2hh")

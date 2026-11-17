@@ -5,7 +5,8 @@ using System.Collections.Generic;
 
 namespace Game.UI;
 
-public partial class WeaponCarousel : Control
+[GlobalClass]
+public partial class ItemCarousel : Control
 {
 	[Export]
 	public float ItemSpacing { get; set; } = 20.0f;

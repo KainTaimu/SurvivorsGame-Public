@@ -1,7 +1,78 @@
 [gd_scene format=3 uid="uid://bsw4dh2fya7ka"]
 
-[ext_resource type="Script" uid="uid://56ejkhdfy8tg" path="res://src/Utils/ItemDebugInfo.cs" id="1_tmfea"]
 [ext_resource type="FontFile" uid="uid://imomsqhxc2fu" path="res://assets/Fonts/MunroSmall-wPZw.ttf" id="2_iwdqe"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_tmfea"]
+script/source = "// Copyright 2026 Erwin Panergo
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+using System.Reflection;
+using System.Text;
+using Game.Players.Controllers;
+using Node = Godot.Node;
+
+namespace Game.Utils;
+
+public partial class ItemDebugInfo : CanvasLayer
+{
+	[Export]
+	public bool Enabled
+	{
+		get;
+		set
+		{
+			field = value;
+			Visible = field;
+		}
+	}
+
+	[Export]
+	public Node? Target;
+
+	[Export]
+	public AbstractPlayerItemController? PlayerItemController;
+
+	[Export]
+	public Label Label = null!;
+
+	[Export]
+	public int RecursionDepth;
+
+	public override void _Ready()
+	{
+		Visible = Enabled;
+	}
+
+	public override void _Process(double delta)
+	{
+		if (!Enabled)
+			return;
+
+		var target = Target ?? PlayerItemController?.Equipped;
+		if (target is null)
+		{
+			Hide();
+			return;
+		}
+
+		if (!Visible)
+			Show();
+
+		var s = new StringBuilder();
+		s.AppendLine(
+			ClassInspector.GetClassFieldsString(target, BindingFlags.NonPublic | BindingFlags.Instance, RecursionDepth)
+		);
+		s.AppendLine(
+			ClassInspector.GetClassPropertiesString(
+				target,
+				BindingFlags.NonPublic | BindingFlags.Instance,
+				RecursionDepth
+			)
+		);
+		Label.Text = s.ToString();
+	}
+}
+"
 
 [sub_resource type="LabelSettings" id="LabelSettings_1f7rb"]
 font = ExtResource("2_iwdqe")
@@ -11,7 +82,7 @@ shadow_color = Color(0, 0, 0, 1)
 
 [node name="ItemDebugInfo" type="CanvasLayer" unique_id=79685039 node_paths=PackedStringArray("Label")]
 process_mode = 3
-script = ExtResource("1_tmfea")
+script = SubResource("CSharpScript_tmfea")
 Label = NodePath("PanelContainer/MarginContainer/Label")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=313164471]

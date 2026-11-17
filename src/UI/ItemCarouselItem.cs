@@ -3,8 +3,8 @@
 
 namespace Game.UI;
 
-public partial class WeaponItem : VBoxContainer
+public partial class ItemCarouselItem : VBoxContainer
 {
 	[Export]
-	public Label WeaponName = null!;
+	public Label ItemName = null!;
 }

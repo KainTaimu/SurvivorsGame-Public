@@ -31,11 +31,11 @@ public partial class MoveBloomModule : Node
 
 	private static Crosshair? Crosshair => Crosshair.Instance;
 	private PlayerMovementController MovementController => GameWorld.Instance.MainPlayer.MovementController;
-	private AbstractPlayerWeaponController WeaponController => GameWorld.Instance.MainPlayer.WeaponController;
+	private AbstractPlayerItemController ItemController => GameWorld.Instance.MainPlayer.ItemController;
 
 	public override void _Process(double delta)
 	{
-		if (WeaponController.PrimaryAttack == Parent)
+		if (ItemController.Equipped == Parent)
 			UpdateMoveTimeBloom((float)delta);
 	}
 

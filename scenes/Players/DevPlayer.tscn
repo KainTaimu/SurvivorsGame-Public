@@ -150,7 +150,7 @@ resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2b8op"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qoswm"]
 resource_local_to_scene = true
 shader = ExtResource("5_t84yk")
 
@@ -186,7 +186,7 @@ region = Rect2(62, 0, 31, 31)
 atlas = ExtResource("6_y52bq")
 region = Rect2(93, 0, 31, 31)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_3bk4h"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_ygwx1"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -224,7 +224,7 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hhitw"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_rg3gt"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_agk5e"]
@@ -233,7 +233,7 @@ Name = "DEV"
 Permanent = true
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gcva6"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6a21i"]
 resource_local_to_scene = true
 shader = ExtResource("21_vujg4")
 shader_parameter/tint = Color(0.33618236, 2.6171097e-07, 1.2032687e-07, 1)
@@ -272,8 +272,8 @@ _outgoingDamage = SubResource("Resource_ofy2w")
 _player = NodePath("../..")
 
 [node name="AnimatedSprite2D" parent="." index="1" unique_id=881638213]
-material = SubResource("ShaderMaterial_2b8op")
-sprite_frames = SubResource("SpriteFrames_3bk4h")
+material = SubResource("ShaderMaterial_qoswm")
+sprite_frames = SubResource("SpriteFrames_ygwx1")
 animation = &"idle"
 
 [node name="PlayerCameraController" parent="." index="2" unique_id=68646763]
@@ -286,57 +286,57 @@ shadow_enabled = true
 [node name="PlayerStatusEffectController" parent="." index="7" unique_id=1019311816]
 _testEffect = Array[ExtResource("7_qh10d")]([SubResource("Resource_agk5e")])
 
-[node name="M17" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="0" unique_id=1989500741 instance=ExtResource("9_wkerx")]
+[node name="M17" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="0" unique_id=1989500741 instance=ExtResource("9_wkerx")]
 
-[node name="Ak47" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="1" unique_id=915008798 instance=ExtResource("10_l68un")]
+[node name="Ak47" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="1" unique_id=915008798 instance=ExtResource("10_l68un")]
 
-[node name="AA-12" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="2" unique_id=764147352 instance=ExtResource("11_ya27f")]
+[node name="AA-12" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="2" unique_id=764147352 instance=ExtResource("11_ya27f")]
 
-[node name="DamageInjector" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="3" unique_id=1845625201 instance=ExtResource("12_qoswm")]
+[node name="DamageInjector" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="3" unique_id=1845625201 instance=ExtResource("12_qoswm")]
 
-[node name="DMR" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="4" unique_id=901001043 instance=ExtResource("13_ygwx1")]
+[node name="DMR" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="4" unique_id=901001043 instance=ExtResource("13_ygwx1")]
 
-[node name="FentPill" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="5" unique_id=2085229111 instance=ExtResource("14_rg3gt")]
+[node name="FentPill" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="5" unique_id=2085229111 instance=ExtResource("14_rg3gt")]
 
-[node name="G3A3" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="6" unique_id=265287884 instance=ExtResource("15_6a21i")]
+[node name="G3A3" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="6" unique_id=265287884 instance=ExtResource("15_6a21i")]
 
-[node name="G17-F" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="7" unique_id=154650949 instance=ExtResource("16_epxog")]
+[node name="G17-F" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="7" unique_id=154650949 instance=ExtResource("16_epxog")]
 
-[node name="GrenadeLauncher" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="8" unique_id=1535579917 instance=ExtResource("17_p0vfj")]
+[node name="GrenadeLauncher" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="8" unique_id=1535579917 instance=ExtResource("17_p0vfj")]
 
-[node name="GrenadeThrower" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="9" unique_id=1000269585 instance=ExtResource("18_w107a")]
+[node name="GrenadeThrower" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="9" unique_id=1000269585 instance=ExtResource("18_w107a")]
 
-[node name="M4" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="10" unique_id=86667717 instance=ExtResource("19_pdi6p")]
+[node name="M4" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="10" unique_id=86667717 instance=ExtResource("19_pdi6p")]
 
-[node name="M7" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="11" unique_id=885462707 instance=ExtResource("20_pwwtk")]
+[node name="M7" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="11" unique_id=885462707 instance=ExtResource("20_pwwtk")]
 
-[node name="M16A4" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="12" unique_id=432855656 instance=ExtResource("21_3logm")]
+[node name="M16A4" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="12" unique_id=432855656 instance=ExtResource("21_3logm")]
 
-[node name="M45" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="13" unique_id=1713613643 instance=ExtResource("22_lk35y")]
+[node name="M45" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="13" unique_id=1713613643 instance=ExtResource("22_lk35y")]
 
-[node name="M92FS" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="14" unique_id=1472391115 instance=ExtResource("23_0t3tl")]
+[node name="M92FS" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="14" unique_id=1472391115 instance=ExtResource("23_0t3tl")]
 
-[node name="M249" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="15" unique_id=873525008 instance=ExtResource("24_y0rwl")]
+[node name="M249" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="15" unique_id=873525008 instance=ExtResource("24_y0rwl")]
 
-[node name="M249-S" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="16" unique_id=1854773231 instance=ExtResource("25_h7b02")]
+[node name="M249-S" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="16" unique_id=1854773231 instance=ExtResource("25_h7b02")]
 
-[node name="Matrix" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="17" unique_id=1078163122 instance=ExtResource("26_xw6rq")]
+[node name="Matrix" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="17" unique_id=1078163122 instance=ExtResource("26_xw6rq")]
 
-[node name="Minigun" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="18" unique_id=636864915 instance=ExtResource("27_mvllv")]
+[node name="Minigun" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="18" unique_id=636864915 instance=ExtResource("27_mvllv")]
 
-[node name="MP5" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="19" unique_id=1400919794 instance=ExtResource("28_jlyqp")]
+[node name="MP5" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="19" unique_id=1400919794 instance=ExtResource("28_jlyqp")]
 
-[node name="MP7" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="20" unique_id=782864425 instance=ExtResource("29_ck20b")]
+[node name="MP7" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="20" unique_id=782864425 instance=ExtResource("29_ck20b")]
 
-[node name="P90" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="21" unique_id=505582638 instance=ExtResource("30_tdu7j")]
+[node name="P90" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="21" unique_id=505582638 instance=ExtResource("30_tdu7j")]
 
-[node name="Revolver" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="22" unique_id=708917318 instance=ExtResource("31_kxri3")]
+[node name="Revolver" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="22" unique_id=708917318 instance=ExtResource("31_kxri3")]
 
-[node name="M870" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="23" unique_id=1997007315 instance=ExtResource("32_7hk4g")]
+[node name="M870" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="23" unique_id=1997007315 instance=ExtResource("32_7hk4g")]
 
-[node name="SKS" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="24" unique_id=1602172865 instance=ExtResource("33_hbcge")]
+[node name="SKS" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="24" unique_id=1602172865 instance=ExtResource("33_hbcge")]
 
-[node name="Sniper" parent="PlayerWeaponController" parent_id_path=PackedInt32Array(1687061162) index="25" unique_id=399121865 instance=ExtResource("34_ja4tk")]
+[node name="Sniper" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="25" unique_id=399121865 instance=ExtResource("34_ja4tk")]
 
 [node name="ColorRect" parent="DamageVignette" parent_id_path=PackedInt32Array(758455490) index="0" unique_id=1773597369]
-material = SubResource("ShaderMaterial_gcva6")
+material = SubResource("ShaderMaterial_6a21i")

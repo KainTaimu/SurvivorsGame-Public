@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bvumasotjkltv" path="res://src/UI/hud.gd" id="1_bg4j7"]
 [ext_resource type="Theme" uid="uid://cwyp7j6g53bhf" path="res://resources/UiThemes/NormalUi.tres" id="1_bplp6"]
-[ext_resource type="LabelSettings" uid="uid://cu65p2lbgxmhg" path="res://scenes/UI/WeaponCarouselLabelSettings.tres" id="2_bplp6"]
+[ext_resource type="LabelSettings" uid="uid://cu65p2lbgxmhg" path="res://scenes/UI/ItemCarouselLabelSettings.tres" id="2_bplp6"]
 [ext_resource type="Script" uid="uid://df22nw3i0hqp6" path="res://src/UI/HealthBar/health_bar.gd" id="4_t4hrf"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y52bq"]

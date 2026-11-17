@@ -1,4 +1,4 @@
-class_name OffensiveRegistryEntry
+class_name ItemRegistryEntry
 extends Resource
 
 @export var properties: BaseItemProperties
