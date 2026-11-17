@@ -12,17 +12,18 @@ public abstract partial class AbstractPlayerWeaponController : Node
 	public delegate void OnOffensiveListChangedEventHandler(BaseOffensive newOffensive);
 
 	[Signal]
-	public delegate void OnPrimaryAttackReassignedEventHandler();
+	public delegate void OnPrimaryAttackReassignedEventHandler(BaseOffensive? neww, BaseOffensive? old);
 
 	public BaseOffensive? PrimaryAttack
 	{
 		get;
 		protected set
 		{
+			var old = field;
 			field?.EmitSignal(BaseOffensive.SignalName.OnUnequipped);
 			value?.EmitSignal(BaseOffensive.SignalName.OnEquipped);
 			field = value;
-			EmitSignalOnPrimaryAttackReassigned();
+			EmitSignalOnPrimaryAttackReassigned(value, old);
 		}
 	}
 

@@ -11,7 +11,6 @@ namespace Game.Items.Offensive;
 public partial class GrenadeLauncher
 	: BaseOffensive,
 		IReloadable,
-		ICustomReloadDisplay,
 		IHasDamageStats,
 		IHasMagazineStats,
 		IHasBloomStats,
@@ -68,15 +67,15 @@ public partial class GrenadeLauncher
 	private AbstractFireGroup _fireGroup = null!;
 
 	[Export]
-	private SequentialReloadBehaviour _reloadBehaviour = null!;
+	public AbstractReloadBehaviour ReloadBehaviour { get; private set; } = null!;
 
 	[Export]
 	private AudioStreamPlayer? _explosionPlayer;
 
 	private Crosshair? Crosshair => Crosshair.Instance;
 
-	public bool IsReloading => _reloadBehaviour.IsReloading;
-	public ReloadDisplayType ReloadDisplayType => _reloadBehaviour.DisplayType;
+	public bool IsReloading => ReloadBehaviour.IsReloading;
+	public ReloadDisplayType ReloadDisplayType => ReloadBehaviour.DisplayType;
 
 	public int MagazineCapacity => MagazineStats.Capacity;
 
@@ -114,7 +113,7 @@ public partial class GrenadeLauncher
 	public override void Process(double delta)
 	{
 		(_fireGroup as ICooldown)?.Process((float)delta);
-		_reloadBehaviour.Process((float)delta);
+		ReloadBehaviour.Process((float)delta);
 
 		if (Input.IsActionPressed(InputMapNames.WeaponReload))
 		{
@@ -130,7 +129,7 @@ public partial class GrenadeLauncher
 		if (MagazineCount <= 0)
 			return;
 
-		if (_reloadBehaviour.IsReloading)
+		if (ReloadBehaviour.IsReloading)
 			return;
 
 		if (Crosshair is null)
@@ -171,7 +170,7 @@ public partial class GrenadeLauncher
 
 	public void Reload()
 	{
-		_reloadBehaviour.Reload();
+		ReloadBehaviour.Reload();
 	}
 
 	protected override void HandleDamage(Entity entity)

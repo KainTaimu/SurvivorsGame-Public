@@ -13,7 +13,6 @@ namespace Game.Items.Offensive;
 public partial class SimpleFirearm
 	: BaseOffensive,
 		IReloadable,
-		ICustomReloadDisplay,
 		IHasDamageStats,
 		IHasMagazineStats,
 		IHasBloomStats,
@@ -77,7 +76,7 @@ public partial class SimpleFirearm
 	protected AbstractFireGroup FireGroup { get; private set; } = null!;
 
 	[Export]
-	protected AbstractReloadBehaviour ReloadBehaviour { get; private set; } = null!;
+	public AbstractReloadBehaviour ReloadBehaviour { get; private set; } = null!;
 
 	[Export]
 	protected AbstractProjectileAttack ProjectileAttack { get; private set; } = null!;

@@ -32,6 +32,8 @@ public partial class CurrentWeaponUi : CanvasLayer
 
 	private static Registry<Resource> _registry = null!;
 
+	private BaseOffensive? _offensive;
+
 	public override void _EnterTree()
 	{
 		_registry = new Registry<Resource>(GD.Load(_weaponRegistryPath));
@@ -40,10 +42,36 @@ public partial class CurrentWeaponUi : CanvasLayer
 	public override void _Ready()
 	{
 		PauseController.Instance.OnPauseToggled += OnInstanceOnOnPauseToggled;
-		_weaponController.OnPrimaryAttackReassigned += UpdateCarousel;
+		_weaponController.OnPrimaryAttackReassigned += OnAttackReassignedEventHandler;
 		_weaponController.OnOffensiveListChanged += _ => UpdateCarousel();
 		_weaponController.ChildOrderChanged += UpdateCarousel;
-		Callable.From(UpdateCarousel).CallDeferred();
+		OnAttackReassignedEventHandler(_weaponController.PrimaryAttack, null);
+	}
+
+	private void OnAttackReassignedEventHandler(BaseOffensive? n, BaseOffensive? _)
+	{
+		if (_offensive is IHasMagazineStats magazineStats1)
+			magazineStats1.MagazineStats.OnMagazineCountChanged -= MagazineStatsOnOnMagazineCountChanged;
+		if (_offensive is IReloadable reloadable1)
+		{
+			reloadable1.ReloadBehaviour.OnReloadStart -= UpdateAmmoCount;
+			reloadable1.ReloadBehaviour.OnReloadEnd -= UpdateAmmoCount;
+			reloadable1.ReloadBehaviour.OnReloadProgress -= OnReloadBehaviourOnOnReloadProgress;
+		}
+
+		_offensive = n;
+
+		if (_offensive is IHasMagazineStats magazineStats)
+			magazineStats.MagazineStats.OnMagazineCountChanged += MagazineStatsOnOnMagazineCountChanged;
+		if (_offensive is IReloadable reloadable)
+		{
+			reloadable.ReloadBehaviour.OnReloadStart += UpdateAmmoCount;
+			reloadable.ReloadBehaviour.OnReloadEnd += UpdateAmmoCount;
+			reloadable.ReloadBehaviour.OnReloadProgress += OnReloadBehaviourOnOnReloadProgress;
+		}
+
+		UpdateAmmoCount();
+		UpdateCarousel();
 	}
 
 	public override void _ExitTree()
@@ -51,18 +79,7 @@ public partial class CurrentWeaponUi : CanvasLayer
 		PauseController.Instance.OnPauseToggled -= OnInstanceOnOnPauseToggled;
 	}
 
-	private void OnInstanceOnOnPauseToggled(bool toggle)
-	{
-		Visible = !toggle;
-	}
-
-	public override void _Process(double delta)
-	{
-		// PERF: Use signals
-		UpdateAmmoCount();
-	}
-
-	public void UpdateAmmoCount()
+	private void UpdateAmmoCount()
 	{
 		var primaryAttack = _weaponController.PrimaryAttack;
 		if (primaryAttack is not IReloadable primary)
@@ -73,37 +90,25 @@ public partial class CurrentWeaponUi : CanvasLayer
 
 		_primaryWeaponAmmo.Show();
 
-		switch (primaryAttack)
+		switch (primary.ReloadDisplayType)
 		{
-			case ICustomReloadDisplay customReloadDisplay:
-				switch (customReloadDisplay.ReloadDisplayType)
-				{
-					case ReloadDisplayType.Normal:
-					{
-						if (primary.IsReloading)
-							_primaryWeaponAmmo.Text = "Reloading...";
-						else
-							_primaryWeaponAmmo.Text = UpdateAmmoDisplay(primary);
-						return;
-					}
-					case ReloadDisplayType.Progressive:
-						_primaryWeaponAmmo.Text = UpdateAmmoDisplay(primary);
-						return;
-					default:
-						throw new ArgumentOutOfRangeException();
-				}
-
-			default:
+			case ReloadDisplayType.Normal:
+			{
 				if (primary.IsReloading)
 					_primaryWeaponAmmo.Text = "Reloading...";
 				else
-					_primaryWeaponAmmo.Text = UpdateAmmoDisplay(primary);
-
-				break;
+					_primaryWeaponAmmo.Text = CreateAmmoDisplayString(primary);
+				return;
+			}
+			case ReloadDisplayType.Progressive:
+				_primaryWeaponAmmo.Text = CreateAmmoDisplayString(primary);
+				return;
+			default:
+				throw new ArgumentOutOfRangeException();
 		}
 	}
 
-	private static string UpdateAmmoDisplay(IReloadable primary)
+	private static string CreateAmmoDisplayString(IReloadable primary)
 	{
 		if (primary.MagazineCount > primary.MagazineCapacity)
 		{
@@ -165,5 +170,20 @@ public partial class CurrentWeaponUi : CanvasLayer
 		{
 			// Ignore disposal during scene reload
 		}
+	}
+
+	private void OnInstanceOnOnPauseToggled(bool toggle)
+	{
+		Visible = !toggle;
+	}
+
+	private void OnReloadBehaviourOnOnReloadProgress(int i, int i1, int i2)
+	{
+		UpdateAmmoCount();
+	}
+
+	private void MagazineStatsOnOnMagazineCountChanged(int i, int i1)
+	{
+		UpdateAmmoCount();
 	}
 }

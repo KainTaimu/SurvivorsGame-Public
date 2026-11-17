@@ -67,7 +67,7 @@ public partial class Sniper
 	private AbstractFireGroup _fireGroup = null!;
 
 	[Export]
-	private AbstractReloadBehaviour _reloadBehaviour = null!;
+	public AbstractReloadBehaviour ReloadBehaviour { get; private set; } = null!;
 
 	[Export]
 	private AbstractProjectileAttack _projectileAttack = null!;
@@ -85,7 +85,8 @@ public partial class Sniper
 		set => MagazineStats.Count = value;
 	}
 
-	public bool IsReloading => _reloadBehaviour.IsReloading;
+	public bool IsReloading => ReloadBehaviour.IsReloading;
+	public ReloadDisplayType ReloadDisplayType => ReloadBehaviour.DisplayType;
 
 	private readonly ProjectilePool _pool = new();
 
@@ -133,7 +134,7 @@ public partial class Sniper
 	public override void Process(double delta)
 	{
 		(_fireGroup as ICooldown)?.Process((float)delta);
-		_reloadBehaviour.Process((float)delta);
+		ReloadBehaviour.Process((float)delta);
 
 		if (Input.IsActionPressed(InputMapNames.WeaponReload))
 		{
@@ -233,7 +234,7 @@ public partial class Sniper
 
 	public void Reload()
 	{
-		_reloadBehaviour.Reload();
+		ReloadBehaviour.Reload();
 	}
 
 	protected override void HandleDamage(Entity entity)

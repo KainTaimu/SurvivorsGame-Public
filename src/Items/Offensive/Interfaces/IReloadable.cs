@@ -5,6 +5,8 @@ namespace Game.Items.Offensive;
 
 public interface IReloadable
 {
+	AbstractReloadBehaviour ReloadBehaviour { get; }
+	ReloadDisplayType ReloadDisplayType { get; }
 	int MagazineCapacity { get; }
 	int MagazineCount { get; }
 	bool IsReloading { get; }
