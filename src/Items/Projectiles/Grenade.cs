@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using Arch.Core;
+using CommunityToolkit.HighPerformance.Buffers;
 using Game.Core.Settings;
 using Game.Levels.Controllers;
 
@@ -61,36 +62,40 @@ public partial class Grenade : RigidBody2D
 		if (Engine.GetPhysicsFrames() % 5 != 0)
 			return;
 
-		TargetQuery.TryGetTargetsInArea(
+		using var hitBuffer = SpanOwner<Entity>.Allocate(512);
+		var hitCount = TargetQuery.TryGetTargetsInArea(
 			GlobalPosition,
 			((IHasProjectileStats)OffensiveOrigin).ProjectileStats.HitRadius,
-			out var entities
+			hitBuffer.Span,
+			512
 		);
 
-		if (entities.Length > EnemiesInAreaUntilExplode && _distanceTraveled > ArmingDistance)
+		if (hitCount > EnemiesInAreaUntilExplode && _distanceTraveled > ArmingDistance)
 		{
 			ExplodeWithDelay();
 			return;
 		}
 
 		if (_t <= 0)
-			Explode(entities);
+			Explode(hitBuffer.Span);
 	}
 
 	private void ExplodeWithDelay()
 	{
 		GetTree().CreateTimer(0.1f, false).Timeout += () =>
 		{
+			using var hitBuffer = SpanOwner<Entity>.Allocate(512);
 			TargetQuery.TryGetTargetsInArea(
 				GlobalPosition,
 				((IHasProjectileStats)OffensiveOrigin).ProjectileStats.HitRadius,
-				out var entities
+				hitBuffer.Span,
+				512
 			);
-			Explode(entities);
+			Explode(hitBuffer.Span);
 		};
 	}
 
-	private void Explode(Entity[] entitiesHit)
+	private void Explode(Span<Entity> entitiesHit)
 	{
 		EmitSignalOnExploded(GlobalPosition);
 

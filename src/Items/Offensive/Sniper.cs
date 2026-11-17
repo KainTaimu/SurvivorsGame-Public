@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using Arch.Core;
+using CommunityToolkit.HighPerformance.Buffers;
+using Game.Core;
 using Game.Levels.Controllers;
 using Game.Players.Controllers;
 using Game.UI;
@@ -192,11 +194,40 @@ public partial class Sniper
 
 		var mousePos = Crosshair?.GlobalSpacePosition ?? Player.GetGlobalMousePosition();
 
-		if (TargetQuery.TryGetTargetsInArea(mousePos, ProjectileStats.HitRadius, out var targetIds))
+		const int maxHitBufferSize = Globals.MAX_STACKALLOC_COUNT / 12;
+		if (PierceStats.PierceLimit <= maxHitBufferSize)
 		{
-			foreach (var entity in targetIds)
+			Span<Entity> hitBuffer = stackalloc Entity[PierceStats.PierceLimit];
+			var hitCount = TargetQuery.TryGetTargetsInArea(
+				mousePos,
+				ProjectileStats.HitRadius,
+				hitBuffer,
+				PierceStats.PierceLimit
+			);
+
+			for (var i = 0; i < hitCount; i++)
+			{
+				var entity = hitBuffer[i];
 				TryHandleHit(entity);
+			}
 		}
+		else
+		{
+			using var hitBuffer = SpanOwner<Entity>.Allocate(PierceStats.PierceLimit);
+			var hitCount = TargetQuery.TryGetTargetsInArea(
+				mousePos,
+				ProjectileStats.HitRadius,
+				hitBuffer.Span,
+				PierceStats.PierceLimit
+			);
+
+			for (var i = 0; i < hitCount; i++)
+			{
+				var entity = hitBuffer.Span[i];
+				TryHandleHit(entity);
+			}
+		}
+
 		EmitSignalOnAttack();
 	}
 

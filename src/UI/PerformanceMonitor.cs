@@ -1,6 +1,8 @@
 // Copyright 2026 Erwin Panergo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System.Diagnostics;
+using System.Text;
 using Godot.Collections;
 
 namespace Game.UI;
@@ -25,15 +27,20 @@ public partial class PerformanceMonitor : CanvasLayer
 	private Label? _fpsLabel;
 
 	[Export]
-	private RichTextLabel? _staticMemLabel;
+	private RichTextLabel _staticMemLabel = null!;
 
 	[Export]
-	private RichTextLabel? _vidMemLabel;
+	private RichTextLabel _vidMemLabel = null!;
 
 	[Export]
-	private RichTextLabel? _gcLabel;
+	private RichTextLabel _gcLabel = null!;
 
 	private readonly System.Collections.Generic.Dictionary<IFrameTimeTrackable, RichTextLabel> _labels = [];
+
+	private long _lastAllocBytes;
+	private long _lastAllocBytesTimeStamp;
+	private double _lastAllocRate;
+	private const double BYTES_PER_MEGABYTE = 1024.0 * 1024.0;
 
 	public override void _Ready()
 	{
@@ -63,14 +70,16 @@ public partial class PerformanceMonitor : CanvasLayer
 
 #if !DEBUG
 		// These are unavailable in optimized builds
-		_staticMemLabel?.QueueFree();
-		_vidMemLabel?.QueueFree();
+		_staticMemLabel.QueueFree();
+		_vidMemLabel.QueueFree();
 #endif
 
 #if OS_WINDOWS
-		_gcLabel?.QueueFree();
+		_gcLabel.QueueFree();
 #endif
 	}
+
+	private readonly StringBuilder _stringBuilder = new();
 
 	public override void _Process(double delta)
 	{
@@ -78,39 +87,61 @@ public partial class PerformanceMonitor : CanvasLayer
 			return;
 		if (Engine.GetProcessFrames() % RefreshRate != 0)
 			return;
-		foreach (var (node, label) in _labels)
+
+		var elapsed = Stopwatch.GetElapsedTime(_lastAllocBytesTimeStamp).TotalSeconds;
+		var gcInfo = GC.GetGCMemoryInfo();
+		if (elapsed > 1)
 		{
-			var unit = node.FrameTime.TimeUnit switch
-			{
-				FrameTimeUnitEnum.Ms => "ms",
-				FrameTimeUnitEnum.Us => "µs",
-				_ => throw new ArgumentOutOfRangeException(),
-			};
-			var time = node.FrameTime.TimeUnit switch
-			{
-				FrameTimeUnitEnum.Ms => node.FrameTime.ProcessTimeMicroSeconds * 1e-3,
-				FrameTimeUnitEnum.Us => node.FrameTime.ProcessTimeMicroSeconds,
-				_ => throw new ArgumentOutOfRangeException(),
-			};
-			label.Text = $"{node.FrameTime.FrameName}: {time:0.##}{unit}";
-		}
+			var thisAllocBytes = GC.GetTotalAllocatedBytes(true);
+			var allocDelta = thisAllocBytes - _lastAllocBytes;
+			_lastAllocRate = (allocDelta) / elapsed;
+			_lastAllocBytes = thisAllocBytes;
+			_lastAllocBytesTimeStamp = Stopwatch.GetTimestamp();
 
 #if DEBUG
-		var staticMem = Performance.GetMonitor(Performance.Monitor.MemoryStatic);
-		_staticMemLabel?.Text = $"Static Mem: {staticMem * 1e-6:F2}MB";
-		var videoMem = Performance.GetMonitor(Performance.Monitor.RenderVideoMemUsed);
-		_vidMemLabel?.Text = $"Video Mem: {videoMem * 1e-6:F2}MB";
+			var staticMem = Performance.GetMonitor(Performance.Monitor.MemoryStatic);
+			_staticMemLabel.Text = $"StaticMem: {staticMem / BYTES_PER_MEGABYTE:F2}MiB";
+			var videoMem = Performance.GetMonitor(Performance.Monitor.RenderVideoMemUsed);
+			_vidMemLabel.Text = $"VideoMem: {videoMem / BYTES_PER_MEGABYTE:F2}MiB";
 #endif
-
 #if !OS_WINDOWS
-		if (_gcLabel is not null)
-		{
-			var gcInfo = GC.GetGCMemoryInfo();
 			_gcLabel.Text =
-				$"GC Pause: {gcInfo.PauseTimePercentage:F1}%\nGC CommBytes: {gcInfo
-					.TotalCommittedBytes * 1e-6:F2}MB";
-		}
+				$"GC_Pause: {gcInfo.PauseTimePercentage:F1}%\nGC_CommBytes: {gcInfo
+					.TotalCommittedBytes / BYTES_PER_MEGABYTE:F2}MiB\nGC_AllocRate: {_lastAllocRate / 1024:F2}KiB/s";
 #endif
+		}
+
+		foreach (var (node, label) in _labels)
+		{
+			_stringBuilder.AppendLine(
+				CreateString(node.FrameTime.FrameName, node.FrameTime.TimeUnit, node.FrameTime.ProcessTimeMicroSeconds)
+			);
+			if (node is IMultipleFrameTimeTrackable m)
+			{
+				foreach (var ft in m.FrameTimes)
+					_stringBuilder.AppendLine(CreateString(ft.FrameName, ft.TimeUnit, ft.ProcessTimeMicroSeconds));
+			}
+
+			label.Text = _stringBuilder.ToString();
+			_stringBuilder.Clear();
+		}
+	}
+
+	private static string CreateString(string frameName, FrameTimeUnitEnum timeUnit, double processTime)
+	{
+		var unit = timeUnit switch
+		{
+			FrameTimeUnitEnum.Ms => "ms",
+			FrameTimeUnitEnum.Us => "µs",
+			_ => throw new ArgumentOutOfRangeException(),
+		};
+		var time = timeUnit switch
+		{
+			FrameTimeUnitEnum.Ms => processTime * 1e-3,
+			FrameTimeUnitEnum.Us => processTime,
+			_ => throw new ArgumentOutOfRangeException(),
+		};
+		return $"{frameName}: {time:0.##}{unit}";
 	}
 
 	public void AddTarget(Node node)

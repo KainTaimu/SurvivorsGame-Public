@@ -20,25 +20,27 @@ public partial class Airstrike : BaseOffensive, IHasAttackStats, IHasDamageStats
 
 	public override void Process(double delta)
 	{
-		_fireCooldown -= delta;
-
-		if (Input.IsActionPressed(InputMapNames.PrimaryAttack))
-			Attack();
+		throw new NotImplementedException();
+		// _fireCooldown -= delta;
+		//
+		// if (Input.IsActionPressed(InputMapNames.PrimaryAttack))
+		// 	Attack();
 	}
 
 	public void Attack()
 	{
-		if (_fireCooldown > 0)
-			return;
-		_fireCooldown = AttackStats.AttackSpeed;
-
-		var mousePos = Crosshair.GlobalSpacePosition;
-
-		if (TargetQuery.TryGetTargetsInArea(mousePos, 256, out var targetIds))
-		{
-			foreach (var entity in targetIds)
-				TryHandleHit(entity);
-		}
+		throw new NotImplementedException();
+		// if (_fireCooldown > 0)
+		// 	return;
+		// _fireCooldown = AttackStats.AttackSpeed;
+		//
+		// var mousePos = Crosshair.GlobalSpacePosition;
+		//
+		// if (TargetQuery.TryGetTargetsInArea(mousePos, 256, out var targetIds))
+		// {
+		// 	foreach (var entity in targetIds)
+		// 		TryHandleHit(entity);
+		// }
 	}
 
 	protected override void HandleDamage(Entity entity)

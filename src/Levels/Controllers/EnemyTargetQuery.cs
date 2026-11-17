@@ -15,17 +15,21 @@ using Game.Core.Extensions;
 using Game.Models;
 using Game.Players.Controllers;
 using Game.UI;
+using Godot.Collections;
 
 namespace Game.Levels.Controllers;
 
 [GlobalClass]
-public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
+public partial class EnemyTargetQuery : Node, IMultipleFrameTimeTrackable
 {
 	[Export]
 	private float _rangeFactor = 1.5f;
 
 	[Export]
 	public FrameTime FrameTime { get; private set; } = null!;
+
+	[Export]
+	public Array<FrameTime> FrameTimes { get; private set; } = [];
 
 	// BREAKING: Changing this value breaks Projectile radius of weapons
 	private const int GRID_SIZE = 16;
@@ -98,44 +102,70 @@ public partial class EnemyTargetQuery : Node, IFrameTimeTrackable
 		return pos.Position.DistanceSquaredTo(projPos) <= radiusSum * radiusSum;
 	}
 
-	public bool TryGetTargetsInArea(Vector2 areaCenter, float areaRadius, out Entity[] targetIds)
+	public int TryGetTargetsInArea(
+		Vector2 areaCenter,
+		float areaRadius,
+		Span<Entity> targetBuffer,
+		int hitLimit,
+		bool recordTime = true
+	)
 	{
-		// credit: https://www.redblobgames.com/grids/circle-drawing/
-		var targets = new HashSet<Entity>();
+		using var rec = recordTime ? FrameTimes[0].Record() : null;
+		if (targetBuffer.IsEmpty)
+			return 0;
 
-		var top = Math.Ceiling(areaCenter.Y - areaRadius);
-		var bottom = Math.Floor(areaCenter.Y + areaRadius);
-		for (var y = top; y <= bottom; y++)
+		if (areaRadius < 0f)
+			return 0;
+
+		var cellSize = _grid.CellSize;
+		var topLeft = _grid.TopLeft;
+		var dims = _grid.Dimensions;
+
+		var minCellY = Math.Max(0, Mathf.FloorToInt((areaCenter.Y - areaRadius - topLeft.Y) / cellSize));
+		var maxCellY = Math.Min(dims.Y - 1, Mathf.FloorToInt((areaCenter.Y + areaRadius - topLeft.Y) / cellSize));
+		var radiusSq = areaRadius * areaRadius;
+		var hitCount = 0;
+
+		for (var cellY = minCellY; cellY <= maxCellY; cellY++)
 		{
-			var dy = y - areaCenter.Y;
-			var dx = Math.Sqrt(areaRadius * areaRadius - dy * dy);
-			var left = Math.Ceiling(areaCenter.X - dx);
-			var right = Math.Floor(areaCenter.X + dx);
-			for (var x = left; x <= right; x++)
-			{
-				var cell = _grid.WorldToCell(new Vector2((float)x, (float)y));
-				if (!_grid.IsValidCell(cell.X, cell.Y))
-					continue;
+			var rowMinY = topLeft.Y + cellY * cellSize;
+			var rowMaxY = rowMinY + cellSize;
+			var dy =
+				areaCenter.Y < rowMinY ? rowMinY - areaCenter.Y
+				: areaCenter.Y > rowMaxY ? areaCenter.Y - rowMaxY
+				: 0f;
 
-				foreach (var entity in _grid.GetEnumerator(cell.X, cell.Y))
+			if (dy > areaRadius)
+				continue;
+
+			var dx = MathF.Sqrt(Math.Max(0f, radiusSq - dy * dy));
+			var minCellX = Math.Max(0, Mathf.FloorToInt((areaCenter.X - dx - topLeft.X) / cellSize));
+			var maxCellX = Math.Min(dims.X - 1, Mathf.FloorToInt((areaCenter.X + dx - topLeft.X) / cellSize));
+
+			for (var cellX = minCellX; cellX <= maxCellX; cellX++)
+			{
+				foreach (var entity in _grid.GetEnumerator(cellX, cellY))
 				{
 					if (!GameWorld.World.IsAlive(entity))
 						continue;
-					if (CircleHitTest(areaCenter, areaRadius, entity))
-						targets.Add(entity);
+					if (!CircleHitTest(areaCenter, areaRadius, entity))
+						continue;
+
+					targetBuffer[hitCount++] = entity;
+					if (hitCount >= hitLimit)
+						return hitCount;
 				}
 			}
 		}
 
-		targetIds = [.. targets];
-		return targets.Count > 0;
+		return hitCount;
 	}
 
 	public IEnumerable<Entity> GetTargetsInScreen()
 	{
-		for (var x = 0; x < _grid.Dimensions.X; x++)
+		for (var y = 0; y < _grid.Dimensions.Y; y++)
 		{
-			for (var y = 0; y < _grid.Dimensions.Y; y++)
+			for (var x = 0; x < _grid.Dimensions.X; x++)
 			{
 				foreach (var entity in _grid.GetEnumerator(x, y))
 				{

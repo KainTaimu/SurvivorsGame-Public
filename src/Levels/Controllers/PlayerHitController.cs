@@ -1,6 +1,9 @@
 // Copyright 2026 Erwin Panergo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System.Diagnostics;
+using Arch.Core;
+using Game.Core;
 using Game.Core.ECS;
 using Game.Players;
 
@@ -13,6 +16,10 @@ public partial class PlayerHitController : Node
 
 	[Export]
 	private AnimatedSprite2D _playerSprite = null!;
+
+	[ExportCategory("")]
+	[Export(PropertyHint.Range, "1,16, 1")]
+	private int _maxEnemyContacts = 16;
 
 	// ReSharper disable once ReturnTypeCanBeNotNullable
 	private EnemyTargetQuery? TargetQuery => EnemyTargetQuery.Instance;
@@ -38,13 +45,23 @@ public partial class PlayerHitController : Node
 		if (_invisibilityTime > 0)
 			return;
 
-		if (!TargetQuery.TryGetTargetsInArea(_player.GlobalPosition, PlayerHitboxRadius, out var entities))
+		Debug.Assert(_maxEnemyContacts <= Globals.MAX_STACKALLOC_COUNT);
+		Span<Entity> entities = stackalloc Entity[_maxEnemyContacts];
+		var hitCount = TargetQuery.TryGetTargetsInArea(
+			_player.GlobalPosition,
+			PlayerHitboxRadius,
+			entities,
+			_maxEnemyContacts,
+			recordTime: false
+		);
+		if (hitCount <= 0)
 			return;
 
 		var damageSum = 0;
 
-		foreach (var entity in entities)
+		for (var i = 0; i < hitCount; i++)
 		{
+			var entity = entities[i];
 			if (!GameWorld.World.IsAlive(entity))
 				continue;
 

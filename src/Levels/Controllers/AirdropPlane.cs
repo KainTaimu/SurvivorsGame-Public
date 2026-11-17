@@ -1,10 +1,6 @@
 // Copyright 2026 Erwin Panergo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using Game.Core.ECS;
-using Game.Items.Offensive;
-using Godot.Collections;
-
 namespace Game.Levels.Controllers;
 
 public partial class AirdropPlane : Node2D
@@ -101,24 +97,25 @@ public partial class AirdropPlane : Node2D
 
 	private void DropCarpetBomb()
 	{
-		var rand = new Vector2(GD.RandRange(-1, 1), 0) * 200;
-		var dropPos = GlobalPosition - rand.Rotated(Rotation);
-
-		CustomLogger.LogInfo($"Dropped at {dropPos}, {_t}s");
-		EnvironmentFxManager.PlayVfx(
-			"explosion",
-			new Dictionary<StringName, Variant> { { "position", dropPos }, { "scale", new Vector2(2, 2) } }
-		);
-		EnvironmentFxManager.PlaySfx("explosion_generic");
-
-		if (!EnemyTargetQuery.Instance.TryGetTargetsInArea(dropPos, 400f, out var targets))
-			return;
-
-		foreach (var target in targets)
-		{
-			OffensiveEffects.ApplyDamage(target, 500, 0, 1, 1);
-			OffensiveEffects.ApplyKnockback(target, dropPos, 100);
-			GameWorld.World.Add(target, new DeathCauseComponent(DeathCauseEnum.Explosion));
-		}
+		throw new NotImplementedException();
+		// var rand = new Vector2(GD.RandRange(-1, 1), 0) * 200;
+		// var dropPos = GlobalPosition - rand.Rotated(Rotation);
+		//
+		// CustomLogger.LogInfo($"Dropped at {dropPos}, {_t}s");
+		// EnvironmentFxManager.PlayVfx(
+		// 	"explosion",
+		// 	new Dictionary<StringName, Variant> { { "position", dropPos }, { "scale", new Vector2(2, 2) } }
+		// );
+		// EnvironmentFxManager.PlaySfx("explosion_generic");
+		//
+		// if (!EnemyTargetQuery.Instance.TryGetTargetsInArea(dropPos, 400f, out var targets))
+		// 	return;
+		//
+		// foreach (var target in targets)
+		// {
+		// 	OffensiveEffects.ApplyDamage(target, 500, 0, 1, 1);
+		// 	OffensiveEffects.ApplyKnockback(target, dropPos, 100);
+		// 	GameWorld.World.Add(target, new DeathCauseComponent(DeathCauseEnum.Explosion));
+		// }
 	}
 }

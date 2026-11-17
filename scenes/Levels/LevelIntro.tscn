@@ -92,7 +92,7 @@ script = ExtResource("6_vrw23")
 Weights = Array[ExtResource("5_iiw53")]([SubResource("Resource_w2_walker_wt")])
 metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ja4tk"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w70hc"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_mod_health"]
@@ -1616,6 +1616,11 @@ script = ExtResource("17_faso5")
 FrameName = &"LastTargetRaycast"
 metadata/_custom_type_script = "uid://daw8gyvo0xom3"
 
+[sub_resource type="Resource" id="Resource_h210h"]
+script = ExtResource("17_faso5")
+FrameName = &"LastTargetArea"
+metadata/_custom_type_script = "uid://daw8gyvo0xom3"
+
 [sub_resource type="Resource" id="Resource_sf4ij"]
 script = ExtResource("17_faso5")
 FrameName = &"Nav"
@@ -1878,6 +1883,7 @@ pickup_scene = ExtResource("18_ta1oo")
 
 [node name="EnemyTargetQuery" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="1" unique_id=991938994]
 FrameTime = SubResource("Resource_vhjum")
+FrameTimes = Array[ExtResource("17_faso5")]([SubResource("Resource_h210h")])
 
 [node name="EnemyNavMeshController" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="4" unique_id=7126221 instance=ExtResource("16_v38xc")]
 FrameTime = SubResource("Resource_sf4ij")
@@ -1898,7 +1904,6 @@ RenderDistanceFactor = 1.1
 layer = 2
 
 [node name="PerformanceMonitor" parent="UI" parent_id_path=PackedInt32Array(1918867052) index="4" unique_id=1872396024 node_paths=PackedStringArray("Targets")]
-layer = 9999
 Targets = [NodePath("../../Systems/EnemySystems/EnemyRenderer"), NodePath("../../Systems/EnemySystems/EnemyTargetQuery"), NodePath("../../Systems/EnemySystems/EnemyNavMeshController")]
 
 [connection signal="on_death_screen_show" from="UI/DeathScreen" to="UI/DeathScreen/Vignette" method="on_death_screen_show"]

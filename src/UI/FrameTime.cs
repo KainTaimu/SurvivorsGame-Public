@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using System.Diagnostics;
+using Godot.Collections;
 
 namespace Game.UI;
 
@@ -37,6 +38,11 @@ public partial class FrameTime : Resource
 public interface IFrameTimeTrackable
 {
 	FrameTime FrameTime { get; }
+}
+
+public interface IMultipleFrameTimeTrackable : IFrameTimeTrackable
+{
+	Array<FrameTime> FrameTimes { get; }
 }
 
 public enum FrameTimeUnitEnum

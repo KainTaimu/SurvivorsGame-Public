@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Arch.Core;
 using CommunityToolkit.HighPerformance.Buffers;
+using Game.Core;
 using Game.Core.ECS;
 using Game.Core.Extensions;
 using Game.Items.Offensive;
@@ -129,7 +130,7 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 		tweenScale.TweenProperty(Sprite, "scale", finalScale, 0.05);
 		IsInitialized = true;
 
-		const int maxHitBufferSize = 512 / 12;
+		const int maxHitBufferSize = Globals.MAX_STACKALLOC_COUNT / 12;
 		if (PierceLimit <= maxHitBufferSize)
 		{
 			Span<Entity> hitBuffer = stackalloc Entity[PierceLimit];
@@ -137,7 +138,7 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 		}
 		else
 		{
-			using var hitBuffer = SpanOwner<Entity>.Allocate(maxHitBufferSize);
+			using var hitBuffer = SpanOwner<Entity>.Allocate(PierceLimit);
 			var span = hitBuffer.Span;
 			HitTargets(span);
 		}
@@ -149,8 +150,10 @@ public partial class ProjectileBullet : BaseProjectile, IPooledProjectile
 		if (hitCount <= 0)
 			return;
 
-		foreach (var entity in hitBuffer)
+		for (var i = 0; i < hitCount; i++)
 		{
+			var entity = hitBuffer[i];
+
 			if (!GameWorld.World.IsAlive(entity))
 				continue;
 			var alreadyHit = false;
