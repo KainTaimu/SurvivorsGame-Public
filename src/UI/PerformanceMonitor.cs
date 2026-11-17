@@ -24,7 +24,7 @@ public partial class PerformanceMonitor : CanvasLayer
 	private PackedScene _labelScene = null!;
 
 	[Export]
-	private Label? _fpsLabel;
+	private RichTextLabel? _frameTimeLabel;
 
 	[Export]
 	private RichTextLabel _staticMemLabel = null!;
@@ -87,6 +87,8 @@ public partial class PerformanceMonitor : CanvasLayer
 			return;
 		if (Engine.GetProcessFrames() % RefreshRate != 0)
 			return;
+
+		_frameTimeLabel?.Text = $"FrameTime: {Performance.GetMonitor(Performance.Monitor.TimeProcess) * 1000:F2}ms";
 
 		var elapsed = Stopwatch.GetElapsedTime(_lastAllocBytesTimeStamp).TotalSeconds;
 		var gcInfo = GC.GetGCMemoryInfo();
