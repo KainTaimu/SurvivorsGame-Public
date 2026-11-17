@@ -64,13 +64,13 @@ public partial class Sniper
 	private PackedScene _projectileScene = null!;
 
 	[Export]
-	private AbstractFireGroup _fireGroup = null!;
+	public AbstractFireGroup FireGroup { get; private set; } = null!;
 
 	[Export]
 	public AbstractReloadBehaviour ReloadBehaviour { get; private set; } = null!;
 
 	[Export]
-	private AbstractProjectileAttack _projectileAttack = null!;
+	public AbstractProjectileAttack ProjectileAttack { get; private set; } = null!;
 
 	[Export]
 	private AudioStreamPlayer? _boltCyclingPlayer;
@@ -133,7 +133,7 @@ public partial class Sniper
 
 	public override void Process(double delta)
 	{
-		(_fireGroup as ICooldown)?.Process((float)delta);
+		(FireGroup as ICooldown)?.Process((float)delta);
 		ReloadBehaviour.Process((float)delta);
 
 		if (Input.IsActionPressed(InputMapNames.WeaponReload))
@@ -145,7 +145,7 @@ public partial class Sniper
 		if (IsReloading)
 			return;
 
-		_fireGroup.ProcessInput();
+		FireGroup.ProcessInput();
 		_scopeComponent.Process();
 	}
 
@@ -173,7 +173,7 @@ public partial class Sniper
 		rotation += bloom;
 		var scale = Vector2.One * ProjectileStats.Scale;
 
-		_projectileAttack.Attack(
+		ProjectileAttack.Attack(
 			_pool.GetProjectile,
 			this,
 			Player.GlobalPosition,

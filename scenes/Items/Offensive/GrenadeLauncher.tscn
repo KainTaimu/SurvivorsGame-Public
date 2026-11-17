@@ -20,7 +20,7 @@
 _data = [Vector2(0, 1), 0.0, -0.49786425, 0, 1, Vector2(1, 0.50213575), -0.49786425, 0.0, 1, 0]
 point_count = 2
 
-[node name="GrenadeLauncher" type="Node" unique_id=1535579917 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "GrenadeStats", "_fireGroup", "_reloadBehaviour", "_explosionPlayer")]
+[node name="GrenadeLauncher" type="Node" unique_id=1535579917 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "GrenadeStats", "FireGroup", "ReloadBehaviour", "_explosionPlayer")]
 script = ExtResource("1_hamct")
 DamageStats = NodePath("Stats/DamageStats")
 MagazineStats = NodePath("Stats/MagazineStats")
@@ -33,8 +33,8 @@ GrenadeStats = NodePath("Stats/GrenadeStats")
 _throwForce = 1500.0
 _damageDropoffFromCenter = SubResource("Curve_ysrq1")
 GrenadeScene = ExtResource("2_hamct")
-_fireGroup = NodePath("SemiAutoFireGroup")
-_reloadBehaviour = NodePath("SequentialReloadBehaviour")
+FireGroup = NodePath("SemiAutoFireGroup")
+ReloadBehaviour = NodePath("SequentialReloadBehaviour")
 _explosionPlayer = NodePath("Explosion")
 
 [node name="Stats" type="Node" parent="." unique_id=1006702990]

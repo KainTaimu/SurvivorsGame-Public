@@ -64,7 +64,7 @@ public partial class GrenadeLauncher
 	public PackedScene GrenadeScene = null!;
 
 	[Export]
-	private AbstractFireGroup _fireGroup = null!;
+	public AbstractFireGroup FireGroup { get; private set; } = null!;
 
 	[Export]
 	public AbstractReloadBehaviour ReloadBehaviour { get; private set; } = null!;
@@ -112,7 +112,7 @@ public partial class GrenadeLauncher
 
 	public override void Process(double delta)
 	{
-		(_fireGroup as ICooldown)?.Process((float)delta);
+		(FireGroup as ICooldown)?.Process((float)delta);
 		ReloadBehaviour.Process((float)delta);
 
 		if (Input.IsActionPressed(InputMapNames.WeaponReload))
@@ -121,7 +121,7 @@ public partial class GrenadeLauncher
 			return;
 		}
 
-		_fireGroup.ProcessInput();
+		FireGroup.ProcessInput();
 	}
 
 	private void Attack()
