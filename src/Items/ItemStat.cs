@@ -3,7 +3,7 @@
 
 using Game.Utils;
 
-namespace Game.Items.Offensive;
+namespace Game.Items;
 
 [GlobalClass]
 public abstract partial class ItemStat : Node

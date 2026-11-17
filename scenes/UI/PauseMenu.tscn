@@ -79,7 +79,7 @@ script/source = "extends Button
 
 func _on_button_up() -> void:
 	var player := GameWorldInstance.MainPlayer as Player
-	var wpn_ctrlr := player.WeaponController as Node
+	var wpn_ctrlr := player.ItemController as Node
 	for child in wpn_ctrlr.get_children():
 		child.queue_free()
 "

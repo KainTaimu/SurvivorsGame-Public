@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://dfi450hlcvmli"]
+[gd_resource type="Resource" script_class="ItemRegistryEntry" format=3 uid="uid://dfi450hlcvmli"]
 
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="1_pshnx"]
-[ext_resource type="PackedScene" uid="uid://c2bradk7lbxae" path="res://scenes/Items/Offensive/FentPill.tscn" id="2_pshnx"]
-[ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="3_kol0a"]
+[ext_resource type="PackedScene" uid="uid://c2bradk7lbxae" path="res://scenes/Items/Healing/FentPill.tscn" id="2_pshnx"]
+[ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/ItemRegistryEntry.gd" id="3_kol0a"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_s44xh"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_rbi1w"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_pshnx"]

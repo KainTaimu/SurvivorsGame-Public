@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="OffensiveRegistryEntry" format=3 uid="uid://c4b66i7cyon41"]
+[gd_resource type="Resource" script_class="ItemRegistryEntry" format=3 uid="uid://c4b66i7cyon41"]
 
 [ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="1_4tiii"]
-[ext_resource type="PackedScene" uid="uid://bw0y45qdkgbmf" path="res://scenes/Items/Offensive/DamageInjector.tscn" id="2_4tiii"]
-[ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/OffensiveRegistryEntry.gd" id="3_11ha5"]
+[ext_resource type="PackedScene" uid="uid://bw0y45qdkgbmf" path="res://scenes/Items/Healing/DamageInjector.tscn" id="2_4tiii"]
+[ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/ItemRegistryEntry.gd" id="3_11ha5"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_4tiii"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_rbi1w"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_1pdk2"]

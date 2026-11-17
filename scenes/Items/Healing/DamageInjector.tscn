@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://bw0y45qdkgbmf"]
+
+[ext_resource type="Script" uid="uid://dru07bad6l2ml" path="res://src/Items/Healing/SimpleConsumable.cs" id="1_h7ygk"]
+[ext_resource type="Script" uid="uid://c0xnhv61iiqba" path="res://src/Items/Offensive/Modules/StatusEffectModule.cs" id="2_h7ygk"]
+[ext_resource type="Script" uid="uid://ciwpdmpqgvlgd" path="res://src/Items/Healing/Stats/ConsumeTimeStat.cs" id="2_oa348"]
+[ext_resource type="Script" uid="uid://buktv0tjyitt5" path="res://src/Items/Healing/ConsumptionBehaviour/InjectorConsumptionBehaviour.cs" id="2_tpsea"]
+[ext_resource type="Script" uid="uid://d31d8uns5faa5" path="res://src/Players/Controllers/StatusEffectModifier.cs" id="3_tpsea"]
+[ext_resource type="Script" uid="uid://bdk4fdcqvypav" path="res://src/Players/Controllers/StatusEffect.cs" id="4_oa348"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_86p0c"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_h7ygk"]
+script = ExtResource("3_tpsea")
+StatName = 21
+Operation = 1
+Value = 2.0
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_ogoab"]
+script = ExtResource("3_tpsea")
+StatName = 15
+Operation = 1
+Value = 2.0
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_do71q"]
+script = ExtResource("4_oa348")
+Name = "Adrenaline"
+InitialDuration = 300.0
+Modifiers = Array[ExtResource("3_tpsea")]([SubResource("Resource_h7ygk"), SubResource("Resource_ogoab")])
+metadata/_custom_type_script = "uid://bdk4fdcqvypav"
+
+[node name="DamageInjector" type="Node" unique_id=1845625201 node_paths=PackedStringArray("ConsumeTimeStat", "ConsumptionBehaviour")]
+script = ExtResource("1_h7ygk")
+ConsumeTimeStat = NodePath("Stats/ConsumeTimeStat")
+ConsumptionBehaviour = NodePath("InjectorConsumptionBehaviour")
+
+[node name="Stats" type="Node" parent="." unique_id=511657111]
+
+[node name="ConsumeTimeStat" type="Node" parent="Stats" unique_id=182301611]
+script = ExtResource("2_oa348")
+metadata/_custom_type_script = "uid://ciwpdmpqgvlgd"
+
+[node name="InjectorConsumptionBehaviour" type="Node" parent="." unique_id=100581685 node_paths=PackedStringArray("ConsumeTimeStat")]
+script = ExtResource("2_tpsea")
+ConsumeTimeStat = NodePath("../Stats/ConsumeTimeStat")
+metadata/_custom_type_script = "uid://buktv0tjyitt5"
+
+[node name="StatusEffectModule" type="Node" parent="." unique_id=1514074665]
+script = ExtResource("2_h7ygk")
+_statusEffect = SubResource("Resource_do71q")
+metadata/_custom_type_script = "uid://c0xnhv61iiqba"
+
+[connection signal="OnConsumed" from="." to="StatusEffectModule" method="GiveStatusEffect"]
+[connection signal="OnConsumed" from="InjectorConsumptionBehaviour" to="." method="queue_free"]
+[connection signal="OnConsumed" from="InjectorConsumptionBehaviour" to="." method="Consume"]
