@@ -16,5 +16,6 @@ public static class InputMapNames
 	public static StringName Interact { get; } = "interact";
 	public static StringName NextItem { get; } = "next_item";
 	public static StringName PreviousItem { get; } = "previous_item";
+	public static StringName DebugFastForward { get; } = "DEBUG_FAST_FORWARD";
 	public static readonly StringName UiCancel = "ui_cancel";
 }

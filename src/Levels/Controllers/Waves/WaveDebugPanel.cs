@@ -35,7 +35,7 @@ public partial class WaveDebugPanel : CanvasLayer
 	{
 		if (@event is not InputEventKey)
 			return;
-		FastForward(Input.IsPhysicalKeyPressed(Key.Right));
+		FastForward(Input.IsActionPressed(InputMapNames.DebugFastForward));
 		ForceNextWave();
 		if (Input.IsPhysicalKeyPressed(Key.Delete))
 		{

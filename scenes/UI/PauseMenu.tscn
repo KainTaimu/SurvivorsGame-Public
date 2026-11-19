@@ -24,14 +24,13 @@ func _ready() -> void:
 		if action.begins_with(\"ui_\"):
 			continue
 		var events := InputMap.action_get_events(action)
-		var event := events[0]
-		
-		if event is InputEventKey:
-			var key := events[0] as InputEventKey
-			text = \"%s\\n%s = %s\" % [text, action, key.as_text_physical_keycode()]
-		elif event is InputEventMouseButton:
-			var btn := events[0] as InputEventMouseButton
-			text = \"%s\\n%s = %s\" % [text, action, btn.as_text()]
+		for event in events:
+			if event is InputEventKey:
+				var key := event as InputEventKey
+				text = \"%s\\n%s = %s\" % [text, action, key.as_text_physical_keycode()]
+			elif event is InputEventMouseButton:
+				var btn := event as InputEventMouseButton
+				text = \"%s\\n%s = %s\" % [text, action, btn.as_text()]
 "
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_do71q"]

@@ -6,6 +6,7 @@ extends Node
 		return solver_type
 	set(value):
 		solver_type = value
+		CustomLogger.log_debug("changing to %s" % value)
 		change_solver.call_deferred()
 var current_solver: AbstractEnemyCollisionSolver = null
 var selection_cause: String = ""
@@ -13,8 +14,8 @@ var selection_cause: String = ""
 @export var nav_map: NavMap = null
 
 enum SolverTypeEnum {
-	AUTO,
 	NONE,
+	AUTO,
 	CPU,
 	GPU,
 }
@@ -31,6 +32,14 @@ func _ready() -> void:
 
 func change_solver() -> void:
 	if solver_type == SolverTypeEnum.NONE:
+		if current_solver != null:
+			if monitor != null:
+				if not monitor.has_method("RemoveTarget"):
+					push_error("PerformanceMonitor has no method named RemoveTarget")
+					return
+				monitor.call_deferred("RemoveTarget", current_solver)
+			current_solver.queue_free()
+			current_solver = null
 		return
 	if solver_type != SolverTypeEnum.AUTO:
 		set_solver(get_solver(solver_type))
@@ -76,7 +85,7 @@ func set_solver(type: PackedScene):
 	node.NavMap = nav_map
 	add_child(node)
 	current_solver = node
-	CustomLogger.log_debug("using %s: %s" % [node.name, selection_cause])
+	CustomLogger.log_debug("using %s: %s" % [node.get_script().get_global_name(), selection_cause])
 	if monitor != null:
 		if not monitor.has_method("AddTarget"):
 			push_error("PerformanceMonitor has no method named AddTarget")
