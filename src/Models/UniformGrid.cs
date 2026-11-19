@@ -1,212 +1,78 @@
 // Copyright 2026 Erwin Panergo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using System.Runtime.CompilerServices;
+using System.Collections.Generic;
 
 namespace Game.Models;
 
-public class UniformGrid<T> : IUniformGrid<T, GridCellHandle>
+public class UniformGrid<T>
 {
-	public int Count { get; private set; }
+	public readonly UniformGridCell<T>[,] Cells;
 
-	public readonly int Width;
-	public readonly int Height;
+	public readonly Vector2I Dimensions;
 
-	private Entry[] _entries;
-	private int _freeHead;
-	private uint _epoch;
+	public readonly int CellSize;
 
-	public UniformGrid(int width, int height, int initialCapacity = 64)
+	public UniformGrid(int cellSize, int sizeX, int sizeY, int startX = 0, int startY = 0)
 	{
-		Width = width;
-		Height = height;
-		_entries = new Entry[width * height + initialCapacity];
-		ResetCells();
-		LinkFreeRange(width * height);
-	}
-
-	public void EnsureCapacity(int newCapacity)
-	{
-		var oldLength = _entries.Length;
-		if (newCapacity <= oldLength - Width * Height)
-			return;
-
-		Array.Resize(ref _entries, Width * Height + newCapacity);
-		LinkFreeRange(oldLength);
-	}
-
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public bool TryGet(int x, int y, out T result, out GridCellHandle handle)
-	{
-		var sentinel = CellIndex(x, y);
-		ref var head = ref _entries[sentinel];
-		if (head.Next == sentinel)
+		if (cellSize <= 0)
 		{
-			result = default!;
-			handle = default;
-			return false;
+			CustomLogger.LogError("Invalid cell size, cellSize must be > 0. Setting as 16px.");
+			cellSize = 16;
 		}
 
-		ref var entry = ref _entries[head.Next];
-		result = entry.Item;
-		handle = new GridCellHandle(head.Next, entry.Generation, _epoch);
-		return true;
-	}
+		var startCellX = startX / cellSize;
+		var startCellY = startY / cellSize;
+		var width = sizeX / cellSize;
+		var height = sizeY / cellSize;
+		var grid = new UniformGridCell<T>[width, height];
 
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public bool TryGet(GridCellHandle handle, out T result)
-	{
-		if (!IsValidHandle(handle))
+		for (var x = 0; x < width; x++)
 		{
-			result = default!;
-			return false;
+			for (var y = 0; y < height; y++)
+			{
+				grid[x, y] = new UniformGridCell<T>
+				{
+					Index = new Vector2I(x, y),
+					Position = new Vector2I(cellSize * x - startCellX * x, cellSize * y - startCellY * y),
+				};
+			}
 		}
 
-		result = _entries[handle.Index].Item;
-		return true;
+		Cells = grid;
+		Dimensions = new Vector2I(width, height);
+		CellSize = cellSize;
 	}
 
-	public GridCellHandle Add(int x, int y, T obj)
+	public UniformGridCell<T>? GetCell(Vector2 position)
 	{
-		if (_freeHead == -1)
-			EnsureCapacity((_entries.Length - Width * Height) * 2 + 1);
+		var x = (int)(position.X / CellSize);
+		var y = (int)(position.Y / CellSize);
 
-		var slot = _freeHead;
-		ref var entry = ref _entries[slot];
-		_freeHead = entry.Next;
-
-		var sentinel = CellIndex(x, y);
-		ref var head = ref _entries[sentinel];
-
-		entry.Item = obj;
-		entry.Next = head.Next;
-		entry.Previous = sentinel;
-		entry.Generation++;
-		entry.Cell = sentinel;
-
-		_entries[head.Next].Previous = slot;
-		head.Next = slot;
-		head.Count++;
-
-		Count++;
-		return new GridCellHandle(slot, entry.Generation, _epoch);
-	}
-
-	public void Remove(GridCellHandle targetHandle)
-	{
-		if (!IsValidHandle(targetHandle))
-			return;
-
-		ref var entry = ref _entries[targetHandle.Index];
-
-		_entries[entry.Previous].Next = entry.Next;
-		_entries[entry.Next].Previous = entry.Previous;
-		_entries[entry.Cell].Count--;
-
-		entry.Next = _freeHead;
-		entry.Previous = -1;
-		entry.Generation++;
-		_freeHead = targetHandle.Index;
-
-		Count--;
-	}
-
-	public void ClearAll()
-	{
-		var cellCount = Width * Height;
-		_epoch++;
-		ResetCells();
-		_freeHead = -1;
-		LinkFreeRange(cellCount);
-		Count = 0;
-	}
-
-	public void ClearCell(int x, int y)
-	{
-		var sentinel = CellIndex(x, y);
-		ref var head = ref _entries[sentinel];
-
-		var i = head.Next;
-		while (i != sentinel)
+		if (x < 0 || y < 0 || x >= Dimensions.X || y >= Dimensions.Y)
 		{
-			ref var entry = ref _entries[i];
-			var next = entry.Next;
-			entry.Next = _freeHead;
-			entry.Previous = -1;
-			entry.Generation++;
-			_freeHead = i;
-			Count--;
-			i = next;
+			// CustomLogger.LogWarning($"Invalid cell access at ({x}, {y}) for {position}");
+			return null;
 		}
 
-		head.Next = sentinel;
-		head.Previous = sentinel;
-		head.Count = 0;
+		return Cells[x, y];
 	}
 
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public int GetCellCount(int x, int y)
+	public UniformGridCell<T>? GetCell(int x, int y)
 	{
-		return _entries[CellIndex(x, y)].Count;
-	}
-
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public bool IsValidCell(int x, int y)
-	{
-		return (uint)x < (uint)Width && (uint)y < (uint)Height;
-	}
-
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public CellEnumerator<T> GetEnumerator(int x, int y)
-	{
-		return new CellEnumerator<T>(_entries, CellIndex(x, y));
-	}
-
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private bool IsValidHandle(GridCellHandle handle)
-	{
-		return handle.Epoch == _epoch
-			&& handle.Index >= Width * Height
-			&& handle.Index < _entries.Length
-			&& _entries[handle.Index].Generation == handle.Generation;
-	}
-
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	private int CellIndex(int x, int y)
-	{
-		return y * Width + x;
-	}
-
-	private void ResetCells()
-	{
-		var cellCount = Width * Height;
-		for (var i = 0; i < cellCount; i++)
+		if (x < 0 || y < 0 || x >= Dimensions.X || y >= Dimensions.Y)
 		{
-			ref var sentinel = ref _entries[i];
-			sentinel.Next = i;
-			sentinel.Previous = i;
-			sentinel.Count = 0;
+			// CustomLogger.LogWarning($"Invalid cell access at ({x}, {y})");
+			return null;
 		}
+
+		return Cells[x, y];
 	}
 
-	private void LinkFreeRange(int start)
+	public void ClearGrid()
 	{
-		for (var i = start; i < _entries.Length; i++)
-		{
-			ref var entry = ref _entries[i];
-			entry.Next = _freeHead;
-			entry.Previous = -1;
-			_freeHead = i;
-		}
-	}
-
-	internal struct Entry()
-	{
-		public T Item = default!;
-		public int Next = -1;
-		public int Previous = -1;
-		public int Cell = -1;
-		public int Count = 0;
-		public uint Generation = 0;
+		for (var x = 0; x < Dimensions.X; x++)
+		for (var y = 0; y < Dimensions.Y; y++)
+			Cells[x, y].Clear();
 	}
 }

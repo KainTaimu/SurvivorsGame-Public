@@ -1,10 +1,6 @@
 // Copyright 2026 Erwin Panergo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-/*
- * Commented methods are written by AI slop machine
- */
-
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Arch.Core;
@@ -34,7 +30,7 @@ public partial class EnemyTargetQuery : Node, IMultipleFrameTimeTrackable
 	// BREAKING: Changing this value breaks Projectile radius of weapons
 	private const int GRID_SIZE = 16;
 
-	private UniformGridWorld<Entity> _grid = null!;
+	private CenteredMovingUniformGrid<Entity> _grid = null!;
 
 	public static EnemyTargetQuery Instance { get; private set; } = null!;
 
@@ -61,8 +57,7 @@ public partial class EnemyTargetQuery : Node, IMultipleFrameTimeTrackable
 
 		var visRect = viewport.GetVisibleRect();
 		var windowSize = visRect.Size * (1f / zoom) * _rangeFactor;
-		_grid = new UniformGridWorld<Entity>(GRID_SIZE, windowSize);
-		_grid.EnsureCapacity(16_384);
+		_grid = new CenteredMovingUniformGrid<Entity>(GRID_SIZE, windowSize);
 	}
 
 	public override void _Process(double delta)
@@ -70,7 +65,7 @@ public partial class EnemyTargetQuery : Node, IMultipleFrameTimeTrackable
 		var player = GameWorld.Instance.MainPlayer;
 		var playerPos = player.GlobalPosition;
 
-		_grid.ClearAll();
+		_grid.ClearGrid();
 		_grid.Recenter(playerPos);
 		AddObjectsToGridQuery(GameWorld.World, _grid);
 	}
@@ -80,7 +75,7 @@ public partial class EnemyTargetQuery : Node, IMultipleFrameTimeTrackable
 	[None<DyingMarkerComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static void AddObjectsToGrid(
-		[Data] in UniformGridWorld<Entity> grid,
+		[Data] in CenteredMovingUniformGrid<Entity> grid,
 		Entity entity,
 		ref PositionComponent pos
 	)
@@ -88,7 +83,8 @@ public partial class EnemyTargetQuery : Node, IMultipleFrameTimeTrackable
 		if (!grid.ContainsWorld(pos.Position))
 			return;
 
-		grid.AddWorld(pos.Position, entity);
+		var cell = grid.GetCellWorld(pos.Position);
+		cell?.Add(entity);
 	}
 
 	private bool CircleHitTest(Vector2 projPos, float projRadius, Entity entity)
@@ -144,8 +140,13 @@ public partial class EnemyTargetQuery : Node, IMultipleFrameTimeTrackable
 
 			for (var cellX = minCellX; cellX <= maxCellX; cellX++)
 			{
-				foreach (var entity in _grid.GetEnumerator(cellX, cellY))
+				var cell = _grid.GetCell(cellX, cellY);
+				if (cell is null)
+					continue;
+
+				for (var i = 0; i < cell.Count; i++)
 				{
+					var entity = cell.Array[i];
 					if (!GameWorld.World.IsAlive(entity))
 						continue;
 					if (!CircleHitTest(areaCenter, areaRadius, entity))
@@ -167,8 +168,12 @@ public partial class EnemyTargetQuery : Node, IMultipleFrameTimeTrackable
 		{
 			for (var x = 0; x < _grid.Dimensions.X; x++)
 			{
-				foreach (var entity in _grid.GetEnumerator(x, y))
+				var cell = _grid.GetCell(x, y);
+				if (cell is null)
+					continue;
+				for (var i = 0; i < cell.Count; i++)
 				{
+					var entity = cell.Array[i];
 					if (!GameWorld.World.IsAlive(entity))
 						continue;
 
@@ -201,13 +206,13 @@ public partial class EnemyTargetQuery : Node, IMultipleFrameTimeTrackable
 			for (var dy = -cellWidth; dy <= cellWidth; dy++)
 			{
 				var checkCell = new Vector2I(cellIdx.X + dx, cellIdx.Y + dy);
-				if (!_grid.IsValidCell(checkCell.X, checkCell.Y))
-					continue;
-				if (_grid.GetCellCount(checkCell.X, checkCell.Y) <= 0)
+				var cell = _grid.GetCell(checkCell.X, checkCell.Y);
+				if (cell is null || cell.Count <= 0)
 					continue;
 
-				foreach (var entity in _grid.GetEnumerator(checkCell.X, checkCell.Y))
+				for (var i = 0; i < cell.Count; i++)
 				{
+					var entity = cell.Array[i];
 					if (!GameWorld.World.IsAlive(entity))
 						continue;
 					if (!_cachedSeenIds.Add(entity))
@@ -237,13 +242,13 @@ public partial class EnemyTargetQuery : Node, IMultipleFrameTimeTrackable
 
 	private void GetCellsAlongLine(Vector2 start, Vector2 end, HashSet<Vector2I> cells)
 	{
-		var startCell = _grid.WorldToCell(start);
-		if (!_grid.IsValidCell(startCell.X, startCell.Y))
+		var startCell = _grid.GetCellWorld(start);
+		if (startCell is null)
 			return;
 
 		var direction = (end - start).Normalized();
 		var maxDist = (end - start).Length();
-		var current = startCell;
+		var current = startCell.Index;
 		var dx = Mathf.Abs(Mathf.RoundToInt(direction.X * maxDist));
 		var dy = Mathf.Abs(Mathf.RoundToInt(direction.Y * maxDist));
 		var sx = direction.X > 0 ? 1 : -1;
@@ -267,7 +272,7 @@ public partial class EnemyTargetQuery : Node, IMultipleFrameTimeTrackable
 				current.Y += sy;
 			}
 
-			if (!_grid.IsValidCell(current.X, current.Y))
+			if (_grid.GetCell(current.X, current.Y) is null)
 				break;
 
 			cells.Add(current);

@@ -39,7 +39,7 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 	[Export]
 	public byte SubSteps = 6;
 
-	private IUniformGridWorld<(Vector2 pos, Entity entity, float radius)> _grid = null!;
+	private CenteredMovingUniformGrid<(Vector2 pos, Entity entity, float radius)> _grid = null!;
 
 	// Dense write buffers indexed by Entity.Id. Entries are valid for the
 	// current frame when _stamps[id] == _writeFrame, avoiding a full clear.
@@ -66,7 +66,7 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 		// suddenly affected by it, causing a large amount of enemies
 		// to be shoved towards player. The smaller height of 16:9 display
 		// makes it harder for player to avoid the spilled enemies.
-		_grid = new UniformGridWorld<(Vector2, Entity, float)>(_gridSize, new Vector2(windowSize.X, windowSize.X), 128);
+		_grid = new CenteredMovingUniformGrid<(Vector2, Entity, float)>(_gridSize, new Vector2(windowSize.X, windowSize.X));
 
 		CustomLogger.LogDebug("in", _grid.Dimensions, _grid.CellSize);
 	}
@@ -94,7 +94,7 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 			AddObjectsToGridQuery(GameWorld.World, _grid, _entries, _stamps, _writeFrame);
 			for (var i = 0; i < SubSteps; i++)
 			{
-				_grid.ClearAll();
+				_grid.ClearGrid();
 				AddObjectsToGridFromBuffer();
 				SolveCollisions();
 			}
@@ -118,7 +118,7 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 	[None<DyingMarkerComponent>]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	private static void AddObjectsToGrid(
-		[Data] in IUniformGridWorld<(Vector2 pos, Entity entity, float radius)> grid,
+		[Data] in CenteredMovingUniformGrid<(Vector2 pos, Entity entity, float radius)> grid,
 		[Data] in (Vector2 pos, Entity entity, float radius)[] entries,
 		[Data] in int[] stamps,
 		[Data] in int writeFrame,
@@ -146,8 +146,11 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 				continue;
 
 			var entry = _entries[i];
+			if (!_grid.ContainsWorld(entry.pos))
+				continue;
 
-			_grid.AddWorld(entry.pos, entry);
+			var cell = _grid.GetCellWorld(entry.pos);
+			cell?.Add(entry);
 		}
 	}
 
@@ -200,16 +203,16 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 				var x = i * 2 + phase;
 				for (var y = 0; y < _grid.Dimensions.Y; y++)
 				{
-					var count = _grid.GetCellCount(x, y);
-					if (count <= 1 || count > 10)
+					var cell = _grid.GetCell(x, y);
+					if (cell is null || cell.Count <= 1 || cell.Count > 10)
 						continue;
 
-					SolveCellInternalCollisions(x, y, count);
+					SolveCellInternalCollisions(cell);
 
-					SolveCellPairCollisions(x, y, x + 1, y); // E
-					SolveCellPairCollisions(x, y, x, y + 1); // S
-					SolveCellPairCollisions(x, y, x + 1, y + 1); // SE
-					SolveCellPairCollisions(x, y, x + 1, y - 1); // NE
+					SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y)); // E
+					SolveCellPairCollisions(cell, _grid.GetCell(x, y + 1)); // S
+					SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y + 1)); // SE
+					SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y - 1)); // NE
 				}
 			}),
 			columns
@@ -217,70 +220,70 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 		WorkerThreadPool.WaitForGroupTaskCompletion(id);
 	}
 
-	private void SolveCellInternalCollisions(int x, int y, int count)
+	private void SolveCellInternalCollisions(UniformGridCell<(Vector2 pos, Entity entity, float radius)> cell)
 	{
-		var outer = _grid.GetEnumerator(x, y);
-		while (outer.MoveNext())
+		for (var i = 0; i < cell.Count; i++)
 		{
-			var rest = outer.CloneRest();
-			while (rest.MoveNext())
-				SolveCollisionInPlace(ref outer.CurrentRef, ref rest.CurrentRef, count, count);
+			for (var j = i + 1; j < cell.Count; j++)
+				SolveCollisionInPlace(cell, i, cell, j);
 		}
 	}
 
-	private void SolveCellPairCollisions(int ax, int ay, int bx, int by)
+	private void SolveCellPairCollisions(
+		UniformGridCell<(Vector2 pos, Entity entity, float radius)> cellA,
+		UniformGridCell<(Vector2 pos, Entity entity, float radius)>? cellB
+	)
 	{
-		if (!_grid.IsValidCell(bx, by))
+		if (cellB is null || cellB.Count == 0)
 			return;
 
-		var countA = _grid.GetCellCount(ax, ay);
-		var countB = _grid.GetCellCount(bx, by);
-		if (countB == 0)
-			return;
-
-		var enumA = _grid.GetEnumerator(ax, ay);
-		while (enumA.MoveNext())
+		for (var i = 0; i < cellA.Count; i++)
 		{
-			var enumB = _grid.GetEnumerator(bx, by);
-			while (enumB.MoveNext())
-				SolveCollisionInPlace(ref enumA.CurrentRef, ref enumB.CurrentRef, countA, countB);
+			for (var j = 0; j < cellB.Count; j++)
+				SolveCollisionInPlace(cellA, i, cellB, j);
 		}
 	}
 
 	private void SolveCollisionInPlace(
-		ref (Vector2 pos, Entity entity, float radius) a,
-		ref (Vector2 pos, Entity entity, float radius) b,
-		int countA,
-		int countB
+		UniformGridCell<(Vector2 pos, Entity entity, float radius)> cellA,
+		int indexA,
+		UniformGridCell<(Vector2 pos, Entity entity, float radius)> cellB,
+		int indexB
 	)
 	{
-		if (a.entity == b.entity)
+		var (posA, entityA, radiusA) = cellA.Array[indexA];
+		var (posB, entityB, radiusB) = cellB.Array[indexB];
+
+		if (entityA == entityB)
 			return;
 
-		var largest = Math.Max(a.radius, b.radius) * 3;
-		if (a.pos.DistanceSquaredTo(b.pos) >= largest * largest)
+		var largest = Math.Max(radiusA, radiusB) * 3;
+		if (posA.DistanceSquaredTo(posB) >= largest * largest)
 			return;
 
-		// if (a.pos.DistanceSquaredTo(b.pos) >= _distBeforeShove * _distBeforeShove)
+		// if (posA.DistanceSquaredTo(posB) >= _distBeforeShove * _distBeforeShove)
 		// 	return;
 
-		var direction = b.pos.DirectionTo(a.pos);
+		var direction = posB.DirectionTo(posA);
 		if (direction == Vector2.Zero)
 			direction = Vector2.Right;
 
 		var push = _distBeforeShove * 0.5f * _pushAmount;
 
-		if (countA >= _cramLimitBeforeExtraPush || countB >= _cramLimitBeforeExtraPush)
+		if (cellA.Count >= _cramLimitBeforeExtraPush || cellB.Count >= _cramLimitBeforeExtraPush)
 		{
-			var extraPush = Mathf.Log((countA + countB) / 1.5f) * _cramExtraPushFactor;
+			var extraPush = Mathf.Log((cellA.Count + cellB.Count) / 1.5f) * _cramExtraPushFactor;
 			extraPush = Math.Abs(extraPush);
 			push *= Math.Abs(extraPush);
 		}
 
-		a.pos += direction * push;
-		b.pos -= direction * push;
+		posA += direction * push;
+		posB -= direction * push;
 
-		_entries[a.entity.Id].pos = a.pos;
-		_entries[b.entity.Id].pos = b.pos;
+		cellA.Array[indexA] = (posA, entityA, radiusA);
+		cellB.Array[indexB] = (posB, entityB, radiusB);
+
+		_entries[entityA.Id].pos = posA;
+		_entries[entityB.Id].pos = posB;
 	}
 }
