@@ -1,5 +1,6 @@
 extends Node
 
+
 func _ready() -> void:
 	Console.pause_enabled = true
 	Console.remove_command("pause")
@@ -17,11 +18,11 @@ func _ready() -> void:
 			if m == null:
 				Console.print_error("EnemyCollisionSolver does not exist")
 				return
-			m.solver_type = i as EnemyCollisionSolverManager.SolverTypeEnum
-			Console.print_line("set %s" % str(i as EnemyCollisionSolverManager.SolverTypeEnum)),
+			m.change_solver(i as EnemyCollisionSolverManager.SolverTypeEnum)
+			Console.print_line("set %s" % EnemyCollisionSolverManager.SOLVER_TYPE_NAMES[i]),
 		["mode"],
 		1,
-		"Change collision solver type",
+		"Change collision solver type [none=0, auto=1, cpu=2, gpu=3]",
 	)
 
 
