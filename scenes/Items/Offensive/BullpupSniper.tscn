@@ -15,7 +15,7 @@
 [ext_resource type="Script" uid="uid://doyqd2gp5rtvn" path="res://src/Items/Offensive/Stats/SlowStats.cs" id="13_niepl"]
 [ext_resource type="Script" uid="uid://66x4x0yo47cj" path="res://src/Items/Offensive/Stats/KnockbackStats.cs" id="14_sbdfb"]
 [ext_resource type="Script" uid="uid://b1j7f3uyd80s3" path="res://src/Items/Offensive/Stats/MoveBloomStats.cs" id="15_nbqni"]
-[ext_resource type="AudioStream" uid="uid://c53a14j8b1b3k" path="res://assets/SFX/Shoot/gm6/Gm6_r1.wav" id="16_23nvd"]
+[ext_resource type="AudioStream" uid="uid://bsq1syolncq6d" path="res://assets/SFX/Shoot/gm6/Gm6Lynx_r3.wav" id="16_v7kl0"]
 [ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/FireGroups/SemiAutoFireGroup.cs" id="21_036s1"]
 [ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="22_in5gd"]
 [ext_resource type="PackedScene" uid="uid://3egbr6rh75nk" path="res://scenes/Items/Offensive/Modules/ScopeModule.tscn" id="23_nx3pq"]
@@ -71,7 +71,32 @@ Icon = SubResource("PlaceholderTexture2D_bgsbt")
 Modifiers = Array[ExtResource("26_2rbd6")]([SubResource("Resource_5hpaj"), SubResource("Resource_k7qs1")])
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
-[node name="Sniper" type="Node2D" unique_id=399121865 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "MoveBloomStats", "KnockbackStats", "_scopeComponent", "FireGroup", "ReloadBehaviour")]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_v7kl0"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_ogoab"]
+script = ExtResource("26_2rbd6")
+StatName = 5
+Operation = 1
+Value = 0.33
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_fev8o"]
+script = ExtResource("26_2rbd6")
+StatName = 3
+Operation = 1
+Value = 0.6
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_do71q"]
+script = ExtResource("27_0bnkh")
+Name = "Concussed"
+Cause = 2
+InitialDuration = 1.0
+Modifiers = Array[ExtResource("26_2rbd6")]([SubResource("Resource_ogoab"), SubResource("Resource_fev8o")])
+metadata/_custom_type_script = "uid://bdk4fdcqvypav"
+
+[node name="BullpupSniper" type="Node2D" unique_id=399121865 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "MoveBloomStats", "KnockbackStats", "_scopeComponent", "FireGroup", "ReloadBehaviour")]
 script = ExtResource("1_23nvd")
 DamageStats = NodePath("Stats/DamageStats")
 MagazineStats = NodePath("Stats/MagazineStats")
@@ -94,6 +119,7 @@ ProjectileAttack = SubResource("Resource_c52kb")
 [node name="DamageStats" type="Node" parent="Stats" unique_id=384257627]
 script = ExtResource("5_k2m51")
 Damage = -1
+DamageVariance = 0.1
 CritDamageMultiplier = 1.0
 CritDamageChance = 1.0
 metadata/_custom_type_script = "uid://c8bfvbbqfaakj"
@@ -115,9 +141,10 @@ HorizontalRecoilRandom = 20.0
 VerticalRecoilMin = 150.0
 VerticalBaseRecoil = 150.0
 VerticalRecoilRandom = 0.0
+RecoilScale = 1.2
 RecoilAccumilationScale = 0.0
 HorizontalRecoilPunish = false
-CameraRecoilScale = 4.0
+CameraRecoilScale = 6.0
 metadata/_custom_type_script = "uid://xtlc02w402jw"
 
 [node name="ReloadStats" type="Node" parent="Stats" unique_id=1187073488]
@@ -127,14 +154,14 @@ metadata/_custom_type_script = "uid://gr35snno6a2m"
 
 [node name="ProjectileStats" type="Node" parent="Stats" unique_id=1158764564]
 script = ExtResource("10_ldb4g")
-Speed = 10000
+Speed = 20000
 HitRadius = 64
-Scale = 1.5
+Scale = 2.0
 metadata/_custom_type_script = "uid://cuyrbm7tgm3od"
 
 [node name="AttackStats" type="Node" parent="Stats" unique_id=1591529000]
 script = ExtResource("11_4q0j7")
-AttackSpeed = 0.9
+AttackSpeed = 0.65
 metadata/_custom_type_script = "uid://bjysatf11t7bw"
 
 [node name="PierceStats" type="Node" parent="Stats" unique_id=657452369]
@@ -148,7 +175,7 @@ metadata/_custom_type_script = "uid://doyqd2gp5rtvn"
 
 [node name="KnockbackStats" type="Node" parent="Stats" unique_id=1624617998]
 script = ExtResource("14_sbdfb")
-KnockbackForce = 50.0
+KnockbackForce = 75.0
 metadata/_custom_type_script = "uid://66x4x0yo47cj"
 
 [node name="MoveBloomStats" type="Node" parent="Stats" unique_id=1164612352]
@@ -164,9 +191,8 @@ metadata/_custom_type_script = "uid://b1j7f3uyd80s3"
 
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=2103641847]
 process_mode = 3
-stream = ExtResource("16_23nvd")
-volume_db = 5.0
-bus = &"ShootSfxNoCompress"
+stream = ExtResource("16_v7kl0")
+bus = &"ShootSfxNoDistortion"
 
 [node name="SemiAutoFireGroup" type="Node" parent="." unique_id=1729526405 node_paths=PackedStringArray("AttackStats")]
 script = ExtResource("21_036s1")
@@ -200,7 +226,13 @@ BloomStats = NodePath("../Stats/BloomStats")
 MoveBloomStats = NodePath("../Stats/MoveBloomStats")
 metadata/_custom_type_script = "uid://doh6x5pfspjv7"
 
+[node name="ConcussedStatusEffectModule" type="Node" parent="." unique_id=84616492]
+script = ExtResource("25_wdvq4")
+_statusEffect = SubResource("Resource_do71q")
+metadata/_custom_type_script = "uid://c0xnhv61iiqba"
+
 [connection signal="OnAttack" from="." to="Shoot" method="play"]
+[connection signal="OnAttack" from="." to="ConcussedStatusEffectModule" method="GiveStatusEffect"]
 [connection signal="OnUnequipped" from="." to="ScopeComponent" method="HideScope"]
 [connection signal="OnFire" from="SemiAutoFireGroup" to="." method="Attack"]
 [connection signal="OnReloadStart" from="NormalReloadBehaviour" to="ScopeComponent" method="HideScope"]

@@ -169,23 +169,24 @@ metadata/_custom_type_script = "uid://b1j7f3uyd80s3"
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=2103641847]
 process_mode = 3
 stream = ExtResource("7_0avw1")
+volume_db = -8.0
 mix_target = 2
 bus = &"ShootSfxNoDistortion"
 
 [node name="BoltCycle" type="AudioStreamPlayer" parent="." unique_id=1900327009]
 stream = ExtResource("8_ia1h2")
-volume_db = 8.0
+volume_db = 2.0
 
 [node name="SpentCasingEmitter" parent="." unique_id=1298992116 instance=ExtResource("10_bfcl0")]
 process_mode = 3
 
 [node name="308BoltCycleOpen" type="AudioStreamPlayer" parent="." unique_id=1403999457]
 stream = ExtResource("11_ia1h2")
-volume_db = 8.0
+volume_db = 2.0
 
 [node name="308BoltCycleClose" type="AudioStreamPlayer" parent="." unique_id=508340117]
 stream = ExtResource("12_hagd0")
-volume_db = 8.0
+volume_db = 2.0
 
 [node name="SemiAutoFireGroup" type="Node" parent="." unique_id=1729526405 node_paths=PackedStringArray("AttackStats")]
 script = ExtResource("3_0ap61")
