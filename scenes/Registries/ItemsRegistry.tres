@@ -27,6 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://cnk5c4yvwhjun" path="res://scenes/Items/Offensive/M45.tscn" id="23_mmlnp"]
 [ext_resource type="PackedScene" uid="uid://c2bradk7lbxae" path="res://scenes/Items/Healing/FentPill.tscn" id="23_xxrsb"]
 [ext_resource type="PackedScene" uid="uid://cuf1ut26wc716" path="res://scenes/Items/Offensive/Matrix.tscn" id="24_16g23"]
+[ext_resource type="PackedScene" uid="uid://y32pvmev62q6" path="res://scenes/Items/Offensive/BullpupSniper.tscn" id="27_mxbet"]
 
 [resource]
 script = ExtResource("1_cngp6")
@@ -59,6 +60,7 @@ _uids_to_string_ids = Dictionary[StringName, StringName]({
 &"uid://cpvuqkwl3k0g1": &"M249",
 &"uid://cxco3dha05xnp": &"SKS",
 &"uid://d37pj80g4j5cy": &"Dmr",
+&"uid://dc5oon3sf640p": &"BullpupSniper",
 &"uid://dd7q76kfjdvxq": &"Shotgun",
 &"uid://dfi450hlcvmli": &"FentPill",
 &"uid://dh08ymqfxu5xh": &"M7",
@@ -70,6 +72,7 @@ _uids_to_string_ids = Dictionary[StringName, StringName]({
 _string_ids_to_uids = Dictionary[StringName, StringName]({
 &"Ak47": &"uid://bkabsg23vh70n",
 &"AutoShotgun": &"uid://0mop1ayfv2cg",
+&"BullpupSniper": &"uid://dc5oon3sf640p",
 &"DamageInjector": &"uid://c4b66i7cyon41",
 &"Dmr": &"uid://d37pj80g4j5cy",
 &"FentPill": &"uid://dfi450hlcvmli",
@@ -97,11 +100,8 @@ _string_ids_to_uids = Dictionary[StringName, StringName]({
 })
 _property_index = Dictionary[StringName, Dictionary]({
 &"scene": {
-ExtResource("23_xxrsb"): {
-&"FentPill": true
-},
-ExtResource("13_xxrsb"): {
-&"DamageInjector": true
+ExtResource("27_mxbet"): {
+&"BullpupSniper": true
 },
 ExtResource("21_dpdnh"): {
 &"GrenadeThrower": true
@@ -117,6 +117,9 @@ ExtResource("23_mmlnp"): {
 },
 ExtResource("17_kf61w"): {
 &"M7": true
+},
+ExtResource("23_xxrsb"): {
+&"FentPill": true
 },
 ExtResource("16_ca340"): {
 &"Shotgun": true
@@ -138,6 +141,9 @@ ExtResource("11_beu6o"): {
 },
 ExtResource("10_rxhkk"): {
 &"GrenadeLauncher": true
+},
+ExtResource("13_xxrsb"): {
+&"DamageInjector": true
 },
 ExtResource("9_lr57v"): {
 &"M92FS": true

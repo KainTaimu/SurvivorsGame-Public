@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ItemRegistryEntry" format=3 uid="uid://dc5oon3sf640p"]
+
+[ext_resource type="Script" uid="uid://8rt54h4imtxv" path="res://src/Items/BaseItemProperties.cs" id="1_2nxju"]
+[ext_resource type="PackedScene" uid="uid://y32pvmev62q6" path="res://scenes/Items/Offensive/BullpupSniper.tscn" id="2_2nxju"]
+[ext_resource type="Script" uid="uid://brmkfowmxbv52" path="res://src/Items/ItemRegistryEntry.gd" id="3_q6c06"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_f0pdf"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_6gyh8"]
+script = ExtResource("1_2nxju")
+Name = "GM6"
+Description = "A bullpup anti-materiel rifle chambered in the massive .50BMG. It is capable of penetrating through lightly armored vehicles. It features an advanced reciprocating barrel that mitigates recoil. The bullpup design allows it be shorter and have a closer center-of-gravity to the shooter, improving mobility and manueverability while on the move."
+ItemIcon = SubResource("PlaceholderTexture2D_f0pdf")
+metadata/_custom_type_script = "uid://8rt54h4imtxv"
+
+[resource]
+script = ExtResource("3_q6c06")
+properties = SubResource("Resource_6gyh8")
+scene = ExtResource("2_2nxju")
+spawn_weight = 0.3
+rarity = 4
+metadata/_custom_type_script = "uid://brmkfowmxbv52"

@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://bdk4fdcqvypav" path="res://src/Players/Controllers/StatusEffect.cs" id="7_qh10d"]
 [ext_resource type="Script" uid="uid://d31d8uns5faa5" path="res://src/Players/Controllers/StatusEffectModifier.cs" id="8_agk5e"]
 [ext_resource type="PackedScene" uid="uid://okgy2hpbgy53" path="res://scenes/Items/Offensive/M17.tscn" id="9_wkerx"]
+[ext_resource type="PackedScene" uid="uid://y32pvmev62q6" path="res://scenes/Items/Offensive/BullpupSniper.tscn" id="10_q2wbp"]
 [ext_resource type="Shader" uid="uid://bg3me0bhc4em2" path="res://src/Shaders/vignette.gdshader" id="21_vujg4"]
 
 [sub_resource type="Resource" id="Resource_comn3"]
@@ -125,7 +126,7 @@ resource_local_to_scene = true
 script = ExtResource("4_qh10d")
 metadata/_custom_type_script = "uid://wsto3khl70md"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wkerx"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g7v3u"]
 resource_local_to_scene = true
 shader = ExtResource("5_t84yk")
 
@@ -161,7 +162,7 @@ region = Rect2(62, 0, 31, 31)
 atlas = ExtResource("6_y52bq")
 region = Rect2(93, 0, 31, 31)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_q2wbp"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_kag5i"]
 resource_local_to_scene = true
 animations = [{
 "frames": [{
@@ -199,7 +200,7 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_g7v3u"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w70hc"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_agk5e"]
@@ -208,7 +209,7 @@ Name = "DEV"
 Permanent = true
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kag5i"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_23k0g"]
 resource_local_to_scene = true
 shader = ExtResource("21_vujg4")
 shader_parameter/tint = Color(0.33618236, 2.6171097e-07, 1.2032687e-07, 1)
@@ -247,8 +248,8 @@ _outgoingDamage = SubResource("Resource_ofy2w")
 _player = NodePath("../..")
 
 [node name="AnimatedSprite2D" parent="." index="1" unique_id=881638213]
-material = SubResource("ShaderMaterial_wkerx")
-sprite_frames = SubResource("SpriteFrames_q2wbp")
+material = SubResource("ShaderMaterial_g7v3u")
+sprite_frames = SubResource("SpriteFrames_kag5i")
 animation = &"idle"
 
 [node name="PlayerCameraController" parent="." index="2" unique_id=68646763]
@@ -263,5 +264,7 @@ _testEffect = Array[ExtResource("7_qh10d")]([SubResource("Resource_agk5e")])
 
 [node name="M17" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="0" unique_id=1989500741 instance=ExtResource("9_wkerx")]
 
+[node name="Sniper" parent="PlayerItemController" parent_id_path=PackedInt32Array(1687061162) index="1" unique_id=399121865 instance=ExtResource("10_q2wbp")]
+
 [node name="ColorRect" parent="DamageVignette" parent_id_path=PackedInt32Array(758455490) index="0" unique_id=1773597369]
-material = SubResource("ShaderMaterial_kag5i")
+material = SubResource("ShaderMaterial_23k0g")
