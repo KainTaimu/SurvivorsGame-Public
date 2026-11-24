@@ -22,6 +22,12 @@
 script = ExtResource("5_vam7u")
 metadata/_custom_type_script = "uid://dpq42sefws67v"
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_rmnc5"]
+random_pitch = 1.0594631
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("8_61i6o")
+
 [node name="Matrix" type="Node" unique_id=1472391115 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "SlowStats", "KnockbackStats", "FireGroup", "ReloadBehaviour")]
 script = ExtResource("1_o1peo")
 DamageStats = NodePath("Stats/DamageStats")
@@ -105,10 +111,9 @@ metadata/_custom_type_script = "uid://66x4x0yo47cj"
 
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=1380114539]
 process_mode = 3
-stream = ExtResource("8_61i6o")
-pitch_scale = 1.1
-max_polyphony = 2
-bus = &"ShootSfx"
+stream = SubResource("AudioStreamRandomizer_rmnc5")
+max_polyphony = 10
+bus = &"ShootSfxNoDistortion"
 
 [node name="MagAlmostEmpty" parent="." unique_id=866300451 instance=ExtResource("9_rmnc5")]
 
@@ -119,7 +124,6 @@ metadata/_custom_type_script = "uid://bt8inkwpypk5b"
 
 [node name="NormalReloadBehaviour" type="Node" parent="." unique_id=1270252923 node_paths=PackedStringArray("MagazineStats", "ReloadStats")]
 script = ExtResource("4_nj2k5")
-CanReloadInBackground = true
 MagazineStats = NodePath("../Stats/MagazineStats")
 ReloadStats = NodePath("../Stats/ReloadStats")
 metadata/_custom_type_script = "uid://b7arqp2dmxhtx"
