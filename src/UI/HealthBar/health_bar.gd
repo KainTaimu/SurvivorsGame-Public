@@ -40,7 +40,9 @@ func _process(delta: float) -> void:
 	_time_until_standby = max(0, _time_until_standby - delta)
 	_damage_rect = Rect2(Vector2.ZERO, _damage_rect.size.lerp(_real_rect.size, delta * 3))
 
-	offset_transform_rotation = (E ** (-a * (3 - _time_until_standby))) * cos(b * (3 - _time_until_standby)) * m
+	offset_transform_rotation = (E ** (-a * (3 - _time_until_standby))) * cos(
+		b * (3 - _time_until_standby)
+	) * m
 	queue_redraw()
 
 	if _time_until_standby <= 0:

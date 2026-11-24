@@ -75,8 +75,7 @@ public partial class GameSingleton : Node
 		GameSettings newSettings;
 		try
 		{
-			newSettings =
-				JsonConvert.DeserializeObject<GameSettings>(s.ToString())
+			newSettings = JsonConvert.DeserializeObject<GameSettings>(s.ToString())
 				?? throw new Exception("Valid read, invalid settings file");
 		}
 		catch (Exception exception)

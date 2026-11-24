@@ -107,14 +107,10 @@ public partial class SimpleFirearm
 
 	public override void _Ready()
 	{
-		Pool.Initialize(
-			this,
-			ProjectileScene,
-			p =>
-			{
-				p.OnEntityHit += e => TryHandleHit(e.Entity);
-			}
-		);
+		Pool.Initialize(this, ProjectileScene, p =>
+		{
+			p.OnEntityHit += e => TryHandleHit(e.Entity);
+		});
 
 		OnAttack += () => OffensiveEffects.ApplyCameraShake(RecoilStats.CameraRecoilScale, GetViewport, CreateTween);
 		OnAttack += () =>

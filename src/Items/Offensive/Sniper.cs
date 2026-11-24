@@ -94,14 +94,10 @@ public partial class Sniper
 
 	public override void _Ready()
 	{
-		_pool.Initialize(
-			this,
-			_projectileScene,
-			p =>
-			{
-				p.OnEntityHit += e => TryHandleHit(e.Entity);
-			}
-		);
+		_pool.Initialize(this, _projectileScene, p =>
+		{
+			p.OnEntityHit += e => TryHandleHit(e.Entity);
+		});
 
 		OnAttack += () => OffensiveEffects.ApplyCameraShake(RecoilStats.CameraRecoilScale, GetViewport, CreateTween);
 		OnAttack += () =>

@@ -29,7 +29,10 @@ func _process(delta: float) -> void:
 	if _shake <= 0:
 		return
 	_shake = max(0, _shake - delta)
-	rotation = (E ** (-a * (3 - _shake))) * cos(b * (3 - _shake)) * _damage_shake_scale * randf_range(0.5, 1.0)
+	rotation = (E ** (-a * (3 - _shake))) * cos(b * (3 - _shake)) * _damage_shake_scale * randf_range(
+		0.5,
+		1.0,
+	)
 	rotation *= 1 if randf() < 0.5 else -1
 
 

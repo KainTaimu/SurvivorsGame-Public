@@ -1,16 +1,26 @@
 class_name CustomLogger
 extends Object
 
+
 static func log_info(...args: Array) -> void:
-	send_log(print_rich, "[color=white][Info  :  %s] %s[/color]" % [get_caller_name(), construct_string(args)])
+	send_log(
+		print_rich,
+		"[color=white][Info  :  %s] %s[/color]" % [get_caller_name(), construct_string(args)],
+	)
 
 
 static func log_debug(...args: Array) -> void:
-	send_log(print_rich, "[color=darkgray][Debug  :  %s] %s[/color]" % [get_caller_name(), construct_string(args)])
+	send_log(
+		print_rich,
+		"[color=darkgray][Debug  :  %s] %s[/color]" % [get_caller_name(), construct_string(args)],
+	)
 
 
 static func log_warning(...args: Array) -> void:
-	send_log(print_rich, "[color=yellow][Warning  :  %s] %s[/color]" % [get_caller_name(), construct_string(args)])
+	send_log(
+		print_rich,
+		"[color=yellow][Warning  :  %s] %s[/color]" % [get_caller_name(), construct_string(args)],
+	)
 
 
 static func log_error(...args: Array) -> void:

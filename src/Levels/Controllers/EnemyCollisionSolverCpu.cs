@@ -66,7 +66,10 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 		// suddenly affected by it, causing a large amount of enemies
 		// to be shoved towards player. The smaller height of 16:9 display
 		// makes it harder for player to avoid the spilled enemies.
-		_grid = new CenteredMovingUniformGrid<(Vector2, Entity, float)>(_gridSize, new Vector2(windowSize.X, windowSize.X));
+		_grid = new CenteredMovingUniformGrid<(Vector2, Entity, float)>(
+			_gridSize,
+			new Vector2(windowSize.X, windowSize.X)
+		);
 
 		CustomLogger.LogDebug("in", _grid.Dimensions, _grid.CellSize);
 	}

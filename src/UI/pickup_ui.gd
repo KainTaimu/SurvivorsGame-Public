@@ -41,9 +41,9 @@ func _input(event: InputEvent) -> void:
 
 
 func show_ui(
-		item_limit: int,
-		rarity_lower_gate: Globals.Rarity,
-		rarity_upper_gate: Globals.Rarity,
+	item_limit: int,
+	rarity_lower_gate: Globals.Rarity,
+	rarity_upper_gate: Globals.Rarity,
 ) -> void:
 	show()
 	PauseController.Lock(self)
@@ -79,7 +79,6 @@ func _assign_item_recurse(arr: Array[ItemShowcase], items: Array[Resource], rema
 	# if stats == null:
 	# 	CustomLogger.log_error("expected BaseItemStats. got %s" % typeof(stats))
 	# 	return
-
 	var props := entry.properties
 	if props == null:
 		CustomLogger.log_error("expected BaseItemProperties. got %s" % typeof(props))
@@ -91,12 +90,7 @@ func _assign_item_recurse(arr: Array[ItemShowcase], items: Array[Resource], rema
 	tween.tween_property(showcase, "offset_transform_scale", Vector2(1.0, 1.0), 0.2)
 
 	get_tree().create_timer(0.025, true, false, true).timeout.connect(
-		_assign_item_recurse.bind(
-			arr,
-			items,
-			remaining -
-			1,
-		),
+		_assign_item_recurse.bind(arr, items, remaining - 1),
 	)
 
 

@@ -1,6 +1,5 @@
 extends Node2D
 
-
 @export var VU_COUNT = 16
 @export var FREQ_MAX = 11050.0
 
@@ -24,14 +23,14 @@ func _draw():
 
 		draw_rect(
 			Rect2(w * i, HEIGHT - height, w - 2, height),
-			Color.from_hsv(float(VU_COUNT * 0.6 + i * 0.5) / VU_COUNT, 0.5, 0.6)
+			Color.from_hsv(float(VU_COUNT * 0.6 + i * 0.5) / VU_COUNT, 0.5, 0.6),
 		)
 		draw_line(
 			Vector2(w * i, HEIGHT - height),
 			Vector2(w * i + w - 2, HEIGHT - height),
 			Color.from_hsv(float(VU_COUNT * 0.6 + i * 0.5) / VU_COUNT, 0.5, 1.0),
 			2.0,
-			true
+			true,
 		)
 
 
