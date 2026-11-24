@@ -1,19 +1,18 @@
 // Copyright 2026 Erwin Panergo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using System.Collections.Generic;
-
 namespace Game.Models;
 
 public class UniformGrid<T>
+	where T : struct
 {
-	public readonly UniformGridCell<T>[,] Cells;
+	public readonly UniformGridCell<T>[] Cells;
 
 	public readonly Vector2I Dimensions;
 
 	public readonly int CellSize;
 
-	public UniformGrid(int cellSize, int sizeX, int sizeY, int startX = 0, int startY = 0)
+	public UniformGrid(int cellSize, int sizeX, int sizeY)
 	{
 		if (cellSize <= 0)
 		{
@@ -21,58 +20,88 @@ public class UniformGrid<T>
 			cellSize = 16;
 		}
 
-		var startCellX = startX / cellSize;
-		var startCellY = startY / cellSize;
 		var width = sizeX / cellSize;
 		var height = sizeY / cellSize;
-		var grid = new UniformGridCell<T>[width, height];
 
-		for (var x = 0; x < width; x++)
-		{
-			for (var y = 0; y < height; y++)
-			{
-				grid[x, y] = new UniformGridCell<T>
-				{
-					Index = new Vector2I(x, y),
-					Position = new Vector2I(cellSize * x - startCellX * x, cellSize * y - startCellY * y),
-				};
-			}
-		}
-
-		Cells = grid;
+		Cells = new UniformGridCell<T>[width * height];
 		Dimensions = new Vector2I(width, height);
 		CellSize = cellSize;
 	}
 
-	public UniformGridCell<T>? GetCell(Vector2 position)
+	public int GetCellIndex(int x, int y)
 	{
-		var x = (int)(position.X / CellSize);
-		var y = (int)(position.Y / CellSize);
-
 		if (x < 0 || y < 0 || x >= Dimensions.X || y >= Dimensions.Y)
-		{
-			// CustomLogger.LogWarning($"Invalid cell access at ({x}, {y}) for {position}");
-			return null;
-		}
+			return -1;
 
-		return Cells[x, y];
+		return y * Dimensions.X + x;
 	}
 
-	public UniformGridCell<T>? GetCell(int x, int y)
+	public int GetCellIndex(Vector2 position)
 	{
-		if (x < 0 || y < 0 || x >= Dimensions.X || y >= Dimensions.Y)
+		if (position.X < 0f || position.Y < 0f)
+			return -1;
+
+		return GetCellIndex((int)(position.X / CellSize), (int)(position.Y / CellSize));
+	}
+
+	public bool TryGetCellIndex(int x, int y, out int index)
+	{
+		index = GetCellIndex(x, y);
+		return index >= 0;
+	}
+
+	public bool TryGetCellIndex(Vector2 position, out int index)
+	{
+		index = GetCellIndex(position);
+		return index >= 0;
+	}
+
+	public bool TryGetCellCoord(Vector2 position, out Vector2I coord)
+	{
+		if (position.X < 0f || position.Y < 0f)
 		{
-			// CustomLogger.LogWarning($"Invalid cell access at ({x}, {y})");
-			return null;
+			coord = default;
+			return false;
 		}
 
-		return Cells[x, y];
+		var x = (int)(position.X / CellSize);
+		var y = (int)(position.Y / CellSize);
+		if (x >= Dimensions.X || y >= Dimensions.Y)
+		{
+			coord = default;
+			return false;
+		}
+
+		coord = new Vector2I(x, y);
+		return true;
+	}
+
+	public Vector2 GetCellPosition(Vector2I coord)
+	{
+		return new Vector2(coord.X * CellSize, coord.Y * CellSize);
+	}
+
+	public bool TryAdd(int x, int y, T item)
+	{
+		if (!TryGetCellIndex(x, y, out var index))
+			return false;
+
+		Cells[index].Add(item);
+		return true;
+	}
+
+	public bool TryAdd(Vector2 position, T item)
+	{
+		if (!TryGetCellIndex(position, out var index))
+			return false;
+
+		Cells[index].Add(item);
+		return true;
 	}
 
 	public void ClearGrid()
 	{
-		for (var x = 0; x < Dimensions.X; x++)
-		for (var y = 0; y < Dimensions.Y; y++)
-			Cells[x, y].Clear();
+		for (var i = 0; i < Cells.Length; i++)
+			Cells[i].Clear();
 	}
 }

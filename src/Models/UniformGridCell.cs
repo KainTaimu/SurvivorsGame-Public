@@ -1,32 +1,33 @@
 // Copyright 2026 Erwin Panergo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
+
 namespace Game.Models;
 
-public class UniformGridCell<T>
+public struct UniformGridCell<T>
+	where T : struct
 {
-	private const int MAX_SIZE = 256;
+	public const int MAX_SIZE = 16;
 
-	public required Vector2I Index;
-	public required Vector2I Position;
-
-	public readonly T[] Array = new T[MAX_SIZE];
-
-	public int Count
+	[InlineArray(MAX_SIZE)]
+	public struct CellBuffer
 	{
-		get => _count;
-		set => _count = Math.Clamp(value, 0, MAX_SIZE);
+		private T _element0;
 	}
 
-	private int _count;
+	public CellBuffer Items;
 
-	// Drops obj silenty by design
+	public int Count { get; private set; }
+
+	// Drops obj silently by design
 	public void Add(T obj)
 	{
 		if (Count >= MAX_SIZE)
 			return;
 
-		Array[Count] = obj;
+		Items[Count] = obj;
 		Count++;
 	}
 
@@ -35,8 +36,14 @@ public class UniformGridCell<T>
 		Count = 0;
 	}
 
-	public override string ToString()
+	[UnscopedRef]
+	public ReadOnlySpan<T> AsReadOnlySpan()
 	{
-		return $"{Index} : {Count} objects";
+		return ((ReadOnlySpan<T>)Items)[..Count];
+	}
+
+	public override readonly string ToString()
+	{
+		return $"{Count} objects";
 	}
 }

@@ -40,7 +40,7 @@ public partial class NavMap : NavigationRegion2D
 	[Export]
 	private float _clampMargin = 128f;
 
-	private CenteredMovingUniformGrid<Vector2[]> _grid = null!;
+	private CenteredMovingUniformGrid<Vector2> _grid = null!;
 	public Rect2 GridVisibilityRect => _grid.WorldBounds;
 
 	// Null until the async build runs; treat null as "always clamp".
@@ -94,35 +94,36 @@ public partial class NavMap : NavigationRegion2D
 
 	public ReadOnlySpan<Vector2> GetNavLine(Vector2 pos)
 	{
-		var cell = _grid.GetCellWorld(pos);
-		if (cell is null)
+		if (!_grid.TryGetCellCoordWorld(pos, out var coord))
 			return [];
 
+		var cellIndex = _grid.GetCellIndex(coord.X, coord.Y);
+		ref var cell = ref _grid.Cells[cellIndex];
 		if (cell.Count == 0)
 		{
-			UpdateNavCell(pos);
+			UpdateNavCell(pos, coord, ref cell);
 			if (cell.Count == 0)
 				return [];
 		}
 
-		return cell.Array[0].AsSpan();
+		return cell.AsReadOnlySpan();
 	}
 
 	private void UpdateNavGrid()
 	{
 		for (var x = 0; x < _grid.Dimensions.X; x++)
 		for (var y = 0; y < _grid.Dimensions.Y; y++)
-			UpdateNavCell(new Vector2(x, y));
+		{
+			var coord = new Vector2I(x, y);
+			var cellIndex = _grid.GetCellIndex(x, y);
+			UpdateNavCell(new Vector2(x, y), coord, ref _grid.Cells[cellIndex]);
+		}
 	}
 
 	private readonly PhysicsRayQueryParameters2D _cachedRayQuery = new();
 
-	private void UpdateNavCell(Vector2 position)
+	private void UpdateNavCell(Vector2 position, Vector2I coord, ref UniformGridCell<Vector2> cell)
 	{
-		var cell = _grid.GetCellWorld(position);
-		if (cell is null)
-			return;
-
 		var playerPos = _cachedPlayerPosition;
 
 		// if outside navmap
@@ -131,7 +132,8 @@ public partial class NavMap : NavigationRegion2D
 		// 	return _grid.Add(cell.X, cell.Y, [position, playerPos]);
 		if (!GridVisibilityRect.HasPoint(position))
 		{
-			cell.Add([position, playerPos]);
+			cell.Add(position);
+			cell.Add(playerPos);
 			return;
 		}
 
@@ -141,18 +143,22 @@ public partial class NavMap : NavigationRegion2D
 
 		if (_cachedSpace.IntersectRay(_cachedRayQuery).Count == 0)
 		{
-			cell.Add([position, playerPos]);
+			cell.Add(position);
+			cell.Add(playerPos);
 			return;
 		}
 
-		var origin = _grid.TopLeft + cell.Position + Vector2.One * (_grid.CellSize * 0.5f);
+		var origin = _grid.TopLeft + _grid.GetCellPosition(coord) + Vector2.One * (_grid.CellSize * 0.5f);
 
 		var points = GetPathsFromServer(origin, playerPos);
 		// var points = GetPathsFromQuery(origin, playerPos);
 
 		if (points.Length < 2)
 			return;
-		cell.Add(points);
+
+		var count = Math.Min(points.Length, UniformGridCell<Vector2>.MAX_SIZE);
+		for (var i = 0; i < count; i++)
+			cell.Add(points[i]);
 	}
 
 	private Vector2[] GetPathsFromServer(Vector2 origin, Vector2 playerPos)
@@ -187,6 +193,6 @@ public partial class NavMap : NavigationRegion2D
 			return;
 		var windowLength = viewport.GetVisibleRect().Size.X * (1 / cam.Zoom.GetLargestComponent());
 		var windowSize = Vector2.One * windowLength;
-		_grid = new CenteredMovingUniformGrid<Vector2[]>(GridSize, windowSize * RangeFactor);
+		_grid = new CenteredMovingUniformGrid<Vector2>(GridSize, windowSize * RangeFactor);
 	}
 }

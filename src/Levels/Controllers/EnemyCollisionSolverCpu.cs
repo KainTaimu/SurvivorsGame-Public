@@ -70,8 +70,6 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 			_gridSize,
 			new Vector2(windowSize.X, windowSize.X)
 		);
-
-		CustomLogger.LogDebug("in", _grid.Dimensions, _grid.CellSize);
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -152,8 +150,7 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 			if (!_grid.ContainsWorld(entry.pos))
 				continue;
 
-			var cell = _grid.GetCellWorld(entry.pos);
-			cell?.Add(entry);
+			_grid.TryAddWorld(entry.pos, entry);
 		}
 	}
 
@@ -206,16 +203,20 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 				var x = i * 2 + phase;
 				for (var y = 0; y < _grid.Dimensions.Y; y++)
 				{
-					var cell = _grid.GetCell(x, y);
-					if (cell is null || cell.Count <= 1 || cell.Count > 10)
+					var cellIdx = _grid.GetCellIndex(x, y);
+					if (cellIdx < 0)
 						continue;
 
-					SolveCellInternalCollisions(cell);
+					ref var cell = ref _grid.Cells[cellIdx];
+					if (cell.Count <= 1 || cell.Count > 10)
+						continue;
 
-					SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y)); // E
-					SolveCellPairCollisions(cell, _grid.GetCell(x, y + 1)); // S
-					SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y + 1)); // SE
-					SolveCellPairCollisions(cell, _grid.GetCell(x + 1, y - 1)); // NE
+					SolveCellInternalCollisions(ref cell);
+
+					SolveCellPairCollisions(ref cell, _grid.GetCellIndex(x + 1, y)); // E
+					SolveCellPairCollisions(ref cell, _grid.GetCellIndex(x, y + 1)); // S
+					SolveCellPairCollisions(ref cell, _grid.GetCellIndex(x + 1, y + 1)); // SE
+					SolveCellPairCollisions(ref cell, _grid.GetCellIndex(x + 1, y - 1)); // NE
 				}
 			}),
 			columns
@@ -223,39 +224,43 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 		WorkerThreadPool.WaitForGroupTaskCompletion(id);
 	}
 
-	private void SolveCellInternalCollisions(UniformGridCell<(Vector2 pos, Entity entity, float radius)> cell)
+	private void SolveCellInternalCollisions(ref UniformGridCell<(Vector2 pos, Entity entity, float radius)> cell)
 	{
 		for (var i = 0; i < cell.Count; i++)
 		{
 			for (var j = i + 1; j < cell.Count; j++)
-				SolveCollisionInPlace(cell, i, cell, j);
+				SolveCollisionInPlace(ref cell, i, ref cell, j);
 		}
 	}
 
 	private void SolveCellPairCollisions(
-		UniformGridCell<(Vector2 pos, Entity entity, float radius)> cellA,
-		UniformGridCell<(Vector2 pos, Entity entity, float radius)>? cellB
+		ref UniformGridCell<(Vector2 pos, Entity entity, float radius)> cellA,
+		int cellBIndex
 	)
 	{
-		if (cellB is null || cellB.Count == 0)
+		if (cellBIndex < 0)
+			return;
+
+		ref var cellB = ref _grid.Cells[cellBIndex];
+		if (cellB.Count == 0)
 			return;
 
 		for (var i = 0; i < cellA.Count; i++)
 		{
 			for (var j = 0; j < cellB.Count; j++)
-				SolveCollisionInPlace(cellA, i, cellB, j);
+				SolveCollisionInPlace(ref cellA, i, ref cellB, j);
 		}
 	}
 
 	private void SolveCollisionInPlace(
-		UniformGridCell<(Vector2 pos, Entity entity, float radius)> cellA,
+		ref UniformGridCell<(Vector2 pos, Entity entity, float radius)> cellA,
 		int indexA,
-		UniformGridCell<(Vector2 pos, Entity entity, float radius)> cellB,
+		ref UniformGridCell<(Vector2 pos, Entity entity, float radius)> cellB,
 		int indexB
 	)
 	{
-		var (posA, entityA, radiusA) = cellA.Array[indexA];
-		var (posB, entityB, radiusB) = cellB.Array[indexB];
+		var (posA, entityA, radiusA) = cellA.Items[indexA];
+		var (posB, entityB, radiusB) = cellB.Items[indexB];
 
 		if (entityA == entityB)
 			return;
@@ -283,8 +288,8 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 		posA += direction * push;
 		posB -= direction * push;
 
-		cellA.Array[indexA] = (posA, entityA, radiusA);
-		cellB.Array[indexB] = (posB, entityB, radiusB);
+		cellA.Items[indexA] = (posA, entityA, radiusA);
+		cellB.Items[indexB] = (posB, entityB, radiusB);
 
 		_entries[entityA.Id].pos = posA;
 		_entries[entityB.Id].pos = posB;

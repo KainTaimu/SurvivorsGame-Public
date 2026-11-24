@@ -7,6 +7,7 @@ namespace Game.Models;
 /// while mapping world positions into the grid via an offset.
 /// </summary>
 public class CenteredMovingUniformGrid<T> : UniformGrid<T>
+	where T : struct
 {
 	public Vector2 WindowSize { get; }
 
@@ -38,8 +39,23 @@ public class CenteredMovingUniformGrid<T> : UniformGrid<T>
 		return WorldBounds.HasPoint(worldPosition);
 	}
 
-	public UniformGridCell<T>? GetCellWorld(Vector2 worldPosition)
+	public int GetCellIndexWorld(Vector2 worldPosition)
 	{
-		return GetCell(worldPosition - TopLeft);
+		return GetCellIndex(worldPosition - TopLeft);
+	}
+
+	public bool TryGetCellIndexWorld(Vector2 worldPosition, out int index)
+	{
+		return TryGetCellIndex(worldPosition - TopLeft, out index);
+	}
+
+	public bool TryGetCellCoordWorld(Vector2 worldPosition, out Vector2I coord)
+	{
+		return TryGetCellCoord(worldPosition - TopLeft, out coord);
+	}
+
+	public bool TryAddWorld(Vector2 worldPosition, T item)
+	{
+		return TryAdd(worldPosition - TopLeft, item);
 	}
 }

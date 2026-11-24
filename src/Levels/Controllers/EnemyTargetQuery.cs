@@ -83,8 +83,7 @@ public partial class EnemyTargetQuery : Node, IMultipleFrameTimeTrackable
 		if (!grid.ContainsWorld(pos.Position))
 			return;
 
-		var cell = grid.GetCellWorld(pos.Position);
-		cell?.Add(entity);
+		grid.TryAddWorld(pos.Position, entity);
 	}
 
 	private bool CircleHitTest(Vector2 projPos, float projRadius, Entity entity)
@@ -140,13 +139,14 @@ public partial class EnemyTargetQuery : Node, IMultipleFrameTimeTrackable
 
 			for (var cellX = minCellX; cellX <= maxCellX; cellX++)
 			{
-				var cell = _grid.GetCell(cellX, cellY);
-				if (cell is null)
+				var cellIdx = _grid.GetCellIndex(cellX, cellY);
+				if (cellIdx < 0)
 					continue;
 
+				ref var cell = ref _grid.Cells[cellIdx];
 				for (var i = 0; i < cell.Count; i++)
 				{
-					var entity = cell.Array[i];
+					var entity = cell.Items[i];
 					if (!GameWorld.World.IsAlive(entity))
 						continue;
 					if (!CircleHitTest(areaCenter, areaRadius, entity))
@@ -164,21 +164,15 @@ public partial class EnemyTargetQuery : Node, IMultipleFrameTimeTrackable
 
 	public IEnumerable<Entity> GetTargetsInScreen()
 	{
-		for (var y = 0; y < _grid.Dimensions.Y; y++)
+		for (var cellIdx = 0; cellIdx < _grid.Cells.Length; cellIdx++)
 		{
-			for (var x = 0; x < _grid.Dimensions.X; x++)
+			for (var i = 0; i < _grid.Cells[cellIdx].Count; i++)
 			{
-				var cell = _grid.GetCell(x, y);
-				if (cell is null)
+				var entity = _grid.Cells[cellIdx].Items[i];
+				if (!GameWorld.World.IsAlive(entity))
 					continue;
-				for (var i = 0; i < cell.Count; i++)
-				{
-					var entity = cell.Array[i];
-					if (!GameWorld.World.IsAlive(entity))
-						continue;
 
-					yield return entity;
-				}
+				yield return entity;
 			}
 		}
 	}
@@ -205,14 +199,17 @@ public partial class EnemyTargetQuery : Node, IMultipleFrameTimeTrackable
 			for (var dx = -cellWidth; dx <= cellWidth; dx++)
 			for (var dy = -cellWidth; dy <= cellWidth; dy++)
 			{
-				var checkCell = new Vector2I(cellIdx.X + dx, cellIdx.Y + dy);
-				var cell = _grid.GetCell(checkCell.X, checkCell.Y);
-				if (cell is null || cell.Count <= 0)
+				var index = _grid.GetCellIndex(cellIdx.X + dx, cellIdx.Y + dy);
+				if (index < 0)
+					continue;
+
+				ref var cell = ref _grid.Cells[index];
+				if (cell.Count <= 0)
 					continue;
 
 				for (var i = 0; i < cell.Count; i++)
 				{
-					var entity = cell.Array[i];
+					var entity = cell.Items[i];
 					if (!GameWorld.World.IsAlive(entity))
 						continue;
 					if (!_cachedSeenIds.Add(entity))
@@ -242,13 +239,11 @@ public partial class EnemyTargetQuery : Node, IMultipleFrameTimeTrackable
 
 	private void GetCellsAlongLine(Vector2 start, Vector2 end, HashSet<Vector2I> cells)
 	{
-		var startCell = _grid.GetCellWorld(start);
-		if (startCell is null)
+		if (!_grid.TryGetCellCoordWorld(start, out var current))
 			return;
 
 		var direction = (end - start).Normalized();
 		var maxDist = (end - start).Length();
-		var current = startCell.Index;
 		var dx = Mathf.Abs(Mathf.RoundToInt(direction.X * maxDist));
 		var dy = Mathf.Abs(Mathf.RoundToInt(direction.Y * maxDist));
 		var sx = direction.X > 0 ? 1 : -1;
@@ -272,7 +267,7 @@ public partial class EnemyTargetQuery : Node, IMultipleFrameTimeTrackable
 				current.Y += sy;
 			}
 
-			if (_grid.GetCell(current.X, current.Y) is null)
+			if (_grid.GetCellIndex(current.X, current.Y) < 0)
 				break;
 
 			cells.Add(current);
