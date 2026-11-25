@@ -12,22 +12,30 @@ public partial class StatusEffectModule : Node
 {
 	[Export]
 	private StatusEffect _statusEffect = null!;
+
+	[Export]
+	private bool _isEffectSingleInstance = true;
+
 	private bool _isStatusEffectApplied;
 
 	private static Player Player => GameWorld.Instance.MainPlayer;
 
 	public void GiveStatusEffect()
 	{
-		if (_isStatusEffectApplied)
+		if (_isEffectSingleInstance && _isStatusEffectApplied)
 			return;
 
-		Player.StatusEffectController.AddStatusEffect(_statusEffect);
+		if (_isEffectSingleInstance)
+			Player.StatusEffectController.AddStatusEffect(_statusEffect);
+		else
+			Player.StatusEffectController.AddStatusEffect((StatusEffect)_statusEffect.Duplicate(true));
 		_isStatusEffectApplied = true;
 	}
 
+	// NOTE: if _isEffectSingleInstance, nothing happens because _statusEffect is duplicated
 	public void RemoveStatusEffect()
 	{
-		if (!_isStatusEffectApplied)
+		if (!_isEffectSingleInstance || !_isStatusEffectApplied)
 			return;
 
 		Player.StatusEffectController.RemoveStatusEffect(_statusEffect);

@@ -15,7 +15,7 @@
 [ext_resource type="Script" uid="uid://doyqd2gp5rtvn" path="res://src/Items/Offensive/Stats/SlowStats.cs" id="13_niepl"]
 [ext_resource type="Script" uid="uid://66x4x0yo47cj" path="res://src/Items/Offensive/Stats/KnockbackStats.cs" id="14_sbdfb"]
 [ext_resource type="Script" uid="uid://b1j7f3uyd80s3" path="res://src/Items/Offensive/Stats/MoveBloomStats.cs" id="15_nbqni"]
-[ext_resource type="AudioStream" uid="uid://bsq1syolncq6d" path="res://assets/SFX/Shoot/gm6/Gm6Lynx_r3.wav" id="16_v7kl0"]
+[ext_resource type="AudioStream" uid="uid://delw8epm3enie" path="res://assets/SFX/Shoot/gm6/Gm6Lynx_r4.wav" id="16_v7kl0"]
 [ext_resource type="Script" uid="uid://dnodsacrptssb" path="res://src/Items/Offensive/FireGroups/SemiAutoFireGroup.cs" id="21_036s1"]
 [ext_resource type="Script" uid="uid://b7arqp2dmxhtx" path="res://src/Items/Offensive/ReloadBehaviours/NormalReloadBehaviour.cs" id="22_in5gd"]
 [ext_resource type="PackedScene" uid="uid://3egbr6rh75nk" path="res://scenes/Items/Offensive/Modules/ScopeModule.tscn" id="23_nx3pq"]
@@ -81,24 +81,31 @@ size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_ogoab"]
 script = ExtResource("26_2rbd6")
+StatName = 6
+Operation = 1
+Value = 0.5
+metadata/_custom_type_script = "uid://d31d8uns5faa5"
+
+[sub_resource type="Resource" id="Resource_v7kl0"]
+script = ExtResource("26_2rbd6")
 StatName = 5
 Operation = 1
-Value = 0.33
+Value = 0.5
 metadata/_custom_type_script = "uid://d31d8uns5faa5"
 
 [sub_resource type="Resource" id="Resource_fev8o"]
 script = ExtResource("26_2rbd6")
 StatName = 3
 Operation = 1
-Value = 0.6
+Value = 0.8
 metadata/_custom_type_script = "uid://d31d8uns5faa5"
 
 [sub_resource type="Resource" id="Resource_do71q"]
 script = ExtResource("27_0bnkh")
 Name = "Concussed"
 Cause = 2
-InitialDuration = 1.0
-Modifiers = Array[ExtResource("26_2rbd6")]([SubResource("Resource_ogoab"), SubResource("Resource_fev8o")])
+InitialDuration = 1.5
+Modifiers = Array[ExtResource("26_2rbd6")]([SubResource("Resource_ogoab"), SubResource("Resource_v7kl0"), SubResource("Resource_fev8o")])
 metadata/_custom_type_script = "uid://bdk4fdcqvypav"
 
 [node name="BullpupSniper" type="Node2D" unique_id=399121865 node_paths=PackedStringArray("DamageStats", "MagazineStats", "BloomStats", "RecoilStats", "ReloadStats", "ProjectileStats", "AttackStats", "PierceStats", "MoveBloomStats", "KnockbackStats", "_scopeComponent", "FireGroup", "ReloadBehaviour")]
@@ -196,7 +203,8 @@ metadata/_custom_type_script = "uid://b1j7f3uyd80s3"
 
 [node name="Shoot" type="AudioStreamPlayer" parent="." unique_id=2103641847]
 process_mode = 3
-stream = SubResource("AudioStreamRandomizer_rmnc5")
+stream = ExtResource("16_v7kl0")
+volume_db = 4.0
 bus = &"ShootSfxNoCompress"
 
 [node name="SemiAutoFireGroup" type="Node" parent="." unique_id=1729526405 node_paths=PackedStringArray("AttackStats")]
@@ -234,6 +242,7 @@ metadata/_custom_type_script = "uid://doh6x5pfspjv7"
 [node name="ConcussedStatusEffectModule" type="Node" parent="." unique_id=84616492]
 script = ExtResource("25_wdvq4")
 _statusEffect = SubResource("Resource_do71q")
+_isEffectSingleInstance = false
 metadata/_custom_type_script = "uid://c0xnhv61iiqba"
 
 [connection signal="OnAttack" from="." to="Shoot" method="play"]
