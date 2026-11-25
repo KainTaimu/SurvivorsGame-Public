@@ -7,11 +7,14 @@ using Arch.System;
 using Arch.System.SourceGenerator;
 using Game.Core.ECS;
 using Game.Models;
+using Game.UI;
+using Godot.Collections;
+using Array = System.Array;
 
 namespace Game.Levels.Controllers;
 
 [GlobalClass]
-public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
+public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver, IMultipleFrameTimeTrackable
 {
 	[ExportCategory("Configuration")]
 	[Export]
@@ -49,6 +52,9 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 	private int _writeFrame;
 
 	private Vector2 _playerPosition;
+
+	[Export]
+	public Array<FrameTime> FrameTimes { get; private set; } = [];
 
 	public override void _Ready()
 	{
@@ -93,14 +99,16 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 		using (FrameTime.Record())
 		{
 			AddObjectsToGridQuery(GameWorld.World, _grid, _entries, _stamps, _writeFrame);
-			for (var i = 0; i < SubSteps; i++)
-			{
-				_grid.ClearGrid();
-				AddObjectsToGridFromBuffer();
-				SolveCollisions();
-			}
+			using (FrameTimes[0].Record())
+				for (var i = 0; i < SubSteps; i++)
+				{
+					_grid.ClearGrid();
+					AddObjectsToGridFromBuffer();
+					SolveCollisions();
+				}
 
-			ApplyCollisionsQuery(GameWorld.World, _entries, _stamps, _writeFrame, NavMap!);
+			using (FrameTimes[1].Record())
+				ApplyCollisionsQuery(GameWorld.World, _entries, _stamps, _writeFrame, NavMap!);
 		}
 	}
 
@@ -108,6 +116,7 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 	{
 		if (_entries.Length >= capacity)
 			return;
+		CustomLogger.LogDebug("resize" + capacity);
 
 		var newSize = Math.Max(capacity, _entries.Length * 2);
 		Array.Resize(ref _entries, newSize);
@@ -147,9 +156,6 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 				continue;
 
 			var entry = _entries[i];
-			if (!_grid.ContainsWorld(entry.pos))
-				continue;
-
 			_grid.TryAddWorld(entry.pos, entry);
 		}
 	}
@@ -219,7 +225,8 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 					SolveCellPairCollisions(ref cell, _grid.GetCellIndex(x + 1, y - 1)); // NE
 				}
 			}),
-			columns
+			columns,
+			highPriority: true
 		);
 		WorkerThreadPool.WaitForGroupTaskCompletion(id);
 	}
@@ -268,9 +275,6 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver
 		var largest = Math.Max(radiusA, radiusB) * 3;
 		if (posA.DistanceSquaredTo(posB) >= largest * largest)
 			return;
-
-		// if (posA.DistanceSquaredTo(posB) >= _distBeforeShove * _distBeforeShove)
-		// 	return;
 
 		var direction = posB.DirectionTo(posA);
 		if (direction == Vector2.Zero)

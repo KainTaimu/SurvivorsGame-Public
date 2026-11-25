@@ -53,8 +53,11 @@ func change_solver(type: SolverTypeEnum) -> void:
 		RenderingDevice.DeviceType.DEVICE_TYPE_DISCRETE_GPU:
 			selected_solver = SolverTypeEnum.GPU
 		RenderingDevice.DeviceType.DEVICE_TYPE_INTEGRATED_GPU:
-			selected_solver = SolverTypeEnum.GPU
-			selection_cause = "using Integrated GPU."
+			selected_solver = SolverTypeEnum.CPU
+			selection_cause = "No discrete GPU found. Using CPU solver"
+		RenderingDevice.DeviceType.DEVICE_TYPE_CPU:
+			selected_solver = SolverTypeEnum.CPU
+			selection_cause = "No discrete GPU found. Using CPU solver"
 		_:
 			selected_solver = SolverTypeEnum.CPU
 			selection_cause = "unsupported video adapter: %s" % adapter

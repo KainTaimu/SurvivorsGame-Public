@@ -137,7 +137,6 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 
 		_gpuCounter[0] = 0;
 
-		var start = Time.GetTicksUsec();
 		using (FrameTime.Record())
 		{
 			AddObjectsToBufferQuery(GameWorld.World, _entityBuffer, _gpuCounter, _writeFrame, bounds);
@@ -153,10 +152,7 @@ public partial class EnemyCollisionSolverGpu : AbstractEnemyCollisionSolver
 			}
 
 			if (entityCount == 0)
-			{
-				FrameTime.ProcessTimeMicroSeconds = Time.GetTicksUsec() - start;
 				return;
-			}
 
 			var byteCount = (uint)(entityCount * ENTITY_STRIDE);
 			_rd.BufferUpdate(_entitiesA, 0, byteCount, _entityBuffer);

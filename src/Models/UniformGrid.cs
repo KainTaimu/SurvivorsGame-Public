@@ -101,7 +101,6 @@ public class UniformGrid<T>
 
 	public void ClearGrid()
 	{
-		for (var i = 0; i < Cells.Length; i++)
-			Cells[i].Clear();
+		Array.Clear(Cells);
 	}
 }

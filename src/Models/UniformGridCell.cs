@@ -27,7 +27,12 @@ public struct UniformGridCell<T>
 		if (Count >= MAX_SIZE)
 			return;
 
-		Items[Count] = obj;
+		// Directly indexing into an InlineArray causes the compiler to turn this into Span via InlineArrayAsSpan for runtime bounds checking.
+		// Very expensive.
+		// Items[Count] = obj;
+
+		// jump to Count index and set directly
+		Unsafe.Add(ref Unsafe.As<CellBuffer, T>(ref Items), Count) = obj;
 		Count++;
 	}
 
