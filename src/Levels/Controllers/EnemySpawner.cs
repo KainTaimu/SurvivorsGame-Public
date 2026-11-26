@@ -1,9 +1,7 @@
 // Copyright 2026 Erwin Panergo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using System.Collections.Generic;
 using Arch.Core;
-using CommunityToolkit.HighPerformance;
 using Game.Core.ECS;
 using Game.Core.Services;
 
@@ -31,8 +29,8 @@ public partial class EnemySpawner : Node
 		var spriteInfo = ss.GetSpriteInfo(bp.SpriteName);
 
 		var entity = EnemyTracker.CreateEntity();
-		var comps = new List<object>
-		{
+		GameWorld.World.Add(
+			entity,
 			new EnemyTypeComponent(bp.Type),
 			new HealthComponent(stats.MaxHealth),
 			new PositionComponent { Position = position },
@@ -58,9 +56,8 @@ public partial class EnemySpawner : Node
 			new DeathRewardComponent(Mathf.CeilToInt(stats.MoneyDrop * stats.MoneyDropMultiplier)),
 			new HitFeedbackComponent { HitTime = 0 },
 			new CollisionLodComponent(CollisionLodLevel.Far),
-			CollisionGpuIndexComponent.NotParticipating,
-		};
-		GameWorld.World.AddRange(entity, comps.AsSpan());
+			CollisionGpuIndexComponent.NotParticipating
+		);
 
 		foreach (var behavior in bp.EnemyBehaviors)
 			behavior.AddComponent(entity);
