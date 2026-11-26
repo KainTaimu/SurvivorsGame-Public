@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Arch.Core;
 using Arch.System;
 using Arch.System.SourceGenerator;
@@ -44,14 +45,15 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver, IMu
 
 	private CenteredMovingUniformGrid<(Vector2 pos, Entity entity, float radius)> _grid = null!;
 
-	// Dense write buffers indexed by Entity.Id. Entries are valid for the
-	// current frame when _stamps[id] == _writeFrame, avoiding a full clear.
 	private (Vector2 pos, Entity entity, float radius)[] _entries = [];
 
 	private int[] _stamps = [];
 	private int _writeFrame;
 
 	private Vector2 _playerPosition;
+
+	private Action<int>? _solveColumnEven;
+	private Action<int>? _solveColumnOdd;
 
 	[Export]
 	public Array<FrameTime> FrameTimes { get; private set; } = [];
@@ -196,39 +198,66 @@ public partial class EnemyCollisionSolverCpu : AbstractEnemyCollisionSolver, IMu
 	// SolveCollisionInPlace race-free without any locking.
 	private void SolveCollisions()
 	{
-		SolveColumnPhase(0);
-		SolveColumnPhase(1);
+		SolveColumnPhaseEven();
+		SolveColumnPhaseOdd();
 	}
 
-	private void SolveColumnPhase(int phase)
+	private void SolveColumnPhaseEven()
 	{
-		var columns = (_grid.Dimensions.X + 1 - phase) / 2;
-		var id = WorkerThreadPool.AddGroupTask(
-			Callable.From<int>(i =>
-			{
-				var x = i * 2 + phase;
-				for (var y = 0; y < _grid.Dimensions.Y; y++)
-				{
-					var cellIdx = _grid.GetCellIndex(x, y);
-					if (cellIdx < 0)
-						continue;
+		var columns = (_grid.Dimensions.X + 1) / 2;
+		_solveColumnEven ??= BodyEven;
+		Parallel.For(0, columns, _solveColumnEven);
+	}
 
-					ref var cell = ref _grid.Cells[cellIdx];
-					if (cell.Count <= 1 || cell.Count > 10)
-						continue;
+	private void SolveColumnPhaseOdd()
+	{
+		var columns = (_grid.Dimensions.X) / 2;
+		_solveColumnOdd ??= BodyOdd;
+		Parallel.For(0, columns, _solveColumnOdd);
+	}
 
-					SolveCellInternalCollisions(ref cell);
+	private void BodyEven(int i)
+	{
+		var x = i * 2;
+		for (var y = 0; y < _grid.Dimensions.Y; y++)
+		{
+			var cellIdx = _grid.GetCellIndex(x, y);
+			if (cellIdx < 0)
+				continue;
 
-					SolveCellPairCollisions(ref cell, _grid.GetCellIndex(x + 1, y)); // E
-					SolveCellPairCollisions(ref cell, _grid.GetCellIndex(x, y + 1)); // S
-					SolveCellPairCollisions(ref cell, _grid.GetCellIndex(x + 1, y + 1)); // SE
-					SolveCellPairCollisions(ref cell, _grid.GetCellIndex(x + 1, y - 1)); // NE
-				}
-			}),
-			columns,
-			highPriority: true
-		);
-		WorkerThreadPool.WaitForGroupTaskCompletion(id);
+			ref var cell = ref _grid.Cells[cellIdx];
+			if (cell.Count <= 1 || cell.Count > 10)
+				continue;
+
+			SolveCellInternalCollisions(ref cell);
+
+			SolveCellPairCollisions(ref cell, _grid.GetCellIndex(x + 1, y)); // E
+			SolveCellPairCollisions(ref cell, _grid.GetCellIndex(x, y + 1)); // S
+			SolveCellPairCollisions(ref cell, _grid.GetCellIndex(x + 1, y + 1)); // SE
+			SolveCellPairCollisions(ref cell, _grid.GetCellIndex(x + 1, y - 1)); // NE
+		}
+	}
+
+	private void BodyOdd(int i)
+	{
+		var x = i * 2 + 1;
+		for (var y = 0; y < _grid.Dimensions.Y; y++)
+		{
+			var cellIdx = _grid.GetCellIndex(x, y);
+			if (cellIdx < 0)
+				continue;
+
+			ref var cell = ref _grid.Cells[cellIdx];
+			if (cell.Count <= 1 || cell.Count > 10)
+				continue;
+
+			SolveCellInternalCollisions(ref cell);
+
+			SolveCellPairCollisions(ref cell, _grid.GetCellIndex(x + 1, y)); // E
+			SolveCellPairCollisions(ref cell, _grid.GetCellIndex(x, y + 1)); // S
+			SolveCellPairCollisions(ref cell, _grid.GetCellIndex(x + 1, y + 1)); // SE
+			SolveCellPairCollisions(ref cell, _grid.GetCellIndex(x + 1, y - 1)); // NE
+		}
 	}
 
 	private void SolveCellInternalCollisions(ref UniformGridCell<(Vector2 pos, Entity entity, float radius)> cell)

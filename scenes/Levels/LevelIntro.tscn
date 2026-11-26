@@ -1895,6 +1895,7 @@ script = ExtResource("18_duif7")
 SupportedTypes = 3
 
 [node name="EnemyCollisionSolverManager" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="8" unique_id=1705317581 node_paths=PackedStringArray("nav_map")]
+default_solver = 2
 nav_map = NodePath("../../../World/Navigation/NavMap")
 
 [node name="EnemyRenderer" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="9" unique_id=1054443393]
