@@ -42,6 +42,16 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Arr
 outlines = Array[PackedVector2Array]([PackedVector2Array(5775, -1184, 8695, -1192, 8871, 1952, 5831, 1952)])
 agent_radius = 24.0
 
+[sub_resource type="Resource" id="Resource_a6la3"]
+script = ExtResource("5_iiw53")
+Blueprint = ExtResource("7_d75v4")
+metadata/_custom_type_script = "uid://dau6m811dtep8"
+
+[sub_resource type="Resource" id="Resource_vmdw7"]
+script = ExtResource("6_vrw23")
+Weights = Array[ExtResource("5_iiw53")]([SubResource("Resource_a6la3")])
+metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
+
 [sub_resource type="Resource" id="Resource_w70hc"]
 script = ExtResource("11_v38xc")
 DamageOnContact = 4
@@ -92,7 +102,7 @@ script = ExtResource("6_vrw23")
 Weights = Array[ExtResource("5_iiw53")]([SubResource("Resource_w2_walker_wt")])
 metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ya27f"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w70hc"]
 size = Vector2(32, 32)
 
 [sub_resource type="Resource" id="Resource_mod_health"]
@@ -1565,16 +1575,6 @@ script = ExtResource("6_vrw23")
 Weights = Array[ExtResource("5_iiw53")]([SubResource("Resource_uui33"), SubResource("Resource_885es"), SubResource("Resource_t7v5b"), SubResource("Resource_tgplc"), SubResource("Resource_ufwql")])
 metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
 
-[sub_resource type="Resource" id="Resource_a6la3"]
-script = ExtResource("5_iiw53")
-Blueprint = ExtResource("7_d75v4")
-metadata/_custom_type_script = "uid://dau6m811dtep8"
-
-[sub_resource type="Resource" id="Resource_vmdw7"]
-script = ExtResource("6_vrw23")
-Weights = Array[ExtResource("5_iiw53")]([SubResource("Resource_a6la3")])
-metadata/_custom_type_script = "uid://ds8lkov4wnj2l"
-
 [sub_resource type="Resource" id="Resource_oo16t"]
 script = ExtResource("11_v38xc")
 DamageOnContact = 4
@@ -1703,14 +1703,24 @@ avoidance_enabled = false
 [node name="GameWorld" parent="Systems" parent_id_path=PackedInt32Array(897106209) index="0" unique_id=562045734 node_paths=PackedStringArray("MainPlayer")]
 MainPlayer = NodePath("../../World/Player")
 
-[node name="1 Duration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="0" unique_id=233059836]
+[node name="1 HORDE SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="0" unique_id=1421423771]
+script = ExtResource("9_duif7")
+SpawnCountTarget = 16384
+WaveName = "HORDE"
+EnemyBlueprints = SubResource("Resource_vmdw7")
+SpawnMinTime = 0.007
+SpawnMaxTime = 0.007
+SpawnBatchMin = 50
+SpawnBatchMax = 50
+
+[node name="2 Duration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="1" unique_id=233059836]
 script = ExtResource("10_ta1oo")
 Duration = 60.0
 EnemyBlueprints = SubResource("Resource_iiw53")
 SpawnMinTime = 0.7
 SpawnMaxTime = 1.05
 
-[node name="2 SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="1" unique_id=616732534]
+[node name="3 SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="2" unique_id=616732534]
 script = ExtResource("9_duif7")
 SpawnCountTarget = 112
 EnemyBlueprints = SubResource("Resource_w2_collection")
@@ -1718,7 +1728,7 @@ SpawnMinTime = 0.371
 SpawnMaxTime = 0.56
 Rewards = Array[ExtResource("12_j0071")]([SubResource("Resource_w2_reward_se"), SubResource("Resource_w2_reward_pickup")])
 
-[node name="3 Duration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="2" unique_id=1604725013]
+[node name="4 Duration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="3" unique_id=1604725013]
 script = ExtResource("10_ta1oo")
 Duration = 75.0
 EnemyBlueprints = SubResource("Resource_w3_collection")
@@ -1726,7 +1736,7 @@ SpawnMinTime = 0.329
 SpawnMaxTime = 0.511
 Rewards = Array[ExtResource("12_j0071")]([SubResource("Resource_w3_reward_se"), SubResource("Resource_w3_reward_pickup")])
 
-[node name="4 SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="3" unique_id=700100004]
+[node name="5 SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="4" unique_id=700100004]
 script = ExtResource("9_duif7")
 SpawnCountTarget = 142
 EnemyBlueprints = SubResource("Resource_w4_collection")
@@ -1734,7 +1744,7 @@ SpawnMinTime = 0.308
 SpawnMaxTime = 0.469
 Rewards = Array[ExtResource("12_j0071")]([SubResource("Resource_w4_reward_se"), SubResource("Resource_w4_reward_pickup")])
 
-[node name="5 Duration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="4" unique_id=700100005]
+[node name="6 Duration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="5" unique_id=700100005]
 script = ExtResource("10_ta1oo")
 Duration = 80.0
 EnemyBlueprints = SubResource("Resource_w5_collection")
@@ -1742,7 +1752,7 @@ SpawnMinTime = 0.259
 SpawnMaxTime = 0.42
 Rewards = Array[ExtResource("12_j0071")]([SubResource("Resource_w5_reward_se"), SubResource("Resource_w5_reward_pickup")])
 
-[node name="6 SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="5" unique_id=700100006]
+[node name="7 SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="6" unique_id=700100006]
 script = ExtResource("9_duif7")
 SpawnCountTarget = 240
 EnemyBlueprints = SubResource("Resource_w6_collection")
@@ -1751,7 +1761,7 @@ SpawnMaxTime = 0.511
 SpawnBatchMax = 2
 Rewards = Array[ExtResource("12_j0071")]([SubResource("Resource_w6_reward_se"), SubResource("Resource_w6_reward_pickup")])
 
-[node name="7 Duration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="6" unique_id=700100007]
+[node name="8 Duration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="7" unique_id=700100007]
 script = ExtResource("10_ta1oo")
 Duration = 80.0
 EnemyBlueprints = SubResource("Resource_w7_collection")
@@ -1760,7 +1770,7 @@ SpawnMaxTime = 0.539
 SpawnBatchMax = 2
 Rewards = Array[ExtResource("12_j0071")]([SubResource("Resource_w7_reward_se"), SubResource("Resource_w7_reward_pickup")])
 
-[node name="8 SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="7" unique_id=700100008]
+[node name="9 SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="8" unique_id=700100008]
 script = ExtResource("9_duif7")
 SpawnCountTarget = 300
 EnemyBlueprints = SubResource("Resource_w8_collection")
@@ -1770,7 +1780,7 @@ SpawnBatchMin = 2
 SpawnBatchMax = 3
 Rewards = Array[ExtResource("12_j0071")]([SubResource("Resource_w8_reward_se"), SubResource("Resource_w8_reward_pickup")])
 
-[node name="9 Duration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="8" unique_id=700100009]
+[node name="10 Duration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="9" unique_id=700100009]
 script = ExtResource("10_ta1oo")
 Duration = 85.0
 EnemyBlueprints = SubResource("Resource_w9_collection")
@@ -1780,7 +1790,7 @@ SpawnBatchMin = 2
 SpawnBatchMax = 3
 Rewards = Array[ExtResource("12_j0071")]([SubResource("Resource_w9_reward_se"), SubResource("Resource_w9_reward_pickup")])
 
-[node name="10 SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="9" unique_id=700100010]
+[node name="11 SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="10" unique_id=700100010]
 script = ExtResource("9_duif7")
 SpawnCountTarget = 450
 EnemyBlueprints = SubResource("Resource_w10_collection")
@@ -1790,7 +1800,7 @@ SpawnBatchMin = 2
 SpawnBatchMax = 3
 Rewards = Array[ExtResource("12_j0071")]([SubResource("Resource_w10_reward_se"), SubResource("Resource_w10_reward_pickup")])
 
-[node name="11 Duration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="10" unique_id=700100011]
+[node name="12 Duration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="11" unique_id=700100011]
 script = ExtResource("10_ta1oo")
 Duration = 85.0
 EnemyBlueprints = SubResource("Resource_w11_collection")
@@ -1800,7 +1810,7 @@ SpawnBatchMin = 3
 SpawnBatchMax = 4
 Rewards = Array[ExtResource("12_j0071")]([SubResource("Resource_w11_reward_se"), SubResource("Resource_w11_reward_pickup")])
 
-[node name="12 SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="11" unique_id=700100012]
+[node name="13 SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="12" unique_id=700100012]
 script = ExtResource("9_duif7")
 SpawnCountTarget = 660
 EnemyBlueprints = SubResource("Resource_w12_collection")
@@ -1810,7 +1820,7 @@ SpawnBatchMin = 5
 SpawnBatchMax = 6
 Rewards = Array[ExtResource("12_j0071")]([SubResource("Resource_w12_reward_se"), SubResource("Resource_w12_reward_pickup")])
 
-[node name="13 Duration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="12" unique_id=700100013]
+[node name="14 Duration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="13" unique_id=700100013]
 script = ExtResource("10_ta1oo")
 Duration = 85.0
 EnemyBlueprints = SubResource("Resource_w13_collection")
@@ -1820,7 +1830,7 @@ SpawnBatchMin = 5
 SpawnBatchMax = 6
 Rewards = Array[ExtResource("12_j0071")]([SubResource("Resource_w13_reward_se"), SubResource("Resource_w13_reward_pickup")])
 
-[node name="14 SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="13" unique_id=700100014]
+[node name="15 SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="14" unique_id=700100014]
 script = ExtResource("9_duif7")
 SpawnCountTarget = 900
 EnemyBlueprints = SubResource("Resource_w14_collection")
@@ -1830,7 +1840,7 @@ SpawnBatchMin = 6
 SpawnBatchMax = 7
 Rewards = Array[ExtResource("12_j0071")]([SubResource("Resource_w14_reward_se"), SubResource("Resource_w14_reward_pickup")])
 
-[node name="15 Duration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="14" unique_id=700100015]
+[node name="16 Duration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="15" unique_id=700100015]
 script = ExtResource("10_ta1oo")
 Duration = 90.3
 EnemyBlueprints = SubResource("Resource_w15_collection")
@@ -1840,7 +1850,7 @@ SpawnBatchMin = 8
 SpawnBatchMax = 9
 Rewards = Array[ExtResource("12_j0071")]([SubResource("Resource_w15_reward_se"), SubResource("Resource_w15_reward_pickup")])
 
-[node name="16 SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="15" unique_id=1053226975]
+[node name="17 SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="16" unique_id=1053226975]
 script = ExtResource("9_duif7")
 SpawnCountTarget = 6000
 EnemyBlueprints = SubResource("Resource_xuljg")
@@ -1850,19 +1860,9 @@ SpawnBatchMin = 2
 SpawnBatchMax = 2
 Rewards = Array[ExtResource("12_j0071")]([SubResource("Resource_w14_reward_se"), SubResource("Resource_w14_reward_pickup")])
 
-[node name="17 DebugStopper" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="16" unique_id=526366324]
+[node name="18 DebugStopper" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="17" unique_id=526366324]
 script = ExtResource("15_n7qsj")
 metadata/_custom_type_script = "uid://bhhh8235y54bg"
-
-[node name="18 HORDE SpawnCount" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="17" unique_id=1421423771]
-script = ExtResource("9_duif7")
-SpawnCountTarget = 6000
-WaveName = "HORDE"
-EnemyBlueprints = SubResource("Resource_vmdw7")
-SpawnMinTime = 0.007
-SpawnMaxTime = 0.007
-SpawnBatchMin = 50
-SpawnBatchMax = 50
 
 [node name="19 Duration" type="Node" parent="Systems/EnemySystems/EnemyWaveController/Waves" parent_id_path=PackedInt32Array(1382166870) index="18" unique_id=563917666]
 script = ExtResource("10_ta1oo")
@@ -1895,6 +1895,7 @@ script = ExtResource("18_duif7")
 SupportedTypes = 3
 
 [node name="EnemyCollisionSolverManager" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="8" unique_id=1705317581 node_paths=PackedStringArray("nav_map")]
+default_solver = 2
 nav_map = NodePath("../../../World/Navigation/NavMap")
 
 [node name="EnemyRenderer" parent="Systems/EnemySystems" parent_id_path=PackedInt32Array(1808118587) index="9" unique_id=1054443393]
